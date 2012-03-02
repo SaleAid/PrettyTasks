@@ -1,8 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('CakeEmail', 'Network/Email');
-App::import('Vendor', 'loginza'.DS.'LoginzaAPI');
-App::import('Vendor', 'loginza'.DS.'LoginzaUserProfile');
+
 /**
  * Users Controller
  *
@@ -22,7 +21,7 @@ class UsersController extends AppController {
     
     public function beforeFilter(){
         parent::beforeFilter();
-        $this->Auth->allow('login','loginzalogin','activate','reactivation','confirm_email','registration');
+        $this->Auth->allow('login','loginzalogin','activate','reactivation','confirm_email','confirm_user_data','registration');
           
     }
     
@@ -39,6 +38,7 @@ class UsersController extends AppController {
     }
     
     public function login(){
+        $this->layout = 'login';
         if($this->Auth->user()){
             $this->redirect($this->Auth->redirect());    
         }
@@ -65,6 +65,11 @@ class UsersController extends AppController {
  * @return void
  */ 
 	public function index() {
+	   $this->User->id = $this->Auth->user('id');
+           $this->redirect(array('controller'=>'profiles','action'=>'index'));
+        //debug($this->User->read());die;
+           
+        
 		$this->User->recursive = 0;
         $this->set('users', $this->paginate());
 	}
@@ -80,6 +85,7 @@ class UsersController extends AppController {
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
 		}
+        debug($this->User->read());die;
 		$this->set('user', $this->User->read(null, $id));
 	}
 
@@ -166,47 +172,23 @@ class UsersController extends AppController {
     public function loginzalogin(){
         
         if(!empty($this->request->data['token'])){
-            $LoginzaAPI = new LoginzaAPI();
-            $UserProfile = $LoginzaAPI->getAuthInfo($this->request->data['token'],'14377',md5($this->request->data['token'].'21013aca17787a9d1b8cf4be7c7f5aeb'));
-            if (isset($UserProfile->error_type)){
-                $this->Session->setFlash(__($UserProfile->error_type.': '.$UserProfile->error_message));
+            $loginzaUserInfo = $this->User->getLoginzaUserInfo($this->request->data['token']);
+            if($loginzaUserInfo['error']){
+                $this->Session->setFlash(__($loginzaUserInfo['error']->error_type.': '.$loginzaUserInfo['error']->error_message));
                 $this->redirect(array('controller'=>'users','action'=>'login'));
             }
-            $userSocial = array();
-            if(strpos($UserProfile->provider, 'twitter')!== false){
-                list($userSocial['first_name'],$userSocial['last_name']) = explode(' ',$UserProfile->name->full_name);
-                $userSocial['provider'] = 'twitter';
-                $userSocial['uid'] = $UserProfile->uid;
-                $userSocial['email'] = '';
-            }elseif(strpos($UserProfile->provider, 'vkontakte')!== false) {
-                $userSocial['uid'] = $UserProfile->uid;
-                $userSocial['first_name'] = $UserProfile->name->first_name;
-                $userSocial['last_name'] = $UserProfile->name->last_name;
-                $userSocial['email'] = '';
-                $userSocial['provider'] = 'vkontakte';
-            }else{
-                $userSocial['uid'] = $UserProfile->uid;
-                $userSocial['first_name'] = $UserProfile->name->first_name;
-                $userSocial['last_name'] = $UserProfile->name->last_name;
-                $userSocial['email'] = $UserProfile->email;
-                if(strpos($UserProfile->provider, 'google')!== false){
-                    $userSocial['provider'] = 'google';
-                 }elseif(strpos($UserProfile->provider, 'facebook')!== false){
-                    $userSocial['provider'] = 'facebook';
-                 }
-             }
-             $result = $this->User->findByUidAndProvider($userSocial['uid'],$userSocial['provider']);
-             if(!$result){
-                $this->Session->write('userSocial',$userSocial);
+            $result = $this->User->findByUidAndProvider($loginzaUserInfo['uid'],$loginzaUserInfo['provider']);
+            if(!$result){
+                $this->Session->write('userSocial',$loginzaUserInfo);
                 $this->redirect(array('controller'=>'users','action'=>'confirm_email'));
             } 
-             if($result['User']['active']){
+            if($result['User']['active']){
                     $this->Auth->login($result['User']);
                     $this->redirect($this->Auth->redirect());    
-             }
-             $this->Session->write('confirm_ative',$result);
-             $this->Session->setFlash('Your account not active.'); 
-             $this->redirect(array('controller'=>'users','action'=>'reactivation'));        
+            }
+            $this->Session->write('confirm_ative',$result);
+            $this->Session->setFlash('Your account not active.'); 
+            $this->redirect(array('controller'=>'users','action'=>'reactivation'));        
         }else {
             $this->Session->setFlash(__('An unknown error'));
 			$this->redirect(array('controller'=>'users','action'=>'login'));
@@ -222,7 +204,7 @@ class UsersController extends AppController {
         if($this->Session->check('confirm_ative')){
             $user_profile = $this->Session->read('confirm_ative');
             $this->request->data = $user_profile;
-            if ($this->request->is('post') || $this->request->is('put')) {
+            if ($this->request->is('post')) {
                 $this->__createActivationHashAndSendEmail($user_profile['User']['id']);
                 $this->Session->delete('confirm_ative');
             }
@@ -237,69 +219,75 @@ class UsersController extends AppController {
             $this->Session->setFlash(__('You already active  ...'));
             $this->redirect(array('action' => 'index'));
          }
-        
-        if($this->Session->check('userSocial')){
-            $newUser['Profile'] = $this->Session->read('userSocial');
-            $profile = $this->User->Profile->findByEmail($newUser['Profile']['email']);
-            if($profile){
-                $newUser['User']['profile_id'] = $profile['Profile']['id'];
-            }
-            $this->Session->write('new_user', $newUser);
-            $this->request->data = $newUser;
-            $this->set('user',$newUser);
-            $this->Session->delete('userSocial');
-         }elseif($this->Session->check('new_user')){
-            if ($this->request->is('post')) {
+         if(!$this->Session->check('userSocial')){
+                $this->redirect(array('action' => 'login'));
+         }
+        $userSocial = $this->Session->read('userSocial');
+        if ($this->request->is('post')) {
                 if ($this->User->Profile->saveAll($this->request->data, array('validate' => 'only'))) {
-                    $newUser = $this->Session->read('new_user');
-                    $saveUser['User']['provider'] = $newUser['Profile']['provider'];
-                    $saveUser['User']['uid'] = $newUser['Profile']['uid'];
-                    if(!empty($newUser['User']['profile_id'])){
-                        $saveUser['User']['profile_id'] = $newUser['User']['profile_id'];
-                    }else{
-                        $profile = $this->User->Profile->findByEmail($this->request->data['Profile']['email']);
-                        if($profile){
-                            $saveUser['User']['profile_id'] = $profile['Profile']['id'];
-                        }else{
-                            $saveUser['Profile']['first_name'] = $newUser['Profile']['first_name'];
-                            $saveUser['Profile']['last_name'] = $newUser['Profile']['last_name'];
-                            $saveUser['Profile']['email'] = $this->request->data['Profile']['email'];
-                            if(!$this->User->Profile->save($saveUser['Profile'])){
-                                throw new NotFoundException(__('An unknown error'));
-                            }
-                            $saveUser['User']['profile_id'] = $this->User->Profile->getLastInsertID();
-                        }
-                        
-                    }
-                     if($this->User->save($saveUser['User'])){
-                            $this->Session->setFlash(__('The user has been saved.'));
-                            $this->__createActivationHashAndSendEmail($this->User->getLastInsertID());
-            				$this->redirect(array('action' => 'login'));
-                            $this->Session->delete('new_user');
-                    }
-                }else {
-                    $this->set('user',$this->Session->read('new_user'));
-                    $this->Session->setFlash(__('The email could not be saved. Please, try again.'));
-                }        
+                    $userSocial['email'] = $this->request->data['Profile']['email'];
+                    $this->Session->write('userSocial',$userSocial);
+                    $this->redirect(array('action'=>'confirm_user_data'));
+                } else {
+                    $this->Session->setFlash(__('The email incorrect. Please, try again.'));
+                    return false;
+                }
         }else{
-            $this->Session->setFlash(__(' Please, try again.'));
-            $this->redirect(array('controller' => 'users', 'action' => 'login'));    
+           $this->request->data['Profile']['email'] = $userSocial['email'];
         }
-      }  
     }
-  
     
+    public function confirm_user_data(){
+        if($this->Auth->user()){
+            $this->Session->setFlash(__('You already active  ...'));
+            $this->redirect(array('action' => 'index'));
+         }
+         if(!$this->Session->check('userSocial')){
+            $this->redirect(array('action' => 'login'));
+         }
+         $userSocial = $this->Session->read('userSocial');
+         if ($this->request->is('post')) {
+            if ($this->User->Profile->saveAll($this->request->data, array('validate' => 'only'))) {
+                $profile = $this->User->Profile->findByEmail($userSocial['email']);
+                $saveUser['User']['provider'] = $userSocial['provider'];
+                $saveUser['User']['uid'] = $userSocial['uid'];
+                if($profile){
+                    $saveUser['User']['profile_id'] = $profile['Profile']['id'];
+                }else{
+                    if(!$this->User->Profile->save($this->request->data)){
+                        throw new NotFoundException(__('An unknown error'));
+                    }
+                    $saveUser['User']['profile_id'] = $this->User->Profile->getLastInsertID();
+                }
+                if($this->User->save($saveUser['User'])){
+                    $this->Session->setFlash(__('The user has been saved.'));
+                    $this->__createActivationHashAndSendEmail($this->User->getLastInsertID());
+    				$this->redirect(array('action' => 'login'));
+                    $this->Session->delete('userSocial');
+                }
+            }else {
+                 $this->Session->setFlash(__('The user incorrect. Please, try again.'));
+                 return false;
+            }
+         }else{
+            $profile = $this->User->Profile->findByEmail($userSocial['email']);
+            if($profile){
+                $this->set('profile_id',true);
+                $this->request->data['Profile'] = $profile['Profile'];
+            }else{
+                $this->request->data['Profile'] = $userSocial;
+                $this->request->data['Profile']['email'] = $userSocial['email'];
+            }
+         }
+    }  
+  
     public function activate($hash = null) {
-    	
     	if ($hash){
-    	    if($user_profile = $this->User->findByHash_key($hash)){
-    	        $this->User->id = $user_profile['User']['id'];
-        	    $this->User->saveField('active', 1);
-                $this->User->saveField('hash_key', null);
-                $this->Session->setFlash('Your account has been activated, please log in.');
-        		$this->redirect(array('action' => 'login'));
-    	    }
-    	}
+            if($this->User->activate($hash)){
+            $this->Session->setFlash('Your account has been activated, please log in.');
+    		$this->redirect(array('action' => 'login'));    
+            }    
+       }
        $this->Session->setFlash(__('Invalid key.'));
        $this->redirect(array('action' => 'login'));
     }
