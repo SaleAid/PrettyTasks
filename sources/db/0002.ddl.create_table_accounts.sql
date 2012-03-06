@@ -12,5 +12,4 @@ CREATE TABLE `accounts` (
   `role` enum('admin','regular') NOT NULL DEFAULT 'regular',
   `last_login` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uid` (`uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
+ ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
