@@ -3,12 +3,12 @@ class AppController extends Controller{
     public $components = array(
                 'Session',
                 'Auth' => array(
-                    'loginAction' => array('controller' => 'users', 'action' => 'login'),
-                    'loginRedirect' => array('controller' => 'profiles', 'action' => 'index'),
-                    'logoutRedirect' => array('controller' => 'users', 'action' => 'login'),
+                    'loginAction' => array('controller' => 'accounts', 'action' => 'login'),
+                    'loginRedirect' => array('controller' => 'users', 'action' => 'index'),
+                    'logoutRedirect' => array('controller' => 'accounts', 'action' => 'login'),
                     'authError' => 'You cannot access that action!',
                     'authorize' => array('Controller'),
-                    //'scope' => array('User.active' => 1)
+                    'authenticate' => array('Form' => array('userModel' => 'Account')), 
                 )
             );
     
@@ -17,12 +17,8 @@ class AppController extends Controller{
     }
     
     public function beforeFilter(){
-        ///$this->Auth->allow('*');
-        //$this->User->id = $this->Auth->user('id');
-         App::import('Model', 'User'); 
-         $User = new User(); 
-         $User->id = $this->Auth->user('id');
-         $this->currentUser = $User->read(); 
+         $this->loadModel('User');
+         $this->currentUser =  $this->User->getUser($this->Auth->user('user_id'));
     }
     
     public function beforeRender() { 
