@@ -18,32 +18,7 @@ class Account extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'username' => array(
-			'Not empty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Your custom message here',
-			),
-            'isUnique' => array(
-                'rule'    => 'isUnique',
-                'message' => 'A user with that username already exists.'
-            ),
-		),
-		'password' => array(
-			'Not empty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Please enter your password.',
-			),
-            'Match password' => array(
-                'rule' => 'matchPasswords',
-                'message' => 'You password do not match.'
-            ),
-		),
-        'password_confirm' => array(
-            'Not empty' => array(
-                'rule' => array('notEmpty'),
-                'message' => 'Please confirm your password.'
-            )
-        ),
+		
     	'user_id' => array(
 		'Not empty' => array(
 			'rule' => array('notempty'),
@@ -52,26 +27,14 @@ class Account extends AppModel {
         ),
 	);
     
-    public function matchPasswords($data){
-        if($data['password'] == $this->data['Account']['password_confirm']){
-            return true;
-        }
-        $this->invalidate('password_confirm','You password do not match.');
-        return false;
-    }
-    public function beforeSave(){
-        if(isset($this->data['Account']['password'])){
-            $this->data['Account']['password'] = AuthComponent::password($this->data['Account']['password']);
-        }
-        return true;
-    }
+
     
     public function createActivationHash(){
         if (!isset($this->id)) {
 			return false;
 		}
-        $hash = Security::hash(Configure::read('Security.salt') . mt_rand(). $this->field('created') . mt_rand());
-		$this->saveField('hash_key', $hash);
+        $hash = Security::hash(mt_rand().Configure::read('Security.salt') .  $this->field('created') . mt_rand());
+		$this->saveField('activate_token', $hash);
         return true;
 	}
     
@@ -80,25 +43,19 @@ class Account extends AppModel {
 			return false;
 		}
         $this->read();
-        $activate_url = 'http://' . env('SERVER_NAME') . '/accounts/activate/'.$this->data['Account']['hash_key'];
-		$username = $this->data['User']['first_name'].' '.$this->data['User']['last_name'];
-        $email = new CakeEmail();
-        $email->config('gmail');
-        $email->template('confirmation_email')
-                ->viewVars(array('activate_url' => $activate_url, 'username' => $username))
-                ->emailFormat('html')
-                ->to($this->data['User']['email'])
-                ->from('noreply@' . env('SERVER_NAME'))
-                ->subject('Активация аккаунта')
+        $email = new CakeEmail('activate_account');
+        $email->viewVars(array('activate_token' => $this->data['Account']['activate_token'], 
+                                'fullname' => $this->data['User']['first_name'].' '.$this->data['User']['last_name']))
+              ->to($this->data['User']['email'])
                 ;
         return $email->send();
     }
     
     public function activate($hash){
-        if($user_profile = $this->findByHash_key($hash)){
+        if($user_profile = $this->findByEmail_token($hash)){
     	        $this->id = $user_profile['Account']['id'];
         	    $this->saveField('active', 1);
-                $this->saveField('hash_key', null);
+                $this->saveField('email_token', null);
                 return true;
     	}
         return false;
@@ -127,6 +84,7 @@ class Account extends AppModel {
             $data['msg'] = $UserProfile->error_message;
             return $data;
         }
+        $data['identity'] = $UserProfile->identity;
         switch($UserProfile->provider){
             case strpos($UserProfile->provider, 'twitter') == true:{
                     $tmp = explode(' ',$UserProfile->name->full_name);
@@ -186,27 +144,7 @@ class Account extends AppModel {
     }
     
  
-   public function register($data){
-    
-        if ($this->saveAll($data, array('validate' => 'only'))) {
-            $user = $this->User->findByEmail($data['User']['email']);
-            if(empty($user)){
-                if(!$this->User->save($data['User'])){
-                    return false;    
-                }   
-                $data['Account']['user_id'] =  $this->User->getLastInsertID();
-            }else{
-                $data['Account']['user_id'] = $user['User']['id'];    
-            }
-            $data['Account']['provider'] = 'local';
-            debug($data);
-            if($this->save($data['Account'])){
-                $this->activation($this->getLastInsertID());
-                return true;    
-            }
-        }
-        return false; 
-   }
+
    
   
     

@@ -5,7 +5,7 @@ class AccountsController extends AppController {
 
     public $name = 'Accounts';
     public $helpers = array('Html','Js');
-    public $components = array('RequestHandler');
+    public $components = array('RequestHandler','Recaptcha.Recaptcha' => array('actions' => array('register'),'error' => 'tratra'));
     public $layout = 'login';
   
   
@@ -28,71 +28,8 @@ class AccountsController extends AppController {
     }
     
     public function isAuthorized($user){
-        if($user['role'] == 'admin'){
-            return true;
-        }
-        if(in_array($this->action, array('edit','delete','view'))){
-            if($user['id'] != $this->request->params['pass'][0]){
-                return false;
-            }
-        }
        return true;
     }
-    
-    public function login(){
-        
-        if($this->request->is('post')){
-            if($this->Auth->login()){
-                if($this->Session->read('Auth.User.active')){
-                    $user = $this->Account->User->getUser($this->Auth->user('user_id'));
-                    if($user['active']){
-                        $this->redirect($this->Auth->redirect());    
-                    }
-                    $this->Session->setFlash('Your user profile is blocked.','alert',array('class'=>'alert-error'));
-                    $this->redirect($this->Auth->logout());    
-                }
-                $this->Session->setFlash('Your account not active.','alert',array('class'=>'alert-info'));
-                $this->redirect($this->Auth->logout());
-            }else{
-                $this->Session->setFlash('Your username or password was incorrect.','alert',array('class'=>'alert-error'));
-            }
-        }
-    }
-    
-    public function logout(){
-        $this->redirect($this->Auth->logout());
-    }
-
-	public function index() {}
-
-/**
- * view method
- *
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-        debug($this->User->read());die;
-		$this->set('user', $this->User->read(null, $id));
-	}
-
-
-     public function register() {
-        
-		if ($this->request->is('post')) {
-		      if($this->Account->register($this->request->data)){
-                    $resultActivate = $this->Account->activation($this->Account->getLastInsertID());
-                    $this->Session->setFlash($resultActivate['msg'],'alert',array('class'=>'alert-success'));
-                    $this->redirect(array('action'=>'login'));
-		  	   }else{
-		  	       $this->Session->setFlash(__('The user could not be saved. Please, try again.'),'alert',array('class'=>'alert-error'));
-		  	   }
-		}
-	}
     
     public function loginzalogin(){
         
@@ -105,7 +42,7 @@ class AccountsController extends AppController {
                 }
                 case 'notActive':{
                     $this->Session->write('tmpUser',$result);
-                    $this->Session->setFlash('Your account not active.','alert',array('class'=>'alert-info')); 
+                    $this->Session->setFlash(__('Your account not active.','alert',array('class'=>'alert-info'))); 
                     $this->redirect(array('action'=>'reactivation')); break;   
                 }
                 case 'newUser':{
@@ -215,23 +152,6 @@ class AccountsController extends AppController {
        $this->redirect(array('action' => 'login'));
     }
     
-    private function __createActivationHashAndSendEmail($id){
-        
-        $this->Account->id = $id;
-        if (!$this->Account->exists()) {
-	         throw new NotFoundException(__('Invalid user'));
-        }
-        
-        if($this->User->createActivationHash()){
-            if($this->User->sendActivationEmail()){
-                $this->Session->setFlash(__('Please check email ...'));
-            }else{
-                $this->Session->setFlash(__('Wow error ...'));
-            }
-            $this->redirect(array('action' => 'login'));
-        }
-    }
-
-        
+      
     
 }

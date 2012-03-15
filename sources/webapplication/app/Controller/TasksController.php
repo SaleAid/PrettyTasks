@@ -7,6 +7,8 @@ App::uses('AppController', 'Controller');
  */
 class TasksController extends AppController {
 
+    public $helpers = array('Html','Js');
+    public $layout ='login';
 
 /**
  * index method
@@ -14,8 +16,8 @@ class TasksController extends AppController {
  * @return void
  */
 	public function index() {
-	   	$this->Task->recursive = 0;
-		$this->set('tasks', $this->paginate());
+	   	//$this->Task->recursive = 0;
+//		$this->set('tasks', $this->paginate());
 	}
 
 /**

@@ -6,9 +6,9 @@ if (!isset($close)) {
 	$close = true;
 }
 ?>
-<div class="alert<?php echo ($class) ? ' ' . $class : null; ?>">
+<div class="alert fade in<?php echo ($class) ? ' ' . $class : null; ?>">
 <?php if ($close): ?>
-	<a class="close" data-dismiss="alert">×</a>
+	<a class="close" data-dismiss="alert" href="#">&times;</a>
 <?php endif; ?>
 	<?php echo $message; ?>
 </div>
