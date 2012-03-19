@@ -49,7 +49,7 @@ class UsersController extends AppController {
         $this->layout = 'login';
         if ($this->request->is('post')) {
               if($this->User->register($this->request->data)){
-		            if($this->User->sendActivationAccount($this->User->getLastInsertID())){
+		            if($this->User->sendActivationAccount($this->User->getLastInsertID(),$this->name)){
 		              $this->Session->setFlash(__('Код активации аккаунта был выслан Вам на почту.'),'alert',array('class'=>'alert-success'));
                         $this->redirect(array('action'=>'login'));  
 		            }
@@ -76,7 +76,7 @@ class UsersController extends AppController {
     
     public function reactivate(){
         if(isset($this->request->data['email'])){
-            if($this->User->reactivate($this->request->data)){
+            if($this->User->reactivate($this->request->data, $this->name)){
                 $this->Session->setFlash(__('Код активации аккаунта был выслан Вам на почту.'),'alert',array('class'=>'alert-success'));
                 $this->redirect(array('action' => 'login'));    
             }
@@ -160,8 +160,8 @@ class UsersController extends AppController {
 	}
     
     public function accounts(){
-        
-        $this->paginate= array('conditions' => array('User.id' => $this->Auth->user('user_id'), 'Account.active'=>1));
+        //debug($this->Auth->User());
+        $this->paginate= array('conditions' => array('User.id' => $this->Auth->user('id'), 'Account.active'=>1));
         $accounts = $this->paginate('Account');
         $this->set('accounts',$accounts);
     }

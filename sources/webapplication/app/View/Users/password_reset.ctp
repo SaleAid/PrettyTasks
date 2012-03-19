@@ -27,7 +27,7 @@
 
         <?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => 'clean')));?>
            
-        <?php echo $this->Form->submit('Отправить');?>
+        <?php echo $this->Form->submit('Отправить',array('class'=>'btn btn-info'));?>
   
   	<?php echo $this->Form->end();?>
     

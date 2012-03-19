@@ -23,6 +23,7 @@ class AppController extends Controller{
     
     public function beforeRender() { 
         $this->set('currentUser', $this->currentUser); 
+        $this->set('provider', $this->Auth->user('provider'));
         
     } 
 

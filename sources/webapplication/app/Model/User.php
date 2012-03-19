@@ -9,7 +9,7 @@ class User extends AppModel {
     
     public $name = 'User';
     public $hasMany ='Account'; 
-    //public $actsAs = array('Activation');
+    public $actsAs = array('Activation');
 /**
  * Validation rules
  *
@@ -91,6 +91,10 @@ class User extends AppModel {
             			),
                ),
     );
+    
+    public $virtualFields = array(
+        'full_name' => 'CONCAT(User.first_name, " ", User.last_name)'
+    );
 
  
 
@@ -161,6 +165,7 @@ class User extends AppModel {
             }
             return false;
         }
+        return false;
     }
     
    public function register($data){
@@ -180,7 +185,7 @@ class User extends AppModel {
         return false;
    }
    
-   public function reactivate($data){
+   public function reactivate($data,$controllerName){
         $data[$this->alias]['email'] =  $data['email'];
         $this->set($data);
         if ($this->validates(array('fieldList' => array('email')))) {
@@ -188,7 +193,7 @@ class User extends AppModel {
             if($user){
                 $this->set($user);
                 $this->saveField('activate_token',$this->generateToken());
-                return $this->sendActivationAccount( $user[$this->alias]['id']);
+                return $this->sendActivationAccount( $user[$this->alias]['id'], $controllerName);
             }
             return false;
         }
@@ -208,31 +213,31 @@ class User extends AppModel {
         return $email->send();
     }
     
-    public function sendActivationAccount($id){
-        $this->id = $id;
-        if (!$this->exists()) {
-	        return false;
-        }
-        $this->read();
-        $email = new CakeEmail('activate_account');
-        $email->viewVars(array( 
-                                'activate_token' => $this->data[$this->alias]['activate_token'], 
-                                'fullname' => $this->data[$this->alias]['first_name'].' '.$this->data[$this->alias]['last_name']))
-              ->to($this->data[$this->alias]['email'])
-                ;
-        return $email->send();
-    }
-    
-    public function activate($token){
-        if($user = $this->findByActivate_token($token)){
-    	        $this->id = $user[$this->alias]['id'];
-        	    $this->saveField('active', 1);
-                $this->saveField('activate_token', null);
-                return true;
-    	}
-        return false;
-    }
-
+//    public function sendActivationAccount($id){
+//        $this->id = $id;
+//        if (!$this->exists()) {
+//	        return false;
+//        }
+//        $this->read();
+//        $email = new CakeEmail('activate_account');
+//        $email->viewVars(array( 
+//                                'activate_token' => $this->data[$this->alias]['activate_token'], 
+//                                'fullname' => $this->data[$this->alias]['first_name'].' '.$this->data[$this->alias]['last_name']))
+//              ->to($this->data[$this->alias]['email'])
+//                ;
+//        return $email->send();
+//    }
+//    
+//    public function activate($token){
+//        if($user = $this->findByActivate_token($token)){
+//    	        $this->id = $user[$this->alias]['id'];
+//        	    $this->saveField('active', 1);
+//                $this->saveField('activate_token', null);
+//                return true;
+//    	}
+//        return false;
+//    }
+//
    
    public function generateToken(){
         return Security::hash(mt_rand().Configure::read('Security.salt') .  time() . mt_rand());
@@ -244,7 +249,7 @@ class User extends AppModel {
 
    public function getUser($id){
         $this->unbindModel(array('hasMany' => array('Account')));
-        return $this->findByIdAndActive($id,'1');
+        return $this->findByIdAndIs_blocked($id,0);
    }
 
 }

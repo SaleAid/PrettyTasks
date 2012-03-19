@@ -15,23 +15,22 @@ class ActivationBehavior extends ModelBehavior {
 	   $this->settings = $config;
 	}
 
+
     
-    public function sendActivationAccount($Model,$id){
+    public function sendActivationAccount($Model, $id, $controllerName){
         $Model->id = $id;
         if (!$Model->exists()) {
 	        return false;
         }
         $Model->read();
         $email = new CakeEmail('activate_account');
-        $email->viewVars(array( 
+        $email->viewVars(array( 'controllerName' => $controllerName,
                                 'activate_token' => $Model->data[$Model->alias]['activate_token'], 
-                                'fullname' => $Model->data['User']['first_name'].' '.$Model->data['User']['last_name']))
+                                'full_name' => $Model->data[$Model->alias]['full_name']))
               ->to($Model->data['User']['email'])
                 ;
         return $email->send();
     }
-    
-    
     
     public function activate($Model, $token){
         if($user = $Model->findByActivate_token($token)){
@@ -42,5 +41,8 @@ class ActivationBehavior extends ModelBehavior {
     	}
         return false;
     }
+    
+
+
 
 }

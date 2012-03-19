@@ -8,7 +8,7 @@ App::uses('AppController', 'Controller');
 class TasksController extends AppController {
 
     public $helpers = array('Html','Js');
-    public $layout ='login';
+    public $layout ='tasks';
 
 /**
  * index method

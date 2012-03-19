@@ -1,6 +1,5 @@
 <?php
 App::uses('AppModel', 'Model');
-App::uses('CakeEmail', 'Network/Email');
 
 App::import('Vendor', 'loginza'.DS.'LoginzaAPI');
 App::import('Vendor', 'loginza'.DS.'LoginzaUserProfile');
@@ -11,6 +10,7 @@ App::import('Vendor', 'loginza'.DS.'LoginzaUserProfile');
 class Account extends AppModel {
     
     public $name = 'Account';
+    public $actsAs = array('Activation');
     public $belongsTo = 'User';
 /**
  * Validation rules
@@ -28,54 +28,6 @@ class Account extends AppModel {
 	);
     
 
-    
-    public function createActivationHash(){
-        if (!isset($this->id)) {
-			return false;
-		}
-        $hash = Security::hash(mt_rand().Configure::read('Security.salt') .  $this->field('created') . mt_rand());
-		$this->saveField('activate_token', $hash);
-        return true;
-	}
-    
-    public function sendActivationEmail(){
-        if (!isset($this->id)) {
-			return false;
-		}
-        $this->read();
-        $email = new CakeEmail('activate_account');
-        $email->viewVars(array('activate_token' => $this->data['Account']['activate_token'], 
-                                'fullname' => $this->data['User']['first_name'].' '.$this->data['User']['last_name']))
-              ->to($this->data['User']['email'])
-                ;
-        return $email->send();
-    }
-    
-    public function activate($hash){
-        if($user_profile = $this->findByEmail_token($hash)){
-    	        $this->id = $user_profile['Account']['id'];
-        	    $this->saveField('active', 1);
-                $this->saveField('email_token', null);
-                return true;
-    	}
-        return false;
-    }
-    
-    public function activation($id){
-        $this->id = $id;
-        if (!$this->exists()) {
-	        return array('status' => 'error', 'msg' => 'Invalid user. User not exists');
-        }
-        if($this->createActivationHash()){
-            if($this->sendActivationEmail()){
-                return array('status' => 'normal', 'msg' => 'Please check email ...');
-            }
-            return array('status' => 'error', 'msg' => 'Wow error ...');
-        }
-        return array('status' => 'error', 'msg' => 'Invalid user ');
-    }
-    
-    
     public function getLoginzaUser($token){
         $LoginzaAPI = new LoginzaAPI();
         $UserProfile = $LoginzaAPI->getAuthInfo($token,Configure::read('loginza.id'),md5($token.Configure::read('loginza.skey')));
@@ -94,14 +46,18 @@ class Account extends AppModel {
                         $data['last_name'] = '';
                     }
                     $data['first_name'] = $tmp[0];
+                    $data['full_name'] = $UserProfile->name->full_name;
                     $data['provider'] = 'twitter';
                     $data['uid'] = $UserProfile->uid;
+                    $data['identity'] = $UserProfile->identity;
                     $data['email'] = ''; break;
             }
             case strpos($UserProfile->provider, 'vkontakte') == true:{
                     $data['uid'] = $UserProfile->uid;
                     $data['first_name'] = $UserProfile->name->first_name;
                     $data['last_name'] = $UserProfile->name->last_name;
+                    $data['full_name'] = $data['first_name'] .' ' .$data['last_name'];
+                    $data['identity'] = $UserProfile->identity;
                     $data['email'] = '';
                     $data['provider'] = 'vkontakte'; break;
             }
@@ -110,6 +66,8 @@ class Account extends AppModel {
                     $data['uid'] = $UserProfile->uid;
                     $data['first_name'] = $UserProfile->name->first_name;
                     $data['last_name'] = $UserProfile->name->last_name;
+                    $data['full_name'] = $UserProfile->name->full_name;
+                    $data['identity'] = $UserProfile->identity;
                     $data['email'] = $UserProfile->email; break;
             }
             case strpos($UserProfile->provider, 'facebook')!== true:{
@@ -117,6 +75,8 @@ class Account extends AppModel {
                     $data['uid'] = $UserProfile->uid;
                     $data['first_name'] = $UserProfile->name->first_name;
                     $data['last_name'] = $UserProfile->name->last_name;
+                    $data['full_name'] = $UserProfile->name->full_name; 
+                    $data['identity'] = $UserProfile->identity;
                     $data['email'] = $UserProfile->email; break;
             }
             default:{
@@ -130,11 +90,13 @@ class Account extends AppModel {
             $data['status'] = 'newUser';
             return $data;
         }
-        if(!$result['User']['active']){
+        if($result['User']['is_blocked']){
             return array('status' => 'error', 'msg' => 'Your user profile is blocked.');
         }elseif($result['Account']['active']){
-            $data['status'] = 'active';    
-            return array_merge((array)$result,(array)$data);    
+            $result =  $result['User'];
+            $result['status'] = 'active';
+            $result['provider'] = $data['provider'];  
+            return $result;    
         }else{
             $data['status'] = 'notActive';
             return array_merge((array)$result,(array)$data);   
@@ -143,14 +105,16 @@ class Account extends AppModel {
         return false;
     }
     
- 
-
-   
-  
+    public function reactivate($id, $controllerName){
+        $this->id = $id;
+        if (!$this->exists()) {
+	        return false;
+        }
+        $this->saveField('activate_token',$this->User->generateToken());
+        return $this->sendActivationAccount($id, $controllerName);
+    }
     
+   
     
 }
-
-
-
 
