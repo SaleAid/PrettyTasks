@@ -279,6 +279,7 @@ class Folder {
  * @link http://book.cakephp.org/2.0/en/core-utility-libraries/file-folder.html#Folder::correctSlashFor
  */
 	public static function correctSlashFor($path) {
+		echo 'insude';
 		return (Folder::isWindowsPath($path)) ? '\\' : '/';
 	}
 
