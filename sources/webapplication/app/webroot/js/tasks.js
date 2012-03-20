@@ -1,27 +1,26 @@
 
 $(function() {
-		$( "#sortable1" ).sortable({
-			items: "li:not(.ui-state-disabled)"
-		});
-
-		$( "#sortable2" ).sortable({
+		$( "#sortable" ).sortable({
 			cancel: ".ui-state-disabled",
-            receive: function(){ 
-                $(this).children().children('input.ch').val('ABC');
-            },
             opacity: 0.9, 
             cursor: 'move', 
+            placeholder: "ui-state-highlight"
 		  });
-          $('#sortable2').sortable({handle: 'span'}).disableSelection();
+          $('#sortable').sortable({handle: 'span'}).disableSelection();
+          $( "#resizable" ).resizable({
+			handles: "se",
+            containment: ".ui-state-default"
+            
+		});
+            $( "#datepicker" ).datepicker();
+        	$( "#datepicker" ).datepicker( "option", "showAnim", "bounce" );
+            
+         $(".editable").editable("/tasks/editTitle",
+               {
+                       tooltip : "Щелкните чтоб отредактировать этот текст",
+                      
+               }
+       );
+		
         
-        
-
-		$( "#sortable1 li, #sortable2 li" ).disableSelection();	
-        
-          $("#test-list").sortable({ 
-    handle : '.handle', 
-    update : function () { 
-      $("input#test-log").val($('#test-list').sortable('serialize')); 
-    } 
   }); 	
-	});

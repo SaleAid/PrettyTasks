@@ -1,79 +1,101 @@
-	<style>
-	#sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0; zoom: 1; }
-	#sortable1 li, #sortable2 li { margin: 0 5px 5px 5px; padding: 3px; width: 90%; }
-	</style>
-	
-
-<ul id="test-list"> 
-    <li id="listItem_1"> 
-    <img src="arrows.png" class="handle" alt="move" /> 
-      Item 1 with a link to <a href="http://www.google.co.uk/" rel="nofollow">Google</a> 
-    </li> 
-    <li id="listItem_2"> 
-      <img src="arrow.png" class="handle" alt="move" /> 
-      Item 2 
-    </li> 
-    <li id="listItem_3"> 
-      <img src="arrow.png" class="handle" alt="move" /> 
-      Item 3 
-    </li> 
-    <li id="listItem_4"> 
-      <img src="arrow.png" class="handle" alt="move" /> 
-      Item 4 
-      <p>Perhaps you want to add a form in here?</p> 
-      <p>Text:<br /><input type="text" /></p> 
-      <p>And a textarea<br /><textarea></textarea></p> 
-    </li> 
-</ul> 
-<label for="test-log"><strong>Resultant order of list</strong></label> 
-<input type="text" size="70" id="test-log" />
-
-<div class="demo">
-
-<h3 class="docs">Specify which items are sortable:</h3>
-
-<ul id="sortable1">
-	<li class="ui-state-default">Item 1</li>
-	<li class="ui-state-default ui-state-disabled">(I'm not sortable or a drop target)</li>
-	<li class="ui-state-default ui-state-disabled">(I'm not sortable or a drop target)</li>
-	<li class="ui-state-default">
-        <?php echo $this->Form->input('username', array('label' =>false, 'class' => 'input-xlarge', 'error' => array('attributes' => array('class' => 'controls help-block'))));?>
-    </li>
-</ul>
-
-<h3 class="docs">Cancel sorting (but keep as drop targets):</h3>
-
-<ul id="sortable2">
-
-    <li class="ui-state-default">
-        <?php echo $this->Form->input('username', array('label' =>false));?>
-    </li>
-	<li class="ui-state-default">Item 1</li>
-	<li class="ui-state-default ui-state-disabled">(I'm not sortable)</li>
-	<li class="ui-state-default ui-state-disabled">(I'm not sortable)</li>
-     
-	<li class="ui-state-default">Item 4</li>
-    <li class="ui-state-default">
-        <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-        <input class="ch" name="thename" value="XYZ" />
-         
-    </li>
-</ul>
-
-</div><!-- End demo -->
-
-
-
-<div class="demo-description">
-<p>
-	Specify which items are eligible to sort by passing a jQuery selector into
-	the <code>items</code> option. Items excluded from this option are not
-	sortable, nor are they valid targets for sortable items.
-</p>
-<p>
-	To only prevent sorting on certain items, pass a jQuery selector into the
-	<code>cancel</code> option. Cancelled items remain valid sort targets for
-	others.
-    http://jquery.page2page.ru/index.php5/%D0%93%D1%80%D1%83%D0%BF%D0%BF%D0%B8%D1%80%D1%83%D0%B5%D0%BC%D1%8B%D0%B5_%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D1%8B
-</p>
-</div><!-- End demo-description -->
+ <style type="text/css">
+  #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+  #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+  #sortable li span { position: absolute; margin-left: -1.3em; }
+</style>
+  
+<div class="row">
+    <div class="span8">
+      <div class="tabbable" style="margin-bottom: 9px;">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#1" data-toggle="tab">Сегодня</a></li>
+          <li><a href="#2" data-toggle="tab">Завтра</a></li>
+          <li><a href="#3" data-toggle="tab">Неделя</a></li>
+          <li><a href="#4" data-toggle="tab">Будущее</a></li>
+          <li><a href="#5" data-toggle="tab">Просроченные</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="1">
+            <p>Задачи на сегодня. <input type="text" id="datepicker" size="10" readonly="readonly"/></p>
+            <ul id="sortable">
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                     <input value="" />
+                </li>
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                    <input id="resizable" value="123"/>
+                </li>
+                <li class="ui-state-default ui-state-disabled">(I'm not sortable)</li>
+                <li class="ui-state-default ">
+                    <span> <i class="icon-move"> </i></span><input class="span2" id="prependedInput" size="16" type="text">
+                </li>
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                    Item 4
+                </li>
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                    <input value="XYZ" />
+                     
+                </li>
+                </ul>
+          </div>
+          <div class="tab-pane" id="2">
+            <p>Howdy, I'm in Section 2.</p>
+          </div>
+          <div class="tab-pane" id="3">
+            <p>What up girl, this is Section 3.</p>
+          </div>
+        </div>
+      </div> <!-- /tabbable -->
+    </div>
+    <div class="span3 well">
+        <div class="tabbable" style="margin-bottom: 9px;">
+        <ul class="nav nav-tabs">
+          <li class="active" ><a href="#future" data-toggle="tab">Будущее</a></li>
+          <li><a href="#expired" data-toggle="tab">Просроченные</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="future">
+            <ul id="sortable">
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                     <input value="" />
+                </li>
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                    <input id="resizable" value="123"/>
+                </li>
+                <li class="ui-state-default ui-state-disabled">(I'm not sortable)</li>
+                <li class="ui-state-default ">
+                    <span> <i class="icon-move"> </i></span><input class="span2" id="prependedInput" size="16" type="text">
+                </li>
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                    Item 4
+                </li>
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                    <input value="XYZ" />
+                     
+                </li>
+                </ul>
+          </div>
+          <div class="tab-pane" id="expired">
+            <div class="editable">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit....
+            </div>
+            <hr/>
+            <div class="editable">
+            Aenean ut mauris nec nisl varius volutpat....
+            </div>
+            <hr/>
+            <div class="editable">
+            Aenean pharetra. Curabitur non turpis....
+            </div>
+          </div>
+        </div>
+      </div> <!-- /tabbable -->
+    </div>
+</div>

@@ -30,6 +30,8 @@
             
     <?php echo $this->Html->script('jquery-1.7.1.min.js'); ?>
     
+    <?php echo $this->Html->script('jquery.jeditable.mini.js'); ?>
+    
     <?php echo $this->Html->script('jquery-ui-1.8.18.custom.min.js'); ?>
         
     <?php echo $this->Html->script('bootstrap.min.js'); ?>
