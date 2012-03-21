@@ -1,4 +1,4 @@
-sources/webapplication/app/Config
-sources/webapplication/app/tmp
-sources/webapplication/lib/Cake/Console/Templates/skel/tmp/
+sources/webapplication/app/Config/*
+sources/webapplication/app/tmp/*
+sources/webapplication/lib/Cake/Console/Templates/skel/tmp/*
 
