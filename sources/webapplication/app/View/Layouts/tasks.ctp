@@ -26,6 +26,8 @@
 
     <?php echo $this->Html->css('main'); ?>
     
+    <?php echo $this->Html->css('tasks'); ?>
+    
     <?php echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom'); ?>
             
     <?php echo $this->Html->script('jquery-1.7.1.min.js'); ?>

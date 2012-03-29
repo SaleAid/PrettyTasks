@@ -1,4 +1,5 @@
 <?php
+App::uses('CakeTime', 'Utility');
 App::uses('AppController', 'Controller');
 /**
  * Tasks Controller
@@ -8,15 +9,38 @@ App::uses('AppController', 'Controller');
 class TasksController extends AppController {
     
     public $components = array('RequestHandler');
-    public $helpers = array('Html','Js');
+    public $helpers = array('Html','Js','Time');
     public $layout ='tasks';
     
     public function editTitle(){
+
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
            echo "goof"; 
         }
         return false;
+    }
+    
+    public function addNewTask(){
+        $this->autoRender = false;
+        if ($this->request->is('ajax')) {
+            if($this->Task->create($this->Auth->user('id'),$this->request->data['title'],CakeTime::format('Y-m-d',time()))){
+                $this->set('title', $this->request->data['title']);
+                $this->autoRender = true;
+            }
+        }
+        return false;
+    }
+    public function getAllForDate(){
+       
+       if (empty($this->request->data['Date'])){
+            $this->request->data['Date'] = CakeTime::format('Y-m-d',time());
+       }
+       if ($this->request->is('ajax')) {
+             //debug(CakeTime::format('Y-m-d','+'.CakeTime::fromString($this->request->data['strDate'])));
+             $taskOnDay = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d',$this->request->data['Date']));
+             $this->set('result', $taskOnDay);
+       } 
     }
     
 
@@ -28,6 +52,8 @@ class TasksController extends AppController {
  * @return void
  */
 	public function index() {
+	   //debug($this->Task->getAllForDate($this->Auth->user('id'),CakeTime::format('Y-m-d',time())));
+       $taskToDay = $this->Task->getAllForDate($this->Auth->user('id'),CakeTime::format('Y-m-d',time()));
 	   	//$this->Task->recursive = 0;
 //		$this->set('tasks', $this->paginate());
 	}

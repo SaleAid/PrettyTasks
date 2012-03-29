@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       Cake.Test.Case.Model
  * @since         CakePHP(tm) v 1.2.0.4206
@@ -67,7 +67,6 @@ class ModelReadTest extends BaseModelTest {
 				'updated' => '2007-03-18 10:41:31'
 			)
 		);
-
 
 		$Something->JoinThing->create($joinThingData);
 		$Something->JoinThing->save();
@@ -347,7 +346,6 @@ class ModelReadTest extends BaseModelTest {
 
 		$result = $this->db->getQueryCache($query, $params);
 		$this->assertFalse($result === false);
-
 	}
 
 /**
@@ -6199,17 +6197,20 @@ class ModelReadTest extends BaseModelTest {
 
 		$expected = array(
 			'conditions' => array(
-				'user' => 'larry'),
-			'fields' => NULL,
+				'user' => 'larry'
+			),
+			'fields' => null,
 			'joins' => array(),
-			'limit' => NULL,
-			'offset' => NULL,
+			'limit' => null,
+			'offset' => null,
 			'order' => array(
-				0 => NULL),
+				0 => null
+			),
 			'page' => 1,
-			'group' => NULL,
+			'group' => null,
 			'callbacks' => true,
-			'returnQuery' => true);
+			'returnQuery' => true
+		);
 		$result = $TestModel->buildQuery('all', array('returnQuery' => true, 'conditions' => array('user' => 'larry')));
 		$this->assertEquals($expected, $result);
 	}
@@ -7736,7 +7737,6 @@ class ModelReadTest extends BaseModelTest {
 
 		$this->assertEquals($result, $expectation);
 
-
 		$Author = ClassRegistry::init('Author');
 		$Author->virtualFields = array(
 			'full_name' => 'CONCAT(Author.user, " ", Author.id)'
@@ -7804,7 +7804,6 @@ class ModelReadTest extends BaseModelTest {
 		$this->assertEquals($Post->getVirtualField('Post.other_field'), $Post->virtualFields['other_field']);
 	}
 
-
 /**
  * test that checks for error when NOT condition passed in key and a 1 element array value
  *
@@ -7823,9 +7822,8 @@ class ModelReadTest extends BaseModelTest {
 				)
 			)
 		);
-
 		$this->assertTrue(is_array($result) && !empty($result));
-    }
+	}
 
 /**
  * test custom find method
@@ -7845,5 +7843,6 @@ class ModelReadTest extends BaseModelTest {
 
 		$result = $Article->find('unPublished');
 		$this->assertEquals(1, count($result));
-    }
+	}
+
 }

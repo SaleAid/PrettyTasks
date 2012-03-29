@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       Cake.Test.Case.Network.Http
  * @since         CakePHP(tm) v 1.2.0.4206
@@ -85,6 +85,7 @@ class TestHttpResponse extends HttpResponse {
  * @package       Cake.Test.Case.Network.Http
  */
 class HttpResponseTest extends CakeTestCase {
+
 /**
  * This function sets up a HttpResponse
  *
@@ -491,7 +492,7 @@ class HttpResponseTest extends CakeTestCase {
 			$unescapedToken = $this->HttpResponse->unescapeToken($token);
 			$expectedToken = 'My-special-' . $char . '-Token';
 
-			$this->assertEquals($unescapedToken, $expectedToken, 'Test token unescaping for ASCII '.ord($char));
+			$this->assertEquals($unescapedToken, $expectedToken, 'Test token unescaping for ASCII ' . ord($char));
 		}
 
 		$token = 'Extreme-":"Token-"	"-""""@"-test';
@@ -519,14 +520,13 @@ class HttpResponseTest extends CakeTestCase {
 		);
 		$this->HttpResponse->body = 'This is a test!';
 		$this->HttpResponse->raw = "HTTP/1.1 200 OK\r\nServer: CakePHP\r\nContEnt-Type: text/plain\r\n\r\nThis is a test!";
-
-		$expected1 = "HTTP/1.1 200 OK\r\n";
-		$this->assertEquals($this->HttpResponse['raw']['status-line'], $expected1);
-		$expected2 = "Server: CakePHP\r\nContEnt-Type: text/plain\r\n";
-		$this->assertEquals($this->HttpResponse['raw']['header'], $expected2);
-		$expected3 = 'This is a test!';
-		$this->assertEquals($this->HttpResponse['raw']['body'], $expected3);
-		$expected = $expected1 . $expected2 . "\r\n" . $expected3;
+		$expectedOne = "HTTP/1.1 200 OK\r\n";
+		$this->assertEquals($this->HttpResponse['raw']['status-line'], $expectedOne);
+		$expectedTwo = "Server: CakePHP\r\nContEnt-Type: text/plain\r\n";
+		$this->assertEquals($this->HttpResponse['raw']['header'], $expectedTwo);
+		$expectedThree = 'This is a test!';
+		$this->assertEquals($this->HttpResponse['raw']['body'], $expectedThree);
+		$expected = $expectedOne . $expectedTwo . "\r\n" . $expectedThree;
 		$this->assertEquals($this->HttpResponse['raw']['response'], $expected);
 
 		$expected = 'HTTP/1.1';

@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       Cake.Test.Case.TestSuite
  * @since         CakePHP(tm) v 1.2.0.4667
@@ -155,15 +155,23 @@ class CakeTestFixtureDefaultImportFixture extends CakeTestFixture {
  * @package       Cake.Test.Case.TestSuite
  */
 class FixtureImportTestModel extends Model {
+
 	public $name = 'FixtureImport';
+
 	public $useTable = 'fixture_tests';
+
 	public $useDbConfig = 'test';
+
 }
 
 class FixturePrefixTest extends Model {
+
 	public $name = 'FixturePrefix';
+
 	public $useTable = '_tests';
+
 	public $tablePrefix = 'fixture';
+
 	public $useDbConfig = 'test';
 }
 
@@ -218,9 +226,9 @@ class CakeTestFixtureTest extends CakeTestCase {
 		$this->assertEquals($Fixture->primaryKey, 'my_random_key');
 	}
 
-
 /**
- * test that init() correctly sets the fixture table when the connection or model have prefixes defined.
+ * test that init() correctly sets the fixture table when the connection 
+ * or model have prefixes defined.
  *
  * @return void
  */
@@ -358,7 +366,6 @@ class CakeTestFixtureTest extends CakeTestCase {
 		$Source = new CakeTestFixtureTestFixture();
 		$Source->create($newTestSuiteDb);
 		$Source->insert($newTestSuiteDb);
-
 
 		$Fixture = new CakeTestFixtureDefaultImportFixture();
 		$Fixture->fields = $Fixture->records = null;

@@ -166,4 +166,45 @@ class Task extends AppModel {
 			'order' => ''
 		)
 	);
+    
+    //------------------------------
+    
+    public function create($user_id, $title, $date, $time=null, $order=null, $checktime=null, $priority=0){
+     
+        $this->data[$this->alias]['user_id'] = $user_id;
+        $this->data[$this->alias]['title'] = $title;
+        $this->data[$this->alias]['date'] = $date; 
+        $this->data[$this->alias]['order'] = $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;  
+        if($this->save($this->data)){
+                return true;    
+        }
+        return false;
+    }
+    
+    public function getLastOrderByUser_idAndDate($user_id, $date){
+        $lastOrder =  $this->find('first', array(
+                        'fields' => array('Task.order'),
+                        'order' => array('Task.order' => 'desc'),
+                        'conditions' => array('AND' => array(
+                                                     array('Task.user_id' => $user_id),
+                                                     array('Task.date' => $date),
+                                        )), 
+         ));
+         if($lastOrder){
+            return $lastOrder[$this->alias]['order'];
+         }
+         return false;        
+    }
+    
+    public function getAllForDate($user_id, $date){
+        $this->unbindModel(array('belongsTo' => array('User')));
+        return $this->find('all', array(
+                        //'fields' => array('Task.order'),
+                        'order' => array('Task.order' => 'ASC'),
+                        'conditions' => array('AND' => array(
+                                                     array('Task.user_id' => $user_id),
+                                                     array('Task.date' => $date),
+                                        )), 
+         ));
+    }
 }

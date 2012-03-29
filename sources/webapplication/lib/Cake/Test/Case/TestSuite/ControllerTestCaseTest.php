@@ -7,12 +7,12 @@
  * PHP version 5
  *
  * CakePHP : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc.
+ * Copyright 2005-2012, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc.
  * @link          http://cakephp.org CakePHP Project
  * @package       Cake.Test.Case.TestSuite
  * @since         CakePHP v 2.0
@@ -26,7 +26,6 @@ App::uses('CakeHtmlReporter', 'TestSuite/Reporter');
 
 require_once dirname(dirname(__FILE__)) . DS . 'Model' . DS . 'models.php';
 
-
 /**
  * AppController class
  *
@@ -36,9 +35,10 @@ if (!class_exists('AppController', false)) {
 	/**
 	 * AppController class
 	 *
-		 * @package       Cake.Test.Case.TestSuite
+	 * @package       Cake.Test.Case.TestSuite
 	 */
 	class AppController extends Controller {
+
 	/**
 	 * helpers property
 	 *
@@ -46,6 +46,7 @@ if (!class_exists('AppController', false)) {
 	 * @access public
 	 */
 		public $helpers = array('Html');
+
 	/**
 	 * uses property
 	 *
@@ -53,6 +54,7 @@ if (!class_exists('AppController', false)) {
 	 * @access public
 	 */
 		public $uses = array('ControllerPost');
+
 	/**
 	 * components property
 	 *
@@ -60,6 +62,7 @@ if (!class_exists('AppController', false)) {
 	 * @access public
 	 */
 		public $components = array('Cookie');
+
 	}
 } elseif (!defined('APP_CONTROLLER_EXISTS')) {
 	define('APP_CONTROLLER_EXISTS', true);
@@ -238,7 +241,6 @@ class ControllerTestCaseTest extends CakeTestCase {
 			->will($this->returnValue(false));
 		$this->assertTrue($Tests->TestPluginComment->save(array()));
 		$this->assertFalse($Tests->TestPluginComment->save(array()));
-
 	}
 
 /**
@@ -496,7 +498,7 @@ class ControllerTestCaseTest extends CakeTestCase {
 		$this->assertContains('This is the TestsAppsController index view', $result);
 		$this->assertContains('first call', $result);
 		$this->assertContains('</html>', $result);
-	
+
 		$result = $this->Case->testAction('/tests_apps/index', array(
 			'data' => array('var' => 'second call'),
 			'method' => 'get',

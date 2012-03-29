@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       Cake.Test.Case.Controller.Component
  * @since         CakePHP(tm) v 1.2.0.5435
@@ -49,6 +49,7 @@ class CookieComponentTestController extends Controller {
 		$this->Cookie->secure = false;
 		$this->Cookie->key = 'somerandomhaskey';
 	}
+
 }
 
 /**
@@ -159,7 +160,6 @@ class CookieComponentTest extends CakeTestCase {
  */
 	public function testReadPlainCookieData() {
 		$this->_setCookieData();
-
 		$data = $this->Cookie->read('Plain_array');
 		$expected = array('name' => 'CakePHP', 'version' => '1.2.0.x', 'tag' => 'CakePHP Rocks!');
 		$this->assertEquals($data, $expected);
@@ -167,6 +167,26 @@ class CookieComponentTest extends CakeTestCase {
 		$data = $this->Cookie->read('Plain_multi_cookies');
 		$expected = array('name' => 'CakePHP', 'version' => '1.2.0.x', 'tag' => 'CakePHP Rocks!');
 		$this->assertEquals($data, $expected);
+	}
+
+/**
+ * test read() after switching the cookie name.
+ *
+ * @return void
+ */
+	public function testReadWithNameSwitch() {
+		$_COOKIE = array(
+			'CakeTestCookie' => array(
+				'key' => 'value'
+			),
+			'OtherTestCookie' => array(
+				'key' => 'other value'
+			)
+		);
+		$this->assertEquals('value', $this->Cookie->read('key'));
+
+		$this->Cookie->name = 'OtherTestCookie';
+		$this->assertEquals('other value', $this->Cookie->read('key'));
 	}
 
 /**
@@ -191,7 +211,7 @@ class CookieComponentTest extends CakeTestCase {
 		$this->Cookie->secure = false;
 		$this->Cookie->write('Testing', 'value', false);
 		$expected = array(
-			'name' => $this->Cookie->name.'[Testing]',
+			'name' => $this->Cookie->name . '[Testing]',
 			'value' => 'value',
 			'expire' => time() + 10,
 			'path' => '/',
@@ -212,7 +232,7 @@ class CookieComponentTest extends CakeTestCase {
 		$this->Cookie->secure = false;
 		$this->Cookie->delete('Testing', false);
 		$expected = array(
-			'name' => $this->Cookie->name.'[Testing]',
+			'name' => $this->Cookie->name . '[Testing]',
 			'value' => '',
 			'expire' => time() - 42000,
 			'path' => '/',
@@ -249,14 +269,14 @@ class CookieComponentTest extends CakeTestCase {
 		$this->Cookie->secure = false;
 		$this->Cookie->write('Testing', array(1, 2, 3), false);
 		$expected = array(
-			'name' => $this->Cookie->name.'[Testing]',
+			'name' => $this->Cookie->name . '[Testing]',
 			'value' => '[1,2,3]',
 			'expire' => time() + 10,
 			'path' => '/',
 			'domain' => '',
 			'secure' => false,
 			'httpOnly' => false);
-		$result = $this->Controller->response->cookie($this->Cookie->name.'[Testing]');
+		$result = $this->Controller->response->cookie($this->Cookie->name . '[Testing]');
 		$this->assertEquals($result, $expected);
 	}
 
@@ -515,7 +535,6 @@ class CookieComponentTest extends CakeTestCase {
 
 		$this->assertNull($this->Cookie->read('value'));
 	}
-
 
 /**
  * test that deleting a top level keys kills the child elements too.

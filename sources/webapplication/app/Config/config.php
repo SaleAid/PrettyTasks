@@ -3,8 +3,8 @@
                 'loginza' => array(
                                'id' => '14377', 
 	                           'skey' => '21013aca17787a9d1b8cf4be7c7f5aeb',
-	                           'token_url' => 'http:learning-2012.org.ua/accounts/loginzalogin',
-                               'widget_url' => 'http:loginza.ru/js/widget.js'
+	                           'token_url' => 'http://learning-2012.org.ua/accounts/loginzalogin',
+                               'widget_url' => 'http://loginza.ru/js/widget.js'
                 ),
                 
                 'Recaptcha' => array(
