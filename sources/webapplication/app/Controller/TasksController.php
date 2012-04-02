@@ -12,11 +12,24 @@ class TasksController extends AppController {
     public $helpers = array('Html','Js','Time');
     public $layout ='tasks';
     
-    public function editTitle(){
+    public function index() {
+	   
+       $arrTaskOnDays = array();
+       $arrTaskOnDays['Today'] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d',time()));
+       $arrTaskOnDays['Tomorrow'] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d','+1 days'));
+       for($i = 2; $i <= 5; $i++){
+            $arrTaskOnDays[CakeTime::format('l', '+'.$i.' days')] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d','+'.$i.' days'));       
+       }
+       $this->set('arrTaskOnDays', $arrTaskOnDays);
+    }
+    
+    public function changeTitle(){
 
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
-           echo "goof"; 
+           if($this->Task->changeTitle($this->request->data['id'],$this->request->data['title'])){
+                return true;
+           }
         }
         return false;
     }
@@ -24,22 +37,23 @@ class TasksController extends AppController {
     public function addNewTask(){
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
-            if($this->Task->create($this->Auth->user('id'),$this->request->data['title'],CakeTime::format('Y-m-d',time()))){
+            if($this->Task->create($this->Auth->user('id'),$this->request->data['title'],$this->request->data['date'])){
+                $this->set('task_id', $this->Task->getLastInsertID());
                 $this->set('title', $this->request->data['title']);
                 $this->autoRender = true;
             }
         }
         return false;
     }
-    public function getAllForDate(){
-       
-       if (empty($this->request->data['Date'])){
-            $this->request->data['Date'] = CakeTime::format('Y-m-d',time());
-       }
-       if ($this->request->is('ajax')) {
-             //debug(CakeTime::format('Y-m-d','+'.CakeTime::fromString($this->request->data['strDate'])));
-             $taskOnDay = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d',$this->request->data['Date']));
-             $this->set('result', $taskOnDay);
+    
+    public function changeOrders(){
+        $this->autoRender = false;
+        if ($this->request->is('ajax')) {
+            if($this->Task->changeOrders($this->request->data['orders'])){
+                return true;
+            }
+            //debug($this->request->data);
+            return false; 
        } 
     }
     
@@ -51,12 +65,12 @@ class TasksController extends AppController {
  *
  * @return void
  */
-	public function index() {
-	   //debug($this->Task->getAllForDate($this->Auth->user('id'),CakeTime::format('Y-m-d',time())));
-       $taskToDay = $this->Task->getAllForDate($this->Auth->user('id'),CakeTime::format('Y-m-d',time()));
-	   	//$this->Task->recursive = 0;
-//		$this->set('tasks', $this->paginate());
-	}
+	//public function index() {
+//	   
+//       $taskOnDay = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d',time()));
+//       $this->set('result', $taskOnDay);
+//
+//	}
 
 /**
  * view method

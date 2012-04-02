@@ -1,5 +1,5 @@
 
-.newTask{
+.createTask{
     display: inline-block;
     border:1px inset transparent;
     height: 18px;
@@ -7,11 +7,11 @@
     overflow:hidden;
     
 }
-.newTask:hover{
+.createTask:hover{
   border:1px inset #f5f5f5;
 }
 
-.newTask input { 
+.createTask input { 
     color:#416796;
     padding:0;
     font-weight:bold; 
@@ -36,7 +36,7 @@
     display: inline-block;
     border:1px dotted #CCC;
     height: 18px;
-    width: 330px;
+    width: 300px;
     overflow:hidden; 
   
 }

@@ -174,6 +174,8 @@ class Task extends AppModel {
         $this->data[$this->alias]['user_id'] = $user_id;
         $this->data[$this->alias]['title'] = $title;
         $this->data[$this->alias]['date'] = $date; 
+        $this->data[$this->alias]['time'] = $time; 
+        $this->data[$this->alias]['priority'] = $priority; 
         $this->data[$this->alias]['order'] = $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;  
         if($this->save($this->data)){
                 return true;    
@@ -199,12 +201,38 @@ class Task extends AppModel {
     public function getAllForDate($user_id, $date){
         $this->unbindModel(array('belongsTo' => array('User')));
         return $this->find('all', array(
-                        //'fields' => array('Task.order'),
                         'order' => array('Task.order' => 'ASC'),
                         'conditions' => array('AND' => array(
                                                      array('Task.user_id' => $user_id),
                                                      array('Task.date' => $date),
                                         )), 
          ));
+    }
+    
+    public function changeTitle($id, $title){
+        
+        $this->data[$this->alias]['id'] = $id;
+        $this->data[$this->alias]['title'] = $title;
+        if (!$this->save($this->data)){
+           return false;
+        }
+        return $this;
+    }
+    
+    public function changeOrders(array $ordersOfDay ){
+       foreach($ordersOfDay as $key => $value) {
+            $data[$this->alias][] =  array(
+                                        'id' => $value,
+                                        'order' => $key+1,
+                                        
+                                );
+         }
+         $this->set($data);
+        debug($this->data);
+        //debug($arrID);
+        if (!$this->saveAll($this->data[$this->alias])){
+           return false;
+        }
+        return true;
     }
 }

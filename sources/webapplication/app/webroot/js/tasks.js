@@ -2,7 +2,7 @@ function loadtab(e){
     var nowtab = e.target // activated tab
     var divid = $(nowtab).attr('href').substr(1);
     var date = $(nowtab).attr('name');
-    console.log(nowtab);
+    //console.log(nowtab);
      $.ajax({
         url:'/tasks/getAllForDate',
         type:'POST',
@@ -49,48 +49,10 @@ $(document).ready(function()  {
         
          
         
-        $('a[data-toggle="tab"]').on('shown', function (e) {
-             loadtab(e);
-        });
-        
-       //$('#Today').load('/tasks/getAllForDate',{ strDate: '#Today', date:null },function(data){
-//            
-//            $("#Today div.list").empty();
-//            var items = [];
-//            $.each(data, function(key, val) {
-//                console.log(val);
-//            items.push('<li  class="ui-state-default" id="' + val.Task.id + '"><div class="editable">' + val.Task.title 
-//            + '</div>'
-//            + '<span> <i class="icon-move"> </i></span>'
-//            + '<span> <i class="icon-refresh divider"> </i></span>'
-//            + '<a href="#"> <i class="icon-remove"> </i></a>'
-//            +'</li>');
-//            });
-//            $('<ul/>', {
-//            'class': 'sortable connectedSortable ui-helper-reset',
-//            html: items.join('')
-//            }).appendTo("#Today div.list");
-//            
-//            //sortable 
-//            
-//            $( ".sortable" ).sortable({
-//    			cancel: ".ui-state-disabled",
-//                opacity: 0.9, 
-//                cursor: 'move', 
-//                placeholder: "ui-state-highlight",
-//                connectWith:".connectedSortable",
-//                handle: 'span',
-//           });
-//           
-//            $(".editable").editable("/tasks/editTitle",
-//            {
-//                tooltip : "Щелкните чтоб отредактировать этот текст",
-//                style  : "inherit"
-//           });
-//       });
-//
-          
-          //$('.sortable').sortable({handle: 'span'}).disableSelection();
+//        $('a[data-toggle="tab"]').on('shown', function (e) {
+//             loadtab(e);
+//        });
+//        
           $('.sortable').on('sortable',function(){
                 $('.sortable').sortable({handle: 'span'}).disableSelection();
                 
@@ -98,23 +60,83 @@ $(document).ready(function()  {
 
             $( "#datepicker" ).datepicker();
         	$( "#datepicker" ).datepicker( "option", "showAnim", "bounce" );
-            
-        $(".newTask").editable("/tasks/addNewTask",
-               {
-                       id:'data[id]',
-                       name:'data[title]',
-                       tooltip : "добавить задание",
-                       style  : "inherit",
-                       placeholder: "+добавить задание",
-                       callback : function(value, settings) {
-                            $('#Today ul').append(value);
-                            console.log(value);
-                            console.log(settings);
-                            $(".newTask").text('');
-                            
-                         }
-               }
+//-------------------------------- work tesk
+ 
+        $(".createTask").editable(function(value, settings) { 
+            var createTask = this;
+            var tabDay = $(this).siblings(".tabDay").text();
+            $.ajax({
+                    url:'/tasks/addNewTask',
+                    type:'POST',
+                    data: {title: value, date: tabDay },
+                    success: function(data) {
+                        $(createTask).siblings("ul").append(data);
+                        
+                    }
+                });
+                return null;
+            },    
+            {
+               tooltip : "добавить задание",
+               style  : "inherit",
+               placeholder: "+добавить задание",
+           }
         );
+        $("ul").delegate(".editable", "click", function(){
+             $(".editable").editable(function(value, settings) { 
+                var editable = this;
+                var task_id = $(editable).parent().attr('id');
+                console.log(task_id);
+                $.ajax({
+                        url:'/tasks/changeTitle',
+                        type:'POST',
+                        data: {title: value, id: task_id },
+                        success: function(data) {
+                            if (!data){
+                                $(location).attr('href','/');
+                            }
+                        }
+                    });
+                    return value;
+                }
+             ,{
+                tooltip : "Щелкните чтоб отредактировать этот текст",
+                style  : "inherit"
+            });
+        });
+        
+        $( ".sortable" ).sortable({
+			cancel: ".ui-state-disabled",
+            opacity: 0.9, 
+            cursor: 'move', 
+            placeholder: "ui-state-highlight",
+            connectWith:".connectedSortable",
+            handle: 'span',
+            containment: '.row',
+            revert : true,
+            change: function(event, ui) {
+                
+                ui.helper.css("color","#f00");
+            },
+            update : function(e,ui){
+                var orders = $(this).sortable('toArray');
+                
+                console.log("After: "+orders);
+                ui.item.css("color","");
+                console.log('id: '+ui.item.attr('id'));
+                $.ajax({
+                        url:'/tasks/changeOrders',
+                        type:'POST',
+                        data: {orders: orders },
+                        success: function(data) {
+                            //$(createTask).siblings("ul").append(data);
+                        }
+                });
+            }
+
+        });
+        
+
 
 		
         

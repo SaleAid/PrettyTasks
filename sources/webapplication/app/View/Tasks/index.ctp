@@ -4,14 +4,28 @@
     <div id="data"></div>
       <div class="tabbable" style="margin-bottom: 9px;">
         <ul class="nav nav-tabs main">
-          <li class="active"><a href="#Today" data-toggle="tab" name = "<?php echo $this->Time->format('Y-m-d', time(), true); ?>">Сегодня</a></li>
-          <li><a href="#Tomorrow" data-toggle="tab" name = "<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>">Завтра</a></li>
-          <li class="diliver"></li>
-          <?php for($i = 2; $i <= 8; $i++):?>
+          <li class="active">
+            <a href="#Today" data-toggle="tab" name = "<?php echo $this->Time->format('Y-m-d', time(), true); ?>">
+                <?php echo __('Сегодня'); ?>
+                <br />
+                 <?php echo $this->Time->format('Y-m-d', time(), true); ?>
+            </a>
+          </li>
+          <li>
+            <a href="#Tomorrow" data-toggle="tab" name = "<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>">
+                 <?php echo __('Завтра'); ?>
+                  <br />
+                 <?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>
+            </a>
+          </li>
+          <li class="divider-vertical"></li>
+          <?php for($i = 2; $i <= 5; $i++):?>
             <li> <a href="#<?php echo $this->Time->format('l', '+'.$i.' days', true); ?>"
                              data-toggle="tab"
                               name = "<?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true); ?>">
-                     <?php echo $this->Time->format('l', '+'.$i.' days', true); ?> 
+                      <?php echo __($this->Time->format('l', '+'.$i.' days', true)); ?>
+                      <br />
+                <?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true); ?>
                  </a>
             </li>
           <?php endfor; ?>
@@ -20,60 +34,78 @@
         <div class="tab-content">
           <div class="tab-pane active" id="Today">
              <div class="row">
-             <div class="span5">
-            
-             <div class="newTask"></div>
-            <hr />
-            <div class="list"></div>
-           <!-- <ul class="sortable connectedSortable ui-helper-reset">
-               
-                <li class="ui-state-default ui-state-disabled">
-                    <div class="editable">Lorem ipsum dolor sit amet 4 4 4 4 4 4 4</div>
-                    <span> <i class="icon-move"> </i></span>
-                    <span> <i class="icon-refresh divider"> </i></span>
-                    <span> <i class="icon-remove"> </i></span>
-                 
-                </li>
-                <li class="ui-state-default ">
-                    <div class="editable">Lorem ipsum dolor sit amet 4 4 4 4 4 4 4</div>
-                    <span> <i class="icon-move"> </i></span>
-                    <span> <i class="icon-refresh divider"> </i></span>
-                    <span> <i class="icon-remove"> </i></span>
-                 
-                </li>
-               
-            </ul> --!>
-                </div>
-      <div class="span2 well">
-      </div>
-      </div>
-    
+                 <div class="span5">
+                     <p class="tabDay"><?php echo $this->Time->format('Y-m-d', time(), true); ?></p>
+                     <div class="createTask"></div>
+                     <hr />
+                     <ul class="sortable connectedSortable ui-helper-reset">
+                     <?php if(isset($arrTaskOnDays['Today']) && !empty($arrTaskOnDays['Today'])):?>
+                        <?php foreach($arrTaskOnDays['Today'] as $item):?>
+                            <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
+                                <span class="label label-info"><?php echo $item['Task']['id']; ?></span>
+                                <span class="label label-important"><?php echo $item['Task']['order']; ?></span>
+                                <div class="editable"><?php echo $item['Task']['title']; ?></div>
+                                <span> <i class="icon-move"> </i></span>
+                                <span> <i class="icon-refresh divider"> </i></span>
+                                <span> <i class="icon-remove"> </i></span>
+                            </li>
+                        <?php endforeach;?>
+                     <?php endif;?>
+                     </ul>
+                 </div>
+                 <div class="span2 well">
+                 </div>
+            </div>
           </div>
           <div class="tab-pane" id="Tomorrow">
-            <p>tomorrow.</p>
+            <div class="row">
+                 <div class="span5">
+                     <p class="tabDay"><?php echo $this->Time->format('Y-m-d', '+1 days', true); ?></p>
+                     <div class="createTask"></div>
+                     <hr />
+                     <ul class="sortable connectedSortable ui-helper-reset">
+                     <?php if(isset($arrTaskOnDays['Tomorrow']) && !empty($arrTaskOnDays['Tomorrow'])):?>
+                        <?php foreach($arrTaskOnDays['Tomorrow'] as $item):?>
+                            <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
+                                <div class="editable"><?php echo $item['Task']['title']; ?></div>
+                                <span> <i class="icon-move"> </i></span>
+                                <span> <i class="icon-refresh divider"> </i></span>
+                                <span> <i class="icon-remove"> </i></span>
+                            </li>
+                        <?php endforeach;?>
+                     <?php endif;?>
+                     </ul>
+                 </div>
+                 <div class="span2 well">
+                 </div>
+            </div>
           </div>
-          <div class="tab-pane" id="Sunday">
-            <p>Sunday </p>
-          </div>
-          <div class="tab-pane" id="Monday">
-            <p>Monday </p>
-          </div>
-          <div class="tab-pane" id="Tuesday">
-            <p>Tuesday </p>
-          </div>
-          <div class="tab-pane" id="Wednesday">
-            <p>Wednesday </p>
-          </div>
-          <div class="tab-pane" id="Thursday">
-            <p>Thursday </p>
-          </div>
-          <div class="tab-pane" id="Friday">
-            <p>Friday </p>
-          </div>
-          <div class="tab-pane" id="Saturday">
-            <p>Saturday </p>
-          </div>
-        
+          <?php for($i = 2; $i <= 5; $i++):?>
+            <div class="tab-pane" id="<?php echo $this->Time->format('l', '+'.$i.' days', true); ?>">
+                <div class="row">
+                    <div class="span5">
+                        <p class="tabDay"><?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true); ?></p>
+                        <div class="createTask"></div>
+                        <hr />
+                        <ul class="sortable connectedSortable ui-helper-reset">
+                            <?php if(isset($arrTaskOnDays[$this->Time->format('l', '+'.$i.' days', true)]) && !empty($arrTaskOnDays[$this->Time->format('l', '+'.$i.' days', true)])):?>
+                                <?php foreach($arrTaskOnDays[$this->Time->format('l', '+'.$i.' days', true)] as $item):?>
+                                    <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
+                                        <div class="editable"><?php echo $item['Task']['title']; ?></div>
+                                        <span> <i class="icon-move"> </i></span>
+                                        <span> <i class="icon-refresh divider"> </i></span>
+                                        <span> <i class="icon-remove"> </i></span>
+                                    </li>
+                                <?php endforeach;?>
+                            <?php endif;?>
+                        </ul>
+                    </div>
+                    <div class="span2 well">
+                    </div>
+                </div>
+            </div>
+          <?php endfor; ?>
+          
     </div> <!-- /tabbable -->
     </div>  
     </div>
@@ -85,7 +117,10 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="future">
+            <div class="createTask"></div>
+                <hr />
             <ul class="sortable connectedSortable ui-helper-reset">
+                
                 <li class="ui-state-default">
                     <span> <i class="icon-move"> </i></span>
                     <div class="editable">Lorem ipsum dolor sit amet</div>
