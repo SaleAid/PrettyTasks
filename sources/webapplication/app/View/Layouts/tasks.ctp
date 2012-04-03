@@ -66,5 +66,6 @@
         <p>&copy; Company 2012</p>
       </footer>
    <?php echo $this->Js->writeBuffer(); ?>
+   <?php //echo $this->element('sql_dump'); ?>
   </body>
 </html>

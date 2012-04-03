@@ -6,6 +6,8 @@ App::uses('AppModel', 'Model');
  * @property User $User
  */
 class Task extends AppModel {
+
+    public $actsAs = array('Containable');
 /**
  * Display field
  *
@@ -169,6 +171,11 @@ class Task extends AppModel {
     
     //------------------------------
     
+    public function isOwn($task_id,$user_id){
+        $this->contain();
+        return $this->findByIdAndUser_id($task_id,$user_id);    
+    }
+    
     public function create($user_id, $title, $date, $time=null, $order=null, $checktime=null, $priority=0){
      
         $this->data[$this->alias]['user_id'] = $user_id;
@@ -199,7 +206,7 @@ class Task extends AppModel {
     }
     
     public function getAllForDate($user_id, $date){
-        $this->unbindModel(array('belongsTo' => array('User')));
+        $this->contain();
         return $this->find('all', array(
                         'order' => array('Task.order' => 'ASC'),
                         'conditions' => array('AND' => array(
@@ -209,30 +216,63 @@ class Task extends AppModel {
          ));
     }
     
-    public function changeTitle($id, $title){
+    public function changeTitle($task_id, $title){
         
-        $this->data[$this->alias]['id'] = $id;
+        $this->data[$this->alias]['id'] = $task_id;
         $this->data[$this->alias]['title'] = $title;
         if (!$this->save($this->data)){
            return false;
         }
-        return $this;
+        return true;
     }
     
-    public function changeOrders(array $ordersOfDay ){
-       foreach($ordersOfDay as $key => $value) {
-            $data[$this->alias][] =  array(
-                                        'id' => $value,
-                                        'order' => $key+1,
-                                        
-                                );
-         }
-         $this->set($data);
-        debug($this->data);
-        //debug($arrID);
-        if (!$this->saveAll($this->data[$this->alias])){
+    
+    public function changeOrders($task_id, $old_pos, $new_pos, $new_order){
+        //необходимо в будущем оптимизировать 
+        if($old_pos < $new_pos){
+            $oper = '-1';
+            $start = $old_pos;
+            $end =  $new_pos; 
+        }else{
+            $oper = '+1';
+            $start = $new_pos;
+            $end = $old_pos;
+        }
+        foreach($new_order as $k => $v){
+            if(($k >= $start and $k <= $end) and $task_id <> $v){
+                $arrId[] = $v;
+            }
+        }
+        if ($this->updateAll(array('Task.order' => 'Task.order '.$oper),array('Task.id '=> $arrId)) and 
+        $this->updateAll(array('Task.order' => "'".++$new_pos."'"),array('Task.id '=> $task_id))){
+            return true;
+        }
+        return false;
+    }
+    
+    public function deleteTask($task_id){
+        return $this->delete($id);
+    }
+    
+    public function setDone($task_id, $done){
+        
+        $this->data[$this->alias]['id'] = $task_id;
+        $this->data[$this->alias]['done'] = $done;
+        if (!$this->save($this->data)){
            return false;
         }
         return true;
+    }
+    
+    public function getAllExpired($user_id){
+        $this->contain();
+        return $this->find('all', array(
+                        'order' => array('Task.date' => 'ASC', 'Task.order' => 'ASC'),
+                        'conditions' => array('AND' => array(
+                                                     array('Task.user_id' => $user_id),
+                                                     array('Task.done' => 0),
+                                                     array('Task.date <' => CakeTime::format('Y-m-d',time())),
+                                        )), 
+         ));
     }
 }
