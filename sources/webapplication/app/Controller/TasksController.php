@@ -20,6 +20,8 @@ class TasksController extends AppController {
        for($i = 2; $i <= 5; $i++){
             $arrTaskOnDays[CakeTime::format('l', '+'.$i.' days')] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d','+'.$i.' days'));       
        }
+       $arrAllExpired = $this->Task->getAllExpired($this->Auth->user('id'));
+       $this->set('arrAllExpired', $arrAllExpired);
        $this->set('arrTaskOnDays', $arrTaskOnDays);
     }
     
@@ -27,9 +29,9 @@ class TasksController extends AppController {
 
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
-           if($this->Task->changeTitle($this->request->data['id'],$this->request->data['title'])){
-                return true;
-           }
+            if($this->Task->isOwn($this->request->data['id'], $this->Auth->user('id'))){
+                return $this->Task->changeTitle($this->request->data['id'],$this->request->data['title']);
+            }
         }
         return false;
     }
@@ -49,12 +51,20 @@ class TasksController extends AppController {
     public function changeOrders(){
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
-            if($this->Task->changeOrders($this->request->data['orders'])){
+            if($this->Task->changeOrders($this->request->data['id'], $this->request->data['old_pos'], $this->request->data['new_pos'],$this->request->data['new_order'])){
                 return true;
             }
-            //debug($this->request->data);
             return false; 
        } 
+    }
+    public function setDone(){
+        $this->autoRender = false;
+        if ($this->request->is('ajax')) {
+            if($this->Task->isOwn($this->request->data['id'], $this->Auth->user('id'))){
+                return $this->Task->setDone($this->request->data['id'], $this->request->data['checked']);
+            }
+            return false; 
+       }    
     }
     
 
