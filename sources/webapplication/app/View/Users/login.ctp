@@ -5,7 +5,7 @@
         <div class="row"> 
             <div class="span4">
                 <h3>Войдите используя Ваш аккаунт:</h3>
-                    <?php echo $this->Form->create('Account',array('class' => 'well ',
+                    <?php echo $this->Form->create('User',array('class' => 'well ',
                                     'inputDefaults' => array(
                                     'div' => array('class' => 'control-group'),
                                     'label' => array('class' => 'control-label'),
@@ -18,13 +18,13 @@
             
                     <?php echo $this->Form->input('password',array('label'=>' Пароль: ','class'=>'input-xlarge', 'placeholder'=>'Ваш пароль')); ?>
             
-                    <?php echo $this->Form->submit(' Войти ',array('class'=>'btn-primary')); ?>
+                    <?php echo $this->Form->submit(' Войти ',array('class'=>' btn btn-primary')); ?>
                     
-                    <?php echo $this->Html->link(' Забыли пароль? ', array('controller' => 'accounts', 'action' => 'register')); ?>
+                    <?php echo $this->Html->link(' Забыли пароль? ', array('controller' => 'users', 'action' => 'password_resend')); ?>
                     
                     |
                     
-                    <?php echo $this->Html->link(' Регистрация ', array('controller' => 'accounts', 'action' => 'register')); ?>
+                    <?php echo $this->Html->link(' Регистрация ', array('controller' => 'users', 'action' => 'register')); ?>
                     
                     <?php echo $this->Form->end(); ?>
                             

@@ -29,6 +29,8 @@
     <?php echo $this->Html->script('jquery-1.7.1.min.js'); ?>
         
     <?php echo $this->Html->script('bootstrap.min.js'); ?>
+    
+    <?php echo $this->Html->script('main.js'); ?>
 
 	<?php echo $scripts_for_layout; ?>
     
@@ -42,7 +44,7 @@
       
         <?php echo $this->Session->flash(); ?>
             
-        <?php echo $this->Session->flash('auth'); ?>
+        <?php //echo $this->Session->flash('auth'); ?>
 
         <?php echo $content_for_layout; ?>
         

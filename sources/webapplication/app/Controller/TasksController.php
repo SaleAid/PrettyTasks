@@ -6,16 +6,30 @@ App::uses('AppController', 'Controller');
  * @property Task $Task
  */
 class TasksController extends AppController {
+    
+    public $components = array('RequestHandler');
+    public $helpers = array('Html','Js');
+    public $layout ='tasks';
+    
+    public function editTitle(){
+        $this->autoRender = false;
+        if ($this->request->is('ajax')) {
+           echo "goof"; 
+        }
+        return false;
+    }
+    
 
 
+//----------------------------------------------------------------------
 /**
  * index method
  *
  * @return void
  */
 	public function index() {
-	   	$this->Task->recursive = 0;
-		$this->set('tasks', $this->paginate());
+	   	//$this->Task->recursive = 0;
+//		$this->set('tasks', $this->paginate());
 	}
 
 /**

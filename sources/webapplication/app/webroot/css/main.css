@@ -18,4 +18,8 @@ footer > p {
 }
 
 .push { height: 63px; }
+ #test-list { list-style: none; padding: 0; margin: 0 40px; } 
+  #test-list li { margin: 0 0 10px 0; background: #eaf3fa; padding: 15px; } 
+  #test-list .handle { float: left; margin-right: 10px; cursor: move; } 
+  #test-log { padding: 5px; border: 1px solid #ccc; } 
 

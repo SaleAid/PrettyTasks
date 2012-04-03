@@ -1,68 +1,101 @@
-<div class="tasks index">
-	<h2><?php echo __('Tasks');?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('user_id');?></th>
-			<th><?php echo $this->Paginator->sort('title');?></th>
-			<th><?php echo $this->Paginator->sort('datetime');?></th>
-			<th><?php echo $this->Paginator->sort('checktime');?></th>
-			<th><?php echo $this->Paginator->sort('order');?></th>
-			<th><?php echo $this->Paginator->sort('done');?></th>
-			<th><?php echo $this->Paginator->sort('future');?></th>
-			<th><?php echo $this->Paginator->sort('repeatid');?></th>
-			<th><?php echo $this->Paginator->sort('transfer');?></th>
-			<th><?php echo $this->Paginator->sort('priority');?></th>
-			<th><?php echo $this->Paginator->sort('created');?></th>
-			<th><?php echo $this->Paginator->sort('modified');?></th>
-			<th class="actions"><?php echo __('Actions');?></th>
-	</tr>
-	<?php
-	foreach ($tasks as $task): ?>
-	<tr>
-		<td><?php echo h($task['Task']['id']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($task['User']['id'], array('controller' => 'users', 'action' => 'view', $task['User']['id'])); ?>
-		</td>
-		<td><?php echo h($task['Task']['title']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['datetime']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['checktime']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['order']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['done']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['future']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['repeatid']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['transfer']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['priority']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['created']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['modified']); ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $task['Task']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $task['Task']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $task['Task']['id']), null, __('Are you sure you want to delete # %s?', $task['Task']['id'])); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
-	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Task'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-	</ul>
+ <style type="text/css">
+  #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+  #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+  #sortable li span { position: absolute; margin-left: -1.3em; }
+</style>
+  
+<div class="row">
+    <div class="span8">
+      <div class="tabbable" style="margin-bottom: 9px;">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#1" data-toggle="tab">Сегодня</a></li>
+          <li><a href="#2" data-toggle="tab">Завтра</a></li>
+          <li><a href="#3" data-toggle="tab">Неделя</a></li>
+          <li><a href="#4" data-toggle="tab">Будущее</a></li>
+          <li><a href="#5" data-toggle="tab">Просроченные</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="1">
+            <p>Задачи на сегодня. <input type="text" id="datepicker" size="10" readonly="readonly"/></p>
+            <ul id="sortable">
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                     <input value="" />
+                </li>
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                    <input id="resizable" value="123"/>
+                </li>
+                <li class="ui-state-default ui-state-disabled">(I'm not sortable)</li>
+                <li class="ui-state-default ">
+                    <span> <i class="icon-move"> </i></span><input class="span2" id="prependedInput" size="16" type="text">
+                </li>
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                    Item 4
+                </li>
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                    <input value="XYZ" />
+                     
+                </li>
+                </ul>
+          </div>
+          <div class="tab-pane" id="2">
+            <p>Howdy, I'm in Section 2.</p>
+          </div>
+          <div class="tab-pane" id="3">
+            <p>What up girl, this is Section 3.</p>
+          </div>
+        </div>
+      </div> <!-- /tabbable -->
+    </div>
+    <div class="span3 well">
+        <div class="tabbable" style="margin-bottom: 9px;">
+        <ul class="nav nav-tabs">
+          <li class="active" ><a href="#future" data-toggle="tab">Будущее</a></li>
+          <li><a href="#expired" data-toggle="tab">Просроченные</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="future">
+            <ul id="sortable">
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                     <input value="" />
+                </li>
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                    <input id="resizable" value="123"/>
+                </li>
+                <li class="ui-state-default ui-state-disabled">(I'm not sortable)</li>
+                <li class="ui-state-default ">
+                    <span> <i class="icon-move"> </i></span><input class="span2" id="prependedInput" size="16" type="text">
+                </li>
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                    Item 4
+                </li>
+                <li class="ui-state-default">
+                    <span> <i class="icon-move"> </i></span>
+                    <input value="XYZ" />
+                     
+                </li>
+                </ul>
+          </div>
+          <div class="tab-pane" id="expired">
+            <div class="editable">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit....
+            </div>
+            <hr/>
+            <div class="editable">
+            Aenean ut mauris nec nisl varius volutpat....
+            </div>
+            <hr/>
+            <div class="editable">
+            Aenean pharetra. Curabitur non turpis....
+            </div>
+          </div>
+        </div>
+      </div> <!-- /tabbable -->
+    </div>
 </div>
