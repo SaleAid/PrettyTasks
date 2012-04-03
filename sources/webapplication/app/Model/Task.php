@@ -7,7 +7,6 @@ App::uses('AppModel', 'Model');
  */
 class Task extends AppModel {
 
-    public $actsAs = array('Containable');
 /**
  * Display field
  *
