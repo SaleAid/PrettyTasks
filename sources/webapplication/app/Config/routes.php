@@ -25,11 +25,12 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
-	Router::connect('/', array('controller' => 'tasks', 'action' => 'index'));
-/**
- * ...and connect the rest of 'Pages' controller's urls.
- */
-	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+	Router::connect('/', array('controller' => 'tasks', 'action' => 'index'), array('device' => '[m]{1}'));	
+	Router::connect('/:device', array('controller' => 'tasks', 'action' => 'index'), array('device' => '[m]{1}'));
+	Router::connect('/:device/:controller', array('action' => 'index'), array('device' => '[m]{1}'));
+	Router::connect('/:device/:controller/:action', array(), array('device' => '[m]{1}'));
+	Router::connect('/:device/:controller/:action', array(), array('device' => '[m]{1}'));	
+	
 
 /**
  * Load all plugin routes.  See the CakePlugin documentation on 
