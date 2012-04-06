@@ -45,6 +45,11 @@ class UsersController extends AppController {
         $this->redirect($this->Auth->logout());
     }
     
+    public function checkLogin(){
+        $this->autoRender = false;
+        return $this->Auth->loggedIn();
+    }
+    
     public function register() {
         $this->layout = 'login';
         if ($this->request->is('post')) {

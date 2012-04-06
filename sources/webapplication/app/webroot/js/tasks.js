@@ -44,44 +44,103 @@ function loadtab(e){
    });
 }
 
-$(document).ready(function()  {
-    
-        
-         
-        
-//        $('a[data-toggle="tab"]').on('shown', function (e) {
-//             loadtab(e);
-//        });
-//        
-          $('.sortable').on('sortable',function(){
-                $('.sortable').sortable({handle: 'span'}).disableSelection();
-                
-          });
+function mesg (text){
+    $.jGrowl(text, { 
+					//position : 'right',
+                    speed: 'slow',
+                    life: '1000',
+					animateOpen: { 
+						height: "show"
+					},
+					animateClose: { 
+						height: "hide"
+					}
+				});
+}
 
-            $( "#datepicker" ).datepicker();
-        	$( "#datepicker" ).datepicker( "option", "showAnim", "bounce" );
+function checkLogin(){
+    $.ajax({
+
+        type: "POST",
+        url: "/users/checkLogin",
+        success: function (status) {
+            console.log(status);
+            if(!status){
+               redirect();
+            }
+          
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                if(xhr.status != '200'){
+                    redirect();
+                }
+       }
+        
+    });
+}
+
+function redirect(){
+    window.location.href = "/";
+}
+
+$(document).ready(function()  {
+
 //-------------------------------- work tesk
- 
-        $(".createTask").editable(function(value, settings) { 
-            var createTask = this;
+
+        
+        setInterval(function() {
+            checkLogin();
+        }, 120000);
+        
+         $(".createTask").bind('keypress', function(e) {
+            var ul = $(this).siblings("ul");
             var tabDay = $(this).siblings(".tabDay").text();
-            $.ajax({
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if(code == 13) {
+                console.log($(this).val());
+                $.ajax({
                     url:'/tasks/addNewTask',
                     type:'POST',
-                    data: {title: value, date: tabDay },
+                    data: {title: $(this).val(), date: tabDay },
                     success: function(data) {
-                        $(createTask).siblings("ul").append(data);
-                        
+                        mesg('Задача успешно создана.');
+                      ul.append(data);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                            if(xhr.status != '200'){
+                                redirect();
+                            }
                     }
                 });
-                return null;
-            },    
-            {
-               tooltip : "добавить задание",
-               style  : "inherit",
-               placeholder: "+добавить задание",
-           }
-        );
+            $(this).val(null);
+            }
+        });
+        
+        $("#future input").bind('keypress', function(e) {
+            var ul = $(this).siblings("ul");
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if(code == 13) {
+                console.log($(this).val());
+                $.ajax({
+                    url:'/tasks/addFutureTask',
+                    type:'POST',
+                    data: { title: $(this).val()},
+                    success: function(data) {
+                        mesg('Задача успешно создана.');
+                      ul.append(data);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                            if(xhr.status != '200'){
+                                redirect();
+                            }
+                    }
+                });
+            $(this).val(null);
+            }
+        });
+        
+        
         $("ul").delegate(".editable", "click", function(){
              $(".editable").editable(function(value, settings) { 
                 var editable = this;
@@ -92,8 +151,13 @@ $(document).ready(function()  {
                         type:'POST',
                         data: {title: value, id: task_id },
                         success: function(data) {
-                            if (!data){
-                                $(location).attr('href','/');
+                            if (data){
+                               mesg('Задача  успешно изменена.');
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            if(xhr.status != '200'){
+                                redirect();
                             }
                         }
                     });
@@ -110,31 +174,123 @@ $(document).ready(function()  {
             opacity: 0.9, 
             cursor: 'move', 
             placeholder: "ui-state-highlight",
-            connectWith:".connectedSortable",
-            handle: 'span',
+            connectWith:".conWith",
+            handle: 'span .icon-move',
             containment: '.row',
             revert : true,
             change: function(event, ui) {
-                
                 ui.helper.css("color","#f00");
             },
+            start:function(event, ui) {
+                $(ui.item).data("startindex", ui.item.index());
+            },
             update : function(e,ui){
-                var orders = $(this).sortable('toArray');
-                
-                console.log("After: "+orders);
                 ui.item.css("color","");
-                console.log('id: '+ui.item.attr('id'));
                 $.ajax({
                         url:'/tasks/changeOrders',
                         type:'POST',
-                        data: {orders: orders },
+                        data: {  new_order: $(this).sortable('toArray'),
+                                 id: ui.item.attr('id'),
+                                 old_pos: ui.item.data("startindex"),
+                                 new_pos: ui.item.index(),
+                              },
                         success: function(data) {
-                            //$(createTask).siblings("ul").append(data);
+                            if (data){
+                                 mesg('Задача успешно перенесена.');
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            if(xhr.status != '200'){
+                                redirect();
+                            }
                         }
+
                 });
             }
-
         });
+        
+        $("ul").delegate(".done", "click", function(){
+                var status = $(this).is(":checked");
+                var editable = $(this).siblings(".editable");
+                $.ajax({
+                        url:'/tasks/setDone',
+                        type:'POST',
+                        data: {  id: $(this).parent().attr('id'),
+                                 checked: status ? '1': '0',
+                              },
+                        success: function(data) {
+                            if (data){
+                                if(status){
+                                    editable.addClass('complete');
+                                    mesg('Задача успешно выполнена.');    
+                                }else{
+                                    editable.removeClass('complete');
+                                    mesg('Задача открыта.');
+                                }
+                                
+                                 
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            if(xhr.status != '200'){
+                                redirect();
+                            }
+                        }
+                }); 
+        });
+        
+        //$("ul").delegate(".deleteTask", "click", function(){
+//                var li = $(this).parent('li');
+//                if (confirm('Are you sure to hide')) {
+//                    $("#tmm1").hide("slow");
+//                }
+//                $.ajax({
+//                        url:'/tasks/deleteTask',
+//                        type:'POST',
+//                        data: {  id: $(this).parent().attr('id'),
+//                                order: $(this).parent("li").parent(".sortable").sortable('toArray')
+//                              },
+//                        success: function(data) {
+//                            if (data){
+//                                    li.remove();
+//                                    mesg('Задача успешно удалена.');    
+//                                }else{
+//                                   mesg('Ошибка при удалении .');
+//                             }
+//                        },
+//                        error: function (xhr, ajaxOptions, thrownError) {
+//                            if(xhr.status != '200'){
+//                                redirect();
+//                            }
+//                        }
+//                }); 
+//        });
+        
+       
+    $(".deleteTask").live('click',function() {
+      var $dialog = $('<div>Are you sure you wish to delete this record?</div>').dialog({
+            buttons: [
+                  {
+                        text: "Ok",
+                        click: function(){
+                              // delete the record
+                              $.post('deleteHandler.php?id=1');
+                              $dialog.remove();
+                        }
+                  },
+                  {
+                        text: "Cancel",
+                        click: function(){
+                              $dialog.remove();
+                        }
+                  }
+            ]
+      });
+});
+ 
+
+        
+				
         
 
 
@@ -143,12 +299,4 @@ $(document).ready(function()  {
   }); 	
   
 
-  
-     $(document).keypress(function(event){
-    	var keycode = (event.keyCode ? event.keyCode : event.which);
-        if(keycode == '13'){
-		  	$(".newTask:text").focus();
-            	
-}
- 
-    });
+  //end 

@@ -1,25 +1,16 @@
+.modal {
+    margin-top: -45%;
+    max-height: 90%;
+    overflow-y: auto;
+}
 
 .createTask{
-    display: inline-block;
-    border:1px inset transparent;
-    height: 18px;
-    width: 330px;
-    overflow:hidden;
-    
 }
 .createTask:hover{
   border:1px inset #f5f5f5;
 }
 
-.createTask input { 
-    color:#416796;
-    padding:0;
-    font-weight:bold; 
-    border:1px solid #ccc;
-    height: 18px; 
-    width: 300px;
-    
-}
+
 
 .sortable { list-style-type: none; margin: 0; padding: 0;  }
 .sortable li { 
@@ -36,7 +27,7 @@
     display: inline-block;
     border:1px dotted #CCC;
     height: 18px;
-    width: 300px;
+    width: 200px;
     overflow:hidden; 
   
 }
@@ -49,6 +40,9 @@
     font-weight:bold; 
     border:1px solid #ccc;
     height: 18px; 
-    width: 300px;
-    
+    width: 200px;
+}
+.complete {
+    text-decoration: line-through;
+    color: #ccc;
 }

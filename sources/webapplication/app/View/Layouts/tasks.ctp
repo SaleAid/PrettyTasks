@@ -38,6 +38,8 @@
         
     <?php echo $this->Html->script('bootstrap.min.js'); ?>
     
+    <?php echo $this->Html->script('jquery.jgrowl.min.js'); ?>
+    
     <?php echo $this->Html->script('main.js'); ?>
     
     <?php echo $this->Html->script('tasks.js'); ?>

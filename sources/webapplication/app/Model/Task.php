@@ -175,7 +175,7 @@ class Task extends AppModel {
         return $this->findByIdAndUser_id($task_id,$user_id);    
     }
     
-    public function create($user_id, $title, $date, $time=null, $order=null, $checktime=null, $priority=0){
+    public function create($user_id, $title, $date=null, $time=null, $order=null, $priority=0, $future=0, $checktime=null){
      
         $this->data[$this->alias]['user_id'] = $user_id;
         $this->data[$this->alias]['title'] = $title;
@@ -183,6 +183,8 @@ class Task extends AppModel {
         $this->data[$this->alias]['time'] = $time; 
         $this->data[$this->alias]['priority'] = $priority; 
         $this->data[$this->alias]['order'] = $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;  
+        $this->data[$this->alias]['future'] = $future;
+        //debug($this->data);die;
         if($this->save($this->data)){
                 return true;    
         }
@@ -249,8 +251,14 @@ class Task extends AppModel {
         return false;
     }
     
-    public function deleteTask($task_id){
-        return $this->delete($id);
+    public function deleteTask($task_id, $order){
+        
+        $arrId = array_slice($order, array_search($task_id, $order)+1); 
+        if ($this->updateAll(array('Task.order' => 'Task.order -1'),array('Task.id '=> $arrId)) and 
+        $this->delete($task_id)){
+            return true;
+        }
+        return false;
     }
     
     public function setDone($task_id, $done){
@@ -271,6 +279,17 @@ class Task extends AppModel {
                                                      array('Task.user_id' => $user_id),
                                                      array('Task.done' => 0),
                                                      array('Task.date <' => CakeTime::format('Y-m-d',time())),
+                                        )), 
+         ));
+    }
+    
+    public function getAllFuture($user_id){
+        $this->contain();
+        return $this->find('all', array(
+                        'order' => array('Task.date' => 'ASC', 'Task.order' => 'ASC'),
+                        'conditions' => array('AND' => array(
+                                                     array('Task.user_id' => $user_id),
+                                                     array('Task.future' => 1),
                                         )), 
          ));
     }

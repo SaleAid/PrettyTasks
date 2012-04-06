@@ -21,6 +21,8 @@ class TasksController extends AppController {
             $arrTaskOnDays[CakeTime::format('l', '+'.$i.' days')] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d','+'.$i.' days'));       
        }
        $arrAllExpired = $this->Task->getAllExpired($this->Auth->user('id'));
+       $arrAllFuture = $this->Task->getAllFuture($this->Auth->user('id'));
+       $this->set('arrAllFuture', $arrAllFuture);
        $this->set('arrAllExpired', $arrAllExpired);
        $this->set('arrTaskOnDays', $arrTaskOnDays);
     }
@@ -48,6 +50,19 @@ class TasksController extends AppController {
         return false;
     }
     
+    public function addFutureTask(){
+        $this->autoRender = false;
+        if ($this->request->is('ajax')) {
+            if($this->Task->create($this->Auth->user('id'),$this->request->data['title'],null,null,null,0,1)){
+                $this->set('task_id', $this->Task->getLastInsertID());
+                $this->set('title', $this->request->data['title']);
+                $this->autoRender = true;
+            }
+        }
+        return false;
+    }
+    
+    
     public function changeOrders(){
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
@@ -57,6 +72,7 @@ class TasksController extends AppController {
             return false; 
        } 
     }
+
     public function setDone(){
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
@@ -67,7 +83,17 @@ class TasksController extends AppController {
        }    
     }
     
-
+    public function deleteTask(){
+        $this->autoRender = false;
+        if ($this->request->is('ajax')) {
+            if($this->Task->isOwn($this->request->data['id'], $this->Auth->user('id'))){
+                //debug($this->request->data);die;
+                return $this->Task->deleteTask($this->request->data['id'],$this->request->data['order']);
+            }
+            return false; 
+       }    
+    }
+    
 
 //----------------------------------------------------------------------
 /**
