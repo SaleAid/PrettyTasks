@@ -3,63 +3,118 @@
 <html>
 	<head> 
 	<title>My Page</title> 
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
 	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+<script>
+$(document).ready(function() {
+	$("input[type='checkbox']").live( "change", function(event, ui) {
+          var $el = $(this);
+          if ($el.attr('checked')) {
+              name = $el.attr("name");
+              $("label[for='"+name+"']").addClass('complete');
+          } else {
+              name = $el.attr("name");
+              $("label[for='"+name+"']").removeClass('complete');
+          }
+
+	});
+});
+</script>
+<style type="text/css">
+        #complete label, .complete {
+            text-decoration: line-through;
+color: #ccc;
+        }
+            
+            
+            
+            
+#primary li .ui-btn-text {
+	width: 36px;
+	height: 36px;
+	vertical-align: middle;
+	text-indent: -9999px;
+	overflow: hidden;
+	text-align: left;
+	position: relative;
+	display: inline-block;
+	background-image: url(icons.png );
+	background-repeat: none;
+	-webkit-background-size: 308px 85px;
+	   -moz-background-size: 308px 85px;
+	     -o-background-size: 308px 85px;
+	        background-size: 308px 85px;
+}
+
+#primary li.icon-index    .ui-btn-text { background-position: -4px -47px; }
+#primary li.icon-speakers .ui-btn-text { background-position: -57px -47px; }
+#primary li.icon-schedule .ui-btn-text { background-position: -107px -46px; }
+#primary li.icon-twitter  .ui-btn-text { background-position: -212px -46px; width: 40px }
+#primary li.icon-venue    .ui-btn-text { background-position: -263px -46px; width: 40px }
+</style>
 </head> 
 <body>
-<div  data-role="fieldcontain">
- 	<fieldset data-role="controlgroup">
-  		<input type="text" class="span3" placeholder="Type to add new task"/>
-		<input type="checkbox" name="checkbox-1a" id="checkbox-1a" class="custom" />
-		<label for="checkbox-1a">Изучить политическую обстановку на ближнем востоке</label>
-
-		<input type="checkbox" name="checkbox-2a" id="checkbox-2a" class="custom" />
-		<label for="checkbox-2a">Провести тест драйв мерседеса</label>
-		
-		<input type="checkbox" name="checkbox-3a" id="checkbox-3a" class="custom" />
-		<label for="checkbox-3a">Купить парус на яхту</label>
-
-		<input type="checkbox" name="checkbox-4a" id="checkbox-4a" class="custom" />
-		<label for="checkbox-4a">Посмотреть новости о открытии фабрики</label>
-		
-		<input type="checkbox" name="checkbox-5a" id="checkbox-5a" class="custom" />
-		<label for="checkbox-5a">Проверить траектории планет Солнечной системы</label>
-    </fieldset>
+<!--
+<div data-role="header" data-position="inline"> 
+	<h1>Page Title</h1>
+	<a href="index.html" data-icon="gear" class="ui-btn-right">Tomorrow</a>
 </div>
-<!-- 
-<form class="well">
+-->
+<div data-role="header" id="primary" data-id="primary">
+	<div data-role="navbar">
+		<ul>
+						<li id="nav-index" class="icon-index"><a class="ui-btn-active ui-state-persist" href="index.php">Home</a></li>
+						<li id="nav-speakers" class="icon-speakers"><a  href="index2.php">Tomorrow</a></li>
+						<li id="nav-schedule" class="icon-schedule"><a  href="schedule.php">Calendar</a></li>
+						<li id="nav-venue" class="icon-venue"><a  href="venue.php">Future</a></li>
+					</ul>
+	</div>
+</div>
 
-  <input type="text" class="span3" placeholder="Type to add new task">
-  <label class="checkbox">
-    <input type="checkbox"> Изучить политическую обстановку на ближнем востоке 
-  </label>
-  <label class="checkbox">
-    <input type="checkbox"> Провести тест драв мерседеса
-  </label>
-  <label class="checkbox">
-    <input type="checkbox"> Купить парус на яхту
-  </label>
-  <label class="checkbox">
-    <input type="checkbox"> Посмотреть новости о открытии фабрики
-  </label>
-  <label class="checkbox">
-    <input type="checkbox"> Изучить политическую обстановку на ближнем востоке 
-  </label>
-  <label class="checkbox">
-    <input type="checkbox"> Провести тест драв мерседеса
-  </label>
-  <label class="checkbox">
-    <input type="checkbox"> Купить парус на яхту
-  </label>
-  <label class="checkbox">
-    <input type="checkbox"> Посмотреть новости о открытии фабрики
-  </label>
-  <button type="submit" class="btn btn-primary">Submit</button>
-  <button type="reset" class="btn btn-danger">Cancel</button>
-</form>
- -->
+
+<div data-role="fieldcontain">
+ 	<fieldset data-role="controlgroup" id="incomplete">
+				<input type="checkbox" name="checkbox-0a" id="checkbox-0a" class="custom"/>
+		<label for="checkbox-0a">0 Соцсеть Facebook подала встречный иск против Yahoo! </label>
+				<input type="checkbox" name="checkbox-1a" id="checkbox-1a" class="custom"/>
+		<label for="checkbox-1a">1 В Германии кот нашелся после 16 лет скитаний по лесам </label>
+				<input type="checkbox" name="checkbox-2a" id="checkbox-2a" class="custom"/>
+		<label for="checkbox-2a">2 Toyota покажет в Нью-Йорке обновленную Venza </label>
+				<input type="checkbox" name="checkbox-3a" id="checkbox-3a" class="custom"/>
+		<label for="checkbox-3a">3 Апелляционный суд оставил приговор судье-коляднику в силе </label>
+				<input type="checkbox" name="checkbox-4a" id="checkbox-4a" class="custom"/>
+		<label for="checkbox-4a">4 Более 3 лет китаянка носит парализованную внучку в школу на спине </label>
+				<input type="checkbox" name="checkbox-5a" id="checkbox-5a" class="custom"/>
+		<label for="checkbox-5a">5 Китайского ребенка, упавшего в колодец, спасли с помощью iPhone </label>
+				<input type="checkbox" name="checkbox-6a" id="checkbox-6a" class="custom"/>
+		<label for="checkbox-6a">6 Mitsubishi обновила кроссовер ASX </label>
+				<input type="checkbox" name="checkbox-7a" id="checkbox-7a" class="custom"/>
+		<label for="checkbox-7a">7 Укрэнерго подтвердило, что Молдова незаконно отбирает украинскую электроэнергию </label>
+				<input type="checkbox" name="checkbox-8a" id="checkbox-8a" class="custom"/>
+		<label for="checkbox-8a">8 Land Rover презентовал "самую роскошную версию" внедорожника Discovery </label>
+				<input type="checkbox" name="checkbox-9a" id="checkbox-9a" class="custom"/>
+		<label for="checkbox-9a">9 Гаишники спасли водителя, который поджег себя в машине </label>
+				<input type="checkbox" name="checkbox-10a" id="checkbox-10a" class="custom"/>
+		<label for="checkbox-10a">10 Новый Lexus оснастили гибридной силовой установкой </label>
+				<input type="checkbox" name="checkbox-11a" id="checkbox-11a" class="custom"/>
+		<label for="checkbox-11a">11 Соцсеть Facebook подала встречный иск против Yahoo! </label>
+				<input type="checkbox" name="checkbox-12a" id="checkbox-12a" class="custom"/>
+		<label for="checkbox-12a">12 В Германии кот нашелся после 16 лет скитаний по лесам </label>
+				<input type="checkbox" name="checkbox-13a" id="checkbox-13a" class="custom"/>
+		<label for="checkbox-13a">13 Toyota покажет в Нью-Йорке обновленную Venza </label>
+				<input type="checkbox" name="checkbox-14a" id="checkbox-14a" class="custom"/>
+		<label for="checkbox-14a">14 Апелляционный суд оставил приговор судье-коляднику в силе </label>
+
+    </fieldset>
+    <br/>
+	<br/>
+	<br/>
+</div>
+
+
 </body>
 </html>
 
