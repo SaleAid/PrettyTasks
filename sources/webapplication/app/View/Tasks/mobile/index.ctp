@@ -4,41 +4,37 @@ $this->start('scriptTop');
 <script  type="text/javascript">
 $(document).ready(function() {
 	$("input[type='checkbox']").live( "change", function(event, ui) {
-          var $el = $(this);
-          if ($el.attr('checked')) {
-              name = $el.attr("name");
+		var $el = $(this);
+		var name = $el.attr("name");
+		var status = $(this).is(":checked");
+		var taskId = $(this).attr('data-id');
+		//console.log(taskId);
+		//console.log(status);
+		if ($el.attr('checked')) {
               $("label[for='"+name+"']").addClass('complete');
-              var status = $(this).is(":checked");
-              var taskId = $(this).attr('data-id');
-              console.log(taskId);
-              console.log(status);
-              setDone(taskId, status);
-          } else {
-              name = $el.attr("name");
+		} else {
               $("label[for='"+name+"']").removeClass('complete');
-              var status = $(this).is(":checked");
-              var taskId = $(this).attr('data-id');
-              console.log(taskId);
-              console.log(status);
-              setDone(taskId, status);
-          }
+		}
+		setDone(taskId, status);
 
 	});
 	
 	//alert(111);
-    $("#newTask").bind('keypress', function(e) {
+    $(".span3").bind('keypress', function(e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         var Day = $(this).attr('date');
-        console.log(Day);
+        var Container = $("#incomplete-"+Day);
+        //console.log(Day);
         if(code == 13) {
-            console.log($(this).val());
+            //console.log($(this).val());
             $.ajax({
-                url:'/tasks/addNewTask',
+                url:'/m/tasks/addNewTask/',
                 type:'POST',
                 data: {title: $(this).val(), date: Day },
                 success: function(data) {
-                    //alert('Задача успешно создана.');
-                  //ul.append(data);
+					Container.append(data);
+					Container.trigger('create');
+					
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                         if(xhr.status != '200'){
@@ -53,7 +49,7 @@ $(document).ready(function() {
        var setDone = function(taskId, status){
 
                 $.ajax({
-                        url:'/tasks/setDone',
+                        url:'/m/tasks/setDone',
                         type:'POST',
                         data: {  id: taskId,
                                  checked: status ? '1': '0',
@@ -118,34 +114,78 @@ color: #ccc;
 <?
 $this->end();
 ?>
-<div data-role="header" id="primary" data-id="primary">
-	<div data-role="navbar">
-		<ul>
-						<li id="nav-index" class="icon-index"><a class="ui-btn-active ui-state-persist" href="/m/">Home</a></li>
-						<li id="nav-speakers" class="icon-speakers"><a  href="index2.php">Tomorrow</a></li>
-						<li id="nav-schedule" class="icon-schedule"><a  href="schedule.php">Calendar</a></li>
-						<li id="nav-venue" class="icon-venue"><a  href="venue.php">Future</a></li>
-					</ul>
+
+<div data-role="page" id="today">
+	
+	<div data-role="header" id="primary" data-id="primary">
+		<div data-role="navbar">
+			<ul>
+							<li id="nav-index" class="icon-index"><a class="ui-btn-active ui-state-persist" href="#today">Today</a></li>
+							<li id="nav-speakers" class="icon-speakers"><a  href="#tomorrow">Tomorrow</a></li>
+							<li id="nav-schedule" class="icon-schedule"><a  href="schedule.php">Calendar</a></li>
+							<li id="nav-venue" class="icon-venue"><a  href="venue.php">Future</a></li>
+						</ul>
+		</div>
 	</div>
+	
+	
+	<div  data-role="fieldcontain">
+		<fieldset data-role="controlgroup" id="incomplete-<?php echo $this->Time->format('Y-m-d', time(), true); ?>" >
+		<input type="text" class="span3" name="newTask" id="newTask-<?php echo $this->Time->format('Y-m-d', time(), true); ?>" placeholder="Type to add new task" date="<?php echo $this->Time->format('Y-m-d', time(), true); ?>"/><br/>
+		<?php 
+			if(isset($arrTaskOnDays['Today']) && !empty($arrTaskOnDays['Today'])):
+			foreach($arrTaskOnDays['Today'] as $item):
+		?>
+		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
+		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
+		<?php
+		endforeach;
+		endif;
+		?>
+		</fieldset>
+	</div>
+	
+	<div data-role="footer">
+
+	</div><!-- /footer -->
+
 </div>
-<div  data-role="fieldcontain">
-<fieldset data-role="controlgroup" id="incomplete" >
-<input type="text" class="span3" name="newTask" id="newTask" placeholder="Type to add new task" date="<?php echo $this->Time->format('Y-m-d', time(), true); ?>"/><br/>
-<?php 
-	if(isset($arrTaskOnDays['Today']) && !empty($arrTaskOnDays['Today'])):
-	foreach($arrTaskOnDays['Today'] as $item):
-?>
-<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
-<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
-<?php
-endforeach;
-endif;
-?>
-</fieldset>
+
+<div data-role="page" id="tomorrow">
+	
+	<div data-role="header" id="primary" data-id="primary">
+		<div data-role="navbar">
+			<ul>
+							<li id="nav-index" class="icon-index"><a href="#today">Today</a></li>
+							<li id="nav-speakers" class="icon-speakers"><a  class="ui-btn-active ui-state-persist"  href="#tomorrow">Tomorrow</a></li>
+							<li id="nav-schedule" class="icon-schedule"><a  href="schedule.php">Calendar</a></li>
+							<li id="nav-venue" class="icon-venue"><a  href="venue.php">Future</a></li>
+						</ul>
+		</div>
+	</div>
+	
+	
+	<div  data-role="fieldcontain">
+		<fieldset data-role="controlgroup" id="incomplete-<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>" >
+		<input type="text" class="span3" name="newTask" id="newTask-<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>" placeholder="Type to add new task" date="<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>"/><br/>
+		<?php 
+			if(isset($arrTaskOnDays['Tomorrow']) && !empty($arrTaskOnDays['Tomorrow'])):
+			foreach($arrTaskOnDays['Tomorrow'] as $item):
+		?>
+		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
+		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
+		<?php
+		endforeach;
+		endif;
+		?>
+		</fieldset>
+	</div>
+	
+	<div data-role="footer">
+
+	</div><!-- /footer -->
+
 </div>
-<br/>
-<br/>
-<br/>
 
 
 

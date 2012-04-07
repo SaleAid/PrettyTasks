@@ -1,0 +1,2 @@
+<input type="checkbox" data-id="<?php echo $task_id;?>" name="checkbox-<?php echo $task_id;?>" id="checkbox-<?php echo $task_id;?>" class="custom" />
+<label for="checkbox-<?php echo $task_id;?>"  ><?php echo $title ?></label>

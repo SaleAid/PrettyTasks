@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head> 
+	<title>My Page</title> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+	<script  type="text/javascript">
+$(document).ready(function() {
+	$("input[type='checkbox']").live( "change", function(event, ui) {
+          var $el = $(this);
+          if ($el.attr('checked')) {
+              name = $el.attr("name");
+              $("label[for='"+name+"']").addClass('complete');
+              var status = $(this).is(":checked");
+              var taskId = $(this).attr('data-id');
+              console.log(taskId);
+              console.log(status);
+              setDone(taskId, status);
+          } else {
+              name = $el.attr("name");
+              $("label[for='"+name+"']").removeClass('complete');
+              var status = $(this).is(":checked");
+              var taskId = $(this).attr('data-id');
+              console.log(taskId);
+              console.log(status);
+              setDone(taskId, status);
+          }
+
+	});
+	
+	//alert(111);
+    $("#newTask").bind('keypress', function(e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        var Day = $(this).attr('date');
+        var Container = $("#incomplete");
+        console.log(Day);
+        if(code == 13) {
+            console.log($(this).val());
+            $.ajax({
+                url:'/m/tasks/addNewTask/',
+                type:'POST',
+                data: {title: $(this).val(), date: Day },
+                success: function(data) {
+					Container.append(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                        if(xhr.status != '200'){
+                            redirect();
+                        }
+                }
+            });
+        $(this).val(null);
+        }
+    });
+    
+       var setDone = function(taskId, status){
+
+                $.ajax({
+                        url:'/tasks/setDone',
+                        type:'POST',
+                        data: {  id: taskId,
+                                 checked: status ? '1': '0',
+                              },
+                        success: function(data) {
+                            if (data){
+                                if(status){
+                                    //editable.addClass('complete');
+                                    //alert('Задача успешно выполнена.');    
+                                }else{
+                                    //editable.removeClass('complete');
+                                    //alert('Задача открыта.');
+                                }
+                                
+                                 
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            if(xhr.status != '200'){
+                                redirect();
+                            }
+                        }
+                })
+      }
+	
+});
+
+
+</script>
+<style type="text/css">
+        #complete label, .complete {
+            text-decoration: line-through;
+color: #ccc;
+        }
+            
+            
+            
+            
+#primary li .ui-btn-text {
+	width: 36px;
+	height: 36px;
+	vertical-align: middle;
+	text-indent: -9999px;
+	overflow: hidden;
+	text-align: left;
+	position: relative;
+	display: inline-block;
+	background-image: url(/css/m/icons.png );
+	background-repeat: none;
+	-webkit-background-size: 308px 85px;
+	   -moz-background-size: 308px 85px;
+	     -o-background-size: 308px 85px;
+	        background-size: 308px 85px;
+}
+
+#primary li.icon-index    .ui-btn-text { background-position: -4px -47px; }
+#primary li.icon-speakers .ui-btn-text { background-position: -57px -47px; }
+#primary li.icon-schedule .ui-btn-text { background-position: -107px -46px; }
+#primary li.icon-twitter  .ui-btn-text { background-position: -212px -46px; width: 40px }
+#primary li.icon-venue    .ui-btn-text { background-position: -263px -46px; width: 40px }
+</style>
+</head> 
+<body >
+<div data-role="header" id="primary" data-id="primary">
+	<div data-role="navbar">
+		<ul>
+						<li id="nav-index" class="icon-index"><a class="ui-btn-active ui-state-persist" href="/m/">Home</a></li>
+						<li id="nav-speakers" class="icon-speakers"><a  href="index2.php">Tomorrow</a></li>
+						<li id="nav-schedule" class="icon-schedule"><a  href="schedule.php">Calendar</a></li>
+						<li id="nav-venue" class="icon-venue"><a  href="venue.php">Future</a></li>
+					</ul>
+	</div>
+</div>
+<div  data-role="fieldcontain">
+<fieldset data-role="controlgroup" id="incomplete" >
+<input type="text" class="span3" name="newTask" id="newTask" placeholder="Type to add new task" date="2012-04-06"/><br/>
+<input type="checkbox" data-id="1" name="checkbox-1" id="checkbox-1" class="custom" />
+<label for="checkbox-1"  class="">qwerwqerwer</label>
+<input type="checkbox" data-id="2" name="checkbox-2" id="checkbox-2" class="custom" />
+<label for="checkbox-2"  class="">werwer</label>
+<input type="checkbox" data-id="3" name="checkbox-3" id="checkbox-3" class="custom" />
+<label for="checkbox-3"  class="">aerwer</label>
+<input type="checkbox" data-id="4" name="checkbox-4" id="checkbox-4" class="custom" />
+<label for="checkbox-4"  class="">ewrwer</label>
+<input type="checkbox" data-id="5" name="checkbox-5" id="checkbox-5" class="custom" />
+<label for="checkbox-5"  class="">qwrwer</label>
+<input type="checkbox" data-id="6" name="checkbox-6" id="checkbox-6" class="custom" />
+<label for="checkbox-6"  class="">qerwqer</label>
+</fieldset>
+</div>
+<br/>
+<br/>
+<br/>
+
+
+
+
+
+
+</body>
+</html>

@@ -22,9 +22,9 @@ class AppController extends Controller{
 	 * To add logic for switching to mobile and normal version
 	 */    
     protected function _checkMobile(){
-		//debug($this->params);
+		//$this->log($this->params, LOG_DEBUG);
 		if ((isset($this->params['device'])and ($this->params['device']=='m'))||$this->RequestHandler->isMobile ()) {
-			$mobileViewFile = 'View' . DS . $this->name . '/mobile/' . $this->params ['action'] . '.ctp';
+			$mobileViewFile = 'View' . DS . $this->name . '/mobile/' . Inflector::underscore($this->params ['action']) . '.ctp';
 			if (file_exists ( APP . DS . $mobileViewFile )) {
 				$this->layout = 'mobile';
 				$mobileView = $this->name . '/mobile';
