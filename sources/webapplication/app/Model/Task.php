@@ -165,7 +165,15 @@ class Task extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
+		
+		'Day' => array(
+			'className' => 'Day',
+			'foreignKey' => 'day_id',
+			'fields' => '',
+			'order' => ''
+		),
+		
 	);
     
     //------------------------------
@@ -229,7 +237,7 @@ class Task extends AppModel {
     
     
     public function changeOrders($task_id, $old_pos, $new_pos, $new_order){
-        //необходимо в будущем оптимизировать 
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
         if($old_pos < $new_pos){
             $oper = '-1';
             $start = $old_pos;
