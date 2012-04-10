@@ -13,3 +13,4 @@
 <?php echo $content_for_layout; ?>
 </body>
 </html>
+<?php //echo $this->element('sql_dump'); ?>

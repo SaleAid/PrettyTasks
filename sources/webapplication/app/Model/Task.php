@@ -282,12 +282,12 @@ class Task extends AppModel {
     public function getAllExpired($user_id){
         $this->contain();
         return $this->find('all', array(
-                        'order' => array('Task.date' => 'ASC', 'Task.order' => 'ASC'),
-                        'conditions' => array('AND' => array(
-                                                     array('Task.user_id' => $user_id),
-                                                     array('Task.done' => 0),
-                                                     array('Task.date <' => CakeTime::format('Y-m-d',time())),
-                                        )), 
+                        'order' => array('Task.date' => 'DESC', 'Task.order' => 'ASC'),
+                        'conditions' => array(
+                                                   'Task.user_id' => $user_id,
+                                                     'Task.done' => 0,
+                                                     'Task.date <' => CakeTime::format('Y-m-d',time()),
+                                        ), 
          ));
     }
     
