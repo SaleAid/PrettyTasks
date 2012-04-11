@@ -27,12 +27,14 @@ class TasksController extends AppController {
        $this->set('arrTaskOnDays', $arrTaskOnDays);
     }
     
-    public function changeTitle(){
+    public function setTitle(){
 
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
-            if($this->Task->isOwn($this->request->data['id'], $this->Auth->user('id'))){
-                return $this->Task->changeTitle($this->request->data['id'],$this->request->data['title']);
+            if($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))){
+                if($this->Task->setTitle($this->request->data['title'])->save()){
+                    return true;    
+                }
             }
         }
         return false;
@@ -41,7 +43,7 @@ class TasksController extends AppController {
     public function addNewTask(){
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
-            if($this->Task->create($this->Auth->user('id'),$this->request->data['title'],$this->request->data['date'])){
+            if($this->Task->create($this->Auth->user('id'),$this->request->data['title'],$this->request->data['date'])->save()){
                 $this->set('task_id', $this->Task->getLastInsertID());
                 $this->set('title', $this->request->data['title']);
                 $this->autoRender = true;
@@ -53,7 +55,7 @@ class TasksController extends AppController {
     public function addFutureTask(){
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
-            if($this->Task->create($this->Auth->user('id'),$this->request->data['title'],null,null,null,0,1)){
+            if($this->Task->create($this->Auth->user('id'),$this->request->data['title'],null,null,null,0,1)->save()){
                 $this->set('task_id', $this->Task->getLastInsertID());
                 $this->set('title', $this->request->data['title']);
                 $this->autoRender = true;
@@ -62,12 +64,13 @@ class TasksController extends AppController {
         return false;
     }
     
-    
     public function changeOrders(){
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
-            if($this->Task->changeOrders($this->request->data['id'], $this->request->data['old_pos'], $this->request->data['new_pos'],$this->request->data['new_order'])){
-                return true;
+            if($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))){
+                if($this->Task->setOrder($this->request->data['new_pos'])->save()){
+                    return true;    
+                }
             }
             return false; 
        } 
@@ -76,8 +79,10 @@ class TasksController extends AppController {
     public function setDone(){
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
-            if($this->Task->isOwn($this->request->data['id'], $this->Auth->user('id'))){
-                return $this->Task->setDone($this->request->data['id'], $this->request->data['checked']);
+            if($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))){
+                if($this->Task->setDone($this->request->data['checked'])->save()){
+                    return true;    
+                }
             }
             return false; 
        }    
@@ -86,12 +91,32 @@ class TasksController extends AppController {
     public function deleteTask(){
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
-            if($this->Task->isOwn($this->request->data['id'], $this->Auth->user('id'))){
-                //debug($this->request->data);die;
-                return $this->Task->deleteTask($this->request->data['id'],$this->request->data['order']);
+            if($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))){
+                return $this->Task->delete();
             }
             return false; 
        }    
+    }
+    public function moveTo(){
+        $this->autoRender = false;
+        if ($this->request->is('ajax')) {
+            if($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))){
+                return $this->Task->moveTo($this->Auth->user('id'), $this->request->data['id'], $this->request->data['date']);
+            }
+            return false; 
+       }    
+    }
+    
+    public function dragOnDay(){
+        $this->autoRender = false;
+        if ($this->request->is('ajax')) {
+            if($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))){
+                if($this->Task->setOrder(1)->setDate($this->request->data['date'])->save()){
+                    return true;    
+                }
+            }
+            return false; 
+       } 
     }
     
 

@@ -40,6 +40,8 @@
     
     <?php echo $this->Html->script('jquery.jgrowl.min.js'); ?>
     
+    <?php echo $this->Html->script('jquery.inline-confirmation.js'); ?>
+    
     <?php echo $this->Html->script('main.js'); ?>
     
     <?php echo $this->Html->script('tasks.js'); ?>

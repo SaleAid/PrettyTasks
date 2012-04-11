@@ -16,31 +16,24 @@
 
 <div class="row-fluid row">
     <div class="span7 span-fixed-sidebar">
-    <div id="data"></div>
-      <div class="tabbable" style="margin-bottom: 9px;">
-        <ul class="nav nav-tabs main">
+    
+      <div id="main" class="tabbable" style="margin-bottom: 9px;">
+        <ul class="nav nav-tabs">
           <li class="active">
             <a href="#Today" data-toggle="tab" name = "<?php echo $this->Time->format('Y-m-d', time(), true); ?>">
                 <?php echo __('Сегодня'); ?>
-                <br />
-                 <?php echo $this->Time->format('Y-m-d', time(), true); ?>
             </a>
           </li>
           <li>
             <a href="#Tomorrow" data-toggle="tab" name = "<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>">
                  <?php echo __('Завтра'); ?>
-                  <br />
-                 <?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>
             </a>
           </li>
-          <li class="divider-vertical"></li>
           <?php for($i = 2; $i <= 5; $i++):?>
             <li> <a href="#<?php echo $this->Time->format('l', '+'.$i.' days', true); ?>"
                              data-toggle="tab"
                               name = "<?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true); ?>">
                       <?php echo __($this->Time->format('l', '+'.$i.' days', true)); ?>
-                      <br />
-                <?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true); ?>
                  </a>
             </li>
           <?php endfor; ?>
@@ -49,76 +42,79 @@
         <div class="tab-content">
           <div class="tab-pane active" id="Today">
              <div class="row">
-                 <div class="span4">
+                 <div class="span5">
                      <p class="tabDay"><?php echo $this->Time->format('Y-m-d', time(), true); ?></p>
                      <input type="text" class="createTask span4" placeholder=" +Добавить задание…"/>
-                     <p><a data-toggle="modal" href="#example" class="btn btn-primary btn-large">Launch demo modal</a></p>
+                     <!--<p><a data-toggle="modal" href="#example" class="btn btn-primary btn-large">Launch demo modal</a></p>
+                     --!>
                      <hr />
-                     <ul class="sortable conWith ui-helper-reset">
+                     <ul id="sortableToday" class="sortable connectedSortable ui-helper-reset" date="<?php echo $this->Time->format('Y-m-d', time(), true); ?>">
                      <?php if(isset($arrTaskOnDays['Today']) && !empty($arrTaskOnDays['Today'])):?>
                         <?php foreach($arrTaskOnDays['Today'] as $item):?>
                             <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
-                                 <span> <i class="icon-move"> </i></span>
+                                <span> <i class="icon-move"> </i></span>
+                                <span class="time"> <i class="icon-time"> </i></span>
                                 <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
                                 <div class="editable <?php if($item['Task']['done']):?> complete <?php endif; ?>"><?php echo $item['Task']['title']; ?></div>
-                               
-                                <span> <i class="icon-refresh divider"> </i></span>
-                                <span class="deleteTask "> <i class="icon-remove "> </i></span>
+                                <span> <i class="icon-pencil"> </i></span>
+                                <span class="deleteTask "> <i class=" icon-ban-circle "> </i></span>
                             </li>
                         <?php endforeach;?>
                      <?php endif;?>
                      </ul>
                  </div>
-                 <div class="span2 well">
+                 <div class="span2 comment">
                  </div>
             </div>
           </div>
           <div class="tab-pane" id="Tomorrow">
             <div class="row">
-                 <div class="span4">
+                 <div class="span5">
                      <p class="tabDay"><?php echo $this->Time->format('Y-m-d', '+1 days', true); ?></p>
                      <input type="text" class="createTask span4" placeholder=" +Добавить задание…"/>
                      <hr />
-                     <ul class="sortable connectedSortable ui-helper-reset">
+                     <ul id="sortableTomorrow" class="sortable connectedSortable ui-helper-reset" date="<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>">
                      <?php if(isset($arrTaskOnDays['Tomorrow']) && !empty($arrTaskOnDays['Tomorrow'])):?>
                         <?php foreach($arrTaskOnDays['Tomorrow'] as $item):?>
                             <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
+                                <span> <i class="icon-move"> </i></span>
+                                <span class="time"> <i class="icon-time"> </i></span>
                                 <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
                                 <div class="editable <?php if($item['Task']['done']):?> complete <?php endif; ?>"><?php echo $item['Task']['title']; ?></div>
-                                <span> <i class="icon-move"> </i></span>
-                                <span> <i class="icon-refresh divider"> </i></span>
-                                <span class="deleteTask"> <i class="icon-remove"> </i></span>
+                                <span> <i class="icon-pencil"> </i></span>
+                                <span class="deleteTask"> <i class=" icon-ban-circle"> </i></span>
                             </li>
                         <?php endforeach;?>
                      <?php endif;?>
                      </ul>
                  </div>
-                 <div class="span2 well">
+                 <div class="span2 comment">
                  </div>
             </div>
           </div>
           <?php for($i = 2; $i <= 5; $i++):?>
             <div class="tab-pane" id="<?php echo $this->Time->format('l', '+'.$i.' days', true); ?>">
                 <div class="row">
-                    <div class="span4">
+                    <div class="span5">
                         <p class="tabDay"><?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true); ?></p>
                         <input type="text" class="createTask span4" placeholder=" +Добавить задание…"/>
                         <hr />
-                        <ul class="sortable connectedSortable ui-helper-reset">
+                        <ul id="sortable<?php echo $this->Time->format('l', '+'.$i.' days', true); ?>" class="sortable connectedSortable ui-helper-reset" date="<?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true); ?>">
                             <?php if(isset($arrTaskOnDays[$this->Time->format('l', '+'.$i.' days', true)]) && !empty($arrTaskOnDays[$this->Time->format('l', '+'.$i.' days', true)])):?>
                                 <?php foreach($arrTaskOnDays[$this->Time->format('l', '+'.$i.' days', true)] as $item):?>
                                     <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
+                                        <span> <i class="icon-move"> </i></span>
+                                        <span class="time"> <i class="icon-time"> </i></span>
                                         <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
                                         <div class="editable <?php if($item['Task']['done']):?> complete <?php endif; ?>"><?php echo $item['Task']['title']; ?></div>
-                                        <span> <i class="icon-move"> </i></span>
-                                        <span> <i class="icon-refresh divider"> </i></span>
-                                        <span class="deleteTask"> <i class="icon-remove"> </i></span>
+                                        <span> <i class="icon-pencil"> </i></span>
+                                        <span class="deleteTask"> <i class=" icon-ban-circle"> </i></span>
                                     </li>
                                 <?php endforeach;?>
                             <?php endif;?>
                         </ul>
                     </div>
-                    <div class="span2 well">
+                    <div class="span2 comment">
                     </div>
                 </div>
             </div>
@@ -141,11 +137,12 @@
                 <?php if(isset($arrAllFuture) && !empty($arrAllFuture)):?>
                     <?php foreach($arrAllFuture as $item):?>
                         <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
+                            <span> <i class="icon-move"> </i></span>
+                            
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
                             <div class="editable <?php if($item['Task']['done']):?> complete <?php endif; ?>"><?php echo $item['Task']['title']; ?></div>
-                            <span> <i class="icon-move"> </i></span>
-                            <span> <i class="icon-refresh divider"> </i></span>
-                            <span class="deleteTask"> <i class="icon-remove"> </i></span>
+                            <span> <i class="icon-pencil"> </i></span>
+                            <span class="deleteTask"> <i class=" icon-ban-circle"> </i></span>
                         </li>
                     <?php endforeach;?>
                 <?php endif;?>   
@@ -156,11 +153,11 @@
                 <ul class="sortable connectedSortable ui-helper-reset">
                     <?php foreach($arrAllExpired as $item):?>
                         <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
+                            <span> <i class="icon-move"> </i></span>
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
                             <div class="editable"><?php echo $item['Task']['title']; ?></div>
-                            <span> <i class="icon-move"> </i></span>
-                            <span> <i class="icon-refresh divider"> </i></span>
-                            <span class="deleteTask"> <i class="icon-remove"> </i></span>
+                            <span> <i class="icon-pencil"> </i></span>
+                            <span class="deleteTask"> <i class=" icon-ban-circle"> </i></span>
                         </li>
                     <?php endforeach;?>
                     </ul>

@@ -6,10 +6,20 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a class="brand" href="/">Project name</a>
+      <?php echo $this->Html->link(
+                            'Project name',
+                            array('controller' => 'tasks', 'action' => 'index'),
+                            array('class' => 'brand')
+      );?>
+
       <div class="nav-collapse">
         <ul class="nav">
-          <li class="active"><a href="#">Home</a></li>
+          <li class="active">
+            <?php echo $this->Html->link(
+                            'Tasks',
+                            array('controller' => 'tasks', 'action' => 'index')
+            );?>    
+          </li>
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>

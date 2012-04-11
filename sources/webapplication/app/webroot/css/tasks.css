@@ -7,7 +7,7 @@
 .createTask{
 }
 .createTask:hover{
-  border:1px inset #f5f5f5;
+  //border:1px inset #f5f5f5;
 }
 
 
@@ -16,18 +16,25 @@
 .sortable li { 
     margin: 0 3px 3px 3px; 
     font-size: 1.4em;
-    height: 20px; 
+    height: 22px; 
 }
 .sortable li span { 
-    vertical-align: bottom;
+    vertical-align: middle;
     margin-right: 10px; 
 }
+.comment{
+    outline: 1px solid red;
+    height: 200px;
+    margin-top: 5px;
+}
+
+
 
 .editable{
     display: inline-block;
     border:1px dotted #CCC;
-    height: 18px;
-    width: 200px;
+    height: 19px;
+    width: 220px;
     overflow:hidden; 
   
 }
@@ -39,10 +46,27 @@
     padding:0;
     font-weight:bold; 
     border:1px solid #ccc;
-    height: 18px; 
-    width: 200px;
+    height: 19px; 
+    width: 230px;
 }
 .complete {
     text-decoration: line-through;
     color: #ccc;
+}
+
+.time{
+    display: inline-block;
+    width: 40px;
+    
+}
+
+/*jGrowl theme */
+div.jGrowl div.green_theme {
+    background-color: #008040;
+    color: yellow;
+}
+
+div.jGrowl.custom {
+	right: 				0px;
+	top: 				25px;
 }
