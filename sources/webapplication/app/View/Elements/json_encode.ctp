@@ -1,1 +1,2 @@
-<?PHP echo json_encode($data); ?>
+<?php
+echo json_encode($result);

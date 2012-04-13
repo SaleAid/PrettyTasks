@@ -119,14 +119,13 @@ $(document).ready(function()  {
                 var editable = this;
                 var task_id = $(editable).parent().attr('id');
                 $.ajax({
-                        url:'/tasks/setTitle',
+                        url:'/tasks/setTitle.json',
                         type:'POST',
                         data: {title: value, id: task_id },
                         success: function(data) {
-                            data = $.parseJSON(data);
-                            if (data !== false){
+                            if (data.result !== false){
                                mesg('Задача  успешно изменена.');
-                               if(data.Task.priority){
+                               if(data.data.Task.priority){
                                     $(editable).addClass('important');
                                }else{
                                     $(editable).removeClass('important');

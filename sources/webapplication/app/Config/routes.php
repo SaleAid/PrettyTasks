@@ -30,7 +30,7 @@
 	Router::connect('/:device/:controller', array('action' => 'index'), array('device' => '[m]{1}'));
 	Router::connect('/:device/:controller/:action', array(), array('device' => '[m]{1}'));
 	Router::connect('/:device/:controller/:action', array(), array('device' => '[m]{1}'));	
-	
+	Router::parseExtensions('xml','json');
 
 /**
  * Load all plugin routes.  See the CakePlugin documentation on 
