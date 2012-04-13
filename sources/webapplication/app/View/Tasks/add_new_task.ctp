@@ -3,6 +3,6 @@
     <span class="time"> <i class="icon-time"> </i></span>
     <input type="checkbox" class="done" value="1"/>
     <div class="editable"><?php echo $title; ?></div>
-    <span> <i class="icon-pencil"> </i></span>
+    <span class="editTask"> <i class="icon-pencil"> </i></a></span>
     <span class="deleteTask"> <i class=" icon-ban-circle"> </i></span>
 </li>

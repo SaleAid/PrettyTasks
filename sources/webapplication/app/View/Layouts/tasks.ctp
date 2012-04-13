@@ -42,6 +42,8 @@
     
     <?php echo $this->Html->script('jquery.inline-confirmation.js'); ?>
     
+    <?php echo $this->Html->script('jquery.timepicker-1.2.2.js'); ?>
+    
     <?php echo $this->Html->script('main.js'); ?>
     
     <?php echo $this->Html->script('tasks.js'); ?>

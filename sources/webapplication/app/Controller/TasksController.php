@@ -28,13 +28,11 @@ class TasksController extends AppController {
     }
     
     public function setTitle(){
-
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
             if($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))){
-                if($this->Task->setTitle($this->request->data['title'])->save()){
-                    return true;    
-                }
+                $this->set('data', $this->Task->setTitle($this->request->data['title'])->save());
+                $this->render('/Elements/json_encode');
             }
         }
         return false;

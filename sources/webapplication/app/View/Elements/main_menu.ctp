@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
       </a>
       <?php echo $this->Html->link(
-                            'Project name',
+                            'Besttask ...pre-alpha version',
                             array('controller' => 'tasks', 'action' => 'index'),
                             array('class' => 'brand')
       );?>

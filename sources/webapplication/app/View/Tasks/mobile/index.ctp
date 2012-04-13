@@ -115,7 +115,6 @@ color: #ccc;
 $this->end();
 ?>
 
-
 <div data-role="page" id="today">
 	
 	<div data-role="header" id="primary" data-id="primary">
@@ -123,8 +122,8 @@ $this->end();
 			<ul>
 							<li id="nav-index" class="icon-index"><a class="ui-btn-active ui-state-persist" href="#today">Today</a></li>
 							<li id="nav-speakers" class="icon-speakers"><a  href="#tomorrow">Tomorrow</a></li>
-							<li id="nav-schedule" class="icon-schedule"><a  href="#overdue">Overdue</a></li>
-							<li id="nav-venue" class="icon-venue"><a href="#overview">Overview</a></li>
+							<li id="nav-schedule" class="icon-schedule"><a  href="schedule.php">Calendar</a></li>
+							<li id="nav-venue" class="icon-venue"><a  href="venue.php">Future</a></li>
 						</ul>
 		</div>
 	</div>
@@ -158,9 +157,9 @@ $this->end();
 		<div data-role="navbar">
 			<ul>
 							<li id="nav-index" class="icon-index"><a href="#today">Today</a></li>
-							<li id="nav-speakers" class="icon-speakers"><a class="ui-btn-active ui-state-persist"  href="#tomorrow">Tomorrow</a></li>
-							<li id="nav-schedule" class="icon-schedule"><a href="#overdue">Overdue</a></li>
-							<li id="nav-venue" class="icon-venue"><a href="#overview">Overview</a></li>
+							<li id="nav-speakers" class="icon-speakers"><a  class="ui-btn-active ui-state-persist"  href="#tomorrow">Tomorrow</a></li>
+							<li id="nav-schedule" class="icon-schedule"><a  href="schedule.php">Calendar</a></li>
+							<li id="nav-venue" class="icon-venue"><a  href="venue.php">Future</a></li>
 						</ul>
 		</div>
 	</div>
@@ -188,86 +187,6 @@ $this->end();
 
 </div>
 
-<div data-role="page" id="overdue">
-	
-	<div data-role="header" id="primary" data-id="primary">
-		<div data-role="navbar">
-			<ul>
-							<li id="nav-index" class="icon-index"><a href="#today">Today</a></li>
-							<li id="nav-speakers" class="icon-speakers"><a href="#tomorrow">Tomorrow</a></li>
-							<li id="nav-schedule" class="icon-schedule"><a class="ui-btn-active ui-state-persist" href="#overdue">Overdue</a></li>
-							<li id="nav-venue" class="icon-venue"><a href="#overview">Overview</a></li>
-						</ul>
-		</div>
-	</div>
-	
-	
-	<div  data-role="fieldcontain">
-		<fieldset data-role="controlgroup" id="incomplete-overdue" >
-		<?php 
-			if(isset($arrAllExpired) && !empty($arrAllExpired)):
-			foreach($arrAllExpired as $item):
-
-		?>
-		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
-		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
-		<?php
-		endforeach;
-		endif;
-		?>
-		</fieldset>
-	</div>
-	
-	<div data-role="footer">
-
-	</div><!-- /footer -->
-
-</div>
-
-
-<div data-role="page" id="overview">
-	
-	<div data-role="header" id="primary" data-id="primary">
-		<div data-role="navbar">
-			<ul>
-							<li id="nav-index" class="icon-index"><a href="#today">Today</a></li>
-							<li id="nav-speakers" class="icon-speakers"><a href="#tomorrow">Tomorrow</a></li>
-							<li id="nav-schedule" class="icon-schedule"><a href="#overdue">Overdue</a></li>
-							<li id="nav-venue" class="icon-venue"><a class="ui-btn-active ui-state-persist" href="#overview">Overview</a></li>
-						</ul>
-		</div>
-	</div>
-	
-	
-	<div  data-role="fieldcontain">
-		<?php 
-			if(isset($arrTaskOnDays) && !empty($arrTaskOnDays)):
-			foreach($arrTaskOnDays as $datelabel => $day):
-			if(isset($day) && !empty($day)):
-		?>
-		<h3><?php echo $datelabel; ?></h3>
-		<fieldset data-role="controlgroup" id="incomplete-overview-<?php echo $datelabel; ?>" >
-		<?
-			foreach($day as $item):
-		?>
-		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
-		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
-		<?php
-		endforeach;
-		?>
-		</fieldset>
-		<?php
-		endif;
-		endforeach;
-		endif;
-		?>
-	</div>
-	
-	<div data-role="footer">
-
-	</div><!-- /footer -->
-
-</div>
 
 
 

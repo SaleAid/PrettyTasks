@@ -1,3 +1,5 @@
+@import "jquery.timepicker-1.2.2.css";
+
 .modal {
     margin-top: -45%;
     max-height: 90%;
@@ -52,6 +54,9 @@
 .complete {
     text-decoration: line-through;
     color: #ccc;
+}
+.important{
+    color: lime;
 }
 
 .time{

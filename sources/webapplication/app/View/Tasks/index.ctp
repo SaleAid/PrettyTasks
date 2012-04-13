@@ -1,16 +1,55 @@
 <!-- modal --!>
-<div id="example" class="modal hide fade in" style="display: none; ">
+<div id="editTask" class="modal hide fade in" style="display: none; ">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
-        <h3>Удаление задачи.</h3>
+        <h3>Редактирование задачи.</h3>
     </div>
     <div class="modal-body">
-        <h4>Text in a modal</h4>
-        <p>You can add some text here.</p>		        
+        <div class="row">
+       
+            <div class="span4">
+               <form class="form-horizontal">
+        <fieldset>
+          
+          <div class="control-group">
+            <label class="control-label" for="eTitle">Title</label>
+            <div class="controls">
+              <input type="text" class="span3" id="eTitle"/>
+            </div>
+          </div>
+          <div class="control-group form-inline">
+            <label class="control-label" for="eDate">Date, time?</label>
+            <div class="controls">
+                <input type="text" class="span2" id="eDate"/>
+                <input type="text" class="span1" id="eTime"/>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="eComment">Comment</label>
+            <div class="controls">
+              <textarea class="span3" id="eComment" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <label class="checkbox">
+                <input type="checkbox" id="eDone" value="option1"/>
+                Done
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+            </div>
+            <div class="span2">
+            
+            </div>
+            </form>
+        </div>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn btn-danger">Call to action</a>
-        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <a href="#" class="btn btn-danger">Сохранить</a>
+        <a href="#" class="btn" data-dismiss="modal">Закрыть</a>
     </div>
 </div>
 
@@ -45,8 +84,6 @@
                  <div class="span5">
                      <p class="tabDay"><?php echo $this->Time->format('Y-m-d', time(), true); ?></p>
                      <input type="text" class="createTask span4" placeholder=" +Добавить задание…"/>
-                     <!--<p><a data-toggle="modal" href="#example" class="btn btn-primary btn-large">Launch demo modal</a></p>
-                     --!>
                      <hr />
                      <ul id="sortableToday" class="sortable connectedSortable ui-helper-reset" date="<?php echo $this->Time->format('Y-m-d', time(), true); ?>">
                      <?php if(isset($arrTaskOnDays['Today']) && !empty($arrTaskOnDays['Today'])):?>
@@ -55,8 +92,8 @@
                                 <span> <i class="icon-move"> </i></span>
                                 <span class="time"> <i class="icon-time"> </i></span>
                                 <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                                <div class="editable <?php if($item['Task']['done']):?> complete <?php endif; ?>"><?php echo $item['Task']['title']; ?></div>
-                                <span> <i class="icon-pencil"> </i></span>
+                                <div class="editable <?php if($item['Task']['done']):?> complete <?php endif; ?> <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo $item['Task']['title']; ?></div>
+                                <span class="editTask"> <i class="icon-pencil"> </i></a></span>
                                 <span class="deleteTask "> <i class=" icon-ban-circle "> </i></span>
                             </li>
                         <?php endforeach;?>
@@ -80,7 +117,7 @@
                                 <span> <i class="icon-move"> </i></span>
                                 <span class="time"> <i class="icon-time"> </i></span>
                                 <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                                <div class="editable <?php if($item['Task']['done']):?> complete <?php endif; ?>"><?php echo $item['Task']['title']; ?></div>
+                                <div class="editable <?php if($item['Task']['done']):?> complete <?php endif; ?> <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo $item['Task']['title']; ?></div>
                                 <span> <i class="icon-pencil"> </i></span>
                                 <span class="deleteTask"> <i class=" icon-ban-circle"> </i></span>
                             </li>
@@ -106,7 +143,7 @@
                                         <span> <i class="icon-move"> </i></span>
                                         <span class="time"> <i class="icon-time"> </i></span>
                                         <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                                        <div class="editable <?php if($item['Task']['done']):?> complete <?php endif; ?>"><?php echo $item['Task']['title']; ?></div>
+                                        <div class="editable <?php if($item['Task']['done']):?> complete <?php endif; ?> <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo $item['Task']['title']; ?></div>
                                         <span> <i class="icon-pencil"> </i></span>
                                         <span class="deleteTask"> <i class=" icon-ban-circle"> </i></span>
                                     </li>
@@ -140,7 +177,7 @@
                             <span> <i class="icon-move"> </i></span>
                             
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                            <div class="editable <?php if($item['Task']['done']):?> complete <?php endif; ?>"><?php echo $item['Task']['title']; ?></div>
+                            <div class="editable <?php if($item['Task']['done']):?> complete <?php endif; ?> <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo $item['Task']['title']; ?></div>
                             <span> <i class="icon-pencil"> </i></span>
                             <span class="deleteTask"> <i class=" icon-ban-circle"> </i></span>
                         </li>
@@ -155,7 +192,7 @@
                         <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
                             <span> <i class="icon-move"> </i></span>
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                            <div class="editable"><?php echo $item['Task']['title']; ?></div>
+                            <div class="editable <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo $item['Task']['title']; ?></div>
                             <span> <i class="icon-pencil"> </i></span>
                             <span class="deleteTask"> <i class=" icon-ban-circle"> </i></span>
                         </li>

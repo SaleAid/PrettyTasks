@@ -1,46 +1,14 @@
 
-function createsortable(){
-     $( ".sortable" ).sortable({
-			cancel: ".ui-state-disabled",
-            opacity: 0.9, 
-            cursor: 'move', 
-            //revert: false,
-            //scroll: true,
-            //revert: 'invalid',
-            placeholder: "ui-state-highlight",
-            handle: 'span .icon-move',
-            //containment: '.row',
-            change: function(event, ui) {
-                ui.helper.css("color","#f00");
-            },
-            start: function(event, ui) {
-                $(ui.item).data("startindex", ui.item.index());
-            },
-            update : function(e,ui){
-                ui.item.css("color","");
-                if(dropped){
-                    dropped = false;
-                    return true;
-                }
-                $.ajax({
-                        url:'/tasks/changeOrders',
-                        type:'POST',
-                        data: {  id: ui.item.attr('id'),
-                                 new_pos: ui.item.index()+1,
-                              },
-                        success: function(data) {
-                            if (data){
-                                 mesg('Задача успешно перенесена.');
-                            }
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            if(xhr.status != '200'){
-                                redirect();
-                            }
-                        }
-                });
-            }
-        }).disableSelection();
+function getTaskForEdit(id){
+    return getTaskFromPage(id);
+}
+
+function getTaskFromPage(id){
+    var data = {
+        title: $('#'+id).children('.editable').text(),
+        done:  $('#'+id).children('.done').is(":checked"),   
+    }
+    return data;
 }
 
 function mesg (text){
@@ -86,12 +54,16 @@ $(document).ready(function()  {
 
 //-------------------------------- work tesk
 
-        
+         $.datepicker.setDefaults(
+            $.extend($.datepicker.regional["ru"])
+         );
+
         
         setInterval(function() {
             checkLogin();
         }, 120000);
         
+                 
          $(".createTask").bind('keypress', function(e) {
             var ul = $(this).siblings("ul");
             var tabDay = $(this).siblings(".tabDay").text();
@@ -151,8 +123,16 @@ $(document).ready(function()  {
                         type:'POST',
                         data: {title: value, id: task_id },
                         success: function(data) {
-                            if (data){
+                            data = $.parseJSON(data);
+                            if (data !== false){
                                mesg('Задача  успешно изменена.');
+                               if(data.Task.priority){
+                                    $(editable).addClass('important');
+                               }else{
+                                    $(editable).removeClass('important');
+                               }
+                            }else{
+                                mesg('Задача  не изменена.');
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
@@ -276,7 +256,76 @@ $(document).ready(function()  {
                             });
                            }
                           });
-            createsortable();
+                          
+    $( ".sortable" ).sortable({
+			cancel: ".ui-state-disabled",
+            opacity: 0.9, 
+            cursor: 'move', 
+            placeholder: "ui-state-highlight",
+            handle: 'span .icon-move',
+            //containment: '.row',
+            change: function(event, ui) {
+                ui.helper.css("color","#f00");
+            },
+            start: function(event, ui) {
+                $(ui.item).data("startindex", ui.item.index());
+            },
+            update : function(e,ui){
+                ui.item.css("color","");
+                if(dropped){
+                    dropped = false;
+                    return true;
+                }
+                $.ajax({
+                        url:'/tasks/changeOrders',
+                        type:'POST',
+                        data: {  id: ui.item.attr('id'),
+                                 new_pos: ui.item.index()+1,
+                              },
+                        success: function(data) {
+                            if (data){
+                                 mesg('Задача успешно перенесена.');
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            if(xhr.status != '200'){
+                                redirect();
+                            }
+                        }
+                });
+            }
+        }).disableSelection();
+        
+        $("ul").delegate(".editTask", "click", function(){
+            var task = getTaskForEdit($(this).parent().attr('id'));
+            console.log(task);
+            $('#editTask').find('#eTitle').val(task.title);
+            if(task.done){
+                $('#editTask').find('#eDone').attr('checked','checked');
+            }else {
+                $('#editTask').find('#eDone').removeAttr('checked');
+            }
+            $( "#eDate" ).datepicker({ 
+                    dateFormat: 'yy-mm-dd',
+                    showAnim: 'clip',
+            });
+		    $('#eTime').timepicker({
+                    timeFormat: 'HH:mm',
+                    minHour: null,
+                    minMinutes: null,
+                    minTime: null,
+                    maxHour: null,
+                    maxMinutes: null,
+                    maxTime: null,
+                    startHour: 7,
+                    startMinutes: 0,
+                    startTime: null,
+                    interval: 15,
+                    change: function(time) {}
+        });
+            $('#editTask').modal('show');
+        });
+
                            
 }); 	
   
