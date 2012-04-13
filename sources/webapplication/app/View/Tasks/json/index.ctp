@@ -1,1 +1,1 @@
-<?php echo json_encode($arrTaskOnDays); ?>
+<?php echo json_encode($result); ?>

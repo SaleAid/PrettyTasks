@@ -74,6 +74,36 @@ $(document).ready(function() {
                         }
                 })
       }
+      
+       var testIndex = function(){
+
+                $.ajax({
+                        url:'/tasks/index.json',
+                        type:'GET',
+                        data: {},
+                        success: function(data) {
+                            console.log(data);
+                            if (data){
+                            
+                                if(status){
+                                    //editable.addClass('complete');
+                                    //alert('Задача успешно выполнена.');    
+                                }else{
+                                    //editable.removeClass('complete');
+                                    //alert('Задача открыта.');
+                                }
+                                
+                                 
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            if(xhr.status != '200'){
+                                redirect();
+                            }
+                        }
+                })
+      }
+      //testIndex();
 	
 });
 

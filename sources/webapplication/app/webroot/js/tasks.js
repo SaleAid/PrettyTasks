@@ -70,9 +70,10 @@ $(document).ready(function()  {
             var code = (e.keyCode ? e.keyCode : e.which);
             if(code == 13) {
                 $.ajax({
-                    url:'/tasks/addNewTask',
+                    url:'/tasks/addNewTask.xhtml',
                     type:'POST',
                     data: {title: $(this).val(), date: tabDay },
+                    dataType:'html',
                     success: function(data) {
                         if(data){
                             mesg('Задача успешно создана.');
@@ -94,9 +95,10 @@ $(document).ready(function()  {
             var code = (e.keyCode ? e.keyCode : e.which);
             if(code == 13) {
                 $.ajax({
-                    url:'/tasks/addFutureTask',
+                    url:'/tasks/addFutureTask.xhtml',
                     type:'POST',
                     data: { title: $(this).val()},
+                    dataType:'html',
                     success: function(data) {
                       if(data){
                         mesg('Задача успешно создана.');
@@ -123,7 +125,7 @@ $(document).ready(function()  {
                         type:'POST',
                         data: {title: value, id: task_id },
                         success: function(data) {
-                            if (data.result !== false){
+                            if (data.success !== false){
                                mesg('Задача  успешно изменена.');
                                if(data.data.Task.priority){
                                     $(editable).addClass('important');
@@ -152,14 +154,15 @@ $(document).ready(function()  {
                 var status = $(this).is(":checked");
                 var editable = $(this).siblings(".editable");
                 $.ajax({
-                        url:'/tasks/setDone',
+                        url:'/tasks/setDone.json',
                         type:'POST',
                         data: {  id: $(this).parent().attr('id'),
                                  checked: status ? '1': '0',
                               },
                         success: function(data) {
-                            if (data){
-                                if(status){
+                        	console.log(data);
+                            if (data.success){
+                                if(data.data.Task.done==1){
                                     editable.addClass('complete');
                                     mesg('Задача успешно выполнена.');    
                                 }else{

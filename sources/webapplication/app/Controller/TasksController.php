@@ -17,10 +17,15 @@ class TasksController extends AppController {
 		'Html', 'Js', 'Time'
 	);
 
-	public $layout = 'tasks';
+	protected function _prepareResponse() {
+		return array(
+			'success' => false
+		);
+	}
 
 	public function index() {
-		
+		$this->layout = 'tasks';
+		$result = $this->_prepareResponse();
 		$arrTaskOnDays = array();
 		$arrTaskOnDays['Today'] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', time()));
 		$arrTaskOnDays['Tomorrow'] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', '+1 days'));
@@ -29,20 +34,22 @@ class TasksController extends AppController {
 		}
 		$arrAllExpired = $this->Task->getAllExpired($this->Auth->user('id'));
 		$arrAllFuture = $this->Task->getAllFuture($this->Auth->user('id'));
-		$this->set('arrAllFuture', $arrAllFuture);
-		$this->set('arrAllExpired', $arrAllExpired);
-		$this->set('arrTaskOnDays', $arrTaskOnDays);
-		$this->set('result', true);
+		$this->set('arrAllFuture', $arrAllFuture); //TODO rewrite for using $result
+		$this->set('arrAllExpired', $arrAllExpired); //TODO rewrite for using $result
+		$this->set('arrTaskOnDays', $arrTaskOnDays); //TODO rewrite for using $result
+		$result['success'] = true;
+		$result['data']['arrAllFuture'] = $arrAllFuture;
+		$result['data']['arrAllExpired'] = $arrAllExpired;
+		$result['data']['arrTaskOnDays'] = $arrTaskOnDays;
+		$this->set('result', $result);
 	}
 
 	public function setTitle() {
-		$result = array(
-			'result' => false
-		);
+		$result = $this->_prepareResponse();
 		if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
 			$task = $this->Task->setTitle($this->request->data['title'])->save();
 			if ($task) {
-				$result['result'] = true;
+				$result['success'] = true;
 				$result['data'] = $task;
 			
 			}
@@ -51,27 +58,27 @@ class TasksController extends AppController {
 	}
 
 	public function addNewTask() {
-		$this->autoRender = false;
-		if ($this->request->is('ajax')) {
-			if ($this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->save()) {
-				$this->set('task_id', $this->Task->getLastInsertID());
-				$this->set('title', $this->request->data['title']);
-				$this->autoRender = true;
-			}
+		$result = $this->_prepareResponse();
+		//TODO check data before call function
+		$task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->save();
+		if ($task) {
+			$result['success'] = true;
+			$result['data'] = $task;
 		}
-		return false;
+		$this->set('result', $result);
+	
 	}
 
 	public function addFutureTask() {
-		$this->autoRender = false;
-		if ($this->request->is('ajax')) {
-			if ($this->Task->create($this->Auth->user('id'), $this->request->data['title'], null, null, null, 0, 1)->save()) {
-				$this->set('task_id', $this->Task->getLastInsertID());
-				$this->set('title', $this->request->data['title']);
-				$this->autoRender = true;
-			}
+		//TODO Maybe it is possible to merge this function with addNewTask? Looks as very similar
+		$result = $this->_prepareResponse();
+		//TODO check data before call function
+		$task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], null, null, null, 0, 1)->save();
+		if ($task) {
+			$result['success'] = true;
+			$result['data'] = $task;
 		}
-		return false;
+		$this->set('result', $result);
 	}
 
 	public function changeOrders() {
@@ -87,15 +94,15 @@ class TasksController extends AppController {
 	}
 
 	public function setDone() {
-		$this->autoRender = false;
-		if ($this->request->is('ajax')) {
-			if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-				if ($this->Task->setDone($this->request->data['checked'])->save()) {
-					return true;
-				}
+		$result = $this->_prepareResponse();
+		if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
+			$task = $this->Task->setDone($this->request->data['checked'])->save();
+			if ($task) {
+				$result['success'] = true;
+				$result['data'] = $task;
 			}
-			return false;
 		}
+		$this->set('result', $result);
 	}
 
 	public function deleteTask() {
