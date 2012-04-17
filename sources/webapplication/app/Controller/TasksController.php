@@ -51,27 +51,19 @@ class TasksController extends AppController {
 	}
 
 	public function addNewTask() {
-		$result = $this->_prepareResponse();
+	   	$result = $this->_prepareResponse();
 		//TODO check data before call function
-		$task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->save();
+        if(isset($this->request->data['date']) and !empty($this->request->data['date']) ){
+            $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->save();    
+        }else{
+            $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], null, null, null, 0, 1)->save();
+        }
 		if ($task) {
 			$result['success'] = true;
 			$result['data'] = $task;
 		}
 		$this->set('result', $result);
 	
-	}
-
-	public function addFutureTask() {
-		//TODO Maybe it is possible to merge this function with addNewTask? Looks as very similar
-		$result = $this->_prepareResponse();
-		//TODO check data before call function
-		$task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], null, null, null, 0, 1)->save();
-		if ($task) {
-			$result['success'] = true;
-			$result['data'] = $task;
-		}
-		$this->set('result', $result);
 	}
 
 	public function changeOrders() {

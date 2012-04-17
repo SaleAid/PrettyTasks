@@ -45,6 +45,8 @@ function checkLogin(){
        }
     });
 }
+
+
 var dropped = false;
 function redirect(){
     window.location.href = "/";
@@ -95,7 +97,7 @@ $(document).ready(function()  {
             var code = (e.keyCode ? e.keyCode : e.which);
             if(code == 13) {
                 $.ajax({
-                    url:'/tasks/addFutureTask.xhtml',
+                    url:'/tasks/addNewTask.xhtml',
                     type:'POST',
                     data: { title: $(this).val()},
                     dataType:'html',
@@ -300,7 +302,7 @@ $(document).ready(function()  {
         
         $("ul").delegate(".editTask", "click", function(){
             var task = getTaskForEdit($(this).parent().attr('id'));
-            console.log(task);
+            //console.log(task);
             $('#editTask').find('#eTitle').val(task.title);
             if(task.done){
                 $('#editTask').find('#eDone').attr('checked','checked');
