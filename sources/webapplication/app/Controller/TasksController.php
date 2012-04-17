@@ -26,21 +26,14 @@ class TasksController extends AppController {
 	public function index() {
 		$this->layout = 'tasks';
 		$result = $this->_prepareResponse();
-		$arrTaskOnDays = array();
-		$arrTaskOnDays['Today'] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', time()));
-		$arrTaskOnDays['Tomorrow'] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', '+1 days'));
-		for($i = 2; $i <= 5; $i ++) {
-			$arrTaskOnDays[CakeTime::format('l', '+' . $i . ' days')] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', '+' . $i . ' days'));
-		}
-		$arrAllExpired = $this->Task->getAllExpired($this->Auth->user('id'));
-		$arrAllFuture = $this->Task->getAllFuture($this->Auth->user('id'));
-		$this->set('arrAllFuture', $arrAllFuture); //TODO rewrite for using $result
-		$this->set('arrAllExpired', $arrAllExpired); //TODO rewrite for using $result
-		$this->set('arrTaskOnDays', $arrTaskOnDays); //TODO rewrite for using $result
 		$result['success'] = true;
-		$result['data']['arrAllFuture'] = $arrAllFuture;
-		$result['data']['arrAllExpired'] = $arrAllExpired;
-		$result['data']['arrTaskOnDays'] = $arrTaskOnDays;
+		$result['data']['arrAllFuture'] = $this->Task->getAllFuture($this->Auth->user('id'));
+		$result['data']['arrAllExpired'] = $this->Task->getAllExpired($this->Auth->user('id'));
+		$result['data']['arrTaskOnDays']['Today'] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', time()));
+		$result['data']['arrTaskOnDays']['Tomorrow'] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', '+1 days'));
+		for($i = 2; $i <= 5; $i ++) {
+			$result['data']['arrTaskOnDays'][CakeTime::format('l', '+' . $i . ' days')] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', '+' . $i . ' days'));
+		}
 		$this->set('result', $result);
 	}
 

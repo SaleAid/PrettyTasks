@@ -52,6 +52,7 @@
         <a href="#" class="btn" data-dismiss="modal">Закрыть</a>
     </div>
 </div>
+<!-- End modal --!>
 
 <div class="row-fluid row">
     <div class="span7 span-fixed-sidebar">
@@ -86,8 +87,8 @@
                      <input type="text" class="createTask span4" placeholder=" +Добавить задание…"/>
                      <hr />
                      <ul id="sortableToday" class="sortable connectedSortable ui-helper-reset" date="<?php echo $this->Time->format('Y-m-d', time(), true); ?>">
-                     <?php if(isset($arrTaskOnDays['Today']) && !empty($arrTaskOnDays['Today'])):?>
-                        <?php foreach($arrTaskOnDays['Today'] as $item):?>
+                     <?php if(isset($result['data']['arrTaskOnDays']['Today']) && !empty($result['data']['arrTaskOnDays']['Today'])):?>
+                        <?php foreach($result['data']['arrTaskOnDays']['Today'] as $item):?>
                             <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
                                 <span> <i class="icon-move"> </i></span>
                                 <span class="time"> <i class="icon-time"> </i></span>
@@ -111,8 +112,8 @@
                      <input type="text" class="createTask span4" placeholder=" +Добавить задание…"/>
                      <hr />
                      <ul id="sortableTomorrow" class="sortable connectedSortable ui-helper-reset" date="<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>">
-                     <?php if(isset($arrTaskOnDays['Tomorrow']) && !empty($arrTaskOnDays['Tomorrow'])):?>
-                        <?php foreach($arrTaskOnDays['Tomorrow'] as $item):?>
+                     <?php if(isset($result['data']['arrTaskOnDays']['Tomorrow']) && !empty($result['data']['arrTaskOnDays']['Tomorrow'])):?>
+                        <?php foreach($result['data']['arrTaskOnDays']['Tomorrow'] as $item):?>
                             <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
                                 <span> <i class="icon-move"> </i></span>
                                 <span class="time"> <i class="icon-time"> </i></span>
@@ -137,8 +138,8 @@
                         <input type="text" class="createTask span4" placeholder=" +Добавить задание…"/>
                         <hr />
                         <ul id="sortable<?php echo $this->Time->format('l', '+'.$i.' days', true); ?>" class="sortable connectedSortable ui-helper-reset" date="<?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true); ?>">
-                            <?php if(isset($arrTaskOnDays[$this->Time->format('l', '+'.$i.' days', true)]) && !empty($arrTaskOnDays[$this->Time->format('l', '+'.$i.' days', true)])):?>
-                                <?php foreach($arrTaskOnDays[$this->Time->format('l', '+'.$i.' days', true)] as $item):?>
+                            <?php if(isset($result['data']['arrTaskOnDays'][$this->Time->format('l', '+'.$i.' days', true)]) && !empty($result['data']['arrTaskOnDays'][$this->Time->format('l', '+'.$i.' days', true)])):?>
+                                <?php foreach($result['data']['arrTaskOnDays'][$this->Time->format('l', '+'.$i.' days', true)] as $item):?>
                                     <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
                                         <span> <i class="icon-move"> </i></span>
                                         <span class="time"> <i class="icon-time"> </i></span>
@@ -171,8 +172,8 @@
             <input type="text" class="span4" placeholder=" +Добавить задание…"/>
             <hr />
             <ul class="sortable conWith ui-helper-reset">
-                <?php if(isset($arrAllFuture) && !empty($arrAllFuture)):?>
-                    <?php foreach($arrAllFuture as $item):?>
+                <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])):?>
+                    <?php foreach($result['data']['arrAllFuture'] as $item):?>
                         <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
                             <span> <i class="icon-move"> </i></span>
                             
@@ -186,9 +187,9 @@
             </ul>
           </div>
           <div class="tab-pane" id="expired">
-                <?php if(isset($arrAllExpired) && !empty($arrAllExpired)):?>
+                <?php if(isset($result['data']['arrAllExpired']) && !empty($result['data']['arrAllExpired'])):?>
                 <ul class="sortable connectedSortable ui-helper-reset">
-                    <?php foreach($arrAllExpired as $item):?>
+                    <?php foreach($result['data']['arrAllExpired'] as $item):?>
                         <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
                             <span> <i class="icon-move"> </i></span>
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
