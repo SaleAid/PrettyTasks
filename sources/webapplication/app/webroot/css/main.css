@@ -1,17 +1,13 @@
 @import "bootstrap.min.css";
 @import "jquery.jgrowl.css";
-@media ( min-width: 1200px) {
-    .span12, .container {
-    width: 1200px;
-  }
-}
+
 html{
      overflow-y: scroll;
 }
 
-body{min-width:1200px}
+
 .container{
-    min-width:1100px
+    min-width:1000px
 }
 footer {
 	padding: 0 10px 0 10px;

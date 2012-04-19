@@ -7,19 +7,15 @@
     <?php echo $this->Html->charset(); ?>
     
     <title><?php echo $title_for_layout; ?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
     
     <?php echo $this->Html->meta('icon');?>
     
     <style type="text/css">
       body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
     
@@ -56,7 +52,7 @@
     
     <?php echo $this->element('main_menu'); ?> 
     
-    <div class="container ">
+    <div class="container">
       
         <?php echo $this->Session->flash(); ?>
             
@@ -64,13 +60,9 @@
 
         <?php echo $content_for_layout; ?>
         
-    <div class="push"><!--//--></div>
-    </div>
     
-      <hr>
-      <footer>
-        <p>&copy; Company 2012</p>
-      </footer>
+    </div>
+
    <?php echo $this->Js->writeBuffer(); ?>
    <?php //echo $this->element('sql_dump'); ?>
   </body>

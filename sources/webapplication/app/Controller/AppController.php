@@ -1,6 +1,7 @@
 <?php 
 class AppController extends Controller{
     public $components = array(
+                'AutoLogin',
                 'Session',
                 'Auth' => array(
                     'loginAction' => array('controller' => 'users', 'action' => 'login'),
@@ -34,6 +35,30 @@ class AppController extends Controller{
     }
     
     public function beforeFilter(){
+        
+        $this->AutoLogin->settings = array(
+		// Model settings
+		'model' => 'User',
+		'username' => 'username',
+		'password' => 'password',
+ 
+		// Controller settings
+		'plugin' => '',
+		'controller' => 'users',
+		'loginAction' => 'login',
+		'logoutAction' => 'logout',
+ 
+		// Cookie settings
+		'cookieName' => 'rememberMe',
+		'expires' => '+1 month',
+ 
+		// Process logic
+		'active' => true,
+		'redirect' => true,
+		'requirePrompt' => true
+	);
+        
+        
     	 $this->_checkMobile();
          $this->loadModel('User');
          $this->currentUser =  $this->User->getUser($this->Auth->user('id'));

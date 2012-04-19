@@ -18,6 +18,10 @@
             
                     <?php echo $this->Form->input('password',array('label'=>' Пароль: ','class'=>'input-xlarge', 'placeholder'=>'Ваш пароль')); ?>
             
+                     <label class="checkbox">
+                        <?php echo $this->Form->input('auto_login', array('label'=> __('Оставаться в системе'), 'type'=>'checkbox')); ?>
+                        
+                     </label>
                     <?php echo $this->Form->submit(' Войти ',array('class'=>' btn btn-primary')); ?>
                     
                     <?php echo $this->Html->link(' Забыли пароль? ', array('controller' => 'users', 'action' => 'password_resend')); ?>

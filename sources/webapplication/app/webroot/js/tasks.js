@@ -5,18 +5,21 @@ function getTaskForEdit(id){
 
 function getTaskFromPage(id){
     var data = {
-        title: $('#'+id).children('.editable').text(),
-        done:  $('#'+id).children('.done').is(":checked"),   
+        title:   $('#'+id).children('.editable').text(),
+        done:    $('#'+id).children('.done').is(":checked"),
+        date:    $('#'+id).parent().attr('date'),
+        time:    $('#'+id).children('.time').text(),
+        comment: 'comment',   
     }
     return data;
 }
 
-function mesg (text){
+function mesg (message){
     $.jGrowl.defaults.pool = 2;
-    $.jGrowl(text, { 
+    $.jGrowl(message.message, { 
                     glue: 'before',
                     position: 'custom',
-                    theme: 'green_theme',
+                    theme: message.type,
                     speed: 'slow',
                     life: '1000',
 					animateOpen: { 
@@ -46,6 +49,36 @@ function checkLogin(){
     });
 }
 
+function superAjax(url, data){
+     var result = null;
+     $.ajax({
+            url:url,
+            type:'POST',
+            async: false,
+            data: data,
+            success: function(data) {
+                result = data;
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                if(xhr.status != '200'){
+                    redirect();
+                }
+            }
+     });
+     return result;
+}
+function AddTask(data){
+    task = $('<li></li>').addClass('ui-state-default').attr('id',data.Task.id)
+        .append($('<span></span>').append($('<i></i>').addClass('icon-move')))
+        .append($('<span></span>').addClass('time').append($('<i></i>').addClass('icon-time')))
+        .append($('<input></input>').addClass('done').attr('type','checkbox'))
+        .append($('<span></span>').addClass('editable input-xxlarge').text(data.Task.title))
+        .append($('<span></span>').addClass('editTask').append($('<i></i>').addClass('icon-pencil')))
+        .append($('<span></span>').addClass('deleteTask').append($('<i></i>').addClass('icon-ban-circle')))
+        ;	
+    return task;
+}
+
 
 var dropped = false;
 function redirect(){
@@ -67,86 +100,56 @@ $(document).ready(function()  {
         
                  
          $(".createTask").bind('keypress', function(e) {
-            var ul = $(this).siblings("ul");
-            var tabDay = $(this).siblings(".tabDay").text();
+            var ul = $(this).parent().siblings("ul");
+            var day = $(this).parent().siblings("ul").attr('date');
             var code = (e.keyCode ? e.keyCode : e.which);
             if(code == 13) {
-                $.ajax({
-                    url:'/tasks/addNewTask.xhtml',
-                    type:'POST',
-                    data: {title: $(this).val(), date: tabDay },
-                    dataType:'html',
-                    success: function(data) {
-                        if(data){
-                            mesg('Задача успешно создана.');
-                            ul.append(data);  
-                        }
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                            if(xhr.status != '200'){
-                                redirect();
-                            }
-                    }
-                });
-            $(this).val(null);
+                var data = superAjax('/tasks/addNewTask.json',{title: $(this).val(), date: day });
+                if (data.result.success){
+                    ul.append(AddTask(data.result.data));  
+                }
+                mesg(data.result.message);
+                $(this).val(null);
             }
         });
         
         $("#future input").bind('keypress', function(e) {
-            var ul = $(this).siblings("ul");
+            var ul = $(this).parent().siblings("ul");
             var code = (e.keyCode ? e.keyCode : e.which);
             if(code == 13) {
-                $.ajax({
-                    url:'/tasks/addNewTask.xhtml',
-                    type:'POST',
-                    data: { title: $(this).val()},
-                    dataType:'html',
-                    success: function(data) {
-                      if(data){
-                        mesg('Задача успешно создана.');
-                        ul.append(data);  
-                      }
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                            if(xhr.status != '200'){
-                                redirect();
-                            }
-                    }
-                });
+                var data = superAjax('/tasks/addNewTask.json',{title: $(this).val()});
+                if (data.result.success){
+                    ul.append(AddTask(data.result.data));  
+                }
+                mesg(data.result.message);
             $(this).val(null);
             }
         });
         
-        
         $("ul").delegate(".editable", "click", function(){
              $(".editable").editable(function(value, settings) { 
-                var editable = this;
-                var task_id = $(editable).parent().attr('id');
-                $.ajax({
-                        url:'/tasks/setTitle.json',
-                        type:'POST',
-                        data: {title: value, id: task_id },
-                        success: function(data) {
-                            if (data.success !== false){
-                               mesg('Задача  успешно изменена.');
-                               if(data.data.Task.priority){
-                                    $(editable).addClass('important');
-                               }else{
-                                    $(editable).removeClass('important');
-                               }
-                            }else{
-                                mesg('Задача  не изменена.');
-                            }
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            if(xhr.status != '200'){
-                                redirect();
-                            }
-                        }
-                    });
-                    return value;
-                }
+                    var editable = this;
+                    var task_id = $(editable).parent().attr('id');
+                    var data = superAjax('/tasks/setTitle.json',{title: value, id: task_id });
+                    if (data.result.success){
+                       if(data.result.data.Task.priority){
+                            $(editable).addClass('important');
+                       }else{
+                            $(editable).removeClass('important');
+                       }
+                       result = value
+                    }else{
+                        result = data.result.data.Task.title;
+                    }
+                    mesg(data.result.message);
+                    return result;    
+             }
              ,{
+                cssclass : 'inlineform',
+                width: 520,
+                height: 20,
+                indicator : "<img src='img/indicator.gif'>",
+                placeholder : "",
                 tooltip : "Щелкните чтоб отредактировать этот текст",
                 style  : "inherit"
             });
@@ -155,35 +158,16 @@ $(document).ready(function()  {
        $("ul").delegate(".done", "click", function(){
                 var status = $(this).is(":checked");
                 var editable = $(this).siblings(".editable");
-                $.ajax({
-                        url:'/tasks/setDone.json',
-                        type:'POST',
-                        data: {  id: $(this).parent().attr('id'),
-                                 checked: status ? '1': '0',
-                              },
-                        success: function(data) {
-                        	console.log(data);
-                            if (data.success){
-                                if(data.data.Task.done==1){
-                                    editable.addClass('complete');
-                                    mesg('Задача успешно выполнена.');    
-                                }else{
-                                    editable.removeClass('complete');
-                                    mesg('Задача открыта.');
-                                }
-                            }
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            if(xhr.status != '200'){
-                                redirect();
-                            }
-                        }
-                }); 
+                var data = superAjax('/tasks/setDone.json',{id: $(this).parent().attr('id'), checked: status ? '1': '0' });
+                if (data.result.success){
+                    if(data.result.data.Task.done == 1){
+                        editable.addClass('complete');
+                    }else{
+                        editable.removeClass('complete');
+                    }
+                    mesg(data.result.message);
+                }
         });
-        
-     $("ul").delegate(".deleteTask", "hover", function(e){   
-        $('.deleteTask').attr('title','Click to delete').tooltip();
-     });
         
     $("ul").delegate(".deleteTask", "click", function(e){
         $("ul").undelegate(".deleteTask", "click");
@@ -195,27 +179,14 @@ $(document).ready(function()  {
               expiresIn: 3,
               bindsOnEvent: "click",
               confirmCallback: function(el) {
-                     $.ajax({
-                            url:'/tasks/deleteTask',
-                            type:'POST',
-                            data: { id: el.parent().attr('id'),},
-                            success: function(data) {
-                                if (data){
-                                        el.parent().remove();
-                                        mesg('Задача успешно удалена.');    
-                                    }else{
-                                       mesg('Ошибка при удалении .');
-                                 }
-                            },
-                            error: function (xhr, ajaxOptions, thrownError) {
-                                if(xhr.status != '200'){
-                                    redirect();
-                                }
-                            }
-                    }); 
+                 var data = superAjax('/tasks/deleteTask.json',{id: el.parent().attr('id')});
+                 if (data.result.success){
+                        el.parent().remove();
+                 }
+                 mesg(data.result.message);
               },
               cancelCallback: function(el) {
-                 mesg('Отмена удаления .');
+                 //mesg('Отмена удаления .');
               },
         });
     });
@@ -226,7 +197,7 @@ $(document).ready(function()  {
             var $tab_items = $( "ul:first li", $tabs ).droppable({
                          tolerance:'pointer', 
                          accept: ".connectedSortable li",
-                         hoverClass: "ui-state-hover", 
+                         hoverClass: "hover", 
                          drop: function( event, ui ) { 
                             dropped = true;
                             var $item = $(this);
@@ -238,34 +209,19 @@ $(document).ready(function()  {
                                     }else{
                                         $(this).appendTo($list).show('slow');
                                     }
-                                $.ajax({
-                                        url:'/tasks/dragOnDay',
-                                        type:'POST',
-                                        data: { id: $(this).attr('id'),
-                                                date: $(this).parent().attr('date')
-                                              },
-                                        success: function(data) {
-                                            if (data){
-                                                    mesg('Задача успешно перемещена (moveTo).');    
-                                                }else{
-                                                   mesg('Ошибка при перемещении (moveTo).');
-                                             }
-                                        },
-                                        error: function (xhr, ajaxOptions, thrownError) {
-                                            if(xhr.status != '200'){
-                                               // redirect();
-                                            }
-                                        }
-                                }); 
+                                    var data = superAjax('/tasks/dragOnDay.json',{id: $(this).attr('id'),date: $(this).parent().attr('date')});
+                                    if (data.result.success){
+                                        mesg(data.result.message);
+                                    } 
                             });
-                           }
-                          });
-                          
+                         } 
+                });
+                                                     
     $( ".sortable" ).sortable({
 			cancel: ".ui-state-disabled",
             opacity: 0.9, 
             cursor: 'move', 
-            placeholder: "ui-state-highlight",
+            placeholder: ".ui-state-highlight",
             handle: 'span .icon-move',
             //containment: '.row',
             change: function(event, ui) {
@@ -280,29 +236,15 @@ $(document).ready(function()  {
                     dropped = false;
                     return true;
                 }
-                $.ajax({
-                        url:'/tasks/changeOrders',
-                        type:'POST',
-                        data: {  id: ui.item.attr('id'),
-                                 new_pos: ui.item.index()+1,
-                              },
-                        success: function(data) {
-                            if (data){
-                                 mesg('Задача успешно перенесена.');
-                            }
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            if(xhr.status != '200'){
-                                redirect();
-                            }
-                        }
-                });
+                var data = superAjax('/tasks/changeOrders.json',{id: ui.item.attr('id'), new_pos: ui.item.index()+1});
+                if (data.result.success){
+                    mesg(data.result.message);
+                }
             }
         }).disableSelection();
         
         $("ul").delegate(".editTask", "click", function(){
             var task = getTaskForEdit($(this).parent().attr('id'));
-            //console.log(task);
             $('#editTask').find('#eTitle').val(task.title);
             if(task.done){
                 $('#editTask').find('#eDone').attr('checked','checked');
@@ -312,7 +254,8 @@ $(document).ready(function()  {
             $( "#eDate" ).datepicker({ 
                     dateFormat: 'yy-mm-dd',
                     showAnim: 'clip',
-            });
+                    minDate: 0,
+            }).val(task.date);
 		    $('#eTime').timepicker({
                     timeFormat: 'HH:mm',
                     minHour: null,
@@ -328,6 +271,36 @@ $(document).ready(function()  {
                     change: function(time) {}
         });
             $('#editTask').modal('show');
+        });
+        $("#eSave").click(function(){
+            var $title = $('#editTask').find('#eTitle').val();
+            var $done = $('#editTask').find('#eDone').is(":checked");
+            var $date = $( "#eDate" ).val();
+            var $time = $('#eTime').val();
+            var $comment = $('#eComment').val();
+            $.ajax({
+                        url:'/tasks/editTask.json',
+                        type:'POST',
+                        data: { title: $('#editTask').find('#eTitle').val(),
+                                done: $('#editTask').find('#eDone').is(":checked"),
+                                date: $( "#eDate" ).val(),
+                                time: $('#eTime').val(),
+                                comment: $('#eComment').val(),
+                              },
+                        success: function(data) {
+                            if (data.result.success){
+                                 mesg('Задача успешно отредактирована.');
+                                 $('#editTask').modal('hide');
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            if(xhr.status != '200'){
+                                redirect();
+                            }
+                        }
+                });
+            
+            
         });
 
                            

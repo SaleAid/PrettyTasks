@@ -39,21 +39,24 @@ class TasksController extends AppController {
 
 	public function setTitle() {
 		$result = $this->_prepareResponse();
-		if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-			$task = $this->Task->setTitle($this->request->data['title'])->save();
+		if ($originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
+		  	$task = $this->Task->setTitle($this->request->data['title'])->save();
 			if ($task) {
 				$result['success'] = true;
 				$result['data'] = $task;
-			
-			}
+			    $result['message'] = array('type'=>'success', 'message' => __('Задача  успешно изменена.')); 
+			}else {
+			     $result['data'] = $originTask;
+                 $result['message'] = array('type'=>'alert', 'message' => __('Задача  не изменена'));
+            }
 		}
 		$this->set('result', $result);
+        $this->set('_serialize', array('result'));
 	}
 
 	public function addNewTask() {
 	   	$result = $this->_prepareResponse();
-		//TODO check data before call function
-        if(isset($this->request->data['date']) and !empty($this->request->data['date']) ){
+		if(isset($this->request->data['date']) and !empty($this->request->data['date']) ){
             $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->save();    
         }else{
             $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], null, null, null, 0, 1)->save();
@@ -61,22 +64,25 @@ class TasksController extends AppController {
 		if ($task) {
 			$result['success'] = true;
 			$result['data'] = $task;
-		}
+            $result['message'] = array('type'=>'success', 'message' => __('Задача успешно создана.'));
+		}else {
+            $result['message'] = array('type'=>'alert', 'message' => __('Задача  не создана.'));
+        }
 		$this->set('result', $result);
-	
+        $this->set('_serialize', array('result'));
 	}
 
 	public function changeOrders() {
-		$this->autoRender = false;
-		if ($this->request->is('ajax')) {
-			if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-				if ($this->Task->setOrder($this->request->data['new_pos'])->save()) {
-					return true;
-				}
+	   $result = $this->_prepareResponse();
+		if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
+			if ($this->Task->setOrder($this->request->data['new_pos'])->save()) {
+				$result['success'] = true;
+                $result['message'] = array('type'=>'success', 'message' => __('Задача успешно перемещена.'));    
 			}
-			return false;
 		}
-	}
+        $this->set('result', $result);
+        $this->set('_serialize', array('result'));
+    }
 
 	public function setDone() {
 		$result = $this->_prepareResponse();
@@ -85,42 +91,50 @@ class TasksController extends AppController {
 			if ($task) {
 				$result['success'] = true;
 				$result['data'] = $task;
-			}
+                if($task['Task']['done']){
+                    $result['message'] = array('type'=>'success', 'message' => __('Задача успешно выполнена.'));    
+                }else{
+                    $result['message'] = array('type'=>'alert', 'message' => __('Задача открыта.'));
+                }
+            }
 		}
 		$this->set('result', $result);
+        $this->set('_serialize', array('result'));
 	}
 
 	public function deleteTask() {
-		$this->autoRender = false;
-		if ($this->request->is('ajax')) {
-			if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-				return $this->Task->delete();
+		$result = $this->_prepareResponse();
+        if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
+			if($this->Task->delete()){
+			    $result['success'] = true;
+                $result['message'] = array('type'=>'success', 'message' => __('Задача успешно удалена.'));    
+			}else {
+			    $result['message'] = array('type'=>'alert', 'message' => __('Error.'));
 			}
-			return false;
 		}
-	}
-
-	public function moveTo() {
-		$this->autoRender = false;
-		if ($this->request->is('ajax')) {
-			if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-				return $this->Task->moveTo($this->Auth->user('id'), $this->request->data['id'], $this->request->data['date']);
-			}
-			return false;
-		}
+		$this->set('result', $result);
+        $this->set('_serialize', array('result'));
 	}
 
 	public function dragOnDay() {
-		$this->autoRender = false;
-		if ($this->request->is('ajax')) {
-			if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-				if ($this->Task->setOrder(1)->setDate($this->request->data['date'])->save()) {
-					return true;
-				}
+		$result = $this->_prepareResponse();
+		if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
+			if ($this->Task->setOrder(1)->setDate($this->request->data['date'])->save()) {
+				$result['success'] = true;
+                $result['message'] = array('type'=>'success', 'message' => __('Задача успешно перемещена (moveTo).'));    
 			}
-			return false;
 		}
+        $this->set('result', $result);
+        $this->set('_serialize', array('result'));
 	}
+    
+    public function editTask(){
+        $result = $this->_prepareResponse();
+        $result['success'] = true;
+        $result['data'] = $this->request->data;
+        $this->set('result', $result);
+        $this->set('_serialize', array('result'));
+    }
 
 	//----------------------------------------------------------------------
 	/**
