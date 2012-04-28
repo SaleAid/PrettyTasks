@@ -5,9 +5,11 @@
     max-height: 90%;
     overflow-y: auto;
 }
+.sortable { list-style-type: none; margin: 0; padding: 0;  }
+
 
 .sortable li {
-    background: none;
+    height: 30px;
     margin: 5px;
     border: none;
 }
@@ -68,11 +70,13 @@ div.well{
     
 }
 .hover {
+    
     background-color: silver;
     
 }
 .tab2{
-    background-color: #A0975F;
+    color: red;
+    
 }
 
 /*jGrowl theme */
@@ -91,4 +95,19 @@ div.jGrowl div.alert {
 div.jGrowl.custom {
 	right: 				0px;
 	top: 				25px;
+}
+
+
+.sortable-drop { 
+    //height: 40px; 
+    //overflow: hidden;
+     
+     
+}
+.sortable-dropw li { 
+    padding: 0;
+    margin: 0;
+    height: 0; 
+    width: 0; 
+    overflow: hidden; 
 }

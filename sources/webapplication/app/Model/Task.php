@@ -196,6 +196,9 @@ class Task extends AppModel {
             $data[$this->alias]['priority'] = 1;
         }
         $data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;  
+        if(!$date){
+            $future = 1;
+        }
         $data[$this->alias]['future'] = $future ? $future : 0;
         return $data;
     }
@@ -286,12 +289,23 @@ class Task extends AppModel {
         return false;
     }
     
+    public function setTime($time){
+        $this->data[$this->alias]['time'] = $time;
+        return $this;
+    }
+        
     public function setDate($date){
         $this->data[$this->alias]['date'] = $date;
         return $this;
     }
+    
     public function setOrder($order){
         $this->data[$this->alias]['order'] = $order;
+        return $this;
+    }
+    
+     public function setFuture($future){
+        $this->data[$this->alias]['future'] = $future;
         return $this;
     }
     

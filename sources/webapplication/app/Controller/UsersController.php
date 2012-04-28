@@ -6,7 +6,7 @@ class UsersController extends AppController {
 
     public $name = 'Users';
     public $helpers = array('Form','Html','Js');
-    public $components = array('RequestHandler','Recaptcha.Recaptcha' => array('actions' => array('register','password_change','password_resend','password_reset')));
+    public $components = array('Recaptcha.Recaptcha' => array('actions' => array('register','password_resend','password_reset')));
     public $layout = 'profile';
     
     public function beforeFilter(){
@@ -24,7 +24,9 @@ class UsersController extends AppController {
     
     public function login(){
         $this->layout = 'login';
-        if($this->request->is('post')){
+        //if (!empty($this->request->data)) {
+        if ($this->User->validates()) {
+        //if($this->request->is('post')){
             if($this->Auth->login()){
                 if($this->Auth->user('active')){
                     if(!$this->Auth->user('is_blocked')){
@@ -39,6 +41,7 @@ class UsersController extends AppController {
                 $this->Session->setFlash(__('Your username or password was incorrect.'),'alert',array('class'=>'alert-error'));
             }
         }
+        //}
     }
     
     public function logout(){

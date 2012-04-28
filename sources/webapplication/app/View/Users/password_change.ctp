@@ -39,8 +39,6 @@
         
 ?>
 
-        <?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => 'clean')));?>
-           
         <?php echo $this->Form->submit(__('Сохранить изменения'),array('class'=>'btn btn-info'));?>
   
   	<?php echo $this->Form->end();?>

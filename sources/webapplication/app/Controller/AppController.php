@@ -36,28 +36,28 @@ class AppController extends Controller{
     
     public function beforeFilter(){
         
-        $this->AutoLogin->settings = array(
-		// Model settings
-		'model' => 'User',
-		'username' => 'username',
-		'password' => 'password',
- 
-		// Controller settings
-		'plugin' => '',
-		'controller' => 'users',
-		'loginAction' => 'login',
-		'logoutAction' => 'logout',
- 
-		// Cookie settings
-		'cookieName' => 'rememberMe',
-		'expires' => '+1 month',
- 
-		// Process logic
-		'active' => true,
-		'redirect' => true,
-		'requirePrompt' => true
-	);
-        
+//        $this->AutoLogin->settings = array(
+//    		// Model settings
+//    		'model' => 'User',
+//    		'username' => 'username',
+//    		'password' => 'password',
+//     
+//    		// Controller settings
+//    		'plugin' => '',
+//    		'controller' => 'users',
+//    		'loginAction' => 'login',
+//    		'logoutAction' => 'logout',
+//     
+//    		// Cookie settings
+//    		'cookieName' => 'rememberMe1',
+//    		'expires' => '+1 month',
+//     
+//    		// Process logic
+//    		'active' => true,
+//    		'redirect' => true,
+//    		'requirePrompt' => false,
+//        );
+//        
         
     	 $this->_checkMobile();
          $this->loadModel('User');

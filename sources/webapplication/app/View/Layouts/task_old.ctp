@@ -26,7 +26,24 @@
     
     <?php echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom'); ?>
             
+    <?php echo $this->Html->script('jquery-1.7.1.min.js'); ?>
     
+    <?php echo $this->Html->script('jquery.jeditable.mini.js'); ?>
+    
+    <?php echo $this->Html->script('jquery-ui-1.8.18.custom.min.js'); ?>
+        
+    <?php echo $this->Html->script('bootstrap.min.js'); ?>
+    
+    <?php echo $this->Html->script('jquery.jgrowl.min.js'); ?>
+    
+    <?php echo $this->Html->script('jquery.inline-confirmation.js'); ?>
+    
+    <?php echo $this->Html->script('jquery.timepicker-1.2.2.js'); ?>
+    
+    <?php echo $this->Html->script('main.js'); ?>
+    
+    <?php echo $this->Html->script('tasks.js'); ?>
+
 	<?php echo $scripts_for_layout; ?>
     
   </head>
@@ -45,27 +62,14 @@
         
     
     </div>
-
+    <!--
+      <hr>
+      <footer>
+        <p>&copy; Company 2012</p>
+      </footer>
+      
+      --!>
    <?php echo $this->Js->writeBuffer(); ?>
    <?php //echo $this->element('sql_dump'); ?>
-
-   <?php echo $this->Html->script('jquery-1.7.1.min.js'); ?>
-    
-    <?php echo $this->Html->script('jquery.jeditable.mini.js'); ?>
-    
-    <?php echo $this->Html->script('jquery-ui-1.8.18.custom.min.js'); ?>
-        
-    <?php echo $this->Html->script('bootstrap.min.js'); ?>
-    
-    <?php echo $this->Html->script('jquery.jgrowl.min.js'); ?>
-    
-    <?php echo $this->Html->script('jquery.inline-confirmation.js'); ?>
-    
-    <?php echo $this->Html->script('jquery.timepicker-1.2.2.js'); ?>
-    
-    <?php echo $this->Html->script('main.js'); ?>
-    
-    <?php echo $this->Html->script('tasks.js'); ?>
-
   </body>
 </html>
