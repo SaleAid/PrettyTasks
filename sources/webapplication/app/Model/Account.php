@@ -111,7 +111,7 @@ class Account extends AppModel {
 	        return false;
         }
         $this->saveField('activate_token',$this->User->generateToken());
-        return $this->sendActivationAccount($id, $controllerName);
+        return $this->sendActivationAccount($id, $controllerName);//TODO Where is this function?
     }
     
    

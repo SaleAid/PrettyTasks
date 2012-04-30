@@ -58,7 +58,7 @@ function taskSetDone(id, done) {
 function onSetDone(data) {
 	var message = ' is successfully opened';
 	if(+data.data.Task.done){
-		message = ' is successfully closed'; 
+		message = ' is successfully completed'; 
 	}
 	showMessage("Task " + data.data.Task.title + message);
 	// showMessage(""+data.message.message);
