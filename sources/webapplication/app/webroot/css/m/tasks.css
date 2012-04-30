@@ -1,9 +1,16 @@
 @CHARSET "UTF-8";
 
+label.important span.ui-btn-text {
+	color: #f00;
+	font-weight: bold;
+}
+
 label.complete span.ui-btn-text {
 	text-decoration: line-through;
 	color: #ccc;
 }
+
+
 
 #primary li .ui-btn-text {
 	width: 36px;

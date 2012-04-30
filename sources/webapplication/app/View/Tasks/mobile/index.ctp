@@ -20,7 +20,7 @@
 			foreach($result['data']['arrTaskOnDays']['Today'] as $item):
 		?>
 		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
-		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
+		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
 		<?php
 		endforeach;
 		endif;
@@ -56,7 +56,7 @@
 			foreach($result['data']['arrTaskOnDays']['Tomorrow'] as $item):
 		?>
 		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
-		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
+		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
 		<?php
 		endforeach;
 		endif;
@@ -93,7 +93,7 @@
 
 		?>
 		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
-		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
+		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
 		<?php
 		endforeach;
 		endif;
@@ -135,7 +135,7 @@
 			foreach($day as $item):
 		?>
 		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
-		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
+		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
 		<?php
 		endforeach;
 		?>
