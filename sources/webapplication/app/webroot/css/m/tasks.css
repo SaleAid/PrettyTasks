@@ -10,6 +10,10 @@ label.complete span.ui-btn-text {
 	color: #ccc;
 }
 
+body.hidden{
+	display: none;
+}
+
 
 
 #primary li .ui-btn-text {
