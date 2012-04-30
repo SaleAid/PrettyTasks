@@ -14,7 +14,7 @@
 	
 	<div  data-role="fieldcontain">
 		<fieldset data-role="controlgroup" id="incomplete-<?php echo $this->Time->format('Y-m-d', time(), true); ?>" >
-		<input type="text" class="span3" name="newTask" id="newTask-<?php echo $this->Time->format('Y-m-d', time(), true); ?>" placeholder="Type to add new task" date="<?php echo $this->Time->format('Y-m-d', time(), true); ?>"/><br/>
+		<input type="text" class="span3" name="newTask" id="newTask-<?php echo $this->Time->format('Y-m-d', time(), true); ?>" placeholder="Type to add new task for today" date="<?php echo $this->Time->format('Y-m-d', time(), true); ?>"/><br/>
 		<?php 
 			if(isset($result['data']['arrTaskOnDays']['Today']) && !empty($result['data']['arrTaskOnDays']['Today'])):
 			foreach($result['data']['arrTaskOnDays']['Today'] as $item):
@@ -50,7 +50,7 @@
 	
 	<div  data-role="fieldcontain">
 		<fieldset data-role="controlgroup" id="incomplete-<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>" >
-		<input type="text" class="span3" name="newTask" id="newTask-<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>" placeholder="Type to add new task" date="<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>"/><br/>
+		<input type="text" class="span3" name="newTask" id="newTask-<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>" placeholder="Type to add new task for tomorrow" date="<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>"/><br/>
 		<?php 
 			if(isset($result['data']['arrTaskOnDays']['Tomorrow']) && !empty($result['data']['arrTaskOnDays']['Tomorrow'])):
 			foreach($result['data']['arrTaskOnDays']['Tomorrow'] as $item):
@@ -85,6 +85,7 @@
 	
 	
 	<div  data-role="fieldcontain">
+		<h2>There are your overdue tasks</h2>
 		<fieldset data-role="controlgroup" id="incomplete-overdue" >
 		<?php 
 			if(isset($result['data']['arrAllExpired']) && !empty($result['data']['arrAllExpired'])):
@@ -122,7 +123,7 @@
 	
 	
 	<div  data-role="fieldcontain">
-		<input type="text" class="span3" name="newTask" id="newTask-future" placeholder="Type to add new task" date=""/><br/>
+		<input type="text" class="span3" name="newTask" id="newTask-future" placeholder="Type to add new task for future" date=""/><br/>
 		<?php 
 			if(isset($result['data']['arrTaskOnDays']) && !empty($result['data']['arrTaskOnDays'])):
 			foreach($result['data']['arrTaskOnDays'] as $datelabel => $day):
