@@ -24,7 +24,8 @@ class AppController extends Controller{
 	 */    
     protected function _checkMobile(){
 		//$this->log($this->params, LOG_DEBUG);
-		if ((isset($this->params['device'])and ($this->params['device']=='m'))||$this->RequestHandler->isMobile ()) {
+		//debug($this->params);
+		if ((isset($this->params['device'])and ($this->params['device']=='m'))) {// ||$this->RequestHandler->isMobile ()
 			$mobileViewFile = 'View' . DS . $this->name . '/mobile/' . Inflector::underscore($this->params ['action']) . '.ctp';
 			if (file_exists ( APP . DS . $mobileViewFile )) {
 				$this->layout = 'mobile';

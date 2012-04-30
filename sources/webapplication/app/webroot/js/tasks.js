@@ -9,8 +9,8 @@ function getTaskFromPage(id){
         done:    $('#'+id).children('.done').is(":checked"),
         date:    $('#'+id).parent().attr('date'),
         time:    $('#'+id).children('.time').text(),
-        comment: 'comment',   
-    }
+        comment: 'comment'   
+    };
     //console.log(data);
     return data;
 }
@@ -28,7 +28,7 @@ function mesg (message){
 					},
 					animateClose: { 
 						height: "hide"
-					},
+					}
                     
 				});
 }
@@ -189,7 +189,7 @@ function scrDragOnDay(id, date){
         }else{
             $(this).appendTo(list).show('slow');
         }
-        $(this).css({'opacity':'1'})
+        $(this).css({'opacity':'1'});
     });
     
 }
@@ -223,7 +223,7 @@ function srvSetDone(id, done){
 function scrSetDone(id, done){
     var titleEl = $("li[id='"+id+"']").find('.editable');
     var doneEl = $("li[id='"+id+"']").find('.done');
-    if(done == 1){
+    if(+done){
         titleEl.addClass('complete');
         doneEl.attr('checked', 'checked');
     }else{
@@ -345,7 +345,7 @@ $(document).ready(function()  {
     $("ul").delegate(".done", "click", function(){
             var id = $(this).parent().attr('id');
             var done = $(this).is(":checked")? 1 : 0;
-            userEvent('setDone', {id: id, done: done });
+            userEvent('setDone', {id: id, done: done});
     });
         
     $("ul").delegate(".deleteTask", "click", function(e){

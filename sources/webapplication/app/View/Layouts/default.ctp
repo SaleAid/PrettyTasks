@@ -1,40 +1,71 @@
-<?php
-
-$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
-?>
 <?php echo $this->Html->docType('html5'); ?>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  <head>
+    <?php echo $this->Html->charset(); ?>
+    
+    <title><?php echo $title_for_layout; ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    
+    <?php echo $this->Html->meta('icon');?>
+    
+    <style type="text/css">
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    
 
-<head>
-	<?php echo $this->Html->charset(); ?>
-	<title>
-		<?php echo $title_for_layout; ?>
-	</title>
-    <meta name="google-site-verification" content="eaAqHVdKZqG9JWK-q64SVmGnr8CAJdhWYBzdWI0sHQM" />
-	<?php
-		
-		echo $scripts_for_layout;
-	?>
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-29304740-1']);
-      _gaq.push(['_trackPageview']);
+    <?php echo $this->Html->css('main'); ?>
+    
+    <?php echo $this->Html->css('tasks'); ?>
+    
+    <?php echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom'); ?>
+            
+    
+	<?php echo $scripts_for_layout; ?>
+    
+  </head>
+
+  <body>
+    
+    <?php echo $this->element('main_menu'); ?> 
+    
+    <div class="container">
+      
+        <?php echo $this->Session->flash(); ?>
+            
+        <?php //echo $this->Session->flash('auth'); ?>
+
+        <?php echo $content_for_layout; ?>
         
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    </script>
+    
+    </div>
 
-<?php //echo $this->Js->writeBuffer(array('cache'=>TRUE));?>
+   <?php echo $this->Js->writeBuffer(); ?>
+   <?php //echo $this->element('sql_dump'); ?>
 
-</head>
-<body>
-	<div id="container">
-		<div id="content">
-		<?php echo $content_for_layout; ?>
-        </div>
-	</div>
-	<?php //echo $this->element('sql_dump'); ?>
-</body>
+   <?php echo $this->Html->script('jquery-1.7.1.min.js'); ?>
+    
+    <?php echo $this->Html->script('jquery.jeditable.mini.js'); ?>
+    
+    <?php echo $this->Html->script('jquery-ui-1.8.18.custom.min.js'); ?>
+        
+    <?php echo $this->Html->script('bootstrap.min.js'); ?>
+    
+    <?php echo $this->Html->script('jquery.jgrowl.min.js'); ?>
+    
+    <?php echo $this->Html->script('jquery.inline-confirmation.js'); ?>
+    
+    <?php echo $this->Html->script('jquery.timepicker-1.2.2.js'); ?>
+    
+    <?php echo $this->Html->script('main.js'); ?>
+    
+    <?php echo $this->Html->script('tasks.js'); ?>
+
+  </body>
 </html>

@@ -37,7 +37,7 @@ class TasksController extends AppController {
     }
 
 	public function index() {
-		$this->layout = 'tasks';
+		//$this->layout = 'tasks';//WTF???
 		$result = $this->_prepareResponse();
 		$result['success'] = true;
 		$result['data']['arrAllFuture'] = $this->Task->getAllFuture($this->Auth->user('id'));
@@ -48,6 +48,7 @@ class TasksController extends AppController {
 			$result['data']['arrTaskOnDays'][CakeTime::format('l', '+' . $i . ' days')] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', '+' . $i . ' days'));
 		}
 		$this->set('result', $result);
+        $this->set('_serialize', array('result'));
 	}
 
 	public function setTitle() {
@@ -57,10 +58,10 @@ class TasksController extends AppController {
 			if ($task) {
 				$result['success'] = true;
 				$result['data'] = $task;
-			    $result['message'] = array('type'=>'success', 'message' => __('Задача  успешно изменена.')); 
+			    $result['message'] = array('type'=>'success', 'message' => __('Задача  успешно изменена')); 
 			}else {
 			     $result['data'] = $originTask;
-                 $result['message'] = array('type'=>'alert', 'message' => __('Ошибка. Задача  не изменена'));
+                 $result['message'] = array('type'=>'alert', 'message' => __('Ошибка, Задача  не изменена'));
             }
 		}
         $result['action'] = 'setTitle';
@@ -78,9 +79,9 @@ class TasksController extends AppController {
 		if ($task) {
 			$result['success'] = true;
 			$result['data'] = $task;
-            $result['message'] = array('type'=>'success', 'message' => __('Задача успешно создана.'));
+            $result['message'] = array('type'=>'success', 'message' => __('Задача успешно создана'));
 		}else {
-            $result['message'] = array('type'=>'alert', 'message' => __('Задача  не создана.'));
+            $result['message'] = array('type'=>'alert', 'message' => __('Задача  не создана'));
         }
         $result['action'] = 'create';
 		$this->set('result', $result);
@@ -92,12 +93,12 @@ class TasksController extends AppController {
 		if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
 			if ($this->Task->setOrder($this->request->data['position'])->save()) {
 				$result['success'] = true;
-                $result['message'] = array('type'=>'success', 'message' => __('Задача успешно перемещена.'));    
+                $result['message'] = array('type'=>'success', 'message' => __('Задача успешно перемещена'));    
 			}else{
-			     $result['message'] = array('type'=>'success', 'message' => __('Задача не перемещена.')); 
+			     $result['message'] = array('type'=>'success', 'message' => __('Задача не перемещена')); 
 			}
         }else{
-            $result['message'] = array('type'=>'success', 'message' => __('Ошибка, Вы не можете делать изменения в этой задачи.')); 
+            $result['message'] = array('type'=>'success', 'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')); 
         }
         $result['action'] = 'changeOrders';
         $this->set('result', $result);
@@ -112,13 +113,13 @@ class TasksController extends AppController {
 				$result['success'] = true;
 				$result['data'] = $task;
                 if($task['Task']['done']){
-                    $result['message'] = array('type'=>'success', 'message' => __('Задача успешно выполнена.'));    
+                    $result['message'] = array('type'=>'success', 'message' => __('Задача успешно выполнена'));    
                 }else{
-                    $result['message'] = array('type'=>'alert', 'message' => __('Задача открыта.'));
+                    $result['message'] = array('type'=>'alert', 'message' => __('Задача открыта'));
                 }
             }else {
 			     $result['data'] = $originTask;
-                 $result['message'] = array('type'=>'alert', 'message' => __('Ошибка. Задача  не изменена'));
+                 $result['message'] = array('type'=>'alert', 'message' => __('Ошибка, Задача  не изменена'));
             }
 		}
         $result['action'] = 'setDone';
@@ -131,12 +132,12 @@ class TasksController extends AppController {
         if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
 			if($this->Task->delete()){
 			    $result['success'] = true;
-                $result['message'] = array('type'=>'success', 'message' => __('Задача успешно удалена.'));    
+                $result['message'] = array('type'=>'success', 'message' => __('Задача успешно удалена'));    
 			}else {
-			    $result['message'] = array('type'=>'alert', 'message' => __('Error.'));
+			    $result['message'] = array('type'=>'alert', 'message' => __('Error'));
 			}
 		}else {
-		     $result['message'] = array('type'=>'alert', 'message' => __('Ошибка. Задача  не изменена'));
+		     $result['message'] = array('type'=>'alert', 'message' => __('Ошибка, Задача  не изменена'));
         }
         $result['action'] = 'delete';
 		$this->set('result', $result);
@@ -153,12 +154,12 @@ class TasksController extends AppController {
 		      }
 			if ($this->Task->setOrder(1)->setDate($this->request->data['date'])->setFuture($future)->save()) {
 				$result['success'] = true;
-                $result['message'] = array('type'=>'success', 'message' => __('Задача успешно перемещена (moveTo).'));    
+                $result['message'] = array('type'=>'success', 'message' => __('Задача успешно перемещена (moveTo)'));    
 			}else{
-			    $result['message'] = array('type'=>'success', 'message' => __('Задача  не перемещена (moveTo).')); 
+			    $result['message'] = array('type'=>'success', 'message' => __('Задача  не перемещена (moveTo)')); 
 			}
 		}else{
-            $result['message'] = array('type'=>'success', 'message' => __('Ошибка, Вы не можете делать изменения в этой задачи.')); 
+            $result['message'] = array('type'=>'success', 'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')); 
         }
         $result['action'] = 'dragOnDay';
         $this->set('result', $result);
@@ -180,17 +181,17 @@ class TasksController extends AppController {
                         ){
                  $result['success'] = true;
                  $result['data'] = $task;
-                 $result['message'] = array('type'=>'success', 'message' => __('Задача успешно отредактировано.'));  
+                 $result['message'] = array('type'=>'success', 'message' => __('Задача успешно отредактировано'));  
              }else{
                 print_r( $this->Task->validationErrors);
-                $result['message'] = array('type'=>'success', 'message' => __('Задача не отредактировано.'));  
+                $result['message'] = array('type'=>'success', 'message' => __('Задача не отредактировано'));  
              }
             
         }else{
-            $result['message'] = array('type'=>'success', 'message' => __('Ошибка, Вы не можете делать изменения в этой задачи.'));
+            $result['message'] = array('type'=>'success', 'message' => __('Ошибка, Вы не можете делать изменения в этой задачи'));
         }
         }else{
-            $result['message'] = array('type'=>'success', 'message' => __('Ошибка при передачи данных.'));
+            $result['message'] = array('type'=>'success', 'message' => __('Ошибка при передачи данных'));
         }
         //$result['data'] = $this->request->data;
         $result['action'] = 'edit';

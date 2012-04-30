@@ -1,0 +1,45 @@
+@CHARSET "UTF-8";
+
+label.complete span.ui-btn-text {
+	text-decoration: line-through;
+	color: #ccc;
+}
+
+#primary li .ui-btn-text {
+	width: 36px;
+	height: 36px;
+	vertical-align: middle;
+	text-indent: -9999px;
+	overflow: hidden;
+	text-align: left;
+	position: relative;
+	display: inline-block;
+	background-image: url(/css/m/icons.png );
+	background-repeat: none;
+	-webkit-background-size: 308px 85px;
+	-moz-background-size: 308px 85px;
+	-o-background-size: 308px 85px;
+	background-size: 308px 85px;
+}
+
+#primary li.icon-index    .ui-btn-text {
+	background-position: -4px -47px;
+}
+
+#primary li.icon-speakers .ui-btn-text {
+	background-position: -57px -47px;
+}
+
+#primary li.icon-schedule .ui-btn-text {
+	background-position: -107px -46px;
+}
+
+#primary li.icon-twitter  .ui-btn-text {
+	background-position: -212px -46px;
+	width: 40px
+}
+
+#primary li.icon-venue    .ui-btn-text {
+	background-position: -263px -46px;
+	width: 40px
+}
