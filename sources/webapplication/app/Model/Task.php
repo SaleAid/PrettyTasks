@@ -231,6 +231,7 @@ class Task extends AppModel {
     
     
     public function beforeSave() {
+    	//TODO разнести по функциям
         if($this->_originData){
             // change order
             if($this->_originData[$this->alias]['order'] <> $this->data[$this->alias]['order'] and 
@@ -244,6 +245,9 @@ class Task extends AppModel {
                     $start = $this->data[$this->alias]['order'];
                     $end = $this->_originData[$this->alias]['order'];
                 }
+                //TODO Когда делаем апдейт, всегда нужно также менять поле modified, 
+                //возможно оно нам понадобиться для синхронизации.
+                //Проверить, чтобы везде было так
                 if ($this->updateAll(array('Task.order' => 'Task.order '.$operation),
                                      array('Task.date '=> $this->data[$this->alias]['date'],  
                                            'Task.user_id' => $this->data[$this->alias]['user_id'],
