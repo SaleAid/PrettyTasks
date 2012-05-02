@@ -37,7 +37,7 @@ class TasksController extends AppController {
     }
 
 	public function index() {
-		//$this->layout = 'tasks';//WTF???
+		//$this->layout = 'tasks';//WTF???:-)
 		$result = $this->_prepareResponse();
 		$result['success'] = true;
 		$result['data']['arrAllFuture'] = $this->Task->getAllFuture($this->Auth->user('id'));
