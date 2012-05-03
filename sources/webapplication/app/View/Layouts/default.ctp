@@ -25,9 +25,11 @@
     <?php echo $this->Html->css('tasks'); ?>
     
     <?php echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom'); ?>
+    
+    <?php echo $this->Html->css('print', null, array('media' => 'print')); ?>
             
     
-	<?php echo $scripts_for_layout; ?>
+	
     
   </head>
 
@@ -48,6 +50,8 @@
 
 
    <?php //echo $this->element('sql_dump'); ?>
+   
+   <?php echo $scripts_for_layout; ?>
 
    <?php echo $this->Html->script('jquery-1.7.1.min.js'); ?>
     
