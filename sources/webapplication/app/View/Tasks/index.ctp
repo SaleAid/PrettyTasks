@@ -93,7 +93,7 @@
             <ul class="sortable connectedSortable ui-helper-reset" date="future">
                 <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])):?>
                     <?php foreach($result['data']['arrAllFuture'] as $item):?>
-                        <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
+                        <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?>" date="<?php echo $item['Task']['date'];?>">
                             <span> <i class="icon-move"> </i></span>
                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php else: ?><i class="icon-time"> </i><?php endif; ?></span>
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
@@ -114,7 +114,7 @@
                 <?php if(isset($result['data']['arrAllExpired']) && !empty($result['data']['arrAllExpired'])):?>
                 <ul class="sortable connectedSortable ui-helper-reset " date="expired">
                     <?php foreach($result['data']['arrAllExpired'] as $item):?>
-                        <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
+                        <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?>" date="<?php echo $item['Task']['date'];?>">
                             <span><i class="icon-move"></i></span>
                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php else: ?><i class="icon-time"> </i><?php endif; ?></span>
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
@@ -139,7 +139,7 @@
                      <ul id="sortableToday" class=" sortable connectedSortable ui-helper-reset" date="<?php echo $this->Time->format('Y-m-d', time(), true); ?>">
                      <?php if(isset($result['data']['arrTaskOnDays']['Today']) && !empty($result['data']['arrTaskOnDays']['Today'])):?>
                         <?php foreach($result['data']['arrTaskOnDays']['Today'] as $item):?>
-                            <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
+                            <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?>" date="<?php echo $item['Task']['date'];?>">
                                 <span> <i class="icon-move"></i></span>
                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php else: ?><i class="icon-time"> </i><?php endif; ?></span>
                                 <input type="checkbox" class="done" <?php if($item['Task']['done']):?> checked <?php endif; ?> />
@@ -165,7 +165,7 @@
                      <ul id="sortableTomorrow" class="sortable connectedSortable ui-helper-reset" date="<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>">
                      <?php if(isset($result['data']['arrTaskOnDays']['Tomorrow']) && !empty($result['data']['arrTaskOnDays']['Tomorrow'])):?>
                         <?php foreach($result['data']['arrTaskOnDays']['Tomorrow'] as $item):?>
-                            <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
+                            <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?>" date="<?php echo $item['Task']['date'];?>">
                                 <span> <i class="icon-move"> </i></span>
                                 <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php else: ?><i class="icon-time"> </i><?php endif; ?></span>
                                 <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
@@ -192,7 +192,7 @@
                         <ul id="sortable<?php echo $this->Time->format('l', '+'.$i.' days', true); ?>" class="sortable connectedSortable ui-helper-reset" date="<?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true); ?>">
                             <?php if(isset($result['data']['arrTaskOnDays'][$this->Time->format('l', '+'.$i.' days', true)]) && !empty($result['data']['arrTaskOnDays'][$this->Time->format('l', '+'.$i.' days', true)])):?>
                                 <?php foreach($result['data']['arrTaskOnDays'][$this->Time->format('l', '+'.$i.' days', true)] as $item):?>
-                                    <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default">
+                                    <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?>" date="<?php echo $item['Task']['date'];?>">
                                         <span> <i class="icon-move"> </i></span>
                                         <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php else: ?><i class="icon-time"> </i><?php endif; ?></span>
                                         <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>

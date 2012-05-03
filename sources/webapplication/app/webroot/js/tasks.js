@@ -7,11 +7,10 @@ function getTaskFromPage(id){
     var data = {
         title:   $('#'+id).children('.editable').text(),
         done:    $('#'+id).children('.done').is(":checked"),
-        date:    $('#'+id).parent().attr('date'),
+        date:    $('#'+id).attr('date'),
         time:    $('#'+id).children('.time').text(),
         comment: 'comment'   
     };
-    //console.log(data);
     return data;
 }
 
@@ -29,8 +28,7 @@ function mesg (message){
 					animateClose: { 
 						height: "hide"
 					}
-                    
-				});
+     });
 }
 
 function checkLogin(){
@@ -55,11 +53,9 @@ function superAjax(url, data){
      $.ajax({
             url:url,
             type:'POST',
-            //async: false,
             data: data,
             success: function(data) {
                 responseHandler(data.result);
-                //result = data;
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if(xhr.status != '200'){
@@ -67,7 +63,6 @@ function superAjax(url, data){
                 }
             }
      });
-     //return result;
 }
 
 function userEvent(action, data){
@@ -122,6 +117,16 @@ function responseHandler(data){
     }
 }
 
+//----------------setTime-------
+function scrTime(id, time){
+    var task = $("li[id='"+id+"']");
+    if(time){
+        task.find('.time').text(time);    
+    }else{
+      $(task.find('.time').text('')).append($('<i />').addClass('icon-time'));
+    }
+}
+
 //----------------edit----------
 function taskEdit(id, title, done, date, time, comment){
 
@@ -141,13 +146,40 @@ function srvEdit(id, title, done, date, time, comment){
 function scrEdit(id, title, done, date, time, comment){
     var task = $("li[id='"+id+"']");
     var list = $("ul[date='"+date+"']");
+    var timeList = list.find('li.setTime').get();
+    var newPositionID;
+    if(task.find('.time').text()!= time){
+        if(time){
+            timeList.sort(function(a, b) {
+                var compA = $(a).find('.time').text();
+                var compB = $(b).find('.time').text();
+                return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+            })
+            $.each(timeList, function(index, element) {
+                if(time > $(element).find('.time').text()){
+                    newPositionID = $(element).attr('id');
+                }
+            });
+        }
+        task.hide( "slow", function() {
+            if(newPositionID){
+                $(this).insertAfter($("li[id='"+newPositionID+"']")).show( "slow" );
+            }else{
+                if(time){
+                    if(list.children().length){
+                        $(this).prependTo(list).show( "slow" );    
+                    }else{
+                        $(this).appendTo(list).show('slow');
+                    }
+                }else{
+                    $(this).show('slow');
+                }                    
+            }
+        });
+    }
     scrSetDone(id,done);
     scrSetTitle(id, title, 0);
-    
-    console.log(id, title, done, date, time, comment);
-    console.log(list, task);
-    
-    
+    scrTime(id, time);
 }
 
 //----------------changeOrder---
@@ -274,16 +306,25 @@ function scrCreate(data){
     $("ul[date='"+date+"']").append(AddTask(data.data));
 }
 function AddTask(data){
-    task = $('<li />').addClass('ui-state-default').attr('id',data.Task.id)
-        .append($('<span />').append($('<i />').addClass('icon-move')))
-        .append($('<span />').addClass('time').append($('<i />').addClass('icon-time')))
-        .append($('<input />').addClass('done').attr('type','checkbox'))
-        .append($('<span />').addClass('editable input-xxlarge').text(data.Task.title))
-        .append($('<span />').addClass('editTask').append($('<i />').addClass('icon-pencil')))
-        .append($('<span />').addClass('deleteTask').append($('<i />').addClass('icon-ban-circle')))
-        ;
+    var important ='';
+	var setTime ='';
+    if (data.Task.priority){
+		important = 'important';
+	}
+    if (data.Task.time){
+		setTime = 'setTime ';
+	}
+    
+    taskHtml = '<li id ="'+data.Task.id+'" class="ui-state-default '+setTime+'" date="'+data.Task.date+'"> \
+                            <span> <i class="icon-move"> </i></span> \
+                            <span class="time"><i class="icon-time"> </i></span> \
+                            <input type="checkbox" class="done" value="1"/> \
+                            <span class="editable input-xxlarge '+important+'">'+data.Task.title+'</span> \
+                            <span class="editTask"><i class="icon-pencil"></i></a></span> \
+                            <span class="deleteTask"> <i class=" icon-ban-circle"> </i></span> \
+                </li>';
         	
-    return task;
+    return taskHtml;
 }
 //-------------------------------------
 
@@ -386,7 +427,7 @@ $(document).ready(function()  {
                                                      
     $( ".sortable" ).sortable({
             tolerance:'pointer',
-            cancel: 'ui-state-disabled',
+            cancel: '.ui-state-disabled',
             opacity: 0.6, 
             cursor: 'move', 
             placeholder: "placeh ui-state-highlight",
@@ -395,6 +436,11 @@ $(document).ready(function()  {
                 ui.helper.css("color","#f00");
             },
             update : function(e, ui){
+                if(ui.item.hasClass('setTime')){
+                    $(this).css("color","");
+                    return false;    
+                }
+                
                 if(dropped){
                     dropped = false;
                     return true;
@@ -404,6 +450,7 @@ $(document).ready(function()  {
                 userEvent('changeOrders', {id: id, position: position});
             },
           stop: function(event, ui) {
+                
                 if(dropped){
                     dropped = false;
                     return true;
@@ -433,22 +480,20 @@ $(document).ready(function()  {
             }
             $('#eTime').val(task.time);
             $( "#eDate" ).val(task.date);
+            if(!task.date){
+                $( "#eDate" ).attr('placeholder', '---FUTURE---');
+            }
             $('#editTask').modal('show');
     });
         
     $("#eSave").click(function(){
             var id = $('#editTask').attr('task_id');
-            var title = $('#editTask').find('#eTitle').val();
-            var done = $('#editTask').find('#eDone').is(":checked")? 1: 0;
-            var date = $( "#eDate" ).val();
-            var time = $('#eTime').val();
+            var title = $.trim($('#editTask').find('#eTitle').val());
+            var done = $.trim($('#editTask').find('#eDone').is(":checked")? 1: 0);
+            var date = $.trim($( "#eDate" ).val());
+            var time = $.trim($('#eTime').val());
             var comment = $('#eComment').val();
             userEvent('edit',{id: id,title: title, done: done, date: date, time: time, comment: comment });
-            //var data = superAjax('/tasks/editTask.json', {id: id,title: title, done: done, date: date, time: time, comment: comment });
-//            if (data.result.success){
-//                 
-//            }
-//            mesg(data.result.message);
     });
 
                            

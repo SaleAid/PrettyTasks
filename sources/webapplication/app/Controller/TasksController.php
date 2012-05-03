@@ -37,7 +37,6 @@ class TasksController extends AppController {
     }
 
 	public function index() {
-		//$this->layout = 'tasks';//WTF???:-)
 		$result = $this->_prepareResponse();
 		$result['success'] = true;
 		$result['data']['arrAllFuture'] = $this->Task->getAllFuture($this->Auth->user('id'));
@@ -147,17 +146,16 @@ class TasksController extends AppController {
 	public function dragOnDay() {
 		$result = $this->_prepareResponse();
 		if ($task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-		      $future = 0;
-              if(!isset($this->request->data['date']) or empty($this->request->data['date'])){
-		          $this->request->data['date'] = null;
-                  $future = 1;
-		      }
-			if ($this->Task->setOrder(1)->setDate($this->request->data['date'])->setFuture($future)->save()) {
-				$result['success'] = true;
-                $result['message'] = array('type'=>'success', 'message' => __('Задача успешно перемещена (moveTo)'));    
-			}else{
-			    $result['message'] = array('type'=>'success', 'message' => __('Задача  не перемещена (moveTo)')); 
-			}
+		    if($this->_isSetRequestData(array('id','date'))){
+                if ($this->Task->setOrder(1)->setDate($this->request->data['date'])->save()) {
+    				$result['success'] = true;
+                    $result['message'] = array('type'=>'success', 'message' => __('Задача успешно перемещена (moveTo)'));    
+    			}else{
+    			    $result['message'] = array('type'=>'success', 'message' => __('Задача  не перемещена (moveTo)')); 
+    			}
+            }else{
+                $result['message'] = array('type'=>'success', 'message' => __('Ошибка при передачи данных'));
+            }
 		}else{
             $result['message'] = array('type'=>'success', 'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')); 
         }
@@ -170,30 +168,19 @@ class TasksController extends AppController {
         $result = $this->_prepareResponse();
         if($this->_isSetRequestData(array('id','title','date','time','done','comment'))){
             if ($originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-             $future = empty($this->request->data['date'])?1:0;
-             if($task = $this->Task
-                        ->setTitle($this->request->data['title'])
-                        //->setDate($this->request->data['date'])
-                        ->setTime($this->request->data['time'])
-                        ->setDone($this->request->data['done'])
-                        ->setFuture($future)
-                        ->save()
-                        ){
-                 $result['success'] = true;
-                 $result['data'] = $task;
-                 $result['message'] = array('type'=>'success', 'message' => __('Задача успешно отредактировано'));  
-             }else{
-                print_r( $this->Task->validationErrors);
-                $result['message'] = array('type'=>'success', 'message' => __('Задача не отредактировано'));  
-             }
-            
-        }else{
-            $result['message'] = array('type'=>'success', 'message' => __('Ошибка, Вы не можете делать изменения в этой задачи'));
-        }
+                 if($task = $this->Task->setEdit($this->request->data['title'],$this->request->data['date'], $this->request->data['time'], $this->request->data['done'])->save()){
+                     $result['success'] = true;
+                     $result['data'] = $task;
+                     $result['message'] = array('type'=>'success', 'message' => __('Задача успешно отредактировано'));  
+                 }else{
+                    $result['message'] = array('type'=>'success', 'message' => __('Задача не отредактировано'));  
+                 }
+            }else{
+                $result['message'] = array('type'=>'success', 'message' => __('Ошибка, Вы не можете делать изменения в этой задачи'));
+            }
         }else{
             $result['message'] = array('type'=>'success', 'message' => __('Ошибка при передачи данных'));
         }
-        //$result['data'] = $this->request->data;
         $result['action'] = 'edit';
         $this->set('result', $result);
         $this->set('_serialize', array('result'));
