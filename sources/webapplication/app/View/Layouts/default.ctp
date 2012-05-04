@@ -27,7 +27,8 @@
     <?php echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom'); ?>
     
     <?php echo $this->Html->css('print', null, array('media' => 'print')); ?>
-            
+	
+    <?php echo $this->fetch('toHead'); ?>       
     
 	
     
@@ -70,6 +71,8 @@
     <?php echo $this->Html->script('main.js'); ?>
     
     <?php echo $this->Html->script('tasks.js'); ?>
+    
+    <?php echo $this->fetch('toFooter'); ?> 
 
   </body>
 </html>

@@ -26,12 +26,12 @@
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 Router::connect('/', array(
-	'controller' => 'tasks', 'action' => 'index'
+	'controller' => 'Pages', 'action' => 'index'
 ), array(
 	'device' => '[m]{1}'
 ));
 Router::connect('/:device', array(
-	'controller' => 'tasks', 'action' => 'index'
+	'controller' => 'Tasks', 'action' => 'index'
 ), array(
 	'device' => '[m]{1}'
 ));

@@ -16,11 +16,17 @@
       <div class="nav-collapse">
         <ul class="nav">
           <li class="active">
-            <?php echo $this->Html->link(
+            <?php 
+            //TODO SELECT ITEMS
+            echo $this->Html->link(
                             'Tasks',
-                            array('controller' => 'tasks', 'action' => 'index')
+                            array('controller' => 'Tasks', 'action' => 'index')
                         );?>    
           </li>
+          <li>            <?php echo $this->Html->link(
+                            'Calendar',
+                            array('controller' => 'Calendar', 'action' => 'index')
+                        );?>  </li>
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
