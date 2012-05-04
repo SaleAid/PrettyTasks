@@ -100,7 +100,7 @@ class EmailConfig {
         'host' => 'ssl://smtp.gmail.com',
         'port' => 465,
         'username' => 'registration@learning-2012.org.ua',
-        'password' => 'registration123',
+        'password' => 'nubbjuvogatvjktq',
         'transport' => 'Smtp',
         'from' => 'registration@learning-2012.org.ua',
         'template'=> 'activate_account',

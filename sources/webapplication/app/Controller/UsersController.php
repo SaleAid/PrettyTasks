@@ -38,7 +38,9 @@ class UsersController extends AppController {
                 $this->Session->setFlash(null,'not_active',array('class'=>'alert-info','email' => $this->Auth->user('email')));
                 $this->redirect($this->Auth->logout());
             }else{
-                $this->Session->setFlash(__('Your username or password was incorrect.'),'alert',array('class'=>'alert-error'));
+                if($this->request->is('post')){
+                    $this->Session->setFlash(__('Your username or password was incorrect.'),'alert',array('class'=>'alert-error'));
+                }
             }
         }
         //}

@@ -263,7 +263,7 @@ class Task extends AppModel {
             $start = $this->data[$this->alias]['order'];
             $end = $this->_originData[$this->alias]['order'];
         }
-        if ($this->updateAll(array('Task.order' => 'Task.order '.$operation,),
+        if ($this->updateAll(array('Task.order' => 'Task.order '.$operation),
                              array('Task.date '=> $this->data[$this->alias]['date'],  
                                    'Task.user_id' => $this->data[$this->alias]['user_id'],
                                    'Task.order between  ? and ?' => array($start, $end),
@@ -334,7 +334,7 @@ class Task extends AppModel {
                                                                                       "Task.user_id" => $this->data[$this->alias]['user_id'],
                                                                                       "Task.date"    => $this->data[$this->alias]['date']
                                                                                         ),
-                                                          'order' => array('Task.time' => 'desc')));
+                                                          'order' => array('Task.time' => 'desc', 'Task.order' => 'desc')));
     	   foreach($listTaskWithTime as $task){
     	       if($this->data[$this->alias]['time'] > $task[$this->alias]['time']){
     	           $newOrderID = $task[$this->alias]['order'] + 1;    
@@ -359,6 +359,8 @@ class Task extends AppModel {
     public function setDate($date){
         if(!$date){
             $this->setFuture(1);
+        }else{
+            $this->setFuture(0);
         }
         $this->data[$this->alias]['date'] = $date;
         return $this;

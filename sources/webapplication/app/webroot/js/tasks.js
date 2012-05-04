@@ -116,6 +116,16 @@ function responseHandler(data){
         break;
     }
 }
+// --------------setDate--------
+
+function scrDate(id, date){
+    var task = $("li[id='"+id+"']");
+    if(date){
+        task.attr('date',date);    
+    }else{
+        task.attr('date','');
+    }
+}
 
 //----------------setTime-------
 function scrTime(id, time){
@@ -143,40 +153,60 @@ function onEdit(data){
 function srvEdit(id, title, done, date, time, comment){
     superAjax('/tasks/editTask.json',{id: id, title: title, done: done, date: date, time: time, comment: comment});
 }
+
 function scrEdit(id, title, done, date, time, comment){
     var task = $("li[id='"+id+"']");
-    var list = $("ul[date='"+date+"']");
-    var timeList = list.find('li.setTime').get();
+    if(!date){
+        var list = $("ul[date='future']");
+    }else{
+        var list = $("ul[date='"+date+"']");    
+    }
+    var timeList = list.find('li.setTime');
     var newPositionID;
-    if(task.find('.time').text()!= time){
+    var preTime;
+    if(task.find('.time').text()!= time || task.attr('date') != date){
         if(time){
-            timeList.sort(function(a, b) {
-                var compA = $(a).find('.time').text();
-                var compB = $(b).find('.time').text();
-                return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
-            })
-            $.each(timeList, function(index, element) {
-                if(time > $(element).find('.time').text()){
-                    newPositionID = $(element).attr('id');
+            timeList.each(function() { 
+                if(time > $(this).find('.time').text()){
+                    if(newPositionID){
+                        if(preTime <= $(this).find('.time').text()){
+                            newPositionID = $(this).attr('id');
+                            preTime = $(this).find('.time').text();    
+                        } 
+                    }else{
+                        preTime = $(this).find('.time').text();
+                        newPositionID = $(this).attr('id');    
+                    }
                 }
             });
         }
-        task.hide( "slow", function() {
+       console.log(date);
+       console.log(task.attr('date'))
+       console.log(time);
+       console.log(!(date == task.attr('date')) || time); 
+       var b=!(date == task.attr('date')) || time;
+       console.log(b);
+       task.hide( "slow", function() {
             if(newPositionID){
                 $(this).insertAfter($("li[id='"+newPositionID+"']")).show( "slow" );
+                $(this).addClass('setTime');
             }else{
-                if(time){
+                if(b){
+                    console.log('popal');
                     if(list.children().length){
                         $(this).prependTo(list).show( "slow" );    
                     }else{
                         $(this).appendTo(list).show('slow');
                     }
+                    $(this).addClass('setTime');
                 }else{
+                    
                     $(this).show('slow');
                 }                    
             }
         });
     }
+    scrDate(id,date);
     scrSetDone(id,done);
     scrSetTitle(id, title, 0);
     scrTime(id, time);
