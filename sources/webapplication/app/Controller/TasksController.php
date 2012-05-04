@@ -24,6 +24,8 @@ class TasksController extends AppController {
 	}
     
     protected function _isSetRequestData($data){
+    	//TODO: 1. Check for post
+    	
         if(is_array($data)){
             foreach($data as $value){
                 if(!isset($this->request->data[$value])){
