@@ -80,7 +80,7 @@ function userEvent(action, data){
             taskDelete(data.id);
         break;
         case 'dragOnDay':
-            taskDragOnDay(data.id, data.date);
+            taskDragOnDay(data.id, data.date, data.time);
         break;
         case 'changeOrders':
             taskChangeOrders(data.id, data.position);
@@ -155,62 +155,66 @@ function srvEdit(id, title, done, date, time, comment){
 }
 
 function scrEdit(id, title, done, date, time, comment){
-    var task = $("li[id='"+id+"']");
-    if(!date){
-        var list = $("ul[date='future']");
-    }else{
-        var list = $("ul[date='"+date+"']");    
-    }
-    var timeList = list.find('li.setTime');
-    var newPositionID;
-    var preTime;
-    if(task.find('.time').text()!= time || task.attr('date') != date){
-        if(time){
-            timeList.each(function() { 
-                if(time > $(this).find('.time').text()){
-                    if(newPositionID){
-                        if(preTime <= $(this).find('.time').text()){
-                            newPositionID = $(this).attr('id');
-                            preTime = $(this).find('.time').text();    
-                        } 
-                    }else{
-                        preTime = $(this).find('.time').text();
-                        newPositionID = $(this).attr('id');    
-                    }
-                }
-            });
-        }
-       console.log(date);
-       console.log(task.attr('date'))
-       console.log(time);
-       console.log(!(date == task.attr('date')) || time); 
-       var b=!(date == task.attr('date')) || time;
-       console.log(b);
-       task.hide( "slow", function() {
-            if(newPositionID){
-                $(this).insertAfter($("li[id='"+newPositionID+"']")).show( "slow" );
-                $(this).addClass('setTime');
-            }else{
-                if(b){
-                    console.log('popal');
-                    if(list.children().length){
-                        $(this).prependTo(list).show( "slow" );    
-                    }else{
-                        $(this).appendTo(list).show('slow');
-                    }
-                    $(this).addClass('setTime');
-                }else{
-                    
-                    $(this).show('slow');
-                }                    
-            }
-        });
-    }
+    scrDragWithTime(id, date, time);
     scrDate(id,date);
     scrSetDone(id,done);
     scrSetTitle(id, title, 0);
     scrTime(id, time);
 }
+
+
+function scrDragWithTime(id, date, time){
+        var task = $("li[id='"+id+"']");
+        if(!date){
+            var list = $("ul[date='future']");
+        }else{
+            var list = $("ul[date='"+date+"']");    
+        }
+        var timeList = list.find('li.setTime');
+        var newPositionID;
+        var preTime;
+        var change = task.find('.time').text()!= time || task.attr('date') != date;
+        if(change){
+            if(time){
+                timeList.each(function() { 
+                    if(time > $(this).find('.time').text()){
+                        if(newPositionID){
+                            if(preTime <= $(this).find('.time').text()){
+                                newPositionID = $(this).attr('id');
+                                preTime = $(this).find('.time').text();    
+                            } 
+                        }else{
+                            preTime = $(this).find('.time').text();
+                            newPositionID = $(this).attr('id');    
+                        }
+                    }
+                });
+                if(newPositionID == id){
+                    newPositionID ='';
+                }
+           }
+           task.hide( "slow", function() {
+                if(newPositionID){
+                    $(this).insertAfter($("li[id='"+newPositionID+"']")).show('slow');
+                    $(this).addClass('setTime');
+                }else{
+                    if(change){
+                        if(list.children().length){
+                            $(this).prependTo(list).show('slow');    
+                        }else{
+                            $(this).appendTo(list).show('slow');
+                        }
+                        $(this).addClass('setTime');
+                    }else{
+                        
+                        $(this).show('slow');
+                    }                    
+                }
+                $(this).css({'opacity':'1'});
+            });
+        }
+}
+
 
 //----------------changeOrder---
 function taskChangeOrders(id, position){
@@ -228,32 +232,21 @@ function scrChangeOrders(id, position){
 }
 
 //----------------dragOnDay-----
-function taskDragOnDay(id, date){
-    scrDragOnDay(id, date);
-    srvDragOnDay(id, date);
+function taskDragOnDay(id, date, time){
+    scrDragOnDay(id, date, time);
+    srvDragOnDay(id, date, time);
 }
 function onDragOnDay(data){
     mesg(data.message);
 }
-function srvDragOnDay(id, date){
+function srvDragOnDay(id, date, time){
     if(date == 'future'){
         date = '';
     }
-    superAjax('/tasks/dragOnDay.json',{id: id,date: date});
+    superAjax('/tasks/dragOnDay.json',{id: id,date: date, time:time});
 }
-function scrDragOnDay(id, date){
-    var list = $("ul[date='"+date+"']");
-    var task = $("li[id='"+id+"']");
-    task.hide( "slow", function() {
-        $(this).css("color","");
-        if(list.children().length){
-            $(this).prependTo(list).show( "slow" );    
-        }else{
-            $(this).appendTo(list).show('slow');
-        }
-        $(this).css({'opacity':'1'});
-    });
-    
+function scrDragOnDay(id, date, time){
+    scrDragWithTime(id, date, time);
 }
 
 //----------------delete--------
@@ -450,7 +443,8 @@ $(document).ready(function()  {
                             dropped = true;
                             var id = ui.draggable.attr('id');
                             var date = $(this).find( "a" ).attr( "date" );
-                            userEvent('dragOnDay', {id: id, date: date});
+                            var time = $.trim(ui.draggable.children('.time').text());
+                            userEvent('dragOnDay', {id: id, date: date, time:time});
                             $(ui).parent().sortable('cancel');
                         } 
                 }).disableSelection();

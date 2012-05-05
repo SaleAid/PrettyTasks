@@ -246,8 +246,10 @@ class Task extends AppModel {
     }
     
     private function _isOrderChangedWithTime(){
-        if(CakeTime::format('H:i',$this->_originData[$this->alias]['time']) <> CakeTime::format('H:i', $this->data[$this->alias]['time']) and !empty($this->data[$this->alias]['time']) and
-            $this->_originData[$this->alias]['date'] == $this->data[$this->alias]['date']){
+        if((CakeTime::format('H:i',$this->_originData[$this->alias]['time']) <> CakeTime::format('H:i', $this->data[$this->alias]['time']) and !empty($this->data[$this->alias]['time'])
+            and $this->_originData[$this->alias]['date'] == $this->data[$this->alias]['date']) 
+            or ($this->_originData[$this->alias]['date'] <> $this->data[$this->alias]['date'] and !empty($this->data[$this->alias]['time']))
+            ){
                 return true;
         }
         return false;
@@ -299,10 +301,9 @@ class Task extends AppModel {
     	
         if($this->_originData){
            
-           if($order = $this->_getPositionByTime()){
-            $this->setOrder($order);
-           }
-         
+            if($order = $this->_getPositionByTime()){
+                $this->setOrder($order);
+            }
             // change order
             if($this->_isOrderChanged()){
                 return $this->_changeOrder();
@@ -346,6 +347,15 @@ class Task extends AppModel {
         }
         return false;
     }
+    //public function dragOnDay($date, $time) {
+//        if(!$time){
+//           $this->setOrder(1)->setDate($date); 
+//        }else{
+//            $this->setDate($date);
+//        }
+//        return $this;
+//    }
+    
     public function setEdit($title, $date=null, $time=null, $done=null){
         $this->setDate($date)->setTime($time)->setDone($done)->setTitle($title);
         return $this;

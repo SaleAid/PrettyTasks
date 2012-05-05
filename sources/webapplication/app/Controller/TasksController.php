@@ -148,8 +148,9 @@ class TasksController extends AppController {
 	public function dragOnDay() {
 		$result = $this->_prepareResponse();
 		if ($task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-		    if($this->_isSetRequestData(array('id','date'))){
+		    if($this->_isSetRequestData(array('id','date','time'))){
                 if ($this->Task->setOrder(1)->setDate($this->request->data['date'])->save()) {
+                //if ($this->Task->dragOnDay($this->request->data['date'], $this->request->data['time'])->save()) {
     				$result['success'] = true;
                     $result['message'] = array('type'=>'success', 'message' => __('Задача успешно перемещена (moveTo)'));    
     			}else{
