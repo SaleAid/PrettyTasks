@@ -43,10 +43,8 @@ class TasksController extends AppController {
 		$result['success'] = true;
 		$result['data']['arrAllFuture'] = $this->Task->getAllFuture($this->Auth->user('id'));
 		$result['data']['arrAllExpired'] = $this->Task->getAllExpired($this->Auth->user('id'));
-		$result['data']['arrTaskOnDays']['Today'] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', time()));
-		$result['data']['arrTaskOnDays']['Tomorrow'] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', '+1 days'));
-		for($i = 2; $i <= 5; $i ++) {
-			$result['data']['arrTaskOnDays'][CakeTime::format('l', '+' . $i . ' days')] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', '+' . $i . ' days'));
+		for($i = 0; $i <= 5; $i ++) {
+			$result['data']['arrTaskOnDays'][CakeTime::format('Y-m-d', '+' . $i . ' days')] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', '+' . $i . ' days'));
 		}
 		$this->set('result', $result);
         $this->set('_serialize', array('result'));

@@ -137,8 +137,8 @@
                      </div>
                      <hr />
                      <ul id="sortableToday" class=" sortable connectedSortable ui-helper-reset" date="<?php echo $this->Time->format('Y-m-d', time(), true); ?>">
-                     <?php if(isset($result['data']['arrTaskOnDays']['Today']) && !empty($result['data']['arrTaskOnDays']['Today'])):?>
-                        <?php foreach($result['data']['arrTaskOnDays']['Today'] as $item):?>
+                     <?php if(isset($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', time(), true)]) && !empty($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', time(), true)])):?>
+                        <?php foreach($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', time(), true)] as $item):?>
                             <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?>" date="<?php echo $item['Task']['date'];?>">
                                 <span> <i class="icon-move"></i></span>
                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php else: ?><i class="icon-time"> </i><?php endif; ?></span>
@@ -163,8 +163,8 @@
                      </div>
                      <hr />
                      <ul id="sortableTomorrow" class="sortable connectedSortable ui-helper-reset" date="<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>">
-                     <?php if(isset($result['data']['arrTaskOnDays']['Tomorrow']) && !empty($result['data']['arrTaskOnDays']['Tomorrow'])):?>
-                        <?php foreach($result['data']['arrTaskOnDays']['Tomorrow'] as $item):?>
+                     <?php if(isset($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', '+1 days', true)]) && !empty($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', '+1 days', true)])):?>
+                        <?php foreach($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', '+1 days', true)] as $item):?>
                             <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?>" date="<?php echo $item['Task']['date'];?>">
                                 <span> <i class="icon-move"> </i></span>
                                 <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php else: ?><i class="icon-time"> </i><?php endif; ?></span>
@@ -190,8 +190,8 @@
                         </div>
                         <hr />
                         <ul id="sortable<?php echo $this->Time->format('l', '+'.$i.' days', true); ?>" class="sortable connectedSortable ui-helper-reset" date="<?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true); ?>">
-                            <?php if(isset($result['data']['arrTaskOnDays'][$this->Time->format('l', '+'.$i.' days', true)]) && !empty($result['data']['arrTaskOnDays'][$this->Time->format('l', '+'.$i.' days', true)])):?>
-                                <?php foreach($result['data']['arrTaskOnDays'][$this->Time->format('l', '+'.$i.' days', true)] as $item):?>
+                            <?php if(isset($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', '+'.$i.' days', true)]) && !empty($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', '+'.$i.' days', true)])):?>
+                                <?php foreach($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', '+'.$i.' days', true)] as $item):?>
                                     <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?>" date="<?php echo $item['Task']['date'];?>">
                                         <span> <i class="icon-move"> </i></span>
                                         <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php else: ?><i class="icon-time"> </i><?php endif; ?></span>
