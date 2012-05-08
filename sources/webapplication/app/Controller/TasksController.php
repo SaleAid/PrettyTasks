@@ -186,6 +186,22 @@ class TasksController extends AppController {
         $this->set('result', $result);
         $this->set('_serialize', array('result'));
     }
+    
+    public function getTasksForDay(){
+        $result = $this->_prepareResponse();
+        if($this->_isSetRequestData('date')){
+             $task = $this->Task->getTasksForDay($this->Auth->user('id'), $this->request->data['date']);
+             $result['success'] = true;
+             $result['data']['list'] = $task;
+             $result['data']['date'] = $this->request->data['date'];
+             $result['message'] = array('type'=>'success', 'message' => __('Задача успешно ...'));  
+        }else{
+            $result['message'] = array('type'=>'success', 'message' => __('Ошибка при передачи данных'));
+        }
+        $result['action'] = 'addDay';
+        $this->set('result', $result);
+        $this->set('_serialize', array('result'));
+    }
 
 	//----------------------------------------------------------------------
 

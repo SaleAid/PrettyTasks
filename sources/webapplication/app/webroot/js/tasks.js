@@ -87,6 +87,9 @@ function userEvent(action, data){
         break; 
         case 'edit':
             taskEdit(data.id, data.title, data.done, data.date, data.time, data.comment);
+        break;
+        case 'addDay':
+            taskAddDay(data.date);
         break;          
     }
 }
@@ -114,8 +117,69 @@ function responseHandler(data){
         case 'edit':
             onEdit(data);
         break;
+        case 'addDay':
+            onAddDay(data);
+        break;
     }
 }
+//---------------addDay---------
+function taskAddDay(date){
+
+    if(scrAddDay(date)){
+        srvAddDay(date);    
+    }
+}
+
+function scrAddDay(date){
+    var flag = true;
+    $( "#main ul:first li").each(function(){
+        console.log('test');
+        if($(this).children('a').attr('date') == date){
+            flag = false;
+        }
+    });
+    if(!flag){
+        activeTab(date);
+        return false;    
+    }
+    var newTabContent = '<div class="tab-pane" id="'+date+'"> \
+                    <div class="row"> \
+                        <div class="span10"> \
+                            <div class="well form-inline"> \
+                                <input type="text" class=" createTask input-xxlarge" placeholder=" +Добавить задание…"/> \
+                            </div> \
+                            <hr /> \
+                            <ul class="sortable connectedSortable ui-helper-reset" date="'+date+'"> \
+                                <p class="loadContent" align=center> Loading content ...</p> \
+                            </ul> \
+                        </div> \
+                    </div> \
+                </div>';
+                
+    $('.tab-content').append(newTabContent);
+    $('#main ul.nav-tabs').append('<li class="drop"><a href="#'+date+'" data-toggle="tab" date="'+date+'">'+date+'</a></li>');
+    activeTab(date);
+    return true;
+}
+function activeTab(date){
+    $('div.active').removeClass('active').removeClass('in');
+    $('li.active').removeClass('active');
+    $('#main ul.nav-tabs a[date="'+date+'"]').tab('show');
+}
+
+function srvAddDay(date){
+    superAjax('/tasks/getTasksForDay.json',{date: date});
+}
+
+function onAddDay(data){
+    var list = $("ul[date='"+data.data.date+"']");
+    list.children('.loadContent').remove();
+    $.each(data.data.list,function(index, value) {
+        list.append(AddTask(value));
+    });
+    
+}
+
 // --------------setDate--------
 
 function scrDate(id, date){
@@ -327,39 +391,63 @@ function scrCreate(data){
         date = 'future';    
     }
     $("ul[date='"+date+"']").append(AddTask(data.data));
+    initDelete( "li[id='"+data.data.Task.id+"']  .deleteTask");    	
+    
 }
 function AddTask(data){
     var important ='';
 	var setTime ='';
-    if (data.Task.priority){
+    var time ='';
+    if (+data.Task.priority){
 		important = 'important';
 	}
     if (data.Task.time){
 		setTime = 'setTime ';
+        time = '<span class="time">'+data.Task.time.slice(0,-3)+'</span>'; 
+	}else {
+	   time = '<span class="time"><i class="icon-time"> </i> </span>';
 	}
-    
-    taskHtml = '<li id ="'+data.Task.id+'" class="ui-state-default '+setTime+'" date="'+data.Task.date+'"> \
-                            <span> <i class="icon-move"> </i></span> \
-                            <span class="time"><i class="icon-time"> </i></span> \
-                            <input type="checkbox" class="done" value="1"/> \
-                            <span class="editable input-xxlarge '+important+'">'+data.Task.title+'</span> \
-                            <span class="editTask"><i class="icon-pencil"></i></a></span> \
-                            <span class="deleteTask"> <i class=" icon-ban-circle"> </i></span> \
-                </li>';
-        	
+    taskHtml = '<li id ="'+data.Task.id+'" class="ui-state-default '+setTime+'" date="'+data.Task.date+'"> \n'+ 
+                            '<span> <i class="icon-move"> </i></span> \n'+
+                            time+'\n'+
+                            '<input type="checkbox" class="done" value="1"/> \n' +
+                            '<span class="editable input-xxlarge '+important+'">'+data.Task.title+'</span> \n'+
+                            '<span class="editTask"><i class="icon-pencil"></i></a></span> \n'+
+                            '<span class="deleteTask"> <i class=" icon-ban-circle"> </i></span> \n'+
+                '</li>';
     return taskHtml;
 }
 //-------------------------------------
+
+function initDelete(element){
+    $(element).inlineConfirmation({
+              //reverse: true,
+              confirm: "<a href='#'><i class='icon-ok-sign'></i></a>",
+              cancel: "<a href='#'><i class='icon-remove-sign '></i></a>",
+              separator: "| ",
+              expiresIn: 3,
+              bindsOnEvent: "click",
+              confirmCallback: function(el) {
+                 el.parent().fadeIn();
+                 var id = el.parent().attr('id');
+                 userEvent('delete', {id: id});
+              },
+              cancelCallback: function(el) {
+                 //mesg('Отмена удаления .');
+              },
+    });
+}
 
 function reload(){
     location.reload();
 }
 
 var dropped = false;
-$(document).ready(function()  {
+$(function(){
 
 //-------------------------------- work tesk
         
+         //$('a[href="' + window.location.hash + '"]').click();
          $.datepicker.setDefaults(
             $.extend($.datepicker.regional["ru"])
          );
@@ -370,7 +458,8 @@ $(document).ready(function()  {
         }, 120000);
         
                  
-         $(".createTask").bind('keypress', function(e) {
+         $(document).on('keypress','.createTask' , function(e){
+         //$(".createTask").bind('keypress', function(e) {
             var code = (e.keyCode ? e.keyCode : e.which);
             if(code == 13) {
                 var title = $(this).val();
@@ -389,7 +478,7 @@ $(document).ready(function()  {
             }
         });
         
-        $("ul").delegate(".editable", "click", function(){
+         $(document).on("click", ".editable", function(){
              $(".editable").editable(function(value, settings) { 
                     var id = $(this).parent().attr('id');   
                     userEvent('setTitle', {id: id, title: value });
@@ -406,32 +495,34 @@ $(document).ready(function()  {
             });
         });
         
-    $("ul").delegate(".done", "click", function(){
+    $(document).on("click", ".done",  function(){
             var id = $(this).parent().attr('id');
             var done = $(this).is(":checked")? 1 : 0;
             userEvent('setDone', {id: id, done: done});
     });
-        
-    $("ul").delegate(".deleteTask", "click", function(e){
-        $("ul").undelegate(".deleteTask", "click");
-        $(".deleteTask").inlineConfirmation({
-              //reverse: true,
-              confirm: "<a href='#'><i class='icon-ok-sign'></i></a>",
-              cancel: "<a href='#'><i class='icon-remove-sign '></i></a>",
-              separator: "| ",
-              expiresIn: 3,
-              bindsOnEvent: "click",
-              confirmCallback: function(el) {
-                 el.parent().fadeIn();
-                 var id = el.parent().attr('id');
-                 userEvent('delete', {id: id});
-              },
-              cancelCallback: function(el) {
-                 //mesg('Отмена удаления .');
-              },
-        });
-    });
     
+    initDelete(".deleteTask");
+        
+    //$(document).on("click", ".deleteTask", function(){
+        //$(this).off("click", ".deleteTask");
+        //$(this).inlineConfirmation({
+//              //reverse: true,
+//              confirm: "<a href='#'><i class='icon-ok-sign'></i></a>",
+//              cancel: "<a href='#'><i class='icon-remove-sign '></i></a>",
+//              separator: "| ",
+//              expiresIn: 3,
+//              bindsOnEvent: "click",
+//              confirmCallback: function(el) {
+//                 el.parent().fadeIn();
+//                 var id = el.parent().attr('id');
+//                 userEvent('delete', {id: id});
+//              },
+//              cancelCallback: function(el) {
+//                 //mesg('Отмена удаления .');
+//              },
+//        });
+    //});
+    $(document).on( 'hover', '.sortable', function(){
     //drag & drop
     
             var $tabs = $( "#main" ).tab();
@@ -448,7 +539,8 @@ $(document).ready(function()  {
                             $(ui).parent().sortable('cancel');
                         } 
                 }).disableSelection();
-                                                     
+     
+        console.log('hover');
     $( ".sortable" ).sortable({
             tolerance:'pointer',
             cancel: '.ui-state-disabled',
@@ -460,6 +552,12 @@ $(document).ready(function()  {
                 ui.helper.css("color","#f00");
             },
             update : function(e, ui){
+                console.log('test');
+                console.log(ui.item.parent());
+                if(ui.item.parent().attr('date') == 'expired'){
+                    $(this).css("color","");
+                    return false;  
+                }
                 if(ui.item.hasClass('setTime')){
                     $(this).css("color","");
                     return false;    
@@ -481,6 +579,7 @@ $(document).ready(function()  {
                 }
         },
     }).disableSelection();
+    });
         
     $('#eTime').timepicker({
                     timeFormat: 'HH:mm',
@@ -493,7 +592,7 @@ $(document).ready(function()  {
                     minDate: 0,
     });
             
-    $("ul").delegate(".editTask", "click", function(){
+    $(document).on("click", ".editTask", function(){
             var task = getTaskForEdit($(this).parent().attr('id'));
             $('#editTask').attr('task_id', $(this).parent().attr('id'));
             $('#editTask').find('#eTitle').val(task.title);
@@ -519,8 +618,26 @@ $(document).ready(function()  {
             var comment = $('#eComment').val();
             userEvent('edit',{id: id,title: title, done: done, date: date, time: time, comment: comment });
     });
+    
+  
+    $("#addDay").button().click(function(e) {
+        var dp = $('#dp');
+        dp.datepicker({
+            dateFormat: 'yy-mm-dd',
+            showAnim: 'clip',
+            onSelect: function(date) {
+                userEvent('addDay',{date: date});
+            },
+        });
+        if (dp.datepicker('widget').is(':hidden')) {
+            dp.datepicker("show");
+        } else {
+            dp.hide();
+        }
+        e.preventDefault();
+    }).disableSelection();
 
-                           
+                   
 }); 	
   
 

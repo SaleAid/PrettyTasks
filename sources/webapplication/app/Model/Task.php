@@ -347,15 +347,7 @@ class Task extends AppModel {
         }
         return false;
     }
-    //public function dragOnDay($date, $time) {
-//        if(!$time){
-//           $this->setOrder(1)->setDate($date); 
-//        }else{
-//            $this->setDate($date);
-//        }
-//        return $this;
-//    }
-    
+
     public function setEdit($title, $date=null, $time=null, $done=null){
         $this->setDate($date)->setTime($time)->setDone($done)->setTitle($title);
         return $this;
@@ -424,5 +416,17 @@ class Task extends AppModel {
                                         )
                         )
                 );
+    }
+    
+    public function getTasksForDay($user_id, $date){
+        $this->contain();
+        return $this->find('all', array(
+                        'order' => array('Task.date' => 'ASC', 'Task.order' => 'ASC'),
+                        'conditions' => array(
+                                              'Task.user_id' => $user_id,
+                                              'Task.date' => $date,
+                                        )
+                        )
+        );
     }
 }

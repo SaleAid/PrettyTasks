@@ -1,63 +1,20 @@
-<!-- modal --!>
-<div id="editTask" class="modal hide fade in" style="display: none; ">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">×</a>
-        <h3>Редактирование задачи.</h3>
-    </div>
-    <div class="modal-body">
-        <div class="row">
-       
-            <div class="span4">
-               <form class="form-horizontal">
-        <fieldset>
-          
-          <div class="control-group">
-            <label class="control-label" for="eTitle">Title</label>
-            <div class="controls">
-              <input type="text" class="span3" id="eTitle"/>
-            </div>
-          </div>
-          <div class="control-group form-inline">
-            <label class="control-label" for="eDate">Date, time?</label>
-            <div class="controls">
-                <input type="text" class="span2" id="eDate"/>
-                <input type="text" class="span1" id="eTime"/>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="eComment">Comment</label>
-            <div class="controls">
-              <textarea class="span3" id="eComment" rows="3"></textarea>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="controls">
-              <label class="checkbox">
-                <input type="checkbox" id="eDone" value="option1"/>
-                Done
-              </label>
-            </div>
-          </div>
-        </fieldset>
-      </form>
-            </div>
-            <div class="span2">
-            
-            </div>
-            
-        </div>
-    </div>
-    <div class="modal-footer">
-        <a href="#" id="eSave" class="btn btn-success">Сохранить</a>
-        <a href="#" class="btn" data-dismiss="modal">Закрыть</a>
-    </div>
-</div>
-<!-- End modal --!>
 
 <div class="row">
     <div class="span12">
       <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
         <ul class="nav nav-tabs">
+            <li class="dropdown ">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li ><a id="addDay1" class="addDay">Add Day1</a></li>
+                <li ><a id="addDay1" class="addDay">Add Day</a></li>
+              </ul>
+            </li>
+            <input type="hidden" id="dp">
+            <li ><a id="addDay" class="addDay">Add Day</a></li>
+            
+             <div id="datepicker"></div>
+            <hr />
             <li ><a href="#expired" data-toggle="tab" date="expired" class="tab2">Просроченные</a></li>
             <li class="drop">
                 <a href="#future" data-toggle="tab" date="future" class="tab2">Будущее</a>
@@ -80,7 +37,7 @@
                  </a>
             </li>
           <?php endfor; ?>
-          
+           <hr />
         </ul>
         <div class="tab-content" >
           <div class="tab-pane" id="future">
@@ -214,6 +171,62 @@
     </div>
 
 </div>
+
+<!-- modal --!>
+<div id="editTask" class="modal hide fade in" style="display: none; ">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>Редактирование задачи.</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+       
+            <div class="span4">
+               <form class="form-horizontal">
+        <fieldset>
+          
+          <div class="control-group">
+            <label class="control-label" for="eTitle">Title</label>
+            <div class="controls">
+              <input type="text" class="span3" id="eTitle"/>
+            </div>
+          </div>
+          <div class="control-group form-inline">
+            <label class="control-label" for="eDate">Date, time?</label>
+            <div class="controls">
+                <input type="text" class="span2" id="eDate"/>
+                <input type="text" class="span1" id="eTime"/>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="eComment">Comment</label>
+            <div class="controls">
+              <textarea class="span3" id="eComment" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <label class="checkbox">
+                <input type="checkbox" id="eDone" value="option1"/>
+                Done
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+            </div>
+            <div class="span2">
+            
+            </div>
+            
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" id="eSave" class="btn btn-success">Сохранить</a>
+        <a href="#" class="btn" data-dismiss="modal">Закрыть</a>
+    </div>
+</div>
+<!-- End modal --!>
 
 
 

@@ -76,7 +76,14 @@ div.well{
 }
 .tab2{
     color: red;
-    
+}
+.addDay{
+    color: green;
+}
+
+.addDay:hover{
+    cursor: pointer;
+    color: red;
 }
 
 /*jGrowl theme */
