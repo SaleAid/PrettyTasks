@@ -43,30 +43,25 @@ echo $this->Html->script ( 'fullcalendar/fullcalendar.min.js' );
 		var events = [];
 
 		var js = $.getJSON('/Tasks/index.json', function(data) {
-			//console.log(data.result.success);
 			if (data.result.success){
-				
-				$.each(data.result.data.arrTaskOnDays.Today, function(key, value) {
-					var dataToShow = {
-						title: value.Task.title,
-						start: new Date(value.Task.date +" "+value.Task.time),
-						allDay: !value.Task.time,
-						id: +value.Task.id,
-						done: +value.Task.done
-					};
-					if (!value.Task.time){
-						dataToShow.start = new Date(value.Task.date);
-					}
-					
-				    //console.log(value.Task.title);
-				    //console.log(dataToShow);
-				    if (!+value.Task.done){
-				    	events.push(dataToShow);
-				    }
+				$.each(data.result.data.arrTaskOnDays, function(key, value) {
+					console.log(this);
+                    $.each(this, function(key, value) {
+                        var dataToShow = {
+    						title: value.Task.title,
+    						start: new Date(value.Task.date +" "+value.Task.time),
+    						allDay: !value.Task.time,
+    						id: +value.Task.id,
+    						done: +value.Task.done
+    					};
+    					if (!value.Task.time){
+    						dataToShow.start = new Date(value.Task.date);
+    					}
+    					if (!+value.Task.done){
+    				    	events.push(dataToShow);
+    				    }
+                    });
 				});
-				//console.log(events);
-				//console.log(js);
-				//console.log(events);
 				$('#calendar').fullCalendar({
 					header: {
 						left: 'prev, next, today',

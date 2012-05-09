@@ -3,6 +3,18 @@
     <div class="span12">
       <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
         <ul class="nav nav-tabs">
+            
+            <li class="btn-group dropup">
+                <button class="btn">Add New Day</button>
+                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li ><a id="addDay1" class="addDay">Add Day1</a></li>
+                    <li ><a id="addDay1" class="addDay">Add Day</a></li>
+                </ul>
+            
+            </li>
             <li class="dropdown ">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
               <ul class="dropdown-menu">

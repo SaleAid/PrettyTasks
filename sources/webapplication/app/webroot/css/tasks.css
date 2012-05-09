@@ -118,3 +118,7 @@ div.jGrowl.custom {
     width: 0; 
     overflow: hidden; 
 }
+.span10{
+    position: fixed;
+    
+}

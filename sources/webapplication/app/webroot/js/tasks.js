@@ -133,7 +133,6 @@ function taskAddDay(date){
 function scrAddDay(date){
     var flag = true;
     $( "#main ul:first li").each(function(){
-        console.log('test');
         if($(this).children('a').attr('date') == date){
             flag = false;
         }
@@ -176,7 +175,12 @@ function onAddDay(data){
     list.children('.loadContent').remove();
     $.each(data.data.list,function(index, value) {
         list.append(AddTask(value));
+        initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
+        initEditAble("li[id='"+value.Task.id+"'] .editable");
+        initDone("li[id='"+value.Task.id+"'] .done");
+        initEditTask("li[id='"+value.Task.id+"'] .editTask");
     });
+    initCreateTask($("ul[date='"+data.data.date+"']").parent().find(".createTask"));
     
 }
 
@@ -391,7 +395,10 @@ function scrCreate(data){
         date = 'future';    
     }
     $("ul[date='"+date+"']").append(AddTask(data.data));
-    initDelete( "li[id='"+data.data.Task.id+"']  .deleteTask");    	
+    initDelete("li[id='"+data.data.Task.id+"'] .deleteTask");
+    initEditAble("li[id='"+data.data.Task.id+"'] .editable");
+    initDone("li[id='"+data.data.Task.id+"'] .done");
+    initEditTask("li[id='"+data.data.Task.id+"'] .editTask");    	
     
 }
 function AddTask(data){
@@ -419,6 +426,22 @@ function AddTask(data){
 }
 //-------------------------------------
 
+function initEditAble(element){
+         $(element).editable(function(value, settings) { 
+                    var id = $(this).parent().attr('id');   
+                    userEvent('setTitle', {id: id, title: value });
+                    return value;
+             }
+             ,{
+                cssclass : 'inlineform',
+                width: 520,
+                height: 20,
+                indicator : "<img src='img/indicator.gif'>",
+                placeholder : "",
+                tooltip : "Щелкните чтоб отредактировать этот текст",
+                style  : "inherit"
+        });
+}
 function initDelete(element){
     $(element).inlineConfirmation({
               //reverse: true,
@@ -438,6 +461,47 @@ function initDelete(element){
     });
 }
 
+function initDone(element){
+    $(element).on("click", function(){
+        var id = $(this).parent().attr('id');
+        var done = $(this).is(":checked")? 1 : 0;
+        userEvent('setDone', {id: id, done: done});
+    });
+}
+
+function initEditTask(element){
+     $(element).on("click", function(){
+            var task = getTaskForEdit($(this).parent().attr('id'));
+            $('#editTask').attr('task_id', $(this).parent().attr('id'));
+            $('#editTask').find('#eTitle').val(task.title);
+            if(task.done){
+                $('#editTask').find('#eDone').attr('checked','checked');
+            }else {
+                $('#editTask').find('#eDone').removeAttr('checked');
+            }
+            $('#eTime').val(task.time);
+            $( "#eDate" ).val(task.date);
+            if(!task.date){
+                $( "#eDate" ).attr('placeholder', '---FUTURE---');
+            }
+            $('#editTask').modal('show');
+    });
+}
+
+function initCreateTask(element){
+    $(element).on('keypress', function(e){
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if(code == 13) {
+            var title = $(this).val();
+            var date = $(this).parent().siblings("ul").attr('date');
+            if(date == 'future'){
+                date = '';
+            }
+            userEvent('create', {title: title, date: date });
+            $(this).val(null);
+        }
+    });
+}
 function reload(){
     location.reload();
 }
@@ -452,93 +516,35 @@ $(function(){
             $.extend($.datepicker.regional["ru"])
          );
 
-        
         setInterval(function() {
             checkLogin();
         }, 120000);
         
-                 
-         $(document).on('keypress','.createTask' , function(e){
-         //$(".createTask").bind('keypress', function(e) {
-            var code = (e.keyCode ? e.keyCode : e.which);
-            if(code == 13) {
-                var title = $(this).val();
-                var date = $(this).parent().siblings("ul").attr('date');
-                userEvent('create', {title: title, date: date });
-                $(this).val(null);
-            }
-        });
+        initCreateTask(".createTask");
+        initCreateTask("#future input");
+        initEditAble(".editable");
+        initDelete(".deleteTask");
+        initDone(".done"); 
+        initEditTask(".editTask");   
         
-        $("#future input").bind('keypress', function(e) {
-            var code = (e.keyCode ? e.keyCode : e.which);
-            if(code == 13) {
-                var title = $(this).val();
-                userEvent('create', {title: title, date: '' });
-                $(this).val(null);
-            }
-        });
-        
-         $(document).on("click", ".editable", function(){
-             $(".editable").editable(function(value, settings) { 
-                    var id = $(this).parent().attr('id');   
-                    userEvent('setTitle', {id: id, title: value });
-                    return value;
-             }
-             ,{
-                cssclass : 'inlineform',
-                width: 520,
-                height: 20,
-                indicator : "<img src='img/indicator.gif'>",
-                placeholder : "",
-                tooltip : "Щелкните чтоб отредактировать этот текст",
-                style  : "inherit"
-            });
-        });
-        
-    $(document).on("click", ".done",  function(){
-            var id = $(this).parent().attr('id');
-            var done = $(this).is(":checked")? 1 : 0;
-            userEvent('setDone', {id: id, done: done});
-    });
-    
-    initDelete(".deleteTask");
-        
-    //$(document).on("click", ".deleteTask", function(){
-        //$(this).off("click", ".deleteTask");
-        //$(this).inlineConfirmation({
-//              //reverse: true,
-//              confirm: "<a href='#'><i class='icon-ok-sign'></i></a>",
-//              cancel: "<a href='#'><i class='icon-remove-sign '></i></a>",
-//              separator: "| ",
-//              expiresIn: 3,
-//              bindsOnEvent: "click",
-//              confirmCallback: function(el) {
-//                 el.parent().fadeIn();
-//                 var id = el.parent().attr('id');
-//                 userEvent('delete', {id: id});
-//              },
-//              cancelCallback: function(el) {
-//                 //mesg('Отмена удаления .');
-//              },
-//        });
-    //});
+
     $(document).on( 'hover', '.sortable', function(){
     //drag & drop
     
             var $tabs = $( "#main" ).tab();
-            var $tab_items = $( "ul:first li.drop", $tabs ).droppable({
-                         tolerance:'pointer', 
-                         accept: ".connectedSortable li",
-                         hoverClass: "hover", 
-                         drop: function( event, ui ) {
-                            dropped = true;
-                            var id = ui.draggable.attr('id');
-                            var date = $(this).find( "a" ).attr( "date" );
-                            var time = $.trim(ui.draggable.children('.time').text());
-                            userEvent('dragOnDay', {id: id, date: date, time:time});
-                            $(ui).parent().sortable('cancel');
-                        } 
-                }).disableSelection();
+            $( "ul:first li.drop", $tabs ).droppable({
+                     tolerance:'pointer', 
+                     accept: ".connectedSortable li",
+                     hoverClass: "hover", 
+                     drop: function( event, ui ) {
+                        dropped = true;
+                        var id = ui.draggable.attr('id');
+                        var date = $(this).find( "a" ).attr( "date" );
+                        var time = $.trim(ui.draggable.children('.time').text());
+                        userEvent('dragOnDay', {id: id, date: date, time:time});
+                        $(ui).parent().sortable('cancel');
+                    } 
+            }).disableSelection();
      
         console.log('hover');
     $( ".sortable" ).sortable({
@@ -580,7 +586,8 @@ $(function(){
         },
     }).disableSelection();
     });
-        
+    
+    // edit task, modal window      
     $('#eTime').timepicker({
                     timeFormat: 'HH:mm',
                     interval: 15,
@@ -592,23 +599,6 @@ $(function(){
                     minDate: 0,
     });
             
-    $(document).on("click", ".editTask", function(){
-            var task = getTaskForEdit($(this).parent().attr('id'));
-            $('#editTask').attr('task_id', $(this).parent().attr('id'));
-            $('#editTask').find('#eTitle').val(task.title);
-            if(task.done){
-                $('#editTask').find('#eDone').attr('checked','checked');
-            }else {
-                $('#editTask').find('#eDone').removeAttr('checked');
-            }
-            $('#eTime').val(task.time);
-            $( "#eDate" ).val(task.date);
-            if(!task.date){
-                $( "#eDate" ).attr('placeholder', '---FUTURE---');
-            }
-            $('#editTask').modal('show');
-    });
-        
     $("#eSave").click(function(){
             var id = $('#editTask').attr('task_id');
             var title = $.trim($('#editTask').find('#eTitle').val());
@@ -619,7 +609,7 @@ $(function(){
             userEvent('edit',{id: id,title: title, done: done, date: date, time: time, comment: comment });
     });
     
-  
+  // add new day into tabs
     $("#addDay").button().click(function(e) {
         var dp = $('#dp');
         dp.datepicker({
