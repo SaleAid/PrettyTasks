@@ -251,5 +251,18 @@ class User extends AppModel {
         $this->unbindModel(array('hasMany' => array('Account')));
         return $this->findByIdAndIs_blocked($id,0);
    }
+   
+   public function getConfig($id){
+       $this->contain();
+       $config = $this->find('first', array('conditions' => array('User.id' => $id),'fields' => array('User.config'),));
+       $config = unserialize($config['User']['config']);
+       return $config; 
+   }
+    
+   public function setConfig($id, $config){
+       $this->id = $id;
+       $this->saveField('config', serialize($config));
+       return true;
+   }
 
 }

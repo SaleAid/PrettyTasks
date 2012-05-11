@@ -39,14 +39,17 @@ class TasksController extends AppController {
     }
 
 	public function index() {
-		$result = $this->_prepareResponse();
+	    
+        $result = $this->_prepareResponse();
 		$result['success'] = true;
 		$result['data']['arrAllFuture'] = $this->Task->getAllFuture($this->Auth->user('id'));
 		$result['data']['arrAllExpired'] = $this->Task->getAllExpired($this->Auth->user('id'));
-		for($i = 0; $i <= 5; $i ++) {
-			$result['data']['arrTaskOnDays'][CakeTime::format('Y-m-d', '+' . $i . ' days')] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', '+' . $i . ' days'));
-		}
-		$this->set('result', $result);
+//		for($i = 0; $i <= 5; $i ++) {
+//			$result['data']['arrTaskOnDays'][CakeTime::format('Y-m-d', '+' . $i . ' days')] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', '+' . $i . ' days'));
+//		}
+        $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'));
+		//pr($result);die;
+        $this->set('result', $result);
         $this->set('_serialize', array('result'));
 	}
 
@@ -202,7 +205,24 @@ class TasksController extends AppController {
         $this->set('result', $result);
         $this->set('_serialize', array('result'));
     }
-
+    
+    public function deleteDay(){
+        $result = $this->_prepareResponse();
+        if($this->_isSetRequestData('date')){
+             if($this->Task->deleteDayFromConfig($this->Auth->user('id'), $this->request->data['date'])){
+                $result['success'] = true;
+                $result['message'] = array('type'=>'success', 'message' => __('День успешно удален из списка'));   
+             }else{
+                $result['message'] = array('type'=>'success', 'message' => __('Ошибка при  ...'));
+             }
+        }else{
+            $result['message'] = array('type'=>'success', 'message' => __('Ошибка при передачи данных'));
+        }
+        $result['action'] = 'deleteDay';
+        $this->set('result', $result);
+        $this->set('_serialize', array('result'));
+        
+    }
 	//----------------------------------------------------------------------
 
 }

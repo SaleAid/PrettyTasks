@@ -91,6 +91,9 @@ function userEvent(action, data){
         case 'addDay':
             taskAddDay(data.date);
         break;          
+        case 'deleteDay':
+            taskDeleteDay(data.date);
+        break;      
     }
 }
 
@@ -120,8 +123,33 @@ function responseHandler(data){
         case 'addDay':
             onAddDay(data);
         break;
+        case 'deleteDay':
+            onDeleteDay(data);
+        break;
     }
 }
+//---------------deleteDay------
+function taskDeleteDay(date){
+
+    scrDeleteDay(date);
+    srvDeleteDay(date);    
+}
+function scrDeleteDay(date){
+    //var tabid = $('#main ul.nav-tabs a[date="'+date+'"]').parent();
+    $("#" + date).remove();
+    $('#main ul.nav-tabs a[date="'+date+'"]').parent().remove();
+    var now = new Date();
+    activeTab($.datepicker.formatDate( "yy-mm-dd", now));
+     
+}
+function srvDeleteDay(date){
+    superAjax('/tasks/deleteDay.json',{date: date});
+}
+
+function onDeleteDay(data){
+    mesg(data.message);
+}
+
 //---------------addDay---------
 function taskAddDay(date){
 
@@ -132,7 +160,7 @@ function taskAddDay(date){
 
 function scrAddDay(date){
     var flag = true;
-    $( "#main ul:first li").each(function(){
+    $("#main ul:first li").each(function(){
         if($(this).children('a').attr('date') == date){
             flag = false;
         }
@@ -156,8 +184,10 @@ function scrAddDay(date){
                 </div>';
                 
     $('.tab-content').append(newTabContent);
-    $('#main ul.nav-tabs').append('<li class="drop"><a href="#'+date+'" data-toggle="tab" date="'+date+'">'+date+'</a></li>');
+    $('#main ul.nav-tabs').append('<li class="drop"><a href="#'+date+'" data-toggle="tab" date="'+date+'">'+date+'<span class="close">×</span></a></li>');
+    initTab('#main a[data-toggle="tab"]');
     activeTab(date);
+    
     return true;
 }
 function activeTab(date){
@@ -181,6 +211,10 @@ function onAddDay(data){
         initEditTask("li[id='"+value.Task.id+"'] .editTask");
     });
     initCreateTask($("ul[date='"+data.data.date+"']").parent().find(".createTask"));
+    initDrop($("li a[date='"+data.data.date+"']").parent());
+    initSortable("ul[date='"+data.data.date+"'].sortable");
+    
+    initTabDelte("li a[date='"+data.data.date+"'] .close");
     
 }
 
@@ -201,7 +235,7 @@ function scrTime(id, time){
     if(time){
         task.find('.time').text(time);    
     }else{
-      $(task.find('.time').text('')).append($('<i />').addClass('icon-time'));
+      $(task.find('.time').text(''));
     }
 }
 
@@ -241,18 +275,20 @@ function scrDragWithTime(id, date, time){
         var timeList = list.find('li.setTime');
         var newPositionID;
         var preTime;
-        var change = task.find('.time').text()!= time || task.attr('date') != date;
+        var curTime;
+        var change = $.trim(task.find('.time').text())!= time || task.attr('date') != date;
         if(change){
             if(time){
                 timeList.each(function() { 
-                    if(time > $(this).find('.time').text()){
+                    curTime =$.trim($(this).find('.time').text())
+                    if(time > curTime && curTime.length > 0){
                         if(newPositionID){
-                            if(preTime <= $(this).find('.time').text()){
+                            if(preTime <= curTime){
                                 newPositionID = $(this).attr('id');
-                                preTime = $(this).find('.time').text();    
+                                preTime = curTime;    
                             } 
                         }else{
-                            preTime = $(this).find('.time').text();
+                            preTime = curTime;
                             newPositionID = $(this).attr('id');    
                         }
                     }
@@ -261,6 +297,7 @@ function scrDragWithTime(id, date, time){
                     newPositionID ='';
                 }
            }
+           console.log(newPositionID);
            task.hide( "slow", function() {
                 if(newPositionID){
                     $(this).insertAfter($("li[id='"+newPositionID+"']")).show('slow');
@@ -268,16 +305,25 @@ function scrDragWithTime(id, date, time){
                 }else{
                     if(change){
                         if(list.children().length){
-                            $(this).prependTo(list).show('slow');    
+                            if(task.attr('date') != date){
+                                $(this).prependTo(list).show('slow');        
+                            }else{
+                                $(this).show('slow')
+                            }
+                                
                         }else{
                             $(this).appendTo(list).show('slow');
                         }
-                        $(this).addClass('setTime');
                     }else{
-                        
                         $(this).show('slow');
                     }                    
                 }
+                if(time){
+                    $(this).addClass('setTime');
+                }else{
+                    $(this).removeClass('setTime');
+                }
+                $(this).attr('date', date);
                 $(this).css({'opacity':'1'});
             });
         }
@@ -349,8 +395,10 @@ function scrSetDone(id, done){
     if(+done){
         titleEl.addClass('complete');
         doneEl.attr('checked', 'checked');
+         $("li[id='"+id+"']").addClass('complete')
     }else{
         titleEl.removeClass('complete');
+        $("li[id='"+id+"']").removeClass('complete');
         doneEl.removeAttr('checked');
     }
 }
@@ -372,7 +420,7 @@ function scrSetTitle(id, title_text, priority){
     if(priority == 1){
         title.addClass('important');
     }else{
-        title.removeClass('important');
+        $("li[id='"+id+"']").removeClass('important');
     }
 }
 
@@ -404,23 +452,21 @@ function scrCreate(data){
 function AddTask(data){
     var important ='';
 	var setTime ='';
-    var time ='';
+    var time = '<span class="time"></span>';
     if (+data.Task.priority){
 		important = 'important';
 	}
     if (data.Task.time){
 		setTime = 'setTime ';
         time = '<span class="time">'+data.Task.time.slice(0,-3)+'</span>'; 
-	}else {
-	   time = '<span class="time"><i class="icon-time"> </i> </span>';
 	}
     taskHtml = '<li id ="'+data.Task.id+'" class="ui-state-default '+setTime+'" date="'+data.Task.date+'"> \n'+ 
-                            '<span> <i class="icon-move"> </i></span> \n'+
                             time+'\n'+
+                            '<span><i class="icon-move"></i></span> \n'+
                             '<input type="checkbox" class="done" value="1"/> \n' +
                             '<span class="editable input-xxlarge '+important+'">'+data.Task.title+'</span> \n'+
                             '<span class="editTask"><i class="icon-pencil"></i></a></span> \n'+
-                            '<span class="deleteTask"> <i class=" icon-ban-circle"> </i></span> \n'+
+                            '<span class="deleteTask"><i class=" icon-ban-circle"></i></span> \n'+
                 '</li>';
     return taskHtml;
 }
@@ -433,9 +479,9 @@ function initEditAble(element){
                     return value;
              }
              ,{
-                cssclass : 'inlineform',
-                width: 520,
-                height: 20,
+                //cssclass : 'inlineform',
+                //width: 616,
+                //height: 19,
                 indicator : "<img src='img/indicator.gif'>",
                 placeholder : "",
                 tooltip : "Щелкните чтоб отредактировать этот текст",
@@ -502,64 +548,33 @@ function initCreateTask(element){
         }
     });
 }
-function reload(){
-    location.reload();
+
+function initDrop(element){
+    var $tabs = $( "#main" ).tab();
+    $(element, $tabs ).droppable({
+             tolerance:'pointer', 
+             accept: ".connectedSortable li",
+             hoverClass: "hover", 
+             drop: function( event, ui ) {
+                dropped = true;
+                var id = ui.draggable.attr('id');
+                var date = $(this).find( "a" ).attr( "date" );
+                var time = $.trim(ui.draggable.children('.time').text());
+                userEvent('dragOnDay', {id: id, date: date, time:time});
+                $(ui).parent().sortable('cancel');
+            } 
+    }).disableSelection();
 }
 
-var dropped = false;
-$(function(){
-
-//-------------------------------- work tesk
-        
-         //$('a[href="' + window.location.hash + '"]').click();
-         $.datepicker.setDefaults(
-            $.extend($.datepicker.regional["ru"])
-         );
-
-        setInterval(function() {
-            checkLogin();
-        }, 120000);
-        
-        initCreateTask(".createTask");
-        initCreateTask("#future input");
-        initEditAble(".editable");
-        initDelete(".deleteTask");
-        initDone(".done"); 
-        initEditTask(".editTask");   
-        
-
-    $(document).on( 'hover', '.sortable', function(){
-    //drag & drop
-    
-            var $tabs = $( "#main" ).tab();
-            $( "ul:first li.drop", $tabs ).droppable({
-                     tolerance:'pointer', 
-                     accept: ".connectedSortable li",
-                     hoverClass: "hover", 
-                     drop: function( event, ui ) {
-                        dropped = true;
-                        var id = ui.draggable.attr('id');
-                        var date = $(this).find( "a" ).attr( "date" );
-                        var time = $.trim(ui.draggable.children('.time').text());
-                        userEvent('dragOnDay', {id: id, date: date, time:time});
-                        $(ui).parent().sortable('cancel');
-                    } 
-            }).disableSelection();
-     
-        console.log('hover');
-    $( ".sortable" ).sortable({
+function initSortable(element){
+    $(element).sortable({
             tolerance:'pointer',
             cancel: '.ui-state-disabled',
             opacity: 0.6, 
             cursor: 'move', 
-            placeholder: "placeh ui-state-highlight",
+            placeholder: "ui-state-highlight",
             handle: 'span .icon-move',
-            change: function(event, ui) {
-                ui.helper.css("color","#f00");
-            },
             update : function(e, ui){
-                console.log('test');
-                console.log(ui.item.parent());
                 if(ui.item.parent().attr('date') == 'expired'){
                     $(this).css("color","");
                     return false;  
@@ -568,7 +583,6 @@ $(function(){
                     $(this).css("color","");
                     return false;    
                 }
-                
                 if(dropped){
                     dropped = false;
                     return true;
@@ -578,15 +592,56 @@ $(function(){
                 userEvent('changeOrders', {id: id, position: position});
             },
           stop: function(event, ui) {
-                
                 if(dropped){
                     dropped = false;
                     return true;
                 }
         },
+        
     }).disableSelection();
+}
+function initTab(element){
+     $(element).on('shown', function (e) {
+            window.location.hash=e.target.hash;
+      })
+}
+
+function initTabDelte(element){
+    $(element).on('click', function() {
+        var date = $(this).parent().attr('date');
+        userEvent('deleteDay', {date:date});
     });
-    
+}
+
+function reload(){
+    location.reload();
+}
+
+var dropped = false;
+$(function(){
+
+//-------------------------------- work tesk
+
+       if(window.location.hash != "") { 
+            $('#main a[href="'+window.location.hash+'"]').tab('show');
+       } 
+     $.datepicker.setDefaults(
+        $.extend($.datepicker.regional["ru"])
+     );
+
+    setInterval(function() {
+        checkLogin();
+    }, 120000);
+    initTab('#main a[data-toggle="tab"]');
+    initCreateTask(".createTask");
+    initCreateTask("#future input");
+    initEditAble(".editable");
+    initDelete(".deleteTask");
+    initDone(".done"); 
+    initEditTask(".editTask");   
+    initDrop("ul:first li.drop");
+    initSortable(".sortable");
+    initTabDelte('li a[data-toggle="tab"] .close');
     // edit task, modal window      
     $('#eTime').timepicker({
                     timeFormat: 'HH:mm',

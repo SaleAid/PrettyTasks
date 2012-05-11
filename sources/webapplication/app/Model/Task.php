@@ -418,7 +418,53 @@ class Task extends AppModel {
                 );
     }
     
+    public function getDays($user_id){
+        $day = array();
+        for($i = 0; $i <= 5; $i ++) {
+			$result[] = CakeTime::format('Y-m-d', '+' . $i . ' days');
+        }
+        $day = $this->_getDayWithConfig($user_id);
+        //pr($day);
+        sort($day);
+        $allDay = array_merge($result, $day);
+        $allDay = array_unique($allDay);
+        $this->contain();
+        $result = $this->find('all', array(
+                        'order' => array('Task.date' => 'ASC', 'Task.order' => 'ASC'),
+                        'conditions' => array(
+                                              'Task.user_id' => $user_id,
+                                              'Task.date' => $allDay,
+                                        )
+                        )
+        );
+        foreach($allDay as $v){
+            $data[$v] = array();
+        }
+        //pr($data);
+        foreach($result as $item){
+            $data[$item['Task']['date']][] = $item;
+       }
+       return $data;
+    }
+    
+    private function _getDayWithConfig($user_id){
+       $config = array();
+       $config = $this->User->getConfig($user_id);
+       //pr($config);
+       return (array)$config['day'];
+    }
+    
+    private function _setDayToConfig($user_id, $date){
+       $config = array();
+       $config = $this->User->getConfig($user_id);
+       if(!is_array($config['day']) || !in_array($date, $config['day'])){
+            $config['day'][] = $date; 
+       }
+       $this->User->setConfig($user_id, $config);    
+    }
+    
     public function getTasksForDay($user_id, $date){
+        $this->_setDayToConfig($user_id, $date);
         $this->contain();
         return $this->find('all', array(
                         'order' => array('Task.date' => 'ASC', 'Task.order' => 'ASC'),
@@ -428,5 +474,11 @@ class Task extends AppModel {
                                         )
                         )
         );
+    }
+    public function deleteDayFromConfig($user_id, $date){
+       $config = array();
+       $config = $this->User->getConfig($user_id);
+       unset($config['day'][ array_search($date, $config['day'])]);
+       return $this->User->setConfig($user_id, $config);
     }
 }
