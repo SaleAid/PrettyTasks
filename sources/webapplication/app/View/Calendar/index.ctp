@@ -57,9 +57,11 @@ echo $this->Html->script ( 'fullcalendar/fullcalendar.min.js' );
     					if (!value.Task.time){
     						dataToShow.start = new Date(value.Task.date);
     					}
-    					if (!+value.Task.done){
-    				    	events.push(dataToShow);
+    					if (+value.Task.done){
+    						dataToShow.color = '#aaffaa';
+    						dataToShow.className='calDone';
     				    }
+    					events.push(dataToShow);
                     });
 				});
 				$('#calendar').fullCalendar({
