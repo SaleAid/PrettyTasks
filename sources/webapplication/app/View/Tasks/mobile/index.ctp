@@ -16,8 +16,8 @@
 		<fieldset data-role="controlgroup" id="incomplete-<?php echo $this->Time->format('Y-m-d', time(), true); ?>" >
 		<input type="text" class="span3" name="newTask" id="newTask-<?php echo $this->Time->format('Y-m-d', time(), true); ?>" placeholder="Type to add new task for today" date="<?php echo $this->Time->format('Y-m-d', time(), true); ?>"/><br/>
 		<?php 
-			if(isset($result['data']['arrTaskOnDays']['Today']) && !empty($result['data']['arrTaskOnDays']['Today'])):
-			foreach($result['data']['arrTaskOnDays']['Today'] as $item):
+			if(isset($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', time(), true)]) && !empty($result['data']['arrTaskOnDays'][ $this->Time->format('Y-m-d', time(), true)])):
+			foreach($result['data']['arrTaskOnDays'][ $this->Time->format('Y-m-d', time(), true)] as $item):
 		?>
 		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
 		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
@@ -52,8 +52,8 @@
 		<fieldset data-role="controlgroup" id="incomplete-<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>" >
 		<input type="text" class="span3" name="newTask" id="newTask-<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>" placeholder="Type to add new task for tomorrow" date="<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>"/><br/>
 		<?php 
-			if(isset($result['data']['arrTaskOnDays']['Tomorrow']) && !empty($result['data']['arrTaskOnDays']['Tomorrow'])):
-			foreach($result['data']['arrTaskOnDays']['Tomorrow'] as $item):
+			if(isset($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', '+1 days', true)]) && !empty($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', '+1 days', true)])):
+			foreach($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', '+1 days', true)] as $item):
 		?>
 		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
 		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
@@ -85,7 +85,7 @@
 	
 	
 	<div  data-role="fieldcontain">
-		<h2>There are your overdue tasks</h2>
+		<h3>There are your overdue tasks</h3>
 		<fieldset data-role="controlgroup" id="incomplete-overdue" >
 		<?php 
 			if(isset($result['data']['arrAllExpired']) && !empty($result['data']['arrAllExpired'])):
