@@ -171,7 +171,7 @@ function scrAddDay(date){
     }
     var newTabContent = '<div class="tab-pane" id="'+date+'"> \
                     <div class="row"> \
-                        <div class="span10"> \
+                        <div class="listTask"> \
                             <div class="well form-inline"> \
                                 <input type="text" class=" createTask input-xxlarge" placeholder=" +Добавить задание…"/> \
                             </div> \
@@ -587,13 +587,10 @@ function initSortable(element){
             placeholder: "ui-state-highlight",
             handle: 'span .icon-move',
             update : function(e, ui){
-                if(ui.item.parent().attr('date') == 'expired'){
+                if(ui.item.parent().attr('date') == 'expired' || ui.item.hasClass('setTime')){
+                    mesg({type:'success', message:'Перемещение запрещено. '});
                     $(this).css("color","");
                     return false;  
-                }
-                if(ui.item.hasClass('setTime')){
-                    $(this).css("color","");
-                    return false;    
                 }
                 if(dropped){
                     dropped = false;
@@ -707,6 +704,10 @@ $(function(){
         }
         e.preventDefault();
     }).disableSelection();
+    
+    $('.addDay').click(function(){
+        $(this).find('li').removeClass('active'); 
+    });
 
                    
 }); 	

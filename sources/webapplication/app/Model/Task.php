@@ -467,6 +467,48 @@ class Task extends AppModel {
                             )
                         ));
     }
+    
+    public function getAllOverdue($user_id) {
+        $result = array();
+        $this->contain();
+        $tasks = $this->find('all', 
+                        array(
+                            'order' => array(
+                                'Task.date' => 'DESC', 
+                                'Task.order' => 'ASC'
+                            ), 
+                            'conditions' => array(
+                                'Task.user_id' => $user_id, 
+                                'Task.done' => 0, 
+                                'Task.date <' => CakeTime::format('Y-m-d', time())
+                            )
+                        ));
+        foreach($tasks as $item){
+            $result[$item['Task']['date']][] = $item;
+        }
+        return $result;
+    }
+    
+    public function getAllCompleted($user_id) {
+        $result = array();
+        $this->contain();
+        $tasks = $this->find('all', 
+                        array(
+                            'order' => array(
+                                'Task.date' => 'DESC', 
+                                'Task.order' => 'ASC'
+                            ), 
+                            'conditions' => array(
+                                'Task.user_id' => $user_id, 
+                                'Task.done' => 1, 
+                                //'Task.date <' => CakeTime::format('Y-m-d', time())
+                            )
+                        ));
+        foreach($tasks as $item){
+            $result[$item['Task']['date']][] = $item;
+        }
+        return $result;
+    }
 
     public function getAllFuture($user_id) {
         $this->contain();

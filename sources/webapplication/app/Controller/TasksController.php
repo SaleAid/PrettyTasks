@@ -41,11 +41,9 @@ class TasksController extends AppController {
         $result['success'] = true;
         $result['data']['arrAllFuture'] = $this->Task->getAllFuture($this->Auth->user('id'));
         $result['data']['arrAllExpired'] = $this->Task->getAllExpired($this->Auth->user('id'));
-        //		for($i = 0; $i <= 5; $i ++) {
-        //			$result['data']['arrTaskOnDays'][CakeTime::format('Y-m-d', '+' . $i . ' days')] = $this->Task->getAllForDate($this->Auth->user('id'), CakeTime::format('Y-m-d', '+' . $i . ' days'));
-        //		}
         $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'));
-        //pr($result);die;
+        $result['data']['arrAllOverdue'] = $this->Task->getAllOverdue($this->Auth->user('id'));
+        $result['data']['arrAllCompleted'] = $this->Task->getAllCompleted($this->Auth->user('id'));
         $this->set('result', $result);
         $this->set('_serialize', array(
             'result'
@@ -244,14 +242,15 @@ class TasksController extends AppController {
             'id', 
             'title', 
             'date', 
-            'time', 
+            'time',
+            'timeEnd', 
             'done', 
             'comment'
         );
         if ($this->_isSetRequestData($expectedData)) {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                $task = $this->Task->setEdit($this->request->data['title'], $this->request->data['date'], $this->request->data['time'], $this->request->data['done'])->save();
+                $task = $this->Task->setEdit($this->request->data['title'], $this->request->data['date'], $this->request->data['time'], $this->request->data['timeEnd'], $this->request->data['done'])->save();
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;
