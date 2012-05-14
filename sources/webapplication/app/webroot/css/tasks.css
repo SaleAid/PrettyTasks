@@ -46,7 +46,7 @@ div.well{
     font-size: 100%;
     overflow:hidden;
     color: #555555;
-    height: inherit !important;
+    height:  33px !important;
     line-height: 33px;
     border: 0 !important;  
     margin: 0 !important;
@@ -68,14 +68,16 @@ div.well{
     filter:alpha(opacity=40);
     background: transparent url('/img/line.png') 0 50% repeat-x !important;
 }
-.important{
+.important span{
     color: lime;
 }
 
 .time{
     display: inline-block;
     width: 36px;
-    
+}
+.timeEnd{
+    display: none;
 }
 .hover {
     
@@ -88,6 +90,10 @@ div.well{
 .addDay{
     color: green;
 }
+.addDay button{
+    border: none !important;
+    color: #08C !important;
+}
 
 .addDay:hover{
     cursor: pointer;
@@ -97,6 +103,7 @@ div.well{
 
 .ui-state-highlight { background: #DEECBB !important; }
 .close:hover{
+    
     opacity:1;
     filter:alpha(opacity=100);
 }

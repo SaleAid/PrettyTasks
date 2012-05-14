@@ -170,9 +170,9 @@ class TasksController extends AppController {
     
     public function editTask(){
         $result = $this->_prepareResponse();
-        if($this->_isSetRequestData(array('id','title','date','time','done','comment'))){
+        if($this->_isSetRequestData(array('id','title','date','time','timeEnd','done','comment'))){
             if ($originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-                 if($task = $this->Task->setEdit($this->request->data['title'],$this->request->data['date'], $this->request->data['time'], $this->request->data['done'])->save()){
+                 if($task = $this->Task->setEdit($this->request->data['title'],$this->request->data['date'], $this->request->data['time'], $this->request->data['timeEnd'], $this->request->data['done'])->save()){
                      $result['success'] = true;
                      $result['data'] = $task;
                      $result['message'] = array('type'=>'success', 'message' => __('Задача успешно отредактировано'));  

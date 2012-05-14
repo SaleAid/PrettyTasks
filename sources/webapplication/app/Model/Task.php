@@ -348,13 +348,21 @@ class Task extends AppModel {
         return false;
     }
 
-    public function setEdit($title, $date=null, $time=null, $done=null){
-        $this->setDate($date)->setTime($time)->setDone($done)->setTitle($title);
+    public function setEdit($title, $date=null, $time=null, $timeEnd=null, $done=null){
+        $this->setDate($date)->setTime($time, $timeEnd)->setDone($done)->setTitle($title);
         return $this;
     }
     
-    public function setTime($time){
-        $this->data[$this->alias]['time'] = $time;    
+    public function setTime($time, $timeEnd){
+        $this->data[$this->alias]['time'] = $time;  
+        $this->data[$this->alias]['timeend'] = $timeEnd;  
+        if(!$time){
+            $this->data[$this->alias]['timeend'] = null;
+        }
+        return $this;
+    }
+    public function setTimeEnd($time){
+        $this->data[$this->alias]['timeend'] = $time;    
         return $this;
     }
         
@@ -424,7 +432,6 @@ class Task extends AppModel {
 			$result[] = CakeTime::format('Y-m-d', '+' . $i . ' days');
         }
         $day = $this->_getDayWithConfig($user_id);
-        //pr($day);
         sort($day);
         $allDay = array_merge($result, $day);
         $allDay = array_unique($allDay);
@@ -440,7 +447,6 @@ class Task extends AppModel {
         foreach($allDay as $v){
             $data[$v] = array();
         }
-        //pr($data);
         foreach($result as $item){
             $data[$item['Task']['date']][] = $item;
        }
@@ -450,7 +456,6 @@ class Task extends AppModel {
     private function _getDayWithConfig($user_id){
        $config = array();
        $config = $this->User->getConfig($user_id);
-       //pr($config);
        return (array)$config['day'];
     }
     

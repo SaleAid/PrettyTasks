@@ -3,20 +3,20 @@
     <div class="span12">
       <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
         <ul class="nav nav-tabs">
- <!-- 
-           <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span id="addDay">select day </span>   <b class="caret"></b></a>
+            <li class="addDay">
+            <div class="btn-group dropup">
+                <button  id="addDay" class="btn btn-large">Добавить день</button>
+                <button class="btn btn-large dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
                 <ul class="dropdown-menu">
-                  <li ><a id="addDay1" class="addDay">Add Day</a></li>
-                  
+                    <li ><a href="#expired" data-toggle="tab" date="expired" class="tab2">Просроченные</a></li>
                 </ul>
-              </li>
-               -->
-           
-            <li ><a id="addDay" class="addDay">Add Day</a></li>
+            </div>   
+           </li>
             <input type="hidden" id="dp"/>
             <hr />
-            <li ><a href="#expired" data-toggle="tab" date="expired" class="tab2">Просроченные</a></li>
+            
             <li class="drop">
                 <a href="#future" data-toggle="tab" date="future" class="tab2">Будущее</a>
             </li>
@@ -63,6 +63,7 @@
                     <?php foreach($result['data']['arrAllFuture'] as $item):?>
                         <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?> " date="<?php echo $item['Task']['date'];?>">
                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
+                            <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
                             <span><i class="icon-move"></i></span>
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
                             <span class="editable input-xxlarge <?php if($item['Task']['done']):?> complete <?php endif; ?> <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo $item['Task']['title']; ?></span>
@@ -84,9 +85,11 @@
                     <?php foreach($result['data']['arrAllExpired'] as $item):?>
                         <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['priority']):?> important <?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
+                            <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
                             <span><i class="icon-move"> </i></span>
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                            <span class=" editable input-xxlarge <?php if($item['Task']['done']):?> complete <?php endif; ?>"><?php echo $item['Task']['title']; ?></span>
+                            <span class=" editable <?php if($item['Task']['done']):?> complete <?php endif; ?>"><?php echo $item['Task']['title']; ?></span>
+                            <span class="editTask hide"><i class="icon-pencil"></i></a></span>
                             <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                         </li>
                     <?php endforeach;?>
@@ -108,9 +111,10 @@
                             <?php foreach($v as $item):?>
                                 <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
                                     <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
+                                    <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
                                     <span><i class="icon-move"></i></span>
                                     <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                                    <span class=" editable input-xxlarge <?php if($item['Task']['done']):?> complete <?php endif; ?> <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo $item['Task']['title']; ?></span>
+                                    <span class=" editable  <?php if($item['Task']['done']):?> complete <?php endif; ?> <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo $item['Task']['title']; ?></span>
                                     <span class="editTask"><i class="icon-pencil"></i></a></span>
                                     <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                                 </li>
@@ -180,8 +184,9 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#" id="eSave" class="btn btn-success">Сохранить</a>
-        <a href="#" class="btn" data-dismiss="modal">Закрыть</a>
+    
+        <button id="eSave" class="btn btn-success">Сохранить</button>
+        <a href="" class="btn" data-dismiss="modal">Закрыть</a>
     </div>
 </div>
 <!-- End modal --!>

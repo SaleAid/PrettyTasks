@@ -9,6 +9,7 @@ function getTaskFromPage(id){
         done:    $('#'+id).children('.done').is(":checked"),
         date:    $('#'+id).attr('date'),
         time:    $('#'+id).children('.time').text(),
+        timeEnd: $('#'+id).children('.timeEnd').text(),   
         comment: 'comment'   
     };
     return data;
@@ -86,7 +87,7 @@ function userEvent(action, data){
             taskChangeOrders(data.id, data.position);
         break; 
         case 'edit':
-            taskEdit(data.id, data.title, data.done, data.date, data.time, data.comment);
+            taskEdit(data.id, data.title, data.done, data.date, data.time, data.timeEnd, data.comment);
         break;
         case 'addDay':
             taskAddDay(data.date);
@@ -135,7 +136,6 @@ function taskDeleteDay(date){
     srvDeleteDay(date);    
 }
 function scrDeleteDay(date){
-    //var tabid = $('#main ul.nav-tabs a[date="'+date+'"]').parent();
     $("#" + date).remove();
     $('#main ul.nav-tabs a[date="'+date+'"]').parent().remove();
     var now = new Date();
@@ -230,20 +230,23 @@ function scrDate(id, date){
 }
 
 //----------------setTime-------
-function scrTime(id, time){
+function scrTime(id, time, timeEnd){
     var task = $("li[id='"+id+"']");
     if(time){
-        task.find('.time').text(time);    
+        task.find('.time').text(time);
+        task.find('.timeEnd').text(timeEnd);    
     }else{
       $(task.find('.time').text(''));
+      $(task.find('.timeEnd').text(''));
     }
 }
 
-//----------------edit----------
-function taskEdit(id, title, done, date, time, comment){
 
-    scrEdit(id, title, done, date, time, comment);
-    srvEdit(id, title, done, date, time, comment);
+//----------------edit----------
+function taskEdit(id, title, done, date, time, timeEnd, comment){
+
+    scrEdit(id, title, done, date, time, timeEnd, comment);
+    srvEdit(id, title, done, date, time, timeEnd, comment);
 }
 function onEdit(data){
     if(data.success){
@@ -252,16 +255,17 @@ function onEdit(data){
     }
     mesg(data.message);
 }
-function srvEdit(id, title, done, date, time, comment){
-    superAjax('/tasks/editTask.json',{id: id, title: title, done: done, date: date, time: time, comment: comment});
+function srvEdit(id, title, done, date, time, timeEnd, comment){
+    superAjax('/tasks/editTask.json',{id: id, title: title, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment});
 }
 
-function scrEdit(id, title, done, date, time, comment){
+function scrEdit(id, title, done, date, time, timeEnd, comment){
     scrDragWithTime(id, date, time);
     scrDate(id,date);
     scrSetDone(id,done);
     scrSetTitle(id, title, 0);
-    scrTime(id, time);
+    scrTime(id, time, timeEnd);
+ 
 }
 
 
@@ -297,7 +301,6 @@ function scrDragWithTime(id, date, time){
                     newPositionID ='';
                 }
            }
-           console.log(newPositionID);
            task.hide( "slow", function() {
                 if(newPositionID){
                     $(this).insertAfter($("li[id='"+newPositionID+"']")).show('slow');
@@ -305,11 +308,11 @@ function scrDragWithTime(id, date, time){
                 }else{
                     if(change){
                         if(list.children().length){
-                            if(task.attr('date') != date){
+                            //if(task.attr('date') != date){
                                 $(this).prependTo(list).show('slow');        
-                            }else{
-                                $(this).show('slow')
-                            }
+                            //}else{
+                            //    $(this).show('slow')
+                            //}
                                 
                         }else{
                             $(this).appendTo(list).show('slow');
@@ -325,6 +328,7 @@ function scrDragWithTime(id, date, time){
                 }
                 $(this).attr('date', date);
                 $(this).css({'opacity':'1'});
+                $(this).children('.editTask').removeClass('hide');
             });
         }
 }
@@ -453,15 +457,20 @@ function AddTask(data){
     var important ='';
 	var setTime ='';
     var time = '<span class="time"></span>';
+    var timeEnd = '<span class="timeEnd"></span>';
     if (+data.Task.priority){
 		important = 'important';
 	}
     if (data.Task.time){
 		setTime = 'setTime ';
-        time = '<span class="time">'+data.Task.time.slice(0,-3)+'</span>'; 
-	}
+        time = '<span class="time">'+data.Task.time.slice(0,-3)+'</span>';
+        if(data.Task.timeend){
+            timeEnd = '<span class="timeEnd">'+data.Task.timeend.slice(0,-3)+'</span>'; 
+        }
+    }
     taskHtml = '<li id ="'+data.Task.id+'" class="ui-state-default '+setTime+'" date="'+data.Task.date+'"> \n'+ 
                             time+'\n'+
+                            timeEnd+'\n'+
                             '<span><i class="icon-move"></i></span> \n'+
                             '<input type="checkbox" class="done" value="1"/> \n' +
                             '<span class="editable input-xxlarge '+important+'">'+data.Task.title+'</span> \n'+
@@ -479,9 +488,6 @@ function initEditAble(element){
                     return value;
              }
              ,{
-                //cssclass : 'inlineform',
-                //width: 616,
-                //height: 19,
                 indicator : "<img src='img/indicator.gif'>",
                 placeholder : "",
                 tooltip : "Щелкните чтоб отредактировать этот текст",
@@ -526,6 +532,12 @@ function initEditTask(element){
                 $('#editTask').find('#eDone').removeAttr('checked');
             }
             $('#eTime').val(task.time);
+            if(task.time){
+                $('#eTimeEnd').timepicker('option', 'minTime', task.time, 'maxTime', '23:59').removeAttr('disabled');
+            }else{
+                $('#eTimeEnd').attr("disabled","disabled");
+            }
+            $('#eTimeEnd').val(task.timeEnd);
             $( "#eDate" ).val(task.date);
             if(!task.date){
                 $( "#eDate" ).attr('placeholder', '---FUTURE---');
@@ -645,7 +657,20 @@ $(function(){
     // edit task, modal window      
     $('#eTime').timepicker({
                     timeFormat: 'HH:mm',
+                    maxTime: '23:59',
                     interval: 15,
+                    startHour: 6,
+                    change: function(time) {
+                        $('#eTimeEnd').timepicker('option', 'minTime', time, 'maxTime', '23:59').removeAttr('disabled');
+                    },
+                    
+    });
+    
+    $('#eTimeEnd').timepicker({
+                    timeFormat: 'HH:mm',
+                    maxTime: '23:59',
+                    interval: 15,
+                    //startHour: 6,
     });
     
     $( "#eDate" ).datepicker({ 
@@ -660,8 +685,9 @@ $(function(){
             var done = $.trim($('#editTask').find('#eDone').is(":checked")? 1: 0);
             var date = $.trim($( "#eDate" ).val());
             var time = $.trim($('#eTime').val());
+            var timeEnd = $.trim($('#eTimeEnd').val());
             var comment = $('#eComment').val();
-            userEvent('edit',{id: id,title: title, done: done, date: date, time: time, comment: comment });
+            userEvent('edit',{id: id,title: title, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment });
     });
     
   // add new day into tabs
