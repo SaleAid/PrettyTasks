@@ -399,7 +399,6 @@ class Task extends AppModel {
         return false;
     }
 
-<<<<<<< HEAD
     public function setEdit($title, $date=null, $time=null, $timeEnd=null, $done=null){
         $this->setDate($date)->setTime($time, $timeEnd)->setDone($done)->setTitle($title);
         return $this;
@@ -413,19 +412,10 @@ class Task extends AppModel {
         }
         return $this;
     }
-    public function setTimeEnd($time){
-        $this->data[$this->alias]['timeend'] = $time;    
-=======
-    public function setEdit($title, $date = null, $time = null, $done = null) {
-        $this->setDate($date)->setTime($time)->setDone($done)->setTitle($title);
-        return $this;
-    }
-
-    public function setTime($time) {
-        $this->data[$this->alias]['time'] = $time;
->>>>>>> 31c74aa69e9834790d659617ba54bdf40584e2f4
-        return $this;
-    }
+    //public function setTimeEnd($time){
+//        $this->data[$this->alias]['timeend'] = $time;    
+//        return $this;
+//    }
 
     public function setDate($date) {
         if (! $date) {
@@ -517,30 +507,16 @@ class Task extends AppModel {
         foreach ( $allDay as $v ) {
             $data[$v] = array();
         }
-<<<<<<< HEAD
         foreach($result as $item){
-=======
-        //pr($data);
-        foreach ( $result as $item ) {
->>>>>>> 31c74aa69e9834790d659617ba54bdf40584e2f4
             $data[$item['Task']['date']][] = $item;
         }
         return $data;
     }
-<<<<<<< HEAD
     
     private function _getDayWithConfig($user_id){
        $config = array();
        $config = $this->User->getConfig($user_id);
        return (array)$config['day'];
-=======
-
-    private function _getDayWithConfig($user_id) {
-        $config = array();
-        $config = $this->User->getConfig($user_id);
-        //pr($config);
-        return (array)$config['day'];
->>>>>>> 31c74aa69e9834790d659617ba54bdf40584e2f4
     }
 
     private function _setDayToConfig($user_id, $date) {
