@@ -169,25 +169,25 @@ function scrAddDay(date){
         activeTab(date);
         return false;    
     }
-    var newTabContent = '<div class="tab-pane" id="'+date+'"> \
-                    <div class="row"> \
-                        <div class="listTask"> \
-                            <div class="well form-inline"> \
-                                <input type="text" class=" createTask input-xxlarge" placeholder=" +Добавить задание…"/> \
-                            </div> \
-                            <hr /> \
-                            <ul class="sortable connectedSortable ui-helper-reset" date="'+date+'"> \
-                                <p class="loadContent" align=center> Loading content ...</p> \
-                            </ul> \
-                        </div> \
-                    </div> \
-                </div>';
+    var newTabContent = '<div class="tab-pane" id="'+date+'"> '+
+                    '<div class="row"> '+ 
+                        '<div class="listTask"> '+
+                            '<h3 class="label label-info margin-bottom10">'+date+'</h3> '+
+                            '<div class="well form-inline"> '+
+                                '<input type="text" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/> '+
+                                '<button class="btn createTaskButton"> Добавить </button> '+
+                            '</div> '+
+                            '<ul class="sortable connectedSortable ui-helper-reset" date="'+date+'"> '+
+                                '<p class="loadContent" align=center> Loading content ...</p> '+
+                            '</ul> '+
+                        '</div> '+
+                    '</div> '+
+                '</div> ';
                 
     $('.tab-content').append(newTabContent);
     $('#main ul.nav-tabs').append('<li class="drop"><a href="#'+date+'" data-toggle="tab" date="'+date+'">'+date+'<span class="close">×</span></a></li>');
     initTab('#main a[data-toggle="tab"]');
     activeTab(date);
-    
     return true;
 }
 function activeTab(date){
@@ -211,6 +211,7 @@ function onAddDay(data){
         initEditTask("li[id='"+value.Task.id+"'] .editTask");
     });
     initCreateTask($("ul[date='"+data.data.date+"']").parent().find(".createTask"));
+    initCreateTaskButton($("ul[date='"+data.data.date+"']").parent().find(".createTaskButton"));
     initDrop($("li a[date='"+data.data.date+"']").parent());
     initSortable("ul[date='"+data.data.date+"'].sortable");
     
@@ -444,14 +445,14 @@ function srvCreate(title, date){
 function scrCreate(data){
     date = data.data.Task.date;
     if(data.data.Task.future){
-        date = 'future';    
+        date = 'future';
+        data.data.Task.date = '';    
     }
     $("ul[date='"+date+"']").append(AddTask(data.data));
     initDelete("li[id='"+data.data.Task.id+"'] .deleteTask");
     initEditAble("li[id='"+data.data.Task.id+"'] .editable");
     initDone("li[id='"+data.data.Task.id+"'] .done");
     initEditTask("li[id='"+data.data.Task.id+"'] .editTask");    	
-    
 }
 function AddTask(data){
     var important ='';
@@ -560,6 +561,17 @@ function initCreateTask(element){
         }
     });
 }
+function initCreateTaskButton(element){
+    $(element).on('click', function(e){
+        var title = $(this).siblings('.createTask').val();
+        var date = $(this).parent().siblings("ul").attr('date');
+        if(date == 'future'){
+            date = '';
+        }
+        userEvent('create', {title: title, date: date });
+        $(this).siblings('.createTask').val(null);
+    });
+}
 
 function initDrop(element){
     var $tabs = $( "#main" ).tab();
@@ -587,15 +599,17 @@ function initSortable(element){
             placeholder: "ui-state-highlight",
             handle: 'span .icon-move',
             update : function(e, ui){
+                console.log('test');
+                if(dropped){
+                    dropped = false;
+                    return true;
+                }
                 if(ui.item.parent().attr('date') == 'expired' || ui.item.hasClass('setTime')){
                     mesg({type:'success', message:'Перемещение запрещено. '});
                     $(this).css("color","");
                     return false;  
                 }
-                if(dropped){
-                    dropped = false;
-                    return true;
-                }
+
                 var id = ui.item.attr('id');
                 var position = ui.item.index()+1;
                 userEvent('changeOrders', {id: id, position: position});
@@ -643,7 +657,8 @@ $(function(){
     }, 120000);
     initTab('#main a[data-toggle="tab"]');
     initCreateTask(".createTask");
-    initCreateTask("#future input");
+    //initCreateTask("#future input");
+    initCreateTaskButton(".createTaskButton");
     initEditAble(".editable");
     initDelete(".deleteTask");
     initDone(".done"); 

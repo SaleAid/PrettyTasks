@@ -1,3 +1,6 @@
+<?php $this->start ( 'toHead' );?>
+<?php echo $this->Html->css('tasks');?>
+<?php $this->end ();?>
 
 <div class="row">
     <div class="span12">
@@ -16,8 +19,6 @@
             </div>   
            </li>
             <input type="hidden" id="dp"/>
-            <hr />
-            
             <li class="drop">
                 <a href="#future" data-toggle="tab" date="future" class="tab2">Будущее</a>
             </li>
@@ -41,8 +42,8 @@
           <?php endfor; ?>
           
           <?php foreach($result['data']['arrTaskOnDays'] as $k => $v):?>
-          <?php if($k > $this->Time->format('Y-m-d', '+7 days') or $k < $this->Time->format('Y-m-d', time())):?>
-            <li class="drop"> <a href="#<?php echo $k; ?>"
+          <?php if($k > $this->Time->format('Y-m-d', '+6 days') or $k < $this->Time->format('Y-m-d', time())):?>
+            <li class="drop"> <a href="#<?php echo $k;?>"
                              data-toggle="tab"
                               date = "<?php echo $k; ?>">
                       <?php echo __($k); ?> <span class="close">×</span>
@@ -55,10 +56,11 @@
           <div class="tab-pane" id="future">
           <div class="row">
           <div class="listTask">
-           <div class="well form-inline">
-                <input type="text" class="input-xxlarge" placeholder=" +Добавить задание…"/>
-             </div>
-            <hr />
+            <h3 class="label label-info margin-bottom10">Задачи на будущие.</h3>
+            <div class="well form-inline">
+                <input type="text" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>
+                <button class="btn createTaskButton"> Добавить </button>
+            </div>
             <ul class="sortable connectedSortable ui-helper-reset" date="future">
                 <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])):?>
                     <?php foreach($result['data']['arrAllFuture'] as $item):?>
@@ -80,16 +82,14 @@
           <div class="tab-pane" id="expired">
               <div class="row">
                   <div class="listTask">
-                  <h3>Просроченные задачи.</h3>
-                    <hr />
+                  <h3 class="margin-bottom10">Просроченные задачи.</h3>
                         <?php if(isset($result['data']['arrAllOverdue']) && !empty($result['data']['arrAllOverdue'])):?>
                         <ul class="sortable connectedSortable ui-helper-reset " date="expired">
                             <?php foreach($result['data']['arrAllOverdue'] as $datelabel => $day):
                                     if(isset($day) && !empty($day)):  
                             ?>
-                                <h3 class="label label-info"><?php echo $datelabel; ?></h3>
-                                <hr />
-                            		<? foreach($day as $item):?>
+                                <h3 class="label label-info margin-bottom10"><?php echo $datelabel; ?></h3>
+                                    <? foreach($day as $item):?>
                                         <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['priority']):?> important <?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
                                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
                                             <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
@@ -112,16 +112,14 @@
           <div class="tab-pane" id="completed">
               <div class="row">
                   <div class="listTask">
-                  <h3>Завершенные задачи.</h3>
-                    <hr />
+                  <h3 class="margin-bottom10">Завершенные задачи.</h3>
                         <?php if(isset($result['data']['arrAllCompleted']) && !empty($result['data']['arrAllCompleted'])):?>
                         <ul class="sortable connectedSortable ui-helper-reset " date="expired">
                             <?php foreach($result['data']['arrAllCompleted'] as $datelabel => $day):
                                     if(isset($day) && !empty($day)):  
                             ?>
-                                <h3 class="label label-info"><?php echo $datelabel; ?></h3>
-                                <hr />
-                            		<? foreach($day as $item):?>
+                                <h3 class="label label-info margin-bottom10"><?php echo $datelabel; ?></h3>
+                                	<? foreach($day as $item):?>
                                         <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['priority']):?> important <?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
                                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
                                             <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
@@ -145,10 +143,13 @@
             <div class="tab-pane <?php if($this->Time->isToday($k)):?>active<?php endif;?>" id="<?php echo $k; ?>" >
                 <div class="row">
                     <div class="listTask">
-                        <h3 class="label label-info"><?php echo $k; ?></h3>
-                        <hr />
+                        <h3 class="label label-info margin-bottom10"><?php echo $k; ?></h3>
                         <div class="well form-inline">
                             <input type="text" class="createTask input-xxlarge" placeholder=" +Добавить задание…"/>
+                            <button class="btn createTaskButton"> Добавить </button>
+                            <label class="checkbox">
+                                <input type="checkbox"/> Удачный день.
+                            </label>
                         </div>
                         <ul id="sortable<?php echo $k; ?>" class="sortable connectedSortable ui-helper-reset" date="<?php echo $k; ?>">
                             <?php foreach($v as $item):?>

@@ -20,14 +20,16 @@
 .listTask{
     width: 800px;
     margin-left: 30px;
+    
 }
 div.well{
     padding: 0px;
     background-color: inherit;
     border: none;
     box-shadow: none;
-    padding: 0px 0px 0px 75px; 
+    //padding: 0px 0px 0px 35px; 
 }
+.margin-bottom10{ margin-bottom: 10px;}
 
 
 .sortable li span { 
@@ -55,7 +57,9 @@ div.well{
     margin: 0 !important;
     padding: 0 !important;
 }
+
 .editable:hover{cursor: text;}
+
 .editable form, .editable input {
     height: 26px !important;
     width: 625px !important;
@@ -63,7 +67,6 @@ div.well{
     margin: 0 0 0 1px !important;
     padding: 0 !important;
     color: blue;
-    //font: inherit !important;
 }
 
 .complete {
@@ -72,8 +75,8 @@ div.well{
     filter:alpha(opacity=40);
     background: transparent url('/img/line.png') 0 50% repeat-x !important;
 }
-.important span{
-    color: lime;
+.important {
+    color: red;
 }
 
 .time{
@@ -103,11 +106,12 @@ div.well{
     cursor: pointer;
     color: red;
 }
+
 .icon-move:hover{cursor: move}
 
 .ui-state-highlight { background: #DEECBB !important; }
+
 .close:hover{
-    
     opacity:1;
     filter:alpha(opacity=100);
 }
@@ -145,7 +149,4 @@ div.jGrowl.custom {
     width: 0; 
     overflow: hidden; 
 }
-.span10{
-    //position: fixed;
-    
-}
+

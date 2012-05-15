@@ -242,24 +242,27 @@ class User extends AppModel {
    public function generateToken(){
         return Security::hash(mt_rand().Configure::read('Security.salt') .  time() . mt_rand());
    }
-//----------------
-
-  
-
-
+   
    public function getUser($id){
-        $this->unbindModel(array('hasMany' => array('Account')));
+        $this->contain();
         return $this->findByIdAndIs_blocked($id,0);
    }
    
-   public function getConfig($id){
+   public function getConfig($id, $field = null){
        $this->contain();
        $config = $this->find('first', array('conditions' => array('User.id' => $id),'fields' => array('User.config'),));
        $config = unserialize($config['User']['config']);
-       return $config; 
+       if($field){
+            if(isset($config[$field])){
+                return (array)$config[$field];    
+            }else{
+                return array();
+            }            
+       }
+       return $config;
    }
     
-   public function setConfig($id, $config){
+   public function setConfig($id, $config, $field=null){
        $this->id = $id;
        $this->saveField('config', serialize($config));
        return true;

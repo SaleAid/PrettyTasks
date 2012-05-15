@@ -41,7 +41,10 @@ class TasksController extends AppController {
         $result['success'] = true;
         $result['data']['arrAllFuture'] = $this->Task->getAllFuture($this->Auth->user('id'));
         $result['data']['arrAllExpired'] = $this->Task->getAllExpired($this->Auth->user('id'));
-        $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'));
+        $from = CakeTime::format('Y-m-d', time());
+        $to = CakeTime::format('Y-m-d', '+6 days');
+        $dayConfig = $this->User->getConfig($this->Auth->user('id'), 'day');
+        $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to, $dayConfig);
         $result['data']['arrAllOverdue'] = $this->Task->getAllOverdue($this->Auth->user('id'));
         $result['data']['arrAllCompleted'] = $this->Task->getAllCompleted($this->Auth->user('id'));
         $this->set('result', $result);
@@ -49,6 +52,20 @@ class TasksController extends AppController {
             'result'
         ));
     }
+    
+    public function agenda() {
+        $result = $this->_prepareResponse();
+        $result['success'] = true;
+        $from = CakeTime::format('Y-m-d', time());
+        $to = CakeTime::format('Y-m-d', '+6 days');
+        $dayConfig = $this->User->getConfig($this->Auth->user('id'), 'day');
+        $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to);
+        $this->set('result', $result);
+        $this->set('_serialize', array(
+            'result'
+        ));
+    }
+
 
     public function setTitle() {
         $result = $this->_prepareResponse();

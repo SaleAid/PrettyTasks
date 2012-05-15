@@ -15,22 +15,39 @@
 
       <div class="nav-collapse">
         <ul class="nav">
-          <li class="active">
-            <?php 
-            //TODO SELECT ITEMS
-            echo $this->Html->link(
-                            'Tasks',
-                            array('controller' => 'Tasks', 'action' => 'index')
-                        );?>    
+          <li class="<? if($this->params['action'] == "index" and $this->params['controller'] == "Tasks") echo 'active'; ?>">
+                <?php echo $this->Html->link(
+                                'Tasks',
+                                array('controller' => 'Tasks', 'action' => 'index')
+                );?>    
           </li>
-          <li>            <?php echo $this->Html->link(
-                            'Calendar',
-                            array('controller' => 'Calendar', 'action' => 'index')
-                        );?>  </li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li class="<? if($this->params['action'] == "index" and $this->params['controller'] == "Calendar") echo 'active'; ?>">
+              <?php echo $this->Html->link(
+                    'Calendar',
+                    array('controller' => 'Calendar', 'action' => 'index')
+                );?>  
+          </li>
+          <li class="<? if($this->params['action'] == "agenda" and $this->params['controller'] == "Tasks") echo 'active'; ?>">
+              <?php echo $this->Html->link(
+                    'Agenda',
+                    array('controller' => 'Tasks', 'action' => 'agenda')
+                );?>
+          </li>
+          <li class="<? if($this->params['action'] == "contact" and $this->params['controller'] == "Pages") echo 'active'; ?>">
+              <?php echo $this->Html->link(
+                    'Contact',
+                    array('controller' => 'Pages', 'action' => 'contact')
+                );?>
+          </li>
+          <li class="<? if($this->params['action'] == "about" and $this->params['controller'] == "Pages") echo 'active'; ?>">
+              <?php echo $this->Html->link(
+                    'About',
+                    array('controller' => 'Pages', 'action' => 'about')
+                );?>
+          </li>
         </ul>
-        <?php echo $this->element('current_user'); ?>  
+        <?php echo $this->element('current_user'); ?> 
+         
       </div>
     </div>
   </div>

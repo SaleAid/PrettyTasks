@@ -525,15 +525,21 @@ class Task extends AppModel {
                         ));
     }
 
-    public function getDays($user_id) {
-        $day = array();
-        for($i = 0; $i <= 5; $i ++) {
-            $result[] = CakeTime::format('Y-m-d', '+' . $i . ' days');
+    public function getDays($user_id, $from, $to, $arrDays = null) {
+        $begin = new DateTime($from);
+        $end = new DateTime($to);
+        $end->add( new DateInterval( "P1D" ) );
+        $interval = DateInterval::createFromDateString('1 day');
+        $daysObj = new DatePeriod($begin, $interval, $end);
+        $days = array();
+        foreach ($daysObj as $day) {
+            $days[] = $day->format("Y-m-d");
         }
-        $day = $this->_getDayWithConfig($user_id);
-        sort($day);
-        $allDay = array_merge($result, $day);
-        $allDay = array_unique($allDay);
+        if(is_array($arrDays)){
+            sort($arrDays);
+            $days = array_merge($days, $arrDays);
+            $days = array_unique($days);
+        }
         $this->contain();
         $result = $this->find('all', 
                             array(
@@ -543,10 +549,10 @@ class Task extends AppModel {
                                 ), 
                                 'conditions' => array(
                                     'Task.user_id' => $user_id, 
-                                    'Task.date' => $allDay
+                                    'Task.date' => $days
                                 )
                             ));
-        foreach ( $allDay as $v ) {
+        foreach ( $days as $v ) {
             $data[$v] = array();
         }
         foreach($result as $item){
@@ -555,16 +561,9 @@ class Task extends AppModel {
         return $data;
     }
     
-    private function _getDayWithConfig($user_id){
-       $config = array();
-       $config = $this->User->getConfig($user_id);
-       return (array)$config['day'];
-    }
-
     private function _setDayToConfig($user_id, $date) {
-        $config = array();
         $config = $this->User->getConfig($user_id);
-        if (! is_array($config['day']) || ! in_array($date, $config['day'])) {
+        if (! is_array($config) || ! in_array($date, $config)) {
             $config['day'][] = $date;
         }
         $this->User->setConfig($user_id, $config);
