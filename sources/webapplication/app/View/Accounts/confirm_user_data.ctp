@@ -2,7 +2,7 @@
     <div class="span6 offset3">
         <fieldset>
 		  <legend><?php echo __('Confirm user data'); ?></legend>
-            <?php echo $this->Form->create('Account', array('class' => 'well',
+            <?php echo $this->Form->create('User', array('class' => 'well',
                                                         'inputDefaults' => array(
                                                         'div' => array('class' => 'control-group'),
                                                         'label' => array('class' => 'control-label'),

@@ -28,7 +28,7 @@ class AppController extends Controller {
         ), 
         'RequestHandler'
     );
-
+    
     /**
      * 
      * Cake autorization function

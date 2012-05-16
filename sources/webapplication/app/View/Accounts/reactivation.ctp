@@ -1,6 +1,6 @@
 <div class="users form">
 
-<?php echo $this->Form->create('Accounts');?>
+<?php echo $this->Form->create('User');?>
 
 	<fieldset>
     	<legend><?php echo __('Re-activation'); ?></legend>

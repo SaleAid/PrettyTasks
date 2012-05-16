@@ -32,13 +32,9 @@
         
         echo $this->Html->css('bootstrap.min');
         
-        echo $this->Html->script('jquery-1.7.1.min.js');
+        echo $this->fetch('toHead'); 
         
-        echo $this->Html->script('bootstrap.min.js');
-        
-        echo $this->Html->script('main.js');
 
-		echo $scripts_for_layout;
     ?>
     
   </head>
@@ -68,6 +64,20 @@
       <footer>
         <p>&copy; Company 2012</p>
       </footer>
-   <?php echo $this->Js->writeBuffer(); ?>
+   <?php
+        echo $this->Js->writeBuffer(); 
+   
+        echo $this->Html->script('jquery-1.7.1.min.js');
+        
+        echo $this->Html->script('bootstrap.min.js');
+        
+        echo $this->Html->script('main.js');
+
+		echo $scripts_for_layout;
+		
+		echo $this->fetch('toFooter'); 
+   
+   
+   ?>
   </body>
 </html>

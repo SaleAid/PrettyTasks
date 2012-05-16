@@ -5,7 +5,8 @@ class UsersController extends AppController {
     public $helpers = array(
         'Form', 
         'Html', 
-        'Js'
+        'Js',
+        'Loginza'
     );
     public $components = array(
         'Recaptcha.Recaptcha' => array(

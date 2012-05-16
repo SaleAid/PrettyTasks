@@ -2,7 +2,7 @@
     <div class="span6 offset3">
    	    <fieldset>
 	     <legend><?php echo __('Введите Ваш e-mail ...'); ?></legend>
-            <?php echo $this->Form->create('Account',array('class' => 'well form-inline',
+            <?php echo $this->Form->create('User',array('class' => 'well form-inline',
                 'inputDefaults' => array(
                     'div' => array('class' => 'control-group'),
                     'label' => array('class' => 'control-label'),
