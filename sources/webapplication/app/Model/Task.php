@@ -556,6 +556,7 @@ class Task extends AppModel {
            $days[] = $day->format("Y-m-d");
         }
         */
+        //TODO Need to rewrite in correct way
         for ($i=0;$i<7;$i++) {
            $days[] = CakeTime::format("Y-m-d", "+$i day");
         }
