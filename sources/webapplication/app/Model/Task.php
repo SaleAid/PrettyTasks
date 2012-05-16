@@ -370,7 +370,9 @@ class Task extends AppModel {
     }
 
     private function _getPositionByTime() {
-        $newOrderID = 1;
+        $user_id = $this->data[$this->alias]['user_id'];
+        $date = $this->data[$this->alias]['date'];
+        $newOrderID = 0;
         if ($this->_isOrderChangedWithTime()) {
             $this->contain();
             $listTaskWithTime = $this->find('all', 
@@ -380,19 +382,30 @@ class Task extends AppModel {
                                                         "Task.time" => null, 
                                                         "Task.id" => $this->data[$this->alias]['id']
                                                     ), 
-                                                    "Task.user_id" => $this->data[$this->alias]['user_id'], 
-                                                    "Task.date" => $this->data[$this->alias]['date']
+                                                    "Task.user_id" => $user_id, 
+                                                    "Task.date" => $date
                                                 ), 
                                                 'order' => array(
                                                     'Task.time' => 'desc', 
                                                     'Task.order' => 'desc'
                                                 )
                                             ));
+            
             foreach ( $listTaskWithTime as $task ) {
+                pr($task[$this->alias]['time']);
                 if ($this->data[$this->alias]['time'] > $task[$this->alias]['time']) {
-                    $newOrderID = $task[$this->alias]['order'] + 1;
+                    $newOrderID = $task[$this->alias]['order'];
                     break;
                 }
+            }
+            //if( !empty($this->_originData[$this->alias]['time'])){
+                ++$newOrderID;
+            //}
+            if( $newOrderID > $this->getLastOrderByUser_idAndDate($user_id, $date)){
+                --$newOrderID;
+            }
+            if(!$newOrderID){
+                ++$newOrderID;
             }
             return $newOrderID;
         }

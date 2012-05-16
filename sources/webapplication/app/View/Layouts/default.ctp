@@ -41,8 +41,14 @@
 
         <?php echo $content_for_layout; ?>
         
-    
+        <div class="push"><!--//--></div>
     </div>
+    
+      <hr/>
+      <footer>
+        <p>&copy; Company 2012</p>
+      </footer>  
+
 
 
    <?php //echo $this->element('sql_dump'); ?>

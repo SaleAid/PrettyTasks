@@ -114,7 +114,7 @@
                   <div class="listTask">
                   <h3 class="margin-bottom10">Завершенные задачи.</h3>
                         <?php if(isset($result['data']['arrAllCompleted']) && !empty($result['data']['arrAllCompleted'])):?>
-                        <ul class="sortable connectedSortable ui-helper-reset " date="expired">
+                        <ul class="sortable connectedSortable ui-helper-reset " date="completed">
                             <?php foreach($result['data']['arrAllCompleted'] as $datelabel => $day):
                                     if(isset($day) && !empty($day)):  
                             ?>
@@ -143,11 +143,11 @@
             <div class="tab-pane <?php if($this->Time->isToday($k)):?>active<?php endif;?>" id="<?php echo $k; ?>" >
                 <div class="row">
                     <div class="listTask">
-                        <h3 class="label label-info margin-bottom10"><?php echo $k; ?></h3>
+                        <h3 class="label label-info margin-bottom10"><?php echo $k; ?><img class="print" src="./img/print.png"/></h3>
                         <div class="well form-inline">
                             <input type="text" class="createTask input-xxlarge" placeholder=" +Добавить задание…"/>
                             <button class="btn createTaskButton"> Добавить </button>
-                            <label class="checkbox">
+                            <label class="checkbox goodDay">
                                 <input type="checkbox"/> Удачный день.
                             </label>
                         </div>

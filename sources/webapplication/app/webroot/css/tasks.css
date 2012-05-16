@@ -27,10 +27,16 @@ div.well{
     background-color: inherit;
     border: none;
     box-shadow: none;
-    //padding: 0px 0px 0px 35px; 
 }
 .margin-bottom10{ margin-bottom: 10px;}
 
+.print{
+    float: right;
+    margin: 4px 5px 0 0 ;
+}
+.print:hover{
+    cursor: pointer;
+}
 
 .sortable li span { 
     vertical-align: middle;
@@ -40,6 +46,10 @@ div.well{
     outline: 1px solid red;
     height: 200px;
     margin-top: 5px;
+}
+.goodDay{
+   float: right;
+   margin-top: 4px;
 }
 
 .editable{
@@ -71,8 +81,8 @@ div.well{
 
 .complete {
     color: black !important;
-    opacity:0.4;
-    filter:alpha(opacity=40);
+    opacity:0.4 !important;
+    filter:alpha(opacity=40) !important;
     background: transparent url('/img/line.png') 0 50% repeat-x !important;
 }
 .important {

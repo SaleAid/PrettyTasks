@@ -271,7 +271,8 @@ function scrEdit(id, title, done, date, time, timeEnd, comment){
 
 
 function scrDragWithTime(id, date, time){
-        var task = $("li[id='"+id+"']");
+        var task = $("li[id='"+id+"'].currentTask");
+        task.removeClass('currentTask');
         if(!date){
             var list = $("ul[date='future']");
         }else{
@@ -279,18 +280,33 @@ function scrDragWithTime(id, date, time){
         }
         var timeList = list.find('li.setTime');
         var newPositionID;
+        var position;
         var preTime;
         var curTime;
         var change = $.trim(task.find('.time').text())!= time || task.attr('date') != date;
         if(change){
+            console.log(timeList);
             if(time){
                 timeList.each(function() { 
-                    curTime =$.trim($(this).find('.time').text())
+                    curTime = $.trim($(this).find('.time').text())
+                    console.log(curTime);
                     if(time > curTime && curTime.length > 0){
                         if(newPositionID){
                             if(preTime <= curTime){
                                 newPositionID = $(this).attr('id');
-                                preTime = curTime;    
+                                preTime = curTime;
+                                position = 'after';    
+                            } 
+                        }else{
+                            preTime = curTime;
+                            newPositionID = $(this).attr('id');    
+                        }
+                    }else{
+                        if(newPositionID){
+                            if(preTime >= curTime){
+                                newPositionID = $(this).attr('id');
+                                preTime = curTime;
+                                position = '';    
                             } 
                         }else{
                             preTime = curTime;
@@ -298,23 +314,30 @@ function scrDragWithTime(id, date, time){
                         }
                     }
                 });
+                
+                console.log(newPositionID);
                 if(newPositionID == id){
                     newPositionID ='';
                 }
            }
+           console.log(newPositionID);
+        
            task.hide( "slow", function() {
-                if(newPositionID){
-                    $(this).insertAfter($("li[id='"+newPositionID+"']")).show('slow');
-                    $(this).addClass('setTime');
+                if(+newPositionID){
+                    if(position == 'after'){
+                        $(this).insertAfter( list.children('#'+newPositionID)).show('slow');    
+                    }else{
+                        $(this).insertBefore( list.children('#'+newPositionID)).show('slow');
+                    }
+                    
                 }else{
                     if(change){
                         if(list.children().length){
-                            //if(task.attr('date') != date){
+                            if(task.attr('date') != date){
                                 $(this).prependTo(list).show('slow');        
-                            //}else{
-                            //    $(this).show('slow')
-                            //}
-                                
+                            }else{
+                                $(this).show('slow')
+                            }
                         }else{
                             $(this).appendTo(list).show('slow');
                         }
@@ -525,6 +548,7 @@ function initDone(element){
 function initEditTask(element){
      $(element).on("click", function(){
             var task = getTaskForEdit($(this).parent().attr('id'));
+            $(this).parent().addClass('currentTask');
             $('#editTask').attr('task_id', $(this).parent().attr('id'));
             $('#editTask').find('#eTitle').val(task.title);
             if(task.done){
@@ -584,6 +608,7 @@ function initDrop(element){
                 var id = ui.draggable.attr('id');
                 var date = $(this).find( "a" ).attr( "date" );
                 var time = $.trim(ui.draggable.children('.time').text());
+                ui.draggable.addClass('currentTask');
                 userEvent('dragOnDay', {id: id, date: date, time:time});
                 $(ui).parent().sortable('cancel');
             } 
@@ -599,7 +624,6 @@ function initSortable(element){
             placeholder: "ui-state-highlight",
             handle: 'span .icon-move',
             update : function(e, ui){
-                console.log('test');
                 if(dropped){
                     dropped = false;
                     return true;
@@ -643,11 +667,17 @@ function reload(){
 var dropped = false;
 $(function(){
 
-//-------------------------------- work tesk
-
-       if(window.location.hash != "") { 
-            $('#main a[href="'+window.location.hash+'"]').tab('show');
-       } 
+     if(window.location.hash != "") { 
+            var date = new Date(window.location.hash);
+            var hash = window.location.hash;
+            if(date != 'Invalid Date' && window.location.hash != "#future"){
+                hash = $.datepicker.formatDate('yy-mm-dd', date);
+                userEvent('addDay',{date: hash});
+            }else{
+                $('#main a[href="'+hash+'"]').tab('show');    
+            }
+     } 
+     
      $.datepicker.setDefaults(
         $.extend($.datepicker.regional["ru"])
      );
@@ -655,9 +685,9 @@ $(function(){
     setInterval(function() {
         checkLogin();
     }, 120000);
+    
     initTab('#main a[data-toggle="tab"]');
     initCreateTask(".createTask");
-    //initCreateTask("#future input");
     initCreateTaskButton(".createTaskButton");
     initEditAble(".editable");
     initDelete(".deleteTask");
@@ -666,6 +696,7 @@ $(function(){
     initDrop("ul:first li.drop");
     initSortable(".sortable");
     initTabDelte('li a[data-toggle="tab"] .close');
+    
     // edit task, modal window      
     $('#eTime').timepicker({
                     timeFormat: 'HH:mm',
@@ -682,7 +713,6 @@ $(function(){
                     timeFormat: 'HH:mm',
                     maxTime: '23:59',
                     interval: 15,
-                    //startHour: 6,
     });
     
     $( "#eDate" ).datepicker({ 
@@ -703,6 +733,7 @@ $(function(){
     });
     
   // add new day into tabs
+  
     $("#addDay").button().click(function(e) {
         var dp = $('#dp');
         dp.datepicker({
@@ -726,6 +757,3 @@ $(function(){
 
                    
 }); 	
-  
-
-  //end  http://lecterror.com/articles/view/cakephp-and-the-infamous-remember-me-cookie

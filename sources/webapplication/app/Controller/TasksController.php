@@ -53,6 +53,26 @@ class TasksController extends AppController {
         ));
     }
     
+    public function getOverdue(){
+        $result = $this->_prepareResponse();
+        $result['success'] = true;
+        $result['data']['arrAllOverdue'] = $this->Task->getAllOverdue($this->Auth->user('id'));
+        $this->set('result', $result);
+        $this->set('_serialize', array(
+            'result'
+        ));    
+    }
+    
+    public function getCompleted(){
+        $result = $this->_prepareResponse();
+        $result['success'] = true;
+        $result['data']['arrAllCompleted'] = $this->Task->getAllCompleted($this->Auth->user('id'));
+        $this->set('result', $result);
+        $this->set('_serialize', array(
+            'result'
+        ));            
+    }
+        
     public function agenda() {
         $result = $this->_prepareResponse();
         $result['success'] = true;
