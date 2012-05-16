@@ -1,0 +1,1 @@
+ALTER TABLE  `users` CHANGE  `timezone`  `timezone` VARCHAR( 60 ) NULL DEFAULT NULL;
