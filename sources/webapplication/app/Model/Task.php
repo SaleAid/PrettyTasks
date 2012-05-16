@@ -539,15 +539,28 @@ class Task extends AppModel {
     }
 
     public function getDays($user_id, $from, $to, $arrDays = null) {
+        $days = array();
+        
+        //TODO Commented because not supported by php 5.2.x
+        /*
         $begin = new DateTime($from);
         $end = new DateTime($to);
         $end->add( new DateInterval( "P1D" ) );
         $interval = DateInterval::createFromDateString('1 day');
         $daysObj = new DatePeriod($begin, $interval, $end);
-        $days = array();
+        */
+        
+        
+        /*
         foreach ($daysObj as $day) {
-            $days[] = $day->format("Y-m-d");
+           $days[] = $day->format("Y-m-d");
         }
+        */
+        for ($i=0;$i<7;$i++) {
+           $days[] = CakeTime::format("Y-m-d", "+$i day");
+        }
+        //debug($days);
+        //debug($arrDays);
         if(is_array($arrDays)){
             sort($arrDays);
             $days = array_merge($days, $arrDays);
@@ -571,7 +584,9 @@ class Task extends AppModel {
         foreach($result as $item){
             $data[$item['Task']['date']][] = $item;
         }
+        
         return $data;
+        
     }
     
     private function _setDayToConfig($user_id, $date) {
