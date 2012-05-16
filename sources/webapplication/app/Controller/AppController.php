@@ -28,7 +28,7 @@ class AppController extends Controller {
         ), 
         'RequestHandler'
     );
-    
+
     /**
      * 
      * Cake autorization function
@@ -75,6 +75,13 @@ class AppController extends Controller {
         }
     }
 
+    private function __setTimeZone() {
+        $timezone = $this->Auth->user('timezone');
+        if ($timezone) {
+            date_default_timezone_set($timezone);
+        }
+    }
+
     public function beforeFilter() {
         /*
         //        $this->AutoLogin->settings = array(
@@ -100,6 +107,7 @@ class AppController extends Controller {
         //        );
         //  
          */
+        $this->__setTimeZone();
         $this->_checkMobile();
         $this->loadModel('User');
         $this->currentUser = $this->User->getUser($this->Auth->user('id')); //TODO remove it carefully!!!

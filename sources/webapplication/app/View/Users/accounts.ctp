@@ -11,7 +11,7 @@ $this->end();
             <tr>
     			<th><?php echo __('Провайдер');?></th>
     			<th><?php echo __('Имя');?></th>
-    			<th><?php echo $this->Paginator->sort(__('Дата связывания'));?></th>
+    			<th><?php echo __('Дата связывания');?></th>
     			
     			<th class="actions"><?php echo __('Действия');?></th>
 	       </tr>
