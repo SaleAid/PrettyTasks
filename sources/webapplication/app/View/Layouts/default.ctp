@@ -71,6 +71,8 @@
     
     <?php echo $this->Html->script('jquery.ba-hashchange.min.js'); ?>
     
+    <?php echo $this->Html->script('jquery.ui.touch-punch.min.js'); ?>
+    
     <?php echo $this->Html->script('main.js'); ?>
     
     <?php echo $this->Html->script('tasks.js'); ?>

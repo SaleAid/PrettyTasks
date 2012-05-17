@@ -22,6 +22,7 @@ class TasksController extends AppController {
         $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to, $dayConfig);
         $result['data']['arrAllOverdue'] = $this->Task->getAllOverdue($this->Auth->user('id'));
         $result['data']['arrAllCompleted'] = $this->Task->getAllCompleted($this->Auth->user('id'));
+        //pr($result);
         $this->set('result', $result);
         $this->set('_serialize', array(
             'result'

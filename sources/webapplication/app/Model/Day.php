@@ -52,18 +52,17 @@ class Day extends AppModel {
 	);
 	
 	
-//	public $hasMany = array(
-//        'Task' => array(
-//            'className'  => 'Task',
-//			'foreignKey' => 'day_id',
-//            'order'      => 'Task.order ASC'
-//        )
-//    );
+	public $hasMany = array(
+        'Task' => array(
+            'className'  => 'Task',
+			'foreignKey' => 'day_id',
+            'order'      => 'Task.order ASC'
+        )
+    );
     
     public function getDayRating($user_id, $date){
         $this->contain();
         $day = $this->findByUser_idAndDate($user_id, $date);
-        pr($day);
         return $day;
     }
     
