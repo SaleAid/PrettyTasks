@@ -2,12 +2,7 @@
 App::uses('AppController', 'Controller');
 class UsersController extends AppController {
     public $name = 'Users';
-    public $helpers = array(
-        'Form', 
-        'Html', 
-        'Js',
-        'Loginza'
-    );
+
     public $components = array(
         'Recaptcha.Recaptcha' => array(
             'actions' => array(

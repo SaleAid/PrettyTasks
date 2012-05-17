@@ -1,5 +1,6 @@
 @import "bootstrap.min.css";
 @import "jquery.jgrowl.css";
+@import "loginza/widget_style.css";
 
 html{
      overflow-y: scroll;
