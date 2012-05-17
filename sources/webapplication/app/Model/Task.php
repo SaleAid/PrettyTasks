@@ -172,7 +172,14 @@ class Task extends AppModel {
             'conditions' => '', 
             'fields' => '', 
             'order' => ''
-        )
+        ),
+        'Day' => array(
+            'className' => 'Day', 
+            'foreignKey' => 'day_id', 
+            'conditions' => '', 
+            'fields' => '', 
+            'order' => ''
+        ),
     );
     private $_originData = array();
 
