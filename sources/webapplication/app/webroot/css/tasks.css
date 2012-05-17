@@ -87,6 +87,7 @@ div.well{
 }
 .important {
     color: red;
+    font-weight: bold;
 }
 
 .time{

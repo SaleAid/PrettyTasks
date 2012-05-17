@@ -4,6 +4,7 @@ class AppController extends Controller {
         'Form', 
         'Html', 
         'Js',
+        'Time',
         'Session',
         'Loginza'
     );
@@ -125,5 +126,25 @@ class AppController extends Controller {
         $this->set('provider', $this->Auth->user('provider'));
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
+    }
+    
+    protected function _prepareResponse() {
+        return array(
+            'success' => false
+        );
+    }
+    
+    protected function _isSetRequestData($data) {
+        //TODO: 1. Check for post
+        if (is_array($data)) {
+            foreach ( $data as $value ) {
+                if (! isset($this->request->data[$value])) {
+                    return false;
+                }
+            }
+        } else {
+            return isset($this->request->data[$data]);
+        }
+        return true;
     }
 }

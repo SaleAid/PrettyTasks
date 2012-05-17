@@ -1,3 +1,26 @@
-.listTask{
+.agenda{
     outline: 1px solid silver;
+    margin-left: 30px;
+    padding: 10px;
+}
+.agenda ul {
+    margin-left: 40px;
+}
+.agenda li {
+    margin: 10px 0 0 10px;
+}
+.agenda h3{
+    color: #804000;
+}
+.time{
+    display: inline-block;
+    width: 36px;
+    font-weight: bold;
+}
+.important {
+    color: red;
+    font-weight: bold;
+}
+.listTasks{
+    margin-bottom: 30px;
 }

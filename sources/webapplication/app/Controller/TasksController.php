@@ -10,31 +10,6 @@ class TasksController extends AppController {
     public $components = array(
         'RequestHandler'
     );
-    public $helpers = array(
-        'Html', 
-        'Js', 
-        'Time'
-    );
-
-    protected function _prepareResponse() {
-        return array(
-            'success' => false
-        );
-    }
-
-    protected function _isSetRequestData($data) {
-        //TODO: 1. Check for post
-        if (is_array($data)) {
-            foreach ( $data as $value ) {
-                if (! isset($this->request->data[$value])) {
-                    return false;
-                }
-            }
-        } else {
-            return isset($this->request->data[$data]);
-        }
-        return true;
-    }
 
     public function index() {
         $result = $this->_prepareResponse();
@@ -241,7 +216,7 @@ class TasksController extends AppController {
                 'time'
             );
             if ($this->_isSetRequestData($expectedData)) {
-                if ($this->Task->setOrder(1)->setDate($this->request->data['date'])->save()) {
+                if ($this->Task->setOrder(1)->setDate($this->request->data['date'])->setTime($this->request->data['time'])->save()) {
                     //if ($this->Task->dragOnDay($this->request->data['date'], $this->request->data['time'])->save()) {
                     $result['success'] = true;
                     $result['message'] = array(

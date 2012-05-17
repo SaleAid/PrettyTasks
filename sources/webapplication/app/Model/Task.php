@@ -372,8 +372,8 @@ class Task extends AppModel {
     private function _getPositionByTime() {
         $user_id = $this->data[$this->alias]['user_id'];
         $date = $this->data[$this->alias]['date'];
-        $newOrderID = 0;
         if ($this->_isOrderChangedWithTime()) {
+            
             $this->contain();
             $listTaskWithTime = $this->find('all', 
                                             array(
@@ -386,29 +386,22 @@ class Task extends AppModel {
                                                     "Task.date" => $date
                                                 ), 
                                                 'order' => array(
-                                                    'Task.time' => 'desc', 
-                                                    'Task.order' => 'desc'
+                                                    'Task.time' => 'ASC', 
+                                                    //'Task.order' => 'desc'
                                                 )
                                             ));
-            
-            foreach ( $listTaskWithTime as $task ) {
-                pr($task[$this->alias]['time']);
-                if ($this->data[$this->alias]['time'] > $task[$this->alias]['time']) {
-                    $newOrderID = $task[$this->alias]['order'];
-                    break;
-                }
+        foreach ( $listTaskWithTime as $task ) {
+            pr($task[$this->alias]['time']);
+            if ($this->data[$this->alias]['time'] > $task[$this->alias]['time']) {
+                $newOrderID = $task[$this->alias]['order'];
+                pr($newOrderID);
             }
-            if( $this->data[$this->alias]['time'] > $this->_originData[$this->alias]['time'] and !empty($this->_originData[$this->alias]['time'])){
-                ++$newOrderID;
-            }
-            if( $newOrderID > $this->getLastOrderByUser_idAndDate($user_id, $date)){
-                --$newOrderID;
-            }
-            if(!$newOrderID){
-                ++$newOrderID;
-            }
-            pr($newOrderID);
-            return $newOrderID;
+        }
+        if($this->_isDraggedOnDay() or $newOrderID){
+            ++$newOrderID;
+        }
+        pr($newOrderID);
+        return $newOrderID;
         }
         return false;
     }
@@ -418,7 +411,7 @@ class Task extends AppModel {
         return $this;
     }
     
-    public function setTime($time, $timeEnd){
+    public function setTime($time, $timeEnd=null){
         $this->data[$this->alias]['time'] = $time;  
         $this->data[$this->alias]['timeend'] = $timeEnd;  
         if(!$time){
@@ -426,11 +419,7 @@ class Task extends AppModel {
         }
         return $this;
     }
-    //public function setTimeEnd($time){
-//        $this->data[$this->alias]['timeend'] = $time;    
-//        return $this;
-//    }
-
+    
     public function setDate($date) {
         if (! $date) {
             $this->setFuture(1);
@@ -558,9 +547,13 @@ class Task extends AppModel {
         }
         */
         //TODO Need to rewrite in correct way
-        for ($i=0;$i<7;$i++) {
-           $days[] = CakeTime::format("Y-m-d", "+$i day");
-        }
+  //      for ($i=0;$i<7;$i++) {
+//           $days[] = CakeTime::format("Y-m-d", "+$i day");
+//        }
+        do {
+            $days[] = $from;
+            $from = date("Y-m-d", strtotime($from . "+1 day"));
+        } while($from < $to);
         //debug($days);
         //debug($arrDays);
         if(is_array($arrDays)){
@@ -585,6 +578,7 @@ class Task extends AppModel {
         }
         foreach($result as $item){
             $data[$item['Task']['date']][] = $item;
+            //$data[$item['Task']['date']['rating']][] = $this->Day->getDayRating($user_id, $item['Task']['date']);
         }
         
         return $data;

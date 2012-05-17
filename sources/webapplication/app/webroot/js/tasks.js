@@ -280,71 +280,44 @@ function scrDragWithTime(id, date, time){
         }
         var timeList = list.find('li.setTime');
         var newPositionID;
+        var prePositionID;
         var position;
         var preTime;
         var curTime;
         var change = $.trim(task.find('.time').text())!= time || task.attr('date') != date;
         if(change){
-            console.log(timeList);
             if(time){
-                timeList.each(function() { 
-                    curTime = $.trim($(this).find('.time').text())
-                    console.log(curTime);
-                    if(time > curTime && curTime.length > 0){
-                        if(newPositionID){
-                            if(preTime <= curTime){
-                                newPositionID = $(this).attr('id');
-                                preTime = curTime;
-                                position = 'after';    
-                            } 
-                        }else{
-                            preTime = curTime;
-                            newPositionID = $(this).attr('id');    
-                        }
-                    }else{
-                        if(newPositionID){
-                            if(preTime >= curTime){
-                                newPositionID = $(this).attr('id');
-                                preTime = curTime;
-                                position = '';    
-                            } 
-                        }else{
-                            preTime = curTime;
-                            newPositionID = $(this).attr('id');    
-                        }
+                var listitems = list.children('li.setTime').get();
+                listitems.sort(function(a, b) {
+                    var compA = $(a).find('.time').text().toUpperCase();
+                    var compB = $(b).find('.time').text().toUpperCase();
+                    return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+                })
+                $.each(listitems, function(idx, itm) { 
+                    console.log(itm);
+                    if(time > $(itm).find('.time').text()){
+                        newPositionID = $(itm).attr('id');
                     }
                 });
-                
-                console.log(newPositionID);
-                if(newPositionID == id){
-                    newPositionID ='';
-                }
            }
-           console.log(newPositionID);
-        
            task.hide( "slow", function() {
-                if(+newPositionID){
-                    if(position == 'after'){
-                        $(this).insertAfter( list.children('#'+newPositionID)).show('slow');    
-                    }else{
-                        $(this).insertBefore( list.children('#'+newPositionID)).show('slow');
-                    }
-                    
-                }else{
+                if(newPositionID != id && +newPositionID){
+                    $(this).insertAfter( list.children('#'+newPositionID)).show('slow');    
+                }else if(!+newPositionID){
                     if(change){
                         if(list.children().length){
-                            if(task.attr('date') != date){
-                                $(this).prependTo(list).show('slow');        
+                            if(task.attr('date') != date || time){
+                                $(this).prependTo(list).show('slow');
                             }else{
-                                $(this).show('slow')
-                            }
+                                $(this).show('slow');
+                            }        
                         }else{
                             $(this).appendTo(list).show('slow');
                         }
-                    }else{
-                        $(this).show('slow');
-                    }                    
-                }
+                    } 
+                }else{
+                    $(this).show('slow');
+                }                    
                 if(time){
                     $(this).addClass('setTime');
                 }else{
