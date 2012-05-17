@@ -21,5 +21,8 @@
 //    
 //    Configure::write('Recaptcha.publicKey', '6Lff1M4SAAAAAFQKlC0j9iy4nhQnc82o-5jmGuIa');
 //    Configure::write('Recaptcha.privateKey', '6Lff1M4SAAAAAFbUUEYXP9c92v4fXvxf3m3BcBM3');
-    
+//TODO:
+//Rename this file to appconfig.php
+//Add Config for title, keywords, description
+//Add Config for beta user default value 
 ?>
