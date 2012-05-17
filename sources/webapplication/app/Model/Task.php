@@ -398,15 +398,16 @@ class Task extends AppModel {
                     break;
                 }
             }
-            //if( !empty($this->_originData[$this->alias]['time'])){
+            if( $this->data[$this->alias]['time'] > $this->_originData[$this->alias]['time'] and !empty($this->_originData[$this->alias]['time'])){
                 ++$newOrderID;
-            //}
+            }
             if( $newOrderID > $this->getLastOrderByUser_idAndDate($user_id, $date)){
                 --$newOrderID;
             }
             if(!$newOrderID){
                 ++$newOrderID;
             }
+            pr($newOrderID);
             return $newOrderID;
         }
         return false;
