@@ -379,7 +379,7 @@ class Task extends AppModel {
     private function _getPositionByTime() {
         $user_id = $this->data[$this->alias]['user_id'];
         $date = $this->data[$this->alias]['date'];
-        $$newOrderID = 0;
+        $newOrderID = 0;
         if ($this->_isOrderChangedWithTime()) {
             $this->contain();
             $listTaskWithTime = $this->find('all', 
@@ -543,32 +543,10 @@ class Task extends AppModel {
 
     public function getDays($user_id, $from, $to, $arrDays = null) {
         $days = array();
-        
-        //TODO Commented because not supported by php 5.2.x
-        /*
-        $begin = new DateTime($from);
-        $end = new DateTime($to);
-        $end->add( new DateInterval( "P1D" ) );
-        $interval = DateInterval::createFromDateString('1 day');
-        $daysObj = new DatePeriod($begin, $interval, $end);
-        */
-        
-        
-        /*
-        foreach ($daysObj as $day) {
-           $days[] = $day->format("Y-m-d");
-        }
-        */
-        //TODO Need to rewrite in correct way
-  //      for ($i=0;$i<7;$i++) {
-//           $days[] = CakeTime::format("Y-m-d", "+$i day");
-//        }
         do {
             $days[] = $from;
             $from = date("Y-m-d", strtotime($from . "+1 day"));
         } while($from < $to);
-        //debug($days);
-        //debug($arrDays);
         if(is_array($arrDays)){
             sort($arrDays);
             $days = array_merge($days, $arrDays);
