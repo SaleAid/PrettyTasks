@@ -10,7 +10,7 @@ function getTaskFromPage(id){
         date:    $('#'+id).attr('date'),
         time:    $('#'+id).children('.time').text(),
         timeEnd: $('#'+id).children('.timeEnd').text(),   
-        comment: 'comment'   
+        comment: $('#'+id).children('.comment').text(),   
     };
     return data;
 }
@@ -524,6 +524,7 @@ function initEditTask(element){
             $(this).parent().addClass('currentTask');
             $('#editTask').attr('task_id', $(this).parent().attr('id'));
             $('#editTask').find('#eTitle').val(task.title);
+            $('#editTask').find('#eComment').val(task.comment);
             if(task.done){
                 $('#editTask').find('#eDone').attr('checked','checked');
             }else {
@@ -640,7 +641,13 @@ function reload(){
 var dropped = false;
 $(function(){
 
-     if(window.location.hash != "") { 
+     
+     $('.print').click(function(){
+        window.print();
+        return false;
+     });
+     $(window).hashchange( function(){
+        if(window.location.hash != "") { 
             var date = new Date(window.location.hash);
             var hash = window.location.hash;
             if(date != 'Invalid Date' && window.location.hash != "#future"){
@@ -649,7 +656,11 @@ $(function(){
             }else{
                 $('#main a[href="'+hash+'"]').tab('show');    
             }
-     } 
+         } 
+    })
+  
+    $(window).hashchange();
+     
      
      $.datepicker.setDefaults(
         $.extend($.datepicker.regional["ru"])
@@ -658,6 +669,8 @@ $(function(){
     setInterval(function() {
         checkLogin();
     }, 120000);
+    
+    $('#addDay').tooltip({placement:'bottom',delay: { show: 500, hide: 100 }});
     
     initTab('#main a[data-toggle="tab"]');
     initCreateTask(".createTask");

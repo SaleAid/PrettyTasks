@@ -391,23 +391,24 @@ class Task extends AppModel {
                                                 )
                                             ));
         foreach ( $listTaskWithTime as $task ) {
-            pr($task[$this->alias]['time']);
             if ($this->data[$this->alias]['time'] > $task[$this->alias]['time']) {
                 $newOrderID = $task[$this->alias]['order'];
-                pr($newOrderID);
             }
         }
-        if($this->_isDraggedOnDay() or $newOrderID){
+        if($this->_isDraggedOnDay() or !$newOrderID){
             ++$newOrderID;
         }
-        pr($newOrderID);
         return $newOrderID;
         }
         return false;
     }
 
-    public function setEdit($title, $date=null, $time=null, $timeEnd=null, $done=null){
-        $this->setDate($date)->setTime($time, $timeEnd)->setDone($done)->setTitle($title);
+    public function setEdit($title, $comment=null, $date=null, $time=null, $timeEnd=null, $done=null){
+        $this->setDate($date)
+             ->setTime($time, $timeEnd)
+             ->setDone($done)
+             ->setTitle($title)
+             ->setCommnet($comment);
         return $this;
     }
     
@@ -447,6 +448,11 @@ class Task extends AppModel {
         } else {
             $this->data[$this->alias]['priority'] = 1;
         }
+        return $this;
+    }
+    
+    public function setCommnet($comment) {
+        $this->data[$this->alias]['comment'] = $comment;
         return $this;
     }
 

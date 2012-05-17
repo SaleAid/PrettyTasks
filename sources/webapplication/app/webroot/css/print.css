@@ -3,3 +3,7 @@
 /*
  * Please place your code below
  */
+ 
+ .noPrint, footer{
+    display: none;
+ }

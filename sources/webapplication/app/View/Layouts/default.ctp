@@ -69,6 +69,8 @@
     
     <?php echo $this->Html->script('jquery.timepicker-1.2.2.js'); ?>
     
+    <?php echo $this->Html->script('jquery.ba-hashchange.min.js'); ?>
+    
     <?php echo $this->Html->script('main.js'); ?>
     
     <?php echo $this->Html->script('tasks.js'); ?>

@@ -5,10 +5,10 @@
 <div class="row">
     <div class="span12">
       <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs noPrint">
             <li class="addDay">
             <div class="btn-group dropup">
-                <button  id="addDay" class="btn btn-large">Добавить день</button>
+                <button  id="addDay" rel="tooltip" title="Добавить новый день в список." class="btn btn-large">Добавить день</button>
                 <button class="btn btn-large dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                 </button>
@@ -144,7 +144,7 @@
                 <div class="row">
                     <div class="listTask">
                         <h3 class="label label-info margin-bottom10"><?php echo $k; ?><img class="print" src="./img/print.png"/></h3>
-                        <div class="well form-inline">
+                        <div class="well form-inline noPrint">
                             <input type="text" class="createTask input-xxlarge" placeholder=" +Добавить задание…"/>
                             <button class="btn createTaskButton"> Добавить </button>
                             <label class="checkbox goodDay">

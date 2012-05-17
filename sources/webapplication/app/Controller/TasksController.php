@@ -262,7 +262,13 @@ class TasksController extends AppController {
         if ($this->_isSetRequestData($expectedData)) {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                $task = $this->Task->setEdit($this->request->data['title'], $this->request->data['date'], $this->request->data['time'], $this->request->data['timeEnd'], $this->request->data['done'])->save();
+                $task = $this->Task->setEdit($this->request->data['title'],
+                                             $this->request->data['comment'],
+                                             $this->request->data['date'], 
+                                             $this->request->data['time'], 
+                                             $this->request->data['timeEnd'], 
+                                             $this->request->data['done']
+                                            )->save();
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;
