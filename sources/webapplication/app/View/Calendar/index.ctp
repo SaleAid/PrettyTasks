@@ -76,7 +76,7 @@ echo $this->Html->script ( 'fullcalendar/fullcalendar.min.js' );
 					defaultView: 'agendaWeek',
 					defaultEventMinutes: 60,
 					firstDay:1,
-					height: window.innerHeight*0.9,
+					height: window.innerHeight*0.8,
 					eventClick: function(calEvent, jsEvent, view) {
 						calEvent.done = !calEvent.done;
 						if (calEvent.done){
