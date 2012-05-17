@@ -379,8 +379,8 @@ class Task extends AppModel {
     private function _getPositionByTime() {
         $user_id = $this->data[$this->alias]['user_id'];
         $date = $this->data[$this->alias]['date'];
+        $$newOrderID = 0;
         if ($this->_isOrderChangedWithTime()) {
-            
             $this->contain();
             $listTaskWithTime = $this->find('all', 
                                             array(
