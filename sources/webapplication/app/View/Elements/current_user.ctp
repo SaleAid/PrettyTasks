@@ -1,8 +1,8 @@
 <div class="btn-group pull-right">
-     <?php if(!empty($currentUser)): ?>
+     <?php if(!empty($currentUser)):  ?>
      <?php echo $this->Html->link($this->Html->tag('i', '',
                  //array('class' => 'icon-user icon-white')). ' { '.$provider.' }' .$currentUser['User']['full_name']. ' ',
-                 array('class' => 'icon-user icon-white')). '  '.$this->Loginza->ico($provider).' ' .$currentUser['User']['full_name']. ' ',
+                 array('class' => 'icon-user icon-white')). '  ' . $this->Loginza->ico($provider) . ' ' .$currentUser['User']['full_name']. ' ',
                  array('controller' => 'users', 'action' => 'profile'),array('escape' => false, 'class'=> 'btn btn-primary'));?>
       
       <a class="btn btn-primary dropdown-toggle " data-toggle="dropdown" href="#"><span class="caret"></span></a>

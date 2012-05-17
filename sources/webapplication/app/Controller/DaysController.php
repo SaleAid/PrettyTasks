@@ -7,15 +7,15 @@ App::uses('AppController', 'Controller');
  */
 class DaysController extends AppController {
 
-    public function getDay(){
+    public function getDayRating(){
         $result = $this->_prepareResponse();
         if ($this->_isSetRequestData('date')) {
             $result['success'] = true;
-            $result['data'] = $this->Day->getDay($this->Auth->user('id'), $this->Auth->user('date'));    
+            $result['data'] = $this->Day->getDayRating($this->Auth->user('id'), $this->Auth->user('date'));    
         }else {
             $result['message'] = array(
                 'type' => 'success', 
-                'message' => __('Îøèáêà ïğè ïåğåäà÷è äàííûõ')
+                'message' => __('ĞÑˆĞ¸Ğ±ĞºĞ° Ğ¿Ñ€Ğ¸ Ğ¿ĞµÑ€ĞµĞ´Ğ°Ñ‡Ğ¸ Ğ´Ğ°Ğ½Ğ½Ñ‹Ñ…')
             );
         }
         $this->set('result', $result);

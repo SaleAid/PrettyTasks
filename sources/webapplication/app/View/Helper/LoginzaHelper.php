@@ -8,6 +8,9 @@ class LoginzaHelper extends AppHelper {
     }
     
     public function ico($provider) {
+        if(!$provider){
+            return '';
+        }
         return "<span class=\"providers_ico_sprite {$provider}_ico\">&nbsp;</span>";    
     }
     
