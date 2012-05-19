@@ -13,12 +13,6 @@
     
     <?php echo $this->Html->meta('icon');?>
     
-    <style type="text/css">
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-    
     <?php echo $this->Html->css('main'); ?>
     
     <?php echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom'); ?>
@@ -29,10 +23,11 @@
 	
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target=".subnav" data-offset="50">
     
     <?php echo $this->element('main_menu'); ?> 
     
+    <div id="wrapper">
     <div class="container">
       
         <?php echo $this->Session->flash(); ?>
@@ -43,13 +38,13 @@
         
         <div class="push"><!--//--></div>
     </div>
-    
-      <hr/>
-      <footer>
+    </div>
+
+<footer>
+    <div class="container">
         <p>&copy; Company 2012</p>
-      </footer>  
-
-
+    </div>
+</footer>
 
    <?php //echo $this->element('sql_dump'); ?>
    
