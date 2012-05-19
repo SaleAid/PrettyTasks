@@ -64,5 +64,6 @@ Cache::config('default', array('engine' => 'File'));
  *
  */
  CakePlugin::load('Recaptcha');
- Configure::load('config');
-
+ //App::uses('PhpReader', 'Configure');
+ Configure::load('appconfig');
+//Configure::config('default', new PhpReader());
