@@ -77,6 +77,7 @@ class Day extends AppModel {
     
     public function getDaysRating($user_id, $from, $to = null, $arrDays = null){
         $days = array();
+        $data = array();
         do {
             $days[] = $from;
             $from = date("Y-m-d", strtotime($from . "+1 day"));

@@ -234,7 +234,7 @@ function srvAddDay(date){
 function onAddDay(data){
     var list = $("ul[date='"+data.data.date+"']");
     list.children('.loadContent').remove();
-    if(+data.data.day[data.data.date][0].Day.rating){
+    if(!$.isEmptyObject(data.data.day) && +data.data.day[data.data.date][0].Day.rating){
         $(".ratingDay input[date='"+data.data.date+"']").attr('checked','checked');
     }
     $.each(data.data.list,function(index, value) {
