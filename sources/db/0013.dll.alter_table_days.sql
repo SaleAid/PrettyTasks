@@ -1,0 +1,1 @@
+alter table days add unique index user_id__date(user_id, date);
