@@ -7,17 +7,23 @@ App::uses('AppController', 'Controller');
  */
 class DaysController extends AppController {
 
-    public function getDayRating(){
+
+    public function setRating(){
         $result = $this->_prepareResponse();
-        if ($this->_isSetRequestData('date')) {
+        if ($this->_isSetRequestData('date','rating')) {
             $result['success'] = true;
-            $result['data'] = $this->Day->getDayRating($this->Auth->user('id'), $this->Auth->user('date'));    
+            $result['data'] = $this->Day->setRating($this->Auth->user('id'), $this->request->data['date'],  $this->request->data['rating'])->save(); 
+            $result['message'] = array(
+                'type' => 'success', 
+                'message' => __('Изменение успешно сохранено.')
+            );   
         }else {
             $result['message'] = array(
                 'type' => 'success', 
                 'message' => __('Ошибка при передачи данных')
             );
         }
+        $result['action'] = 'setRatingDay';
         $this->set('result', $result);
         $this->set('_serialize', array(
             'result'

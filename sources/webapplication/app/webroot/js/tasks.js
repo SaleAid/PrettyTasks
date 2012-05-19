@@ -95,6 +95,9 @@ function userEvent(action, data){
         case 'deleteDay':
             taskDeleteDay(data.date);
         break;      
+        case 'setRatingDay':
+            taskRatingDay(data.date, data.rating);
+        break;    
     }
 }
 
@@ -127,8 +130,33 @@ function responseHandler(data){
         case 'deleteDay':
             onDeleteDay(data);
         break;
+        case 'setRatingDay':
+            onRatingDay(data);
+        break;
     }
 }
+//---------------setRatingDay------
+function taskRatingDay(date, rating){
+    scrRatingDay(date, rating);
+    srvRatingDay(date, rating);    
+}
+function scrRatingDay(date, rating){
+    var ratingEl = $(".ratingDay[id='"+date+"']");
+    if(+rating){
+        ratingEl.attr('checked', 'checked');
+    }else{
+        ratingEl.removeAttr('checked');
+    }
+}
+function srvRatingDay(date, rating){
+    superAjax('/days/setRating.json',{date: date, rating: rating});
+}
+
+function onRatingDay(data){
+    mesg(data.message);
+}
+
+
 //---------------deleteDay------
 function taskDeleteDay(date){
 
@@ -172,10 +200,13 @@ function scrAddDay(date){
     var newTabContent = '<div class="tab-pane" id="'+date+'"> '+
                     '<div class="row"> '+ 
                         '<div class="listTask"> '+
-                            '<h3 class="label label-info margin-bottom10">'+date+'</h3> '+
+                            '<h3 class="label label-info margin-bottom10">'+date+'<img class="print" src="./img/print.png"/></h3> '+
                             '<div class="well form-inline"> '+
                                 '<input type="text" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/> '+
                                 '<button class="btn createTaskButton"> Добавить </button> '+
+                                '<label class="checkbox ratingDay"> '+
+                                    '<input type="checkbox" date="'+date+'"/> Удачный день '+
+                            '</label> '+
                             '</div> '+
                             '<ul class="sortable connectedSortable ui-helper-reset" date="'+date+'"> '+
                                 '<p class="loadContent" align=center> Loading content ...</p> '+
@@ -203,6 +234,9 @@ function srvAddDay(date){
 function onAddDay(data){
     var list = $("ul[date='"+data.data.date+"']");
     list.children('.loadContent').remove();
+    if(+data.data.day[data.data.date][0].Day.rating){
+        $(".ratingDay input[date='"+data.data.date+"']").attr('checked','checked');
+    }
     $.each(data.data.list,function(index, value) {
         list.append(AddTask(value));
         initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
@@ -214,7 +248,7 @@ function onAddDay(data){
     initCreateTaskButton($("ul[date='"+data.data.date+"']").parent().find(".createTaskButton"));
     initDrop($("li a[date='"+data.data.date+"']").parent());
     initSortable("ul[date='"+data.data.date+"'].sortable");
-    
+    initRatingDay(".ratingDay input[date='"+data.data.date+"']");
     initTabDelte("li a[date='"+data.data.date+"'] .close");
     
 }
@@ -274,7 +308,7 @@ function scrDragWithTime(id, date, time){
         var task = $("li[id='"+id+"'].currentTask");
         task.removeClass('currentTask');
         if(!date){
-            var list = $("ul[date='future']");
+            var list = $("ul[date='planned']");
         }else{
             var list = $("ul[date='"+date+"']");    
         }
@@ -355,7 +389,7 @@ function onDragOnDay(data){
     mesg(data.message);
 }
 function srvDragOnDay(id, date, time){
-    if(date == 'future'){
+    if(date == 'planned'){
         date = '';
     }
     superAjax('/tasks/dragOnDay.json',{id: id,date: date, time:time});
@@ -441,7 +475,7 @@ function srvCreate(title, date){
 function scrCreate(data){
     date = data.data.Task.date;
     if(data.data.Task.future){
-        date = 'future';
+        date = 'planned';
         data.data.Task.date = '';    
     }
     $("ul[date='"+date+"']").append(AddTask(data.data));
@@ -518,6 +552,16 @@ function initDone(element){
     });
 }
 
+function initRatingDay(element){
+    $(element).on("click", function(){
+       
+        var date = $(this).attr('date');
+        var rating = $(this).is(":checked")? 1 : 0;
+         console.log(date);
+        userEvent('setRatingDay', {date: date, rating: rating});
+    });
+}
+
 function initEditTask(element){
      $(element).on("click", function(){
             var task = getTaskForEdit($(this).parent().attr('id'));
@@ -551,7 +595,7 @@ function initCreateTask(element){
         if(code == 13) {
             var title = $(this).val();
             var date = $(this).parent().siblings("ul").attr('date');
-            if(date == 'future'){
+            if(date == 'planned'){
                 date = '';
             }
             userEvent('create', {title: title, date: date });
@@ -563,7 +607,7 @@ function initCreateTaskButton(element){
     $(element).on('click', function(e){
         var title = $(this).siblings('.createTask').val();
         var date = $(this).parent().siblings("ul").attr('date');
-        if(date == 'future'){
+        if(date == 'planned'){
             date = '';
         }
         userEvent('create', {title: title, date: date });
@@ -646,11 +690,12 @@ $(function(){
         window.print();
         return false;
      });
+     
      $(window).hashchange( function(){
         if(window.location.hash != "") { 
             var date = new Date(window.location.hash);
             var hash = window.location.hash;
-            if(date != 'Invalid Date' && window.location.hash != "#future"){
+            if(date != 'Invalid Date' && window.location.hash != "#planned"){
                 hash = $.datepicker.formatDate('yy-mm-dd', date);
                 userEvent('addDay',{date: hash});
             }else{
@@ -677,7 +722,8 @@ $(function(){
     initCreateTaskButton(".createTaskButton");
     initEditAble(".editable");
     initDelete(".deleteTask");
-    initDone(".done"); 
+    initDone(".done");
+    initRatingDay(".ratingDay input"); 
     initEditTask(".editTask");   
     initDrop("ul:first li.drop");
     initSortable(".sortable");

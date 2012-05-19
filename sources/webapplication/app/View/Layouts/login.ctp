@@ -13,16 +13,6 @@
     
     <?php echo $this->Html->meta('icon');?>
     
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-    </style>
-    
 
     <?php echo $this->Html->css('main'); ?>
         
@@ -40,6 +30,8 @@
     
     <?php echo $this->element('main_menu'); ?> 
     
+     <div id="wrapper">
+    
     <div class="container ">
       
         <?php echo $this->Session->flash(); ?>
@@ -48,13 +40,14 @@
 
         <?php echo $content_for_layout; ?>
         
-    <div class="push"><!--//--></div>
+    </div>
     </div>
     
-      <hr>
-      <footer>
+<footer>
+    <div class="container">
         <p>&copy; Company 2012</p>
-      </footer>
+    </div>
+</footer>
    <?php echo $this->Js->writeBuffer(); ?>
   </body>
 </html>

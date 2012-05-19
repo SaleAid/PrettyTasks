@@ -60,14 +60,50 @@ class Day extends AppModel {
         )
     );
     
-    public function getDayRating($user_id, $date){
+    public function isDayFound($user_id, $date){
         $this->contain();
         $day = $this->findByUser_idAndDate($user_id, $date);
-        return $day;
+        if ($day) {
+            $this->set($day);
+            return $day;
+        }else{
+            $this->set(array(
+                        'user_id' => $user_id,
+                        'date' => $date
+));
+        }
+        return false;
     }
     
-    public function setDay(){
-        
+    public function getDaysRating($user_id, $from, $to = null, $arrDays = null){
+        $days = array();
+        do {
+            $days[] = $from;
+            $from = date("Y-m-d", strtotime($from . "+1 day"));
+        } while($from < $to);
+        if(is_array($arrDays)){
+            sort($arrDays);
+            $days = array_merge($days, $arrDays);
+            $days = array_unique($days);
+        }
+        $this->contain();
+        $result = $this->find('all', 
+                            array(
+                                'conditions' => array(
+                                    'Day.user_id' => $user_id, 
+                                    'Day.date' => $days
+                                )
+                            ));
+        foreach($result as $item){
+            $data[$item['Day']['date']][] = $item;
+        }
+        return $data;
+    }
+    
+    public function setRating($user_id, $date, $rating=null) {
+        $this->isDayFound($user_id, $date);
+        $this->data[$this->alias]['rating'] = $rating;
+        return $this;
     }
 
 }

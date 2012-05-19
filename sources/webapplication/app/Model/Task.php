@@ -569,9 +569,8 @@ class Task extends AppModel {
         }
         foreach($result as $item){
             $data[$item['Task']['date']][] = $item;
-            //$data[$item['Task']['date']['rating']][] = $this->Day->getDayRating($user_id, $item['Task']['date']);
         }
-        
+
         return $data;
         
     }

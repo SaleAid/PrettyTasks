@@ -2,8 +2,7 @@
 <?php echo $this->Html->css('tasks');?>
 <?php $this->end ();?>
 
-<div class="row">
-    <div class="span12">
+
       <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
         <ul class="nav nav-tabs noPrint">
             <li class="addDay">
@@ -20,7 +19,7 @@
            </li>
             <input type="hidden" id="dp"/>
             <li class="drop">
-                <a href="#future" data-toggle="tab" date="future" class="tab2">Будущее</a>
+                <a href="#planned" data-toggle="tab" date="planned" class="tab2">Планируемые</a>
             </li>
             <li class="active drop">
                 <a href="#<?php echo $this->Time->format('Y-m-d', time(), true); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', time(), true); ?>">
@@ -53,7 +52,7 @@
           <?php endforeach; ?>
         </ul>
         <div class="tab-content" >
-          <div class="tab-pane" id="future">
+          <div class="tab-pane" id="planned">
           <div class="row">
           <div class="listTask">
             <h3 class="label label-info margin-bottom10">Задачи на будущие.</h3>
@@ -61,7 +60,7 @@
                 <input type="text" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>
                 <button class="btn createTaskButton"> Добавить </button>
             </div>
-            <ul class="sortable connectedSortable ui-helper-reset" date="future">
+            <ul class="sortable connectedSortable ui-helper-reset" date="planned">
                 <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])):?>
                     <?php foreach($result['data']['arrAllFuture'] as $item):?>
                         <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?> " date="<?php echo $item['Task']['date'];?>">
@@ -69,7 +68,7 @@
                             <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
                             <span><i class="icon-move"></i></span>
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                            <span class="editable input-xxlarge <?php if($item['Task']['done']):?> complete <?php endif; ?> <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo $item['Task']['title']; ?></span>
+                            <span class="editable  <?php if($item['Task']['done']):?> complete <?php endif; ?> <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo $item['Task']['title']; ?></span>
                             <span class="editTask"><i class="icon-pencil"></i></a></span>
                             <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                         </li>
@@ -80,7 +79,7 @@
           </div>
             </div>
           <div class="tab-pane" id="expired">
-              <div class="row">
+              <div class="">
                   <div class="listTask">
                   <h3 class="margin-bottom10">Просроченные задачи.</h3>
                         <?php if(isset($result['data']['arrAllOverdue']) && !empty($result['data']['arrAllOverdue'])):?>
@@ -147,8 +146,8 @@
                         <div class="well form-inline noPrint">
                             <input type="text" class="createTask input-xxlarge" placeholder=" +Добавить задание…"/>
                             <button class="btn createTaskButton"> Добавить </button>
-                            <label class="checkbox goodDay">
-                                <input type="checkbox"/> Удачный день.
+                            <label class="checkbox ratingDay" >
+                                <input type="checkbox" <?php if( isset($result['data']['arrDaysRating'][$k]) and $result['data']['arrDaysRating'][$k][0]['Day']['rating']):?> checked <?php endif; ?> date="<?php echo $k; ?>"/> Удачный день
                             </label>
                         </div>
                         <ul id="sortable<?php echo $k; ?>" class="sortable connectedSortable ui-helper-reset" date="<?php echo $k; ?>">
@@ -172,9 +171,7 @@
           
     </div> <!-- /tabbable -->
     </div>  
-    </div>
 
-</div>
 
 <!-- modal --!>
 <div id="editTask" class="modal hide fade in" style="display: none; ">

@@ -1,8 +1,12 @@
+
 @import "jquery.timepicker-1.2.2.css";
 
 .modal {
     max-height: 90%;
     overflow-y: auto;
+}
+#main{
+    
 }
 .sortable { list-style-type: none; margin: 0; padding: 0;  }
 
@@ -20,8 +24,12 @@
 .listTask{
     width: 800px;
     margin-left: 30px;
-    
+  
 }
+.listTask h3 {
+    padding-left: 10px;
+}    
+  
 div.well{
     padding: 0px;
     background-color: inherit;
@@ -45,7 +53,7 @@ div.well{
 .comment{
 }
 
-.goodDay{
+.ratingDay{
    float: right;
    margin-top: 4px;
 }
@@ -149,13 +157,5 @@ div.jGrowl div.alert {
 div.jGrowl.custom {
 	right: 				0px;
 	top: 				25px;
-}
-
-.sortable-dropw li { 
-    padding: 0;
-    margin: 0;
-    height: 0; 
-    width: 0; 
-    overflow: hidden; 
 }
 

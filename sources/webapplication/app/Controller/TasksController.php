@@ -20,6 +20,7 @@ class TasksController extends AppController {
         $to = CakeTime::format('Y-m-d', '+6 days');
         $dayConfig = $this->User->getConfig($this->Auth->user('id'), 'day');
         $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to, $dayConfig);
+        $result['data']['arrDaysRating'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $from, $to, $dayConfig);
         $result['data']['arrAllOverdue'] = $this->Task->getAllOverdue($this->Auth->user('id'));
         $result['data']['arrAllCompleted'] = $this->Task->getAllCompleted($this->Auth->user('id'));
         //pr($result);
@@ -309,6 +310,7 @@ class TasksController extends AppController {
             $result['success'] = true;
             $result['data']['list'] = $task;
             $result['data']['date'] = $this->request->data['date'];
+            $result['data']['day'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $this->request->data['date']);
             $result['message'] = array(
                 'type' => 'success', 
                 'message' => __('Задача успешно ...')
@@ -353,5 +355,7 @@ class TasksController extends AppController {
             'result'
         ));
     }
+    
+    
     //----------------------------------------------------------------------
 }

@@ -1,27 +1,69 @@
 @import "bootstrap.min.css";
+@import "bootstrap-responsive.min.css";
 @import "jquery.jgrowl.css";
 @import "loginza/widget_style.css";
 
-html{
+.container{
+   max-width:1001px !important;
+    min-width:1001px !important;
+    margin: 0 auto;
+
+} 
+
+
+body{
      overflow-y: scroll;
-     min-width: 1210px;
+    
+}
+
+body {
+  position: relative;
+  padding-top: 50px;
+  background-color: #8CC1D9;
+  
 }
 
 
+/* Tweak navbar brand link to be super sleek
+-------------------------------------------------- */
+.navbar-fixed-top  {
+  padding-right: 0;
+  padding-left: 0;
+
+  float: right;
+  font-weight: bold;
+  color: #000;
+  text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.125);
+  -webkit-transition: all .2s linear;
+     -moz-transition: all .2s linear;
+          transition: all .2s linear;
+}
+.navbar-fixed-top .brand:hover {
+  text-decoration: none;
+}
+
+#wrapper{
+    max-width:1001px !important;
+    min-width:1001px !important;
+    margin: 0 auto;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+
+}
+
+/* Footer
+-------------------------------------------------- */
 footer {
-	padding: 0 10px 0 10px;
-	border-top: 1px solid #eee;
-	color: white;
-	background-color: black;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  
+  margin-top: 15px;
+  padding: 25px 0 26px;
+  border-top: 1px solid #e5e5e5;
 }
-
-footer > p {
-	margin-bottom: 11px;
-	margin-top: 13px;
+footer p {
+  margin-bottom: 0;
+  color: #555;
 }
-.push { height: 63px; }
-

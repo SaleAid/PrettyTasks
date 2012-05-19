@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
       </a>
       <?php echo $this->Html->link(
-                            'Besttask ...pre-alpha version',
+                            'BestTASK ...-alpha version',
                             array('controller' => 'tasks', 'action' => 'index'),
                             array('class' => 'brand')
       );?>
