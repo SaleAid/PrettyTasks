@@ -25,7 +25,7 @@
                 <?php echo __('Пожалуйста, подтвердите, что вы человек.'); ?>
             </p>
            
-           <?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => 'clean')));?>
+           <?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => Configure::read('Recaptcha.theme'))));?>
            
            <?php echo $this->Form->submit(__('Регистрация'),array('class'=>'btn btn-info'));?>
            

@@ -26,6 +26,7 @@
         
         echo $this->fetch('toHead'); 
         
+        echo $scripts_for_layout;
 
     ?>
     
@@ -65,7 +66,7 @@
         
         echo $this->Html->script('main.js');
 
-		echo $scripts_for_layout;
+		
 		
 		echo $this->fetch('toFooter'); 
    

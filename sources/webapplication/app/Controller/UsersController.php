@@ -83,7 +83,7 @@ class UsersController extends AppController {
                         'action' => 'login'
                     ));
                 }
-                $this->Session->setFlash(__('Вы успешно прошли регистрацию. Возникли проблемы при отправке КодА активации аккаунта.'), 'alert', array(
+                $this->Session->setFlash(__('Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта.'), 'alert', array(
                     'class' => 'alert-success'
                 ));
                 $this->redirect(array(
@@ -271,6 +271,7 @@ class UsersController extends AppController {
     }
 }
 
+//TODO Place this function in other file
 // now you can use $options;
 function formatOffset($offset) {
     $hours = $offset / 3600;
