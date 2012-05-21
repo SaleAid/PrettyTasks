@@ -19,7 +19,9 @@
     
     <?php echo $this->Html->css('print', null, array('media' => 'print')); ?>
 	
-    <?php echo $this->fetch('toHead'); ?>       
+    <?php echo $this->fetch('toHead'); ?> 
+    
+    <?php echo $scripts_for_layout; ?>      
 	
   </head>
 
@@ -48,7 +50,7 @@
 
    <?php //echo $this->element('sql_dump'); ?>
    
-   <?php echo $scripts_for_layout; ?>
+   
 
    <?php echo $this->Html->script('jquery-1.7.1.min.js'); ?>
     

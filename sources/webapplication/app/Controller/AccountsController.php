@@ -2,10 +2,6 @@
 App::uses('AppController', 'Controller');
 class AccountsController extends AppController {
     public $name = 'Accounts';
-    public $helpers = array(
-        'Html', 
-        'Js'
-    );
     public $components = array(
         'RequestHandler', 
         'Recaptcha.Recaptcha' => array(
