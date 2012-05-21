@@ -306,6 +306,8 @@ function scrEdit(id, title, done, date, time, timeEnd, comment){
 
 function scrDragWithTime(id, date, time){
         var task = $("li[id='"+id+"'].currentTask");
+        var taskRemote =  $("li[id='"+id+"']:not(.currentTask)");
+        taskRemote.remove();
         task.removeClass('currentTask');
         if(!date){
             var list = $("ul[date='planned']");
@@ -487,10 +489,16 @@ function scrCreate(data){
 function AddTask(data){
     var important ='';
 	var setTime ='';
+    var complete ='';
+    var checked = '';
     var time = '<span class="time"></span>';
     var timeEnd = '<span class="timeEnd"></span>';
     if (+data.Task.priority){
 		important = 'important';
+	}
+    if (+data.Task.done){
+		complete = ' complete';
+        checked = ' checked';
 	}
     if (data.Task.time){
 		setTime = 'setTime ';
@@ -499,12 +507,12 @@ function AddTask(data){
             timeEnd = '<span class="timeEnd">'+data.Task.timeend.slice(0,-3)+'</span>'; 
         }
     }
-    taskHtml = '<li id ="'+data.Task.id+'" class="ui-state-default '+setTime+'" date="'+data.Task.date+'"> \n'+ 
+    taskHtml = '<li id ="'+data.Task.id+'" class="ui-state-default '+setTime+complete+'" date="'+data.Task.date+'"> \n'+ 
                             time+'\n'+
                             timeEnd+'\n'+
                             '<span><i class="icon-move"></i></span> \n'+
-                            '<input type="checkbox" class="done" value="1"/> \n' +
-                            '<span class="editable input-xxlarge '+important+'">'+data.Task.title+'</span> \n'+
+                            '<input type="checkbox" class="done" '+checked+'/> \n' +
+                            '<span class="editable '+important+'">'+data.Task.title+'</span> \n'+
                             '<span class="editTask"><i class="icon-pencil"></i></a></span> \n'+
                             '<span class="deleteTask"><i class=" icon-ban-circle"></i></span> \n'+
                 '</li>';
@@ -626,9 +634,12 @@ function initDrop(element){
                 var id = ui.draggable.attr('id');
                 var date = $(this).find( "a" ).attr( "date" );
                 var time = $.trim(ui.draggable.children('.time').text());
+                if(date == ui.draggable.attr( "date" )){
+                    mesg({type:'success', message:'Перемещение запрещено. '});
+                    return false;   
+                }
                 ui.draggable.addClass('currentTask');
                 userEvent('dragOnDay', {id: id, date: date, time:time});
-                $(ui).parent().sortable('cancel');
             } 
     }).disableSelection();
 }
@@ -643,6 +654,7 @@ function initSortable(element){
             handle: 'span .icon-move',
             update : function(e, ui){
                 if(dropped){
+                    $(this).sortable('cancel');
                     dropped = false;
                     return true;
                 }
@@ -668,7 +680,8 @@ function initSortable(element){
 function initTab(element){
      $(element).on('shown', function (e) {
             window.location.hash=e.target.hash;
-      })
+            $('html, body').animate({scrollTop:0}, 'slow');
+    })
 }
 
 function initTabDelte(element){
@@ -678,10 +691,18 @@ function initTabDelte(element){
     });
 }
 
+function initTabSelect(element){
+    $(element).click(function(e){
+    
+        console.log(this);
+        $('#'+$(this).attr('date')).addClass('active');
+    //return false;
+});
+}
 function reload(){
     location.reload();
 }
-
+//-----------------------------------------------------------------------
 var dropped = false;
 $(function(){
 
@@ -714,8 +735,9 @@ $(function(){
     setInterval(function() {
         checkLogin();
     }, 120000);
-    
+    $('.help').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
     $('#addDay').tooltip({placement:'bottom',delay: { show: 500, hide: 100 }});
+    $('#completed h3').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
     
     initTab('#main a[data-toggle="tab"]');
     initCreateTask(".createTask");
@@ -728,7 +750,7 @@ $(function(){
     initDrop("ul:first li.drop");
     initSortable(".sortable");
     initTabDelte('li a[data-toggle="tab"] .close');
-    
+    //initTabSelect('a[date="completed"]');
     // edit task, modal window      
     $('#eTime').timepicker({
                     timeFormat: 'HH:mm',
@@ -762,6 +784,10 @@ $(function(){
             var timeEnd = $.trim($('#eTimeEnd').val());
             var comment = $('#eComment').val();
             userEvent('edit',{id: id,title: title, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment });
+    });
+    $('#completed .day').click(function(){
+        var date = $(this).text();
+        userEvent('addDay',{date: date});
     });
     
   // add new day into tabs

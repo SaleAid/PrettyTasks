@@ -7,13 +7,14 @@
         <ul class="nav nav-tabs noPrint">
             <li class="addDay">
             <div class="btn-group dropup">
-                <button  id="addDay" rel="tooltip" title="Добавить новый день в список." class="btn btn-large">Добавить день</button>
+                <button  id="addDay" rel="tooltip" title="Добавить новый день в список" class="btn btn-large">Добавить день</button>
                 <button class="btn btn-large dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
                     <li ><a href="#completed" data-toggle="tab" date="completed">Завершенные</a></li>
                     <li ><a href="#expired" data-toggle="tab" date="expired" class="tab2">Просроченные</a></li>
+                    
                 </ul>
             </div>   
            </li>
@@ -59,11 +60,12 @@
             <div class="well form-inline">
                 <input type="text" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>
                 <button class="btn createTaskButton"> Добавить </button>
+
             </div>
             <ul class="sortable connectedSortable ui-helper-reset" date="planned">
                 <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])):?>
                     <?php foreach($result['data']['arrAllFuture'] as $item):?>
-                        <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?> " date="<?php echo $item['Task']['date'];?>">
+                        <li id ="<?php echo $item['Task']['id']; ?>" class=" <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?> " date="<?php echo $item['Task']['date'];?>">
                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
                             <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
                             <span><i class="icon-move"></i></span>
@@ -79,7 +81,7 @@
           </div>
             </div>
           <div class="tab-pane" id="expired">
-              <div class="">
+              <div class="row">
                   <div class="listTask">
                   <h3 class="margin-bottom10">Просроченные задачи.</h3>
                         <?php if(isset($result['data']['arrAllOverdue']) && !empty($result['data']['arrAllOverdue'])):?>
@@ -89,7 +91,7 @@
                             ?>
                                 <h3 class="label label-info margin-bottom10"><?php echo $datelabel; ?></h3>
                                     <? foreach($day as $item):?>
-                                        <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['priority']):?> important <?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
+                                        <li id ="<?php echo $item['Task']['id']; ?>" class=" <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['priority']):?> important <?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
                                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
                                             <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
                                             <span><i class="icon-move"> </i></span>
@@ -113,20 +115,16 @@
                   <div class="listTask">
                   <h3 class="margin-bottom10">Завершенные задачи.</h3>
                         <?php if(isset($result['data']['arrAllCompleted']) && !empty($result['data']['arrAllCompleted'])):?>
-                        <ul class="sortable connectedSortable ui-helper-reset " date="completed">
+                        <ul class=" ui-helper-reset " date="completed">
                             <?php foreach($result['data']['arrAllCompleted'] as $datelabel => $day):
                                     if(isset($day) && !empty($day)):  
                             ?>
-                                <h3 class="label label-info margin-bottom10"><?php echo $datelabel; ?></h3>
+                                <h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на <?php echo $datelabel; ?>"><?php echo $datelabel; ?></h3>
                                 	<? foreach($day as $item):?>
-                                        <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['priority']):?> important <?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
+                                        <li class=" <?php if($item['Task']['priority']):?>important<?php endif; ?>">
                                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
                                             <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
-                                            <span class="hide"><i class="icon-move"> </i></span>
-                                            <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                                            <span class=" editable <?php if($item['Task']['done']):?> complete <?php endif; ?>"><?php echo $item['Task']['title']; ?></span>
-                                            <span class="editTask hide"><i class="icon-pencil"></i></a></span>
-                                            <span class="deleteTask hide"><i class=" icon-ban-circle"></i></span>
+                                            <span class="title"><?php echo $item['Task']['title']; ?></span>
                                         </li>
                              		<?php endforeach; ?>
                             <?php 
@@ -145,6 +143,7 @@
                         <h3 class="label label-info margin-bottom10"><?php echo $k; ?><img class="print" src="./img/print.png"/></h3>
                         <div class="well form-inline noPrint">
                             <input type="text" class="createTask input-xxlarge" placeholder=" +Добавить задание…"/>
+                            <img class="help" src="./img/help.gif" rel="tooltip" title="Help:  <br/> !	Priority"/>
                             <button class="btn createTaskButton"> Добавить </button>
                             <label class="checkbox ratingDay" >
                                 <input type="checkbox" <?php if( isset($result['data']['arrDaysRating'][$k]) and $result['data']['arrDaysRating'][$k][0]['Day']['rating']):?> checked <?php endif; ?> date="<?php echo $k; ?>"/> Удачный день
@@ -152,12 +151,12 @@
                         </div>
                         <ul id="sortable<?php echo $k; ?>" class="sortable connectedSortable ui-helper-reset" date="<?php echo $k; ?>">
                             <?php foreach($v as $item):?>
-                                <li id ="<?php echo $item['Task']['id']; ?>" class="ui-state-default <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
+                                <li id ="<?php echo $item['Task']['id']; ?>" class=" <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?><?php if($item['Task']['priority']):?>important<?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
                                     <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
                                     <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
                                     <span><i class="icon-move"></i></span>
                                     <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                                    <span class=" editable  <?php if($item['Task']['done']):?> complete <?php endif; ?> <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo $item['Task']['title']; ?></span>
+                                    <span class=" editable  <?php if($item['Task']['done']):?> complete <?php endif; ?>"><?php echo $item['Task']['title']; ?></span>
                                     <span class="editTask"><i class="icon-pencil"></i></a></span>
                                     <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                                 </li>
