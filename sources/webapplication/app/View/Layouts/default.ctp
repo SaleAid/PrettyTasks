@@ -24,7 +24,8 @@
   </head>
 
   <body data-spy="scroll" data-target=".subnav" data-offset="50">
-    
+   <div id="wrapper-all">
+ 
     <?php echo $this->element('main_menu'); ?> 
     
     <div id="wrapper">
@@ -39,7 +40,7 @@
         <div class="push"><!--//--></div>
     </div>
     </div>
-
+</div>
 <footer>
     <div class="container">
         <p>&copy; Company 2012</p>

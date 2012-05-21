@@ -679,7 +679,7 @@ function initSortable(element){
 }
 function initTab(element){
      $(element).on('shown', function (e) {
-            window.location.hash= e.target.hash + '-list';
+            window.location.hash= 'day='+e.target.hash.slice(1);
             //$('html, body').animate({scrollTop:0}, 'slow');
     })
 }
@@ -715,12 +715,12 @@ $(function(){
      $(window).hashchange( function(){
         if(window.location.hash != "") { 
             var date = new Date(window.location.hash);
-            var hash = window.location.hash.slice(0,-5);
-            if(date != 'Invalid Date' && window.location.hash != "#planned"){
+            var hash = window.location.hash.slice(5);
+            if(date != 'Invalid Date' && hash != "planned"){
                 hash = $.datepicker.formatDate('yy-mm-dd', date);
                 userEvent('addDay',{date: hash});
             }else{
-                $('#main a[href="'+hash+'"]').tab('show');    
+                $('#main a[href="#'+hash+'"]').tab('show');    
             }
          } 
     })
@@ -751,6 +751,7 @@ $(function(){
     initSortable(".sortable");
     initTabDelte('li a[data-toggle="tab"] .close');
     //initTabSelect('a[date="completed"]');
+    
     // edit task, modal window      
     $('#eTime').timepicker({
                     timeFormat: 'HH:mm',
