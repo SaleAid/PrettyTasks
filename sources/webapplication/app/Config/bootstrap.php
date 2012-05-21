@@ -63,7 +63,7 @@ Cache::config('default', array('engine' => 'File'));
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
+ config('appconfig');
  CakePlugin::load('Recaptcha');
- //App::uses('PhpReader', 'Configure');
- Configure::load('appconfig');
-//Configure::config('default', new PhpReader());
+ 
+  

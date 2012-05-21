@@ -1,0 +1,2 @@
+msgid "today"
+msgstr "test"

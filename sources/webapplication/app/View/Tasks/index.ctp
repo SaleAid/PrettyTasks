@@ -24,19 +24,29 @@
             </li>
             <li class="active drop">
                 <a href="#<?php echo $this->Time->format('Y-m-d', time(), true); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', time(), true); ?>">
-                <?php echo __('Сегодня'); ?>
+                <?php echo __('today'); ?>
             </a>
           </li>
          <li class="drop">
             <a href="#<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>">
-                 <?php echo __('Завтра'); ?>
+                 <?php echo __('tomorrow'); ?>
             </a>
           </li>
-          <?php for($i = 2; $i <= 5; $i++):?>
-            <li class="drop"> <a href="#<?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true); ?>"
+          <?php 
+          $weekday = array(
+                        'Sunday' => __('Sunday'),
+                        'Monday' => __('Monday'),
+                        'Tuesday' => __('Tuesday'),
+                        'Wednesday' => __('Wednesday'),
+                        'Thursday' => __('Thursday'),
+                        'Friday' => __('Friday'),
+                        'Saturday' => __('Saturday')
+                        );
+          for($i = 2; $i <= 5; $i++):?>
+            <li class="drop"> <a href="#<?php echo $this->Time->format('Y-m-d', '+'.$i.' days'); ?>"
                              data-toggle="tab"
-                              date = "<?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true); ?>">
-                      <?php echo __($this->Time->format('l', '+'.$i.' days', true)); ?>
+                              date = "<?php echo $this->Time->format('Y-m-d', '+'.$i.' days'); ?>">
+                      <?php echo $weekday[$this->Time->format('l', '+'.$i.' days', true)]; ?>
                  </a>
             </li>
           <?php endfor; ?>
