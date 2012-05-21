@@ -43,10 +43,15 @@
 class EmailConfig {
 
 	public $default = array(
-		'transport' => 'Mail',
-		'from' => 'noreply@besttasks.com',
+		//'transport' => 'Mail',
+		//'from' => 'noreply@besttasks.com',
 		'charset' => 'utf-8',
 		'headerCharset' => 'utf-8',
+        'host' => 'ssl://smtp.gmail.com',
+        'port' => 465,
+        'username' => 'registration@learning-2012.org.ua',
+        'password' => 'registration123',
+        'transport' => 'Smtp',
 	);
 
 	public $smtp = array(
@@ -100,7 +105,7 @@ class EmailConfig {
         'host' => 'ssl://smtp.gmail.com',
         'port' => 465,
         'username' => 'registration@learning-2012.org.ua',
-        'password' => 'nubbjuvogatvjktq',
+        'password' => 'registration123',
         'transport' => 'Smtp',
         'from' => 'registration@learning-2012.org.ua',
         'template'=> 'activate_account',

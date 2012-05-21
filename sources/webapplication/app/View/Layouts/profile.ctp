@@ -33,9 +33,9 @@
   </head>
 
   <body>
-
+ <div id="wrapper-all">
 <?php echo $this->element('main_menu'); ?> 
-
+    <div id="wrapper">
     <div class="container-fluid">
       <div class="row-fluid">
         <?php echo $this->element('user_menu'); ?> 
@@ -52,10 +52,12 @@
         
     <div class="push"><!--//--></div>
     </div>
-    
-      <hr>
+ </div>   
+</div>
       <footer>
+            <div class="container">
         <p>&copy; Company 2012</p>
+    </div> 
       </footer>
    <?php
         echo $this->Js->writeBuffer(); 
