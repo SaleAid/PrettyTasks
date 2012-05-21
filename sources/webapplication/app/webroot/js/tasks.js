@@ -679,8 +679,8 @@ function initSortable(element){
 }
 function initTab(element){
      $(element).on('shown', function (e) {
-            window.location.hash=e.target.hash;
-            $('html, body').animate({scrollTop:0}, 'slow');
+            window.location.hash= e.target.hash + '-list';
+            //$('html, body').animate({scrollTop:0}, 'slow');
     })
 }
 
@@ -715,7 +715,7 @@ $(function(){
      $(window).hashchange( function(){
         if(window.location.hash != "") { 
             var date = new Date(window.location.hash);
-            var hash = window.location.hash;
+            var hash = window.location.hash.slice(0,-5);
             if(date != 'Invalid Date' && window.location.hash != "#planned"){
                 hash = $.datepicker.formatDate('yy-mm-dd', date);
                 userEvent('addDay',{date: hash});
