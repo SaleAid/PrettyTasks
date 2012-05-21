@@ -6,8 +6,8 @@
 </p>
 <p>
 Для регистрации на сайте нажмите на ссылку: 
-
-<a href="<?php echo Router::url(array('controller' => 'users', 'action' => 'register', $user['invite_token']), true); ?>"><?php echo Router::url(array('controller' => 'users', 'action' => 'register', $user['invite_token']), true); ?></a>
-
+<a href="<?php echo Router::url(array('controller' => 'users', 'action' => 'register', $user['invite_token']), true); ?>"><?php echo Router::url(array('controller' => 'users', 'action' => 'register', $user['invite_token']), true); ?></a> .
+</p>
+<p>
 С уважением, команда <?php echo Configure::read('Site.name'); ?>
-
+</p>
