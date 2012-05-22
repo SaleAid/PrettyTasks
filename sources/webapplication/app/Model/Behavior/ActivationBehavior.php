@@ -23,12 +23,16 @@ class ActivationBehavior extends ModelBehavior {
 	        return false;
         }
         $Model->read();
-        $email = new CakeEmail('activate_account');
+        $email = new CakeEmail();
+        $email->template('activate_account', 'default');
+        $email->emailFormat(Configure::read('Email.global.format'));
+        $email->from(Configure::read('Email.global.from'));
+        $email->to($Model->data['User']['email']);
+        $email->subject(Configure::read('Email.user.activateAccount.subject'));
         $email->viewVars(array( 'controllerName' => $controllerName,
                                 'activate_token' => $Model->data[$Model->alias]['activate_token'], 
-                                'full_name' => $Model->data[$Model->alias]['full_name']))
-              ->to($Model->data['User']['email'])
-                ;
+                                'full_name' => $Model->data[$Model->alias]['full_name'])
+                        );
         return $email->send();
     }
     

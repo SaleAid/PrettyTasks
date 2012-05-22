@@ -233,14 +233,19 @@ class User extends AppModel {
     public function sendPasswordResend($id) {
         $this->id = $id;
         $this->read();
-        $email = new CakeEmail('default');
+        $email = new CakeEmail();
+        $email->template('password_resend', 'default');
+        $email->emailFormat(Configure::read('Email.global.format'));
+        $email->from(Configure::read('Email.global.from'));
+        $email->to($this->data[$this->alias]['email']);
+        $email->subject(Configure::read('Email.user.passwordResend.subject'));
         $email->viewVars(
                         array(
                             'password_token' => $this->data[$this->alias]['password_token'], 
                             'fullname' => $this->data[$this->alias]['first_name'] . ' ' . $this->data[$this->alias]['last_name'], 
                             'username' => $this->data[$this->alias]['username']
-                        ))->to($this->data[$this->alias]['email']);
-        return $email->subject('PasswordResend')->send();
+                        ));
+        return $email->send();
     }
 
     //    public function sendActivationAccount($id){
