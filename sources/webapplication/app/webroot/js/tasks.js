@@ -208,6 +208,12 @@ function scrAddDay(date){
                                     '<input type="checkbox" date="'+date+'"/> Удачный день '+
                             '</label> '+
                             '</div> '+
+                            '<div class="filter"> '+
+                                '<span>Фильтр: </span> '+ 
+                                '<a href="" class="active" data="all">Все</a>,&nbsp; '+ 
+                                '<a href="" data="inProcess">В Процессе</a>,&nbsp; '+ 
+                                '<a href="" data="completed">Выполненные</a> '+
+                            '</div> '+
                             '<ul class="sortable connectedSortable ui-helper-reset" date="'+date+'"> '+
                                 '<p class="loadContent" align=center> Loading content ...</p> '+
                             '</ul> '+
@@ -250,6 +256,7 @@ function onAddDay(data){
     initSortable("ul[date='"+data.data.date+"'].sortable");
     initRatingDay(".ratingDay input[date='"+data.data.date+"']");
     initTabDelte("li a[date='"+data.data.date+"'] .close");
+    initFilter(list.siblings('.filter').children('a'));
     
 }
 
@@ -275,6 +282,17 @@ function scrTime(id, time, timeEnd){
       $(task.find('.timeEnd').text(''));
     }
 }
+
+//----------------setPriority-------
+function scrPriority(id, priority){
+    var task = $("li[id='"+id+"']");
+    if(+priority){
+        task.addClass('impotant');
+    }else{
+        task.removeClass('impotant');
+    }
+}
+
 
 
 //----------------edit----------
@@ -430,14 +448,15 @@ function scrSetDone(id, done){
     var titleEl = $("li[id='"+id+"']").find('.editable');
     var doneEl = $("li[id='"+id+"']").find('.done');
     if(+done){
-        titleEl.addClass('complete');
+        //titleEl.addClass('complete');
         doneEl.attr('checked', 'checked');
          $("li[id='"+id+"']").addClass('complete')
     }else{
-        titleEl.removeClass('complete');
+        //titleEl.removeClass('complete');
         $("li[id='"+id+"']").removeClass('complete');
         doneEl.removeAttr('checked');
     }
+    $("li[id='"+id+"']").parent().siblings('.filter').children('a.active').trigger('click');
 }
 
 //----------------setTitle------
@@ -455,7 +474,7 @@ function scrSetTitle(id, title_text, priority){
     var title = $("li[id='"+id+"']").find('.editable');
     title.text(title_text);   
     if(priority == 1){
-        title.addClass('important');
+        $("li[id='"+id+"']").addClass('important');
     }else{
         $("li[id='"+id+"']").removeClass('important');
     }
@@ -484,7 +503,8 @@ function scrCreate(data){
     initDelete("li[id='"+data.data.Task.id+"'] .deleteTask");
     initEditAble("li[id='"+data.data.Task.id+"'] .editable");
     initDone("li[id='"+data.data.Task.id+"'] .done");
-    initEditTask("li[id='"+data.data.Task.id+"'] .editTask");    	
+    initEditTask("li[id='"+data.data.Task.id+"'] .editTask");
+    $("li[id='"+data.data.Task.id+"']").parent().siblings('.filter').children('a.active').trigger('click');    	
 }
 function AddTask(data){
     var important ='';
@@ -507,12 +527,12 @@ function AddTask(data){
             timeEnd = '<span class="timeEnd">'+data.Task.timeend.slice(0,-3)+'</span>'; 
         }
     }
-    taskHtml = '<li id ="'+data.Task.id+'" class="ui-state-default '+setTime+complete+'" date="'+data.Task.date+'"> \n'+ 
+    taskHtml = '<li id ="'+data.Task.id+'" class="'+setTime+' '+complete+' '+important+'" date="'+data.Task.date+'"> \n'+ 
                             time+'\n'+
                             timeEnd+'\n'+
                             '<span><i class="icon-move"></i></span> \n'+
                             '<input type="checkbox" class="done" '+checked+'/> \n' +
-                            '<span class="editable '+important+'">'+data.Task.title+'</span> \n'+
+                            '<span class="editable ">'+data.Task.title+'</span> \n'+
                             '<span class="editTask"><i class="icon-pencil"></i></a></span> \n'+
                             '<span class="deleteTask"><i class=" icon-ban-circle"></i></span> \n'+
                 '</li>';
@@ -679,7 +699,7 @@ function initSortable(element){
 }
 function initTab(element){
      $(element).on('shown', function (e) {
-            window.location.hash= 'day='+e.target.hash.slice(1);
+            window.location.hash= 'day-'+e.target.hash.slice(1);
             //$('html, body').animate({scrollTop:0}, 'slow');
     })
 }
@@ -699,6 +719,30 @@ function initTabSelect(element){
     //return false;
 });
 }
+
+function initFilter(element){
+    $(element).on('click', function() {
+        var listTasks = $(this).parent().siblings('ul:first'); 
+        var type =$(this).attr('data');
+        listTasks.children('li').removeClass('hide');
+        $(this).siblings('a').removeClass('active');
+        switch(type){
+            case 'all':
+                $(this).addClass('active');
+            break;
+            case 'inProcess':
+                listTasks.children('li.complete').addClass('hide');
+                $(this).addClass('active');
+            break;
+            case 'completed':
+                listTasks.children('li:not(.complete)').addClass('hide');
+                $(this).addClass('active');
+            break;
+        }
+        return false;
+    });
+}
+
 function reload(){
     location.reload();
 }
@@ -707,6 +751,7 @@ var dropped = false;
 $(function(){
 
      
+
      $('.print').click(function(){
         window.print();
         return false;
@@ -750,6 +795,7 @@ $(function(){
     initDrop("ul:first li.drop");
     initSortable(".sortable");
     initTabDelte('li a[data-toggle="tab"] .close');
+    initFilter('.filter a');
     //initTabSelect('a[date="completed"]');
     
     // edit task, modal window      
@@ -786,12 +832,12 @@ $(function(){
             var comment = $('#eComment').val();
             userEvent('edit',{id: id,title: title, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment });
     });
-    $('#completed .day').click(function(){
+    $('.day').click(function(){
         var date = $(this).text();
         userEvent('addDay',{date: date});
     });
     
-  // add new day into tabs
+  // add new day into tabs 
   
     $("#addDay").button().click(function(e) {
         var dp = $('#dp');

@@ -17,7 +17,7 @@ class TasksController extends AppController {
         $result['data']['arrAllFuture'] = $this->Task->getAllFuture($this->Auth->user('id'));
         $result['data']['arrAllExpired'] = $this->Task->getAllExpired($this->Auth->user('id'));
         $from = CakeTime::format('Y-m-d', time());
-        $to = CakeTime::format('Y-m-d', '+6 days');
+        $to = CakeTime::format('Y-m-d', '+7 days');
         $dayConfig = $this->User->getConfig($this->Auth->user('id'), 'day');
         $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to, $dayConfig);
         $result['data']['arrDaysRating'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $from, $to, $dayConfig);

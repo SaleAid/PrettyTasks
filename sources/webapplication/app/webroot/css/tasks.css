@@ -34,6 +34,16 @@ div.well{
     background-color: inherit;
     border: none;
     box-shadow: none;
+    margin-bottom: 10px;
+}
+.filter{
+    margin-bottom: 10px;
+}
+.filter a {
+    text-decoration: underline;
+}
+.filter a.active {
+    color: silver;
 }
 .margin-bottom10{ margin-bottom: 10px;}
 
@@ -159,11 +169,14 @@ div.jGrowl.custom {
 	right: 				0px;
 	top: 				25px;
 }
-#completed .day{
+ .day{
     margin-top: 4px;
+    text-decoration: underline;
 }
-#completed .day:hover{
+ .day:hover{
     cursor: pointer;
+    color: silver;
+    
 }
 #completed li{
     color: black;
