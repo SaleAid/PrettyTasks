@@ -20,7 +20,7 @@
    Configure::write('Email.global.from', 'noreplay@besttasks.com');
    Configure::write('Email.global.format', 'html');
    Configure::write('Email.user.invitation.subject', __('Приглашение на сервис %s', Configure::read('Site.name')));
-   
- 
+   Configure::write('Email.user.activateAccount.subject', __('Активация аккаунта на сервисе %s', Configure::read('Site.name')));
+   Configure::write('Email.user.passwordResend.subject', __('Сбросить пароль на сервисе %s', Configure::read('Site.name')));
 
    
