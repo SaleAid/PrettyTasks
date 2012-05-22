@@ -43,8 +43,6 @@
 class EmailConfig {
 
 	public $default = array(
-		//'transport' => 'Mail',
-		//'from' => 'noreply@besttasks.com',
 		'charset' => 'utf-8',
 		'headerCharset' => 'utf-8',
         'host' => 'ssl://smtp.gmail.com',
@@ -98,31 +96,6 @@ class EmailConfig {
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 	);
-    //------------------------------------
-    
-    
-    public $activate_account = array(
-        'host' => 'ssl://smtp.gmail.com',
-        'port' => 465,
-        'username' => 'registration@learning-2012.org.ua',
-        'password' => 'registration123',
-        'transport' => 'Smtp',
-        'from' => 'registration@learning-2012.org.ua',
-        'template'=> 'activate_account',
-        'emailFormat' => 'html',
-        'subject' => 'Активация аккаунта',
-    );
-    
-        public $password_resend = array(
-        'host' => 'ssl://smtp.gmail.com',
-        'port' => 465,
-        'username' => 'registration@learning-2012.org.ua',
-        'password' => 'registration123',
-        'transport' => 'Smtp',
-        'from' => 'registration@learning-2012.org.ua',
-        'template'=> 'password_resend',
-        'emailFormat' => 'html',
-        'subject' => 'Сбросить пароль',
-    );
+
 
 }
