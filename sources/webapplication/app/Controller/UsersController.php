@@ -7,8 +7,7 @@ class UsersController extends AppController {
         'Recaptcha.Recaptcha' => array(
             'actions' => array(
                 'register', 
-                'password_resend', 
-                'password_reset'
+                'password_resend' 
             )
         )
     );
