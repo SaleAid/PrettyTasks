@@ -16,7 +16,7 @@ function getTaskFromPage(id){
 }
 
 function mesg (message){
-    $.jGrowl.defaults.pool = 2;
+    $.jGrowl.defaults.pool = 1;
     $.jGrowl(message.message, { 
                     glue: 'before',
                     position: 'custom',
@@ -202,7 +202,10 @@ function scrAddDay(date){
                         '<div class="listTask"> '+
                             '<h3 class="label label-info margin-bottom10">'+date+'<img class="print" src="./img/print.png"/></h3> '+
                             '<div class="well form-inline"> '+
-                                '<input type="text" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/> '+
+                                '<div class="input-append"> '+
+                                    '<input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/> '+
+                                    '<span class="add-on">?</span> '+
+                                '</div> '+
                                 '<button class="btn createTaskButton"> Добавить </button> '+
                                 '<label class="checkbox ratingDay"> '+
                                     '<input type="checkbox" date="'+date+'"/> Удачный день '+
@@ -223,7 +226,7 @@ function scrAddDay(date){
                 
     $('.tab-content').append(newTabContent);
     $('#main ul.nav-tabs').append('<li class="drop"><a href="#'+date+'" data-toggle="tab" date="'+date+'">'+date+'<span class="close">×</span></a></li>');
-    initTab('#main a[data-toggle="tab"]');
+    initTab('#main ul.nav-tabs a[date="'+date+'"]');
     activeTab(date);
     return true;
 }
@@ -251,7 +254,7 @@ function onAddDay(data){
         initEditTask("li[id='"+value.Task.id+"'] .editTask");
     });
     initCreateTask($("ul[date='"+data.data.date+"']").parent().find(".createTask"));
-    initCreateTaskButton($("ul[date='"+data.data.date+"']").parent().find(".createTaskButton"));
+    initCreateTaskButton($("ul[date='"+data.data.date+"']").parent().parent().find(".createTaskButton"));
     initDrop($("li a[date='"+data.data.date+"']").parent());
     initSortable("ul[date='"+data.data.date+"'].sortable");
     initRatingDay(".ratingDay input[date='"+data.data.date+"']");
@@ -585,7 +588,6 @@ function initRatingDay(element){
        
         var date = $(this).attr('date');
         var rating = $(this).is(":checked")? 1 : 0;
-         console.log(date);
         userEvent('setRatingDay', {date: date, rating: rating});
     });
 }
@@ -622,7 +624,7 @@ function initCreateTask(element){
         var code = (e.keyCode ? e.keyCode : e.which);
         if(code == 13) {
             var title = $(this).val();
-            var date = $(this).parent().siblings("ul").attr('date');
+            var date = $(this).parent().parent().siblings("ul").attr('date');
             if(date == 'planned'){
                 date = '';
             }
@@ -633,13 +635,13 @@ function initCreateTask(element){
 }
 function initCreateTaskButton(element){
     $(element).on('click', function(e){
-        var title = $(this).siblings('.createTask').val();
+        var title = $(this).parent().find('.createTask').val();
         var date = $(this).parent().siblings("ul").attr('date');
         if(date == 'planned'){
             date = '';
         }
         userEvent('create', {title: title, date: date });
-        $(this).siblings('.createTask').val(null);
+        $(this).parent().find('.createTask').val(null);
     });
 }
 
@@ -700,7 +702,6 @@ function initSortable(element){
 function initTab(element){
      $(element).on('shown', function (e) {
             window.location.hash= 'day-'+e.target.hash.slice(1);
-            //$('html, body').animate({scrollTop:0}, 'slow');
     })
 }
 
@@ -709,15 +710,6 @@ function initTabDelte(element){
         var date = $(this).parent().attr('date');
         userEvent('deleteDay', {date:date});
     });
-}
-
-function initTabSelect(element){
-    $(element).click(function(e){
-    
-        console.log(this);
-        $('#'+$(this).attr('date')).addClass('active');
-    //return false;
-});
 }
 
 function initFilter(element){
@@ -757,10 +749,12 @@ $(function(){
         return false;
      });
      
-     $(window).hashchange( function(){
+     $(window).hashchange( function(e){
         if(window.location.hash != "") { 
             var date = new Date(window.location.hash);
             var hash = window.location.hash.slice(5);
+            var activeTab =  $('#main li.active a').attr('date');
+            if(hash == activeTab) {return;}
             if(date != 'Invalid Date' && hash != "planned"){
                 hash = $.datepicker.formatDate('yy-mm-dd', date);
                 userEvent('addDay',{date: hash});
@@ -796,7 +790,6 @@ $(function(){
     initSortable(".sortable");
     initTabDelte('li a[data-toggle="tab"] .close');
     initFilter('.filter a');
-    //initTabSelect('a[date="completed"]');
     
     // edit task, modal window      
     $('#eTime').timepicker({
