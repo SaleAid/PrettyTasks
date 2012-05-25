@@ -80,7 +80,8 @@ class TasksController extends AppController {
                 $result['data'] = $originTask;
                 $result['message'] = array(
                     'type' => 'alert', 
-                    'message' => __('Ошибка, Задача  не изменена')
+                    'message' => __('Ошибка, Задача  не изменена'),
+                    'reason' => $this->Task->invalidFields(),
                 );
             }
         }

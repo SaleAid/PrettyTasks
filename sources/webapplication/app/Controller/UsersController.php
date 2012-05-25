@@ -218,8 +218,10 @@ class UsersController extends AppController {
     public function profile() {
         $this->User->id = $this->Auth->user('id');
         if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->User->save($this->request->data)) {
-                $this->Session->write('Auth.User', array_merge($this->Auth->user(), $this->request->data['User']));
+            if ($this->User->save($this->request->data)) {//TODO: May save only needed fields?
+                $this->Session->write('Auth.User', array_merge($this->Auth->user(), $this->request->data['User']));//TODO: NONONO. This is WRONG!!! If you get from request user['admin']=true?
+                //This is case, when REALY necessary to read data from DB!
+                //And Is this correct to write directly to session? Please check these issues. 
                 $this->Session->setFlash(__('The user profile has been saved'), 'alert', array(
                     'class' => 'alert-success'
                 ));
@@ -233,6 +235,7 @@ class UsersController extends AppController {
             $this->set('list', DateTimeZone::listAbbreviations());
             $this->request->data = $this->User->read();
         }
+        //TODO: Rewrite it
         $list = DateTimeZone::listAbbreviations();
         $idents = DateTimeZone::listIdentifiers();
         $data = $offset = $added = array();
