@@ -30,17 +30,19 @@
  
     <?php echo $this->element('main_menu'); ?> 
     
-    <div id="wrapper">
-    <div class="container">
-      
-        <?php echo $this->Session->flash(); ?>
-            
-        <?php //echo $this->Session->flash('auth'); ?>
-
-        <?php echo $content_for_layout; ?>
+    <div id="wrapper-content">
+        <div id="wrapper">
+            <div class="container">
+              
+                <?php echo $this->Session->flash(); ?>
+                    
+                <?php //echo $this->Session->flash('auth'); ?>
         
-        <div class="push"><!--//--></div>
-    </div>
+                <?php echo $content_for_layout; ?>
+                
+                <div class="push"><!--//--></div>
+            </div>
+        </div>
     </div>
 </div>
 <footer>

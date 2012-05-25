@@ -32,7 +32,7 @@ class UsersController extends AppController {
     }
 
     public function login() {
-        $this->layout = 'login';
+        $this->layout = 'default';
         //if (!empty($this->request->data)) {
         if ($this->User->validates()) {
             //if($this->request->is('post')){
@@ -72,7 +72,7 @@ class UsersController extends AppController {
     }
 
     public function register() {
-        $this->layout = 'login';
+        $this->layout = 'default';
         if ($this->request->is('post')) {
             if ($this->User->register($this->request->data)) {
                 if ($this->User->sendActivationAccount($this->User->getLastInsertID(), $this->name)) {
@@ -150,7 +150,7 @@ class UsersController extends AppController {
     }
 
     public function password_reset($password_token = null) {
-        $this->layout = 'login';
+        $this->layout = 'default';
         if ($password_token) {
             if ($id = $this->User->checkPasswordToken($password_token)) {
                 if ($this->request->is('post') || $this->request->is('put')) {
@@ -186,7 +186,7 @@ class UsersController extends AppController {
                 $this->redirect($this->referer());
             }
         }
-        $this->layout = 'login';
+        $this->layout = 'default';
         if ($this->request->is('post') || $this->request->is('put')) {
             if (! $this->User->validateEmail($this->request->data)) {
                 return $this->Session->setFlash(__('Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз.'), 'alert', array(
@@ -219,6 +219,7 @@ class UsersController extends AppController {
         $this->User->id = $this->Auth->user('id');
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->User->save($this->request->data)) {
+                $this->Session->write('Auth.User', array_merge($this->Auth->user(), $this->request->data['User']));
                 $this->Session->setFlash(__('The user profile has been saved'), 'alert', array(
                     'class' => 'alert-success'
                 ));

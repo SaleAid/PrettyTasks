@@ -68,8 +68,11 @@
           <div class="listTask">
             <h3 class="label label-info margin-bottom10">Задачи на будущие.</h3>
             <div class="well form-inline">
-                <input type="text" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>
-                <button class="btn createTaskButton"> Добавить </button>
+                <div class="input-append">
+                    <input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>
+                    <span class="add-on">?</span>
+                </div>
+                <button class="btn createTaskButton"> Добавить </button>    
             </div>
             <div class="filter">
                 <span>Фильтр: </span> 
@@ -157,8 +160,10 @@
                     <div class="listTask">
                         <h3 class="label label-info margin-bottom10"><?php echo $k; ?><img class="print" src="./img/print.png"/></h3>
                         <div class="well form-inline noPrint">
-                            <input type="text" class="createTask input-xxlarge" placeholder=" +Добавить задание…"/>
-                            <img class="help" src="./img/help.gif" rel="tooltip" title="Help:  <br/> !	Priority"/>
+                            <div class="input-append">
+                                <input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>
+                                <span class="add-on">?</span>
+                            </div>
                             <button class="btn createTaskButton"> Добавить </button>
                             <label class="checkbox ratingDay" >
                                 <input type="checkbox" <?php if( isset($result['data']['arrDaysRating'][$k]) and $result['data']['arrDaysRating'][$k][0]['Day']['rating']):?> checked <?php endif; ?> date="<?php echo $k; ?>"/> Удачный день

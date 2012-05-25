@@ -10,7 +10,7 @@ class AccountsController extends AppController {
             )
         )
     );
-    public $layout = 'login';
+    //public $layout = 'login';
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -150,6 +150,8 @@ class AccountsController extends AppController {
         $userTmp = $this->Session->read('tmpUser');
         if ($this->request->is('post') || $this->request->is('put')) {
             $this->request->data['User']['password'] = $this->request->data['User']['password_confirm'] = $this->Account->User->generateToken();
+            $this->request->data['User']['invite_token'] = $this->Account->User->generateToken();
+            $this->request->data['User']['active'] = 1;
             if ($this->Account->User->save($this->request->data)) {
                 $userTmp['user_id'] = $this->Account->User->getLastInsertID();
                 $userTmp['activate_token'] = $this->Account->User->generateToken();
@@ -191,7 +193,10 @@ class AccountsController extends AppController {
             }
         }
         $this->Session->setFlash(__('Invalid key.'));
-        $this->redirect('/');
+        $this->redirect(array(
+            'controller' => 'Users', 
+            'action' => 'login'
+        ));
     }
 
     /**

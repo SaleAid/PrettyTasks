@@ -19,7 +19,7 @@ body {
   overflow-y: scroll;  
   position: relative;
   
-  background-color: #DFDFDF;
+  background-color: #FBFBFB;
   
 }
 
@@ -50,11 +50,14 @@ body {
   text-decoration: none;
 }
 
+#wrapper-content{
+    padding: 50px 5px 110px 5px ;
+}
+
 #wrapper{
     max-width:1001px !important;
     min-width:1001px !important;
     margin: 0 auto;
-    padding: 50px 5px 100px 5px ;
     background-color: white;
     border: 1px solid #ddd;
     -webkit-border-radius: 4px;
@@ -69,9 +72,9 @@ footer {
     display: block;
   	margin: -101px auto 0;
 	height: 100px;
-	background: #DFDFDF;
+	background: #FBFBFB;
 	position: relative;
-  border-top: 1px solid black;
+  //border-top: 1px solid black;
 }
 footer p {
   margin-top: 10px;

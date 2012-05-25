@@ -205,6 +205,7 @@ class User extends AppModel {
         if ($this->validates()) {
             $data[$this->alias]['password'] = AuthComponent::password($data[$this->alias]['password']);
             $data[$this->alias]['activate_token'] = $this->generateToken();
+            $data[$this->alias]['invite_token'] = $this->generateToken();
             if ($this->save($data[$this->alias], false)) {
                 return true;
             }

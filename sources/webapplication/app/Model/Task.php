@@ -307,8 +307,10 @@ class Task extends AppModel {
             $start = $this->data[$this->alias]['order'];
             $end = $this->_originData[$this->alias]['order'];
         }
+        $now = "'".date("Y-m-d H:i:s")."'";
         if ($this->updateAll(array(
-            'Task.order' => 'Task.order ' . $operation
+            'Task.order' => 'Task.order ' . $operation,
+            'modified' => $now
         ), 
                             array(
                                 'Task.date ' => $this->data[$this->alias]['date'], 
@@ -324,8 +326,10 @@ class Task extends AppModel {
     }
 
     private function _dragOnDay() {
+        $now = "'".date("Y-m-d H:i:s")."'";
         if ($this->updateAll(array(
-            'Task.order' => 'Task.order -1'
+            'Task.order' => 'Task.order -1',
+            'modified' => $now
         ), 
                             array(
                                 'Task.date ' => $this->_originData[$this->alias]['date'], 
@@ -333,11 +337,12 @@ class Task extends AppModel {
                                 'Task.order >' => $this->_originData[$this->alias]['order'], 
                                 'Task.id <>' => $this->data[$this->alias]['id']
                             )) and $this->updateAll(array(
-            'Task.order' => 'Task.order +1'
+            'Task.order' => 'Task.order +1',
+            'modified' => $now
         ), 
                                                 array(
                                                     'Task.date ' => $this->data[$this->alias]['date'], 
-                                                    'Task.user_id' => $this->data[$this->alias]['user_id'],  //'Task.order >' => 0,
+                                                    'Task.user_id' => $this->data[$this->alias]['user_id'],  
                                                     'Task.order >' => $this->data[$this->alias]['order'] - 1, 
                                                     'Task.id <>' => $this->data[$this->alias]['id']
                                                 ))) {
@@ -364,8 +369,10 @@ class Task extends AppModel {
     }
 
     public function beforeDelete() {
+        $now = "'".date("Y-m-d H:i:s")."'";
         if ($this->updateAll(array(
-            'Task.order' => 'Task.order -1'
+            'Task.order' => 'Task.order -1',
+            'modified' => $now
         ), array(
             'Task.date ' => $this->data[$this->alias]['date'], 
             'Task.user_id' => $this->data[$this->alias]['user_id'], 

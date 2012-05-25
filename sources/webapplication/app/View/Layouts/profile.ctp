@@ -35,6 +35,7 @@
   <body>
  <div id="wrapper-all">
 <?php echo $this->element('main_menu'); ?> 
+    <div id="wrapper-content">
     <div id="wrapper">
     <div class="container-fluid">
       <div class="row-fluid">
@@ -52,6 +53,7 @@
         
     <div class="push"><!--//--></div>
     </div>
+ </div>
  </div>   
 </div>
       <footer>

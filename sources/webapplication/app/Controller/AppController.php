@@ -120,11 +120,10 @@ class AppController extends Controller {
         $this->__setTimeZone();
         $this->_checkMobile();
         $this->loadModel('User');
-        $this->currentUser = $this->User->getUser($this->Auth->user('id')); //TODO remove it carefully!!!
     }
 
     public function beforeRender() {
-        $this->set('currentUser', $this->currentUser);
+        $this->set('currentUser', $this->Auth->user());
         $this->set('provider', $this->Auth->user('provider'));
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
