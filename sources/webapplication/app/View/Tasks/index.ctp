@@ -165,14 +165,12 @@
                                 <span class="add-on">?</span>
                             </div>
                             <button class="btn createTaskButton"> Добавить </button>
-                            
                         </div>
                         <div class="filter">
                             <span>Фильтр: </span> 
                             <a href="" class="active" data="all">Все</a>,&nbsp; 
                             <a href="" data="inProcess">В Процессе</a>,&nbsp; 
                             <a href="" data="completed">Выполненные</a>
-                            
                         </div>
                         <div class="days">
                             <a href="" data="commentDay">Комментарий</a>

@@ -259,9 +259,6 @@ function scrAddDay(date){
                                     '<span class="add-on">?</span> '+
                                 '</div> '+
                                 '<button class="btn createTaskButton"> Добавить </button> '+
-                                '<label class="checkbox ratingDay"> '+
-                                    '<input type="checkbox" date="'+date+'"/> Удачный день '+
-                            '</label> '+
                             '</div> '+
                             '<div class="filter"> '+
                                 '<span>Фильтр: </span> '+ 
@@ -269,6 +266,13 @@ function scrAddDay(date){
                                 '<a href="" data="inProcess">В Процессе</a>,&nbsp; '+ 
                                 '<a href="" data="completed">Выполненные</a> '+
                             '</div> '+
+                            '<div class="days"> '+
+                                '<a href="" data="commentDay">Комментарий</a> '+
+                                '<label class="checkbox ratingDay"> '+
+                                    '<input type="checkbox" date="'+date+'"/> Удачный день '+
+                                '</label> '+
+                            '</div> '+
+                            '<div class="clear"></div> '+
                             '<ul class="sortable connectedSortable ui-helper-reset" date="'+date+'"> '+
                                 '<p class="loadContent" align=center> Loading content ...</p> '+
                             '</ul> '+
@@ -312,7 +316,8 @@ function onAddDay(data){
     initRatingDay(".ratingDay input[date='"+data.data.date+"']");
     initTabDelte("li a[date='"+data.data.date+"'] .close");
     initFilter(list.siblings('.filter').children('a'));
-    
+    initCommentDay($("ul[date='"+data.data.date+"']").siblings('.days').children('a[data="commentDay"]'));
+
 }
 
 // --------------setDate--------
