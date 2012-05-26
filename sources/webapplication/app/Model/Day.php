@@ -106,5 +106,21 @@ class Day extends AppModel {
         $this->data[$this->alias]['rating'] = $rating;
         return $this;
     }
+    
+    public function getComment($user_id, $date){
+        $this->contain();
+        $day = $this->findByUser_idAndDate($user_id, $date);
+        if(isset($day[$this->alias]['comment'])){
+            return $day[$this->alias];
+        }
+        
+        return array('date' => $date, 'comment' => '');
+    }
+    
+    public function setComment($user_id, $date, $comment=null){
+        $this->isDayFound($user_id, $date);
+        $this->data[$this->alias]['comment'] = $comment;
+        return $this;
+    }
 
 }

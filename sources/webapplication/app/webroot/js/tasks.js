@@ -2,7 +2,6 @@
 function getTaskForEdit(id){
     return getTaskFromPage(id);
 }
-
 function getTaskFromPage(id){
     var data = {
         title:   $('#'+id).children('.editable').text(),
@@ -14,6 +13,7 @@ function getTaskFromPage(id){
     };
     return data;
 }
+
 
 function mesg (message){
     $.jGrowl.defaults.pool = 1;
@@ -97,7 +97,13 @@ function userEvent(action, data){
         break;      
         case 'setRatingDay':
             taskRatingDay(data.date, data.rating);
-        break;    
+        break;
+        case 'getCommentDay':
+            taskGetCommentDay(data.date);
+        break;
+        case 'setCommentDay':
+            taskSetCommentDay(data.date, data.comment);
+        break;            
     }
 }
 
@@ -133,7 +139,53 @@ function responseHandler(data){
         case 'setRatingDay':
             onRatingDay(data);
         break;
+        case 'getCommentDay':
+            onGetCommentDay(data);
+        break;
+        case 'setCommentDay':
+            onSetCommentDay(data);
+        break;
     }
+}
+
+//---------------setCommnetDay-----
+function taskSetCommentDay(date, comment){
+    srvSetCommentDay(date, comment);    
+}
+
+function srvSetCommentDay(date, comment){
+    superAjax('/days/setComment.json',{date: date, comment: comment});
+}
+
+function scrSetCommentDay(data){
+    $('#commentDay').removeAttr('date');
+    $('#eCommentDay').text(null);
+    $('#commentDay').modal('hide');
+}
+function onSetCommentDay(data){
+    mesg(data.message);
+    if(data.success){
+        scrSetCommentDay(data);
+    }
+}
+//---------------getCommnetDay-----
+function taskGetCommentDay(date){
+    srvGetCommentDay(date);    
+}
+
+function srvGetCommentDay(date){
+    superAjax('/days/getComment.json',{date: date});
+}
+
+function scrGetCommentDay(data){
+    $('#commentDay').attr('date', data.date);
+    $('#eCommentDay').val(data.comment);
+    $('#commentDay').modal('show');
+        
+}
+function onGetCommentDay(data){
+    mesg(data.message);
+    scrGetCommentDay(data.data);
 }
 //---------------setRatingDay------
 function taskRatingDay(date, rating){
@@ -620,6 +672,14 @@ function initEditTask(element){
     });
 }
 
+function initCommentDay(element){
+    $(element).on("click", function(){
+        var date = $(this).parent().siblings('ul:first').attr('date');
+        userEvent('getCommentDay', {date: date});
+        return false;
+    });
+}
+
 function initCreateTask(element){
     $(element).on('keypress', function(e){
         var code = (e.keyCode ? e.keyCode : e.which);
@@ -791,6 +851,8 @@ $(function(){
     initSortable(".sortable");
     initTabDelte('li a[data-toggle="tab"] .close');
     initFilter('.filter a');
+    initCommentDay('.days a[data="commentDay"]');
+    
     
     // edit task, modal window      
     $('#eTime').timepicker({
@@ -826,6 +888,13 @@ $(function(){
             var comment = $('#eComment').val();
             userEvent('edit',{id: id,title: title, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment });
     });
+    
+    $("#eCommentDaySave").click(function(){
+            var date = $('#commentDay').attr('date');
+            var comment = $('#eCommentDay').val();
+            userEvent('setCommentDay',{date: date, comment: comment });
+    });
+    
     $('.day').click(function(){
         var date = $(this).text();
         userEvent('addDay',{date: date});

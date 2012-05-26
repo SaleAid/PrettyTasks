@@ -491,7 +491,7 @@ class Task extends AppModel {
                             'conditions' => array(
                                 'Task.user_id' => $user_id, 
                                 'Task.done' => 0, 
-                                'Task.date <' => CakeTime::format('Y-m-d', time())
+                                'Task.date <' => date('Y-m-d')
                             )
                         ));
     }
@@ -508,7 +508,7 @@ class Task extends AppModel {
                             'conditions' => array(
                                 'Task.user_id' => $user_id, 
                                 'Task.done' => 0, 
-                                'Task.date <' => CakeTime::format('Y-m-d', time())
+                                'Task.date <' => date('Y-m-d')
                             )
                         ));
         foreach($tasks as $item){

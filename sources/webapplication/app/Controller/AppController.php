@@ -26,7 +26,7 @@ class AppController extends Controller {
                 'controller' => 'users', 
                 'action' => 'login'
             ), 
-            'authError' => 'You cannot access that action!', 
+            'authError' => 'You cannot access that action! ', 
             'authorize' => array(
                 'Controller'
             ), 
@@ -75,7 +75,7 @@ class AppController extends Controller {
      */
     protected function _checkMobile() {
         //TODO add smarty auto detection
-        $this->layout = 'default';
+        //$this->layout = 'default';
         if ((isset($this->params['device']) and ($this->params['device'] == 'm'))) { // ||$this->RequestHandler->isMobile ()
             $mobileViewFile = 'View' . DS . $this->name . '/mobile/' . Inflector::underscore($this->params['action']) . '.ctp';
             if (file_exists(APP . DS . $mobileViewFile)) {

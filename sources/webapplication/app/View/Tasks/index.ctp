@@ -165,16 +165,22 @@
                                 <span class="add-on">?</span>
                             </div>
                             <button class="btn createTaskButton"> Добавить </button>
-                            <label class="checkbox ratingDay" >
-                                <input type="checkbox" <?php if( isset($result['data']['arrDaysRating'][$k]) and $result['data']['arrDaysRating'][$k][0]['Day']['rating']):?> checked <?php endif; ?> date="<?php echo $k; ?>"/> Удачный день
-                            </label>
+                            
                         </div>
                         <div class="filter">
                             <span>Фильтр: </span> 
                             <a href="" class="active" data="all">Все</a>,&nbsp; 
                             <a href="" data="inProcess">В Процессе</a>,&nbsp; 
                             <a href="" data="completed">Выполненные</a>
+                            
                         </div>
+                        <div class="days">
+                            <a href="" data="commentDay">Комментарий</a>
+                            <label class="checkbox ratingDay" >
+                                <input type="checkbox" <?php if( isset($result['data']['arrDaysRating'][$k]) and $result['data']['arrDaysRating'][$k][0]['Day']['rating']):?> checked <?php endif; ?> date="<?php echo $k; ?>"/> Удачный день
+                            </label>
+                        </div>
+                        <div class="clear"></div>
                         <ul id="sortable<?php echo $k; ?>" class="sortable connectedSortable ui-helper-reset" date="<?php echo $k; ?>">
                             <?php foreach($v as $item):?>
                                 <li id ="<?php echo $item['Task']['id']; ?>" class=" <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?><?php if($item['Task']['priority']):?>important<?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
@@ -183,7 +189,7 @@
                                     <span><i class="icon-move"></i></span>
                                     <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
                                     <span class=" editable "><?php echo $item['Task']['title']; ?></span>
-                                    <span class="editTask"><i class="icon-pencil"></i></a></span>
+                                    <span class="editTask"><i class="icon-pencil"></i></span>
                                     <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                                 </li>
                             <?php endforeach;?>
@@ -198,8 +204,8 @@
     </div>  
 
 
-<!-- modal --!>
-<div id="editTask" class="modal hide fade in" style="display: none; ">
+<!-- modal editTask --!>
+<div id="editTask" class="modal hide fade in" style="display: none;">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
         <h3>Редактирование задачи.</h3>
@@ -252,6 +258,26 @@
     <div class="modal-footer">
     
         <button id="eSave" class="btn btn-success">Сохранить</button>
+        <a href="" class="btn" data-dismiss="modal">Закрыть</a>
+    </div>
+</div>
+<!-- End modal --!>
+
+<!-- modal commentDay --!>
+<div id="commentDay" class="modal hide fade in" style="display: none;">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>Комментарий.</h3>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal">
+        <fieldset>
+            <textarea  class="span5" id="eCommentDay" rows="4"></textarea>
+        </fieldset>
+      </form>
+    </div>
+    <div class="modal-footer">
+        <button id="eCommentDaySave" class="btn btn-success">Сохранить</button>
         <a href="" class="btn" data-dismiss="modal">Закрыть</a>
     </div>
 </div>

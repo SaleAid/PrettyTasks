@@ -8,6 +8,7 @@
 #main{
     
 }
+.clear{clear: both;}
 .sortable { list-style-type: none; margin: 0; padding: 0;  }
 
 
@@ -35,7 +36,7 @@ div.well{
     background-color: inherit;
     border: none;
     box-shadow: none;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
 .createTask + .add-on:hover{
     cursor: help;
@@ -44,13 +45,29 @@ div.well{
     vertical-align: top;
 }
 .filter{
-    margin-bottom: 10px;
+    float: left;
+    margin-bottom: 12px;
 }
 .filter a {
     text-decoration: underline;
 }
 .filter a.active {
     color: silver;
+    text-decoration:none;
+    border-bottom: 1px dashed;
+}
+.days{
+    float:right;
+}   
+.ratingDay{
+   display: inline-block;
+   margin-right: 10px;
+}
+.days a{
+    vertical-align: top;
+    margin-right: 15px;
+    text-decoration: none;
+    border-bottom: 1px dashed;
 }
 .margin-bottom10{ margin-bottom: 10px;}
 
@@ -72,10 +89,7 @@ div.well{
     margin-right: 2px; 
 }
 
-.ratingDay{
-   float: right;
-   margin-top: 4px;
-}
+
 
 .editable{
     display: inline-block;
