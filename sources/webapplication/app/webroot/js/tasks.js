@@ -21,8 +21,8 @@ function mesg (message){
                     glue: 'before',
                     position: 'custom',
                     theme: message.type,
-                    speed: 'slow',
-                    life: '1000',
+                    speed: 'fast',
+                    life: '250',
 					animateOpen: { 
 						height: "show"
 					},
@@ -60,7 +60,7 @@ function superAjax(url, data){
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if(xhr.status != '200'){
-                    reload();
+                    reload();//TODO: Handle this in other way
                 }
             }
      });
@@ -438,10 +438,11 @@ function scrDelete(id){
 
 //----------------setDone-------
 function taskSetDone(id, done){
+	scrSetDone(id, done);
     srvSetDone(id, done);
 }
 function onSetDone(data){
-    scrSetDone(data.data.Task.id, data.data.Task.done);
+	//scrSetDone(data.data.Task.id, data.data.Task.done);
     mesg(data.message);
 }
 function srvSetDone(id, done){
@@ -467,7 +468,7 @@ function taskSetTitle(id, title){
     srvSetTitle(id, title);
 }
 function onSetTitle(data){
-    scrSetTitle(data.data.Task.id, data.data.Task.title, data.data.Task.priority);
+	scrSetTitle(data.data.Task.id, data.data.Task.title, data.data.Task.priority);
     mesg(data.message);
 }
 function srvSetTitle(id, title){

@@ -86,7 +86,7 @@ class Task extends AppModel {
         'done' => array(
             'numeric' => array(
                 'rule' => array(
-                    'numeric'
+                    'boolean'
                 )
             )
         ),  //'message' => 'Your custom message here',
@@ -97,7 +97,7 @@ class Task extends AppModel {
         'future' => array(
             'numeric' => array(
                 'rule' => array(
-                    'numeric'
+                    'boolean'
                 )
             )
         ),  //'message' => 'Your custom message here',

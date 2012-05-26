@@ -4,9 +4,9 @@
 		<div data-role="navbar">
 			<ul>
 							<li id="nav-index" class="icon-index"><a class="ui-btn-active ui-state-persist" href="#today">Today</a></li>
-							<li id="nav-speakers" class="icon-speakers"><a  href="#tomorrow">Tomorrow</a></li>
-							<li id="nav-schedule" class="icon-schedule"><a  href="#overdue">Overdue</a></li>
-							<li id="nav-venue" class="icon-venue"><a href="#overview">Overview</a></li>
+							<li id="nav-speakers" class="icon-speakers"><a  href="#tomorrow" data-transition="flow">Tomorrow</a></li>
+							<li id="nav-schedule" class="icon-schedule"><a  href="#overdue" data-transition="flow">Overdue</a></li>
+							<li id="nav-venue" class="icon-venue"><a href="#overview" data-transition="flow">Overview</a></li>
 						</ul>
 		</div>
 	</div>
@@ -20,7 +20,10 @@
 			foreach($result['data']['arrTaskOnDays'][ $this->Time->format('Y-m-d', time(), true)] as $item):
 		?>
 		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
-		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
+		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>">
+		<?php echo $item['Task']['title']; ?>
+		<?php if($item['Task']['time']):?><span class="time" style="float: right;"><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?></span>&nbsp;<?php endif; ?>
+		</label>
 		<?php
 		endforeach;
 		endif;
@@ -29,7 +32,8 @@
 	</div>
 	
 	<div data-role="footer">
-
+		<a href="/Tasks" rel="external">Go to full version</a>
+		<a href="#about">About</a>
 	</div><!-- /footer -->
 
 </div>
@@ -56,7 +60,10 @@
 			foreach($result['data']['arrTaskOnDays'][$this->Time->format('Y-m-d', '+1 days', true)] as $item):
 		?>
 		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
-		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
+		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>">
+		<?php echo $item['Task']['title']; ?>
+		<?php if($item['Task']['time']):?><span class="time" style="float: right;"><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?></span>&nbsp;<?php endif; ?>
+		</label>
 		<?php
 		endforeach;
 		endif;
@@ -64,8 +71,9 @@
 		</fieldset>
 	</div>
 	
-	<div data-role="footer">
-
+	<div data-role="footer" data-position="fixed">
+		<a href="/Tasks" rel="external">Go to full version</a>
+		<a href="#about">About</a>
 	</div><!-- /footer -->
 
 </div>
@@ -93,7 +101,10 @@
 
 		?>
 		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
-		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
+		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>">
+		<?php echo $item['Task']['title']; ?>
+		<?php if($item['Task']['time']):?><span class="time" style="float: right;"><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?></span>&nbsp;<?php endif; ?>
+		</label>
 		<?php
 		endforeach;
 		endif;
@@ -101,8 +112,9 @@
 		</fieldset>
 	</div>
 	
-	<div data-role="footer">
-
+	<div data-role="footer" data-position="fixed">
+		<a href="/Tasks" rel="external">Go to full version</a>
+		<a href="#about">About</a>
 	</div><!-- /footer -->
 
 </div>
@@ -135,7 +147,10 @@
 			foreach($day as $item):
 		?>
 		<input type="checkbox" data-id="<?php echo $item['Task']['id']; ?>" name="checkbox-<?php echo $item['Task']['id']; ?>" id="checkbox-<?php echo $item['Task']['id']; ?>" class="custom" <?php if($item['Task']['done']):?> checked="checked" <?php endif; ?>/>
-		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>"><?php echo $item['Task']['title']; ?></label>
+		<label for="checkbox-<?php echo $item['Task']['id']; ?>"  class="<?php if($item['Task']['done']):?>complete<?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>">
+		<?php echo $item['Task']['title']; ?>
+		<?php if($item['Task']['time']):?><span class="time" style="float: right;"><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?></span>&nbsp;<?php endif; ?>
+		</label>
 		<?php
 		endforeach;
 		?>
@@ -147,13 +162,32 @@
 		?>
 	</div>
 	
-	<div data-role="footer">
-
+	<div data-role="footer" data-position="fixed">
+		<a href="/Tasks" rel="external">Go to full version</a>
+		<a href="#about">About</a>
 	</div><!-- /footer -->
 
 </div>
 
+<!-- Start of second page: #two -->
+<div data-role="page" id="about" data-theme="a">
 
+	<div data-role="header">
+		<h1>About</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="a">	
+		<h2>This is the best task application</h2>
+		<p>Welcome to the best task management site!</p>	
+		<p><a href="#today" data-direction="reverse" data-role="button" data-theme="b">Back to Today tasks</a></p>	
+		
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-position="fixed">
+		<a href="/Tasks" rel="external">Go to full version</a>
+		<a href="#about">About</a>
+	</div><!-- /footer -->
+</div><!-- /page two -->
 
 
 
