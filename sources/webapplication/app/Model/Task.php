@@ -352,6 +352,7 @@ class Task extends AppModel {
     }
 
     public function beforeSave() {
+        $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
         if ($this->_originData) {
             if ($order = $this->_getPositionByTime()) {
                 $this->setOrder($order);
@@ -472,6 +473,10 @@ class Task extends AppModel {
 
     public function setDone($done) {
         $this->data[$this->alias]['done'] = $done;
+        $this->data[$this->alias]['datedone'] = null;
+        if($done){
+            $this->data[$this->alias]['datedone'] = date("Y-m-d H:i:s");
+        }
         return $this;
     }
 
