@@ -80,6 +80,7 @@
                 <a href="" data="inProcess">В Процессе</a>,&nbsp; 
                 <a href="" data="completed">Выполненные</a>
             </div>
+            <div class="clear"></div>
             <ul class="sortable connectedSortable ui-helper-reset" date="planned">
                 <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])):?>
                     <?php foreach($result['data']['arrAllFuture'] as $item):?>

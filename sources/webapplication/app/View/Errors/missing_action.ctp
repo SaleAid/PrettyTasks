@@ -1,5 +1,5 @@
 	<style type="text/css">
-			body {color:#222; font-size:13px;font-family: sans-serif; background:#fff url(/assets/templates/zanami/img/404bg.png) left top repeat-x;}
+			body {color:#222; font-size:13px;font-family: sans-serif; background:#fff ;}
 			h1 {font-size:300%;font-family:'Trebuchet MS', Verdana, sans-serif; color:#000}
 			#page {font-size:122%;width:720px; margin:144px auto 0 auto;text-align:left;line-height:1.2;}
 			#message {padding-right:400px;min-height:360px;background:transparent url(/img/404.png) right top no-repeat;}

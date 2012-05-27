@@ -48,9 +48,18 @@ function checkLogin(){
        }
     });
 }
+function displayLoadAjax(count){
+    if(count == 0){
+        $('.ajaxLoader').addClass('hide');
+    }else{
+        $('.ajaxLoader').removeClass('hide');
+    }
+}
 //-------------------------------------
 function superAjax(url, data){
      var result = null;
+     countAJAX++;
+     displayLoadAjax(countAJAX);
      $.ajax({
             url:url,
             type:'POST',
@@ -146,6 +155,8 @@ function responseHandler(data){
             onSetCommentDay(data);
         break;
     }
+    countAJAX--;
+    displayLoadAjax(countAJAX);
 }
 
 //---------------setCommnetDay-----
@@ -806,6 +817,7 @@ function reload(){
 }
 //-----------------------------------------------------------------------
 var dropped = false;
+var countAJAX = 0;
 $(function(){
 
      

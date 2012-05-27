@@ -1,4 +1,6 @@
+
 <div class="btn-group pull-right">
+     <img class="pull-left ajaxLoader hide fade in" src="/img/ajax-loader.gif"/>
      <?php if(!empty($currentUser)):  ?>
      <?php echo $this->Html->link($this->Html->tag('i', '',
                  //array('class' => 'icon-user icon-white')). ' { '.$provider.' }' .$currentUser['User']['full_name']. ' ',
