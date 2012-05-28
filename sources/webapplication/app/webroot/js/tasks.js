@@ -49,10 +49,10 @@ function checkLogin(){
     });
 }
 function displayLoadAjax(count){
-    if(count == 0){
-        $('.ajaxLoader').addClass('hide');
+    if(!+count){
+        $('.ajaxLoader').hide();
     }else{
-        $('.ajaxLoader').removeClass('hide');
+        $('.ajaxLoader').show();
     }
 }
 //-------------------------------------
@@ -66,6 +66,8 @@ function superAjax(url, data){
             data: data,
             success: function(data) {
                 responseHandler(data.result);
+                countAJAX--;
+                displayLoadAjax(countAJAX);                                
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if(xhr.status != '200'){
@@ -155,8 +157,7 @@ function responseHandler(data){
             onSetCommentDay(data);
         break;
     }
-    countAJAX--;
-    displayLoadAjax(countAJAX);
+
 }
 
 //---------------setCommnetDay-----
@@ -291,8 +292,25 @@ function scrAddDay(date){
                     '</div> '+
                 '</div> ';
                 
-    $('.tab-content').append(newTabContent);
-    $('#main ul.nav-tabs').append('<li class="drop"><a href="#'+date+'" data-toggle="tab" date="'+date+'">'+date+'<span class="close">×</span></a></li>');
+    $('.tab-content').append(newTabContent); 
+    var listUserDay = $('#main ul.nav-tabs').children('li.userDay').get();
+    var newDay = '<li class="drop userDay"><a href="#'+date+'" data-toggle="tab" date="'+date+'">'+date+'<span class="close">×</span></a></li>';
+    var afterDay = null;
+    listUserDay.sort(function(a, b) {
+        var compA = $(a).find('a').attr('date');
+        var compB = $(b).find('a').attr('date');
+        return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+    });
+    $.each(listUserDay, function(idx, itm) { 
+        if(date > $(itm).find('a').attr('date')){
+            afterDay = $(itm);
+        }
+    });
+    if(afterDay){
+        $(newDay).insertAfter( afterDay );                
+    }else{
+        $(newDay).insertAfter( $("#main ul.nav-tabs li:not('.userDay'):last") );   
+    }
     initTab('#main ul.nav-tabs a[date="'+date+'"]');
     activeTab(date);
     return true;

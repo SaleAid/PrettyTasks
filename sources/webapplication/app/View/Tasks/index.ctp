@@ -53,7 +53,7 @@
           
           <?php foreach($result['data']['arrTaskOnDays'] as $k => $v):?>
           <?php if($k > $this->Time->format('Y-m-d', '+6 days') or $k < $this->Time->format('Y-m-d', time())):?>
-            <li class="drop"> <a href="#<?php echo $k;?>"
+            <li class="drop userDay"> <a href="#<?php echo $k;?>"
                              data-toggle="tab"
                               date = "<?php echo $k; ?>">
                       <?php echo __($k); ?> <span class="close">×</span>
