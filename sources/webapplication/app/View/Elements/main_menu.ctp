@@ -1,5 +1,5 @@
 <div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
+  <div class="navbar-inner ">
     <div class="container">
     
       <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -13,7 +13,7 @@
                             array('class' => 'brand')
       );?>
 
-      <div class="nav-collapse">
+      <div class="nav-collapse" >
         <ul class="nav">
           <?php if ($currentUser): ?>
           <li class="<? if($this->params['action'] == "index" and $this->params['controller'] == "Tasks") echo 'active'; ?>">

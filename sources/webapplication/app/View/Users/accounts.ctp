@@ -4,7 +4,7 @@ echo $this->Html->css($this->Loginza->getCssUrl());
 $this->end();
 ?>
 
-
+<div class="well">
  	<h2><?php echo __('Связанные учетные записи');?></h2>
             
 	       <table class="table table-striped" >
@@ -25,3 +25,4 @@ $this->end();
 	   </tr>
     <?php endforeach; ?>
 	</table>
+ </div>
