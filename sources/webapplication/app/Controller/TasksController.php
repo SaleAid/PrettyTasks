@@ -23,7 +23,6 @@ class TasksController extends AppController {
         $result['data']['arrDaysRating'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $from, $to, $dayConfig);
         $result['data']['arrAllOverdue'] = $this->Task->getAllOverdue($this->Auth->user('id'));
         $result['data']['arrAllCompleted'] = $this->Task->getAllCompleted($this->Auth->user('id'));
-        //pr($result);
         $this->set('result', $result);
         $this->set('_serialize', array(
             'result'
@@ -66,23 +65,34 @@ class TasksController extends AppController {
 
     public function setTitle() {
         $result = $this->_prepareResponse();
-        $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
-        if ($originTask) {
-            $task = $this->Task->setTitle($this->request->data['title'])->save();
-            if ($task) {
-                $result['success'] = true;
-                $result['data'] = $task;
-                $result['message'] = array(
-                    'type' => 'success', 
-                    'message' => __('Задача  успешно изменена')
-                );
-            } else {
-                $result['data'] = $originTask;
-                $result['message'] = array(
-                    'type' => 'alert', 
-                    'message' => __('Ошибка, Задача  не изменена'),
-                    'reason' => $this->Task->invalidFields(),
-                );
+        $expectedData = array(
+            'id', 
+            'title' 
+        );
+        if (!$this->_isSetRequestData($expectedData)) {
+            $result['message'] = array(
+                'type' => 'success', 
+                'message' => __('Ошибка при передачи данных')
+            );
+        } else {
+            $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
+            if ($originTask) {
+                $task = $this->Task->setTitle($this->request->data['title'])->save();
+                if ($task) {
+                    $result['success'] = true;
+                    $result['data'] = $task;
+                    $result['message'] = array(
+                        'type' => 'success', 
+                        'message' => __('Задача  успешно изменена')
+                    );
+                } else {
+                    $result['data'] = $originTask;
+                    $result['message'] = array(
+                        'type' => 'alert', 
+                        'message' => __('Ошибка, Задача  не изменена'),
+                        'reason' => $this->Task->invalidFields(),
+                    );
+                }
             }
         }
         $result['action'] = 'setTitle';
@@ -94,23 +104,34 @@ class TasksController extends AppController {
 
     public function addNewTask() {
         $result = $this->_prepareResponse();
-        if (isset($this->request->data['date']) and ! empty($this->request->data['date'])) {
-            $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->save();
-        } else {
-            $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], null, null, null, 0, 1)->save();
-        }
-        if ($task) {
-            $result['success'] = true;
-            $result['data'] = $task;
+        $expectedData = array(
+            'date',
+            'title' 
+        );
+        if (!$this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
                 'type' => 'success', 
-                'message' => __('Задача успешно создана')
+                'message' => __('Ошибка при передачи данных')
             );
         } else {
-            $result['message'] = array(
-                'type' => 'alert', 
-                'message' => __('Задача  не создана')
-            );
+            if (! empty($this->request->data['date'])) {
+                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->save();
+            } else {
+                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], null, null, null, 0, 1)->save();
+            }
+            if ($task) {
+                $result['success'] = true;
+                $result['data'] = $task;
+                $result['message'] = array(
+                    'type' => 'success', 
+                    'message' => __('Задача успешно создана')
+                );
+            } else {
+                $result['message'] = array(
+                    'type' => 'alert', 
+                    'message' => __('Задача  не создана')
+                );
+            }
         }
         $result['action'] = 'create';
         $this->set('result', $result);
@@ -121,24 +142,35 @@ class TasksController extends AppController {
 
     public function changeOrders() {
         $result = $this->_prepareResponse();
-        if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-            if ($this->Task->setOrder($this->request->data['position'])->save()) {
-                $result['success'] = true;
-                $result['message'] = array(
-                    'type' => 'success', 
-                    'message' => __('Задача успешно перемещена')
-                );
+        $expectedData = array(
+            'id', 
+            'position' 
+        );
+        if (!$this->_isSetRequestData($expectedData)) {
+            $result['message'] = array(
+                'type' => 'success', 
+                'message' => __('Ошибка при передачи данных')
+            );
+        } else {
+            if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
+                if ($this->Task->setOrder($this->request->data['position'])->save()) {
+                    $result['success'] = true;
+                    $result['message'] = array(
+                        'type' => 'success', 
+                        'message' => __('Задача успешно перемещена')
+                    );
+                } else {
+                    $result['message'] = array(
+                        'type' => 'success', 
+                        'message' => __('Задача не перемещена')
+                    );
+                }
             } else {
                 $result['message'] = array(
                     'type' => 'success', 
-                    'message' => __('Задача не перемещена')
+                    'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')
                 );
             }
-        } else {
-            $result['message'] = array(
-                'type' => 'success', 
-                'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')
-            );
         }
         $result['action'] = 'changeOrders';
         $this->set('result', $result);
@@ -149,29 +181,40 @@ class TasksController extends AppController {
 
     public function setDone() {
         $result = $this->_prepareResponse();
-        $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
-        if ($originTask) {
-            $task = $this->Task->setDone($this->request->data['done'])->save();
-            if ($task) {
-                $result['success'] = true;
-                $result['data'] = $task;
-                if ($task['Task']['done']) {
-                    $result['message'] = array(
-                        'type' => 'success', 
-                        'message' => __('Задача успешно выполнена')
-                    );
+        $expectedData = array(
+            'id', 
+            'done' 
+        );
+        if (!$this->_isSetRequestData($expectedData)) {
+            $result['message'] = array(
+                'type' => 'success', 
+                'message' => __('Ошибка при передачи данных')
+            );
+        } else {
+            $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
+            if ($originTask) {
+                $task = $this->Task->setDone($this->request->data['done'])->save();
+                if ($task) {
+                    $result['success'] = true;
+                    $result['data'] = $task;
+                    if ($task['Task']['done']) {
+                        $result['message'] = array(
+                            'type' => 'success', 
+                            'message' => __('Задача успешно выполнена')
+                        );
+                    } else {
+                        $result['message'] = array(
+                            'type' => 'alert', 
+                            'message' => __('Задача открыта')
+                        );
+                    }
                 } else {
+                    $result['data'] = $originTask;
                     $result['message'] = array(
                         'type' => 'alert', 
-                        'message' => __('Задача открыта')
+                        'message' => __('Ошибка, Задача  не изменена')
                     );
                 }
-            } else {
-                $result['data'] = $originTask;
-                $result['message'] = array(
-                    'type' => 'alert', 
-                    'message' => __('Ошибка, Задача  не изменена')
-                );
             }
         }
         $result['action'] = 'setDone';
@@ -183,24 +226,31 @@ class TasksController extends AppController {
 
     public function deleteTask() {
         $result = $this->_prepareResponse();
-        if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-            if ($this->Task->delete()) {
-                $result['success'] = true;
-                $result['message'] = array(
-                    'type' => 'success', 
-                    'message' => __('Задача успешно удалена')
-                );
+        if (!$this->_isSetRequestData('id')) {
+            $result['message'] = array(
+                'type' => 'success', 
+                'message' => __('Ошибка при передачи данных')
+            );
+        } else {
+            if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
+                if ($this->Task->delete()) {
+                    $result['success'] = true;
+                    $result['message'] = array(
+                        'type' => 'success', 
+                        'message' => __('Задача успешно удалена')
+                    );
+                } else {
+                    $result['message'] = array(
+                        'type' => 'alert', 
+                        'message' => __('Error')
+                    );
+                }
             } else {
                 $result['message'] = array(
                     'type' => 'alert', 
-                    'message' => __('Error')
+                    'message' => __('Ошибка, Задача  не изменена')
                 );
             }
-        } else {
-            $result['message'] = array(
-                'type' => 'alert', 
-                'message' => __('Ошибка, Задача  не изменена')
-            );
         }
         $result['action'] = 'delete';
         $this->set('result', $result);
@@ -211,14 +261,19 @@ class TasksController extends AppController {
 
     public function dragOnDay() {
         $result = $this->_prepareResponse();
-        $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
-        if ($originTask) {
-            $expectedData = array(
-                'id', 
-                'date', 
-                'time'
+        $expectedData = array(
+            'id', 
+            'date', 
+            'time'
+        );
+        if (!$this->_isSetRequestData($expectedData)) {
+            $result['message'] = array(
+                'type' => 'success', 
+                'message' => __('Ошибка при передачи данных')
             );
-            if ($this->_isSetRequestData($expectedData)) {
+        } else {
+            $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
+            if ($originTask) {
                 if ($this->Task->setOrder(1)->setDate($this->request->data['date'])->setTime($this->request->data['time'])->save()) {
                     //if ($this->Task->dragOnDay($this->request->data['date'], $this->request->data['time'])->save()) {
                     $result['success'] = true;
@@ -235,14 +290,9 @@ class TasksController extends AppController {
             } else {
                 $result['message'] = array(
                     'type' => 'success', 
-                    'message' => __('Ошибка при передачи данных')
+                    'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')
                 );
             }
-        } else {
-            $result['message'] = array(
-                'type' => 'success', 
-                'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')
-            );
         }
         $result['action'] = 'dragOnDay';
         $this->set('result', $result);
@@ -262,7 +312,12 @@ class TasksController extends AppController {
             'done', 
             'comment'
         );
-        if ($this->_isSetRequestData($expectedData)) {
+        if (!$this->_isSetRequestData($expectedData)) {
+            $result['message'] = array(
+                'type' => 'success', 
+                'message' => __('Ошибка при передачи данных')
+            );
+        } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
                 $task = $this->Task->setEdit($this->request->data['title'],
@@ -291,11 +346,6 @@ class TasksController extends AppController {
                     'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')
                 );
             }
-        } else {
-            $result['message'] = array(
-                'type' => 'success', 
-                'message' => __('Ошибка при передачи данных')
-            );
         }
         $result['action'] = 'edit';
         $this->set('result', $result);
@@ -306,7 +356,12 @@ class TasksController extends AppController {
 
     public function getTasksForDay() {
         $result = $this->_prepareResponse();
-        if ($this->_isSetRequestData('date')) {
+        if (!$this->_isSetRequestData('date')){
+            $result['message'] = array(
+                'type' => 'success', 
+                'message' => __('Ошибка при передачи данных')
+            );
+        } else {
             $task = $this->Task->getTasksForDay($this->Auth->user('id'), $this->request->data['date']);
             $result['success'] = true;
             $result['data']['list'] = $task;
@@ -315,11 +370,6 @@ class TasksController extends AppController {
             $result['message'] = array(
                 'type' => 'success', 
                 'message' => __('Задача успешно ...')
-            );
-        } else {
-            $result['message'] = array(
-                'type' => 'success', 
-                'message' => __('Ошибка при передачи данных')
             );
         }
         $result['action'] = 'addDay';
@@ -331,7 +381,12 @@ class TasksController extends AppController {
 
     public function deleteDay() {
         $result = $this->_prepareResponse();
-        if ($this->_isSetRequestData('date')) {
+        if (!$this->_isSetRequestData('date')) {
+            $result['message'] = array(
+                'type' => 'success', 
+                'message' => __('Ошибка при передачи данных')
+            );
+        } else {
             if ($this->Task->deleteDayFromConfig($this->Auth->user('id'), $this->request->data['date'])) {
                 $result['success'] = true;
                 $result['message'] = array(
@@ -344,11 +399,6 @@ class TasksController extends AppController {
                     'message' => __('Ошибка при  ...')
                 );
             }
-        } else {
-            $result['message'] = array(
-                'type' => 'success', 
-                'message' => __('Ошибка при передачи данных')
-            );
         }
         $result['action'] = 'deleteDay';
         $this->set('result', $result);

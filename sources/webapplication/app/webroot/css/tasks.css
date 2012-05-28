@@ -93,7 +93,7 @@ div.well{
 
 .editable{
     display: inline-block;
-    width: 630px;
+    width: 620px;
     text-align: left;
     font-family: arial,sans-serif;
     font-weight: bold;
@@ -110,7 +110,7 @@ div.well{
 
 .editable form, .editable input {
     height: 26px !important;
-    width: 625px !important;
+    width: 615px !important;
     border: 0 !important;  
     margin: 0 0 0 1px !important;
     padding: 0 !important;
