@@ -137,7 +137,9 @@ class AppController extends Controller {
     }
     
     protected function _isSetRequestData($data) {
-        //TODO: 1. Check for post
+        if (!$this->request->is('post')) {
+            return false;
+        }
         if (is_array($data)) {
             foreach ( $data as $value ) {
                 if (! isset($this->request->data[$value])) {
