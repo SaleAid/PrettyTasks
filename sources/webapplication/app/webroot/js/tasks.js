@@ -277,28 +277,27 @@ function scrAddDay(date){
                             '<h3 class="label label-info margin-bottom10">'+date+'<img class="print" src="./img/print.png"/></h3> '+
                             '<div class="well form-inline"> '+
                                 '<div class="input-append"> '+
-                                    '<input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/> '+
+                                    '<input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>'+
                                     '<span class="add-on">?</span> '+
                                 '</div> '+
                                 '<button class="btn createTaskButton"> Добавить </button> '+
                             '</div> '+
                             '<div class="filter"> '+
-                                '<span>Фильтр: </span> '+
-                                '<span class="all badge badge-success"> '+
+                                '<span>Фильтр:&nbsp; </span> '+
+                                '<a href="" class="active" data="all">Все</a> '+
+                                '<span class="all badge badge-info"> '+
                                     '0'+
-                                '</span> '+
+                                '</span>, '+
                                 '&nbsp; '+
-                                '<a href="" class="active" data="all">Все</a>,&nbsp; '+ 
-                                '<span class="inProcess badge badge-info"> '+
+                                '<a href="" data="inProcess">В Процессе</a> '+                          
+                                '<span class="inProcess badge badge-warning"> '+
                                     '0'+
-                                '</span> '+
-                                '&nbsp; '+
-                                '<a href="" data="inProcess">В Процессе</a>,&nbsp; '+ 
-                                '<span class="completed badge badge-warning"> '+
-                                    '0'+
-                                '</span> '+
+                                '</span>, '+
                                 '&nbsp; '+
                                 '<a href="" data="completed">Выполненные</a> '+
+                                '<span class="completed badge badge-success"> '+
+                                    '0'+
+                                '</span> '+
                             '</div> '+
                             '<div class="days"> '+
                                 '<a href="" data="commentDay">Комментарий</a> '+
@@ -474,8 +473,17 @@ function scrDragWithTime(id, date, time){
                 }else if(!+newPositionID){
                     if(change){
                         if(list.children().length){
-                            //if(task.attr('date') != date || time){
+                            console.log(time);
+                            console.log(currentTaskDate);
+                            console.log(date);
+                            if(currentTaskDate == date && !time){
+                                $(this).show('slow');
+                            }else{
+                                console.log('ke');
                                 $(this).prependTo(list).show('slow');
+                            }
+                            //if(task.attr('date') != date || time){
+                                //$(this).prependTo(list).show('slow');
                             //}else{
                            //     $(this).show('slow');
                            // }        

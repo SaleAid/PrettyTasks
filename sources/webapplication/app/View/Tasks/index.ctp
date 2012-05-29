@@ -69,22 +69,20 @@
             <h3 class="label label-info margin-bottom10">Задачи на будущие.</h3>
             <div class="well form-inline">
                 <div class="input-append">
-                    <input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>
-                    <span class="add-on">?</span>
+                    <input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/><span class="add-on">?</span>
                 </div>
                 <button class="btn createTaskButton"> Добавить </button>    
             </div>
             <div class="filter">
-                <span>Фильтр: </span> 
-                <span class="all badge badge-success"><?php echo $result['data']['arrAllFutureCount']['all']; ?></span>
+                <span>Фильтр:&nbsp; </span> 
+                <a href="" class="active" data="all">Все</a>
+                <span class="all badge badge-info "><?php echo $result['data']['arrAllFutureCount']['all']; ?></span>,
                 &nbsp;
-                <a href="" class="active" data="all">Все</a>,&nbsp;
-                <span class="inProcess badge badge-info"><?php echo $result['data']['arrAllFutureCount']['all'] - $result['data']['arrAllFutureCount']['done']; ?></span> 
-                &nbsp;
-                <a href="" data="inProcess">В Процессе</a>,&nbsp; 
-                <span class="completed badge badge-warning"><?php echo $result['data']['arrAllFutureCount']['done']; ?></span>
+                <a href="" data="inProcess">В Процессе</a>
+                <span class="inProcess badge badge-warning"><?php echo $result['data']['arrAllFutureCount']['all'] - $result['data']['arrAllFutureCount']['done']; ?></span>,
                 &nbsp;
                 <a href="" data="completed">Выполненные</a>
+                <span class="completed badge badge-success"><?php echo $result['data']['arrAllFutureCount']['done']; ?></span>
             </div>
             <div class="clear"></div>
             <ul class="sortable connectedSortable ui-helper-reset" date="planned">
@@ -168,22 +166,20 @@
                         <h3 class="label label-info margin-bottom10"><?php echo $k; ?><img class="print" src="./img/print.png"/></h3>
                         <div class="well form-inline noPrint">
                             <div class="input-append">
-                                <input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>
-                                <span class="add-on">?</span>
+                                <input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/><span class="add-on">?</span>
                             </div>
                             <button class="btn createTaskButton"> Добавить </button>
                         </div>
                         <div class="filter">
-                            <span>Фильтр: </span> 
-                            <span class="all badge badge-success"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all']; ?></span>
+                            <span>Фильтр:&nbsp; </span> 
+                            <a href="" class="active" data="all">Все</a>
+                            <span class="all badge badge-info"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all']; ?></span>,
                             &nbsp;
-                            <a href="" class="active" data="all">Все</a>,&nbsp;
-                            <span class="inProcess badge badge-info"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all'] - $result['data']['arrTaskOnDaysCount'][$k]['done']; ?></span>
-                            &nbsp;
-                            <a href="" data="inProcess">В Процессе</a>,&nbsp; 
-                            <span class="completed badge badge-warning"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['done']; ?></span>
+                            <a href="" data="inProcess">В Процессе</a>
+                            <span class="inProcess badge badge-warning"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all'] - $result['data']['arrTaskOnDaysCount'][$k]['done']; ?></span>,
                             &nbsp;
                             <a href="" data="completed">Выполненные</a>
+                            <span class="completed badge badge-success"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['done']; ?></span>
                             
                         </div>
                         <div class="days">
@@ -220,7 +216,7 @@
 <div id="editTask" class="modal hide fade in" style="display: none;">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
-        <h3>Редактирование задачи.</h3>
+        <h3>Редактирование задачи</h3>
     </div>
     <div class="modal-body">
         <div class="row">
@@ -279,7 +275,7 @@
 <div id="commentDay" class="modal hide fade in" style="display: none;">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
-        <h3>Комментарий.</h3>
+        <h3>Комментарий</h3>
     </div>
     <div class="modal-body">
       <form class="form-horizontal">

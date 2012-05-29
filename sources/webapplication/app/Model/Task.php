@@ -407,12 +407,20 @@ class Task extends AppModel {
                                             ));
         foreach ( $listTaskWithTime as $task ) {
             if ($this->data[$this->alias]['time'] > $task[$this->alias]['time']) {
-                $newOrderID = $task[$this->alias]['order'];
+                $newOrderID = $task[$this->alias]['order'] + 1;
             }
         }
-        if($this->_isDraggedOnDay() or !$newOrderID){
+        if(!empty($listTaskWithTime) and !$newOrderID){
+            $newOrderID = $listTaskWithTime[0][$this->alias]['order'] - 1;
+        }
+        if(!$newOrderID){
             ++$newOrderID;
         }
+        $lastOrder = $this->getLastOrderByUser_idAndDate($user_id, $date);
+        if($newOrderID > $lastOrder){
+            $newOrderID = $lastOrder;
+        }
+        
         return $newOrderID;
         }
         return false;

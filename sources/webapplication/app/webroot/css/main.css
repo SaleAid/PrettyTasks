@@ -34,22 +34,15 @@ body {
 
 
 /* Tweak navbar brand link to be super sleek
--------------------------------------------------- */
-.navbar-fixed-top  {
-  padding-right: 0;
-  padding-left: 0;
+-------------------------------------------------- 
+@navbarBackground #0094C0
+@navbarBackgroundHighlight #007CA1
+@navbarLinkColor @white
+@navbarLinkBackgroundHover rgba(0, 55, 72, 0.15)
+@navbarLinkBackgroundActive rgba(0, 55, 72, 0.15)
+*/
 
-  float: right;
-  font-weight: bold;
-  color: #000;
-  text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.125);
-  -webkit-transition: all .2s linear;
-     -moz-transition: all .2s linear;
-          transition: all .2s linear;
-}
-.navbar-fixed-top .brand:hover {
-  text-decoration: none;
-}
+
 
 #wrapper-content{
     padding: 50px 5px 110px 5px ;
