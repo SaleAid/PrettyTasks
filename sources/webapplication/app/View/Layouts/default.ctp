@@ -55,27 +55,13 @@
    
    
 
-   <?php echo $this->Html->script('jquery-1.7.1.min.js'); ?>
-    
-    <?php echo $this->Html->script('jquery.jeditable.mini.js'); ?>
+    <?php echo $this->Html->script('jquery-1.7.1.min.js'); ?>
     
     <?php echo $this->Html->script('jquery-ui-1.8.18.custom.min.js'); ?>
         
     <?php echo $this->Html->script('bootstrap.min.js'); ?>
     
-    <?php echo $this->Html->script('jquery.jgrowl.min.js'); ?>
-    
-    <?php echo $this->Html->script('jquery.inline-confirmation.js'); ?>
-    
-    <?php echo $this->Html->script('jquery.timepicker-1.2.2.js'); ?>
-    
-    <?php echo $this->Html->script('jquery.ba-hashchange.min.js'); ?>
-    
-    <?php echo $this->Html->script('jquery.ui.touch-punch.min.js'); ?>
-    
     <?php echo $this->Html->script('main.js'); ?>
-    
-    <?php echo $this->Html->script('tasks.js'); ?>
     
     <?php echo $this->fetch('toFooter'); ?> 
 

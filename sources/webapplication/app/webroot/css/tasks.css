@@ -10,7 +10,9 @@
 }
 .clear{clear: both;}
 .sortable { list-style-type: none; margin: 0; padding: 0;  }
-
+.label-info{
+    padding: 6px 0;
+}
 
 .sortable li {
     width: 770px;
@@ -36,7 +38,7 @@ div.well{
     background-color: inherit;
     border: none;
     box-shadow: none;
-    margin-bottom: 0;
+    margin-bottom: 6px;
 }
 .createTask + .add-on:hover{
     cursor: help;
@@ -46,7 +48,7 @@ div.well{
 }
 .filter{
     float: left;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 .filter a {
     text-decoration: underline;
@@ -73,7 +75,7 @@ div.well{
 
 .print{
     float: right;
-    margin: 4px 5px 0 0 ;
+    margin: 0 7px 4px 0 ;
 }
 .print:hover, .help:hover{
     cursor: pointer;
@@ -201,7 +203,7 @@ div.jGrowl.custom {
 }
 #completed li{
     color: black;
-    width: 780px;
+    width: 770px;
     background: none;
     height: 26px;
     margin: -1px 5px 0px 5px;

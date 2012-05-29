@@ -582,7 +582,7 @@ class Task extends AppModel {
         foreach($result as $item){
             $data[$item['Task']['date']][] = $item;
         }
-
+   
         return $data;
         
     }

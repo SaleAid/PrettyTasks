@@ -159,7 +159,17 @@ function responseHandler(data){
     }
 
 }
-
+function srcCountTasks(date){
+    if(date == ''){
+        date ='planned';
+    }
+    var listTask = $("ul[date='"+date+"']");
+    var all = listTask.children('li').length;
+    var done = listTask.children('li.complete').length;
+    listTask.siblings('.filter').find('span.all').text(all);
+    listTask.siblings('.filter').find('span.inProcess').text(all - done);
+    listTask.siblings('.filter').find('span.completed').text(done);
+}
 //---------------setCommnetDay-----
 function taskSetCommentDay(date, comment){
     srvSetCommentDay(date, comment);    
@@ -273,9 +283,21 @@ function scrAddDay(date){
                                 '<button class="btn createTaskButton"> Добавить </button> '+
                             '</div> '+
                             '<div class="filter"> '+
-                                '<span>Фильтр: </span> '+ 
+                                '<span>Фильтр: </span> '+
+                                '<span class="all badge badge-success"> '+
+                                    '0'+
+                                '</span> '+
+                                '&nbsp; '+
                                 '<a href="" class="active" data="all">Все</a>,&nbsp; '+ 
+                                '<span class="inProcess badge badge-info"> '+
+                                    '0'+
+                                '</span> '+
+                                '&nbsp; '+
                                 '<a href="" data="inProcess">В Процессе</a>,&nbsp; '+ 
+                                '<span class="completed badge badge-warning"> '+
+                                    '0'+
+                                '</span> '+
+                                '&nbsp; '+
                                 '<a href="" data="completed">Выполненные</a> '+
                             '</div> '+
                             '<div class="days"> '+
@@ -328,6 +350,9 @@ function srvAddDay(date){
 function onAddDay(data){
     var list = $("ul[date='"+data.data.date+"']");
     list.children('.loadContent').remove();
+    list.siblings('.filter').find('span.all').text(data.data.listCount.all);
+    list.siblings('.filter').find('span.inProcess').text(data.data.listCount.all - data.data.listCount.done);
+    list.siblings('.filter').find('span.completed').text(data.data.listCount.done);
     if(!$.isEmptyObject(data.data.day) && +data.data.day[data.data.date][0].Day.rating){
         $(".ratingDay input[date='"+data.data.date+"']").attr('checked','checked');
     }
@@ -413,6 +438,7 @@ function scrEdit(id, title, done, date, time, timeEnd, comment){
 
 function scrDragWithTime(id, date, time){
         var task = $("li[id='"+id+"'].currentTask");
+        var currentTaskDate = task.attr('date');
         var taskRemote =  $("li[id='"+id+"']:not(.currentTask)");
         taskRemote.remove();
         task.removeClass('currentTask');
@@ -437,7 +463,6 @@ function scrDragWithTime(id, date, time){
                     return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
                 })
                 $.each(listitems, function(idx, itm) { 
-                    console.log(itm);
                     if(time > $(itm).find('.time').text()){
                         newPositionID = $(itm).attr('id');
                     }
@@ -449,11 +474,11 @@ function scrDragWithTime(id, date, time){
                 }else if(!+newPositionID){
                     if(change){
                         if(list.children().length){
-                            if(task.attr('date') != date || time){
+                            //if(task.attr('date') != date || time){
                                 $(this).prependTo(list).show('slow');
-                            }else{
-                                $(this).show('slow');
-                            }        
+                            //}else{
+                           //     $(this).show('slow');
+                           // }        
                         }else{
                             $(this).appendTo(list).show('slow');
                         }
@@ -469,8 +494,12 @@ function scrDragWithTime(id, date, time){
                 $(this).attr('date', date);
                 $(this).css({'opacity':'1'});
                 $(this).children('.editTask').removeClass('hide');
-            });
-        }
+                if(currentTaskDate != date){
+                    srcCountTasks(currentTaskDate);
+                    srcCountTasks(date);
+                }
+        });
+    }
 }
 
 
@@ -501,7 +530,7 @@ function srvDragOnDay(id, date, time){
     if(date == 'planned'){
         date = '';
     }
-    superAjax('/tasks/dragOnDay.json',{id: id,date: date, time:time});
+    superAjax('/tasks/dragOnDay.json',{id: id,date: date, time: time});
 }
 function scrDragOnDay(id, date, time){
     scrDragWithTime(id, date, time);
@@ -513,13 +542,16 @@ function taskDelete(id){
     srvDelete(id);
 }
 function onDelete(data){
+
     mesg(data.message);
 }
 function srvDelete(id){
     superAjax('/tasks/deleteTask.json',{id: id});
 }
 function scrDelete(id){
-    $("li[id='"+id+"']").remove();;
+    var date = $("li[id='"+id+"']").attr('date');
+    $("li[id='"+id+"']").remove();
+    srcCountTasks(date);
 }
 
 //----------------setDone-------
@@ -537,16 +569,16 @@ function srvSetDone(id, done){
 function scrSetDone(id, done){
     var titleEl = $("li[id='"+id+"']").find('.editable');
     var doneEl = $("li[id='"+id+"']").find('.done');
+    var date = $("li[id='"+id+"']").attr('date');
     if(+done){
-        //titleEl.addClass('complete');
         doneEl.attr('checked', 'checked');
-         $("li[id='"+id+"']").addClass('complete')
+        $("li[id='"+id+"']").addClass('complete')
     }else{
-        //titleEl.removeClass('complete');
         $("li[id='"+id+"']").removeClass('complete');
         doneEl.removeAttr('checked');
     }
     $("li[id='"+id+"']").parent().siblings('.filter').children('a.active').trigger('click');
+    srcCountTasks(date);
 }
 
 //----------------setTitle------
@@ -576,7 +608,7 @@ function taskCreate(title, date){
 }
 function onCreate(data){
     if(data.success){
-        scrCreate(data);   
+        scrCreate(data);
     }
     mesg(data.message);
 }
@@ -594,7 +626,8 @@ function scrCreate(data){
     initEditAble("li[id='"+data.data.Task.id+"'] .editable");
     initDone("li[id='"+data.data.Task.id+"'] .done");
     initEditTask("li[id='"+data.data.Task.id+"'] .editTask");
-    $("li[id='"+data.data.Task.id+"']").parent().siblings('.filter').children('a.active').trigger('click');    	
+    $("li[id='"+data.data.Task.id+"']").parent().siblings('.filter').children('a.active').trigger('click');   
+    srcCountTasks(date); 	
 }
 function AddTask(data){
     var important ='';
@@ -719,6 +752,8 @@ function initCreateTask(element){
         var code = (e.keyCode ? e.keyCode : e.which);
         if(code == 13) {
             var title = $(this).val();
+            var time = title.match( /^([01]\d|2[0-3]):?([0-5]\d)/ );
+            console.log(time);
             var date = $(this).parent().parent().siblings("ul").attr('date');
             if(date == 'planned'){
                 date = '';
@@ -960,3 +995,9 @@ $(function(){
 
                    
 }); 	
+
+//window.onbeforeunload = function() {
+//    if(+countAJAX){
+//        return 'alert';    
+//    }
+//}; 

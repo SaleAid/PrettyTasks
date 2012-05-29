@@ -6,7 +6,7 @@
       <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
         <ul class="nav nav-tabs noPrint">
             <li class="addDay">
-            <div class="btn-group dropup">
+            <div class="btn-group dropdown">
                 <button  id="addDay" rel="tooltip" title="Добавить новый день в список" class="btn btn-large">Добавить день</button>
                 <button class="btn btn-large dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
@@ -76,8 +76,14 @@
             </div>
             <div class="filter">
                 <span>Фильтр: </span> 
-                <a href="" class="active" data="all">Все</a>,&nbsp; 
+                <span class="all badge badge-success"><?php echo $result['data']['arrAllFutureCount']['all']; ?></span>
+                &nbsp;
+                <a href="" class="active" data="all">Все</a>,&nbsp;
+                <span class="inProcess badge badge-info"><?php echo $result['data']['arrAllFutureCount']['all'] - $result['data']['arrAllFutureCount']['done']; ?></span> 
+                &nbsp;
                 <a href="" data="inProcess">В Процессе</a>,&nbsp; 
+                <span class="completed badge badge-warning"><?php echo $result['data']['arrAllFutureCount']['done']; ?></span>
+                &nbsp;
                 <a href="" data="completed">Выполненные</a>
             </div>
             <div class="clear"></div>
@@ -169,9 +175,16 @@
                         </div>
                         <div class="filter">
                             <span>Фильтр: </span> 
-                            <a href="" class="active" data="all">Все</a>,&nbsp; 
+                            <span class="all badge badge-success"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all']; ?></span>
+                            &nbsp;
+                            <a href="" class="active" data="all">Все</a>,&nbsp;
+                            <span class="inProcess badge badge-info"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all'] - $result['data']['arrTaskOnDaysCount'][$k]['done']; ?></span>
+                            &nbsp;
                             <a href="" data="inProcess">В Процессе</a>,&nbsp; 
+                            <span class="completed badge badge-warning"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['done']; ?></span>
+                            &nbsp;
                             <a href="" data="completed">Выполненные</a>
+                            
                         </div>
                         <div class="days">
                             <a href="" data="commentDay">Комментарий</a>
@@ -282,5 +295,25 @@
 </div>
 <!-- End modal --!>
 
+<?php
+$this->start ( 'toFooter' );
+?>
 
+<?php echo $this->Html->script('jquery.ui.touch-punch.min.js'); ?>
+
+<?php echo $this->Html->script('jquery.jgrowl.min.js'); ?>
+
+<?php echo $this->Html->script('jquery.jeditable.mini.js'); ?>
+
+<?php echo $this->Html->script('jquery.ba-hashchange.min.js'); ?>
+
+<?php echo $this->Html->script('jquery.timepicker-1.2.2.js'); ?>
+
+<?php echo $this->Html->script('jquery.inline-confirmation.js'); ?>
+
+<?php echo $this->Html->script('tasks.js'); ?>
+
+<?php
+$this->end ();
+?>
 
