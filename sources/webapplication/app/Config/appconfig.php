@@ -24,3 +24,5 @@
    Configure::write('Email.user.passwordResend.subject', __('Сбросить пароль на сервисе %s', Configure::read('Site.name')));
 
    
+
+   

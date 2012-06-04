@@ -37,11 +37,11 @@
 <?php echo $this->element('main_menu'); ?> 
     <div id="wrapper-content">
     <div id="wrapper">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row-fluid">
         <?php echo $this->element('user_menu'); ?> 
         
-        <div class="span8 offset2">
+        <div class="span9 ">
             <?php echo $this->Session->flash('auth'); ?>
 
             <?php echo $this->Session->flash(); ?>

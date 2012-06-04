@@ -16,7 +16,7 @@
       <div class="nav-collapse" >
         <ul class="nav">
           <?php if ($currentUser): ?>
-          <li class="<? if($this->params['action'] == "index" and $this->params['controller'] == "Tasks") echo 'active'; ?>">
+          <li class="<? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">
                 <?php echo $this->Html->link(
                                 'Tasks',
                                 array('controller' => 'Tasks', 'action' => 'index')

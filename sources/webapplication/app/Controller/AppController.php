@@ -3,6 +3,7 @@ App::uses('Controller', 'Controller');
 
 class AppController extends Controller {
     public $helpers = array(
+        'Combinator.Combinator',
         'Form', 
         'Html', 
         'Js',
@@ -136,18 +137,22 @@ class AppController extends Controller {
         );
     }
     
-    protected function _isSetRequestData($data) {
-        if (!$this->request->is('post')) {
+    protected function _isSetRequestData($data, $model = null) {
+         if (!($this->request->is('post') || $this->request->is('put'))) {
             return false;
+        }
+        $request = $this->request->data;
+        if($model){
+            $request = $this->request->data[$model];
         }
         if (is_array($data)) {
             foreach ( $data as $value ) {
-                if (! isset($this->request->data[$value])) {
+                if (! isset($request[$value])) {
                     return false;
                 }
             }
         } else {
-            return isset($this->request->data[$data]);
+            return isset($request[$data]);
         }
         return true;
     }

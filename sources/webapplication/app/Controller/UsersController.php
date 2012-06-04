@@ -32,9 +32,7 @@ class UsersController extends AppController {
 
     public function login() {
         $this->layout = 'default';
-        //if (!empty($this->request->data)) {
         if ($this->User->validates()) {
-            //if($this->request->is('post')){
             if ($this->Auth->login()) {
                 if ($this->Auth->user('active')) {
                     if (! $this->Auth->user('is_blocked')) {
@@ -58,7 +56,6 @@ class UsersController extends AppController {
                 }
             }
         }
-         //}
     }
 
     public function logout() {
@@ -73,27 +70,49 @@ class UsersController extends AppController {
     public function register() {
         $this->layout = 'default';
         if ($this->request->is('post')) {
-            if ($this->User->register($this->request->data)) {
-                if ($this->User->sendActivationAccount($this->User->getLastInsertID(), $this->name)) {
-                    $this->Session->setFlash(__('Код активации аккаунта был выслан Вам на почту.'), 'alert', array(
+            $expectedData = array(
+                'first_name',
+                'last_name',
+                'email',
+                'username',
+                'password', 
+                'password_confirm'
+            );
+            if (!$this->_isSetRequestData($expectedData, $this->modelClass)) {
+                $this->Session->setFlash(__('Ошибка при передачи данных'), 'alert', array(
+                        'class' => 'alert-error'
+                    ));
+            } else {
+                    $saveData = array(
+                        'first_name'        => $this->request->data[$this->modelClass]['first_name'],
+                        'last_name'         => $this->request->data[$this->modelClass]['last_name'],
+                        'email'             => $this->request->data[$this->modelClass]['email'],
+                        'username'          => $this->request->data[$this->modelClass]['username'],
+                        'password'          => $this->request->data[$this->modelClass]['password'], 
+                        'password_confirm'  => $this->request->data[$this->modelClass]['password_confirm']                          
+                    );
+                if ($this->User->register($saveData)) {
+                    if ($this->User->sendActivationAccount($this->User->getLastInsertID(), $this->name)) {
+                        $this->Session->setFlash(__('Код активации аккаунта был выслан Вам на почту.'), 'alert', array(
+                            'class' => 'alert-success'
+                        ));
+                        $this->redirect(array(
+                            'action' => 'login'
+                        ));
+                    }
+                    $this->Session->setFlash(__('Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта.'), 'alert', array(
                         'class' => 'alert-success'
                     ));
                     $this->redirect(array(
                         'action' => 'login'
                     ));
+                } else {
+                    unset($this->request->data[$this->modelClass]['password']);
+                    unset($this->request->data[$this->modelClass]['password_confirm']);
+                    return $this->Session->setFlash(__('Пользователь не может быть сохранен. Пожалуйста, попробуйте еще раз.'), 'alert', array(
+                        'class' => 'alert-error'
+                    ));
                 }
-                $this->Session->setFlash(__('Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта.'), 'alert', array(
-                    'class' => 'alert-success'
-                ));
-                $this->redirect(array(
-                    'action' => 'login'
-                ));
-            } else {
-                unset($this->request->data[$this->modelClass]['password']);
-                unset($this->request->data[$this->modelClass]['password_confirm']);
-                return $this->Session->setFlash(__('Пользователь не может быть сохранен. Пожалуйста, попробуйте еще раз.'), 'alert', array(
-                    'class' => 'alert-error'
-                ));
             }
         }
     }
@@ -116,8 +135,12 @@ class UsersController extends AppController {
     }
 
     public function reactivate() {
-        if (isset($this->request->data['email'])) {
-            if ($this->User->reactivate($this->request->data, $this->name)) {
+        if (!$this->_isSetRequestData('email')) {
+            $this->Session->setFlash(__('Ошибка при передачи данных'), 'alert', array(
+                    'class' => 'alert-error'
+                ));
+        } else {
+            if ($this->User->reactivate($this->request->data['email'], $this->name)) {
                 $this->Session->setFlash(__('Код активации аккаунта был выслан Вам на почту.'), 'alert', array(
                     'class' => 'alert-success'
                 ));
@@ -133,18 +156,30 @@ class UsersController extends AppController {
 
     public function password_change() {
         if ($this->request->is('post') || $this->request->is('put')) {
-            $this->request->data[$this->modelClass]['id'] = $this->Auth->user('id');
-            if ($this->User->password_change($this->request->data)) {
-                return $this->Session->setFlash(__('Ваш пароль успешно изменен.'), 'alert', array(
-                    'class' => 'alert-success'
+            $expectedData = array(
+                'password', 
+                'password_confirm',
+                'old_password'
+            );
+            if (!$this->_isSetRequestData($expectedData, $this->modelClass)) {
+                $this->Session->setFlash(__('Ошибка при передачи данных'), 'alert', array(
+                        'class' => 'alert-error'
+                    ));
+            } else {
+                if ($this->User->password_change($this->Auth->user('id'), $this->request->data[$this->modelClass]['password'],
+                                                                          $this->request->data[$this->modelClass]['password_confirm'], 
+                                                                          $this->request->data[$this->modelClass]['old_password'])) {
+                    return $this->Session->setFlash(__('Ваш пароль успешно изменен.'), 'alert', array(
+                        'class' => 'alert-success'
+                    ));
+                }
+                unset($this->request->data[$this->modelClass]['password']);
+                unset($this->request->data[$this->modelClass]['password_confirm']);
+                unset($this->request->data[$this->modelClass]['old_password']);
+                return $this->Session->setFlash(__('Ваш пароль не может быть сохранен. Пожалуйста, попробуйте еще раз.'), 'alert', array(
+                    'class' => 'alert-error'
                 ));
             }
-            unset($this->request->data[$this->modelClass]['password']);
-            unset($this->request->data[$this->modelClass]['password_confirm']);
-            unset($this->request->data[$this->modelClass]['old_password']);
-            return $this->Session->setFlash(__('Ваш пароль не может быть сохранен. Пожалуйста, попробуйте еще раз.'), 'alert', array(
-                'class' => 'alert-error'
-            ));
         }
     }
 
@@ -153,20 +188,29 @@ class UsersController extends AppController {
         if ($password_token) {
             if ($id = $this->User->checkPasswordToken($password_token)) {
                 if ($this->request->is('post') || $this->request->is('put')) {
-                    $this->request->data[$this->modelClass]['id'] = $id;
-                    if ($this->User->password_change($this->request->data)) {
-                        $this->Session->setFlash(__('Ваш пароль успешно изменен.'), 'alert', array(
-                            'class' => 'alert-success'
-                        ));
-                        $this->redirect(array(
-                            'action' => 'login'
+                    $expectedData = array(
+                        'password', 
+                        'password_confirm'
+                    );
+                    if (!$this->_isSetRequestData($expectedData, $this->modelClass)) {
+                        $this->Session->setFlash(__('Ошибка при передачи данных'), 'alert', array(
+                                'class' => 'alert-error'
+                            ));
+                    } else {
+                        if ($this->User->password_change($id, $this->request->data[$this->modelClass]['password'], $this->request->data[$this->modelClass]['password_confirm'])) {
+                            $this->Session->setFlash(__('Ваш пароль успешно изменен.'), 'alert', array(
+                                'class' => 'alert-success'
+                            ));
+                            $this->redirect(array(
+                                'action' => 'login'
+                            ));
+                        }
+                        unset($this->request->data[$this->modelClass]['password']);
+                        unset($this->request->data[$this->modelClass]['password_confirm']);
+                        return $this->Session->setFlash(__('Ваш пароль не может быть сохранен. Пожалуйста, попробуйте еще раз.'), 'alert', array(
+                            'class' => 'alert-error'
                         ));
                     }
-                    unset($this->request->data[$this->modelClass]['password']);
-                    unset($this->request->data[$this->modelClass]['password_confirm']);
-                    return $this->Session->setFlash(__('Ваш пароль не может быть сохранен. Пожалуйста, попробуйте еще раз.'), 'alert', array(
-                        'class' => 'alert-error'
-                    ));
                 }
                 return false;
             }
@@ -187,24 +231,30 @@ class UsersController extends AppController {
         }
         $this->layout = 'default';
         if ($this->request->is('post') || $this->request->is('put')) {
-            if (! $this->User->validateEmail($this->request->data)) {
-                return $this->Session->setFlash(__('Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз.'), 'alert', array(
+            if (!$this->_isSetRequestData('email', $this->modelClass)) {
+                $this->Session->setFlash(__('Ошибка при передачи данных'), 'alert', array(
+                        'class' => 'alert-error'
+                    ));
+            } else {
+                if (! $this->User->validateEmail($this->request->data[$this->modelClass]['email'])) {
+                    return $this->Session->setFlash(__('Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз.'), 'alert', array(
+                        'class' => 'alert-error'
+                    ));
+                }
+                if ($id = $this->User->checkEmail($this->request->data[$this->modelClass]['email'])) {
+                    if ($this->User->password_resend($id)) {
+                        $this->Session->setFlash(__('На Вашу почту была отправлена инструкция по сбросу пароля.'), 'alert', array(
+                            'class' => 'info-success'
+                        ));
+                        $this->redirect(array(
+                            'action' => 'login'
+                        ));
+                    }
+                }
+                return $this->Session->setFlash(__('В нашей базе нет пользователя с такой почтой.'), 'alert', array(
                     'class' => 'alert-error'
                 ));
             }
-            if ($id = $this->User->checkEmail($this->request->data)) {
-                if ($this->User->password_resend($id)) {
-                    $this->Session->setFlash(__('На Вашу почту была отправлена инструкция по сбросу пароля.'), 'alert', array(
-                        'class' => 'info-success'
-                    ));
-                    $this->redirect(array(
-                        'action' => 'login'
-                    ));
-                }
-            }
-            return $this->Session->setFlash(__('В нашей базе нет пользователя с такой почтой.'), 'alert', array(
-                'class' => 'alert-error'
-            ));
         }
     }
 
@@ -217,21 +267,31 @@ class UsersController extends AppController {
     public function profile() {
         $this->User->id = $this->Auth->user('id');
         if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->User->save($this->request->data)) {//TODO: May save only needed fields?
-                $this->Session->write('Auth.User', array_merge($this->Auth->user(), $this->request->data['User']));//TODO: NONONO. This is WRONG!!! If you get from request user['admin']=true?
-                //This is case, when REALY necessary to read data from DB!
-                //And Is this correct to write directly to session? Please check these issues. 
-                $this->Session->setFlash(__('The user profile has been saved'), 'alert', array(
-                    'class' => 'alert-success'
-                ));
+            $expectedData = array(
+                'first_name', 
+                'last_name',
+                'timezone' 
+            );
+            if (!$this->_isSetRequestData($expectedData, $this->modelClass)) {
+                $this->Session->setFlash(__('Ошибка при передачи данных'), 'alert', array(
+                        'class' => 'alert-error'
+                    ));
             } else {
-                $this->Session->setFlash(__('The user profile could not be saved. Please, try again.'), 'alert', array(
-                    'class' => 'alert-error'
-                ));
+                $data[$this->modelClass]['first_name'] = $this->request->data[$this->modelClass]['first_name'];
+                $data[$this->modelClass]['last_name'] = $this->request->data[$this->modelClass]['last_name'];
+                $data[$this->modelClass]['timezone'] = $this->request->data[$this->modelClass]['timezone'];
+                if ($this->User->save($data)) {
+                   $this->_refreshAuth();
+                   $this->Session->setFlash(__('The user profile has been saved'), 'alert', array(
+                        'class' => 'alert-success'
+                   ));
+                } else {
+                    $this->Session->setFlash(__('The user profile could not be saved. Please, try again.'), 'alert', array(
+                        'class' => 'alert-error'
+                    ));
+                }
             }
         } else {
-            //debug(DateTimeZone::listAbbreviations());
-            $this->set('list', DateTimeZone::listAbbreviations());
             $this->request->data = $this->User->read();
         }
         //TODO: Rewrite it
@@ -262,7 +322,6 @@ class UsersController extends AppController {
     }
 
     public function accounts() {
-        //debug($this->Auth->User());
         $this->paginate = array(
             'conditions' => array(
                 'User.id' => $this->Auth->user('id'), 
@@ -271,6 +330,17 @@ class UsersController extends AppController {
         );
         $accounts = $this->paginate('Account');
         $this->set('accounts', $accounts);
+    }
+    
+    protected function _refreshAuth(){
+         $this->User->contain();
+         $user = $this->User->read(false, $this->Auth->user('id'));
+         $result = $user[$this->modelClass];
+         if($this->Auth->user('provider')){
+            $provider = $this->Auth->user('provider');   
+            $result['provider'] = $provider;
+         }
+         $this->Auth->login($result);
     }
 }
 

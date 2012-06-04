@@ -1,5 +1,9 @@
 <?php $this->start ( 'toHead' );?>
-<?php echo $this->Html->css('tasks');?>
+<?php //echo $this->Html->css('tasks');?>
+<?php
+    $this->Combinator->add_libs('css', array('tasks'));
+    echo $this->Combinator->scripts('css');
+?>
 <?php $this->end ();?>
 
 
@@ -14,7 +18,7 @@
                 <ul class="dropdown-menu">
                     <li ><a href="#completed" data-toggle="tab" date="completed">Завершенные</a></li>
                     <li ><a href="#expired" data-toggle="tab" date="expired" class="tab2">Просроченные</a></li>
-                    
+                    <li ><a href="#expired" data-toggle="tab" date="expired" class="tab2">Будущие</a></li>
                 </ul>
             </div>   
            </li>
@@ -305,10 +309,12 @@ $this->start ( 'toFooter' );
 
 <?php echo $this->Html->script('jquery.timepicker-1.2.2.js'); ?>
 
-<?php echo $this->Html->script('jquery.inline-confirmation.js'); ?>
+<?php echo $this->Html->script(array('jquery.inline-confirmation')); ?>
 
-<?php echo $this->Html->script('tasks.js'); ?>
-
+<?php
+    $this->Combinator->add_libs('js', array('tasks'));
+    echo $this->Combinator->scripts('js');
+?>
 <?php
 $this->end ();
 ?>

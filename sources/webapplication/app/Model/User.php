@@ -133,11 +133,17 @@ class User extends AppModel {
         return false;
     }
 
-    public function password_change($data) {
-        $this->set($data);
+    public function password_change($id, $password, $password_confirm, $old_password = null) {
+        $this->set(array(
+                'id'                => $id,
+                'password'          => $password,
+                'password_confirm'  => $password_confirm
+        ));
+        if($old_password){
+            $this->set('old_password', $old_password);
+        }
         if ($this->validates()) {
-            $data[$this->alias]['password'] = AuthComponent::password($data[$this->alias]['password']);
-            $this->saveField('password', $data[$this->alias]['password']);
+            $this->saveField('password', AuthComponent::password($password));
             $this->saveField('password_token', null);
             return true;
         }
@@ -187,7 +193,7 @@ class User extends AppModel {
                 'email'
             )
         ))) {
-            $user = $this->findByEmail($data[$this->alias]['email']);
+            $user = $this->findByEmail($data);
             if ($user) {
                 return $user[$this->alias]['id'];
             }
@@ -203,10 +209,10 @@ class User extends AppModel {
         );
         $this->set($data);
         if ($this->validates()) {
-            $data[$this->alias]['password'] = AuthComponent::password($data[$this->alias]['password']);
-            $data[$this->alias]['activate_token'] = $this->generateToken();
-            $data[$this->alias]['invite_token'] = $this->generateToken();
-            if ($this->save($data[$this->alias], false)) {
+            $data['password'] = AuthComponent::password($data['password']);
+            $data['activate_token'] = $this->generateToken();
+            $data['invite_token'] = $this->generateToken();
+            if ($this->save($data, false)) {
                 return true;
             }
         }
@@ -214,14 +220,13 @@ class User extends AppModel {
     }
 
     public function reactivate($data, $controllerName) {
-        $data[$this->alias]['email'] = $data['email'];
-        $this->set($data);
+        $this->set('email', $data);
         if ($this->validates(array(
             'fieldList' => array(
                 'email'
             )
         ))) {
-            $user = $this->findByEmailAndActive($data['email'], 0);
+            $user = $this->findByEmailAndActive($data, 0);
             if ($user) {
                 $this->set($user);
                 $this->saveField('activate_token', $this->generateToken());
@@ -249,31 +254,6 @@ class User extends AppModel {
         return $email->send();
     }
 
-    //    public function sendActivationAccount($id){
-    //        $this->id = $id;
-    //        if (!$this->exists()) {
-    //	        return false;
-    //        }
-    //        $this->read();
-    //        $email = new CakeEmail('activate_account');
-    //        $email->viewVars(array( 
-    //                                'activate_token' => $this->data[$this->alias]['activate_token'], 
-    //                                'fullname' => $this->data[$this->alias]['first_name'].' '.$this->data[$this->alias]['last_name']))
-    //              ->to($this->data[$this->alias]['email'])
-    //                ;
-    //        return $email->send();
-    //    }
-    //    
-    //    public function activate($token){
-    //        if($user = $this->findByActivate_token($token)){
-    //    	        $this->id = $user[$this->alias]['id'];
-    //        	    $this->saveField('active', 1);
-    //                $this->saveField('activate_token', null);
-    //                return true;
-    //    	}
-    //        return false;
-    //    }
-    //
     public function generateToken() {
         return Security::hash(mt_rand() . Configure::read('Security.salt') . time() . mt_rand());
     }

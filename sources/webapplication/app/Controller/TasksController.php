@@ -16,19 +16,14 @@ class TasksController extends AppController {
         $result['success'] = true;
         $result['data']['arrAllFuture'] = $this->Task->getAllFuture($this->Auth->user('id'));
         $result['data']['arrAllFutureCount']['all'] = count($result['data']['arrAllFuture']);
-        $result['data']['arrAllFutureCount']['done'] = count(array_filter($result['data']['arrAllFuture'], function($val) {
-                                                                    return $val['Task']['done'] == 1;
-                                                            })
-                                                       );
+        $result['data']['arrAllFutureCount']['done'] = count(array_filter($result['data']['arrAllFuture'], create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;')));
         $result['data']['arrAllExpired'] = $this->Task->getAllExpired($this->Auth->user('id'));
         $from = CakeTime::format('Y-m-d', time());
         $to = CakeTime::format('Y-m-d', '+7 days');
         $dayConfig = $this->User->getConfig($this->Auth->user('id'), 'day');
         $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to, $dayConfig);
         foreach($result['data']['arrTaskOnDays'] as $key => $value){
-            $done = array_filter($value, function($val) {
-                return $val['Task']['done'] == 1;
-            });
+            $done = array_filter($value, create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;'));
             $data_count[$key]['all'] = count($value);
             $data_count[$key]['done'] = count($done);
         }
@@ -377,9 +372,7 @@ class TasksController extends AppController {
             );
         } else {
             $task = $this->Task->getTasksForDay($this->Auth->user('id'), $this->request->data['date']);
-            $done = array_filter($task, function($val) {
-                return $val['Task']['done'] == 1;
-            });
+            $done = array_filter($task, create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;'));
             $result['data']['listCount']['all'] = count($task);
             $result['data']['listCount']['done'] = count($done);
             $result['success'] = true;

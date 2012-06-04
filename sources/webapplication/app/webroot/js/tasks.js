@@ -434,7 +434,10 @@ function scrEdit(id, title, done, date, time, timeEnd, comment){
  
 }
 
-
+function toSeconds(t) {
+    var bits = t.split(':');
+    return bits[0]*3600 + bits[1]*60;
+}
 function scrDragWithTime(id, date, time){
         var task = $("li[id='"+id+"'].currentTask");
         var currentTaskDate = task.attr('date');
@@ -457,12 +460,12 @@ function scrDragWithTime(id, date, time){
             if(time){
                 var listitems = list.children('li.setTime').get();
                 listitems.sort(function(a, b) {
-                    var compA = $(a).find('.time').text().toUpperCase();
-                    var compB = $(b).find('.time').text().toUpperCase();
+                    var compA = toSeconds($(a).find('.time').text());
+                    var compB = toSeconds($(b).find('.time').text());
                     return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
-                })
+                });
                 $.each(listitems, function(idx, itm) { 
-                    if(time > $(itm).find('.time').text()){
+                    if(toSeconds(time) > toSeconds($(itm).find('.time').text())){
                         newPositionID = $(itm).attr('id');
                     }
                 });
@@ -473,20 +476,11 @@ function scrDragWithTime(id, date, time){
                 }else if(!+newPositionID){
                     if(change){
                         if(list.children().length){
-                            console.log(time);
-                            console.log(currentTaskDate);
-                            console.log(date);
                             if(currentTaskDate == date && !time){
                                 $(this).show('slow');
                             }else{
-                                console.log('ke');
                                 $(this).prependTo(list).show('slow');
                             }
-                            //if(task.attr('date') != date || time){
-                                //$(this).prependTo(list).show('slow');
-                            //}else{
-                           //     $(this).show('slow');
-                           // }        
                         }else{
                             $(this).appendTo(list).show('slow');
                         }
@@ -634,7 +628,12 @@ function scrCreate(data){
     initEditAble("li[id='"+data.data.Task.id+"'] .editable");
     initDone("li[id='"+data.data.Task.id+"'] .done");
     initEditTask("li[id='"+data.data.Task.id+"'] .editTask");
-    $("li[id='"+data.data.Task.id+"']").parent().siblings('.filter').children('a.active').trigger('click');   
+    $("li[id='"+data.data.Task.id+"']").parent().siblings('.filter').children('a.active').trigger('click');
+    if(data.data.Task.time){
+        $("li[id='"+data.data.Task.id+"']").addClass('currentTask');
+        scrDragWithTime(data.data.Task.id, data.data.Task.date, data.data.Task.time);
+        $("li[id='"+data.data.Task.id+"']").find('.time').text(data.data.Task.time.slice(0,-3));
+    }
     srcCountTasks(date); 	
 }
 function AddTask(data){
@@ -652,14 +651,14 @@ function AddTask(data){
         checked = ' checked';
 	}
     if (data.Task.time){
-		setTime = 'setTime ';
+		setTime = '';
         time = '<span class="time">'+data.Task.time.slice(0,-3)+'</span>';
         if(data.Task.timeend){
             timeEnd = '<span class="timeEnd">'+data.Task.timeend.slice(0,-3)+'</span>'; 
         }
     }
     taskHtml = '<li id ="'+data.Task.id+'" class="'+setTime+' '+complete+' '+important+'" date="'+data.Task.date+'"> \n'+ 
-                            time+'\n'+
+                            '<span class="time"></span>\n'+
                             timeEnd+'\n'+
                             '<span><i class="icon-move"></i></span> \n'+
                             '<input type="checkbox" class="done" '+checked+'/> \n' +
@@ -760,8 +759,8 @@ function initCreateTask(element){
         var code = (e.keyCode ? e.keyCode : e.which);
         if(code == 13) {
             var title = $(this).val();
-            var time = title.match( /^([01]\d|2[0-3]):?([0-5]\d)/ );
-            console.log(time);
+            //var time = title.match( /^([01]\d|2[0-3]):?([0-5]\d)/ );
+            //console.log(time);
             var date = $(this).parent().parent().siblings("ul").attr('date');
             if(date == 'planned'){
                 date = '';
