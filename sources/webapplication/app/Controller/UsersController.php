@@ -119,13 +119,12 @@ class UsersController extends AppController {
 
     public function activate($token = null) {
         if ($token) {
-            if ($this->User->activate($token)) {
-                $this->Session->setFlash('Your account has been activated, please log in.', 'alert', array(
+            if ($result = $this->User->activate($token)) {
+                $this->Session->setFlash('Your account has been activated.', 'alert', array(
                     'class' => 'alert-success'
                 ));
-                $this->redirect(array(
-                    'action' => 'login'
-                ));
+                $this->Auth->login($result[$this->modelClass]);
+                $this->redirect($this->Auth->redirect());
             }
         }
         $this->Session->setFlash(__('Invalid key.'));
@@ -226,7 +225,7 @@ class UsersController extends AppController {
                 $this->Session->setFlash(__('На Вашу почту была отправлена инструкция по сбросу пароля.'), 'alert', array(
                     'class' => 'info-success'
                 ));
-                $this->redirect($this->referer());
+                $this->redirect(array('action' => 'password_change'));
             }
         }
         $this->layout = 'default';

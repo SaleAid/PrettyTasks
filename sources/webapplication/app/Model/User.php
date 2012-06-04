@@ -111,10 +111,7 @@ class User extends AppModel {
             )
         )
     );
-    public $virtualFields = array(
-        'full_name' => 'CONCAT(User.first_name, " ", User.last_name)'
-    );
-
+  
     public function matchPasswords($data) {
         if ($data['password'] == $this->data[$this->alias]['password_confirm']) {
             return true;
@@ -219,6 +216,17 @@ class User extends AppModel {
         return false;
     }
 
+//    public function activate($token){
+//        $this->contain();
+//        if($user = $this->findByActivate_token($token)){
+//    	        $data[$this->alias]['id'] = $user[$this->alias]['id'];
+//                $data[$this->alias]['active'] = 1;
+//                $data[$this->alias]['activate_token'] = null;
+//                pr($data);die;
+//                return $this->save($data);
+//    	}
+//        return false;
+//    }
     public function reactivate($data, $controllerName) {
         $this->set('email', $data);
         if ($this->validates(array(

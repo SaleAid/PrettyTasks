@@ -307,12 +307,12 @@ $this->start ( 'toFooter' );
 
 <?php echo $this->Html->script('jquery.ba-hashchange.min.js'); ?>
 
-<?php echo $this->Html->script('jquery.timepicker-1.2.2.js'); ?>
+<?php //echo $this->Html->script('jquery.timepicker-1.2.2.js'); ?>
 
-<?php echo $this->Html->script(array('jquery.inline-confirmation')); ?>
+<?php //echo $this->Html->script(array('jquery.inline-confirmation')); ?>
 
 <?php
-    $this->Combinator->add_libs('js', array('tasks'));
+    $this->Combinator->add_libs('js', array('jquery.timepicker-1.2.2','jquery.inline-confirmation','tasks'));
     echo $this->Combinator->scripts('js');
 ?>
 <?php

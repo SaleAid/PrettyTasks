@@ -112,7 +112,7 @@ class AccountsController extends AppController {
                     'class' => 'alert-error'
                 ));
             }
-            if ($id = $this->Account->User->checkEmail($this->request->data)) {
+            if ($id = $this->Account->User->checkEmail($this->request->data['User']['email'])) {
                 $this->Session->delete('tmpUser');
                 $user['user_id'] = $id;
                 $user['activate_token'] = $this->Account->User->generateToken();
@@ -185,11 +185,14 @@ class AccountsController extends AppController {
 
     public function activate($hash = null) {
         if ($hash) {
-            if ($this->Account->activate($hash)) {
-                $this->Session->setFlash('Your account has been activated, please log in.', 'alert', array(
+            if ($result = $this->Account->activate($hash)) {
+                $user = $result['User'];
+                $user['provider'] = $result[$this->modelClass]['provider'];
+                $this->Auth->login($user);
+                $this->Session->setFlash('Your account has been activated.', 'alert', array(
                     'class' => 'alert-success'
                 ));
-                $this->redirect('/');
+                $this->redirect($this->Auth->redirect());
             }
         }
         $this->Session->setFlash(__('Invalid key.'));
