@@ -10,7 +10,7 @@ class AccountsController extends AppController {
             )
         )
     );
-    
+
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('loginzalogin', 'activate', 'reactivate', 'confirm_email', 'confirm_user_data');
@@ -111,7 +111,8 @@ class AccountsController extends AppController {
                     'class' => 'alert-error'
                 ));
             }
-            if ($id = $this->Account->User->checkEmail($this->request->data['User']['email'])) {
+            $id = $this->Account->User->checkEmail($this->request->data['User']['email']);
+            if ($id) {
                 $this->Session->delete('tmpUser');
                 $user['user_id'] = $id;
                 $user['activate_token'] = $this->Account->User->generateToken();
@@ -150,14 +151,14 @@ class AccountsController extends AppController {
         if ($this->request->is('post') || $this->request->is('put')) {
             $password = $this->Account->User->generateToken();
             $saveData = array(
-                'first_name'        => $this->request->data['User']['first_name'],
-                'last_name'         => $this->request->data['User']['last_name'],
-                'email'             => $this->request->data['User']['email'],
-                'username'          => $this->request->data['User']['username'],
-                'password'          => $password, 
-                'password_confirm'  => $password                          
+                'first_name' => $this->request->data['User']['first_name'], 
+                'last_name' => $this->request->data['User']['last_name'], 
+                'email' => $this->request->data['User']['email'], 
+                'username' => $this->request->data['User']['username'], 
+                'password' => $password, 
+                'password_confirm' => $password
             );
-            if ($this->Account->User->register($saveData)) {    
+            if ($this->Account->User->register($saveData)) {
                 $userTmp['user_id'] = $this->Account->User->getLastInsertID();
                 $userTmp['activate_token'] = $this->Account->User->generateToken();
                 if ($this->Account->save($userTmp)) {
@@ -192,17 +193,22 @@ class AccountsController extends AppController {
 
     public function activate($hash = null) {
         if ($hash) {
-            if ($result = $this->Account->activate($hash)) {
-                $password = substr( str_shuffle( 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$' ) , 0 , 8 );
-                if(!$result['User']['active']){
+            $result = $this->Account->activate($hash);
+            if ($result) {
+                $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$'), 0, 8);
+                if (! $result['User']['active']) {
                     $saveData = array(
-                        'id'                => $result['User']['id'],
-                        'password'          => AuthComponent::password($password),
-                        'password_confirm'  => AuthComponent::password($password),
-                        'active'            => 1,
-                        'activate_token'    => null                      
+                        'id' => $result['User']['id'], 
+                        'password' => AuthComponent::password($password), 
+                        'password_confirm' => AuthComponent::password($password), 
+                        'active' => 1, 
+                        'activate_token' => null
                     );
-                    if($this->Account->User->save($saveData, true, array('active', 'activate_token', 'password'))){
+                    if ($this->Account->User->save($saveData, true, array(
+                        'active', 
+                        'activate_token', 
+                        'password'
+                    ))) {
                         App::uses('CakeEmail', 'Network/Email');
                         $email = new CakeEmail();
                         $email->template('send_password_after_activate_account', 'default');
@@ -210,10 +216,12 @@ class AccountsController extends AppController {
                         $email->from(Configure::read('Email.global.from'));
                         $email->to($result['User']['email']);
                         $email->subject(Configure::read('Email.user.activateAccount.subject'));
-                        $email->viewVars(array( 'username' => $result['User']['username'],
-                                                'password' => $password,
-                                                'full_name' => $result['User']['full_name'] 
-                                                ));
+                        $email->viewVars(
+                                        array(
+                                            'username' => $result['User']['username'], 
+                                            'password' => $password, 
+                                            'full_name' => $result['User']['full_name']
+                                        ));
                         $email->send();
                     }
                 }

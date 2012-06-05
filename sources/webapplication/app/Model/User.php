@@ -12,7 +12,7 @@ class User extends AppModel {
     
     public $actsAs = array(
         'Activation'
-    );
+    );//TODO Maybe rewite model without using Behavior?
     
     public $virtualFields = array(
         'full_name' => 'CONCAT(User.first_name, " ", User.last_name)'
@@ -123,7 +123,7 @@ class User extends AppModel {
         if ($data['password'] == $this->data[$this->alias]['password_confirm']) {
             return true;
         }
-        $this->invalidate('password_confirm', 'You password do not match.');
+        $this->invalidate('password_confirm', 'You password do not match.');//TODO use __(
         return false;
     }
 
@@ -209,7 +209,7 @@ class User extends AppModel {
     public function register($data) {
         $this->validate['email']['isUnique'] = array(
             'rule' => 'isUnique', 
-            'message' => 'This email address is already in use. Please supply a different email address.'
+            'message' => 'This email address is already in use. Please supply a different email address.'//TODO use __(
         );
         $this->set($data);
         if ($this->validates()) {

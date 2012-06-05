@@ -37,7 +37,8 @@ class ActivationBehavior extends ModelBehavior {
     }
     
     public function activate($Model, $token){
-        if($user = $Model->findByActivate_token($token)){
+        $user = $Model->findByActivate_token($token);
+        if($user){
     	        $user[$Model->alias]['active'] = 1;
                 $user[$Model->alias]['activate_token'] = null;
                 return $Model->save($user, true, array('active', 'activate_token'));

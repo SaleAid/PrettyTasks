@@ -3,13 +3,13 @@ App::uses('Controller', 'Controller');
 
 class AppController extends Controller {
     public $helpers = array(
-        'Combinator.Combinator',
+        'Combinator.Combinator',//TODO I think it will be to heavy to use directly in project, need to use it only when publishing
         'Form', 
         'Html', 
         'Js',
         'Time',
         'Session',
-        'Loginza'
+        'Loginza'//TODO Maybe move to needed controllers only?
     );
     public $components = array(
         'AutoLogin', 
