@@ -1,38 +1,30 @@
-@import "bootstrap.min.css";
-@import "bootstrap-responsive.min.css";
-@import "jquery.jgrowl.css";
-@import "loginza/widget_style.css";
-
-          
-.container{
-   max-width:970px !important;
-    min-width:970px !important;
-    margin: 0 auto;
-
+ /*                */         
+.container, 
+#wrapper, 
+.navbar-fixed-bottom .container, 
+.navbar-fixed-top .container,
+.navbar-fixed-bottom .container,
+.span12{
+     width: 970px;
+     margin: 0 auto;
 } 
 html {
 	height: 100%;
-    
 }
 body {
   width: 100%;
   height: 100%;
   overflow-y: scroll;  
   position: relative;
-  
   background-color: #FBFBFB;
-  
 }
 
 #wrapper-all {
-    
 	margin: 0 auto;
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
  }
-
-
 /* Tweak navbar brand link to be super sleek
 -------------------------------------------------- 
 @navbarBackground #0094C0
@@ -41,23 +33,23 @@ body {
 @navbarLinkBackgroundHover rgba(0, 55, 72, 0.15)
 @navbarLinkBackgroundActive rgba(0, 55, 72, 0.15)
 */
-
-
-
 #wrapper-content{
     padding: 50px 5px 110px 5px ;
 }
 
 #wrapper{
-    max-width:970px !important;
-    min-width:970px !important;
-    margin: 0 auto;
     background-color: white;
     border: 1px solid #ddd;
     -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
       border-radius: 4px;
 
+}
+.span370{
+    width: 370px;
+}
+.login{
+    margin-left: 70px;
 }
 
 /* Footer
@@ -68,7 +60,7 @@ footer {
   	margin: -101px auto 0;
 	height: 100px;
 	position: relative;
-  //border-top: 1px solid black;
+  border-top: 1px solid #DFDFDF;
 }
 footer p {
   margin-top: 10px;

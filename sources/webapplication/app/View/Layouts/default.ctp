@@ -13,13 +13,19 @@
     
     <?php echo $this->Html->meta('icon');?>
     
-    <?php echo $this->Html->css('main'); ?>
+    <?php echo $this->Html->css('bootstrap'); ?>
+    
+    <?php echo $this->Html->css('jquery.jgrowl'); ?>
     
     <?php echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom'); ?>
     
     <?php echo $this->Html->css('print', null, array('media' => 'print')); ?>
 	
     <?php echo $this->fetch('toHead'); ?> 
+    
+    <?php $this->Combinator->add_libs('css', array('main'))?>
+    
+    <?php echo $this->Combinator->scripts('css'); ?>     
     
     <?php echo $scripts_for_layout; ?>      
 	
@@ -40,7 +46,6 @@
         
                 <?php echo $content_for_layout; ?>
                 
-                <div class="push"><!--//--></div>
             </div>
         </div>
     </div>
@@ -53,17 +58,17 @@
 
    <?php //echo $this->element('sql_dump'); ?>
    
-   
-
-    <?php echo $this->Html->script('jquery-1.7.1.min.js'); ?>
+   <?php echo $this->Html->script('jquery-1.7.1.min.js'); ?>
     
     <?php echo $this->Html->script('jquery-ui-1.8.18.custom.min.js'); ?>
         
-    <?php echo $this->Html->script('bootstrap.min.js'); ?>
+    <?php echo $this->Html->script('bootstrap.js'); ?>
     
     <?php echo $this->Html->script('main.js'); ?>
     
-    <?php echo $this->fetch('toFooter'); ?> 
+    <?php echo $this->fetch('toFooter'); ?>
+     
+    <?php echo $this->Combinator->scripts('js');?>
 
   </body>
 </html>

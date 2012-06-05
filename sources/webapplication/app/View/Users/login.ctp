@@ -1,10 +1,13 @@
-<?php echo $this->Html->script('http://loginza.ru/js/widget.js',FALSE); ?>
-<div class="row"> 
-    <div class="span8 offset2">
-        <h2>Авторизация</h2>
-        <div class="row"> 
-            <div class="span4">
-                <h3>Войдите используя Ваш аккаунт:</h3>
+<?php $this->start ( 'toHead' );?>
+<?php $this->Combinator->add_libs('css', array('loginza/widget_style'));?>
+<?php $this->end ();?>
+<?php $this->start ( 'toFooter' );?>
+<?php echo $this->Html->script('http://loginza.ru/js/widget.js'); ?>
+<?php $this->end ();?>
+        <h2 align="center">Авторизация</h2>
+        <div class="login"> 
+            <div class="span370">
+                <h3 >Войдите используя Ваш аккаунт:</h3>
                     <?php echo $this->Form->create('User',array('class' => 'well ',
                                     'inputDefaults' => array(
                                     'div' => array('class' => 'control-group'),
@@ -33,18 +36,17 @@
                     <?php echo $this->Form->end(); ?>
                             
             </div>
-            <div class="span4">
+            <div class="span370">
                 <h3>Вы можете войти как:</h3>
                  <div class="well">
                      <iframe src="http://loginza.ru/api/widget?overlay=loginza&token_url=<?php echo Configure::read('loginza.token_url');?>
                                     &providers_set=vkontakte,facebook,twitter,google" 
-                             style="width:309px;height:190px;" scrolling="no" frameborder="no">
+                             style="width:330px;height:210px;" scrolling="no" frameborder="no">
                     </iframe>
                  </div>   
             </div>
         </div>
-    </div>
-</div>  
+
            
             
                             

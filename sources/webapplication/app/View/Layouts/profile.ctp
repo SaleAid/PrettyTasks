@@ -16,19 +16,19 @@
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     
-
+    <?php echo $this->Html->css('bootstrap'); ?>
    
-    <?php echo $this->Html->css('main'); ?>
+    <?php $this->Combinator->add_libs('css', array('main'))?>
    
     <?php
-        
-        echo $this->Html->css('bootstrap.min');
         
         echo $this->fetch('toHead'); 
         
         echo $scripts_for_layout;
 
     ?>
+    
+    <?php echo $this->Combinator->scripts('css'); ?> 
     
   </head>
 
@@ -50,8 +50,6 @@
         
         </div>
       </div><!--/row-->
-        
-    <div class="push"><!--//--></div>
     </div>
  </div>
  </div>   
@@ -66,15 +64,14 @@
    
         echo $this->Html->script('jquery-1.7.1.min.js');
         
-        echo $this->Html->script('bootstrap.min.js');
+        echo $this->Html->script('bootstrap.js');
         
         echo $this->Html->script('main.js');
 
-		
-		
 		echo $this->fetch('toFooter'); 
-   
-   
    ?>
+   
+   <?php echo $this->Combinator->scripts('js');?>
+   
   </body>
 </html>

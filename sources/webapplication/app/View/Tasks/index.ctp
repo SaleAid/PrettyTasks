@@ -1,9 +1,19 @@
 <?php $this->start ( 'toHead' );?>
-<?php //echo $this->Html->css('tasks');?>
-<?php
-    $this->Combinator->add_libs('css', array('tasks'));
-    echo $this->Combinator->scripts('css');
-?>
+    <?php $this->Combinator->add_libs('css', array('tasks')); ?>
+<?php $this->end ();?>
+
+<?php $this->start ( 'toFooter' );?>
+    
+    <?php echo $this->Html->script('jquery.ui.touch-punch.min.js'); ?>
+    
+    <?php echo $this->Html->script('jquery.jgrowl.min.js'); ?>
+    
+    <?php echo $this->Html->script('jquery.jeditable.mini.js'); ?>
+    
+    <?php echo $this->Html->script('jquery.ba-hashchange.min.js'); ?>
+    
+    <?php $this->Combinator->add_libs('js', array('jquery.timepicker-1.2.2','jquery.inline-confirmation','tasks'));?>
+    
 <?php $this->end ();?>
 
 
@@ -295,27 +305,5 @@
 </div>
 <!-- End modal --!>
 
-<?php
-$this->start ( 'toFooter' );
-?>
 
-<?php echo $this->Html->script('jquery.ui.touch-punch.min.js'); ?>
-
-<?php echo $this->Html->script('jquery.jgrowl.min.js'); ?>
-
-<?php echo $this->Html->script('jquery.jeditable.mini.js'); ?>
-
-<?php echo $this->Html->script('jquery.ba-hashchange.min.js'); ?>
-
-<?php //echo $this->Html->script('jquery.timepicker-1.2.2.js'); ?>
-
-<?php //echo $this->Html->script(array('jquery.inline-confirmation')); ?>
-
-<?php
-    $this->Combinator->add_libs('js', array('jquery.timepicker-1.2.2','jquery.inline-confirmation','tasks'));
-    echo $this->Combinator->scripts('js');
-?>
-<?php
-$this->end ();
-?>
 
