@@ -54,24 +54,21 @@
  </div>
  </div>   
 </div>
-      <footer>
-            <div class="container">
-        <p>&copy; Company 2012</p>
-    </div> 
-      </footer>
-   <?php
-        echo $this->Js->writeBuffer(); 
-   
-        echo $this->Html->script('jquery-1.7.1.min.js');
-        
-        echo $this->Html->script('bootstrap.js');
-        
-        echo $this->Html->script('main.js');
 
-		echo $this->fetch('toFooter'); 
-   ?>
+<?php echo $this->element('footer'); ?>
+<?php
+    echo $this->Js->writeBuffer(); 
+
+    echo $this->Html->script('jquery-1.7.1.min.js');
+    
+    echo $this->Html->script('bootstrap.js');
+    
+    echo $this->Html->script('main.js');
+
+	echo $this->fetch('toFooter'); 
+?>
    
-   <?php echo $this->Combinator->scripts('js');?>
+<?php echo $this->Combinator->scripts('js');?>
    
   </body>
 </html>
