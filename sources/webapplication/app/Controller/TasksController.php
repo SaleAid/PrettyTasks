@@ -20,7 +20,7 @@ class TasksController extends AppController {
         $result['data']['arrAllExpired'] = $this->Task->getAllExpired($this->Auth->user('id'));
         $from = CakeTime::format('Y-m-d', time());
         $to = CakeTime::format('Y-m-d', '+7 days');
-        $dayConfig = $this->User->getConfig($this->Auth->user('id'), 'day');
+        $dayConfig = $this->Task->User->getConfig($this->Auth->user('id'), 'day');
         $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to, $dayConfig);
         foreach($result['data']['arrTaskOnDays'] as $key => $value){
             $done = array_filter($value, create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;'));

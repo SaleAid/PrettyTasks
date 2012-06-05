@@ -10,8 +10,7 @@ class AccountsController extends AppController {
             )
         )
     );
-    //public $layout = 'login';
-
+    
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('loginzalogin', 'activate', 'reactivate', 'confirm_email', 'confirm_user_data');
@@ -149,10 +148,16 @@ class AccountsController extends AppController {
         }
         $userTmp = $this->Session->read('tmpUser');
         if ($this->request->is('post') || $this->request->is('put')) {
-            $this->request->data['User']['password'] = $this->request->data['User']['password_confirm'] = $this->Account->User->generateToken();
-            $this->request->data['User']['invite_token'] = $this->Account->User->generateToken();
-            $this->request->data['User']['active'] = 1;
-            if ($this->Account->User->save($this->request->data)) {
+            $password = $this->Account->User->generateToken();
+            $saveData = array(
+                'first_name'        => $this->request->data['User']['first_name'],
+                'last_name'         => $this->request->data['User']['last_name'],
+                'email'             => $this->request->data['User']['email'],
+                'username'          => $this->request->data['User']['username'],
+                'password'          => $password, 
+                'password_confirm'  => $password                          
+            );
+            if ($this->Account->User->register($saveData)) {    
                 $userTmp['user_id'] = $this->Account->User->getLastInsertID();
                 $userTmp['activate_token'] = $this->Account->User->generateToken();
                 if ($this->Account->save($userTmp)) {
@@ -160,11 +165,13 @@ class AccountsController extends AppController {
                         $this->Session->setFlash(__('Код активации аккаунта был выслан Вам на почту.'), 'alert', array(
                             'class' => 'alert-success'
                         ));
+                        $this->Session->delete('tmpUser');
                         $this->redirect('/');
                     }
                     $this->Session->setFlash(__('Вы успешно прошли регистрацию. Возникли проблемы при отправке КодА активации аккаунта.'), 'alert', array(
                         'class' => 'alert-success'
                     ));
+                    $this->Session->delete('tmpUser');
                     $this->redirect('/');
                 } else {
                     $this->Session->setFlash('Error create user profile', 'alert', array(
@@ -186,6 +193,30 @@ class AccountsController extends AppController {
     public function activate($hash = null) {
         if ($hash) {
             if ($result = $this->Account->activate($hash)) {
+                $password = substr( str_shuffle( 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$' ) , 0 , 8 );
+                if(!$result['User']['active']){
+                    $saveData = array(
+                        'id'                => $result['User']['id'],
+                        'password'          => AuthComponent::password($password),
+                        'password_confirm'  => AuthComponent::password($password),
+                        'active'            => 1,
+                        'activate_token'    => null                      
+                    );
+                    if($this->Account->User->save($saveData, true, array('active', 'activate_token', 'password'))){
+                        App::uses('CakeEmail', 'Network/Email');
+                        $email = new CakeEmail();
+                        $email->template('send_password_after_activate_account', 'default');
+                        $email->emailFormat(Configure::read('Email.global.format'));
+                        $email->from(Configure::read('Email.global.from'));
+                        $email->to($result['User']['email']);
+                        $email->subject(Configure::read('Email.user.activateAccount.subject'));
+                        $email->viewVars(array( 'username' => $result['User']['username'],
+                                                'password' => $password,
+                                                'full_name' => $result['User']['full_name'] 
+                                                ));
+                        $email->send();
+                    }
+                }
                 $user = $result['User'];
                 $user['provider'] = $result[$this->modelClass]['provider'];
                 $this->Auth->login($user);

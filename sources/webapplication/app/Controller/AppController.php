@@ -121,7 +121,7 @@ class AppController extends Controller {
          */
         $this->__setTimeZone();
         $this->_checkMobile();
-        $this->loadModel('User');
+        //$this->loadModel('User');
     }
 
     public function beforeRender() {
