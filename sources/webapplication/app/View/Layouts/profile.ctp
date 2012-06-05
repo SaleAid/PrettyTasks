@@ -69,6 +69,7 @@
 ?>
    
 <?php echo $this->Combinator->scripts('js');?>
+<?php echo $this->element('ga', array(), array('cache' => array('key' => 'ga', 'config' => 'elements'))); ?>
    
   </body>
 </html>
