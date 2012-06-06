@@ -65,6 +65,6 @@ Cache::config('default', array('engine' => 'File'));
  */
  config('appconfig');
  CakePlugin::load('Recaptcha');
- CakePlugin::load('Combinator');
+ //CakePlugin::load('Combinator');
  
   

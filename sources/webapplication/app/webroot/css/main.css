@@ -50,7 +50,7 @@ body {
 @navbarLinkBackgroundActive rgba(0, 55, 72, 0.15)
 */
 #wrapper-content{
-    padding: 50px 5px 246px 5px ;
+    padding: 50px 5px 276px 5px ;
 }
 
 #wrapper{
@@ -73,7 +73,7 @@ body {
 footer {
     background-color: #EDEDED;
     display: block;
-  	margin: -241px auto 0;
+  	margin: -251px auto 0;
 	height: 230px;
 	position: relative;
     border-top: 1px solid #DFDFDF;

@@ -23,9 +23,9 @@
 	
     <?php echo $this->fetch('toHead'); ?> 
     
-    <?php $this->Combinator->add_libs('css', array('main'))?>
+    <?php echo $this->Html->css('main')?>
     
-    <?php echo $this->Combinator->scripts('css'); ?>     
+         
     
     <?php echo $scripts_for_layout; ?>      
 	
@@ -64,7 +64,6 @@
 
 <?php echo $this->fetch('toFooter'); ?>
  
-<?php echo $this->Combinator->scripts('js');?>
 <?php echo $this->element('ga', array(), array('cache' => array('key' => 'ga', 'config' => 'elements'))); ?> 
   </body>
 </html>

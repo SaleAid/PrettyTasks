@@ -1,5 +1,5 @@
 <?php $this->start ( 'toHead' );?>
-    <?php $this->Combinator->add_libs('css', array('tasks')); ?>
+    <?php echo $this->Html->css('tasks'); ?>
 <?php $this->end ();?>
 
 <?php $this->start ( 'toFooter' );?>
@@ -12,7 +12,7 @@
     
     <?php echo $this->Html->script('jquery.ba-hashchange.min.js'); ?>
     
-    <?php $this->Combinator->add_libs('js', array('jquery.timepicker-1.2.2','jquery.inline-confirmation','tasks'));?>
+    <?php echo $this->Html->script(array('jquery.timepicker-1.2.2','jquery.inline-confirmation','tasks'));?>
     
 <?php $this->end ();?>
 

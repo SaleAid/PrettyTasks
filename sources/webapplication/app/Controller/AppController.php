@@ -3,7 +3,7 @@ App::uses('Controller', 'Controller');
 
 class AppController extends Controller {
     public $helpers = array(
-        'Combinator.Combinator',//TODO I think it will be to heavy to use directly in project, need to use it only when publishing
+        //'Combinator.Combinator',//TODO I think it will be to heavy to use directly in project, need to use it only when publishing
         'Form', 
         'Html', 
         'Js',

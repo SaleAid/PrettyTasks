@@ -1,5 +1,5 @@
 <?php $this->start ( 'toHead' );?>
-<?php $this->Combinator->add_libs('css', array('loginza/widget_style'));?>
+<?php echo $this->Html->css('loginza/widget_style');?>
 <?php $this->end ();?>
 <?php $this->start ( 'toFooter' );?>
 <?php echo $this->Html->script('http://loginza.ru/js/widget.js'); ?>

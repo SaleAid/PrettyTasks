@@ -18,7 +18,7 @@
     
     <?php echo $this->Html->css('bootstrap'); ?>
    
-    <?php $this->Combinator->add_libs('css', array('main'))?>
+    <?php echo $this->Html->css('main')?>
    
     <?php
         
@@ -27,8 +27,6 @@
         echo $scripts_for_layout;
 
     ?>
-    
-    <?php echo $this->Combinator->scripts('css'); ?> 
     
   </head>
 
@@ -59,16 +57,15 @@
 <?php
     echo $this->Js->writeBuffer(); 
 
-    echo $this->Html->script('jquery-1.7.1.min.js');
+    echo $this->Html->script('jquery-1.7.1.min');
     
-    echo $this->Html->script('bootstrap.js');
+    echo $this->Html->script('bootstrap');
     
-    echo $this->Html->script('main.js');
+    echo $this->Html->script('main');
 
 	echo $this->fetch('toFooter'); 
 ?>
-   
-<?php echo $this->Combinator->scripts('js');?>
+
 <?php echo $this->element('ga', array(), array('cache' => array('key' => 'ga', 'config' => 'elements'))); ?>
    
   </body>

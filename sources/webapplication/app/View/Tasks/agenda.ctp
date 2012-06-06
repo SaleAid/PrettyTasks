@@ -1,5 +1,5 @@
 <?php $this->start ( 'toHead' );?>
-<?php $this->Combinator->add_libs('css', array('agenda'));?>
+<?php echo $this->Html->css('agenda');?>
 <?php $this->end ();?>
 <div class="row">
     <div class="agenda">
