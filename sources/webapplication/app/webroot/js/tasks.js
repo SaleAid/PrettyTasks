@@ -911,7 +911,7 @@ $(function(){
 
     setInterval(function() {
         checkLogin();
-    }, 120000);
+    }, 6000000);
     $('.help').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
     $('#addDay').tooltip({placement:'bottom',delay: { show: 500, hide: 100 }});
     $('#completed h3').tooltip({placement:'left',delay: { show: 500, hide: 100 }});

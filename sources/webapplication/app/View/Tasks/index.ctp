@@ -235,41 +235,40 @@
     <div class="modal-body">
         <div class="row">
        
-            <div class="span4">
-               <form class="form-horizontal">
-        <fieldset>
-          
-          <div class="control-group">
-            <label class="control-label" for="eTitle">Title</label>
-            <div class="controls">
-              <input type="text" class="span3" id="eTitle"/>
-            </div>
-          </div>
-          <div class="control-group form-inline">
-            <label class="control-label" for="eDate">Date, time?</label>
-            <div class="controls">
-                <input type="text"  id="eDate"/>
-                <input type="text"  id="eTime"/>
-                <label>to</label>
-                <input type="text"  id="eTimeEnd"/>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="eComment">Comment</label>
-            <div class="controls">
-              <textarea class="span3" id="eComment" rows="3"></textarea>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="controls">
-              <label class="checkbox">
-                <input type="checkbox" id="eDone" value="option1"/>
-                Done
-              </label>
-            </div>
-          </div>
-        </fieldset>
-      </form>
+          <div class="span5">
+           <form class="form-horizontal">
+            <fieldset>
+              <div class="control-group">
+                <label class="control-label" for="eTitle">Title</label>
+                <div class="controls">
+                  <input type="text" class="span4" id="eTitle"/>
+                </div>
+              </div>
+              <div class="control-group form-inline">
+                <label class="control-label" for="eDate">Date, time?</label>
+                <div class="controls">
+                    <input type="text"  id="eDate"/>
+                    <input type="text"  id="eTime"/>
+                    <label>to</label>
+                    <input type="text"  id="eTimeEnd"/>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="eComment">Comment</label>
+                <div class="controls">
+                  <textarea class="span4" id="eComment" rows="3"></textarea>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="controls">
+                  <label class="checkbox">
+                    <input type="checkbox" id="eDone" value="option1"/>
+                    Done
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+        </form>
             </div>
             <div class="span2">
             
