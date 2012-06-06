@@ -1,5 +1,5 @@
 <?php $this->start ( 'toHead' );?>
-<?php echo $this->Html->css('agenda');?>
+<?php echo $this->Html->css('agenda.'.Configure::read('App.version'));?>
 <?php $this->end ();?>
 <div class="row">
     <div class="agenda">

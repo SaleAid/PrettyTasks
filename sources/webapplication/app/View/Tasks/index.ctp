@@ -1,5 +1,5 @@
 <?php $this->start ( 'toHead' );?>
-    <?php echo $this->Html->css('tasks'); ?>
+    <?php echo $this->Html->css('tasks.'.Configure::read('App.version')); ?>
 <?php $this->end ();?>
 
 <?php $this->start ( 'toFooter' );?>
@@ -12,7 +12,8 @@
     
     <?php echo $this->Html->script('jquery.ba-hashchange.min.js'); ?>
     
-    <?php echo $this->Html->script(array('jquery.timepicker-1.2.2','jquery.inline-confirmation','tasks'));?>
+    <?php echo $this->Html->script(array('jquery.timepicker-1.2.2','jquery.inline-confirmation'));?>
+    <?php echo $this->Html->script('tasks.'.Configure::read('App.version'));?>
     
 <?php $this->end ();?>
 

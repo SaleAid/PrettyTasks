@@ -23,7 +23,7 @@
 	
     <?php echo $this->fetch('toHead'); ?> 
     
-    <?php echo $this->Html->css('main')?>
+    <?php echo $this->Html->css('main.'.Configure::read('App.version'))?>
     
          
     
@@ -54,13 +54,13 @@
 
 <?php //echo $this->element('sql_dump'); ?>
 
-<?php echo $this->Html->script('jquery-1.7.1.min.js'); ?>
+<?php echo $this->Html->script('jquery-1.7.1.min'); ?>
 
-<?php echo $this->Html->script('jquery-ui-1.8.18.custom.min.js'); ?>
+<?php echo $this->Html->script('jquery-ui-1.8.18.custom.min'); ?>
     
-<?php echo $this->Html->script('bootstrap.js'); ?>
+<?php echo $this->Html->script('bootstrap'); ?>
 
-<?php echo $this->Html->script('main.js'); ?>
+<?php echo $this->Html->script('main.'.Configure::read('App.version')); ?>
 
 <?php echo $this->fetch('toFooter'); ?>
  

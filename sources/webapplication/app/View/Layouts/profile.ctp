@@ -18,7 +18,7 @@
     
     <?php echo $this->Html->css('bootstrap'); ?>
    
-    <?php echo $this->Html->css('main')?>
+    <?php echo $this->Html->css('main.'.Configure::read('App.version'))?>
    
     <?php
         
@@ -61,7 +61,7 @@
     
     echo $this->Html->script('bootstrap');
     
-    echo $this->Html->script('main');
+    echo $this->Html->script('main.'.Configure::read('App.version'));
 
 	echo $this->fetch('toFooter'); 
 ?>
