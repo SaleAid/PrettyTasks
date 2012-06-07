@@ -5,14 +5,13 @@
 					<div class="span3">
 						<h2>Pages</h2>
 						<ul>
-							<li><a href="<?php echo Configure::read('Site.url')?>">Home</a></li>
-							<li><a href="<?php echo Configure::read('Site.url')?>/about">About</a></li>
-							<li><a href="<?php echo Configure::read('Site.url')?>/about/how-it-works">How it works</a></li>
-							<li><a href="<?php echo Configure::read('Site.url')?>/testimonials">Testimonials</a></li>
-							<li><a href="<?php echo Configure::read('Site.url')?>/support">Help</a></li>
-							<li><a href="<?php echo Configure::read('Site.url')?>/contact">Contact</a></li>
-							<li><a href="<?php echo Configure::read('Site.url')?>/users/login">Login</a></li>
-							<li><a href="<?php echo Configure::read('Site.url')?>/users/register">Register</a></li>
+							<li><?php echo $this->Html->link(__('Home'), '/');?></li>
+							<li><?php echo $this->Html->link(__('About'), array('controller' => 'Pages', 'action' => 'view', 'about'));?></li>
+							<li><?php echo $this->Html->link(__('How it works'), array('controller' => 'Pages', 'action' => 'view', 'how-it-works'));?></li>
+							<li><?php echo $this->Html->link(__('Testimonials'), array('controller' => 'Pages', 'action' => 'view', 'testimonials'));?></li>
+							<li><?php echo $this->Html->link(__('Help'), array('controller' => 'Pages', 'action' => 'view', 'help'));?></li>
+							<li><?php echo $this->Html->link(__('Login'), array('controller' => 'Users', 'action' => 'login'));?></li>
+							<li><?php echo $this->Html->link(__('Register'), array('controller' => 'Users', 'action' => 'login'));?></li>
 						</ul>
 					</div> 
 
@@ -26,24 +25,29 @@
 
 						<h2>Misc</h2>
 						<ul>
-							<li><a href="<?php echo Configure::read('Site.url')?>/privacy_policy">Privacy Policy</a></li>
-							<li><a href="<?php echo Configure::read('Site.url')?>/terms">Terms and Conditions</a></li>
+							<li><?php echo $this->Html->link(__('Privacy Policy'), array('controller' => 'Pages', 'action' => 'view', 'privacy-policy'));?></li>
+							<li><?php echo $this->Html->link(__('Terms and Conditions'), array('controller' => 'Pages', 'action' => 'view', 'terms-and-conditions'));?></li>
 						</ul>
 					</div> 
 
 					<div class="span3">
-						<h2>Blog</h2>
+						<h2>Bloggers about us</h2>
 						<ul>
-                           <li><a href="<?php echo Configure::read('Site.url')?>/blog/google-plus-page">Google Plus Page</a></li>
-                     
+                           <li><a href="#">On habrahabr</a></li>
+                           <li><a href="#">On techcrunch</a></li>
+                           <li><a href="#">On ReadWrite Web</a></li>
+                           <li><a href="#">On Personal blogs</a></li>
     					</ul>
 					</div> 
 					
 					<div class="span3">
-						<h2>Interact</h2>
-						<div class="fb-like" data-href="http://www.facebook.com/" data-send="true" data-width="75" data-show-faces="false" style="overflow:hidden;width:110px;height:25px;"></div><br />
-						<div class="twitterwidget"><a href="https://twitter.com/" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @</a></div><br />
-						<div class="gpluswidget"><g:plusone annotation="inline" width="150" href="<?php echo Configure::read('Site.url')?>" height="20"></g:plusone></div>
+						<h2>Follow us</h2>
+						<ul>
+                           <li><a href="#">On twitter</a></li>
+                           <li><a href="#">On facebook</a></li>
+                           <li><a href="#">On google +</a></li>
+                           <li><a href="#">On livejournal</a></li>
+    					</ul>
 					</div> 
 					
 				</div> 

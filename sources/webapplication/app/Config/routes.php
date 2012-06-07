@@ -46,6 +46,10 @@ Router::connect('/:device/:controller/:action', array(), array(
 Router::connect('/:device/:controller/:action', array(), array(
 	'device' => '[m]{1}'
 ));
+//TODO Change it to /*
+Router::connect('/pages/*', array(
+	'controller' => 'Pages', 'action' => 'view'
+));
 Router::parseExtensions('xml', 'json', 'xhtml', 'html');
 
 /**

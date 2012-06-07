@@ -3,7 +3,7 @@
 	<div data-role="header" id="primary" data-id="primary">
 		<div data-role="navbar">
 			<ul>
-							<li id="nav-index" class="icon-index"><a class="ui-btn-active ui-state-persist" href="#today">Today</a></li>
+							<li id="nav-index" class="icon-index"><a class="ui-btn-active ui-state-persist" href="#today" data-transition="flow">Today</a></li>
 							<li id="nav-speakers" class="icon-speakers"><a  href="#tomorrow" data-transition="flow">Tomorrow</a></li>
 							<li id="nav-schedule" class="icon-schedule"><a  href="#overdue" data-transition="flow">Overdue</a></li>
 							<li id="nav-venue" class="icon-venue"><a href="#overview" data-transition="flow">Overview</a></li>
@@ -43,10 +43,10 @@
 	<div data-role="header" id="primary" data-id="primary">
 		<div data-role="navbar">
 			<ul>
-							<li id="nav-index" class="icon-index"><a href="#today">Today</a></li>
-							<li id="nav-speakers" class="icon-speakers"><a class="ui-btn-active ui-state-persist"  href="#tomorrow">Tomorrow</a></li>
-							<li id="nav-schedule" class="icon-schedule"><a href="#overdue">Overdue</a></li>
-							<li id="nav-venue" class="icon-venue"><a href="#overview">Overview</a></li>
+							<li id="nav-index" class="icon-index"><a href="#today" data-transition="flow">Today</a></li>
+							<li id="nav-speakers" class="icon-speakers"><a class="ui-btn-active ui-state-persist"  href="#tomorrow" data-transition="flow">Tomorrow</a></li>
+							<li id="nav-schedule" class="icon-schedule"><a href="#overdue" data-transition="flow">Overdue</a></li>
+							<li id="nav-venue" class="icon-venue"><a href="#overview" data-transition="flow">Overview</a></li>
 						</ul>
 		</div>
 	</div>
@@ -83,10 +83,10 @@
 	<div data-role="header" id="primary" data-id="primary">
 		<div data-role="navbar">
 			<ul>
-							<li id="nav-index" class="icon-index"><a href="#today">Today</a></li>
-							<li id="nav-speakers" class="icon-speakers"><a href="#tomorrow">Tomorrow</a></li>
-							<li id="nav-schedule" class="icon-schedule"><a class="ui-btn-active ui-state-persist" href="#overdue">Overdue</a></li>
-							<li id="nav-venue" class="icon-venue"><a href="#overview">Overview</a></li>
+							<li id="nav-index" class="icon-index"><a href="#today" data-transition="flow">Today</a></li>
+							<li id="nav-speakers" class="icon-speakers"><a href="#tomorrow" data-transition="flow">Tomorrow</a></li>
+							<li id="nav-schedule" class="icon-schedule"><a class="ui-btn-active ui-state-persist" href="#overdue" data-transition="flow">Overdue</a></li>
+							<li id="nav-venue" class="icon-venue"><a href="#overview" data-transition="flow">Overview</a></li>
 						</ul>
 		</div>
 	</div>
@@ -125,10 +125,10 @@
 	<div data-role="header" id="primary" data-id="primary">
 		<div data-role="navbar">
 			<ul>
-							<li id="nav-index" class="icon-index"><a href="#today">Today</a></li>
-							<li id="nav-speakers" class="icon-speakers"><a href="#tomorrow">Tomorrow</a></li>
-							<li id="nav-schedule" class="icon-schedule"><a href="#overdue">Overdue</a></li>
-							<li id="nav-venue" class="icon-venue"><a class="ui-btn-active ui-state-persist" href="#overview">Overview</a></li>
+							<li id="nav-index" class="icon-index"><a href="#today" data-transition="flow">Today</a></li>
+							<li id="nav-speakers" class="icon-speakers"><a href="#tomorrow" data-transition="flow">Tomorrow</a></li>
+							<li id="nav-schedule" class="icon-schedule"><a href="#overdue" data-transition="flow">Overdue</a></li>
+							<li id="nav-venue" class="icon-venue"><a class="ui-btn-active ui-state-persist" href="#overview" data-transition="flow">Overview</a></li>
 						</ul>
 		</div>
 	</div>
