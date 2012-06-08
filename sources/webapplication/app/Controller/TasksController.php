@@ -57,6 +57,46 @@ class TasksController extends AppController {
         ));            
     }
         
+    public function getTasksByType(){
+        $result = $this->_prepareResponse();
+        if (!$this->_isSetRequestData('type')) {
+            $result['message'] = array(
+                'type' => 'success', 
+                'message' => __('Ошибка при передачи данных')
+            );
+        } else {
+            $result['success'] = true;
+            $result['type'] = $this->request->data['type'];
+            switch($this->request->data['type']){
+                case 'completed':{
+                    $result['data'] = $this->Task->getAllCompleted($this->Auth->user('id'));
+                    break;    
+                }
+                case 'expired':{
+                    $result['data'] = $this->Task->getAllOverdue($this->Auth->user('id'));
+                    break;    
+                }
+                case 'future':{
+                    $from = CakeTime::format('Y-m-d', time());
+                    $to = CakeTime::format('Y-m-d', '+7 days');
+                    $result['data'] = $this->Task->getDays($this->Auth->user('id'), $from, $to);
+                    break;    
+                }
+                default :{
+                    $result['success'] = false;
+                    $result['message'] = array(
+                        'type' => 'success', 
+                        'message' => __('Ошибка, некорректный тип')
+                    );
+                }
+            }
+        }
+        $result['action'] = 'getTasksByType';
+        $this->set('result', $result);
+        $this->set('_serialize', array(
+            'result'
+        ));
+    }
     public function agenda() {
         $result = $this->_prepareResponse();
         $result['success'] = true;

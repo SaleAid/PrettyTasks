@@ -232,14 +232,13 @@ class Task extends AppModel {
         }
         $data[$this->alias]['future'] = $future ? $future : 0;
         if( !$time ){
-            $pattern = '/^([01]\d|2[0-3]):?([0-5]\d)/';
-            preg_match($pattern, $title, $matches, PREG_OFFSET_CAPTURE);
-            if( isset($matches[0][0]) ){
-                $data[$this->alias]['time'] = $matches[0][0].':00';
+            $pattern = '/^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?/';
+            preg_match($pattern, $title, $matches);
+            if( isset($matches[0]) ){
+                $data[$this->alias]['time'] = $matches[0].':00';
                 $data[$this->alias]['title'] = substr($title,5);
             }    
         }
-        
         return $data;
     }
 
@@ -366,7 +365,6 @@ class Task extends AppModel {
     }
 
     public function beforeSave() {
-        //pr('save');
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
         if ($this->_originData) {
             if ($order = $this->_getPositionByTime()) {

@@ -65,5 +65,9 @@
 <?php echo $this->fetch('toFooter'); ?>
  
 <?php echo $this->element('ga', array(), array('cache' => array('key' => 'ga', 'config' => 'elements'))); ?> 
+
+<?php echo $this->element('reformal', array(), array('cache' => array('key' => 'reformal', 'config' => 'elements'))); ?>
+<?php echo $this->element('informer', array(), array('cache' => array('key' => 'informer', 'config' => 'elements'))); ?>
+<?php echo $this->element('userecho', array(), array('cache' => array('key' => 'userecho', 'config' => 'elements'))); ?>  
   </body>
 </html>

@@ -114,7 +114,11 @@ function userEvent(action, data){
         break;
         case 'setCommentDay':
             taskSetCommentDay(data.date, data.comment);
-        break;            
+        break;
+        case 'getTasksByType':
+            taskGetTasksByType(data.type);
+        break;
+                    
     }
 }
 
@@ -156,9 +160,107 @@ function responseHandler(data){
         case 'setCommentDay':
             onSetCommentDay(data);
         break;
+        case 'getTasksByType':
+            onGetTasksByType(data);
+        break;
     }
 
 }
+//---------------getTasksByType----
+function taskGetTasksByType(type){
+    srvGetTasksByType(type);    
+}
+
+function srvGetTasksByType(type){
+    superAjax('/tasks/getTasksByType.json',{type: type});
+}
+
+function scrGetTasksByType(data){
+     switch(data.type){
+        case 'future':
+            futureTasks(data.data);
+        break;
+        case 'expired':
+            expiredTasks(data.data);
+        break;
+        case 'completed':
+            completedTasks(data.data);
+        break;           
+     }
+}
+function onGetTasksByType(data){
+    if(data.success){
+        scrGetTasksByType(data);
+    }else{
+        mesg(data.message);
+    }
+}
+function futureTasks(data){
+    var listUl = $('#future ul[date="future"]');
+    listUl.empty();
+    $.each(data,function(index, value) {
+        if(+value.length){
+            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'">'+index+'</h3>');
+            day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
+            initDayClick(day);
+            listUl.append(day);   
+        }
+        $.each(value,function(index, value) {
+            listUl.append( AddTask(value) );
+            initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
+            initEditAble("li[id='"+value.Task.id+"'] .editable");
+            initDone("li[id='"+value.Task.id+"'] .done");
+            initEditTask("li[id='"+value.Task.id+"'] .editTask");
+        });
+    });
+}
+function expiredTasks(data){
+    var listUl = $('#expired ul[date="expired"]');
+    listUl.empty();
+    $.each(data,function(index, value) {
+        if(+value.length){
+            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'">'+index+'</h3>');
+            day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
+            initDayClick(day);
+            listUl.append(day);   
+        }
+        $.each(value,function(index, value) {
+            listUl.append( AddTask(value) );
+            initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
+            initEditAble("li[id='"+value.Task.id+"'] .editable");
+            initDone("li[id='"+value.Task.id+"'] .done");
+            initEditTask("li[id='"+value.Task.id+"'] .editTask");
+        });
+    });
+}
+function completedTasks(data){
+    var listUl = $('#completed ul[date="completed"]');
+    var task, priority, time, timeend;
+    listUl.empty();
+    $.each(data,function(index, value) {
+        if(+value.length){
+            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'">'+index+'</h3>');
+            day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
+            initDayClick(day);
+            listUl.append(day);   
+        }
+        $.each(value,function(index, value) {
+            priority = +value.Task.priority ? 'important' : '';
+            time = value.Task.time ?  value.Task.time.slice(0,-3) : '';
+            timeend = value.Task.timeend ?  value.Task.timeend.slice(0,-3) : ''; 
+            task = '<li class="'+priority+'"> '+
+            '<span class="time">'+time+'</span> '+
+            '<span class="timeEnd">'+timeend+'</span> '+
+            '<span class="title">'+value.Task.title+'</span> '+
+            '</li> ';
+            listUl.append( task );
+            
+        });
+    });
+}
+
+//----------------------------------
+
 function srcCountTasks(date){
     if(date == ''){
         date ='planned';
@@ -185,9 +287,11 @@ function scrSetCommentDay(data){
     $('#commentDay').modal('hide');
 }
 function onSetCommentDay(data){
-    mesg(data.message);
+    
     if(data.success){
         scrSetCommentDay(data);
+    }else{
+        mesg(data.message);
     }
 }
 //---------------getCommnetDay-----
@@ -206,7 +310,10 @@ function scrGetCommentDay(data){
         
 }
 function onGetCommentDay(data){
-    mesg(data.message);
+    if(!data.success){
+        mesg(data.message);    
+    }
+    
     scrGetCommentDay(data.data);
 }
 //---------------setRatingDay------
@@ -227,7 +334,9 @@ function srvRatingDay(date, rating){
 }
 
 function onRatingDay(data){
-    mesg(data.message);
+    if(!data.success){
+        mesg(data.message);    
+    }
 }
 
 
@@ -249,7 +358,9 @@ function srvDeleteDay(date){
 }
 
 function onDeleteDay(data){
-    mesg(data.message);
+    if(!data.success){
+        mesg(data.message);    
+    }
 }
 
 //---------------addDay---------
@@ -418,19 +529,23 @@ function onEdit(data){
     if(data.success){
         $('#editTask').modal('hide');
         scrSetTitle(data.data.Task.id, data.data.Task.title, data.data.Task.priority);
+    }else {
+        mesg(data.message);    
     }
-    mesg(data.message);
+    
 }
 function srvEdit(id, title, done, date, time, timeEnd, comment){
     superAjax('/tasks/editTask.json',{id: id, title: title, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment});
 }
 
 function scrEdit(id, title, done, date, time, timeEnd, comment){
+    
     scrDragWithTime(id, date, time);
     scrDate(id,date);
     scrSetDone(id,done);
     scrSetTitle(id, title, 0);
     scrTime(id, time, timeEnd);
+    
  
 }
 
@@ -495,6 +610,7 @@ function scrDragWithTime(id, date, time){
                 }
                 $(this).attr('date', date);
                 $(this).css({'opacity':'1'});
+                $(this).removeAttr('style');
                 $(this).children('.editTask').removeClass('hide');
                 if(currentTaskDate != date){
                     srcCountTasks(currentTaskDate);
@@ -511,7 +627,9 @@ function taskChangeOrders(id, position){
     srvChangeOrders(id, position);
 }
 function onChangeOrders(data){
-    mesg(data.message);
+    if(!data.success){
+        mesg(data.message);    
+    }
 }
 function srvChangeOrders(id, position){
     superAjax('/tasks/changeOrders.json',{id: id, position: position});
@@ -526,7 +644,9 @@ function taskDragOnDay(id, date, time){
     srvDragOnDay(id, date, time);
 }
 function onDragOnDay(data){
-    mesg(data.message);
+    if(!data.success){
+        mesg(data.message);    
+    }
 }
 function srvDragOnDay(id, date, time){
     if(date == 'planned'){
@@ -544,8 +664,9 @@ function taskDelete(id){
     srvDelete(id);
 }
 function onDelete(data){
-
-    mesg(data.message);
+    if(!data.success){
+        mesg(data.message);    
+    }
 }
 function srvDelete(id){
     superAjax('/tasks/deleteTask.json',{id: id});
@@ -563,7 +684,9 @@ function taskSetDone(id, done){
 }
 function onSetDone(data){
 	//scrSetDone(data.data.Task.id, data.data.Task.done);
-    mesg(data.message);
+    if(!data.success){
+        mesg(data.message);    
+    }
 }
 function srvSetDone(id, done){
     superAjax('/tasks/setDone.json',{id:id, done: done});
@@ -589,7 +712,9 @@ function taskSetTitle(id, title){
 }
 function onSetTitle(data){
 	scrSetTitle(data.data.Task.id, data.data.Task.title, data.data.Task.priority);
-    mesg(data.message);
+    if(!data.success){
+        mesg(data.message);    
+    }
 }
 function srvSetTitle(id, title){
     superAjax('/tasks/setTitle.json',{id: id, title: title});
@@ -611,8 +736,9 @@ function taskCreate(title, date){
 function onCreate(data){
     if(data.success){
         scrCreate(data);
+    }else{
+        mesg(data.message);    
     }
-    mesg(data.message);
 }
 function srvCreate(title, date){
     superAjax('/tasks/addNewTask.json',{title: title, date: date });
@@ -631,6 +757,7 @@ function scrCreate(data){
     $("li[id='"+data.data.Task.id+"']").parent().siblings('.filter').children('a.active').trigger('click');
     if(data.data.Task.time){
         $("li[id='"+data.data.Task.id+"']").addClass('currentTask');
+        $("li[id='"+data.data.Task.id+"']").find('.time').text(null);
         scrDragWithTime(data.data.Task.id, data.data.Task.date, data.data.Task.time);
         $("li[id='"+data.data.Task.id+"']").find('.time').text(data.data.Task.time.slice(0,-3));
     }
@@ -658,7 +785,7 @@ function AddTask(data){
         }
     }
     taskHtml = '<li id ="'+data.Task.id+'" class="'+setTime+' '+complete+' '+important+'" date="'+data.Task.date+'"> \n'+ 
-                            '<span class="time"></span>\n'+
+                            time+'\n'+
                             timeEnd+'\n'+
                             '<span><i class="icon-move"></i></span> \n'+
                             '<input type="checkbox" class="done" '+checked+'/> \n' +
@@ -688,7 +815,7 @@ function initDelete(element){
               //reverse: true,
               confirm: "<a href='#'><i class='icon-ok-sign'></i></a>",
               cancel: "<a href='#'><i class='icon-remove-sign '></i></a>",
-              separator: "| ",
+              separator: " ",
               expiresIn: 3,
               bindsOnEvent: "click",
               confirmCallback: function(el) {
@@ -817,7 +944,7 @@ function initSortable(element){
                     dropped = false;
                     return true;
                 }
-                if(ui.item.parent().attr('date') == 'expired' || ui.item.hasClass('setTime')){
+                if(ui.item.parent().attr('date') == 'expired' || ui.item.parent().attr('date') == 'future' || ui.item.hasClass('setTime')){
                     mesg({type:'success', message:'Перемещение запрещено. '});
                     $(this).css("color","");
                     return false;  
@@ -871,6 +998,12 @@ function initFilter(element){
         return false;
     });
 }
+function initDayClick(element){
+    $(element).on('click', function() {
+        var date = $(this).text();
+        userEvent('addDay',{date: date});
+    });
+}
 
 function reload(){
     location.reload();
@@ -896,6 +1029,9 @@ $(function(){
             if(date != 'Invalid Date' && hash != "planned"){
                 hash = $.datepicker.formatDate('yy-mm-dd', date);
                 userEvent('addDay',{date: hash});
+            }else if(hash == "future" || hash == "expired" || hash == "completed"){
+                userEvent('getTasksByType', {type: hash});
+                $('#main a[href="#'+hash+'"]').tab('show');
             }else{
                 $('#main a[href="#'+hash+'"]').tab('show');    
             }
@@ -903,15 +1039,13 @@ $(function(){
     })
   
     $(window).hashchange();
-     
-     
-     $.datepicker.setDefaults(
+    $.datepicker.setDefaults(
         $.extend($.datepicker.regional["ru"])
      );
 
     setInterval(function() {
         checkLogin();
-    }, 6000000);
+    }, 600000);
     $('.help').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
     $('#addDay').tooltip({placement:'bottom',delay: { show: 500, hide: 100 }});
     $('#completed h3').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
@@ -929,8 +1063,12 @@ $(function(){
     initTabDelte('li a[data-toggle="tab"] .close');
     initFilter('.filter a');
     initCommentDay('.days a[data="commentDay"]');
+    initDayClick('.day');
     
-    
+    $(".daysButton a").click(function(){
+        var type = $(this).attr('date');
+        userEvent('getTasksByType', {type: type});
+    });
     // edit task, modal window      
     $('#eTime').timepicker({
                     timeFormat: 'HH:mm',
@@ -972,10 +1110,7 @@ $(function(){
             userEvent('setCommentDay',{date: date, comment: comment });
     });
     
-    $('.day').click(function(){
-        var date = $(this).text();
-        userEvent('addDay',{date: date});
-    });
+
     
   // add new day into tabs 
   

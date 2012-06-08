@@ -217,4 +217,21 @@ div.jGrowl.custom {
     color: red !important;
     font-weight: bold !important;
 }
+.inline-confirmation-block{
+    vertical-align: top !important;
+}
+/*modal window*/
+#editTask{
+    width: 600px;
+}
 
+#editTask .form-horizontal .controls {
+    margin-left: 80px;
+}
+
+#editTask .form-horizontal .control-label {
+    width: 70px;
+}
+#editTask .priority{
+    
+}

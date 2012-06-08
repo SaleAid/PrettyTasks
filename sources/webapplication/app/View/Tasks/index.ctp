@@ -26,10 +26,10 @@
                 <button class="btn btn-large dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu daysButton">
                     <li ><a href="#completed" data-toggle="tab" date="completed">Завершенные</a></li>
                     <li ><a href="#expired" data-toggle="tab" date="expired" class="tab2">Просроченные</a></li>
-                    <li ><a href="#expired" data-toggle="tab" date="expired" class="tab2">Будущие</a></li>
+                    <li ><a href="#future" data-toggle="tab" date="future" class="tab2">Будущие</a></li>
                 </ul>
             </div>   
            </li>
@@ -121,56 +121,27 @@
           <div class="tab-pane" id="expired">
               <div class="row">
                   <div class="listTask">
-                  <h3 class="margin-bottom10">Просроченные задачи.</h3>
-                        <?php if(isset($result['data']['arrAllOverdue']) && !empty($result['data']['arrAllOverdue'])):?>
-                        <ul class="sortable connectedSortable ui-helper-reset " date="expired">
-                            <?php foreach($result['data']['arrAllOverdue'] as $datelabel => $day):
-                                    if(isset($day) && !empty($day)):  
-                            ?>
-                                <h3 class="day label label-info margin-bottom10"><?php echo $datelabel; ?></h3>
-                                    <? foreach($day as $item):?>
-                                        <li id ="<?php echo $item['Task']['id']; ?>" class=" <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['priority']):?> important <?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
-                                            <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
-                                            <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
-                                            <span><i class="icon-move"> </i></span>
-                                            <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                                            <span class=" editable <?php if($item['Task']['done']):?> complete <?php endif; ?>"><?php echo $item['Task']['title']; ?></span>
-                                            <span class="editTask hide"><i class="icon-pencil"></i></a></span>
-                                            <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
-                                        </li>
-                             		<?php endforeach; ?>
-                            <?php 
-                                    endif;
-                                endforeach;
-                            ?>
-                            </ul>
-                        <?php endif;?>
-                    </div>
-                </div>
+                    <h3 class="margin-bottom10">Просроченные задачи.</h3>
+                    <ul class="sortable connectedSortable ui-helper-reset " date="expired">
+                    </ul>
+                   </div>
+              </div>
           </div>
           <div class="tab-pane" id="completed">
               <div class="row">
                   <div class="listTask">
-                  <h3 class="margin-bottom10">Завершенные задачи.</h3>
-                        <?php if(isset($result['data']['arrAllCompleted']) && !empty($result['data']['arrAllCompleted'])):?>
-                        <ul class=" ui-helper-reset " date="completed">
-                            <?php foreach($result['data']['arrAllCompleted'] as $datelabel => $day):
-                                    if(isset($day) && !empty($day)):  
-                            ?>
-                                <h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на <?php echo $datelabel; ?>"><?php echo $datelabel; ?></h3>
-                                	<? foreach($day as $item):?>
-                                        <li class=" <?php if($item['Task']['priority']):?>important<?php endif; ?>">
-                                            <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
-                                            <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
-                                            <span class="title"><?php echo $item['Task']['title']; ?></span>
-                                        </li>
-                             		<?php endforeach; ?>
-                            <?php 
-                                    endif;
-                                endforeach;
-                            ?>
-                            </ul>
-                        <?php endif;?>
+                    <h3 class="margin-bottom10">Завершенные задачи.</h3>
+                    <ul class=" ui-helper-reset " date="completed">
+                    </ul>
+                    </div>
+                </div>
+          </div>
+          <div class="tab-pane" id="future">
+              <div class="row">
+                  <div class="listTask">
+                  <h3 class="margin-bottom10">Будущие задачи.</h3>
+                        <ul class="sortable connectedSortable ui-helper-reset " date="future">
+                        </ul>
                     </div>
                 </div>
           </div>
@@ -235,14 +206,11 @@
     </div>
     <div class="modal-body">
         <div class="row">
-       
-          <div class="span5">
-           <form class="form-horizontal">
-            <fieldset>
+            <div class="span6 form-horizontal">
               <div class="control-group">
                 <label class="control-label" for="eTitle">Title</label>
                 <div class="controls">
-                  <input type="text" class="span4" id="eTitle"/>
+                  <input type="text" class="span6" id="eTitle"/>
                 </div>
               </div>
               <div class="control-group form-inline">
@@ -254,12 +222,33 @@
                     <input type="text"  id="eTimeEnd"/>
                 </div>
               </div>
+          <div class="row">
+          
+          <div class="span5">
               <div class="control-group">
                 <label class="control-label" for="eComment">Comment</label>
                 <div class="controls">
                   <textarea class="span4" id="eComment" rows="3"></textarea>
                 </div>
               </div>
+            </div>  
+          <div class="priority span1 form-vertical">
+          <div class="control-group">
+            <label class="control-label">Priority</label>
+            <div class="controls">
+              <label class="radio">
+                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                High
+              </label>
+              <label class="radio">
+                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                Normal
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        </div>
               <div class="control-group">
                 <div class="controls">
                   <label class="checkbox">
@@ -268,17 +257,14 @@
                   </label>
                 </div>
               </div>
-            </fieldset>
-        </form>
-            </div>
-            <div class="span2">
             
-            </div>
-            
+          
+
+        
         </div>
     </div>
+</div>
     <div class="modal-footer">
-    
         <button id="eSave" class="btn btn-success">Сохранить</button>
         <a href="" class="btn" data-dismiss="modal">Закрыть</a>
     </div>
@@ -294,7 +280,7 @@
     <div class="modal-body">
       <form class="form-horizontal">
         <fieldset>
-            <textarea  class="span5" id="eCommentDay" rows="4"></textarea>
+            <textarea  class="span6" id="eCommentDay" rows="4"></textarea>
         </fieldset>
       </form>
     </div>
