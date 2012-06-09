@@ -19,7 +19,7 @@
 
 
       <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
-        <ul class="nav nav-tabs noPrint">
+        <ul class="nav nav-tabs">
             <li class="addDay">
             <div class="btn-group dropdown">
                 <button  id="addDay" rel="tooltip" title="Добавить новый день в список" class="btn btn-large">Добавить день</button>
@@ -150,7 +150,7 @@
                 <div class="row">
                     <div class="listTask">
                         <h3 class="label label-info margin-bottom10"><?php echo $k; ?><img class="print" src="./img/print.png"/></h3>
-                        <div class="well form-inline noPrint">
+                        <div class="well form-inline">
                             <div class="input-append">
                                 <input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/><span class="add-on">?</span>
                             </div>

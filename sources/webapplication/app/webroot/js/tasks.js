@@ -1134,8 +1134,7 @@ $(function(){
     $('.addDay').click(function(){
         $(this).find('li').removeClass('active'); 
     });
-
-                   
+               
 }); 	
 
 //window.onbeforeunload = function() {

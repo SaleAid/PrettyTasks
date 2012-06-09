@@ -3,7 +3,19 @@
 /*
  * Please place your code below
  */
- 
- .noPrint, footer{
-    display: none;
- }
+ .print,
+ .days,
+ .filter,
+ .well,
+.navbar,
+.nav-tabs, 
+#reformal_tab, 
+#ue-feedback-tab, 
+.furrghtd,
+footer .container{
+  display: none;
+}
+#wrapper{
+    border: none !important;
+}
+
