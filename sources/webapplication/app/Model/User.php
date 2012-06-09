@@ -137,13 +137,13 @@ class User extends AppModel {
         return false;
     }
 
-    public function password_change($id, $password, $password_confirm, $old_password = null) {
+    public function password_change($id, $password, $password_confirm, $old_password = null, $reset = null) {
         $this->set(array(
                 'id'                => $id,
                 'password'          => $password,
                 'password_confirm'  => $password_confirm
         ));
-        if($old_password){
+        if(!$reset){
             $this->set('old_password', $old_password);
         }
         if ($this->validates()) {

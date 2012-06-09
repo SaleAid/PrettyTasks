@@ -196,7 +196,7 @@ class UsersController extends AppController {
                                 'class' => 'alert-error'
                             ));
                     } else {
-                        if ($this->User->password_change($id, $this->request->data[$this->modelClass]['password'], $this->request->data[$this->modelClass]['password_confirm'])) {
+                        if ($this->User->password_change($id, $this->request->data[$this->modelClass]['password'], $this->request->data[$this->modelClass]['password_confirm'],null, true)) {
                             $this->Session->setFlash(__('Ваш пароль успешно изменен.'), 'alert', array(
                                 'class' => 'alert-success'
                             ));
