@@ -1,15 +1,15 @@
 <?php
 class FaqsController extends AppController {
-    var $name = 'Faqs';
-    var $helpers = array(
+    public $name = 'Faqs';
+    public $helpers = array(
         'Html', 
         'Form'
     );
-    var $uses = array(
+    public $uses = array(
         'Faq', 
         'Faqcategory'
     );
-    var $cacheAction = array(
+    public $cacheAction = array(
         'index' => 3600, 
         'view' => 3600
     );

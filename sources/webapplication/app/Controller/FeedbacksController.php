@@ -1,7 +1,7 @@
 <?php
 class FeedbacksController extends AppController {
-    var $name = 'Feedbacks';
-    var $uses = array(
+    public $name = 'Feedbacks';
+    public $uses = array(
         'Feedback', 
         'User'
     );

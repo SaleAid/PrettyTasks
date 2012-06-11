@@ -1,7 +1,7 @@
 <?php
 class Faq extends AppModel {
-    var $name = 'Faq';
-    var $validate = array(
+    public $name = 'Faq';
+    public $validate = array(
         'faqcategory_id' => array(
             'numeric' => array(
                 'rule' => array(
@@ -44,7 +44,7 @@ class Faq extends AppModel {
         )
     );
 
-    var $belongsTo = array(
+    public $belongsTo = array(
         'Faqcategory' => array(
             'className' => 'Faqcategory', 
             'foreignKey' => 'faqcategory_id', 

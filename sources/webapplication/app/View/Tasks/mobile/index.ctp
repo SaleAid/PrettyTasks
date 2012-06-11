@@ -138,7 +138,10 @@
 		<input type="text" class="span3" name="newTask" id="newTask-future" placeholder="Type to add new task for future" date=""/><br/>
 		<?php 
 			if(isset($result['data']['arrTaskOnDays']) && !empty($result['data']['arrTaskOnDays'])):
+			$countDays=0;
 			foreach($result['data']['arrTaskOnDays'] as $datelabel => $day):
+			$countDays++;
+			if ($countDays>7) break;
 			if(isset($day) && !empty($day)):
 		?>
 		<h3><?php echo $datelabel; ?></h3>

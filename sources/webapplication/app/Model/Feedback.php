@@ -1,7 +1,7 @@
 <?php
 class Feedback extends AppModel {
-    var $name = 'Feedback';
-    var $validate = array(
+    public $name = 'Feedback';
+    public $validate = array(
         'lang' => array(
             'notempty' => array(
                 'rule' => array(
@@ -45,7 +45,7 @@ class Feedback extends AppModel {
             )
         )
     );
-    var $belongsTo = array(
+    public $belongsTo = array(
         'User' => array(
             'className' => 'User', 
             'foreignKey' => 'user_id', 

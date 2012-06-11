@@ -1,7 +1,7 @@
 <?php
 class Faqcategory extends AppModel {
-    var $name = 'Faqcategory';
-    var $validate = array(
+    public $name = 'Faqcategory';
+    public $validate = array(
         'name' => array(
             'notempty' => array(
                 'rule' => array(
@@ -38,7 +38,7 @@ class Faqcategory extends AppModel {
             )
         )
     );
-    var $belongsTo = array(
+    public $belongsTo = array(
         'User' => array(
             'className' => 'User', 
             'foreignKey' => 'user_id', 
@@ -47,7 +47,7 @@ class Faqcategory extends AppModel {
             'order' => ''
         )
     );
-    var $hasMany = array(
+    public $hasMany = array(
         'Faq' => array(
             'className' => 'Faq', 
             'foreignKey' => 'faqcategory_id', 
