@@ -1,13 +1,15 @@
 <?php
-$this->start ( 'toHead' );
+$this->start('toHead');
 ?>
 <?php
 
-echo $this->Html->css ( 'fullcalendar/fullcalendar.css' );
+echo $this->Html->css('fullcalendar/fullcalendar.css');
 ?>
 <?php
 
-echo $this->Html->css ( 'fullcalendar/fullcalendar.print.css', null, array ('media' => 'print' ) );
+echo $this->Html->css('fullcalendar/fullcalendar.print.css', null, array(
+    'media' => 'print'
+));
 ?>
 
 
@@ -17,20 +19,21 @@ echo $this->Html->css ( 'fullcalendar/fullcalendar.print.css', null, array ('med
 	margin: 0 auto;
 	height: 80%;
 }
-.calDone{
+
+.calDone {
 	text-decoration: line-through;
 }
 </style>
 <?php
-$this->end ();
+$this->end();
 ?>
 <?php
 
-$this->start ( 'toFooter' );
+$this->start('toFooter');
 ?>
 <?php
 
-echo $this->Html->script ( 'fullcalendar/fullcalendar.min.js' );
+echo $this->Html->script('fullcalendar/fullcalendar.min.js');
 ?>
 <script type='text/javascript'>
 
@@ -61,6 +64,10 @@ echo $this->Html->script ( 'fullcalendar/fullcalendar.min.js' );
     						dataToShow.color = '#aaffaa';
     						dataToShow.className='calDone';
     				    }
+    					if (value.Task.timeend){
+    						dataToShow.end = new Date(value.Task.date +" "+value.Task.timeend);
+    					}
+    					console.log(dataToShow);
     					events.push(dataToShow);
                     });
 				});
@@ -72,11 +79,12 @@ echo $this->Html->script ( 'fullcalendar/fullcalendar.min.js' );
 					},
 					editable: false,
 					events: events,
-					timeFormat: 'HH:mm',
+					timeFormat: 'HH:mm{ - HH:mm}',
 					defaultView: 'agendaWeek',
 					defaultEventMinutes: 60,
-					firstDay:1,
-					height: window.innerHeight*0.8,
+					firstDay: 1,
+					firstHour: 8,
+					height: window.innerHeight * 2.5,//0.8,
 					eventClick: function(calEvent, jsEvent, view) {
 						calEvent.done = !calEvent.done;
 						if (calEvent.done){
@@ -152,6 +160,6 @@ echo $this->Html->script ( 'fullcalendar/fullcalendar.min.js' );
 
 </script>
 <?php
-$this->end ();
+$this->end();
 ?>
 <div id='calendar'></div>
