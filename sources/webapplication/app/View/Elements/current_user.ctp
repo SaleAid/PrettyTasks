@@ -1,6 +1,8 @@
 <?php if(!empty($currentUser)):  ?>    
-    <?php echo $this->Html->link('Feedback', array('controller' => 'feedbacks', 'action' => 'add'),array('class'=> 'btn btn-primary')); ?>
+    <?php echo $this->Html->link(__('Feedback'), array('controller' => 'feedbacks', 'action' => 'add'),array('class'=> 'btn btn-primary')); ?>
+    <?php echo $this->Html->link(__('Invite friends'), array('controller' => 'invitations', 'action' => 'add'),array('class'=> 'btn btn-danger')); ?>
 <?php endif; ?>
+
 <div class="pull-right">
     <img class="pull-left ajaxLoader hide" src="/img/ajax-loader.gif"/>
     <div class="btn-group pull-right">
