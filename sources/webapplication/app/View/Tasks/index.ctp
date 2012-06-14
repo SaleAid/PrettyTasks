@@ -93,7 +93,7 @@
                 <a href="" class="active" data="all">Все</a>
                 <span class="all badge badge-info "><?php echo $result['data']['arrAllFutureCount']['all']; ?></span>,
                 &nbsp;
-                <a href="" data="inProcess">В Процессе</a>
+                <a href=""  data="inProcess">В Процессе</a>
                 <span class="inProcess badge badge-warning"><?php echo $result['data']['arrAllFutureCount']['all'] - $result['data']['arrAllFutureCount']['done']; ?></span>,
                 &nbsp;
                 <a href="" data="completed">Выполненные</a>
@@ -121,7 +121,7 @@
           <div class="tab-pane" id="expired">
               <div class="row">
                   <div class="listTask">
-                    <h3 class="margin-bottom10">Просроченные задачи.</h3>
+                    <h3 class="margin-bottom10">Просроченные задачи</h3>
                     <ul class="sortable connectedSortable ui-helper-reset " date="expired">
                     </ul>
                    </div>
@@ -130,7 +130,7 @@
           <div class="tab-pane" id="completed">
               <div class="row">
                   <div class="listTask">
-                    <h3 class="margin-bottom10">Завершенные задачи.</h3>
+                    <h3 class="margin-bottom10">Завершенные задачи</h3>
                     <ul class=" ui-helper-reset " date="completed">
                     </ul>
                     </div>
@@ -139,17 +139,25 @@
           <div class="tab-pane" id="future">
               <div class="row">
                   <div class="listTask">
-                  <h3 class="margin-bottom10">Будущие задачи.</h3>
+                  <h3 class="margin-bottom10">Будущие задачи</h3>
                         <ul class="sortable connectedSortable ui-helper-reset " date="future">
                         </ul>
                     </div>
                 </div>
           </div>
-          <?php foreach($result['data']['arrTaskOnDays'] as $k => $v):?>
+          <?php 
+            foreach($result['data']['arrTaskOnDays'] as $k => $v):
+            $weelDayStyle = '';
+            if($k > $this->Time->format('Y-m-d', time())){
+                $weelDayStyle = 'underline';
+            }elseif($k < $this->Time->format('Y-m-d', time())){
+                $weelDayStyle = 'italic';
+            }
+          ?>
             <div class="tab-pane <?php if($this->Time->isToday($k)):?>active<?php endif;?>" id="<?php echo $k; ?>" >
                 <div class="row">
                     <div class="listTask">
-                        <h3 class="label label-info margin-bottom10"><?php echo $k; ?><img class="print" src="./img/print.png"/></h3>
+                        <h3 class="label label-info margin-bottom10"><?php echo $k; ?> - <span class="<?php echo $weelDayStyle?>"><?php echo $weekday[$this->Time->format('l', $k, true)]; ?></span><img class="print" src="./img/print.png"/></h3>
                         <div class="well form-inline">
                             <div class="input-append">
                                 <input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/><span class="add-on">?</span>
@@ -158,13 +166,13 @@
                         </div>
                         <div class="filter">
                             <span>Фильтр:&nbsp; </span> 
-                            <a href="" class="active" data="all">Все</a>
+                            <a href=""  class="active" data="all">Все</a>
                             <span class="all badge badge-info"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all']; ?></span>,
                             &nbsp;
-                            <a href="" data="inProcess">В Процессе</a>
-                            <span class="inProcess badge badge-warning"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all'] - $result['data']['arrTaskOnDaysCount'][$k]['done']; ?></span>,
+                            <a href=""  data="inProcess">В Процессе</a>
+                            <span class="inProcess  badge badge-warning"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all'] - $result['data']['arrTaskOnDaysCount'][$k]['done']; ?></span>,
                             &nbsp;
-                            <a href="" data="completed">Выполненные</a>
+                            <a href=""  data="completed">Выполненные</a>
                             <span class="completed badge badge-success"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['done']; ?></span>
                             
                         </div>

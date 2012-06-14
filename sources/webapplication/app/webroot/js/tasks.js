@@ -199,13 +199,13 @@ function futureTasks(data){
     var listUl = $('#future ul[date="future"]');
     listUl.empty();
     $.each(data,function(index, value) {
-        if(+value.length){
-            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'">'+index+'</h3>');
+        if(+value.list.length){
+            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span>'+index+'</span> - <span class"">'+value.weekDay+'</span></h3>');
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
-            initDayClick(day);
+            initDayClick(day.children('span:first'));
             listUl.append(day);   
         }
-        $.each(value,function(index, value) {
+        $.each(value.list,function(index, value) {
             listUl.append( AddTask(value) );
             initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
             initEditAble("li[id='"+value.Task.id+"'] .editable");
@@ -218,13 +218,13 @@ function expiredTasks(data){
     var listUl = $('#expired ul[date="expired"]');
     listUl.empty();
     $.each(data,function(index, value) {
-        if(+value.length){
-            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'">'+index+'</h3>');
+        if(+value.list.length){
+            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span>'+index+'</span> - <span class"">'+value.weekDay+'</span></h3>');
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
-            initDayClick(day);
+            initDayClick(day.children('span:first'));
             listUl.append(day);   
         }
-        $.each(value,function(index, value) {
+        $.each(value.list,function(index, value) {
             listUl.append( AddTask(value) );
             initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
             initEditAble("li[id='"+value.Task.id+"'] .editable");
@@ -238,13 +238,13 @@ function completedTasks(data){
     var task, priority, time, timeend;
     listUl.empty();
     $.each(data,function(index, value) {
-        if(+value.length){
-            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'">'+index+'</h3>');
+        if(+value.list.length){
+            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span>'+index+'</span> - <span class"">'+value.weekDay+'</span></h3>');
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
-            initDayClick(day);
+            initDayClick(day.children('span:first'));
             listUl.append(day);   
         }
-        $.each(value,function(index, value) {
+        $.each(value.list,function(index, value) {
             priority = +value.Task.priority ? 'important' : '';
             time = value.Task.time ?  value.Task.time.slice(0,-3) : '';
             timeend = value.Task.timeend ?  value.Task.timeend.slice(0,-3) : ''; 
@@ -257,6 +257,10 @@ function completedTasks(data){
             
         });
     });
+}
+
+function dayStyle(date){
+    
 }
 
 //----------------------------------
@@ -385,7 +389,7 @@ function scrAddDay(date){
     var newTabContent = '<div class="tab-pane" id="'+date+'"> '+
                     '<div class="row"> '+ 
                         '<div class="listTask"> '+
-                            '<h3 class="label label-info margin-bottom10">'+date+'<img class="print" src="./img/print.png"/></h3> '+
+                            '<h3 class="label label-info margin-bottom10">'+date+'<span class="weekday"></span><img class="print" src="./img/print.png"/></h3> '+
                             '<div class="well form-inline"> '+
                                 '<div class="input-append"> '+
                                     '<input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>'+
@@ -400,7 +404,7 @@ function scrAddDay(date){
                                     '0'+
                                 '</span>, '+
                                 '&nbsp; '+
-                                '<a href="" data="inProcess">В Процессе</a> '+                          
+                                '<a href=""  data="inProcess">В Процессе</a> '+                          
                                 '<span class="inProcess badge badge-warning"> '+
                                     '0'+
                                 '</span>, '+
@@ -463,6 +467,7 @@ function onAddDay(data){
     list.siblings('.filter').find('span.all').text(data.data.listCount.all);
     list.siblings('.filter').find('span.inProcess').text(data.data.listCount.all - data.data.listCount.done);
     list.siblings('.filter').find('span.completed').text(data.data.listCount.done);
+    list.parent().find('.weekday').text(" - "+data.data.weekDay);
     if(!$.isEmptyObject(data.data.day) && +data.data.day[data.data.date][0].Day.rating){
         $(".ratingDay input[date='"+data.data.date+"']").attr('checked','checked');
     }

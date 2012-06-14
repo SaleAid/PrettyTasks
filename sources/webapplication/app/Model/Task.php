@@ -182,7 +182,7 @@ class Task extends AppModel {
         ),
     );
     private $_originData = array();
-
+    
     //------------------------------
     public function get($task_id) {
         $this->contain();
@@ -557,6 +557,7 @@ class Task extends AppModel {
                         ));
         foreach($tasks as $item){
             $result[$item['Task']['date']][] = $item;
+            //$result[$item['Task']['date']]['weekDay'] = $this->getWeekDay(CakeTime::format('l', time($item['Task']['date'])));
         }
         return $result;
     }
@@ -640,4 +641,18 @@ class Task extends AppModel {
         unset($config['day'][array_search($date, $config['day'])]);
         return $this->User->setConfig($user_id, $config);
     }
+
+
+    public function getWeekDay($index){
+        $weekday = array(
+                        'Sunday' => __('Sunday', true),
+                        'Monday' => __('Monday', true),
+                        'Tuesday' => __('Tuesday', true),
+                        'Wednesday' => __('Wednesday', true),
+                        'Thursday' => __('Thursday', true),
+                        'Friday' => __('Friday', true),
+                        'Saturday' => __('Saturday', true)
+                        );
+        return $weekday[$index]; 
+}
 }

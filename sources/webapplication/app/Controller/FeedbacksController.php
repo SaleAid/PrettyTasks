@@ -13,29 +13,41 @@ class FeedbacksController extends AppController {
         );
     }
 
-    function beforeFilter() {
+    public function beforeFilter() {
         $this->Auth->allow($this->_getAllowedActions());
         parent::beforeFilter();
     }
 
-    function add() {
-        if (! empty($this->data)) {
-            $this->Feedback->create();
+    public function add() {
+        if (! empty($this->request->data)) {
             $feed['Feedback']['lang'] = Configure::read('Config.language');
-            $feed['Feedback']['email'] = $this->data['Feedback']['email'];
-            $feed['Feedback']['name'] = $this->data['Feedback']['name'];
+            $feed['Feedback']['category'] = $this->data['Feedback']['category'];
             $feed['Feedback']['status'] = 1;
-            $feed['Feedback']['subject'] = $this->data['Feedback']['subject'];
-            $feed['Feedback']['message'] = $this->data['Feedback']['message'];
+            $feed['Feedback']['subject'] = $this->request->data['Feedback']['subject'];
+            $feed['Feedback']['message'] = $this->request->data['Feedback']['message'];
             $feed['Feedback']['processed'] = 0;
             $feed['Feedback']['user_id'] = $this->Auth->user('id');
             if ($this->Feedback->save($feed)) {
-                $this->Session->setFlash(sprintf(__('Ваше сообщение было сохранено', true), 'feedback'));
+                $this->Session->setFlash(__('Ваше сообщение было сохранено', true), 'alert', array(
+                            'class' => 'alert-success'
+                        ));
                 $this->redirect(array(
                     'action' => 'add'
                 ));
             } else {
-                $this->Session->setFlash(sprintf(__('Ваше сообщение не удалось сохранить. Попробуйте снова.', true), 'feedback'));
+                $messages ='';
+                foreach($this->Feedback->validationErrors as $items){
+                    if(is_array($items)){
+                        foreach($items as $item){
+                            if(!empty($item)){
+                                $messages = $messages.$item.'<br>';
+                            }
+                        }
+                    }
+                }
+            $this->Session->setFlash(__($messages.'Ваше сообщение не удалось сохранить. Попробуйте снова.', true), 'alert', array(
+                                    'class' => 'alert-error'
+            ));    
             }
         }
     }

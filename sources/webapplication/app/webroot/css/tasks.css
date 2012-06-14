@@ -48,6 +48,7 @@ div.well{
 }
 .filter{
     float: left;
+    width: 400px;
     margin-bottom: 10px;
 }
 .filter a {
@@ -73,6 +74,15 @@ div.well{
 }
 .margin-bottom10{ margin-bottom: 10px;}
 
+
+.italic {
+    font-weight: normal;
+    font-style: italic;
+}
+.underline{
+    font-weight: normal;
+    
+}
 .print{
     float: right;
     margin: 0 7px 4px 0 ;
@@ -85,13 +95,10 @@ div.well{
 
 }
 
-
 .sortable li span { 
     vertical-align: middle;
     margin-right: 2px; 
 }
-
-
 
 .editable{
     display: inline-block;
@@ -138,9 +145,7 @@ div.well{
     display: none;
 }
 .hover {
-    
     background-color: silver;
-    
 }
 .tab2{
     color: red;
@@ -189,14 +194,14 @@ div.jGrowl div.alert {
     color: yellow;
 }
 div.jGrowl.custom {
-	right: 				0px;
-	top: 				25px;
+	right: 0px;
+	top: 25px;
 }
- .day{
+.day{
     margin-top: 4px;
     text-decoration: underline;
 }
- .day:hover{
+.day:hover{
     cursor: pointer;
     color: silver;
     

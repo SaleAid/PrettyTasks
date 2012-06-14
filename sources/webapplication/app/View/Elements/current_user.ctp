@@ -1,3 +1,6 @@
+<?php if(!empty($currentUser)):  ?>    
+    <?php echo $this->Html->link('Feedback', array('controller' => 'feedbacks', 'action' => 'add'),array('class'=> 'btn btn-primary')); ?>
+<?php endif; ?>
 <div class="pull-right">
     <img class="pull-left ajaxLoader hide" src="/img/ajax-loader.gif"/>
     <div class="btn-group pull-right">

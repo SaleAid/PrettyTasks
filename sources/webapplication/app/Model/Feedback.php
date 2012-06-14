@@ -1,6 +1,8 @@
 <?php
 class Feedback extends AppModel {
+    
     public $name = 'Feedback';
+    
     public $validate = array(
         'lang' => array(
             'notempty' => array(
@@ -9,11 +11,12 @@ class Feedback extends AppModel {
                 )
             )
         ), 
-        'email' => array(
-            'email' => array(
+        'category' => array(
+            'notempty' => array(
                 'rule' => array(
-                    'email'
-                )
+                    'notempty'
+                ),
+                'message' => 'Please select a category'
             )
         ), 
         'status' => array(
@@ -27,7 +30,16 @@ class Feedback extends AppModel {
             'notempty' => array(
                 'rule' => array(
                     'notempty'
-                )
+                ),
+                'message' => 'Please enter the subject'
+            )
+        ),
+        'message' => array(
+            'notempty' => array(
+                'rule' => array(
+                    'notempty'
+                ),
+                'message' => 'Please enter the message'
             )
         ), 
         'processed' => array(

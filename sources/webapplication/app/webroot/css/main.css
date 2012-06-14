@@ -106,3 +106,9 @@ footer .right{ text-align:right; }
     margin: 8px 5px 0 0 ;
 }
 
+.brand
+{
+  background: url(../img/brand.png) no-repeat left center;
+  height: 20px;
+  width: 150px;
+}

@@ -90,7 +90,17 @@ class TasksController extends AppController {
                     );
                 }
             }
+            if(isset($result['data'])){
+                foreach($result['data'] as $key => $value){
+                    if($key){
+                        $data[$key]['weekDay'] = $this->Task->getWeekDay(CakeTime::format('l', $key));
+                        $data[$key]['list'] = $value ;    
+                    }
+                }   
+            }
         }
+        unset($result['data']);
+        $result['data'] = $data;
         $result['action'] = 'getTasksByType';
         $this->set('result', $result);
         $this->set('_serialize', array(
@@ -419,6 +429,7 @@ class TasksController extends AppController {
             $result['data']['list'] = $task;
             
             $result['data']['date'] = $this->request->data['date'];
+            $result['data']['weekDay'] = $this->Task->getWeekDay(CakeTime::format('l', $this->request->data['date']));
             $result['data']['day'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $this->request->data['date']);
             $result['message'] = array(
                 'type' => 'success', 
