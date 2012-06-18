@@ -2,73 +2,59 @@
 echo $this->Html->docType('html5');
 ?>
 
+<html>
 <head>
-    <?php
-    echo $this->Html->charset();
-    ?>
-    
-    <title><?php
-    echo $title_for_layout;
-    ?></title>
+<?php
+echo $this->Html->charset();
+?>
+<title><?php
+echo $title_for_layout;
+?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
-    
-    <?php
-    echo $this->Html->meta('icon');
-    ?>
+<?php
+echo $this->Html->meta('icon');
+?>
     
      
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     
-    <?php
-    echo $this->Html->css('bootstrap');
-    ?>
-   
-    <?php
-    echo $this->Html->css('main.' . Configure::read('App.version'))?>
-   
-    <?php
-    echo $this->fetch('toHead');
-    echo $scripts_for_layout;
-    ?>
+<?php
+echo $this->Html->css('bootstrap');
+echo $this->Html->css('main.' . Configure::read('App.version'));
+echo $this->fetch('toHead');
+echo $scripts_for_layout;
+?>
     
-  </head>
-
+</head>
 <body>
 <div id="wrapper-all">
-<?php
-echo $this->element('main_menu');
-?> 
+    <?php
+    echo $this->element('main_menu');
+    ?> 
     <div id="wrapper-content">
-<div id="wrapper">
-<div class="container">
-<div class="row-fluid">
-        <?php
-        echo $this->element('user_menu');
-        ?> 
-        
-        <div class="span9 ">
-            <?php
-            echo $this->Session->flash('auth');
-            ?>
-
-            <?php
-            echo $this->Session->flash();
-            ?>
-            
-            <?php
-            echo $content_for_layout;
-            ?>
-        
+        <div id="wrapper">
+            <div class="container">
+                <div class="row-fluid">
+                    <?php
+                    echo $this->element('user_menu');
+                    ?> 
+                
+                    <div class="span9 ">
+                        <?php
+                        echo $this->Session->flash('auth');
+                        echo $this->Session->flash();
+                        echo $content_for_layout;
+                        ?>
+                    </div>
+                </div>
+            </div>
         </div>
-</div>
-<!--/row--></div>
-</div>
-</div>
+    </div>
 </div>
 
 <?php
@@ -86,7 +72,7 @@ echo $this->element('ga', array(), array(
 ));
 ?>
    
-  </body>
+</body>
 </html>
 
 <?php
