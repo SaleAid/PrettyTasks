@@ -16,28 +16,27 @@
 					</div> 
 
 					<div class="span3">
-						<h2>Social Media</h2>
-						<ul>
-							<li><a href="http://www.facebook.com/">Facebook</a></li>
-							<li><a href="http://twitter.com/">Twitter</a></li>
-							<li><a href="https://plus.google.com">Google Plus</a></li>
-						</ul>
-
 						<h2>Misc</h2>
 						<ul>
 							<li><?php echo $this->Html->link(__('Privacy Policy'), array('controller' => 'Pages', 'action' => 'view', 'privacy-policy'));?></li>
 							<li><?php echo $this->Html->link(__('Terms and Conditions'), array('controller' => 'Pages', 'action' => 'view', 'terms-and-conditions'));?></li>
 						</ul>
+						
+						<h2>To bloggers</h2>
+						<ul>
+                           <li><a href="#">Welcome</a></li>
+                           <li><a href="#">Benefits</a></li>
+    					</ul>						
 					</div> 
 
 					<div class="span3">
-						<h2>Bloggers about us</h2>
+						<h2>Social Media</h2>
 						<ul>
-                           <li><a href="#">On habrahabr</a></li>
-                           <li><a href="#">On techcrunch</a></li>
-                           <li><a href="#">On ReadWrite Web</a></li>
-                           <li><a href="#">On Personal blogs</a></li>
-    					</ul>
+							<li><a href="http://www.facebook.com/">Facebook</a></li>
+							<li><a href="http://twitter.com/">Twitter</a></li>
+							<li><a href="https://plus.google.com">Google Plus</a></li>
+							<li><a href="#">Bloggers about us</a></li>
+						</ul>
 					</div> 
 					
 					<div class="span3">
@@ -46,7 +45,6 @@
                            <li><a href="#">On twitter</a></li>
                            <li><a href="#">On facebook</a></li>
                            <li><a href="#">On google +</a></li>
-                           <li><a href="#">On livejournal</a></li>
     					</ul>
 					</div> 
 					
