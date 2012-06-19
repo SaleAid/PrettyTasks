@@ -1,5 +1,4 @@
 <?php if(!empty($currentUser)):  ?>    
-    <?php echo $this->Html->link(__('Feedback'), array('controller' => 'feedbacks', 'action' => 'add'),array('class'=> 'btn btn-primary')); ?>
     <?php echo $this->Html->link(__('Invite friends'), array('controller' => 'invitations', 'action' => 'add'),array('class'=> 'btn btn-danger')); ?>
 <?php endif; ?>
 
@@ -8,8 +7,10 @@
     <div class="btn-group pull-right">
      <?php if(!empty($currentUser)):  ?>
      <?php echo $this->Html->link($this->Html->tag('i', '',
-                 //array('class' => 'icon-user icon-white')). ' { '.$provider.' }' .$currentUser['User']['full_name']. ' ',
-                 array('class' => 'icon-user icon-white')). '  ' . ' ' .$currentUser['first_name']. ' ' .$currentUser['last_name'].' '.$this->Loginza->ico($provider),
+                 array('class' => 'icon-user icon-white')). '  ' . ' '
+                        .$this->Text->truncate($currentUser['first_name'],15 , array('ending' => '...','exact' => true)). ' '
+                        .$this->Text->truncate($currentUser['last_name'],15 , array('ending' => '...','exact' => true)).' '
+                        .$this->Loginza->ico($provider),
                  array('controller' => 'users', 'action' => 'profile'),array('escape' => false, 'class'=> 'btn btn-primary'));?>
       
       <a class="btn btn-primary dropdown-toggle " data-toggle="dropdown" href="#"><span class="caret"></span></a>

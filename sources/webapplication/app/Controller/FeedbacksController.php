@@ -34,19 +34,9 @@ class FeedbacksController extends AppController {
                         'action' => 'add'
                     ));
                 } else {
-                    $messages ='';
-                    foreach($this->Feedback->validationErrors as $items){
-                        if(is_array($items)){
-                            foreach($items as $item){
-                                if(!empty($item)){
-                                    $messages = $messages.$item.'<br>';
-                                }
-                            }
-                        }
-                    }
-                $this->Session->setFlash(__($messages.'Ваше сообщение не удалось сохранить. Попробуйте снова.', true), 'alert', array(
-                                        'class' => 'alert-error'
-                ));    
+                    $this->Session->setFlash(__('Ваше сообщение не удалось сохранить. Попробуйте снова.', true), 'alert', array(
+                                            'class' => 'alert-error'
+                    ));    
                 }
             }
         }

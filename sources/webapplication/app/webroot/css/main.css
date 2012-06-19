@@ -108,7 +108,30 @@ footer .right{ text-align:right; }
 
 .brand
 {
-  background: url(../img/brand.png) no-repeat left center;
+  background: url(../img/brand.png) no-repeat center center;
   height: 20px;
   width: 150px;
+}
+/*feedback*/
+#box{
+    position: fixed;
+    top: 150px;
+    margin-left: -46px;
+    height: 150px;
+    width: 40px;
+    background-color: #F7F7F7;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+      border-radius: 4px;
+}
+#feedback{
+    margin: 4px;
+    
+}
+#feedback:hover{
+  cursor: pointer;
+  opacity:0.6;
+  filter:alpha(opacity=60); 
+    
 }

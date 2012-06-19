@@ -10,6 +10,9 @@ jQuery(function($) {
       if(button.val() == hidden.val()) {
         button.addClass('active');
       }
+      if(button.hasClass('active')){
+        button.trigger('click');
+      }
     });
   });
 });

@@ -3,6 +3,9 @@
 /*
  * Please place your code below
  */
+a.brand{
+    display: block !important;
+}
  .print,
  .days,
  .filter,
@@ -18,4 +21,9 @@ footer .container{
 #wrapper{
     border: none !important;
 }
+.listTask h3{
+    text-shadow:none;
+    color: black;
+}
+
 

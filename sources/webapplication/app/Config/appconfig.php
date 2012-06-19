@@ -8,16 +8,16 @@
    Configure::write('Recaptcha.theme', 'white');
    Configure::write('Config.language', 'rus');
    
-   Configure::write('Site.name', 'BestTasks best task service');
+   Configure::write('Site.name', 'Pretty Tasks');
    Configure::write('Site.url', 'http://'.$_SERVER["HTTP_HOST"].'/');
-   Configure::write('Site.title', 'BestTasks');
-   Configure::write('Site.keywords', 'BestTasks, tasks, forget about milk');
-   Configure::write('Site.description', 'BestTasks is the best personal tasks management service');
+   Configure::write('Site.title', 'Pretty Tasks');
+   Configure::write('Site.keywords', 'Pretty Tasks, tasks, gtd, goals, aims, success, schedule, time management');
+   Configure::write('Site.description', 'Pretty Tasks is the prettiest personal tasks management service');
    
    Configure::write('User.default.beta', false);
    Configure::write('User.default.pro', false);
    
-   Configure::write('Email.global.from', 'noreplay@besttasks.com');
+   Configure::write('Email.global.from', 'noreply@besttasks.com');
    Configure::write('Email.global.format', 'html');
    Configure::write('Email.user.invitation.subject', __('Приглашение на сервис %s', Configure::read('Site.name')));
    Configure::write('Email.user.activateAccount.subject', __('Активация аккаунта на сервисе %s', Configure::read('Site.name')));

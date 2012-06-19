@@ -3,6 +3,7 @@ App::uses('Controller', 'Controller');
 
 class AppController extends Controller {
     public $helpers = array(
+        'Text',
         'Form', 
         'Html', 
         'Js',
