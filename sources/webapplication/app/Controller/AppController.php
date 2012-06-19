@@ -27,7 +27,7 @@ class AppController extends Controller {
                 'controller' => 'users', 
                 'action' => 'login'
             ), 
-            'authError' => 'You cannot access that action! ', 
+            'authError' => ' ', 
             'authorize' => array(
                 'Controller'
             ), 
@@ -121,7 +121,6 @@ class AppController extends Controller {
          */
         $this->__setTimeZone();
         $this->_checkMobile();
-        //$this->loadModel('User');
     }
 
     public function beforeRender() {

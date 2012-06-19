@@ -245,11 +245,11 @@
             <label class="control-label">Priority</label>
             <div class="controls">
               <label class="radio">
-                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                <input type="radio" name="priority" id="optionsRadios1" value="1" />
                 High
               </label>
               <label class="radio">
-                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                <input type="radio" name="priority" id="optionsRadios2" value="0"/>
                 Normal
               </label>
             </div>

@@ -221,10 +221,14 @@ class Task extends AppModel {
         $data[$this->alias]['title'] = $title;
         $data[$this->alias]['date'] = $date;
         $data[$this->alias]['time'] = $time;
-        if (strpos($title, '!') === false) {
-            $data[$this->alias]['priority'] = 0;
-        } else {
-            $data[$this->alias]['priority'] = 1;
+        if($priority == null){
+            if (strpos($title, '!') === false) {
+                $data[$this->alias]['priority'] = 0;
+            } else {
+                $data[$this->alias]['priority'] = 1;
+            }    
+        }else{
+            $data[$this->alias]['priority'] = $priority;
         }
         $data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
         if (! $date) {
@@ -441,12 +445,13 @@ class Task extends AppModel {
         return false;
     }
 
-    public function setEdit($title, $comment=null, $date=null, $time=null, $timeEnd=null, $done=null){
+    public function setEdit($title, $priority, $comment=null, $date=null, $time=null, $timeEnd=null, $done=null){
         $this->setDate($date)
              ->setTime($time, $timeEnd)
              ->setDone($done)
-             ->setTitle($title)
+             ->setTitle($title, $priority)
              ->setCommnet($comment);
+        //$this->data = $this->_prepareTask($user_id, $title, $date, $time, $order, $priority, $future, $checktime);
         return $this;
     }
     
@@ -479,13 +484,23 @@ class Task extends AppModel {
         return $this;
     }
 
-    public function setTitle($title) {
+    public function setTitle($title, $priority = null) {
         $this->data[$this->alias]['title'] = $title;
-        if (strpos($title, '!') === false) {
-            $this->data[$this->alias]['priority'] = 0;
-        } else {
-            $this->data[$this->alias]['priority'] = 1;
+        if($priority != null){
+            $this->data[$this->alias]['priority'] = $priority;
+        }else{
+            if (strpos($title, '!') === false) {
+                $this->data[$this->alias]['priority'] = 0;
+            } else {
+                $this->data[$this->alias]['priority'] = 1;
+            }
         }
+        $pattern = '/^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?/';
+        preg_match($pattern, $title, $matches);
+        if( isset($matches[0]) ){
+            $this->data[$this->alias]['time'] = $matches[0].':00';
+            $this->data[$this->alias]['title'] = substr($title,5);
+        }    
         return $this;
     }
     

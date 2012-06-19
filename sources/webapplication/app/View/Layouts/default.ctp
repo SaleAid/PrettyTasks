@@ -20,7 +20,7 @@ echo $this->Html->meta('icon');
 echo $this->Html->css('bootstrap');
 echo $this->Html->css('jquery.jgrowl');
 echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom');
-echo $this->Html->css('print' . Configure::read('App.version'), null, array(
+echo $this->Html->css('print.' . Configure::read('App.version'), null, array(
     'media' => 'print'
 ));
 echo $this->fetch('toHead');

@@ -365,6 +365,7 @@ class TasksController extends AppController {
         $expectedData = array(
             'id', 
             'title', 
+            'priority',
             'date', 
             'time',
             'timeEnd', 
@@ -380,6 +381,7 @@ class TasksController extends AppController {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
                 $task = $this->Task->setEdit($this->request->data['title'],
+                                             $this->request->data['priority'],
                                              $this->request->data['comment'],
                                              $this->request->data['date'], 
                                              $this->request->data['time'], 

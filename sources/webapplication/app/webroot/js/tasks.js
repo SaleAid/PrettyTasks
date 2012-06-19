@@ -4,12 +4,13 @@ function getTaskForEdit(id){
 }
 function getTaskFromPage(id){
     var data = {
-        title:   $('#'+id).children('.editable').text(),
-        done:    $('#'+id).children('.done').is(":checked"),
-        date:    $('#'+id).attr('date'),
-        time:    $('#'+id).children('.time').text(),
-        timeEnd: $('#'+id).children('.timeEnd').text(),   
-        comment: $('#'+id).children('.comment').text(),   
+        title:    $('#'+id).children('.editable').text(),
+        priority: $('#'+id).hasClass('important') ? 1: 0,
+        done:     $('#'+id).children('.done').is(":checked"),
+        date:     $('#'+id).attr('date'),
+        time:     $('#'+id).children('.time').text(),
+        timeEnd:  $('#'+id).children('.timeEnd').text(),   
+        comment:  $('#'+id).children('.comment').text(),   
     };
     return data;
 }
@@ -98,7 +99,7 @@ function userEvent(action, data){
             taskChangeOrders(data.id, data.position);
         break; 
         case 'edit':
-            taskEdit(data.id, data.title, data.done, data.date, data.time, data.timeEnd, data.comment);
+            taskEdit(data.id, data.title, data.priority, data.done, data.date, data.time, data.timeEnd, data.comment);
         break;
         case 'addDay':
             taskAddDay(data.date);
@@ -276,6 +277,7 @@ function srcCountTasks(date){
     listTask.siblings('.filter').find('span.inProcess').text(all - done);
     listTask.siblings('.filter').find('span.completed').text(done);
 }
+
 //---------------setCommnetDay-----
 function taskSetCommentDay(date, comment){
     srvSetCommentDay(date, comment);    
@@ -525,30 +527,30 @@ function scrPriority(id, priority){
 
 
 //----------------edit----------
-function taskEdit(id, title, done, date, time, timeEnd, comment){
+function taskEdit(id, title, priority, done, date, time, timeEnd, comment){
 
-    scrEdit(id, title, done, date, time, timeEnd, comment);
-    srvEdit(id, title, done, date, time, timeEnd, comment);
+    scrEdit(id, title, priority, done, date, time, timeEnd, comment);
+    srvEdit(id, title, priority, done, date, time, timeEnd, comment);
 }
 function onEdit(data){
     if(data.success){
         $('#editTask').modal('hide');
-        scrSetTitle(data.data.Task.id, data.data.Task.title, data.data.Task.priority);
+        //scrSetTitle(data.data.Task.id, data.data.Task.title, data.data.Task.priority);
     }else {
         mesg(data.message);    
     }
     
 }
-function srvEdit(id, title, done, date, time, timeEnd, comment){
-    superAjax('/tasks/editTask.json',{id: id, title: title, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment});
+function srvEdit(id, title, priority, done, date, time, timeEnd, comment){
+    superAjax('/tasks/editTask.json',{id: id, title: title, priority: priority, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment});
 }
 
-function scrEdit(id, title, done, date, time, timeEnd, comment){
+function scrEdit(id, title, priority, done, date, time, timeEnd, comment){
     
     scrDragWithTime(id, date, time);
     scrDate(id,date);
     scrSetDone(id,done);
-    scrSetTitle(id, title, 0);
+    scrSetTitle(id, title, priority);
     scrTime(id, time, timeEnd);
     
  
@@ -717,6 +719,11 @@ function taskSetTitle(id, title){
 }
 function onSetTitle(data){
 	scrSetTitle(data.data.Task.id, data.data.Task.title, data.data.Task.priority);
+    if(data.data.Task.time && $("li[id='"+data.data.Task.id+"']").find('.time').text() != data.data.Task.time.slice(0,-3)){
+        $("li[id='"+data.data.Task.id+"']").addClass('currentTask');
+        scrDragWithTime(data.data.Task.id, data.data.Task.date, data.data.Task.time);
+        $("li[id='"+data.data.Task.id+"']").find('.time').text(data.data.Task.time.slice(0,-3));
+    }
     if(!data.success){
         mesg(data.message);    
     }
@@ -854,6 +861,12 @@ function initRatingDay(element){
 function initEditTask(element){
      $(element).on("click", function(){
             var task = getTaskForEdit($(this).parent().attr('id'));
+            var $priority = $('input:radio[name="priority"]');
+            if(+task.priority){
+                $priority.filter('[value="1"]').attr('checked', true);
+            }else{
+                $priority.filter('[value="0"]').attr('checked', true);
+            }
             $(this).parent().addClass('currentTask');
             $('#editTask').attr('task_id', $(this).parent().attr('id'));
             $('#editTask').find('#eTitle').val(task.title);
@@ -891,8 +904,6 @@ function initCreateTask(element){
         var code = (e.keyCode ? e.keyCode : e.which);
         if(code == 13) {
             var title = $(this).val();
-            //var time = title.match( /^([01]\d|2[0-3]):?([0-5]\d)/ );
-            //console.log(time);
             var date = $(this).parent().parent().siblings("ul").attr('date');
             if(date == 'planned'){
                 date = '';
@@ -1101,12 +1112,14 @@ $(function(){
     $("#eSave").click(function(){
             var id = $('#editTask').attr('task_id');
             var title = $.trim($('#editTask').find('#eTitle').val());
+            var priority = $.trim($('input:radio[name="priority"]:checked', '#editTask').val());
+            console.log(priority);
             var done = $.trim($('#editTask').find('#eDone').is(":checked")? 1: 0);
             var date = $.trim($( "#eDate" ).val());
             var time = $.trim($('#eTime').val());
             var timeEnd = $.trim($('#eTimeEnd').val());
-            var comment = $('#eComment').val();
-            userEvent('edit',{id: id,title: title, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment });
+            var comment = $.trim($('#eComment').val());
+            userEvent('edit',{id: id,title: title, priority: priority, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment });
     });
     
     $("#eCommentDaySave").click(function(){

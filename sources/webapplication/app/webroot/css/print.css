@@ -15,7 +15,8 @@ a.brand{
 #reformal_tab, 
 #ue-feedback-tab, 
 .furrghtd,
-footer .container{
+footer .container,
+#box{
   display: none;
 }
 #wrapper{
