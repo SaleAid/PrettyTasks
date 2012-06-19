@@ -195,6 +195,9 @@
                                     <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                                 </li>
                             <?php endforeach;?>
+                            <div class ="alert alert-info">
+                            <strong>О-о-о!</strong> Ты еще не добавил ни одной задачи. Не спи! Иди к успеху!<br/><br/><br/>
+                            </div>
                         </ul>
                     </div>
                    
