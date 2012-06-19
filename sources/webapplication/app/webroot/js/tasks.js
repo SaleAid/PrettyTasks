@@ -200,7 +200,7 @@ function futureTasks(data){
     listUl.empty();
     $.each(data,function(index, value) {
         if(+value.list.length){
-            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span>'+index+'</span> - <span class"">'+value.weekDay+'</span></h3>');
+            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span >'+value.weekDay+'</span></h3>');
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
             initDayClick(day.children('span:first'));
             listUl.append(day);   
@@ -219,7 +219,7 @@ function expiredTasks(data){
     listUl.empty();
     $.each(data,function(index, value) {
         if(+value.list.length){
-            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span>'+index+'</span> - <span class"">'+value.weekDay+'</span></h3>');
+            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class"">'+value.weekDay+'</span></h3>');
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
             initDayClick(day.children('span:first'));
             listUl.append(day);   
@@ -239,7 +239,7 @@ function completedTasks(data){
     listUl.empty();
     $.each(data,function(index, value) {
         if(+value.list.length){
-            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span>'+index+'</span> - <span class"">'+value.weekDay+'</span></h3>');
+            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class"">'+value.weekDay+'</span></h3>');
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
             initDayClick(day.children('span:first'));
             listUl.append(day);   

@@ -39,12 +39,14 @@ echo $scripts_for_layout;
     <div id="wrapper-content">
         <div id="wrapper">
             <div class="container">
+            <?php echo $this->element('box', array(), array('cache' => array('key' => 'feedback', 'config' => 'elements'))); ?>
                 <div class="row-fluid">
                     <?php
                     echo $this->element('user_menu');
                     ?> 
                 
                     <div class="span9 ">
+                        
                         <?php
                         echo $this->Session->flash('auth');
                         echo $this->Session->flash();

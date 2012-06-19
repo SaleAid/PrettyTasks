@@ -20,7 +20,7 @@ echo $this->Html->meta('icon');
 echo $this->Html->css('bootstrap');
 echo $this->Html->css('jquery.jgrowl');
 echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom');
-echo $this->Html->css('print', null, array(
+echo $this->Html->css('print' . Configure::read('App.version'), null, array(
     'media' => 'print'
 ));
 echo $this->fetch('toHead');
@@ -40,27 +40,18 @@ echo $scripts_for_layout;
     <div id="wrapper-content">
         <div id="wrapper">
             <div class="container">
-<<<<<<< HEAD
-            <?php echo $this->element('feedback', array(), array('cache' => array('key' => 'feedback', 'config' => 'elements'))); ?>
-              
-                <?php echo $this->Session->flash(); ?>
-                    
-                <?php //echo $this->Session->flash('auth'); ?>
-        
-                <?php echo $content_for_layout; ?>
-                
-=======
-                          
+            
             <?php
             echo $this->Session->flash();
             echo $content_for_layout;
             ?>
-                            
->>>>>>> b66c9200fd3d019b2bae48136eb52513eea75964
+            <?php echo $this->element('box', array(), array('cache' => array('key' => 'feedback', 'config' => 'elements'))); ?>
             </div>
+            
         </div>
     </div>
 </div>
+
 <?php
 echo $this->element('footer');
 echo $this->Html->script('jquery-1.7.1.min');
@@ -75,20 +66,7 @@ echo $this->element('ga', array(), array(
     )
 ));
 ?> 
-
-<<<<<<< HEAD
-<?php echo $this->Html->script('main.'.Configure::read('App.version')); ?>
-
-<?php echo $this->fetch('toFooter'); ?>
- 
-<?php echo $this->element('ga', array(), array('cache' => array('key' => 'ga', 'config' => 'elements'))); ?>
-
- 
-
-  </body>
-=======
-</body>
->>>>>>> b66c9200fd3d019b2bae48136eb52513eea75964
+ </body>
 </html>
 
 <?php
