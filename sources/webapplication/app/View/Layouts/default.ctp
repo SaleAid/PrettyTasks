@@ -39,6 +39,7 @@
     <div id="wrapper-content">
         <div id="wrapper">
             <div class="container">
+            <?php echo $this->element('feedback', array(), array('cache' => array('key' => 'feedback', 'config' => 'elements'))); ?>
               
                 <?php echo $this->Session->flash(); ?>
                     
@@ -64,7 +65,9 @@
 
 <?php echo $this->fetch('toFooter'); ?>
  
-<?php echo $this->element('ga', array(), array('cache' => array('key' => 'ga', 'config' => 'elements'))); ?> 
+<?php echo $this->element('ga', array(), array('cache' => array('key' => 'ga', 'config' => 'elements'))); ?>
+
+ 
 
   </body>
 </html>
