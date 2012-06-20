@@ -115,6 +115,9 @@
                     <?php endforeach;?>
                 <?php endif;?>   
             </ul>
+            <div class ="alert alert-info emptyList <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])){echo 'hide';}?>">
+                <strong>О-о-о!</strong> <?php echo __('Здесь нет ни одной задачи! Запланируй здесь то, что не знаешь когда сделать. Поехать в Италию? Сходить в кино? Придет час, и ты это сделаешь. Воспользуйся замечательной функцией переноса задач. Все для тебя! Дерзай!');?>
+            </div>            
           </div>
           </div>
             </div>
@@ -124,6 +127,7 @@
                     <h3 class="margin-bottom10">Просроченные задачи</h3>
                     <ul class="sortable connectedSortable ui-helper-reset " date="expired">
                     </ul>
+                    <?php echo $this->element('empty_lists', array('type' => 'overdue', 'hide' => true));?>
                    </div>
               </div>
           </div>
@@ -133,7 +137,8 @@
                     <h3 class="margin-bottom10">Завершенные задачи</h3>
                     <ul class=" ui-helper-reset " date="completed">
                     </ul>
-                    </div>
+                    <?php echo $this->element('empty_lists', array('type' => 'completed', 'hide' => true));?>
+                  </div>
                 </div>
           </div>
           <div class="tab-pane" id="future">
@@ -142,16 +147,20 @@
                   <h3 class="margin-bottom10">Будущие задачи</h3>
                         <ul class="sortable connectedSortable ui-helper-reset " date="future">
                         </ul>
+                        <?php echo $this->element('empty_lists', array('type' => 'today_future', 'hide' => true));?>
                     </div>
                 </div>
           </div>
           <?php 
             foreach($result['data']['arrTaskOnDays'] as $k => $v):
             $weelDayStyle = '';
+            $type = 'today';
             if($k > $this->Time->format('Y-m-d', time())){
-                $weelDayStyle = 'underline';
+                $weelDayStyle = 'future';
+                $type = 'future';
             }elseif($k < $this->Time->format('Y-m-d', time())){
-                $weelDayStyle = 'italic';
+                $weelDayStyle = 'past';
+                $type = 'past';
             }
           ?>
             <div class="tab-pane <?php if($this->Time->isToday($k)):?>active<?php endif;?>" id="<?php echo $k; ?>" >
@@ -195,10 +204,8 @@
                                     <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                                 </li>
                             <?php endforeach;?>
-                            <div class ="alert alert-info">
-                            <strong>О-о-о!</strong> Ты еще не добавил ни одной задачи. Не спи! Иди к успеху!<br/><br/><br/>
-                            </div>
                         </ul>
+                        <?php echo $this->element('empty_lists', array('type' => $type, 'hide' => $result['data']['arrTaskOnDaysCount'][$k]['all']));?>
                     </div>
                    
                 </div>
@@ -209,7 +216,7 @@
     </div>  
 
 
-<!-- modal editTask --!>
+<!-- modal editTask -->
 <div id="editTask" class="modal hide fade in" style="display: none;">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
@@ -280,9 +287,9 @@
         <a href="" class="btn" data-dismiss="modal">Закрыть</a>
     </div>
 </div>
-<!-- End modal --!>
+<!-- End modal -->
 
-<!-- modal commentDay --!>
+<!-- modal commentDay -->
 <div id="commentDay" class="modal hide fade in" style="display: none;">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
@@ -300,7 +307,7 @@
         <a href="" class="btn" data-dismiss="modal">Закрыть</a>
     </div>
 </div>
-<!-- End modal --!>
+<!-- End modal -->
 
 
 

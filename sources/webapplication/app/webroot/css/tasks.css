@@ -75,11 +75,11 @@ div.well{
 .margin-bottom10{ margin-bottom: 10px;}
 
 
-.italic {
+.past {
     font-weight: normal;
     font-style: italic;
 }
-.underline{
+.future{
     font-weight: normal;
     
 }
@@ -241,4 +241,10 @@ div.jGrowl.custom {
 }
 #editTask .priority{
     
+}
+
+.emptyList{
+    font-size: 14px;
+    margin: 40px 10px;
+    padding: 20px 10px;
 }

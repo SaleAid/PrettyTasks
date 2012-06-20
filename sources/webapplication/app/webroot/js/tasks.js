@@ -214,10 +214,20 @@ function futureTasks(data){
             initEditTask("li[id='"+value.Task.id+"'] .editTask");
         });
     });
+    if(!+listUl.children('li').length){
+        listUl.siblings('.emptyList').removeClass('hide');
+    }else{
+        listUl.siblings('.emptyList').addClass('hide');
+    }
 }
 function expiredTasks(data){
     var listUl = $('#expired ul[date="expired"]');
     listUl.empty();
+    if($.isEmptyObject(data)){
+        listUl.siblings('.emptyList').removeClass('hide');
+    }else{
+        listUl.siblings('.emptyList').addClass('hide');
+    }
     $.each(data,function(index, value) {
         if(+value.list.length){
             day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class"">'+value.weekDay+'</span></h3>');
@@ -238,6 +248,11 @@ function completedTasks(data){
     var listUl = $('#completed ul[date="completed"]');
     var task, priority, time, timeend;
     listUl.empty();
+    if($.isEmptyObject(data)){
+        listUl.siblings('.emptyList').removeClass('hide');
+    }else{
+        listUl.siblings('.emptyList').addClass('hide');
+    }
     $.each(data,function(index, value) {
         if(+value.list.length){
             day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class"">'+value.weekDay+'</span></h3>');
@@ -276,6 +291,11 @@ function srcCountTasks(date){
     listTask.siblings('.filter').find('span.all').text(all);
     listTask.siblings('.filter').find('span.inProcess').text(all - done);
     listTask.siblings('.filter').find('span.completed').text(done);
+    if(!+all){
+        listTask.siblings('.emptyList').removeClass('hide');
+    }else{
+        listTask.siblings('.emptyList').addClass('hide');
+    }
 }
 
 //---------------setCommnetDay-----
@@ -424,7 +444,7 @@ function scrAddDay(date){
                             '</div> '+
                             '<div class="clear"></div> '+
                             '<ul class="sortable connectedSortable ui-helper-reset" date="'+date+'"> '+
-                                '<p class="loadContent" align=center> Loading content ...</p> '+
+                                '<p class="loadContent" align=center> <img src="/img/ajax-loader-content.gif"/></p> '+
                             '</ul> '+
                         '</div> '+
                     '</div> '+
@@ -465,11 +485,13 @@ function srvAddDay(date){
 
 function onAddDay(data){
     var list = $("ul[date='"+data.data.date+"']");
+    list.after(data.data.emptyList);
     list.children('.loadContent').remove();
     list.siblings('.filter').find('span.all').text(data.data.listCount.all);
     list.siblings('.filter').find('span.inProcess').text(data.data.listCount.all - data.data.listCount.done);
     list.siblings('.filter').find('span.completed').text(data.data.listCount.done);
     list.parent().find('.weekday').text(" - "+data.data.weekDay);
+    list.parent().find('.weekday').addClass(data.data.weelDayStyle);
     if(!$.isEmptyObject(data.data.day) && +data.data.day[data.data.date][0].Day.rating){
         $(".ratingDay input[date='"+data.data.date+"']").attr('checked','checked');
     }

@@ -36,7 +36,7 @@ class TasksController extends AppController {
             'result'
         ));
     }
-    
+     
     public function getOverdue(){
         $result = $this->_prepareResponse();
         $result['success'] = true;
@@ -90,6 +90,7 @@ class TasksController extends AppController {
                     );
                 }
             }
+            $data = array();
             if(isset($result['data'])){
                 foreach($result['data'] as $key => $value){
                     if($key){
@@ -429,10 +430,16 @@ class TasksController extends AppController {
             $result['data']['listCount']['done'] = count($done);
             $result['success'] = true;
             $result['data']['list'] = $task;
-            
             $result['data']['date'] = $this->request->data['date'];
             $result['data']['weekDay'] = $this->Task->getWeekDay(CakeTime::format('l', $this->request->data['date']));
             $result['data']['day'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $this->request->data['date']);
+            $result['data']['weelDayStyle'] = ($result['data']['date'] > CakeTime::format('Y-m-d', time())) ? 'future': 'past';
+            $this->layout = false; 
+            $view = new View($this, false);
+            $view->set('type', $result['data']['weelDayStyle']);
+            $view->set('hide', $result['data']['listCount']['all']);
+            $view->viewPath = 'Elements';
+            $result['data']['emptyList'] = $view->render('empty_lists');
             $result['message'] = array(
                 'type' => 'success', 
                 'message' => __('Задача успешно ...')
