@@ -147,7 +147,7 @@
                   <h3 class="margin-bottom10">Будущие задачи</h3>
                         <ul class="sortable connectedSortable ui-helper-reset " date="future">
                         </ul>
-                        <?php echo $this->element('empty_lists', array('type' => 'today_future', 'hide' => true));?>
+                        <?php echo $this->element('empty_lists', array('type' => 'future', 'hide' => true));?>
                     </div>
                 </div>
           </div>
