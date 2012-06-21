@@ -83,9 +83,11 @@ div.well{
     font-weight: normal;
     
 }
+
 .print{
+    display: inline-block;
     float: right;
-    margin: 0 7px 4px 0 ;
+    margin: 4px 7px 4px 0;
 }
 .print:hover, .help:hover{
     cursor: pointer;
@@ -102,7 +104,7 @@ div.well{
 
 .editable{
     display: inline-block;
-    width: 620px;
+    width: 615px;
     text-align: left;
     font-family: arial,sans-serif;
     /*font-weight: bold;*/
@@ -119,7 +121,7 @@ div.well{
 
 .editable form, .editable input {
     height: 26px !important;
-    width: 615px !important;
+    width: 610px !important;
     border: 0 !important;  
     margin: 0 0 0 1px !important;
     padding: 0 !important;
@@ -139,7 +141,7 @@ div.well{
 
 .time{
     display: inline-block;
-    width: 36px;
+    width: 30px;
 }
 .timeEnd{
     display: none;
@@ -152,6 +154,7 @@ div.well{
 }
 .addDay{
     color: green;
+    margin-bottom: 2px!important;
 }
 .addDay button{
     border: none !important;
@@ -247,4 +250,21 @@ div.jGrowl.custom {
     font-size: 14px;
     margin: 40px 10px;
     padding: 20px 10px;
+}
+.editTask, .deleteTask{
+    padding: 5px;   
+    cursor: pointer;
+}
+.move {
+    padding: 5px;   
+    cursor: move;
+}
+.inline-confirmation-confirm, .inline-confirmation-cancel{
+    cursor: pointer;
+}
+.inline-confirmation-block{
+    vertical-align:middle !important;
+}
+.title{
+    padding-left: 20px;
 }

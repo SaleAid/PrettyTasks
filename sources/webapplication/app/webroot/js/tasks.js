@@ -201,7 +201,7 @@ function futureTasks(data){
     listUl.empty();
     $.each(data,function(index, value) {
         if(+value.list.length){
-            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span >'+value.weekDay+'</span></h3>');
+            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class="future">'+value.weekDay+'</span></h3>');
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
             initDayClick(day.children('span:first'));
             listUl.append(day);   
@@ -209,9 +209,10 @@ function futureTasks(data){
         $.each(value.list,function(index, value) {
             listUl.append( AddTask(value) );
             initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
-            initEditAble("li[id='"+value.Task.id+"'] .editable");
+            //initEditAble("li[id='"+value.Task.id+"'] .editable");
             initDone("li[id='"+value.Task.id+"'] .done");
-            initEditTask("li[id='"+value.Task.id+"'] .editTask");
+            //initEditTask("li[id='"+value.Task.id+"'] .editTask");
+            $("li[id='"+value.Task.id+"'] .editTask").hide();
         });
     });
     if(!+listUl.children('li').length){
@@ -230,7 +231,7 @@ function expiredTasks(data){
     }
     $.each(data,function(index, value) {
         if(+value.list.length){
-            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class"">'+value.weekDay+'</span></h3>');
+            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class="past">'+value.weekDay+'</span></h3>');
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
             initDayClick(day.children('span:first'));
             listUl.append(day);   
@@ -238,9 +239,10 @@ function expiredTasks(data){
         $.each(value.list,function(index, value) {
             listUl.append( AddTask(value) );
             initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
-            initEditAble("li[id='"+value.Task.id+"'] .editable");
+            //initEditAble("li[id='"+value.Task.id+"'] .editable");
             initDone("li[id='"+value.Task.id+"'] .done");
-            initEditTask("li[id='"+value.Task.id+"'] .editTask");
+            //initEditTask("li[id='"+value.Task.id+"'] .editTask");
+            $("li[id='"+value.Task.id+"'] .editTask").hide();
         });
     });
 }
@@ -821,7 +823,7 @@ function AddTask(data){
     taskHtml = '<li id ="'+data.Task.id+'" class="'+setTime+' '+complete+' '+important+'" date="'+data.Task.date+'"> \n'+ 
                             time+'\n'+
                             timeEnd+'\n'+
-                            '<span><i class="icon-move"></i></span> \n'+
+                            '<span class="move"><i class="icon-move"></i></span> \n'+
                             '<input type="checkbox" class="done" '+checked+'/> \n' +
                             '<span class="editable ">'+data.Task.title+'</span> \n'+
                             '<span class="editTask"><i class="icon-pencil"></i></a></span> \n'+
@@ -975,7 +977,7 @@ function initSortable(element){
             opacity: 0.6, 
             cursor: 'move', 
             placeholder: "ui-state-highlight",
-            handle: 'span .icon-move',
+            handle: 'span.move',
             update : function(e, ui){
                 if(dropped){
                     $(this).sortable('cancel');
@@ -1116,7 +1118,6 @@ $(function(){
                     change: function(time) {
                         $('#eTimeEnd').timepicker('option', 'minTime', time, 'maxTime', '23:59').removeAttr('disabled');
                     },
-                    
     });
     
     $('#eTimeEnd').timepicker({
@@ -1135,7 +1136,6 @@ $(function(){
             var id = $('#editTask').attr('task_id');
             var title = $.trim($('#editTask').find('#eTitle').val());
             var priority = $.trim($('input:radio[name="priority"]:checked', '#editTask').val());
-            console.log(priority);
             var done = $.trim($('#editTask').find('#eDone').is(":checked")? 1: 0);
             var date = $.trim($( "#eDate" ).val());
             var time = $.trim($('#eTime').val());

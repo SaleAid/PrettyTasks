@@ -106,7 +106,7 @@
                         <li id ="<?php echo $item['Task']['id']; ?>" class=" <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?> " date="<?php echo $item['Task']['date'];?>">
                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
                             <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
-                            <span><i class="icon-move"></i></span>
+                            <span class="move"><i class="icon-move"></i></span>
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
                             <span class="editable <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo $item['Task']['title']; ?></span>
                             <span class="editTask"><i class="icon-pencil"></i></a></span>
@@ -166,7 +166,10 @@
             <div class="tab-pane <?php if($this->Time->isToday($k)):?>active<?php endif;?>" id="<?php echo $k; ?>" >
                 <div class="row">
                     <div class="listTask">
-                        <h3 class="label label-info margin-bottom10"><?php echo $k; ?> - <span class="<?php echo $weelDayStyle?>"><?php echo $weekday[$this->Time->format('l', $k, true)]; ?></span><img class="print" src="./img/print.png"/></h3>
+                        <div class="margin-bottom10">
+                        <img class="print" src="./img/print.png"/>
+                        <h3 class="label label-info" ><?php echo $k; ?> - <span class="<?php echo $weelDayStyle?>"><?php echo $weekday[$this->Time->format('l', $k, true)]; ?></span></h3>
+                        </div>
                         <div class="well form-inline">
                             <div class="input-append">
                                 <input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/><span class="add-on">?</span>
@@ -197,9 +200,9 @@
                                 <li id ="<?php echo $item['Task']['id']; ?>" class=" <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?><?php if($item['Task']['priority']):?>important<?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
                                     <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
                                     <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
-                                    <span><i class="icon-move"></i></span>
+                                    <span class="move"><i class="icon-move"></i></span>
                                     <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                                    <span class=" editable "><?php echo $item['Task']['title']; ?></span>
+                                    <span class="editable"><?php echo $item['Task']['title']; ?></span>
                                     <span class="editTask"><i class="icon-pencil"></i></span>
                                     <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                                 </li>
