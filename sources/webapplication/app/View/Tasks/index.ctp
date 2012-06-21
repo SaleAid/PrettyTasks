@@ -167,8 +167,8 @@
                 <div class="row">
                     <div class="listTask">
                         <div class="margin-bottom10">
-                        <img class="print" src="./img/print.png"/>
-                        <h3 class="label label-info" ><?php echo $k; ?> - <span class="<?php echo $weelDayStyle?>"><?php echo $weekday[$this->Time->format('l', $k, true)]; ?></span></h3>
+                            <img class="print" src="./img/print.png"/>
+                            <h3 class="label label-info" ><?php echo $k; ?> - <span class="<?php echo $weelDayStyle?>"><?php echo $weekday[$this->Time->format('l', $k, true)]; ?></span></h3>
                         </div>
                         <div class="well form-inline">
                             <div class="input-append">

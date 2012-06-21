@@ -413,7 +413,10 @@ function scrAddDay(date){
     var newTabContent = '<div class="tab-pane" id="'+date+'"> '+
                     '<div class="row"> '+ 
                         '<div class="listTask"> '+
-                            '<h3 class="label label-info margin-bottom10">'+date+'<span class="weekday"></span><img class="print" src="./img/print.png"/></h3> '+
+                            '<div class="margin-bottom10"> '+
+                            '<img class="print" src="./img/print.png"/> '+
+                            '<h3 class="label label-info">'+date+'<span class="weekday"></span></h3> '+
+                            '</div> '+
                             '<div class="well form-inline"> '+
                                 '<div class="input-append"> '+
                                     '<input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>'+
