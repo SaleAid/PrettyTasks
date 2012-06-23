@@ -8,7 +8,7 @@
         </a>
       <?php echo $this->Html->link(
                             '',
-                            array('controller' => 'tasks', 'action' => 'index'),
+                            array('controller' => 'Pages', 'action' => 'index'),
                             array('class' => 'brand')
       );?>
 

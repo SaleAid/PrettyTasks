@@ -183,6 +183,8 @@ class Task extends AppModel {
     );
     private $_originData = array();
     
+    private $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'done' ,'datedone');
+    
     //------------------------------
     public function get($task_id) {
         $this->contain();
@@ -530,7 +532,8 @@ class Task extends AppModel {
                                 'Task.user_id' => $user_id, 
                                 'Task.done' => 0, 
                                 'Task.date <' => date('Y-m-d')
-                            )
+                            ),
+                            'fields' => $this->_taskFields,
                         ));
     }
     
@@ -547,7 +550,8 @@ class Task extends AppModel {
                                 'Task.user_id' => $user_id, 
                                 'Task.done' => 0, 
                                 'Task.date <' => date('Y-m-d')
-                            )
+                            ),
+                            'fields' => $this->_taskFields,
                         ));
         foreach($tasks as $item){
             $result[$item['Task']['date']][] = $item;
@@ -568,11 +572,11 @@ class Task extends AppModel {
                                 'Task.user_id' => $user_id, 
                                 'Task.done' => 1, 
                                 //'Task.date <' => CakeTime::format('Y-m-d', time())
-                            )
+                            ),
+                            'fields' => $this->_taskFields,
                         ));
         foreach($tasks as $item){
             $result[$item['Task']['date']][] = $item;
-            //$result[$item['Task']['date']]['weekDay'] = $this->getWeekDay(CakeTime::format('l', time($item['Task']['date'])));
         }
         return $result;
     }
@@ -588,7 +592,8 @@ class Task extends AppModel {
                             'conditions' => array(
                                 'Task.user_id' => $user_id, 
                                 'Task.future' => 1
-                            )
+                            ),
+                            'fields' => $this->_taskFields,
                         ));
     }
 
@@ -613,7 +618,8 @@ class Task extends AppModel {
                                 'conditions' => array(
                                     'Task.user_id' => $user_id, 
                                     'Task.date' => $days
-                                )
+                                ),
+                                'fields' => $this->_taskFields,
                             ));
         foreach ( $days as $v ) {
             $data[$v] = array();
@@ -646,7 +652,8 @@ class Task extends AppModel {
                             'conditions' => array(
                                 'Task.user_id' => $user_id, 
                                 'Task.date' => $date
-                            )
+                            ),
+                            'fields' => $this->_taskFields,
                         ));
     }
 
@@ -669,5 +676,19 @@ class Task extends AppModel {
                         'Saturday' => __('Saturday', true)
                         );
         return $weekday[$index]; 
-}
+    }
+    public function updateTask(){
+        $save = $this->save();
+        if (is_array($save)){
+            foreach($save[$this->alias] as $key => $value){
+                if(!in_array($key, $this->_taskFields)){
+                    unset($save[$this->alias][$key]);
+                }
+            }
+            return $save;
+        }
+        else{
+            return false;
+        }
+    }
 }

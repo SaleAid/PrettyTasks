@@ -136,7 +136,7 @@ class TasksController extends AppController {
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                $task = $this->Task->setTitle($this->request->data['title'])->save();
+                $task = $this->Task->setTitle($this->request->data['title'])->updateTask();//save();
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;
@@ -174,9 +174,9 @@ class TasksController extends AppController {
             );
         } else {
             if (! empty($this->request->data['date'])) {
-                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->save();
+                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->updateTask();//save();
             } else {
-                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], null, null, null, 0, 1)->save();
+                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], null, null, null, 0, 1)->updateTask();//save();
             }
             if ($task) {
                 $result['success'] = true;
@@ -252,7 +252,7 @@ class TasksController extends AppController {
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                $task = $this->Task->setDone($this->request->data['done'])->save();
+                $task = $this->Task->setDone($this->request->data['done'])->updateTask();//save();
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;
@@ -294,7 +294,7 @@ class TasksController extends AppController {
             if ($task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
                 if ($this->Task->delete()) {
                     $result['success'] = true;
-                    $result['data'] = $task;
+                    //$result['data'] = $task;
                     $result['message'] = array(
                         'type' => 'success', 
                         'message' => __('Задача успешно удалена')
@@ -388,7 +388,7 @@ class TasksController extends AppController {
                                              $this->request->data['time'], 
                                              $this->request->data['timeEnd'], 
                                              $this->request->data['done']
-                                            )->save();
+                                            )->updateTask();//save();
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;

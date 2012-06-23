@@ -24,3 +24,8 @@ AddDefaultCharset UTF-8
 
 #    ExpiresActive On
 #    ExpiresDefault "access plus 10 years"
+
+AuthType Basic
+AuthName "Private zone."
+AuthUserFile /home/pubftp/test1/besttask/sources/webapplication/app/webroot/.htpasswd
+require valid-user
