@@ -81,7 +81,10 @@
           <div class="tab-pane" id="planned">
           <div class="row">
           <div class="listTask">
-            <h3 class="label label-info margin-bottom10">Задачи на будущие.</h3>
+            <div class="margin-bottom10">
+                <img class="print" src="./img/print.png"/>
+                <h3 class="label label-info">Задачи на будущее</h3>
+            </div>
             <div class="well form-inline">
                 <div class="input-append">
                     <input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/><span class="add-on">?</span>
@@ -124,7 +127,10 @@
           <div class="tab-pane" id="expired">
               <div class="row">
                   <div class="listTask">
-                    <h3 class="margin-bottom10">Просроченные задачи</h3>
+                  <div class="margin-bottom10">
+                    <img class="print" src="./img/print.png"/>
+                    <h3>Просроченные задачи</h3>
+                  </div>
                     <ul class="sortable connectedSortable ui-helper-reset " date="expired">
                     </ul>
                     <?php echo $this->element('empty_lists', array('type' => 'overdue', 'hide' => true));?>
@@ -134,7 +140,10 @@
           <div class="tab-pane" id="completed">
               <div class="row">
                   <div class="listTask">
-                    <h3 class="margin-bottom10">Завершенные задачи</h3>
+                  <div class="margin-bottom10">
+                    <img class="print" src="./img/print.png"/>
+                    <h3>Завершенные задачи</h3>
+                  </div>
                     <ul class=" ui-helper-reset " date="completed">
                     </ul>
                     <?php echo $this->element('empty_lists', array('type' => 'completed', 'hide' => true));?>
@@ -144,7 +153,10 @@
           <div class="tab-pane" id="future">
               <div class="row">
                   <div class="listTask">
-                  <h3 class="margin-bottom10">Будущие задачи</h3>
+                  <div class="margin-bottom10">
+                    <img class="print" src="./img/print.png"/>
+                    <h3>Будущие задачи</h3>
+                  </div>
                         <ul class="sortable connectedSortable ui-helper-reset " date="future">
                         </ul>
                         <?php echo $this->element('empty_lists', array('type' => 'future', 'hide' => true));?>

@@ -111,6 +111,10 @@ body {
     padding: 10px;
 }
 
+.thumbnails > li {
+    float: none;
+}
+
 .box_container h2 {
     font-size: 14px;
     line-height: 1.3;

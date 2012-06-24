@@ -95,6 +95,11 @@ class TasksController extends AppController {
                 foreach($result['data'] as $key => $value){
                     if($key){
                         $data[$key]['weekDay'] = $this->Task->getWeekDay(CakeTime::format('l', $key));
+                        if(CakeTime::isToday($key)){
+                            $data[$key]['weelDayStyle'] = '';
+                        }else{
+                            $data[$key]['weelDayStyle'] = ($key > CakeTime::format('Y-m-d', time())) ? 'future': 'past';
+                        }
                         $data[$key]['list'] = $value ;    
                     }
                 }   
@@ -136,7 +141,7 @@ class TasksController extends AppController {
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                $task = $this->Task->setTitle($this->request->data['title'])->updateTask();//save();
+                $task = $this->Task->setTitle($this->request->data['title'])->saveTask();
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;
@@ -174,9 +179,9 @@ class TasksController extends AppController {
             );
         } else {
             if (! empty($this->request->data['date'])) {
-                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->updateTask();//save();
+                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->saveTask();
             } else {
-                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], null, null, null, 0, 1)->updateTask();//save();
+                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], null, null, null, 0, 1)->saveTask();
             }
             if ($task) {
                 $result['success'] = true;
@@ -252,7 +257,7 @@ class TasksController extends AppController {
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                $task = $this->Task->setDone($this->request->data['done'])->updateTask();//save();
+                $task = $this->Task->setDone($this->request->data['done'])->saveTask();
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;
@@ -388,7 +393,7 @@ class TasksController extends AppController {
                                              $this->request->data['time'], 
                                              $this->request->data['timeEnd'], 
                                              $this->request->data['done']
-                                            )->updateTask();//save();
+                                            )->saveTask();
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;

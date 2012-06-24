@@ -1,6 +1,6 @@
 
 <div class="">
-  <img class="print" src="/img/start.gif"/>
+  <img  src="/img/start.gif"/>
 </div>
 <div class="row">
 				<div class="span4 box left">
@@ -12,7 +12,7 @@
                         <ul class="thumbnails">
                           <li class="">
                             <a href="#" class="thumbnail">
-                              <img style="margin:0" src="http://placehold.it/300x150" alt="" height="152" width="300">
+                              <img style="margin:0" src="http://placehold.it/300x200" alt="">
                             </a>
                           </li>
                         </ul>
@@ -35,7 +35,7 @@
                         <ul class="thumbnails">
                           <li class="">
                             <a href="#" class="thumbnail">
-                              <img style="margin:0" src="http://placehold.it/300x150" alt="" height="152" width="300">
+                              <img style="margin:0" src="http://placehold.it/300x200" alt="">
                             </a>
                           </li>
                         </ul>
@@ -59,7 +59,7 @@
                         <ul class="thumbnails">
                           <li class="">
                             <a href="#" class="thumbnail">
-                              <img style="margin:0" src="http://placehold.it/300x150" alt="" height="152" width="300">
+                              <img style="margin:0" src="http://placehold.it/300x200" alt="">
                             </a>
                           </li>
                         </ul>

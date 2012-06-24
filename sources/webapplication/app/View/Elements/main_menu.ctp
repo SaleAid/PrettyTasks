@@ -22,30 +22,30 @@
                 );?>    
           </li>
           <?php if ($isBetaUser):?>
-          <li class="<? if($this->params['action'] == "index" and $this->params['controller'] == "Calendar") echo 'active'; ?>">
+          <li class="<? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "calendar") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     'Calendar',
-                    array('controller' => 'Calendar', 'action' => 'index')
+                    array('controller' => 'calendar', 'action' => 'index')
                 );?>  
           </li>
           <?php endif;?>
-          <li class="<? if($this->params['action'] == "agenda" and $this->params['controller'] == "Tasks") echo 'active'; ?>">
+          <li class="<? if($this->params['action'] == "agenda" and strtolower($this->params['controller']) == "pasks") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     'Agenda',
-                    array('controller' => 'Tasks', 'action' => 'agenda')
+                    array('controller' => 'tasks', 'action' => 'agenda')
                 );?>
           </li>
           <?php endif;?>
-          <li class="<? if($this->params['action'] == "contact" and $this->params['controller'] == "Pages") echo 'active'; ?>">
+          <li class="<? if($this->params['action'] == "contact" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     'Contact',
-                    array('controller' => 'Pages', 'action' => 'contact')
+                    array('controller' => 'pages', 'action' => 'contact')
                 );?>
           </li>
-          <li class="<? if($this->params['action'] == "about" and $this->params['controller'] == "Pages") echo 'active'; ?>">
+          <li class="<? if($this->params['action'] == "about" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     'About',
-                    array('controller' => 'Pages', 'action' => 'about')
+                    array('controller' => 'pages', 'action' => 'about')
                 );?>
           </li>
         </ul>

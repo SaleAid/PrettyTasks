@@ -677,7 +677,7 @@ class Task extends AppModel {
                         );
         return $weekday[$index]; 
     }
-    public function updateTask(){
+    public function saveTask(){
         $save = $this->save();
         if (is_array($save)){
             foreach($save[$this->alias] as $key => $value){
@@ -691,4 +691,17 @@ class Task extends AppModel {
             return false;
         }
     }
+    //public function afterSave(){
+//        $data = array();
+//        $data = $this->data;
+//        if (is_array($data)){
+//            foreach($data[$this->alias] as $key => $value){
+//                if(!in_array($key, $this->_taskFields)){
+//                    unset($data[$this->alias][$key]);
+//                }
+//            }
+//            $this->data = $data;
+//        }
+//        
+//    }
 }

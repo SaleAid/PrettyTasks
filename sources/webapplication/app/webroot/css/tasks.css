@@ -55,7 +55,8 @@ div.well{
     text-decoration: underline;
 }
 .filter a.active {
-    color: silver;
+    color: black;
+    font-weight: bold;
     text-decoration:none;
     border-bottom: 1px dashed;
 }
@@ -104,7 +105,7 @@ div.well{
 
 .editable{
     display: inline-block;
-    width: 615px;
+    width: 610px;
     text-align: left;
     font-family: arial,sans-serif;
     /*font-weight: bold;*/
@@ -121,7 +122,7 @@ div.well{
 
 .editable form, .editable input {
     height: 26px !important;
-    width: 610px !important;
+    width: 605px !important;
     border: 0 !important;  
     margin: 0 0 0 1px !important;
     padding: 0 !important;
@@ -228,6 +229,7 @@ div.jGrowl.custom {
     font-weight: bold !important;
 }
 .inline-confirmation-block{
+    margin-left: 5px;
     vertical-align: top !important;
 }
 /*modal window*/
