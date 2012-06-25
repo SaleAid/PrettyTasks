@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  */
 class PagesController extends AppController {
 
-    public $currentLang = 'ru';
+    public $currentLang = '';
     
     public function beforeFilter(){
         parent::beforeFilter();
@@ -25,17 +25,23 @@ class PagesController extends AppController {
     }
     
     public function view(){
-        if(isset($this->request->pass[1])){
-            $this->currentLang = $this->request->pass[0];
-            $url = $this->request->pass[1];
+        $pass = $this->request->pass;
+        if(isset($pass[1]) and $this->_isLang($pass[0])){
+            $this->currentLang = $pass[0];
+            unset($pass[0]);
+            $url =  implode("/", $pass);
         }else{
-            $url = $this->request->pass[0];
-        }
+            $this->currentLang = Configure::read('Config.lang');
+            $url =  implode("/", $this->request->pass);
+        }    
         if(!$result = $this->Page->view($url, $this->currentLang)){
             throw new NotFoundException();
             //$this->render('/Errors/error404');
         }
         $this->set('page', $result['Page']);
-        
+    }
+    
+    private function _isLang($str){
+        return in_array($str, array('ru','en','ua'));
     }
 }

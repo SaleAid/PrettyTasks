@@ -7,7 +7,7 @@
    Configure::write('Recaptcha.privateKey', '6Lff1M4SAAAAAFbUUEYXP9c92v4fXvxf3m3BcBM3');
    Configure::write('Recaptcha.theme', 'white');
    Configure::write('Config.language', 'rus');
-   
+   Configure::write('Config.lang', 'ru');
    Configure::write('Site.name', 'Pretty Tasks');
    Configure::write('Site.url', 'http://'.$_SERVER["HTTP_HOST"].'/');
    Configure::write('Site.title', 'Pretty Tasks');

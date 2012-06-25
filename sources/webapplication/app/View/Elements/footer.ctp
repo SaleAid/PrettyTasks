@@ -24,7 +24,7 @@
 						
 						<h2>To bloggers</h2>
 						<ul>
-                           <li><a href="#">Welcome</a></li>
+                           <li><?php echo $this->Html->link(__('Welcome'), array('controller' => 'Pages', 'action' => 'view', 'to-bloggers'));?></li>
                            <li><a href="#">Benefits</a></li>
     					</ul>						
 					</div> 
