@@ -429,7 +429,7 @@ class TasksController extends AppController {
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
-            $task = $this->Task->getTasksForDay($this->Auth->user('id'), $this->request->data['date']);
+            $task = $this->Task->getTasksForDay($this->Auth->user('id'), CakeTime::format('Y-m-d',$this->request->data['date']));
             $done = array_filter($task, create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;'));
             $result['data']['listCount']['all'] = count($task);
             $result['data']['listCount']['done'] = count($done);

@@ -10,7 +10,7 @@ function getTaskFromPage(id){
         date:     $('#'+id).attr('date'),
         time:     $('#'+id).children('.time').text(),
         timeEnd:  $('#'+id).children('.timeEnd').text(),   
-        comment:  $('#'+id).children('.comment').text(),   
+        comment:  $('#'+id).children('.comment').text()   
     };
     return data;
 }
@@ -212,7 +212,7 @@ function futureTasks(data){
             //initEditAble("li[id='"+value.Task.id+"'] .editable");
             initDone("li[id='"+value.Task.id+"'] .done");
             //initEditTask("li[id='"+value.Task.id+"'] .editTask");
-            $("li[id='"+value.Task.id+"'] .editTask").hide();
+            listUl.find(" li[id='"+value.Task.id+"'] .editTask").hide();
         });
     });
     if(!+listUl.children('li').length){
@@ -240,9 +240,9 @@ function expiredTasks(data){
             listUl.append( AddTask(value) );
             initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
             //initEditAble("li[id='"+value.Task.id+"'] .editable");
-            initDone("li[id='"+value.Task.id+"'] .done");
+            initDone(" li[id='"+value.Task.id+"'] .done");
             //initEditTask("li[id='"+value.Task.id+"'] .editTask");
-            $("li[id='"+value.Task.id+"'] .editTask").hide();
+            listUl.find(" li[id='"+value.Task.id+"'] .editTask").hide();
         });
     });
 }
@@ -747,7 +747,7 @@ function taskSetTitle(id, title){
 function onSetTitle(data){
 	scrSetTitle(data.data.Task.id, data.data.Task.title, data.data.Task.priority);
     if(data.data.Task.time && $("li[id='"+data.data.Task.id+"']").find('.time').text() != data.data.Task.time.slice(0,-3)){
-        $("li[id='"+data.data.Task.id+"']").addClass('currentTask');
+        $("ul[date='"+data.data.Task.date+"']").find("li[id='"+data.data.Task.id+"']").addClass('currentTask');
         scrDragWithTime(data.data.Task.id, data.data.Task.date, data.data.Task.time);
         $("li[id='"+data.data.Task.id+"']").find('.time').text(data.data.Task.time.slice(0,-3));
     }
@@ -937,6 +937,8 @@ function initCreateTask(element){
             }
             userEvent('create', {title: title, date: date });
             $(this).val(null);
+            e.preventDefault();
+            return false;
         }
     });
 }
@@ -1051,6 +1053,16 @@ function initDayClick(element){
 function reload(){
     location.reload();
 }
+
+function isDate(value){
+    var isDate = false;
+    try{
+        $.datepicker.parseDate('yy-mm-dd', value);
+        isDate = true;
+    }
+    catch (e){}
+    return isDate;
+}
 //-----------------------------------------------------------------------
 var dropped = false;
 var countAJAX = 0;
@@ -1064,28 +1076,31 @@ $(function(){
      });
      
      $(window).hashchange( function(e){
-        if(window.location.hash != "") { 
-            var date = new Date(window.location.hash);
-            var hash = window.location.hash.slice(5);
+        if(location.hash != "") { 
+            var hash = location.hash.slice(5);
             var activeTab =  $('#main li.active a').attr('date');
             if(hash == activeTab) {return;}
-            if(date != 'Invalid Date' && hash != "planned"){
-                hash = $.datepicker.formatDate('yy-mm-dd', date);
+            if(isDate(hash)){
+                hash = $.datepicker.formatDate('yy-mm-dd',$.datepicker.parseDate('yy-mm-dd', hash));
                 userEvent('addDay',{date: hash});
             }else if(hash == "future" || hash == "expired" || hash == "completed"){
                 userEvent('getTasksByType', {type: hash});
                 $('#main a[href="#'+hash+'"]').tab('show');
-            }else{
+            }else if(hash == "planned"){
                 $('#main a[href="#'+hash+'"]').tab('show');    
+            }else{
+                var today = $.datepicker.formatDate('yy-mm-dd',new Date());
+                location.hash = 'day-'+today;
+                $('#main a[href="#'+today+'"]').tab('show');
             }
          } 
     })
   
     $(window).hashchange();
-    $.datepicker.setDefaults(
-        $.extend($.datepicker.regional["ru"])
-     );
-
+    //$.datepicker.setDefaults(
+//        $.extend($.datepicker.regional["ru"])
+//     );
+//
     setInterval(function() {
         checkLogin();
     }, 600000);
@@ -1120,19 +1135,19 @@ $(function(){
                     startHour: 6,
                     change: function(time) {
                         $('#eTimeEnd').timepicker('option', 'minTime', time, 'maxTime', '23:59').removeAttr('disabled');
-                    },
+                    }
     });
     
     $('#eTimeEnd').timepicker({
                     timeFormat: 'HH:mm',
                     maxTime: '23:59',
-                    interval: 15,
+                    interval: 15
     });
     
     $( "#eDate" ).datepicker({ 
                     dateFormat: 'yy-mm-dd',
                     showAnim: 'clip',
-                    minDate: 0,
+                    minDate: 0
     });
             
     $("#eSave").click(function(){
@@ -1164,7 +1179,7 @@ $(function(){
             showAnim: 'clip',
             onSelect: function(date) {
                 userEvent('addDay',{date: date});
-            },
+            }
         });
         if (dp.datepicker('widget').is(':hidden')) {
             dp.datepicker("show");
