@@ -71,6 +71,7 @@ body {
 }
 
 .box{
+   
    width: 308px;
    background-color: white;
     -webkit-border-radius: 5px;
@@ -122,11 +123,12 @@ body {
     margin: 0 0 9px;    
 }
 .box_container p {
-    font-size: 12px;
+    font-family: "Trebuchet MS","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 15px;
     margin: 0 0 9px;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     line-height: 21px;
-    font-weight: 300;        
+    font-weight: 300;  
+    text-align: justify;      
 }
 
 /* Footer

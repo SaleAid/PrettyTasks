@@ -3,10 +3,8 @@
 /*
  * Please place your code below
  */
-a.brand{
-    display: block !important;
-}
- .print,
+
+ .brand,
  .days,
  .filter,
  .well,
@@ -19,6 +17,9 @@ footer .container,
 #box{
   display: none;
 }
+.print{
+    display: none!important;
+}
 #wrapper{
     border: none !important;
 }
@@ -26,5 +27,10 @@ footer .container,
     text-shadow:none;
     color: black;
 }
-
+.print_brand{
+    display: block!important;
+    position: absolute;
+    right: 0;
+    top:0;
+}
 

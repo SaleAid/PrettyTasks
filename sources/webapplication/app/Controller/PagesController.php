@@ -6,8 +6,6 @@ App::uses('AppController', 'Controller');
  */
 class PagesController extends AppController {
 
-    public $currentLang = '';
-    
     public function beforeFilter(){
         parent::beforeFilter();
         $this->Auth->allow('*');
@@ -26,15 +24,8 @@ class PagesController extends AppController {
     
     public function view(){
         $pass = $this->request->pass;
-        if(isset($pass[1]) and in_array($pass[0], Configure::read('Config.lang.list'))){
-            $this->currentLang = $pass[0];
-            unset($pass[0]);
-            $url =  implode("/", $pass);
-        }else{
-            $this->currentLang = Configure::read('Config.lang.default');
-            $url =  implode("/", $pass);
-        }    
-        if(!$result = $this->Page->view($url, $this->currentLang)){
+        $url =  implode("/", $pass);
+        if(!$result = $this->Page->view($url, Configure::read('Config.language'))){
             throw new NotFoundException();
             //$this->render('/Errors/error404');
         }

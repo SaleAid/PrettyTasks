@@ -1,6 +1,6 @@
 <?php
 App::uses('Controller', 'Controller');
-
+App::uses('Sanitize', 'Utility');
 class AppController extends Controller {
     public $helpers = array(
         'Text',
@@ -77,8 +77,8 @@ class AppController extends Controller {
     protected function _checkMobile() {
         //TODO add smarty auto detection
         //$this->layout = 'default';
-        if ((isset($this->params['device']) and ($this->params['device'] == 'm'))) { // ||$this->RequestHandler->isMobile ()
-            $mobileViewFile = 'View' . DS . $this->name . '/mobile/' . Inflector::underscore($this->params['action']) . '.ctp';
+        if ((isset($this->request->params['device']) and ($this->request->params['device'] == 'm'))) { // ||$this->RequestHandler->isMobile ()
+            $mobileViewFile = 'View' . DS . $this->name . '/mobile/' . Inflector::underscore($this->request->params['action']) . '.ctp';
             if (file_exists(APP . DS . $mobileViewFile)) {
                 $this->layout = 'mobile';
                 $mobileView = $this->name . '/mobile';
@@ -119,8 +119,30 @@ class AppController extends Controller {
         //        );
         //  
          */
+        $this->_setLanguage();
         $this->__setTimeZone();
         $this->_checkMobile();
+        
+        
+           
+    }
+    
+    public function _setLanguage(){
+        if (isset($this->request->params['lang']) and array_key_exists($this->request->params['lang'], Configure::read('Config.langListURL'))) {
+            $arrLang = Configure::read('Config.langListURL');
+            Configure::write('Config.language', $arrLang[$this->request->params['lang']]);
+            Configure::write('Config.langURL', $this->request->params['lang']);
+        }else{
+            if(($this->request->params['controller'] != 'accounts' and $this->request->params['action'] != 'loginzalogin') 
+                and !$this->request->is('ajax')){
+                $this->redirect(DS.Configure::read('Config.langURL').$this->request->here);    
+            }
+        }
+        //debug(Configure::read('Config.language'));
+        //debug(Configure::read('Config.langURL'));
+        //pr($this->request->here);die;
+        
+        //pr($this->request->params);
     }
 
     public function beforeRender() {
@@ -149,9 +171,20 @@ class AppController extends Controller {
                 if (! isset($request[$value])) {
                     return false;
                 }
+                $request[$value] = Sanitize::clean($request[$value], array('encode' => true ,'remove_html' => true));
             }
         } else {
+            if($model){
+            $this->request->data[$model] = Sanitize::clean($request, array('encode' => true ,'remove_html' => true));
+            }else{
+                $this->request->data = Sanitize::clean($request, array('encode' => true ,'remove_html' => true));    
+            }
             return isset($request[$data]);
+        }
+        if($model){
+            $this->request->data[$model] = $request;
+        }else{
+                $this->request->data = $request;    
         }
         return true;
     }

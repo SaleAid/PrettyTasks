@@ -56,7 +56,6 @@ div.well{
 }
 .filter a.active {
     color: black;
-    font-weight: bold;
     text-decoration:none;
     border-bottom: 1px dashed;
 }
@@ -269,4 +268,7 @@ div.jGrowl.custom {
 }
 .title{
     padding-left: 20px;
+}
+.print_brand{
+    display: none;
 }

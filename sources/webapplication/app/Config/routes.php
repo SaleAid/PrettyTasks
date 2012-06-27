@@ -25,31 +25,42 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
-Router::connect('/', array(
-	'controller' => 'Pages', 'action' => 'index'
-), array(
-	'device' => '[m]{1}'
-));
-Router::connect('/:device', array(
+
+
+//Router::connect('/', array(
+//	'controller' => 'Pages', 'action' => 'index'
+//), array(
+//	'device' => '[m]{1}'
+//));
+Router::connect('/:lang/:device', array(
 	'controller' => 'Tasks', 'action' => 'index'
 ), array(
-	'device' => '[m]{1}'
+	'device' => '[m]{1}',
+    'lang' => '[a-z]{2}'
 ));
-Router::connect('/:device/:controller', array(
+Router::connect('/:lang/:device/:controller', array(
 	'action' => 'index'
 ), array(
-	'device' => '[m]{1}'
+	'device' => '[m]{1}',
+    'lang' => '[a-z]{2}'
 ));
-Router::connect('/:device/:controller/:action', array(), array(
-	'device' => '[m]{1}'
+Router::connect('/:lang/:device/:controller/:action', array(), array(
+	'device' => '[m]{1}',
+    'lang' => '[a-z]{2}'
 ));
-Router::connect('/:device/:controller/:action', array(), array(
-	'device' => '[m]{1}'
+Router::connect('/:lang/:device/:controller/:action', array(), array(
+	'device' => '[m]{1}',
+    'lang' => '[a-z]{2}'
 ));
+Router::connect('/:lang', array('controller' => 'tasks', 'action' => 'index'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/pages/*', array('controller' => 'pages', 'action' => 'view'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/:controller', array('action' => 'index'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/:controller/:action', array(), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/:controller/:action/*', array(), array('lang' => '[a-z]{2}'));
 //TODO Change it to /*
-Router::connect('/pages/*', array(
-	'controller' => 'Pages', 'action' => 'view'
-));
+//Router::connect('/pages/*', array(
+//	'controller' => 'Pages', 'action' => 'view'
+//));
 Router::parseExtensions('xml', 'json', 'xhtml', 'html');
 
 /**

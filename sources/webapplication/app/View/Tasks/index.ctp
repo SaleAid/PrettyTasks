@@ -82,7 +82,7 @@
           <div class="row">
           <div class="listTask">
             <div class="margin-bottom10">
-                <img class="print" src="./img/print.png"/>
+                <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print')); ?>
                 <h3 class="label label-info">Задачи на будущее</h3>
             </div>
             <div class="well form-inline">
@@ -128,7 +128,7 @@
               <div class="row">
                   <div class="listTask">
                   <div class="margin-bottom10">
-                    <img class="print" src="./img/print.png"/>
+                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print')); ?>
                     <h3>Просроченные задачи</h3>
                   </div>
                     <ul class="sortable connectedSortable ui-helper-reset " date="expired">
@@ -141,7 +141,7 @@
               <div class="row">
                   <div class="listTask">
                   <div class="margin-bottom10">
-                    <img class="print" src="./img/print.png"/>
+                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print')); ?>
                     <h3>Завершенные задачи</h3>
                   </div>
                     <ul class=" ui-helper-reset " date="completed">
@@ -154,7 +154,7 @@
               <div class="row">
                   <div class="listTask">
                   <div class="margin-bottom10">
-                    <img class="print" src="./img/print.png"/>
+                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print')); ?>
                     <h3>Будущие задачи</h3>
                   </div>
                         <ul class="sortable connectedSortable ui-helper-reset " date="future">
@@ -179,7 +179,7 @@
                 <div class="row">
                     <div class="listTask">
                         <div class="margin-bottom10">
-                            <img class="print" src="./img/print.png"/>
+                            <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print')); ?>
                             <h3 class="label label-info" ><?php echo $k; ?> - <span class="<?php echo $weelDayStyle?>"><?php echo $weekday[$this->Time->format('l', $k, true)]; ?></span></h3>
                         </div>
                         <div class="well form-inline">
@@ -313,7 +313,7 @@
     <div class="modal-body">
       <form class="form-horizontal">
         <fieldset>
-            <textarea  class="span6" id="eCommentDay" rows="4"></textarea>
+            <textarea  class="span7" id="eCommentDay" rows="9"></textarea>
         </fieldset>
       </form>
     </div>
@@ -324,5 +324,8 @@
 </div>
 <!-- End modal -->
 
+<!-- print_brand -->
+<?php echo $this->Html->image("brand.". Configure::read('App.version') .".png", array('class' => 'print_brand')); ?>
 
+<!-- empty messages list -->
 

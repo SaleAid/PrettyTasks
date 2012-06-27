@@ -19,9 +19,9 @@ class Task extends AppModel {
      */
     public $validate = array(
         'id' => array(
-            'alphanumeric' => array(
+            'numeric' => array(
                 'rule' => array(
-                    'alphanumeric'
+                    'numeric'
                 )
             )
         ),  //'message' => 'Your custom message here',
@@ -44,8 +44,8 @@ class Task extends AppModel {
             'notempty' => array(
                 'rule' => array(
                     'notempty'
-                ), 
-                'message' => 'Your custom message here'
+                ) 
+                //'message' => 'Your custom message here'
             )
         ),  //'allowEmpty' => false,
         //'required' => false,

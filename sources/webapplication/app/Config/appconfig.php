@@ -8,8 +8,10 @@
    Configure::write('Recaptcha.theme', 'white');
    Configure::write('Config.language', 'rus');
    
-   Configure::write('Config.lang.default', 'ru');
-   Configure::write('Config.lang.list', array('ru','en','ua'));
+   Configure::write('Config.langURL', 'ru');
+   Configure::write('Config.langListURL.ru', 'rus');
+   Configure::write('Config.langListURL.en', 'eng');
+   Configure::write('Config.langListURL.ua', 'ukr');
    
    Configure::write('Site.name', 'Pretty Tasks');
    Configure::write('Site.url', 'http://'.$_SERVER["HTTP_HOST"].'/');

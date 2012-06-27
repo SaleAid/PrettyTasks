@@ -414,7 +414,7 @@ function scrAddDay(date){
                     '<div class="row"> '+ 
                         '<div class="listTask"> '+
                             '<div class="margin-bottom10"> '+
-                            '<img class="print" src="./img/print.png"/> '+
+                            '<img class="print" src="/img/print.png"/> '+
                             '<h3 class="label label-info">'+date+'<span class="weekday"></span></h3> '+
                             '</div> '+
                             '<div class="well form-inline"> '+
@@ -497,6 +497,7 @@ function onAddDay(data){
     list.siblings('.filter').find('span.completed').text(data.data.listCount.done);
     list.parent().find('.weekday').text(" - "+data.data.weekDay);
     list.parent().find('.weekday').addClass(data.data.weelDayStyle);
+    initPrintClick(list.parent().find('.print'));
     if(!$.isEmptyObject(data.data.day) && +data.data.day[data.data.date][0].Day.rating){
         $(".ratingDay input[date='"+data.data.date+"']").attr('checked','checked');
     }
@@ -1049,6 +1050,12 @@ function initDayClick(element){
         userEvent('addDay',{date: date});
     });
 }
+function initPrintClick(element){
+    $(element).on('click', function(){
+        window.print();
+        return false;
+    });
+}
 
 function reload(){
     location.reload();
@@ -1070,10 +1077,7 @@ $(function(){
 
      
 
-     $('.print').click(function(){
-        window.print();
-        return false;
-     });
+
      
      $(window).hashchange( function(e){
         if(location.hash != "") { 
@@ -1122,6 +1126,7 @@ $(function(){
     initFilter('.filter a');
     initCommentDay('.days a[data="commentDay"]');
     initDayClick('.day');
+    initPrintClick('.print');
     
     $(".daysButton a").click(function(){
         var type = $(this).attr('date');
