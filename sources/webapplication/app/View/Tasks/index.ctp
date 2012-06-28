@@ -328,4 +328,6 @@
 <?php echo $this->Html->image("brand.". Configure::read('App.version') .".png", array('class' => 'print_brand')); ?>
 
 <!-- empty messages list -->
+<?php echo $this->element('empty_lists', array('type' => 'filterProgress', 'hide' => true));?>
+<?php echo $this->element('empty_lists', array('type' => 'filterCompleted', 'hide' => true));?>
 

@@ -18,10 +18,17 @@
         case 'future':
             $message = __('Здесь нет ни одной задачи! Запланируй себе задачи и иди к успеху с нами!');
             break;
+        case 'filterProgress':
+            $message = __('Здесь нет ни одной задачи! Ты крутой! Стремись почаще видеть эту надпись. Чем чаще ты ее видешь, тем успешнее ты. Она магическая. Заходи к нам. Это принесет тебе счастье.');
+            break;
+        case 'filterCompleted':
+            $message = __('Здесь нет ни одной задачи! Поторопись! Сделай свои дела и отдыхай. Забудь обо всем и сосредоточься на предыдущей вкладке. Выполни все свои задачи. Это принесет тебе счастье.');
+            break;
+            
         default:
             return; 
     }
 ?>
-<div class ="alert alert-info emptyList <?php if($hide){echo 'hide';}?>">
-    <strong>О-о-о!</strong> <?php echo __($message);?>
+<div class ="alert alert-info emptyList <?php if($hide){echo 'hide';}?> ex_<?php echo $type; ?>">
+    <strong>О-о-о!*</strong> <?php echo __($message);?>
 </div>  

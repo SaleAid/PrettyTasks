@@ -1026,7 +1026,9 @@ function initFilter(element){
     $(element).on('click', function() {
         var listTasks = $(this).parent().siblings('ul:first'); 
         var type =$(this).attr('data');
+        var allTasks = listTasks.children('li').length;
         listTasks.children('li').removeClass('hide');
+        listTasks.find(".emptyList").addClass('hide');
         $(this).siblings('a').removeClass('active');
         switch(type){
             case 'all':
@@ -1035,10 +1037,32 @@ function initFilter(element){
             case 'inProcess':
                 listTasks.children('li.complete').addClass('hide');
                 $(this).addClass('active');
+                if(allTasks && !listTasks.children('li:not(.complete)').length){
+                    if( !listTasks.find(".filterProgress").length ){
+                        $(".ex_filterProgress").clone()
+                                               .removeClass('ex_filterProgress')
+                                               .removeClass('hide')
+                                               .addClass('filterProgress')
+                                               .appendTo(listTasks);
+                    }else{
+                       listTasks.find(".filterProgress").removeClass('hide'); 
+                    }
+                }
             break;
             case 'completed':
                 listTasks.children('li:not(.complete)').addClass('hide');
                 $(this).addClass('active');
+                if(allTasks && !listTasks.children('li.complete').length){
+                    if( !listTasks.find(".filterCompleted").length ){
+                        $(".ex_filterCompleted").clone()
+                                               .removeClass('ex_filterCompleted')
+                                               .removeClass('hide')
+                                               .addClass('filterCompleted')
+                                               .appendTo(listTasks);
+                    }else{
+                       listTasks.find(".filterCompleted").removeClass('hide'); 
+                    }
+                }
             break;
         }
         return false;
