@@ -646,11 +646,14 @@ function scrDragWithTime(id, date, time){
                 $(this).attr('date', date);
                 $(this).css({'opacity':'1'});
                 $(this).removeAttr('style');
+                 $(this).prop("style", '');
+                console.log(this);
                 $(this).children('.editTask').removeClass('hide');
                 if(currentTaskDate != date){
                     srcCountTasks(currentTaskDate);
                     srcCountTasks(date);
                 }
+                $(this).parent().siblings('.filter').children('a.active').trigger('click');
         });
     }
 }

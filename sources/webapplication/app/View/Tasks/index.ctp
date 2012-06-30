@@ -118,9 +118,7 @@
                     <?php endforeach;?>
                 <?php endif;?>   
             </ul>
-            <div class ="alert alert-info emptyList <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])){echo 'hide';}?>">
-                <strong>О-о-о!</strong> <?php echo __('Здесь нет ни одной задачи! Запланируй здесь то, что не знаешь когда сделать. Поехать в Италию? Сходить в кино? Придет час, и ты это сделаешь. Воспользуйся замечательной функцией переноса задач. Все для тебя! Дерзай!');?>
-            </div>            
+            <?php echo $this->element('empty_lists', array('type' => 'planned', 'hide' => $result['data']['arrAllFutureCount']['all']));?>           
           </div>
           </div>
             </div>
@@ -232,7 +230,7 @@
 
 
 <!-- modal editTask -->
-<div id="editTask" class="modal hide fade in" style="display: none;">
+<div id="editTask" class="modal  fade in" style="display: none;">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
         <h3>Редактирование задачи</h3>
@@ -305,17 +303,13 @@
 <!-- End modal -->
 
 <!-- modal commentDay -->
-<div id="commentDay" class="modal hide fade in" style="display: none;">
+<div id="commentDay" class="modal  fade in" style="display: none;">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
         <h3>Комментарий</h3>
     </div>
     <div class="modal-body">
-      <form class="form-horizontal">
-        <fieldset>
-            <textarea  class="span7" id="eCommentDay" rows="9"></textarea>
-        </fieldset>
-      </form>
+        <textarea  class="" id="eCommentDay" rows="9"></textarea>
     </div>
     <div class="modal-footer">
         <button id="eCommentDaySave" class="btn btn-success">Сохранить</button>
@@ -327,7 +321,7 @@
 <!-- print_brand -->
 <?php echo $this->Html->image("brand.". Configure::read('App.version') .".png", array('class' => 'print_brand')); ?>
 
-<!-- empty messages list -->
+<!-- empty list messages  -->
 <?php echo $this->element('empty_lists', array('type' => 'filterProgress', 'hide' => true));?>
 <?php echo $this->element('empty_lists', array('type' => 'filterCompleted', 'hide' => true));?>
 

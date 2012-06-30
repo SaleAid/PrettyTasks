@@ -17,34 +17,34 @@
           <?php if ($currentUser): ?>
           <li class="<? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">
                 <?php echo $this->Html->link(
-                                'Tasks',
+                                __('Tasks'),
                                 array('controller' => 'Tasks', 'action' => 'index')
                 );?>    
           </li>
           <?php if ($isBetaUser):?>
           <li class="<? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "calendar") echo 'active'; ?>">
               <?php echo $this->Html->link(
-                    'Calendar',
+                    __('Calendar'),
                     array('controller' => 'calendar', 'action' => 'index')
                 );?>  
           </li>
           <?php endif;?>
           <li class="<? if($this->params['action'] == "agenda" and strtolower($this->params['controller']) == "pasks") echo 'active'; ?>">
               <?php echo $this->Html->link(
-                    'Agenda',
+                    __('Agenda'),
                     array('controller' => 'tasks', 'action' => 'agenda')
                 );?>
           </li>
           <?php endif;?>
           <li class="<? if($this->params['action'] == "contact" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
               <?php echo $this->Html->link(
-                    'Contact',
+                    __('Contact'),
                     array('controller' => 'pages', 'action' => 'contact')
                 );?>
           </li>
           <li class="<? if($this->params['action'] == "about" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
               <?php echo $this->Html->link(
-                    'About',
+                    __('About'),
                     array('controller' => 'pages', 'action' => 'about')
                 );?>
           </li>

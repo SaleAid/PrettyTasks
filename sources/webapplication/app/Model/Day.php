@@ -60,9 +60,11 @@ class Day extends AppModel {
         )
     );
     
+    private $_dayFields = array('id', 'comment', 'date', 'rating');
+    
     public function isDayFound($user_id, $date){
         $this->contain();
-        $day = $this->findByUser_idAndDate($user_id, $date);
+        $day = $this->findByUser_idAndDate($user_id, $date, $this->_dayFields);
         if ($day) {
             $this->set($day);
             return $day;
@@ -93,7 +95,8 @@ class Day extends AppModel {
                                 'conditions' => array(
                                     'Day.user_id' => $user_id, 
                                     'Day.date' => $days
-                                )
+                                ),
+                               'fields' => $this->_dayFields 
                             ));
         foreach($result as $item){
             $data[$item['Day']['date']][] = $item;
@@ -109,7 +112,7 @@ class Day extends AppModel {
     
     public function getComment($user_id, $date){
         $this->contain();
-        $day = $this->findByUser_idAndDate($user_id, $date);
+        $day = $this->findByUser_idAndDate($user_id, $date, $this->_dayFields);
         if(isset($day[$this->alias]['comment'])){
             return $day[$this->alias];
         }
