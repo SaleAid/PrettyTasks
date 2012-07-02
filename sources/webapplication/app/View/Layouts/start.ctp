@@ -1,7 +1,6 @@
 <?php
 echo $this->Html->docType('html5');
 ?>
-
 <html>
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -12,8 +11,9 @@ echo $this->Html->docType('html5');
     
 <title><?php  echo $title_for_layout;  ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="" />
-<meta name="author" content="" />
+<meta name="description" content="<?php echo $description_for_layout; ?>" />
+<meta name="keywords" content="<?php echo $keywords_for_layout; ?>" />
+<meta name="author" content=""/>
    
 <?php
 echo $this->Html->meta('icon');

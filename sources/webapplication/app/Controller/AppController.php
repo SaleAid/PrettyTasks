@@ -37,8 +37,10 @@ class AppController extends Controller {
                 )
             )
         ), 
-        'RequestHandler'
+        'RequestHandler',
+        'Seo'
     );
+     
 
     /**
      * 
@@ -119,12 +121,14 @@ class AppController extends Controller {
         //        );
         //  
          */
+
         $this->_setLanguage();
         $this->__setTimeZone();
         $this->_checkMobile();
         
-        
-           
+        $this->Seo->title = Configure::read('Site.title');
+        $this->Seo->description = Configure::read('Site.description');
+        $this->Seo->keywords = Configure::read('Site.keywords');
     }
     
     public function _setLanguage(){
@@ -138,14 +142,10 @@ class AppController extends Controller {
                 $this->redirect(DS.Configure::read('Config.langURL').$this->request->here);    
             }
         }
-        //debug(Configure::read('Config.language'));
-        //debug(Configure::read('Config.langURL'));
-        //pr($this->request->here);die;
-        
-        //pr($this->request->params);
     }
 
     public function beforeRender() {
+        
         $this->set('currentUser', $this->Auth->user());
         $this->set('provider', $this->Auth->user('provider'));
         $this->set('isProUser', $this->isProUser());
@@ -171,21 +171,24 @@ class AppController extends Controller {
                 if (! isset($request[$value])) {
                     return false;
                 }
-                $request[$value] = Sanitize::clean($request[$value], array('encode' => true ,'remove_html' => true));
+                //$request[$value] = Sanitize::clean($request[$value], array('encode' => true ,'remove_html' => true));
             }
         } else {
-            if($model){
-            $this->request->data[$model] = Sanitize::clean($request, array('encode' => true ,'remove_html' => true));
-            }else{
-                $this->request->data = Sanitize::clean($request, array('encode' => true ,'remove_html' => true));    
-            }
+            //if($model){
+            //$this->request->data[$model] = Sanitize::clean($request, array('encode' => true ,'remove_html' => true));
+            //}else{
+                //$this->request->data = Sanitize::clean($request, array('encode' => true ,'remove_html' => true));    
+            //}
             return isset($request[$data]);
         }
-        if($model){
-            $this->request->data[$model] = $request;
-        }else{
-                $this->request->data = $request;    
-        }
+        //if($model){
+            //$this->request->data[$model] = $request;
+        //}else{
+                //$this->request->data = $request;    
+        //}
         return true;
     }
+    
+    
+    
 }
