@@ -111,7 +111,7 @@
                             <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
                             <span class="move"><i class="icon-move"></i></span>
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                            <span class="editable <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo $item['Task']['title']; ?></span>
+                            <span class="editable <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo h($item['Task']['title']); ?></span>
                             <span class="editTask"><i class="icon-pencil"></i></a></span>
                             <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                         </li>
@@ -212,7 +212,7 @@
                                     <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
                                     <span class="move"><i class="icon-move"></i></span>
                                     <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                                    <span class="editable"><?php echo $item['Task']['title']; ?></span>
+                                    <span class="editable"><?php echo h($item['Task']['title']); ?></span>
                                     <span class="editTask"><i class="icon-pencil"></i></span>
                                     <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                                 </li>
@@ -230,7 +230,7 @@
 
 
 <!-- modal editTask -->
-<div id="editTask" class="modal  fade in" style="display: none;">
+<div id="editTask" class="modal fade in" style="display: none;">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
         <h3>Редактирование задачи</h3>

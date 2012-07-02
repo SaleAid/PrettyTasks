@@ -11,7 +11,7 @@
                         <li  class=" <?php if($item['Task']['done']):?> complete <?php endif; ?> <?php if($item['Task']['priority']):?> important <?php endif; ?>">
                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
                             <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
-                            <span class=" editable  <?php if($item['Task']['done']):?> complete <?php endif; ?> "><?php echo $item['Task']['title']; ?></span>
+                            <span class=" editable  <?php if($item['Task']['done']):?> complete <?php endif; ?> "><?php echo h($item['Task']['title']); ?></span>
                             
                         </li>
                     <?php endforeach;?>

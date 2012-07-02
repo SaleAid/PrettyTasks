@@ -14,7 +14,7 @@ class Page extends AppModel {
                                     'Page.lang' => $lang,
                                     'Page.active' => 1,
                             ),
-                'fields' => array('metakeywords', 'metadescription', 'content')
+                'fields' => array('title', 'metakeywords', 'metadescription', 'content')
         ));
     }
 }

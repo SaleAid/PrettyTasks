@@ -130,6 +130,11 @@ body {
     font-weight: 300;  
     text-align: justify;      
 }
+.go{
+    color: white;
+    font-size: 40px;
+    width: 260px;
+}
 
 /* Footer
 -------------------------------------------------- */

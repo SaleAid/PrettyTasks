@@ -62,8 +62,9 @@
                         <p> Отбрось страхи, ты все сможешь!</p>
                         <p> 
                             Доверься интуиции и жми
-                            <?php echo $this->Html->link(__('Пли!'),array('controller' => 'users', 'action' => 'login'),array('class'=> 'btn btn-primary')); ?>
+                           
                         </p>
+                         <?php echo $this->Html->link(__('Пли!'),array('controller' => 'users', 'action' => 'login'),array('class'=> 'btn btn-success btn-large go')); ?>
                     </div>
 				</div>
 

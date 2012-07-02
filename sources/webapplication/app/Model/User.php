@@ -28,17 +28,18 @@ class User extends AppModel {
             'notempty' => array(
                 'rule' => array(
                     'notempty'
-                )
-            )//'message' => 'Your custom message here',
+                ),
+            'message' => 'Пожалуйста, введите Ваше имя.'
+            )
             
         ), 
         'last_name' => array(
             'notempty' => array(
                 'rule' => array(
                     'notempty'
-                )
-            )//'message' => 'Your custom message here',
-            
+                ),
+            'message' => 'Пожалуйста, введите Вашу фамилию.'
+            )
         ), 
         'created' => array(
             'datetime' => array(
@@ -60,47 +61,47 @@ class User extends AppModel {
             )
         ), 
         'username' => array(
-            'Not empty' => array(
+            'notEmpty' => array(
                 'rule' => array(
                     'notempty'
                 ), 
-                'message' => 'Your custom message here'
+                'message' => 'Пожалуйста, введите Ваш логин.'
             ), 
             'isUnique' => array(
                 'rule' => 'isUnique', 
-                'message' => 'A user with that username already exists.'
+                'message' => 'Пользователь с таким именем уже существует.'
             )
         ), 
         'password' => array(
-            'Not empty' => array(
+            'notEmpty' => array(
                 'rule' => array(
                     'notEmpty'
                 ), 
-                'message' => 'Please enter your password.'
+                'message' => 'Пожалуйста, введите Ваш пароль.'
             ), 
             'Match password' => array(
                 'rule' => 'matchPasswords', 
-                'message' => 'You password do not match.'
+                'message' => 'Ваш пароль не совпадает.'
             )
         ), 
         'password_confirm' => array(
-            'Not empty' => array(
+            'notEmpty' => array(
                 'rule' => array(
                     'notEmpty'
                 ), 
-                'message' => 'Please confirm your password.'
+                'message' => 'Пожалуйста, подтвердите Ваш пароль.'
             )
         ), 
         'old_password' => array(
-            'Not empty' => array(
+            'notEmpty' => array(
                 'rule' => array(
                     'notEmpty'
                 ), 
-                'message' => 'Please enter your password.'
+                'message' => 'Пожалуйста, введите Ваш пароль.'
             ), 
             'Match old password' => array(
                 'rule' => 'matchOldPasswords', 
-                'message' => 'You password do not match.'
+                'message' => 'Ваш пароль не совпадает.'
             )
         ), 
         'email' => array(
@@ -108,13 +109,7 @@ class User extends AppModel {
                 'rule' => array(
                     'email'
                 ), 
-                'message' => 'Please, enter valid email.'
-            ), 
-            'Not empty' => array(
-                'rule' => array(
-                    'notEmpty'
-                ), 
-                'message' => 'Please enter your password.'
+                'message' => 'Пожалуйста, введите Ваш адрес электронной почты.'
             )
         )
     );
@@ -123,7 +118,7 @@ class User extends AppModel {
         if ($data['password'] == $this->data[$this->alias]['password_confirm']) {
             return true;
         }
-        $this->invalidate('password_confirm', 'You password do not match.');//TODO use __(
+        $this->invalidate('password_confirm', __('Ваш пароль не совпадает.'));
         return false;
     }
 
@@ -209,7 +204,7 @@ class User extends AppModel {
     public function register($data) {
         $this->validate['email']['isUnique'] = array(
             'rule' => 'isUnique', 
-            'message' => 'This email address is already in use. Please supply a different email address.'//TODO use __(
+            'message' => _('Этот адрес уже используется. Пожалуйста, введите другой адрес электронной почты.')
         );
         $this->set($data);
         if ($this->validates()) {

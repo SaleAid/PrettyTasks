@@ -2,5 +2,5 @@
     <?php echo $this->Html->css('pages.'.Configure::read('App.version')); ?>
 <?php $this->end ();?>
 <div id="page">
-    <?php echo $page['content']; ?>
+    <?php echo $content; ?>
 </div>

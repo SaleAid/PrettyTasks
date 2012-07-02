@@ -48,7 +48,7 @@ echo $this->Html->script('fullcalendar/fullcalendar.min.js');
 		var js = $.getJSON('/Tasks/index.json', function(data) {
 			if (data.result.success){
 				$.each(data.result.data.arrTaskOnDays, function(key, value) {
-					console.log(this);
+					//console.log(this);
                     $.each(this, function(key, value) {
                         var dataToShow = {
     						title: value.Task.title,
@@ -67,7 +67,7 @@ echo $this->Html->script('fullcalendar/fullcalendar.min.js');
     					if (value.Task.timeend){
     						dataToShow.end = new Date(value.Task.date +" "+value.Task.timeend);
     					}
-    					console.log(dataToShow);
+    					//console.log(dataToShow);
     					events.push(dataToShow);
                     });
 				});

@@ -51,9 +51,9 @@ function checkLogin(){
 }
 function displayLoadAjax(count){
     if(!+count){
-        $('.ajaxLoader').hide();
+        $('.ajaxLoader').addClass('hide');
     }else{
-        $('.ajaxLoader').show();
+        $('.ajaxLoader').removeClass('hide');
     }
 }
 //-------------------------------------
@@ -269,7 +269,7 @@ function completedTasks(data){
             task = '<li class="'+priority+'"> '+
             '<span class="time">'+time+'</span> '+
             '<span class="timeEnd">'+timeend+'</span> '+
-            '<span class="title">'+value.Task.title+'</span> '+
+            '<span class="title">'+convertToHtml(value.Task.title)+'</span> '+
             '</li> ';
             listUl.append( task );
             
@@ -646,14 +646,12 @@ function scrDragWithTime(id, date, time){
                 $(this).attr('date', date);
                 $(this).css({'opacity':'1'});
                 $(this).removeAttr('style');
-                 $(this).prop("style", '');
-                console.log(this);
                 $(this).children('.editTask').removeClass('hide');
                 if(currentTaskDate != date){
                     srcCountTasks(currentTaskDate);
                     srcCountTasks(date);
                 }
-                $(this).parent().siblings('.filter').children('a.active').trigger('click');
+                //$(this).parent().siblings('.filter').children('a.active').trigger('click');
         });
     }
 }
@@ -832,7 +830,7 @@ function AddTask(data){
                             timeEnd+'\n'+
                             '<span class="move"><i class="icon-move"></i></span> \n'+
                             '<input type="checkbox" class="done" '+checked+'/> \n' +
-                            '<span class="editable ">'+data.Task.title+'</span> \n'+
+                            '<span class="editable ">'+convertToHtml(data.Task.title)+'</span> \n'+
                             '<span class="editTask"><i class="icon-pencil"></i></a></span> \n'+
                             '<span class="deleteTask"><i class=" icon-ban-circle"></i></span> \n'+
                 '</li>';
@@ -850,7 +848,11 @@ function initEditAble(element){
                 indicator : "<img src='img/indicator.gif'>",
                 placeholder : "",
                 tooltip : "Щелкните чтоб отредактировать этот текст",
-                style  : "inherit"
+                style  : "inherit",
+                data: function(value, settings) {
+                    var retval = convertToText(value);
+                    return retval;
+                }
         });
 }
 function initDelete(element){
@@ -1096,6 +1098,23 @@ function isDate(value){
     }
     catch (e){}
     return isDate;
+}
+function convertToHtml(str){
+  //str = str.replace(/&/g, "&amp;");
+  //str = str.replace(/>/g, "&gt;");
+  //str = str.replace(/</g, "&lt;");
+  //str = str.replace(/"/g, "&quot;");
+  //str = str.replace(/'/g, "&#039;");
+  //Encode Entities
+  return $("<div/>").text(str).html();
+}
+function convertToText(str){
+    //str = str.replace(/&quot;/g,'"');
+    //str = str.replace(/&amp;/g,"&");
+    //str = str.replace(/&lt;/g,"<");
+    //str =  str.replace(/&gt;/g,">");
+    //Dencode Entities
+    return $("<div/>").html(str).text();
 }
 //-----------------------------------------------------------------------
 var dropped = false;

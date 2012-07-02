@@ -264,7 +264,8 @@ div.jGrowl.custom {
     cursor: pointer;
 }
 .inline-confirmation-block{
-    vertical-align:middle !important;
+    /*vertical-align:middle !important;*/
+    margin-bottom: 10px;
 }
 .title{
     padding-left: 20px;
