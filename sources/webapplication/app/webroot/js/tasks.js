@@ -652,6 +652,7 @@ function scrDragWithTime(id, date, time){
                 $(this).attr('date', date);
                 $(this).css({'opacity':'1'});
                 $(this).css({'display':''});
+                $(this).removeAttr('style');
                 $(this).children('.editTask').removeClass('hide');
                 if(currentTaskDate != date){
                     srcCountTasks(currentTaskDate);
@@ -675,7 +676,9 @@ function srvChangeOrders(id, position){
     superAjax('/tasks/changeOrders.json',{id: id, position: position});
 }
 function scrChangeOrders(id, position){
-    $("li[id='"+id+"']").css("color","");
+    //$("li[id='"+id+"']").css("color","");
+    //$("li[id='"+id+"']").css("opacity","");
+    $("li[id='"+id+"']").removeAttr('style');
 }
 
 //----------------dragOnDay-----
