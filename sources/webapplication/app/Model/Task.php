@@ -73,9 +73,8 @@ class Task extends AppModel {
         ),
         'datedone' => array(
             'datetime' => array(
-                'rule' => array(
-                    'datetime'
-                )
+                'rule' => array('datetime'),
+                'allowEmpty' => true,
             )
         ),
         'future' => array(
