@@ -16,7 +16,7 @@ msgstr "Vous devez définir votre clé privée Recaptcha en utilisant Configure:
 
 #: /controllers/components/recaptcha.php:110
 msgid "Incorect captcha"
-msgstr "Captcha incorrect"
+msgstr "Некорректная капча"
 
 #: /views/helpers/recaptcha.php:115
 msgid "To use reCAPTCHA Mailhide, you need to have the mcrypt php module installed."

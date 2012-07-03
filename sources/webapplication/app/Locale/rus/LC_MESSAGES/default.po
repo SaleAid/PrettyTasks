@@ -1,7 +1,7 @@
-msgid "today"
+msgid "Today"
 msgstr "Сегодня"
 
-msgid "tomorrow"
+msgid "Tomorrow"
 msgstr "Завтра"
 
 msgid "Sunday"
@@ -25,4 +25,17 @@ msgstr "Пятница"
 msgid "Saturday"
 msgstr "Суббота"
 
+msgid "Tasks"
+msgstr "Задачи"
 
+msgid "Calendar"
+msgstr "Календарь"
+
+msgid "Agenda"
+msgstr "Повестка дня"
+
+msgid "Contact"
+msgstr "Контакты"
+
+msgid "About"
+msgstr "О нас"

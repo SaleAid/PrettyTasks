@@ -146,7 +146,7 @@ class RecaptchaComponent extends Component {
             }
 
             if ($response[1] == 'incorrect-captcha-sol') {
-                $this->error = __d('recaptcha', 'Incorrect captcha', true);
+                $this->error = __d('recaptcha', 'Некорректная капча', true);
             } else {
                 $this->error = $response[1];
             }
