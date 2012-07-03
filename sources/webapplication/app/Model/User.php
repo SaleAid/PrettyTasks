@@ -173,7 +173,7 @@ class User extends AppModel {
         if(!$reset){
             $this->set('old_password', $old_password);
         }
-        if ($this->validates()) {
+        if ($this->validates(array('fieldList' => array('id', 'password', 'password_confirm')))) {
             $this->saveField('password', AuthComponent::password($password));
             $this->saveField('password_token', null);
             return true;

@@ -32,7 +32,7 @@ class UsersController extends AppController {
 
     public function login() {
         $this->layout = 'default';
-        if ($this->User->validates()) {
+        //if ($this->User->validates()) {
             if ($this->Auth->login()) {
                 if ($this->Auth->user('active')) {
                     if (! $this->Auth->user('is_blocked')) {
@@ -55,7 +55,7 @@ class UsersController extends AppController {
                     ));
                 }
             }
-        }
+        //}
     }
 
     public function logout() {
