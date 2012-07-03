@@ -1,6 +1,6 @@
 
-<div class="">
-  <img  src="/img/start.gif"/>
+<div class="start">
+  <img  src="/img/start.png"/>
 </div>
 <div class="row">
 				<div class="span4 box left">

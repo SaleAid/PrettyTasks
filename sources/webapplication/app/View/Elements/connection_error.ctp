@@ -1,4 +1,4 @@
-<div class="connError ">
+<div class="connError hide">
     <div class="overlay">
     </div>
     <div class="errorBox label label-important">

@@ -24,142 +24,97 @@ class Task extends AppModel {
                     'numeric'
                 )
             )
-        ),  //'message' => 'Your custom message here',
-        //'allowEmpty' => false,
-        //'required' => false,
-        //'last' => false, // Stop validation after this rule
-        //'on' => 'create', // Limit validation to 'create' or 'update' operations
+        ), 
         'user_id' => array(
             'numeric' => array(
                 'rule' => array(
                     'numeric'
                 )
             )
-        ),  //'message' => 'Your custom message here',
-        //'allowEmpty' => false,
-        //'required' => false,
-        //'last' => false, // Stop validation after this rule
-        //'on' => 'create', // Limit validation to 'create' or 'update' operations
+        ), 
         'title' => array(
             'notempty' => array(
                 'rule' => array(
                     'notempty'
                 ) 
-                //'message' => 'Your custom message here'
             )
-        ),  //'allowEmpty' => false,
-        //'required' => false,
-        //'last' => false, // Stop validation after this rule
-        //'on' => 'create', // Limit validation to 'create' or 'update' operations
-        'datetime' => array(
-            'datetime' => array(
-                'rule' => array(
-                    'datetime'
-                )
+        ),  
+        'date' => array(
+            'date' => array(
+                'rule'    => array('date', 'ymd'),
+                'allowEmpty' => true,
             )
-        ),  //'message' => 'Your custom message here',
-        //'allowEmpty' => false,
-        //'required' => false,
-        //'last' => false, // Stop validation after this rule
-        //'on' => 'create', // Limit validation to 'create' or 'update' operations
-        //'checktime' => array(
-        //			'boolean' => array(
-        //				'rule' => array('boolean'),
-        //				//'message' => 'Your custom message here',
-        //				//'allowEmpty' => false,
-        //				//'required' => false,
-        //				//'last' => false, // Stop validation after this rule
-        //				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-        //			),
-        //		),
+        ),
+        'time' => array(
+            'time' => array(
+                'rule' => array('time'),
+                    'allowEmpty' => true,
+            )
+        ),
+        'timeend' => array(
+            'time' => array(
+                'rule' => array('time'),
+                    'allowEmpty' => true,
+            )
+        ),  
         'order' => array(
             'numeric' => array(
                 'rule' => array(
                     'numeric'
                 )
             )
-        ),  //'message' => 'Your custom message here',
-        //'allowEmpty' => false,
-        //'required' => false,
-        //'last' => false, // Stop validation after this rule
-        //'on' => 'create', // Limit validation to 'create' or 'update' operations
+        ),
         'done' => array(
             'numeric' => array(
                 'rule' => array(
                     'boolean'
                 )
             )
-        ),  //'message' => 'Your custom message here',
-        //'allowEmpty' => false,
-        //'required' => false,
-        //'last' => false, // Stop validation after this rule
-        //'on' => 'create', // Limit validation to 'create' or 'update' operations
+        ),
+        'datedone' => array(
+            'datetime' => array(
+                'rule' => array(
+                    'datetime'
+                )
+            )
+        ),
         'future' => array(
             'numeric' => array(
                 'rule' => array(
                     'boolean'
                 )
             )
-        ),  //'message' => 'Your custom message here',
-        //'allowEmpty' => false,
-        //'required' => false,
-        //'last' => false, // Stop validation after this rule
-        //'on' => 'create', // Limit validation to 'create' or 'update' operations
+        ),
         'repeatid' => array(
             'numeric' => array(
                 'rule' => array(
                     'numeric'
                 )
             )
-        ),  //'message' => 'Your custom message here',
-        //'allowEmpty' => false,
-        //'required' => false,
-        //'last' => false, // Stop validation after this rule
-        //'on' => 'create', // Limit validation to 'create' or 'update' operations
+        ),
         'transfer' => array(
             'numeric' => array(
                 'rule' => array(
                     'numeric'
                 )
             )
-        ),  //'message' => 'Your custom message here',
-        //'allowEmpty' => false,
-        //'required' => false,
-        //'last' => false, // Stop validation after this rule
-        //'on' => 'create', // Limit validation to 'create' or 'update' operations
+        ),
         'priority' => array(
             'numeric' => array(
                 'rule' => array(
                     'numeric'
                 )
             )
-        ),  //'message' => 'Your custom message here',
-        //'allowEmpty' => false,
-        //'required' => false,
-        //'last' => false, // Stop validation after this rule
-        //'on' => 'create', // Limit validation to 'create' or 'update' operations
+        ),
         'created' => array(
             'datetime' => array(
                 'rule' => array(
                     'datetime'
                 )
             )
-        ) //'message' => 'Your custom message here',
-    ); //'allowEmpty' => false,
-    //'required' => false,
-    //'last' => false, // Stop validation after this rule
-    //'on' => 'create', // Limit validation to 'create' or 'update' operations
-    //'modified' => array(
-    //'datetime' => array(
-    //'rule' => array('datetime'),
-    //'message' => 'Your custom message here',
-    //'allowEmpty' => false,
-    //'required' => false,
-    //'last' => false, // Stop validation after this rule
-    //'on' => 'create', // Limit validation to 'create' or 'update' operations
-    //),
-    //),
-    //The Associations below have been created with all possible keys, those that are not needed can be removed
+        )
+    );
+    
     /**
      * belongsTo associations
      *
@@ -183,7 +138,7 @@ class Task extends AppModel {
     );
     private $_originData = array();
     
-    private $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'done' ,'datedone');
+    private $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'done' ,'datedone', 'comment');
     
     //------------------------------
     public function get($task_id) {
@@ -691,17 +646,5 @@ class Task extends AppModel {
             return false;
         }
     }
-    //public function afterSave(){
-//        $data = array();
-//        $data = $this->data;
-//        if (is_array($data)){
-//            foreach($data[$this->alias] as $key => $value){
-//                if(!in_array($key, $this->_taskFields)){
-//                    unset($data[$this->alias][$key]);
-//                }
-//            }
-//            $this->data = $data;
-//        }
-//        
-//    }
+
 }

@@ -38,7 +38,7 @@ class UsersController extends AppController {
                     if (! $this->Auth->user('is_blocked')) {
                         $this->redirect($this->Auth->redirect());
                     }
-                    $this->Session->setFlash(__('Ваш аккаунт заблокирован.'), 'alert', array(
+                    $this->Session->setFlash(__('Ваш аккаунт заблокирован'), 'alert', array(
                         'class' => 'alert-error'
                     ));
                     $this->redirect($this->Auth->logout());
@@ -50,7 +50,7 @@ class UsersController extends AppController {
                 $this->redirect($this->Auth->logout());
             } else {
                 if ($this->request->is('post')) {
-                    $this->Session->setFlash(__('Your username or password was incorrect.'), 'alert', array(
+                    $this->Session->setFlash(__('Your username or password was incorrect'), 'alert', array(
                         'class' => 'alert-error'
                     ));
                 }
@@ -93,14 +93,14 @@ class UsersController extends AppController {
                     );
                 if ($this->User->register($saveData)) {
                     if ($this->User->sendActivationAccount($this->User->getLastInsertID(), $this->name)) {
-                        $this->Session->setFlash(__('Код активации аккаунта был выслан Вам на почту.'), 'alert', array(
+                        $this->Session->setFlash(__('Код активации аккаунта был выслан Вам на почту'), 'alert', array(
                             'class' => 'alert-success'
                         ));
                         $this->redirect(array(
                             'action' => 'login'
                         ));
                     }
-                    $this->Session->setFlash(__('Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта.'), 'alert', array(
+                    $this->Session->setFlash(__('Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта'), 'alert', array(
                         'class' => 'alert-success'
                     ));
                     $this->redirect(array(
@@ -109,7 +109,7 @@ class UsersController extends AppController {
                 } else {
                     unset($this->request->data[$this->modelClass]['password']);
                     unset($this->request->data[$this->modelClass]['password_confirm']);
-                    return $this->Session->setFlash(__('Пользователь не может быть сохранен. Пожалуйста, попробуйте еще раз.'), 'alert', array(
+                    return $this->Session->setFlash(__('Регистрация не удалась. Заполните поля полностью'), 'alert', array(
                         'class' => 'alert-error'
                     ));
                 }
@@ -120,7 +120,7 @@ class UsersController extends AppController {
     public function activate($token = null) {
         if ($token) {
             if ($result = $this->User->activate($token)) {
-                $this->Session->setFlash('Your account has been activated.', 'alert', array(
+                $this->Session->setFlash('Your account has been activated', 'alert', array(
                     'class' => 'alert-success'
                 ));
                 $this->Auth->login($result[$this->modelClass]);
@@ -140,7 +140,7 @@ class UsersController extends AppController {
                 ));
         } else {
             if ($this->User->reactivate($this->request->data['email'], $this->name)) {
-                $this->Session->setFlash(__('Код активации аккаунта был выслан Вам на почту.'), 'alert', array(
+                $this->Session->setFlash(__('Код активации аккаунта был выслан Вам на почту'), 'alert', array(
                     'class' => 'alert-success'
                 ));
                 $this->redirect(array(
@@ -168,14 +168,14 @@ class UsersController extends AppController {
                 if ($this->User->password_change($this->Auth->user('id'), $this->request->data[$this->modelClass]['password'],
                                                                           $this->request->data[$this->modelClass]['password_confirm'], 
                                                                           $this->request->data[$this->modelClass]['old_password'])) {
-                    return $this->Session->setFlash(__('Ваш пароль успешно изменен.'), 'alert', array(
+                    return $this->Session->setFlash(__('Ваш пароль успешно изменен'), 'alert', array(
                         'class' => 'alert-success'
                     ));
                 }
                 unset($this->request->data[$this->modelClass]['password']);
                 unset($this->request->data[$this->modelClass]['password_confirm']);
                 unset($this->request->data[$this->modelClass]['old_password']);
-                return $this->Session->setFlash(__('Ваш пароль не может быть сохранен. Пожалуйста, попробуйте еще раз.'), 'alert', array(
+                return $this->Session->setFlash(__('Ваш пароль не может быть сохранен. Пожалуйста, попробуйте еще раз'), 'alert', array(
                     'class' => 'alert-error'
                 ));
             }
@@ -197,7 +197,7 @@ class UsersController extends AppController {
                             ));
                     } else {
                         if ($this->User->password_change($id, $this->request->data[$this->modelClass]['password'], $this->request->data[$this->modelClass]['password_confirm'],null, true)) {
-                            $this->Session->setFlash(__('Ваш пароль успешно изменен.'), 'alert', array(
+                            $this->Session->setFlash(__('Ваш пароль успешно изменен'), 'alert', array(
                                 'class' => 'alert-success'
                             ));
                             $this->redirect(array(
@@ -206,7 +206,7 @@ class UsersController extends AppController {
                         }
                         unset($this->request->data[$this->modelClass]['password']);
                         unset($this->request->data[$this->modelClass]['password_confirm']);
-                        return $this->Session->setFlash(__('Ваш пароль не может быть сохранен. Пожалуйста, попробуйте еще раз.'), 'alert', array(
+                        return $this->Session->setFlash(__('Ваш пароль не может быть сохранен. Пожалуйста, попробуйте еще раз'), 'alert', array(
                             'class' => 'alert-error'
                         ));
                     }
@@ -222,7 +222,7 @@ class UsersController extends AppController {
     public function password_resend() {
         if ($this->Auth->loggedIn()) {
             if ($this->User->password_resend($this->Auth->user('id'))) {
-                $this->Session->setFlash(__('На Вашу почту была отправлена инструкция по сбросу пароля.'), 'alert', array(
+                $this->Session->setFlash(__('На Вашу почту была отправлена инструкция по сбросу пароля'), 'alert', array(
                     'class' => 'info-success'
                 ));
                 $this->redirect(array('action' => 'password_change'));
@@ -236,13 +236,13 @@ class UsersController extends AppController {
                     ));
             } else {
                 if (! $this->User->validateEmail($this->request->data[$this->modelClass]['email'])) {
-                    return $this->Session->setFlash(__('Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз.'), 'alert', array(
+                    return $this->Session->setFlash(__('Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз'), 'alert', array(
                         'class' => 'alert-error'
                     ));
                 }
                 if ($id = $this->User->checkEmail($this->request->data[$this->modelClass]['email'])) {
                     if ($this->User->password_resend($id)) {
-                        $this->Session->setFlash(__('На Вашу почту была отправлена инструкция по сбросу пароля.'), 'alert', array(
+                        $this->Session->setFlash(__('На Вашу почту была отправлена инструкция по сбросу пароля'), 'alert', array(
                             'class' => 'info-success'
                         ));
                         $this->redirect(array(
@@ -250,7 +250,7 @@ class UsersController extends AppController {
                         ));
                     }
                 }
-                return $this->Session->setFlash(__('В нашей базе нет пользователя с такой почтой.'), 'alert', array(
+                return $this->Session->setFlash(__('В нашей базе нет пользователя с такой почтой'), 'alert', array(
                     'class' => 'alert-error'
                 ));
             }

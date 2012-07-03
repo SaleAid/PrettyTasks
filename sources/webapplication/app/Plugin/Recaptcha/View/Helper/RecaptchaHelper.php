@@ -137,7 +137,7 @@ class RecaptchaHelper extends AppHelper {
             }
             if ($this->isError() && $this->settings['errorType'] == 'simulateError') {
                 //$script = '<div class="error">' . $script . '<div class="error-message">' . $this->getError() . '</div></div>';
-                $script = '<div class=" control-group error">' . $script . '<div class="controls help-block">' . $this->getError() . '</div></div>';
+                $script = '<div class=" control-group error"><div class="controls">' . $script . '<span class="help-inline">' . $this->getError() . '</span></div></div>';
             }
 
             return $script;

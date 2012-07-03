@@ -10,7 +10,7 @@ function getTaskFromPage(id){
         date:     $('#'+id).attr('date'),
         time:     $('#'+id).children('.time').text(),
         timeEnd:  $('#'+id).children('.timeEnd').text(),   
-        comment:  $('#'+id).children('.comment').text()   
+        comment:  $('#'+id).children('.commentTask').text()   
     };
     return data;
 }
@@ -39,12 +39,14 @@ function checkLogin(){
         url: "/users/checkLogin",
         success: function (status) {
                 if(!status){
-                   reload();
+                   showErrorConnection(true);
+                }else{
+                   showErrorConnection(false);
                 }
         },
         error: function (xhr, ajaxOptions, thrownError) {
                 if(xhr.status != '200'){
-                    reload();
+                    showErrorConnection(true);
                 }
        }
     });
@@ -72,7 +74,7 @@ function superAjax(url, data){
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if(xhr.status != '200'){
-                    reload();//TODO: Handle this in other way
+                    showErrorConnection(true);
                 }
             }
      });
@@ -313,6 +315,7 @@ function scrSetCommentDay(data){
     $('#commentDay').removeAttr('date');
     $('#eCommentDay').text(null);
     $('#commentDay').modal('hide');
+    
 }
 function onSetCommentDay(data){
     
@@ -335,6 +338,7 @@ function scrGetCommentDay(data){
     $('#commentDay').attr('date', data.date);
     $('#eCommentDay').val(data.comment);
     $('#commentDay').modal('show');
+    
         
 }
 function onGetCommentDay(data){
@@ -552,6 +556,10 @@ function scrPriority(id, priority){
     }
 }
 
+//----------------setCommentTask-------
+function scrCommentTask(id, comment){
+    $("li[id='"+id+"']").find('.commentTask').text(comment);
+}
 
 
 //----------------edit----------
@@ -574,14 +582,12 @@ function srvEdit(id, title, priority, done, date, time, timeEnd, comment){
 }
 
 function scrEdit(id, title, priority, done, date, time, timeEnd, comment){
-    
     scrDragWithTime(id, date, time);
     scrDate(id,date);
     scrSetDone(id,done);
     scrSetTitle(id, title, priority);
     scrTime(id, time, timeEnd);
-    
- 
+    scrCommentTask(id, comment);
 }
 
 function toSeconds(t) {
@@ -620,23 +626,23 @@ function scrDragWithTime(id, date, time){
                     }
                 });
            }
-           task.hide( "slow", function() {
+           task.hide('show', function() {
                 if(newPositionID != id && +newPositionID){
-                    $(this).insertAfter( list.children('#'+newPositionID)).show('slow');    
+                    $(this).insertAfter( list.children('#'+newPositionID)).show();    
                 }else if(!+newPositionID){
                     if(change){
                         if(list.children().length){
                             if(currentTaskDate == date && !time){
-                                $(this).show('slow');
+                                //$(this).show();
                             }else{
-                                $(this).prependTo(list).show('slow');
+                                $(this).prependTo(list);
                             }
                         }else{
-                            $(this).appendTo(list).show('slow');
+                            $(this).appendTo(list);
                         }
                     } 
                 }else{
-                    $(this).show('slow');
+                    //$(this).show();
                 }                    
                 if(time){
                     $(this).addClass('setTime');
@@ -645,17 +651,15 @@ function scrDragWithTime(id, date, time){
                 }
                 $(this).attr('date', date);
                 $(this).css({'opacity':'1'});
-                $(this).removeAttr('style');
+                $(this).css({'display':''});
                 $(this).children('.editTask').removeClass('hide');
                 if(currentTaskDate != date){
                     srcCountTasks(currentTaskDate);
                     srcCountTasks(date);
                 }
-                //$(this).parent().siblings('.filter').children('a.active').trigger('click');
         });
     }
 }
-
 
 //----------------changeOrder---
 function taskChangeOrders(id, position){
@@ -921,6 +925,7 @@ function initEditTask(element){
                 $( "#eDate" ).attr('placeholder', '---FUTURE---');
             }
             $('#editTask').modal('show');
+            //$('#editTask').removeClass('hide');
     });
 }
 
@@ -991,6 +996,7 @@ function initSortable(element){
             handle: 'span.move',
             update : function(e, ui){
                 if(dropped){
+                    $(this).removeAttr("style");
                     $(this).sortable('cancel');
                     dropped = false;
                     return true;
@@ -1089,6 +1095,26 @@ function initPrintClick(element){
 function reload(){
     location.reload();
 }
+function showErrorConnection(status){
+    if(!status){
+        intervalcheckLogin = 20000;
+        setTimeout(function() {
+            checkLogin();
+        }, intervalcheckLogin);
+        $('.connError').addClass('hide');
+        if(connError){
+            reload();
+        }
+        
+    }else{
+        intervalcheckLogin = 10000;
+        setTimeout(function() {
+            checkLogin();
+        }, intervalcheckLogin);
+        $('.connError').removeClass('hide');
+        connError = true;
+    }
+}
 
 function isDate(value){
     var isDate = false;
@@ -1100,31 +1126,21 @@ function isDate(value){
     return isDate;
 }
 function convertToHtml(str){
-  //str = str.replace(/&/g, "&amp;");
-  //str = str.replace(/>/g, "&gt;");
-  //str = str.replace(/</g, "&lt;");
-  //str = str.replace(/"/g, "&quot;");
-  //str = str.replace(/'/g, "&#039;");
   //Encode Entities
   return $("<div/>").text(str).html();
 }
 function convertToText(str){
-    //str = str.replace(/&quot;/g,'"');
-    //str = str.replace(/&amp;/g,"&");
-    //str = str.replace(/&lt;/g,"<");
-    //str =  str.replace(/&gt;/g,">");
     //Dencode Entities
     return $("<div/>").html(str).text();
 }
 //-----------------------------------------------------------------------
 var dropped = false;
 var countAJAX = 0;
+//var intervalcheckLogin = 600000;
+var intervalcheckLogin = 20000;
+var connError = false;
 $(function(){
 
-     
-
-
-     
      $(window).hashchange( function(e){
         if(location.hash != "") { 
             var hash = location.hash.slice(5);
@@ -1147,13 +1163,15 @@ $(function(){
     })
   
     $(window).hashchange();
-    //$.datepicker.setDefaults(
-//        $.extend($.datepicker.regional["ru"])
-//     );
+    $.datepicker.setDefaults(
+        $.extend($.datepicker.regional["ru"])
+     );
 //
-    setInterval(function() {
+        setTimeout(function() {
+            checkLogin();
+        }, intervalcheckLogin);(function() {
         checkLogin();
-    }, 600000);
+    }, intervalcheckLogin);
     $('.help').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
     $('#addDay').tooltip({placement:'bottom',delay: { show: 500, hide: 100 }});
     $('#completed h3').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
@@ -1243,11 +1261,17 @@ $(function(){
     $('.addDay').click(function(){
         $(this).find('li').removeClass('active'); 
     });
+    
+    window.onbeforeunload = function(e) {
+        if(+countAJAX && !connError){
+            var message = 'Содержимое было изменено!\nВы уверены, что хотите покинуть страницу без сохранения?';
+            e = e || window.event;
+            if (e) {
+                e.returnValue = message;
+            }
+            return message;    
+        }
+    }; 
                
 }); 	
 
-//window.onbeforeunload = function() {
-//    if(+countAJAX){
-//        return 'alert';    
-//    }
-//}; 

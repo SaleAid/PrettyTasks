@@ -25,21 +25,38 @@ class User extends AppModel {
      */
     public $validate = array(
         'first_name' => array(
-            'notempty' => array(
+             'notEmpty' => array(
                 'rule' => array(
-                    'notempty'
-                ),
-            'message' => 'Пожалуйста, введите Ваше имя.'
-            )
-            
+                    'notEmpty'
+                ), 
+                'message' => 'Поле должно быть заполнено'
+             ),
+            'alphaNumeric' => array(
+                'rule'     => 'alphaNumeric',
+                'required' => true,
+                'message'  => 'Введите в поле только буквы и цифры'
+            ),
+            'minLength' => array(
+                'rule'     => array('minLength', 2),
+                'message'  => 'Минимальная длина имени - 2 символа'
+            ),            
         ), 
         'last_name' => array(
-            'notempty' => array(
+            'notEmpty' => array(
                 'rule' => array(
-                    'notempty'
-                ),
-            'message' => 'Пожалуйста, введите Вашу фамилию.'
-            )
+                    'notEmpty'
+                ), 
+                'message' => 'Поле должно быть заполнено'
+             ),
+            'alphaNumeric' => array(
+                'rule'     => 'alphaNumeric',
+                'required' => true,
+                'message'  => 'Введите в поле только буквы и цифры'
+            ),
+            'minLength' => array(
+                'rule'     => array('minLength', 2),
+                'message'  => 'Минимальная длина фамилии - 2 символа'
+            ),
         ), 
         'created' => array(
             'datetime' => array(
@@ -63,13 +80,24 @@ class User extends AppModel {
         'username' => array(
             'notEmpty' => array(
                 'rule' => array(
-                    'notempty'
+                    'notEmpty'
                 ), 
-                'message' => 'Пожалуйста, введите Ваш логин.'
-            ), 
+                'message' => 'Поле должно быть заполнено'
+             ),
+            'alphaNumeric' => array(
+    			'rule'		=> 'alphaNumeric',
+    			//'required'	=> true,
+    			'on'		=> 'create',
+    			'message'	=> 'Введите в поле только буквы и цифры'
+    		),
+    		'between' => array(
+    			'rule' 		=> array('between', 2, 15),
+    			'on'		=> 'create',
+    			'message'	=> 'Длина логина от 2 до 15 символов',
+    		),
             'isUnique' => array(
                 'rule' => 'isUnique', 
-                'message' => 'Пользователь с таким именем уже существует.'
+                'message' => 'Пользователь с таким именем уже существует'
             )
         ), 
         'password' => array(
@@ -77,11 +105,15 @@ class User extends AppModel {
                 'rule' => array(
                     'notEmpty'
                 ), 
-                'message' => 'Пожалуйста, введите Ваш пароль.'
+                'message' => 'Поле должно быть заполнено'
+            ),
+            'minLength' => array(
+                'rule'     => array('minLength', 6),
+                'message'  => 'Минимальная длина пароля - 6 символа'
             ), 
-            'Match password' => array(
+            'matchPasswords' => array(
                 'rule' => 'matchPasswords', 
-                'message' => 'Ваш пароль не совпадает.'
+                'message' => 'Ваш пароль не совпадает'
             )
         ), 
         'password_confirm' => array(
@@ -89,7 +121,7 @@ class User extends AppModel {
                 'rule' => array(
                     'notEmpty'
                 ), 
-                'message' => 'Пожалуйста, подтвердите Ваш пароль.'
+                'message' => 'Поле должно быть заполнено'
             )
         ), 
         'old_password' => array(
@@ -97,11 +129,11 @@ class User extends AppModel {
                 'rule' => array(
                     'notEmpty'
                 ), 
-                'message' => 'Пожалуйста, введите Ваш пароль.'
+                'message' => 'Поле должно быть заполнено'
             ), 
-            'Match old password' => array(
+            'matchOldPasswords' => array(
                 'rule' => 'matchOldPasswords', 
-                'message' => 'Ваш пароль не совпадает.'
+                'message' => 'Ваш пароль не совпадает'
             )
         ), 
         'email' => array(
@@ -109,7 +141,7 @@ class User extends AppModel {
                 'rule' => array(
                     'email'
                 ), 
-                'message' => 'Пожалуйста, введите Ваш адрес электронной почты.'
+                'message' => 'Пожалуйста, введите Ваш адрес электронной почты'
             )
         )
     );
@@ -118,7 +150,7 @@ class User extends AppModel {
         if ($data['password'] == $this->data[$this->alias]['password_confirm']) {
             return true;
         }
-        $this->invalidate('password_confirm', __('Ваш пароль не совпадает.'));
+        $this->invalidate('password_confirm', __('Ваш пароль не совпадает'));
         return false;
     }
 
@@ -204,7 +236,7 @@ class User extends AppModel {
     public function register($data) {
         $this->validate['email']['isUnique'] = array(
             'rule' => 'isUnique', 
-            'message' => _('Этот адрес уже используется. Пожалуйста, введите другой адрес электронной почты.')
+            'message' => _('Этот адрес уже используется. Пожалуйста, введите другой адрес электронной почты')
         );
         $this->set($data);
         if ($this->validates()) {

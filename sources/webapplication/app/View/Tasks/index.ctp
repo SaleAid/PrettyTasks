@@ -13,6 +13,9 @@
     <?php echo $this->Html->script('jquery.ba-hashchange.min.js'); ?>
     
     <?php echo $this->Html->script(array('jquery.timepicker-1.2.2','jquery.inline-confirmation'));?>
+    
+    <?php echo $this->Html->script('jquery-ui-i18n.min');?>
+    
     <?php echo $this->Html->script('tasks.'.Configure::read('App.version'));?>
     
 <?php $this->end ();?>
@@ -39,12 +42,12 @@
             </li>
             <li class="active drop">
                 <a href="#<?php echo $this->Time->format('Y-m-d', time(), true); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', time(), true); ?>">
-                <?php echo __('today'); ?>
+                <?php echo __('Today'); ?>
             </a>
           </li>
          <li class="drop">
             <a href="#<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', '+1 days', true); ?>">
-                 <?php echo __('tomorrow'); ?>
+                 <?php echo __('Tomorrow'); ?>
             </a>
           </li>
           <?php 
@@ -112,6 +115,7 @@
                             <span class="move"><i class="icon-move"></i></span>
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
                             <span class="editable <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo h($item['Task']['title']); ?></span>
+                            <span class="commentTask"><?php echo h($item['Task']['comment']); ?></span>
                             <span class="editTask"><i class="icon-pencil"></i></a></span>
                             <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                         </li>
@@ -213,6 +217,7 @@
                                     <span class="move"><i class="icon-move"></i></span>
                                     <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
                                     <span class="editable"><?php echo h($item['Task']['title']); ?></span>
+                                    <span class="commentTask"><?php echo h($item['Task']['comment']); ?></span>
                                     <span class="editTask"><i class="icon-pencil"></i></span>
                                     <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                                 </li>
@@ -229,8 +234,10 @@
     </div>  
 
 
+
+
 <!-- modal editTask -->
-<div id="editTask" class="modal fade in" style="display: none;">
+<div id="editTask" class="modal hide fade in">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
         <h3>Редактирование задачи</h3>
@@ -288,22 +295,18 @@
                   </label>
                 </div>
               </div>
-            
-          
-
-        
         </div>
     </div>
 </div>
     <div class="modal-footer">
-        <button id="eSave" class="btn btn-success">Сохранить</button>
         <a href="" class="btn" data-dismiss="modal">Закрыть</a>
+        <button id="eSave" class="btn btn-success">Сохранить</button>
     </div>
 </div>
 <!-- End modal -->
 
 <!-- modal commentDay -->
-<div id="commentDay" class="modal  fade in" style="display: none;">
+<div id="commentDay" class="modal hide fade in">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
         <h3>Комментарий</h3>
@@ -312,8 +315,8 @@
         <textarea  class="" id="eCommentDay" rows="9"></textarea>
     </div>
     <div class="modal-footer">
-        <button id="eCommentDaySave" class="btn btn-success">Сохранить</button>
         <a href="" class="btn" data-dismiss="modal">Закрыть</a>
+        <button id="eCommentDaySave" class="btn btn-success">Сохранить</button>
     </div>
 </div>
 <!-- End modal -->
@@ -324,4 +327,6 @@
 <!-- empty list messages  -->
 <?php echo $this->element('empty_lists', array('type' => 'filterProgress', 'hide' => true));?>
 <?php echo $this->element('empty_lists', array('type' => 'filterCompleted', 'hide' => true));?>
+
+<?php echo $this->element('connection_error', array(), array('cache' => array('key' => 'connection_error', 'config' => 'elements'))); ?>
 

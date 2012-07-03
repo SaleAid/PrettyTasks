@@ -1,11 +1,10 @@
 #page{
-    //font-family: "Trebuchet MS","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font: 16px/1.4 helvetica, arial, sans-serif;
+    font-family: "Trebuchet MS","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px/1.4;
     color: #333;
     padding: 5px;
 }
 #page h1{
-    display: none;
     padding-bottom: 20px;
 }
 #page h2{

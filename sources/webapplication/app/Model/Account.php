@@ -19,11 +19,11 @@ class Account extends AppModel {
      */
     public $validate = array(
         'user_id' => array(
-            'Not empty' => array(
+            'notempty' => array(
                 'rule' => array(
                     'notempty'
                 )
-            ) //'message' => 'Your custom message here',
+            ) 
         )
     );
 
