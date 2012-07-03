@@ -159,6 +159,7 @@ class AppController extends Controller {
     }
     
     protected function _isSetRequestData($data, $model = null) {
+        sleep(1);
          if (!($this->request->is('post') || $this->request->is('put'))) {
             return false;
         }

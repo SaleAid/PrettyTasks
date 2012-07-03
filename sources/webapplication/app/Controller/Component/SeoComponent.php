@@ -31,19 +31,6 @@ class SeoComponent extends Component {
     private $allowed_params = array('title', 'description', 'keywords');
 
     /**
-     * @desc Binding other cake components
-     * @var array
-     */
-    public $components = array('Core');
-
-    /**
-    * @desc Core component - variable used for intellicence
-    * @var CoreComponent
-    * @access public
-    */
-    public $Core;
-
-    /**
      * Constructor.
      *
      */
@@ -104,22 +91,6 @@ class SeoComponent extends Component {
     protected function setView($key = null) {
         if (!$this->controller)return;
         $this->controller->set($key . '_for_layout', $this->{$key});
-    }
-
-    /**
-     * @desc Auto fill meta info from pages table
-     * @return boolean - success of oparation
-     * @access public
-     */
-    public function autoFill(){
-        $page = $this->Core->getCurrentPage();
-        if ($page){
-            foreach($this->allowed_params as $key){
-                $this->{$key} = $page['Page'][$key];
-            }
-            return true;
-        }
-        return false;
     }
 
     /**

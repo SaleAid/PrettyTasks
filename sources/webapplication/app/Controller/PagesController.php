@@ -29,7 +29,7 @@ class PagesController extends AppController {
             throw new NotFoundException();
             //$this->render('/Errors/error404');
         }
-        $this->Seo->title = $result['Page']['title'];
+        $this->Seo->title = $this->Seo->title.' :: '.$result['Page']['title'];
         $this->Seo->description = $result['Page']['metadescription'];
         $this->Seo->keywords = $result['Page']['metakeywords'];
         $this->set('content', $result['Page']['content']);
