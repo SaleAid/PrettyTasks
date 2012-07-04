@@ -45,8 +45,10 @@ function checkLogin(){
                 }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-                if(xhr.status != '200'){
+                if(xhr.status == '404'){
                     showErrorConnection(true);
+                }else{
+                    reload();
                 }
        }
     });
@@ -73,8 +75,10 @@ function superAjax(url, data){
                 displayLoadAjax(countAJAX);                                
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                if(xhr.status != '200'){
+                if(xhr.status == '404'){
                     showErrorConnection(true);
+                }else{
+                    reload();
                 }
             }
      });
@@ -214,7 +218,7 @@ function futureTasks(data){
             //initEditAble("li[id='"+value.Task.id+"'] .editable");
             initDone("li[id='"+value.Task.id+"'] .done");
             //initEditTask("li[id='"+value.Task.id+"'] .editTask");
-            listUl.find(" li[id='"+value.Task.id+"'] .editTask").hide();
+            listUl.find(" li[id='"+value.Task.id+"'] .editTask").addClass('hide');
         });
     });
     if(!+listUl.children('li').length){
@@ -244,7 +248,7 @@ function expiredTasks(data){
             //initEditAble("li[id='"+value.Task.id+"'] .editable");
             initDone(" li[id='"+value.Task.id+"'] .done");
             //initEditTask("li[id='"+value.Task.id+"'] .editTask");
-            listUl.find(" li[id='"+value.Task.id+"'] .editTask").hide();
+            listUl.find(" li[id='"+value.Task.id+"'] .editTask").addClass('hide');
         });
     });
 }
@@ -653,7 +657,11 @@ function scrDragWithTime(id, date, time){
                 $(this).css({'opacity':'1'});
                 $(this).css({'display':''});
                 $(this).removeAttr('style');
-                $(this).children('.editTask').removeClass('hide');
+                if($(this).children('.editTask').hasClass('hide')){
+                    $(this).children('.editTask').removeClass('hide');
+                    initEditAble($(this).children('.editable'));
+                    initEditTask($(this).children('.editTask'));
+                }
                 if(currentTaskDate != date){
                     srcCountTasks(currentTaskDate);
                     srcCountTasks(date);
@@ -676,8 +684,6 @@ function srvChangeOrders(id, position){
     superAjax('/tasks/changeOrders.json',{id: id, position: position});
 }
 function scrChangeOrders(id, position){
-    //$("li[id='"+id+"']").css("color","");
-    //$("li[id='"+id+"']").css("opacity","");
     $("li[id='"+id+"']").removeAttr('style');
 }
 
@@ -928,7 +934,6 @@ function initEditTask(element){
                 $( "#eDate" ).attr('placeholder', '---FUTURE---');
             }
             $('#editTask').modal('show');
-            //$('#editTask').removeClass('hide');
     });
 }
 
