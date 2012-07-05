@@ -187,6 +187,12 @@ div.well{
     border-color: #B94A48!important;
     background-color: #fff8f8 !important;
 }
+.errorEdit:focus {
+  border-color: #953b39!important;
+  -webkit-box-shadow: 0 0 6px #d59392!important;
+     -moz-box-shadow: 0 0 6px #d59392!important;
+          box-shadow: 0 0 6px #d59392!important;
+}
 .errorTooltip .tooltip-inner{background-color: red; color: black;}
 .tooltip.right .tooltip-arrow{ border-right-color: red;}
 

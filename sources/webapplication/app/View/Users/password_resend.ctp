@@ -1,26 +1,25 @@
 <div class="row"> 
-    <div class="span6 offset3">
+    <div class="span7 offset2">
 <fieldset>
 		<legend><?php echo __('Забыли пароль?'); ?></legend>
         <p>
             <?php echo __('Для сброса пароля введите свой адрес электронной почты.'); ?>
         </p>
 
-<?php echo $this->Form->create('User',array('class' => 'well',
-                                            'inputDefaults' => array(
-                                            'div' => array('class' => 'control-group'),
-                                            'label' => array('class' => 'control-label'),
-                                            'between' => '<div class="controls">',
-                                            'after' => '</div>',
-                                            'class' => '')
-    )); ?>
+<?php echo $this->Form->create('User',array('class' => 'well ',
+'inputDefaults' => array(
+        'format' => array('before', 'label', 'between', 'input', 'error', 'after'),
+        'div' => array('class' => 'control-group'),
+        'label' => array('class' => 'control-label'),
+        'between' => '<div class="controls">',
+        'after' => '</div>',
+        'error' => array('attributes' => array('wrap' => 'span', 'class' => 'help-inline')),
+    )));?>
     
 <?php
 	echo $this->Form->input('email', array(
-		'label' => __( 'Ваш адрес электронной почты:', true),
-		'class' => 'input-xlarge',
-        'error' => array('attributes' => array('class' => 'controls help-block'))));
-
+		'label' => __( 'Ваш адрес электронной почты:'),
+		'class' => 'input-xlarge'));
 ?>
         <p>
             <?php echo __('Пожалуйста, подтвердите, что вы человек.'); ?>

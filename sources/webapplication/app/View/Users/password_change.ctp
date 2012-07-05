@@ -1,13 +1,13 @@
 
-
-<?php echo $this->Form->create('User',array('class' => 'well',
-                                            'inputDefaults' => array(
-                                            'div' => array('class' => 'control-group'),
-                                            'label' => array('class' => 'control-label'),
-                                            'between' => '<div class="controls">',
-                                            'after' => '</div>',
-                                            'class' => '')
-    )); ?>
+<?php echo $this->Form->create('User',array('class' => 'well ',
+'inputDefaults' => array(
+        'format' => array('before', 'label', 'between', 'input', 'error', 'after'),
+        'div' => array('class' => 'control-group'),
+        'label' => array('class' => 'control-label'),
+        'between' => '<div class="controls">',
+        'after' => '</div>',
+        'error' => array('attributes' => array('wrap' => 'span', 'class' => 'help-inline')),
+    )));?>
     <fieldset>
 		<legend><?php echo __('Изменение пароля:'); ?></legend>
         <p>
@@ -17,8 +17,7 @@
 	echo $this->Form->input('old_password', array(
 		'label' => __( 'Текущий пароль ', true),
 		'type' => 'password',
-        'class' => 'input-xlarge',
-        'error' => array('attributes' => array('class' => 'controls help-block'))));
+        'class' => 'input-xlarge'));
  ?>
  
  <?php echo $this->Html->link(' Забыли пароль? ', array('controller' => 'users', 'action' => 'password_resend')); ?>
@@ -27,15 +26,13 @@
 	echo $this->Form->input('password', array(
 		'label' => __('Новый пароль ', true),
 		'type' => 'password',
-        'class' => 'input-xlarge',
-        'error' => array('attributes' => array('class' => 'controls help-block'))));
+        'class' => 'input-xlarge'));
 ?>
 
 <?php	
     echo $this->Form->input('password_confirm', array(
 		'label' => __('Повторите пароль ', true),
-		'type' => 'password','class' => 'input-xlarge',
-        'error' => array('attributes' => array('class' => 'controls help-block'))));
+		'type' => 'password','class' => 'input-xlarge'));
         
 ?>
 

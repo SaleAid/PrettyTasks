@@ -170,10 +170,12 @@ class User extends AppModel {
                 'password'          => $password,
                 'password_confirm'  => $password_confirm
         ));
+        $fieds = array('id', 'password', 'password_confirm');
         if(!$reset){
             $this->set('old_password', $old_password);
+            array_push($fieds, 'old_password');
         }
-        if ($this->validates(array('fieldList' => array('id', 'password', 'password_confirm')))) {
+        if ($this->validates(array('fieldList' => $fieds))) {
             $this->saveField('password', AuthComponent::password($password));
             $this->saveField('password_token', null);
             return true;
