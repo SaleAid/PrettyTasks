@@ -46,7 +46,11 @@ echo $scripts_for_layout;
     </div>
 </div>
 <?php
-echo $this->element('footer');
+if(Configure::read('Config.language') =='eng'){
+    echo $this->element('footer_eng');
+}else{
+    echo $this->element('footer');    
+}
 echo $this->Html->script('jquery-1.7.1.min');
 echo $this->Html->script('jquery-ui-1.8.18.custom.min');
 echo $this->Html->script('bootstrap');

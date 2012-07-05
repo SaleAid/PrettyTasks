@@ -13,7 +13,7 @@ class PagesController extends AppController {
             $this->redirect(array(
                 'controller' => 'tasks',
                 'action' => 'index'
-        ));
+            ));
         }
 
     }

@@ -5,7 +5,7 @@
 					<div class="span3">
 						<h2>Pages</h2>
 						<ul>
-							<li><?php echo $this->Html->link(__('Home'), '/');?></li>
+							<li><?php echo $this->Html->link(__('Home'), array('controller' => 'pages', 'action' => 'index'));?></li>
 							<li><?php echo $this->Html->link(__('About'), array('controller' => 'pages', 'action' => 'about'));?></li>
 							<li><?php echo $this->Html->link(__('How it works'), array('controller' => 'pages', 'action' =>  'how-it-works'));?></li>
 							<li><?php echo $this->Html->link(__('Testimonials'), array('controller' => 'pages', 'action' =>  'testimonials'));?></li>

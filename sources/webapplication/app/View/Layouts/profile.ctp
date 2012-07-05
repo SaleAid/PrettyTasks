@@ -59,7 +59,11 @@ echo $scripts_for_layout;
 </div>
 
 <?php
-echo $this->element('footer');
+if(Configure::read('Config.language') =='eng'){
+    echo $this->element('footer_eng');
+}else{
+    echo $this->element('footer');    
+}
 echo $this->Js->writeBuffer();
 echo $this->Html->script('jquery-1.7.1.min');
 echo $this->Html->script('bootstrap');

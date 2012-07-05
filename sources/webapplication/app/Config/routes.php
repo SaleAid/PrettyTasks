@@ -52,15 +52,12 @@ Router::connect('/:lang/:device/:controller/:action', array(), array(
 	'device' => '[m]{1}',
     'lang' => '[a-z]{2}'
 ));
-Router::connect('/:lang', array('controller' => 'tasks', 'action' => 'index'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/pages/*', array('controller' => 'pages', 'action' => 'view'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/:controller', array('action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/:controller/:action', array(), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/:controller/:action/*', array(), array('lang' => '[a-z]{2}'));
-//TODO Change it to /*
-//Router::connect('/pages/*', array(
-//	'controller' => 'Pages', 'action' => 'view'
-//));
+
 Router::parseExtensions('xml', 'json', 'xhtml', 'html');
 
 /**
