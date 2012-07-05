@@ -61,7 +61,7 @@ class TasksController extends AppController {
         $result = $this->_prepareResponse();
         if (!$this->_isSetRequestData('type')) {
             $result['message'] = array(
-                'type' => 'success', 
+                'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
@@ -85,7 +85,7 @@ class TasksController extends AppController {
                 default :{
                     $result['success'] = false;
                     $result['message'] = array(
-                        'type' => 'success', 
+                        'type' => 'error', 
                         'message' => __('Ошибка, некорректный тип')
                     );
                 }
@@ -135,7 +135,7 @@ class TasksController extends AppController {
         );
         if (!$this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
-                'type' => 'success', 
+                'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
@@ -152,7 +152,7 @@ class TasksController extends AppController {
                 } else {
                     $result['data'] = $originTask;
                     $result['message'] = array(
-                        'type' => 'alert', 
+                        'type' => 'error', 
                         'message' => __('Ошибка, Задача  не изменена'),
                         'reason' => $this->Task->invalidFields(),
                     );
@@ -174,7 +174,7 @@ class TasksController extends AppController {
         );
         if (!$this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
-                'type' => 'success', 
+                'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
@@ -192,7 +192,7 @@ class TasksController extends AppController {
                 );
             } else {
                 $result['message'] = array(
-                    'type' => 'alert', 
+                    'type' => 'error', 
                     'message' => __('Задача  не создана')
                 );
             }
@@ -212,7 +212,7 @@ class TasksController extends AppController {
         );
         if (!$this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
-                'type' => 'success', 
+                'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
@@ -231,7 +231,7 @@ class TasksController extends AppController {
                 }
             } else {
                 $result['message'] = array(
-                    'type' => 'success', 
+                    'type' => 'error', 
                     'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')
                 );
             }
@@ -251,7 +251,7 @@ class TasksController extends AppController {
         );
         if (!$this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
-                'type' => 'success', 
+                'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
@@ -268,14 +268,14 @@ class TasksController extends AppController {
                         );
                     } else {
                         $result['message'] = array(
-                            'type' => 'alert', 
+                            'type' => 'success', 
                             'message' => __('Задача открыта')
                         );
                     }
                 } else {
                     $result['data'] = $originTask;
                     $result['message'] = array(
-                        'type' => 'alert', 
+                        'type' => 'error', 
                         'message' => __('Ошибка, Задача  не изменена')
                     );
                 }
@@ -292,7 +292,7 @@ class TasksController extends AppController {
         $result = $this->_prepareResponse();
         if (!$this->_isSetRequestData('id')) {
             $result['message'] = array(
-                'type' => 'success', 
+                'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
@@ -306,13 +306,13 @@ class TasksController extends AppController {
                     );
                 } else {
                     $result['message'] = array(
-                        'type' => 'alert', 
+                        'type' => 'error', 
                         'message' => __('Error')
                     );
                 }
             } else {
                 $result['message'] = array(
-                    'type' => 'alert', 
+                    'type' => 'error', 
                     'message' => __('Ошибка, Задача  не изменена')
                 );
             }
@@ -333,7 +333,7 @@ class TasksController extends AppController {
         );
         if (!$this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
-                'type' => 'success', 
+                'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
@@ -354,7 +354,7 @@ class TasksController extends AppController {
                 }
             } else {
                 $result['message'] = array(
-                    'type' => 'success', 
+                    'type' => 'error', 
                     'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')
                 );
             }
@@ -380,7 +380,7 @@ class TasksController extends AppController {
         );
         if (!$this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
-                'type' => 'success', 
+                'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
@@ -402,14 +402,15 @@ class TasksController extends AppController {
                         'message' => __('Задача успешно отредактировано')
                     );
                 } else {
+                    $result['errors'] = $this->Task->invalidFields();
                     $result['message'] = array(
-                        'type' => 'success', 
-                        'message' => __('Задача не отредактировано')
+                        'type' => 'error', 
+                        'message' => __('Задача не отредактировано'),
                     );
                 }
             } else {
                 $result['message'] = array(
-                    'type' => 'success', 
+                    'type' => 'error', 
                     'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')
                 );
             }
@@ -425,7 +426,7 @@ class TasksController extends AppController {
         $result = $this->_prepareResponse();
         if (!$this->_isSetRequestData('date')){
             $result['message'] = array(
-                'type' => 'success', 
+                'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
@@ -462,7 +463,7 @@ class TasksController extends AppController {
         $result = $this->_prepareResponse();
         if (!$this->_isSetRequestData('date')) {
             $result['message'] = array(
-                'type' => 'success', 
+                'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
@@ -474,7 +475,7 @@ class TasksController extends AppController {
                 );
             } else {
                 $result['message'] = array(
-                    'type' => 'success', 
+                    'type' => 'error', 
                     'message' => __('Ошибка при  ...')
                 );
             }

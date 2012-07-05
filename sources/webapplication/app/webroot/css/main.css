@@ -136,3 +136,18 @@ footer .right{ text-align:right; }
   opacity:0.6;
   filter:alpha(opacity=60); 
 }
+
+
+
+.control-group.error .checkbox,
+.control-group.error .radio, 
+.control-group.error input, 
+.control-group.error select, 
+.control-group.error textarea {
+    color: #B94A48;
+    border-color: #B94A48;
+    background-color: #fff8f8;
+}
+.control-group.error input:focus{
+    background-color:white;
+}

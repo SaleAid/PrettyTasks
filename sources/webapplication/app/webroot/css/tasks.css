@@ -183,6 +183,13 @@ div.well{
     margin-left: 5px;
     width: 50px;
 }
+.errorEdit{
+    border-color: #B94A48!important;
+    background-color: #fff8f8 !important;
+}
+.errorTooltip .tooltip-inner{background-color: red; color: black;}
+.tooltip.right .tooltip-arrow{ border-right-color: red;}
+
 /*jGrowl theme */
 div.jGrowl div.success {
     background-color: #008040;
@@ -192,7 +199,7 @@ div.jGrowl div.info {
     background-color: #804040;
     color: yellow;
 }
-div.jGrowl div.alert {
+div.jGrowl div.error {
     background-color: red;
     color: yellow;
 }

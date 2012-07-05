@@ -36,25 +36,35 @@ class Task extends AppModel {
             'notempty' => array(
                 'rule' => array(
                     'notempty'
-                ) 
+                ),
+                'message' => 'Поле должно быть заполнено' 
+            )
+        ),
+        'comment' => array(
+            'maxLength' => array(
+                'rule'    => array('maxLength', 1000),
+                'message' => 'Максимальная длина комментария не больше 1000 символов'
             )
         ),  
         'date' => array(
             'date' => array(
                 'rule'    => array('date', 'ymd'),
                 'allowEmpty' => true,
+                'message' => 'Некорректная дата'
             )
         ),
         'time' => array(
             'time' => array(
                 'rule' => array('time'),
                     'allowEmpty' => true,
+                    'message' => 'Некорректное время'
             )
         ),
         'timeend' => array(
             'time' => array(
                 'rule' => array('time'),
                     'allowEmpty' => true,
+                    'message' => 'Некорректное время'
             )
         ),  
         'order' => array(
@@ -632,18 +642,23 @@ class Task extends AppModel {
         return $weekday[$index]; 
     }
     public function saveTask(){
-        $save = $this->save();
-        if (is_array($save)){
-            foreach($save[$this->alias] as $key => $value){
-                if(!in_array($key, $this->_taskFields)){
-                    unset($save[$this->alias][$key]);
+        
+        //if ($this->validates()) {
+            $save = $this->save();
+            if (is_array($save)){
+                foreach($save[$this->alias] as $key => $value){
+                    if(!in_array($key, $this->_taskFields)){
+                        unset($save[$this->alias][$key]);
+                    }
                 }
+                return $save;
             }
-            return $save;
-        }
-        else{
-            return false;
-        }
+            else{
+                return false;
+            }
+        //}else{
+//            pr('fuck');die;
+//        }
     }
 
 }

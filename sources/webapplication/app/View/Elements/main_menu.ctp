@@ -32,7 +32,8 @@
           <li class="<? if($this->params['action'] == "agenda" and strtolower($this->params['controller']) == "pasks") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __('Agenda'),
-                    array('controller' => 'tasks', 'action' => 'agenda')
+                    '/tasks#day-future'
+                    //array('controller' => 'tasks', 'action' => 'agenda')
                 );?>
           </li>
           <?php endif;?>

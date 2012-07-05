@@ -17,7 +17,6 @@
         <li><?php echo $this->Html->link($this->Html->tag('i', '', array('class' => 'icon-magnet')).__('  Связанные аккаунты'),array('controller' => 'users', 'action' => 'accounts'),array('escape' => false));?></li>
         <li><?php echo $this->Html->link($this->Html->tag('i', '', array('class' => 'icon-plane')).__('  Пригласить друзей'),array('controller' => 'invitations', 'action' => 'add'),array('escape' => false));?></li>
         
-        <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
         <li class="divider"></li>
         <li><?php echo $this->Html->link($this->Html->tag('i', '', array('class' => 'icon-off')). __('  Выход'),array('controller' => 'users', 'action' => 'logout'),array('escape' => false));?></li>
       </ul>

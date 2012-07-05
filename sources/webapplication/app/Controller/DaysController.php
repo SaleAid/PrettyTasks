@@ -16,7 +16,7 @@ class DaysController extends AppController {
         );
         if (!$this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
-                'type' => 'success', 
+                'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
@@ -38,7 +38,7 @@ class DaysController extends AppController {
         $result = $this->_prepareResponse();
         if (!$this->_isSetRequestData('date')) {
             $result['message'] = array(
-                'type' => 'success', 
+                'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
@@ -64,16 +64,24 @@ class DaysController extends AppController {
         );
         if (!$this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
-                'type' => 'success', 
+                'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
-            $result['success'] = true;
-            $result['data'] = $this->Day->setComment($this->Auth->user('id'), $this->request->data['date'],  $this->request->data['comment'])->save(); 
-            $result['message'] = array(
-                'type' => 'success', 
-                'message' => __('Изменение успешно сохранено.')
-            );   
+            if($day = $this->Day->setComment($this->Auth->user('id'), $this->request->data['date'],  $this->request->data['comment'])->save()){
+                $result['success'] = true;
+                $result['data'] = $day; 
+                $result['message'] = array(
+                    'type' => 'success', 
+                    'message' => __('Изменение успешно сохранено.')
+                );    
+            }else{
+                $result['errors'] = $this->Day->invalidFields();
+                    $result['message'] = array(
+                        'type' => 'error', 
+                        'message' => __('Ошибка при сохранении комментария'),
+                    );
+            }
         }
         $result['action'] = 'setCommentDay';
         $this->set('result', $result);

@@ -15,6 +15,38 @@ function getTaskFromPage(id){
     return data;
 }
 
+function getEditElement(name){
+    var element = '';
+    switch(name){
+        case 'title':
+            element = $('#eTitle');
+        break;
+        case 'date':
+            element = $('#eDate');
+        break;
+        case 'time':
+            element = $('#eTime');
+        break;
+        case 'timeend':
+            element = $('#eTimeEnd');
+        break;
+        case 'comment':
+            element = $('#eComment');
+        break;
+    }
+    return element;
+}
+
+function getCommentDayElement(name){
+    var element = '';
+    switch(name){
+        case 'comment':
+            element = $('#eCommentDay');
+        break;
+    }
+    return element;
+}
+
 
 function mesg (message){
     $.jGrowl.defaults.pool = 1;
@@ -23,7 +55,7 @@ function mesg (message){
                     position: 'custom',
                     theme: message.type,
                     speed: 'fast',
-                    life: '250',
+                    life: '1000',
 					animateOpen: { 
 						height: "show"
 					},
@@ -327,7 +359,30 @@ function onSetCommentDay(data){
         scrSetCommentDay(data);
     }else{
         mesg(data.message);
+        scrErrorSetCommentDay(data.errors);
     }
+}
+
+function scrErrorSetCommentDay(data){
+    $('.errorEdit').removeClass('errorEdit')
+                   .removeAttr('rel')
+                   .removeAttr('title')
+                   .removeAttr('data-original-title')
+                   .off('tooltip');
+    if(data !== undefined){
+        $.each(data,function(index, value) {
+            getCommentDayElement(index)
+                        .addClass('errorEdit')
+                        .attr('rel', 'tooltip')
+                        .attr('data-original-title', value[0])
+                        .tooltip({placement:'right',
+                                  delay: { show: 500, hide: 100 },
+                                  //trigger: 'focus',
+                                  template: '<div class="tooltip errorTooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+                                  });
+        });
+    }
+    
 }
 //---------------getCommnetDay-----
 function taskGetCommentDay(date){
@@ -568,19 +623,41 @@ function scrCommentTask(id, comment){
 
 //----------------edit----------
 function taskEdit(id, title, priority, done, date, time, timeEnd, comment){
-
-    scrEdit(id, title, priority, done, date, time, timeEnd, comment);
+    //scrEdit(id, title, priority, done, date, time, timeEnd, comment);
     srvEdit(id, title, priority, done, date, time, timeEnd, comment);
 }
 function onEdit(data){
     if(data.success){
         $('#editTask').modal('hide');
-        //scrSetTitle(data.data.Task.id, data.data.Task.title, data.data.Task.priority);
+        scrEdit(data.data.Task.id, data.data.Task.title, data.data.Task.priority, data.data.Task.done, data.data.Task.date, data.data.Task.time, data.data.Task.timeEnd, data.data.Task.comment);
     }else {
-        mesg(data.message);    
+        mesg(data.message);
+        scrErrorEdit(data.errors);    
     }
     
 }
+function scrErrorEdit(data){
+    $('.errorEdit').removeClass('errorEdit')
+                   .removeAttr('rel')
+                   .removeAttr('title')
+                   .removeAttr('data-original-title')
+                   .off('tooltip');
+    if(data !== undefined){
+        $.each(data,function(index, value) {
+            getEditElement(index)
+                        .addClass('errorEdit')
+                        .attr('rel', 'tooltip')
+                        .attr('data-original-title', value[0])
+                        .tooltip({placement:'right',
+                                  delay: { show: 500, hide: 100 },
+                                  //trigger: 'focus',
+                                  template: '<div class="tooltip errorTooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+                                  });
+        });
+    }
+    
+}
+
 function srvEdit(id, title, priority, done, date, time, timeEnd, comment){
     superAjax('/tasks/editTask.json',{id: id, title: title, priority: priority, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment});
 }
@@ -1212,19 +1289,23 @@ $(function(){
                     startHour: 6,
                     change: function(time) {
                         $('#eTimeEnd').timepicker('option', 'minTime', time, 'maxTime', '23:59').removeAttr('disabled');
+                        $(this).removeClass('errorEdit');
                     }
     });
     
     $('#eTimeEnd').timepicker({
                     timeFormat: 'HH:mm',
                     maxTime: '23:59',
-                    interval: 15
+                    interval: 15,
+                    change: function(time) {
+                        $(this).removeClass('errorEdit');
+                    }
     });
     
     $( "#eDate" ).datepicker({ 
                     dateFormat: 'yy-mm-dd',
                     showAnim: 'clip',
-                    minDate: 0
+                    //minDate: 0
     });
             
     $("#eSave").click(function(){
@@ -1244,6 +1325,18 @@ $(function(){
             var comment = $('#eCommentDay').val();
             userEvent('setCommentDay',{date: date, comment: comment });
     });
+    
+    //modal close 
+    $('#editTask').on('hidden', function () {
+        scrErrorEdit();
+    })
+    $('#commentDay').on('hidden', function () {
+        scrErrorSetCommentDay();
+    })
+    
+    $('#commentDay textarea, #editTask input, #editTask textarea').change(function () {
+        $(this).removeClass('errorEdit');
+    })
     
 
     
