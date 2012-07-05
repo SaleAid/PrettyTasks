@@ -3,13 +3,13 @@ App::uses('Controller', 'Controller');
 App::uses('Sanitize', 'Utility');
 class AppController extends Controller {
     public $helpers = array(
-        'Text',
+        'Text', 
         'Form', 
         'Html', 
-        'Js',
-        'Time',
-        'Session',
-        'Loginza'//TODO Maybe move to needed controllers only?
+        'Js', 
+        'Time', 
+        'Session', 
+        'Loginza' //TODO Maybe move to needed controllers only?
     );
     public $components = array(
         'AutoLogin', 
@@ -37,10 +37,9 @@ class AppController extends Controller {
                 )
             )
         ), 
-        'RequestHandler',
+        'RequestHandler', 
         'Seo'
     );
-     
 
     /**
      * 
@@ -121,49 +120,45 @@ class AppController extends Controller {
         //        );
         //  
          */
-
         $this->_setLanguage();
         $this->__setTimeZone();
         $this->_checkMobile();
-        
         $this->Seo->title = Configure::read('Site.title');
         $this->Seo->description = Configure::read('Site.description');
         $this->Seo->keywords = Configure::read('Site.keywords');
     }
-    
-    public function _setLanguage(){
+
+    public function _setLanguage() {
         if (isset($this->request->params['lang']) and array_key_exists($this->request->params['lang'], Configure::read('Config.langListURL'))) {
             $arrLang = Configure::read('Config.langListURL');
             Configure::write('Config.language', $arrLang[$this->request->params['lang']]);
             Configure::write('Config.langURL', $this->request->params['lang']);
-        }else{
-            if(($this->request->params['controller'] != 'accounts' and $this->request->params['action'] != 'loginzalogin') 
-                and !$this->request->is('ajax')){
-                $this->redirect(DS.Configure::read('Config.langURL').$this->request->here);    
+        } else {
+            if (($this->request->params['controller'] != 'accounts' and $this->request->params['action'] != 'loginzalogin') and ! $this->request->is('ajax')) {
+                $this->redirect(DS . Configure::read('Config.langURL') . $this->request->here);
             }
         }
     }
 
     public function beforeRender() {
-        
         $this->set('currentUser', $this->Auth->user());
         $this->set('provider', $this->Auth->user('provider'));
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
     }
-    
+
     protected function _prepareResponse() {
         return array(
             'success' => false
         );
     }
-    
+
     protected function _isSetRequestData($data, $model = null) {
-         if (!($this->request->is('post') || $this->request->is('put'))) {
+        if (! ($this->request->is('post') || $this->request->is('put'))) {
             return false;
         }
         $request = $this->request->data;
-        if($model){
+        if ($model) {
             $request = $this->request->data[$model];
         }
         if (is_array($data)) {
@@ -171,24 +166,21 @@ class AppController extends Controller {
                 if (! isset($request[$value])) {
                     return false;
                 }
-                //$request[$value] = Sanitize::clean($request[$value], array('encode' => true ,'remove_html' => true));
+                 //$request[$value] = Sanitize::clean($request[$value], array('encode' => true ,'remove_html' => true));
             }
         } else {
             //if($model){
             //$this->request->data[$model] = Sanitize::clean($request, array('encode' => true ,'remove_html' => true));
             //}else{
-                //$this->request->data = Sanitize::clean($request, array('encode' => true ,'remove_html' => true));    
+            //$this->request->data = Sanitize::clean($request, array('encode' => true ,'remove_html' => true));    
             //}
             return isset($request[$data]);
         }
         //if($model){
-            //$this->request->data[$model] = $request;
+        //$this->request->data[$model] = $request;
         //}else{
-                //$this->request->data = $request;    
+        //$this->request->data = $request;    
         //}
         return true;
     }
-    
-    
-    
 }

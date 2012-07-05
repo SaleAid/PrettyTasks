@@ -11,21 +11,3 @@ AddDefaultCharset UTF-8
     RewriteRule ^(.*)$ index.php?/$1 [QSA,L]
 </IfModule>
 
-<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
-    <IfModule mod_expires.c>
-            ExpiresActive On
-            ExpiresDefault "access plus 10 years"
-    </IfModule>
-    <IfModule mod_headers.c>
-	Header set Cache-Control "public"
-        FileETag None
-    </IfModule>
-</FilesMatch>
-
-#    ExpiresActive On
-#    ExpiresDefault "access plus 10 years"
-
-AuthType Basic
-AuthName "Private zone."
-AuthUserFile /home/pubftp/test1/besttask/sources/webapplication/app/webroot/.htpasswd
-require valid-user
