@@ -22,7 +22,7 @@ class TasksController extends AppController {
         $to = CakeTime::format('Y-m-d', '+7 days');
         $dayConfig = $this->Task->User->getConfig($this->Auth->user('id'), 'day');
         $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to, $dayConfig);
-        foreach($result['data']['arrTaskOnDays'] as $key => $value){
+        foreach ( $result['data']['arrTaskOnDays'] as $key => $value ) {
             $done = array_filter($value, create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;'));
             $data_count[$key]['all'] = count($value);
             $data_count[$key]['done'] = count($done);
@@ -36,30 +36,30 @@ class TasksController extends AppController {
             'result'
         ));
     }
-     
-    public function getOverdue(){
+
+    public function getOverdue() {
         $result = $this->_prepareResponse();
         $result['success'] = true;
         $result['data']['arrAllOverdue'] = $this->Task->getAllOverdue($this->Auth->user('id'));
         $this->set('result', $result);
         $this->set('_serialize', array(
             'result'
-        ));    
+        ));
     }
-    
-    public function getCompleted(){
+
+    public function getCompleted() {
         $result = $this->_prepareResponse();
         $result['success'] = true;
         $result['data']['arrAllCompleted'] = $this->Task->getAllCompleted($this->Auth->user('id'));
         $this->set('result', $result);
         $this->set('_serialize', array(
             'result'
-        ));            
+        ));
     }
-        
-    public function getTasksByType(){
+
+    public function getTasksByType() {
         $result = $this->_prepareResponse();
-        if (!$this->_isSetRequestData('type')) {
+        if (! $this->_isSetRequestData('type')) {
             $result['message'] = array(
                 'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
@@ -67,42 +67,46 @@ class TasksController extends AppController {
         } else {
             $result['success'] = true;
             $result['type'] = $this->request->data['type'];
-            switch($this->request->data['type']){
-                case 'completed':{
-                    $result['data'] = $this->Task->getAllCompleted($this->Auth->user('id'));
-                    break;    
-                }
-                case 'expired':{
-                    $result['data'] = $this->Task->getAllOverdue($this->Auth->user('id'));
-                    break;    
-                }
-                case 'future':{
-                    $from = CakeTime::format('Y-m-d', time());
-                    $to = CakeTime::format('Y-m-d', '+7 days');
-                    $result['data'] = $this->Task->getDays($this->Auth->user('id'), $from, $to);
-                    break;    
-                }
-                default :{
-                    $result['success'] = false;
-                    $result['message'] = array(
-                        'type' => 'error', 
-                        'message' => __('Ошибка, некорректный тип')
-                    );
-                }
+            switch ($this->request->data['type']) {
+                case 'completed' :
+                    {
+                        $result['data'] = $this->Task->getAllCompleted($this->Auth->user('id'));
+                        break;
+                    }
+                case 'expired' :
+                    {
+                        $result['data'] = $this->Task->getAllOverdue($this->Auth->user('id'));
+                        break;
+                    }
+                case 'future' :
+                    {
+                        $from = CakeTime::format('Y-m-d', time());
+                        $to = CakeTime::format('Y-m-d', '+7 days');
+                        $result['data'] = $this->Task->getDays($this->Auth->user('id'), $from, $to);
+                        break;
+                    }
+                default :
+                    {
+                        $result['success'] = false;
+                        $result['message'] = array(
+                            'type' => 'error', 
+                            'message' => __('Ошибка, некорректный тип')
+                        );
+                    }
             }
             $data = array();
-            if(isset($result['data'])){
-                foreach($result['data'] as $key => $value){
-                    if($key){
+            if (isset($result['data'])) {
+                foreach ( $result['data'] as $key => $value ) {
+                    if ($key) {
                         $data[$key]['weekDay'] = $this->Task->getWeekDay(CakeTime::format('l', $key));
-                        if(CakeTime::isToday($key)){
+                        if (CakeTime::isToday($key)) {
                             $data[$key]['weelDayStyle'] = '';
-                        }else{
-                            $data[$key]['weelDayStyle'] = ($key > CakeTime::format('Y-m-d', time())) ? 'future': 'past';
+                        } else {
+                            $data[$key]['weelDayStyle'] = ($key > CakeTime::format('Y-m-d', time())) ? 'future' : 'past';
                         }
-                        $data[$key]['list'] = $value ;    
+                        $data[$key]['list'] = $value;
                     }
-                }   
+                }
             }
         }
         unset($result['data']);
@@ -113,6 +117,7 @@ class TasksController extends AppController {
             'result'
         ));
     }
+
     public function agenda() {
         $result = $this->_prepareResponse();
         $result['success'] = true;
@@ -126,14 +131,13 @@ class TasksController extends AppController {
         ));
     }
 
-
     public function setTitle() {
         $result = $this->_prepareResponse();
         $expectedData = array(
             'id', 
-            'title' 
+            'title'
         );
-        if (!$this->_isSetRequestData($expectedData)) {
+        if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
                 'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
@@ -153,7 +157,7 @@ class TasksController extends AppController {
                     $result['data'] = $originTask;
                     $result['message'] = array(
                         'type' => 'error', 
-                        'message' => __('Ошибка, Задача  не изменена')
+                        'message' => __('Ошибка, Задача  не изменена'), 
                     );
                 }
             }
@@ -168,10 +172,10 @@ class TasksController extends AppController {
     public function addNewTask() {
         $result = $this->_prepareResponse();
         $expectedData = array(
-            'date',
-            'title' 
+            'date', 
+            'title'
         );
-        if (!$this->_isSetRequestData($expectedData)) {
+        if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
                 'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
@@ -207,9 +211,9 @@ class TasksController extends AppController {
         $result = $this->_prepareResponse();
         $expectedData = array(
             'id', 
-            'position' 
+            'position'
         );
-        if (!$this->_isSetRequestData($expectedData)) {
+        if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
                 'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
@@ -246,9 +250,9 @@ class TasksController extends AppController {
         $result = $this->_prepareResponse();
         $expectedData = array(
             'id', 
-            'done' 
+            'done'
         );
-        if (!$this->_isSetRequestData($expectedData)) {
+        if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
                 'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
@@ -289,7 +293,7 @@ class TasksController extends AppController {
 
     public function deleteTask() {
         $result = $this->_prepareResponse();
-        if (!$this->_isSetRequestData('id')) {
+        if (! $this->_isSetRequestData('id')) {
             $result['message'] = array(
                 'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
@@ -330,7 +334,7 @@ class TasksController extends AppController {
             'date', 
             'time'
         );
-        if (!$this->_isSetRequestData($expectedData)) {
+        if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
                 'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
@@ -370,14 +374,14 @@ class TasksController extends AppController {
         $expectedData = array(
             'id', 
             'title', 
-            'priority',
+            'priority', 
             'date', 
-            'time',
+            'time', 
             'timeEnd', 
             'done', 
             'comment'
         );
-        if (!$this->_isSetRequestData($expectedData)) {
+        if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
                 'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
@@ -385,14 +389,7 @@ class TasksController extends AppController {
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                $task = $this->Task->setEdit($this->request->data['title'],
-                                             $this->request->data['priority'],
-                                             $this->request->data['comment'],
-                                             $this->request->data['date'], 
-                                             $this->request->data['time'], 
-                                             $this->request->data['timeEnd'], 
-                                             $this->request->data['done']
-                                            )->saveTask();
+                $task = $this->Task->setEdit($this->request->data['title'], $this->request->data['priority'], $this->request->data['comment'], $this->request->data['date'], $this->request->data['time'], $this->request->data['timeEnd'], $this->request->data['done'])->saveTask();
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;
@@ -404,7 +401,7 @@ class TasksController extends AppController {
                     $result['errors'] = $this->Task->validationErrors;
                     $result['message'] = array(
                         'type' => 'error', 
-                        'message' => __('Задача не отредактировано'),
+                        'message' => __('Задача не отредактировано')
                     );
                 }
             } else {
@@ -423,13 +420,13 @@ class TasksController extends AppController {
 
     public function getTasksForDay() {
         $result = $this->_prepareResponse();
-        if (!$this->_isSetRequestData('date')){
+        if (! $this->_isSetRequestData('date')) {
             $result['message'] = array(
                 'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
-            $task = $this->Task->getTasksForDay($this->Auth->user('id'), CakeTime::format('Y-m-d',$this->request->data['date']));
+            $task = $this->Task->getTasksForDay($this->Auth->user('id'), CakeTime::format('Y-m-d', $this->request->data['date']));
             $done = array_filter($task, create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;'));
             $result['data']['listCount']['all'] = count($task);
             $result['data']['listCount']['done'] = count($done);
@@ -438,9 +435,9 @@ class TasksController extends AppController {
             $result['data']['date'] = $this->request->data['date'];
             $result['data']['weekDay'] = $this->Task->getWeekDay(CakeTime::format('l', $this->request->data['date']));
             $result['data']['day'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $this->request->data['date']);
-            $result['data']['weelDayStyle'] = ($result['data']['date'] > CakeTime::format('Y-m-d', time())) ? 'future': 'past';
+            $result['data']['weelDayStyle'] = ($result['data']['date'] > CakeTime::format('Y-m-d', time())) ? 'future' : 'past';
             //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            $this->layout = false; 
+            $this->layout = false;
             $view = new View($this, false);
             $view->set('type', $result['data']['weelDayStyle']);
             $view->set('hide', $result['data']['listCount']['all']);
@@ -460,7 +457,7 @@ class TasksController extends AppController {
 
     public function deleteDay() {
         $result = $this->_prepareResponse();
-        if (!$this->_isSetRequestData('date')) {
+        if (! $this->_isSetRequestData('date')) {
             $result['message'] = array(
                 'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
@@ -485,7 +482,5 @@ class TasksController extends AppController {
             'result'
         ));
     }
-    
-    
     //----------------------------------------------------------------------
 }
