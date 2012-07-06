@@ -642,8 +642,6 @@ class Task extends AppModel {
         return $weekday[$index]; 
     }
     public function saveTask(){
-        
-        //if ($this->validates()) {
             $save = $this->save();
             if (is_array($save)){
                 foreach($save[$this->alias] as $key => $value){
@@ -656,9 +654,6 @@ class Task extends AppModel {
             else{
                 return false;
             }
-        //}else{
-//            pr('fuck');die;
-//        }
     }
 
 }

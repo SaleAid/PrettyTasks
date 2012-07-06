@@ -153,8 +153,7 @@ class TasksController extends AppController {
                     $result['data'] = $originTask;
                     $result['message'] = array(
                         'type' => 'error', 
-                        'message' => __('Ошибка, Задача  не изменена'),
-                        'reason' => $this->Task->invalidFields(),
+                        'message' => __('Ошибка, Задача  не изменена')
                     );
                 }
             }
@@ -402,7 +401,7 @@ class TasksController extends AppController {
                         'message' => __('Задача успешно отредактировано')
                     );
                 } else {
-                    $result['errors'] = $this->Task->invalidFields();
+                    $result['errors'] = $this->Task->validationErrors;
                     $result['message'] = array(
                         'type' => 'error', 
                         'message' => __('Задача не отредактировано'),
