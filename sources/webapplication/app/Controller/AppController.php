@@ -166,21 +166,10 @@ class AppController extends Controller {
                 if (! isset($request[$value])) {
                     return false;
                 }
-                 //$request[$value] = Sanitize::clean($request[$value], array('encode' => true ,'remove_html' => true));
             }
         } else {
-            //if($model){
-            //$this->request->data[$model] = Sanitize::clean($request, array('encode' => true ,'remove_html' => true));
-            //}else{
-            //$this->request->data = Sanitize::clean($request, array('encode' => true ,'remove_html' => true));    
-            //}
             return isset($request[$data]);
         }
-        //if($model){
-        //$this->request->data[$model] = $request;
-        //}else{
-        //$this->request->data = $request;    
-        //}
         return true;
     }
 }
