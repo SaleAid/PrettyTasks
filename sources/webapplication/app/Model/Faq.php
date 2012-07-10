@@ -3,12 +3,13 @@ class Faq extends AppModel {
     public $name = 'Faq';
     public $validate = array(
         'faqcategory_id' => array(
-            'numeric' => array(
+            'maxLength' => array(
                 'rule' => array(
-                    'numeric'
-                )
+                    'maxLength', 
+                    36
+                ), 
+                'message' => 'Wrong ID'
             )
-            
         ), 
         'lang' => array(
             'notempty' => array(
@@ -16,7 +17,6 @@ class Faq extends AppModel {
                     'notempty'
                 )
             )
-            
         ), 
         'subject' => array(
             'notempty' => array(
@@ -24,7 +24,6 @@ class Faq extends AppModel {
                     'notempty'
                 )
             )
-            
         ), 
         'active' => array(
             'boolean' => array(
@@ -32,7 +31,6 @@ class Faq extends AppModel {
                     'boolean'
                 )
             )
-            
         ), 
         'user_id' => array(
             'numeric' => array(
@@ -40,10 +38,8 @@ class Faq extends AppModel {
                     'numeric'
                 )
             )
-            
         )
     );
-
     public $belongsTo = array(
         'Faqcategory' => array(
             'className' => 'Faqcategory', 

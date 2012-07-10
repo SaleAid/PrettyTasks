@@ -24,6 +24,12 @@ class User extends AppModel {
      * @var array
      */
     public $validate = array(
+        'id' => array(
+			'maxLength' => array(
+                'rule'    => array('maxLength', 36),
+                'message' => 'Wrong ID',
+            )
+        ), 
         'first_name' => array(
              'notEmpty' => array(
                 'rule' => array(

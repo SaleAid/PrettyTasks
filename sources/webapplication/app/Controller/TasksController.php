@@ -198,6 +198,7 @@ class TasksController extends AppController {
                     'type' => 'error', 
                     'message' => __('Задача  не создана')
                 );
+                $result['errors'] = $this->Task->validationErrors;
             }
         }
         $result['action'] = 'create';
@@ -299,7 +300,8 @@ class TasksController extends AppController {
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
-            if ($task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
+            $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
+            if ($task) {
                 if ($this->Task->delete()) {
                     $result['success'] = true;
                     //$result['data'] = $task;
