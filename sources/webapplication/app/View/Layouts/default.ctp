@@ -26,14 +26,19 @@ echo $this->Html->css('print.' . Configure::read('App.version'), null, array(
 ));
 echo $this->fetch('toHead');
 echo $this->Html->css('main.' . Configure::read('App.version'));
+echo $this->Html->css($this->Loginza->getCssUrl());
 echo $scripts_for_layout;
 ?>      
 	
 </head>
-
+<noscript>
+  This page needs JavaScript activated to work. 
+  <style>div { display:none; }</style>
+</noscript>
 <body data-spy="scroll" data-target=".subnav" data-offset="50">
+
 <div id="wrapper-all">
- 
+
     <?php
     echo $this->element('main_menu');
     ?> 

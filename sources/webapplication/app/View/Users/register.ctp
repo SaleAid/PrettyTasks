@@ -12,7 +12,7 @@
 		<legend><?php echo __('Регистрация аккаунта'); ?></legend>
     	   <?php echo $this->Form->input('first_name', array('label' =>'Имя:', 'class' => 'input-xlarge'));?>
            
-    	   <?php echo $this->Form->input('last_name', array('label' =>'Фамилия:', 'class' => 'input-xlarge'));?>
+    	   <?php //echo $this->Form->input('last_name', array('label' =>'Фамилия:', 'class' => 'input-xlarge'));?>
            
     	   <?php echo $this->Form->input('email', array('label' =>'Email:', 'class' => 'input-xlarge'));?>
            

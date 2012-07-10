@@ -42,21 +42,21 @@ class User extends AppModel {
             ),            
         ), 
         'last_name' => array(
-            'notEmpty' => array(
-                'rule' => array(
-                    'notEmpty'
-                ), 
-                'message' => 'Поле должно быть заполнено'
-             ),
+//            'notEmpty' => array(
+//                'rule' => array(
+//                    'notEmpty'
+//                ), 
+//                'message' => 'Поле должно быть заполнено'
+//             ),
             'alphaNumeric' => array(
                 'rule'     => 'alphaNumeric',
-                'required' => true,
+                'allowEmpty' => true,
                 'message'  => 'Введите в поле только буквы и цифры'
             ),
-            'minLength' => array(
-                'rule'     => array('minLength', 2),
-                'message'  => 'Минимальная длина фамилии - 2 символа'
-            ),
+//            'minLength' => array(
+//                'rule'     => array('minLength', 2),
+//                'message'  => 'Минимальная длина фамилии - 2 символа'
+//            ),
         ), 
         'created' => array(
             'datetime' => array(

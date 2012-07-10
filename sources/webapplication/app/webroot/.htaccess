@@ -11,3 +11,8 @@ AddDefaultCharset UTF-8
     RewriteRule ^(.*)$ index.php?/$1 [QSA,L]
 </IfModule>
 
+
+AuthType Basic
+AuthName "Private zone."
+AuthUserFile /home/pubftp/test1/besttask/sources/webapplication/app/webroot/.htpasswd
+require valid-user

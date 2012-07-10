@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 /* Спрайт иконок провайдеров */
-.providers_ico_sprite {background-position:0 0;background-repeat:no-repeat;background-image:url('/img/loginza/providers_ico_sprite.png?linkedin');display:inline-block;width:16px;height:16px;}
+.providers_ico_sprite {background-position:0 0;background-repeat:no-repeat;background-image:url('/img/loginza/providers_ico_sprite.png');display:inline-block;width:16px;height:16px;}
 .google_ico {background-position:0 0}
 .yandex_ico {background-position:0 -16px}
 .mailruapi_ico, .mailru_ico {background-position:0 -32px}
@@ -27,7 +27,7 @@
 .linkedin_ico {background-position:0 -288px}
 
 /* Спрайт логотипов провайдеров */
-.providers_sprite {background-position:0 0;background-repeat:no-repeat;background-image:url('/img/loginza/providers_sprite.png?linkedin');display:inline-block;width:90px;height:25px;}
+.providers_sprite {background-position:0 0;background-repeat:no-repeat;background-image:url('/img/loginza/providers_sprite.png');display:inline-block;width:90px;height:25px;}
 .google {background-position:0 0}
 .yandex {background-position:0 -25px}
 .mailruapi {background-position:0 -50px}

@@ -55,7 +55,7 @@ function mesg (message){
                     position: 'custom',
                     theme: message.type,
                     speed: 'fast',
-                    life: '1000',
+                    life: '3000',
 					animateOpen: { 
 						height: "show"
 					},
@@ -1203,11 +1203,13 @@ function showErrorConnection(status){
 
 function isDate(value){
     var isDate = false;
-    try{
-        $.datepicker.parseDate('yy-mm-dd', value);
-        isDate = true;
+    if(value.length){
+        try{
+            $.datepicker.parseDate('yy-mm-dd', value);
+            isDate = true;
+        }
+        catch (e){}
     }
-    catch (e){}
     return isDate;
 }
 function convertToHtml(str){

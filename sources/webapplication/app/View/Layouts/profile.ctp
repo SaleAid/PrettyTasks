@@ -25,6 +25,7 @@ echo $this->Html->meta('icon');
 <?php
 echo $this->Html->css('bootstrap');
 echo $this->Html->css('main.' . Configure::read('App.version'));
+echo $this->Html->css($this->Loginza->getCssUrl());
 echo $this->fetch('toHead');
 echo $scripts_for_layout;
 ?>

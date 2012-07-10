@@ -513,7 +513,10 @@ class Task extends AppModel {
                             'conditions' => array(
                                 'Task.user_id' => $user_id, 
                                 'Task.done' => 0, 
-                                'Task.date <' => date('Y-m-d')
+                                'Task.date <' => date('Y-m-d'),
+                                'not' => array('Task.date'=> null,
+                                               'Task.date'=> '0000-00-00'
+                                              )
                             ),
                             'fields' => $this->_taskFields,
                         ));
@@ -535,6 +538,9 @@ class Task extends AppModel {
                             'conditions' => array(
                                 'Task.user_id' => $user_id, 
                                 'Task.done' => 1, 
+                                'not' => array('Task.date'=> null,
+                                               'Task.date'=> '0000-00-00'
+                                              )
                                 //'Task.date <' => CakeTime::format('Y-m-d', time())
                             ),
                             'fields' => $this->_taskFields,
@@ -581,7 +587,10 @@ class Task extends AppModel {
                                 ), 
                                 'conditions' => array(
                                     'Task.user_id' => $user_id, 
-                                    'Task.date' => $days
+                                    'Task.date' => $days,
+                                    'not' => array('Task.date'=> null,
+                                               'Task.date'=> '0000-00-00'
+                                              )
                                 ),
                                 'fields' => $this->_taskFields,
                             ));
@@ -639,7 +648,10 @@ class Task extends AppModel {
                         'Friday' => __('Friday', true),
                         'Saturday' => __('Saturday', true)
                         );
-        return $weekday[$index]; 
+        if(array_key_exists($index, $weekday)){
+            return $weekday[$index];
+        }                        
+        return false; 
     }
     public function saveTask(){
             $save = $this->save();

@@ -1,6 +1,6 @@
 <?php 
 $this->append('toHead');
-echo $this->Html->css($this->Loginza->getCssUrl());
+//echo $this->Html->css($this->Loginza->getCssUrl());
 $this->end();
 ?>
 

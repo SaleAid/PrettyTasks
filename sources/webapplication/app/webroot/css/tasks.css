@@ -193,7 +193,7 @@ div.well{
      -moz-box-shadow: 0 0 6px #d59392!important;
           box-shadow: 0 0 6px #d59392!important;
 }
-.errorTooltip .tooltip-inner{background-color: red; color: black;}
+.errorTooltip .tooltip-inner{background-color: red; }
 .tooltip.right .tooltip-arrow{ border-right-color: red;}
 
 /*jGrowl theme */
