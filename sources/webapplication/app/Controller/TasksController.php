@@ -198,6 +198,7 @@ class TasksController extends AppController {
                     'type' => 'error', 
                     'message' => __('Задача  не создана')
                 );
+                $result['errors'] = $this->Task->validationErrors;
             }
         }
         $result['action'] = 'create';

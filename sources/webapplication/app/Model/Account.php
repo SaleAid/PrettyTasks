@@ -19,12 +19,11 @@ class Account extends AppModel {
      */
     public $validate = array(
         'user_id' => array(
-            'notempty' => array(
-                'rule' => array(
-                    'notempty'
-                )
-            ) 
-        )
+			'maxLength' => array(
+                'rule'    => array('maxLength', 36),
+                'message' => 'Wrong ID',
+            )
+        ), 
     );
 
     public function getLoginzaUser($token) {

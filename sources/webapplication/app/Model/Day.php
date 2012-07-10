@@ -12,11 +12,12 @@ class Day extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'user_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			)
-		),
+        'user_id' => array(
+			'maxLength' => array(
+                'rule'    => array('maxLength', 36),
+                'message' => 'Wrong ID',
+            )
+        ), 
 		'date' => array(
 			'date' => array(
 				'rule' => array('date'),

@@ -19,17 +19,15 @@ class Task extends AppModel {
      */
     public $validate = array(
         'id' => array(
-            'numeric' => array(
-                'rule' => array(
-                    'numeric'
-                )
+			'maxLength' => array(
+                'rule'    => array('maxLength', 36),
+                'message' => 'Wrong ID',
             )
         ), 
         'user_id' => array(
-            'numeric' => array(
-                'rule' => array(
-                    'numeric'
-                )
+			'maxLength' => array(
+                'rule'    => array('maxLength', 36),
+                'message' => 'Wrong ID',
             )
         ), 
         'title' => array(
@@ -121,7 +119,13 @@ class Task extends AppModel {
                     'datetime'
                 )
             )
-        )
+        ),
+        'day_id' => array(
+			'maxLength' => array(
+                'rule'    => array('maxLength', 36),
+                'message' => 'Wrong ID',
+            )
+        ), 
     );
     
     /**

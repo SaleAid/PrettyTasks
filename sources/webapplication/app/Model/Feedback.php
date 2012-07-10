@@ -50,12 +50,11 @@ class Feedback extends AppModel {
             )
         ), 
         'user_id' => array(
-            'numeric' => array(
-                'rule' => array(
-                    'numeric'
-                )
+			'maxLength' => array(
+                'rule'    => array('maxLength', 36),
+                'message' => 'Wrong ID',
             )
-        )
+        ), 
     );
     public $belongsTo = array(
         'User' => array(
