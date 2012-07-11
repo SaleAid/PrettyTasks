@@ -72,11 +72,12 @@ class UsersController extends AppController {
         if ($this->request->is('post')) {
             $expectedData = array(
                 'first_name',
-                'last_name',
+                //'last_name',
                 'email',
                 'username',
                 'password', 
-                'password_confirm'
+                'password_confirm',
+                'agreed'
             );
             if (!$this->_isSetRequestData($expectedData, $this->modelClass)) {
                 $this->Session->setFlash(__('Ошибка при передачи данных'), 'alert', array(
@@ -85,11 +86,12 @@ class UsersController extends AppController {
             } else {
                     $saveData = array(
                         'first_name'        => $this->request->data[$this->modelClass]['first_name'],
-                        'last_name'         => $this->request->data[$this->modelClass]['last_name'],
+                        //'last_name'         => $this->request->data[$this->modelClass]['last_name'],
                         'email'             => $this->request->data[$this->modelClass]['email'],
                         'username'          => $this->request->data[$this->modelClass]['username'],
                         'password'          => $this->request->data[$this->modelClass]['password'], 
-                        'password_confirm'  => $this->request->data[$this->modelClass]['password_confirm']                          
+                        'password_confirm'  => $this->request->data[$this->modelClass]['password_confirm'],
+                        'agreed'  => $this->request->data[$this->modelClass]['agreed']
                     );
                 if ($this->User->register($saveData)) {
                     if ($this->User->sendActivationAccount($this->User->getLastInsertID(), $this->name)) {

@@ -1,4 +1,4 @@
-<div class="span9 offset1">
+<div class="span10 offset1">
 <?php echo $this->Form->create('User',array('class' => 'well ',
 'inputDefaults' => array(
         'format' => array('before', 'label', 'between', 'input', 'error', 'after'),
@@ -28,11 +28,15 @@
            
            <?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => Configure::read('Recaptcha.theme'))));?>
            
+           <br />
+           <label class="checkbox">
+                <?php echo $this->Form->input('agreed', array('label'=> __('Я согласен с условиями использования'), 'type'=>'checkbox', 'format' => array('before', 'label', 'between',  'error', 'after'))); ?>
+           </label>
+           <br />
            <?php echo $this->Form->submit(__('Регистрация'),array('class'=>'btn btn-info'));?>
-           
-           
            
 	   </fieldset>
 <?php echo $this->Form->end();?>
+                    
 </div>
 

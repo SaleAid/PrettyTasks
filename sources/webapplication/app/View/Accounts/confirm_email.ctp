@@ -1,19 +1,21 @@
 <div class="row"> 
-    <div class="span6 offset3">
+    <div class="span10 offset1">
+        <?php echo $this->Form->create('User',array('class' => 'well ',
+        'inputDefaults' => array(
+                'format' => array('before', 'label', 'between', 'input', 'error', 'after'),
+                'div' => array('class' => 'control-group'),
+                'label' => array('class' => 'control-label'),
+                'between' => '<div class="controls">',
+                'after' => '</div>',
+                'error' => array('attributes' => array('wrap' => 'span', 'class' => 'help-inline')),
+            )));?>
+
    	    <fieldset>
-	     <legend><?php echo __('Введите Ваш e-mail ...'); ?></legend>
-            <?php echo $this->Form->create('User',array('class' => 'well form-inline',
-                'inputDefaults' => array(
-                    'div' => array('class' => 'control-group'),
-                    'label' => array('class' => 'control-label'),
-                    'between' => '<div class="controls">',
-                    'after' => '</div>',
-                    'class' => '')
-                    )); ?>
+	     <legend><?php echo __('Введите Ваш e-mail'); ?></legend>
             
-            <?php echo $this->Form->input('User.email',array('label' =>false, 'class' => 'input-xlarge', 'error' => array('attributes' => array('class' => 'controls help-block'))));?>
-            
-            <?php echo $this->Form->submit(__(' Далее '),array('class'=>'btn btn-info'));?>
+            <?php echo $this->Form->input('User.email',array('label' =>false, 'class' => 'input-xlarge'));?>
+           
+            <?php echo $this->Form->submit(__(' Далее '),array('class'=>'btn btn-info pull-right'));?>
             
             <?php echo $this->Form->end();?>
         </fieldset>

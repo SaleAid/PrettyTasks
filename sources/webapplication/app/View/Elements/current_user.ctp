@@ -1,7 +1,8 @@
 <div class="pull-right">
     <img class="pull-left ajaxLoader hide" src="/img/ajax-loader.gif"/>
-    <div class="btn-group pull-right">
+    <div class="pull-right">
      <?php if(!empty($currentUser)):  ?>
+     <div class="btn-group">
      <?php echo $this->Html->link($this->Html->tag('i', '',
                  array('class' => 'icon-user icon-white')). '  ' . ' '
                         .$this->Text->truncate($currentUser['first_name'],15 , array('ending' => '...','exact' => true)). ' '
@@ -20,9 +21,10 @@
         <li class="divider"></li>
         <li><?php echo $this->Html->link($this->Html->tag('i', '', array('class' => 'icon-off')). __('  Выход'),array('controller' => 'users', 'action' => 'logout'),array('escape' => false));?></li>
       </ul>
+      </div>
     <?php else: ?>
-        <?php echo $this->Html->link('Login',array('controller' => 'users', 'action' => 'login'),array('class'=> 'btn btn-primary')); ?>
-        
+        <?php echo $this->Html->link(__('Войти'),array('controller' => 'users', 'action' => 'login'),array('class'=> 'btn btn-primary')); ?>
+        <?php echo $this->Html->link(__('Регистрация'),array('controller' => 'users', 'action' => 'register'),array('class'=> 'btn btn-success')); ?>
     <?php endif; ?>
     
     </div>

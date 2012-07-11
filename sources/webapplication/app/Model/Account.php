@@ -23,6 +23,12 @@ class Account extends AppModel {
                 'rule'    => array('maxLength', 36),
                 'message' => 'Wrong ID',
             )
+        ),
+        'agreed' => array(
+            'comparison' => array(
+                'rule' => array('comparison', 'equal to', 1),
+                'message' => 'Пожалуйста,...'
+            )
         ), 
     );
 

@@ -149,7 +149,13 @@ class User extends AppModel {
                 ), 
                 'message' => 'Пожалуйста, введите Ваш адрес электронной почты'
             )
-        )
+        ),
+        'agreed' => array(
+            'comparison' => array(
+                'rule' => array('comparison', 'equal to', 1),
+                'message' => 'Пожалуйста,...'
+            )
+        ),
     );
   
     public function matchPasswords($data) {

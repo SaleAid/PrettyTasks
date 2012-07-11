@@ -39,6 +39,7 @@ echo $this->Form->input('emails',
            
 <?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => Configure::read('Recaptcha.theme'))));?>
 </fieldset>
+<br />
 <?php
 echo $this->Form->submit(__('Пригласить'), array(
     'class' => 'btn btn-info'

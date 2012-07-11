@@ -152,11 +152,12 @@ class AccountsController extends AppController {
             $password = $this->Account->User->generateToken();
             $saveData = array(
                 'first_name' => $this->request->data['User']['first_name'], 
-                'last_name' => $this->request->data['User']['last_name'], 
+                //'last_name' => $this->request->data['User']['last_name'], 
                 'email' => $this->request->data['User']['email'], 
                 'username' => $this->request->data['User']['username'], 
                 'password' => $password, 
-                'password_confirm' => $password
+                'password_confirm' => $password,
+                'agreed' => $this->request->data['User']['agreed']
             );
             if ($this->Account->User->register($saveData)) {
                 $userTmp['user_id'] = $this->Account->User->getLastInsertID();
@@ -175,14 +176,14 @@ class AccountsController extends AppController {
                     $this->Session->delete('tmpUser');
                     $this->redirect('/');
                 } else {
-                    $this->Session->setFlash('Error create user profile', 'alert', array(
+                    $this->Session->setFlash('Error create user account', 'alert', array(
                         'class' => 'alert-error'
                     ));
                 }
                 $this->Session->delete('tmpUser');
                 $this->redirect('/');
             } else {
-                return $this->Session->setFlash('Error create account', 'alert', array(
+                return $this->Session->setFlash('Регистрация не удалась. Заполните поля полностью', 'alert', array(
                     'class' => 'alert-error'
                 ));
             }
