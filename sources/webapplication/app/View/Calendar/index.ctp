@@ -28,8 +28,7 @@ echo $this->Html->css('fullcalendar/fullcalendar.print.css', null, array(
 $this->end();
 ?>
 <?php
-
-$this->start('toFooter');
+$this->append('toFooter');
 ?>
 <?php
 
