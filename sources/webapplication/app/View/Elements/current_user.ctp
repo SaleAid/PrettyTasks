@@ -23,8 +23,8 @@
       </ul>
       </div>
     <?php else: ?>
-        <?php echo $this->Html->link(__('Войти'),array('controller' => 'users', 'action' => 'login'),array('class'=> 'btn btn-primary')); ?>
         <?php echo $this->Html->link(__('Регистрация'),array('controller' => 'users', 'action' => 'register'),array('class'=> 'btn btn-success')); ?>
+        <?php echo $this->Html->link(__('Войти'),array('controller' => 'users', 'action' => 'login'),array('class'=> 'btn btn-primary')); ?>
     <?php endif; ?>
     
     </div>

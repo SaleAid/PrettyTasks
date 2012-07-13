@@ -20,7 +20,7 @@
     
 <?php $this->end ();?>
 
-
+    <!--nocache-->    
       <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
         <ul class="nav nav-tabs">
             <li class="addDay">
@@ -232,12 +232,12 @@
           
     </div> <!-- /tabbable -->
     </div>  
-
+<!--/nocache-->
 
 
 
 <!-- modal editTask -->
-<div id="editTask" class="modal hide fade in">
+<div id="editTask" class="modal hide  in">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
         <h3>Редактирование задачи</h3>
@@ -306,7 +306,7 @@
 <!-- End modal -->
 
 <!-- modal commentDay -->
-<div id="commentDay" class="modal hide fade in">
+<div id="commentDay" class="modal hide  in">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
         <h3>Комментарий</h3>

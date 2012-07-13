@@ -1,3 +1,7 @@
+<?php $this->start ( 'toFooter' );?>
+<?php echo $this->Html->script($this->Loginza->getJs()); ?>
+<?php $this->end ();?>
+
 <div class="span10 offset1">
 <?php echo $this->Form->create('User',array('class' => 'well ',
 'inputDefaults' => array(
@@ -9,7 +13,17 @@
         'error' => array('attributes' => array('wrap' => 'span', 'class' => 'help-inline')),
     )));?>
 	<fieldset>
-		<legend><?php echo __('Регистрация аккаунта'); ?></legend>
+		<legend><?php echo __('Регистрация аккаунта'); ?>
+                <div class="box-loginza-registr-top pull-right">
+                <span>Или использовать аккаунт социальной сети</span>
+                    <div class="box-icons-widget">
+                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'google')?>
+                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'facebook')?>
+                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'twitter')?>
+                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'vkontakte')?>
+                    </div>
+               </div>
+        </legend>
     	   <?php echo $this->Form->input('first_name', array('label' =>'Имя:', 'class' => 'input-xlarge'));?>
            
     	   <?php //echo $this->Form->input('last_name', array('label' =>'Фамилия:', 'class' => 'input-xlarge'));?>
@@ -33,7 +47,19 @@
                 <?php echo $this->Form->input('agreed', array('label'=> __('Я согласен с условиями использования'), 'type'=>'checkbox', 'format' => array('before', 'label', 'between',  'error', 'after'))); ?>
            </label>
            <br />
-           <?php echo $this->Form->submit(__('Регистрация'),array('class'=>'btn btn-info'));?>
+           <div class="grp-btn-reg">
+               <?php echo $this->Form->submit(__('Регистрация'),array('class'=>'btn btn-info pull-left'));?>
+               <div class="box-loginza-registr pull-left">
+                    <span> ИЛИ </span>
+                    <div class="box-icons-widget">
+                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'google')?>
+                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'facebook')?>
+                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'twitter')?>
+                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'vkontakte')?>
+                    </div>
+               </div>
+           </div>
+           
            
 	   </fieldset>
 <?php echo $this->Form->end();?>

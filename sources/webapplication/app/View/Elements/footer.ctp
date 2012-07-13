@@ -11,7 +11,7 @@
 							<li><?php echo $this->Html->link(__('Testimonials'), array('controller' => 'pages', 'action' =>  'testimonials'));?></li>
 							<li><?php echo $this->Html->link(__('Help'), array('controller' => 'pages', 'action' => 'help'));?></li>
 							<li><?php echo $this->Html->link(__('Login'), array('controller' => 'users', 'action' => 'login'));?></li>
-							<li><?php echo $this->Html->link(__('Register'), array('controller' => 'users', 'action' => 'login'));?></li>
+							<li><?php echo $this->Html->link(__('Register'), array('controller' => 'users', 'action' => 'register'));?></li>
 						</ul>
 					</div> 
 

@@ -1,5 +1,5 @@
 <div class="row"> 
-    <div class="span7 offset2">
+    <div class="span10 offset1">
 <fieldset>
 		<legend><?php echo __('Забыли пароль?'); ?></legend>
         <p>

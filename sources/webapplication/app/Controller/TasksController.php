@@ -1,6 +1,7 @@
 <?php
 App::uses('CakeTime', 'Utility');
 App::uses('AppController', 'Controller');
+App::uses('Validation', 'Utility');
 /**
  * Tasks Controller
  *
@@ -479,6 +480,23 @@ class TasksController extends AppController {
             }
         }
         $result['action'] = 'deleteDay';
+        $this->set('result', $result);
+        $this->set('_serialize', array(
+            'result'
+        ));
+    }
+    
+    public function checkStatus(){
+        $result = $this->_prepareResponse();
+        if (! $this->_isSetRequestData('date')) {
+            $result['message'] = array(
+                'type' => 'error', 
+                'message' => __('Ошибка при передачи данных')
+            );
+        } else {
+            $result['operation'] =  Validation::date($this->request->data['date']);
+        }
+        $result['action'] = 'checkStatus';
         $this->set('result', $result);
         $this->set('_serialize', array(
             'result'

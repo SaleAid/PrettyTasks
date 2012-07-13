@@ -27,7 +27,7 @@
    Configure::write('Email.user.invitation.subject', __('Приглашение на сервис %s', Configure::read('Site.name')));
    Configure::write('Email.user.activateAccount.subject', __('Активация аккаунта на сервисе %s', Configure::read('Site.name')));
    Configure::write('Email.user.passwordResend.subject', __('Сбросить пароль на сервисе %s', Configure::read('Site.name')));
-   Configure::write('App.version', '1.0.2');
+   Configure::write('App.version', '1.0.3');
    //Cache
    //Cache::config('elements', array(
 //	'engine' => 'File',

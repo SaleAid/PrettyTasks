@@ -219,12 +219,10 @@ class User extends AppModel {
         return false;
     }
 
-    public function validateEmail($data) {
-        $this->set($data);
+    public function validateEmail($email) {
+        $this->set(array('email'  => $email));
         if ($this->validates(array(
-            'fieldList' => array(
-                'email'
-            )
+            'fieldList' => array('email'),
         ))) {
             return true;
         }
@@ -232,8 +230,8 @@ class User extends AppModel {
     }
 
     public function checkEmail($data) {
-        $this->set($data);
-        if ($this->validates(array(
+       $this->set(array('email'  => $data));
+       if ($this->validates(array(
             'fieldList' => array(
                 'email'
             )

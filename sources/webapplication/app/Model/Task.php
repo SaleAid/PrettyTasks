@@ -209,7 +209,7 @@ class Task extends AppModel {
             $pattern = '/^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?/';
             preg_match($pattern, $title, $matches);
             if( isset($matches[0]) ){
-                $data[$this->alias]['time'] = $matches[0].':00';
+                $data[$this->alias]['time'] = CakeTime::format('H:i:s', $matches[0]);
                 $data[$this->alias]['title'] = substr($title,5);
             }    
         }

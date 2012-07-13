@@ -120,9 +120,10 @@ footer .right{ text-align:right; }
 }
 /*feedback and invite*/
 #box{
+    z-index: 1999;
     position: fixed;
     right: 0;
-    top: 220px;
+    top: 30%;
     background-color: #F7F7F7;
     border: 1px solid #ddd;
     -webkit-border-radius: 4px;
@@ -152,3 +153,69 @@ footer .right{ text-align:right; }
     background-color:white;
 }
 
+.box-loginza-registr{
+    color: #09F;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-top: 5px;
+    
+}
+.box-loginza-registr .box-icons-widget{
+    margin-top: -10px;
+    display: inline-block;
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #F7F7F7;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+      border-radius: 4px;
+}
+
+.box-loginza-registr-top .box-icons-widget{
+    margin-top: -10px;
+    display: inline-block;
+    margin-left: 10px;
+    
+}
+.box-loginza-registr-top{
+    
+    font-size: 14px;
+}
+.box-loginza-registr .box-icons-widget a:hover, .box-loginza-registr-top .box-icons-widget a:hover{
+    opacity:0.6;
+  filter:alpha(opacity=60); 
+}
+
+.overlay {
+    filter:alpha(opacity=40);
+    opacity: 0.4;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index:2000;
+}
+
+.errorBox{
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+      border-radius: 5px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    /*background-color: #B94A48;*/
+    z-index: 2001;
+
+    margin-top: -200px;
+
+    width: 600px;
+    margin-left: -300px;
+    padding: 20px;
+    font-size: 14px;
+}

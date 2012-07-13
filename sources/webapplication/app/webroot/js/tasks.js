@@ -64,6 +64,30 @@ function mesg (message){
 					}
      });
 }
+function checkStatus(){
+    $.ajax({
+        type: "POST",
+        data: {date: '2012-01-011'},
+        url: "/tasks/checkstatus.json",
+        success: function (status) {
+            console.log(status);
+            
+                //if(!status){
+//                   showErrorConnection(true);
+//                }else{
+//                   showErrorConnection(false);
+//                }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+               console.log('ky');
+               // if(xhr.status == '404'){
+//                    showErrorConnection(true);
+//                }else{
+//                    reload();
+//                }
+       }
+    });
+}
 
 function checkLogin(){
     $.ajax({
@@ -77,10 +101,11 @@ function checkLogin(){
                 }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-                if(xhr.status == '404'){
+                if(xhr.status == '404' || xhr.status == 0){
                     showErrorConnection(true);
                 }else{
-                    reload();
+                    console.log(xhr);
+                    //reload();
                 }
        }
     });
@@ -708,7 +733,7 @@ function scrDragWithTime(id, date, time){
                 });
            }
            task.hide('show', function() {
-                if(newPositionID != id && +newPositionID){
+                if(newPositionID != id && newPositionID){
                     $(this).insertAfter( list.children('#'+newPositionID)).show();    
                 }else if(!+newPositionID){
                     if(change){
@@ -1227,7 +1252,7 @@ var countAJAX = 0;
 var intervalcheckLogin = 20000;
 var connError = false;
 $(function(){
-
+       //checkStatus(); 
      $(window).hashchange( function(e){
         if(location.hash != "") { 
             var hash = location.hash.slice(5);

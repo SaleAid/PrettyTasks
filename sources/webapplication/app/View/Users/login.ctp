@@ -1,10 +1,9 @@
 <?php $this->start ( 'toHead' );?>
-<?php echo $this->Html->css('loginza/widget_style');?>
+<?php echo $this->Html->css($this->Loginza->getCssUrl());?>
 <?php $this->end ();?>
 <?php $this->start ( 'toFooter' );?>
-<?php echo $this->Html->script('http://loginza.ru/js/widget.js'); ?>
+<?php echo $this->Html->script($this->Loginza->getJs()); ?>
 <?php $this->end ();?>
-        <h2 align="center">Авторизация</h2>
         <div class="login"> 
             <div class="span370">
                     <?php echo $this->Form->create('User',array('class' => 'well ',
@@ -42,10 +41,13 @@
                  <div class="well">
                  <fieldset>
                  <legend><?php echo __('Вы можете войти как'); ?></legend>
-                     <iframe src="http://loginza.ru/api/widget?overlay=loginza&token_url=<?php echo Configure::read('loginza.token_url');?>
+                    <?php echo $this->Loginza->iframeWidget(Configure::read('loginza.token_url'))?>
+                     
+                     <!-- <iframe src="http://loginza.ru/api/widget?overlay=loginza&token_url=<?php echo Configure::read('loginza.token_url');?>
                                     &providers_set=vkontakte,facebook,twitter,google" 
                              style="width:330px;height:244px;" scrolling="no" frameborder="no">
                     </iframe>
+                    -->
                  </fieldset>   
                  </div>   
             </div>

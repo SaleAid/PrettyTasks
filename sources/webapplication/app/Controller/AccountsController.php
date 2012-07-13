@@ -72,6 +72,7 @@ class AccountsController extends AppController {
             'class' => 'alert-error'
         ));
         $this->redirect(array(
+            'controller' => 'users',
             'action' => 'login'
         ));
     }
