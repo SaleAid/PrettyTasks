@@ -77,7 +77,7 @@ echo $this->element('ga', array(), array(
     )
 ));
 ?>
-   
+<?php echo $this->element('noscript', array(), array('cache' => array('key' => 'noscript', 'config' => 'elements'))); ?>   
 </body>
 </html>
 

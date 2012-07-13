@@ -31,10 +31,7 @@ echo $scripts_for_layout;
 ?>      
 	
 </head>
-<noscript>
-  This page needs JavaScript activated to work. 
-  <style>div { display:none; }</style>
-</noscript>
+
 <body data-spy="scroll" data-target=".subnav" data-offset="50">
 
 <div id="wrapper-all">
@@ -75,8 +72,9 @@ echo $this->element('ga', array(), array(
         'config' => 'elements'
     )
 ));
-?> 
+?>
 
+<?php echo $this->element('noscript', array(), array('cache' => array('key' => 'noscript', 'config' => 'elements'))); ?> 
  </body>
 </html>
 
