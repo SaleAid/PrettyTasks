@@ -8,4 +8,5 @@
 /build
 /dist
 .DS_Store
-tags/app/webroot/.htaccess
+tags
+/app/webroot/.htpasswd
