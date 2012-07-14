@@ -92,7 +92,7 @@ function checkStatus(){
 function checkLogin(){
     $.ajax({
         type: "POST",
-        url: "/users/checkLogin",
+        url: "/checkLogin",
         success: function (status) {
                 if(!status){
                    showErrorConnection(true);
