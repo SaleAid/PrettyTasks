@@ -1,0 +1,1 @@
+ALTER TABLE  `pages` CHANGE  `id`  `id` CHAR( 36 ) NOT NULL COMMENT  'primary key'
