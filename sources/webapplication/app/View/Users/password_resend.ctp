@@ -19,14 +19,15 @@
 <?php
 	echo $this->Form->input('email', array(
 		'label' => __( 'Ваш адрес электронной почты:'),
-		'class' => 'input-xlarge'));
+		'class' => 'input-xlarge',
+        'tabindex' =>1));
 ?>
         <p>
             <?php echo __('Пожалуйста, подтвердите, что вы человек.'); ?>
         </p>
-        <?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => 'clean')));?>
+        <?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => 'clean', 'tabindex' => 2)));?>
            
-        <?php echo $this->Form->submit('Отправть запрос',array('class'=>'btn btn-info'));?>
+        <?php echo $this->Form->submit('Отправть запрос',array('class'=>'btn btn-info', 'tabindex' => 2));?>
   
   	<?php echo $this->Form->end();?>
     

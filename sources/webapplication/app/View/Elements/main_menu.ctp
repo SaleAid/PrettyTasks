@@ -12,7 +12,7 @@
                             array('class' => 'brand')
       );?>
 
-      <div class="nav-collapse" >
+      <div class="nav-collapse">
         <ul class="nav">
           <?php if ($currentUser): ?>
           <li class="<? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">

@@ -6,7 +6,6 @@
 @navbarLinkBackgroundHover rgba(0, 55, 72, 0.15)
 @navbarLinkBackgroundActive rgba(0, 55, 72, 0.15)
 */ 
-          
 .container, 
 #wrapper, 
 .navbar-fixed-bottom .container, 
@@ -17,7 +16,7 @@
      margin: 0 auto;
 } 
 
-.navbar .dropdown-menu.no-collapse {
+.navbar .dropdown-menu .no-collapse {
     background-color: #ffffff;
     border-color: rgba(0, 0, 0, 0.2);
     border-radius: 4px;
@@ -31,6 +30,11 @@
     position: absolute;
     top: 100%;
 }
+
+     .sidebar-nav-fixed {
+         position: fixed;
+        width: auto;
+     }
 
 html {
 	height: 100%;
