@@ -31,7 +31,7 @@ class Feedback extends AppModel {
                 'rule' => array(
                     'notempty'
                 ),
-                'message' => 'Please enter the subject'
+                'message' => 'Поле должно быть заполнено'
             )
         ),
         'message' => array(
@@ -39,7 +39,7 @@ class Feedback extends AppModel {
                 'rule' => array(
                     'notempty'
                 ),
-                'message' => 'Please enter the message'
+                'message' => 'Поле должно быть заполнено'
             )
         ), 
         'processed' => array(
