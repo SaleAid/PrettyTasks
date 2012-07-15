@@ -1,6 +1,6 @@
 
 <div class="start">
-  <img  src="/img/commics.jpg"/>
+  <img  src="/img/comics.jpg"/>
 </div>
 <div class="row">
 				<div class="span4 box left">
