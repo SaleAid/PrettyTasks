@@ -27,7 +27,7 @@ class Account extends AppModel {
         'agreed' => array(
             'comparison' => array(
                 'rule' => array('comparison', 'equal to', 1),
-                'message' => 'Пожалуйста,...'
+                'message' => 'Вы должны быть согласны с правилами использования сервиса'
             )
         ), 
     );
@@ -106,7 +106,7 @@ class Account extends AppModel {
         if ($result['User']['is_blocked']) {
             return array(
                 'status' => 'error', 
-                'msg' => 'Your user profile is blocked.'//TODO use __(
+                'msg' => __('Ваш основной аккаунт заблокирован')
             );
         } elseif ($result['Account']['active']) {
             $result = $result['User'];

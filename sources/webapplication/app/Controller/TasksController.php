@@ -64,7 +64,7 @@ class TasksController extends AppController {
         if (! $this->_isSetRequestData('type')) {
             $result['message'] = array(
                 'type' => 'error', 
-                'message' => __('Ошибка при передачи данных')
+                'message' => __('Ошибка при передаче данных')
             );
         } else {
             $result['success'] = true;
@@ -142,7 +142,7 @@ class TasksController extends AppController {
         if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
                 'type' => 'error', 
-                'message' => __('Ошибка при передачи данных')
+                'message' => __('Ошибка при передаче данных')
             );
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
@@ -180,7 +180,7 @@ class TasksController extends AppController {
         if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
                 'type' => 'error', 
-                'message' => __('Ошибка при передачи данных')
+                'message' => __('Ошибка при передаче данных')
             );
         } else {
             if (! empty($this->request->data['date'])) {
@@ -219,7 +219,7 @@ class TasksController extends AppController {
         if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
                 'type' => 'error', 
-                'message' => __('Ошибка при передачи данных')
+                'message' => __('Ошибка при передаче данных')
             );
         } else {
             if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
@@ -257,9 +257,9 @@ class TasksController extends AppController {
         );
         if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
-                'errors' => 'Wrond request data', 
+                'errors' => 'Wrong request data', 
                 'type' => 'error', 
-                'message' => __('Ошибка при передачи данных')
+                'message' => __('Ошибка при передаче данных')
             );
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
@@ -301,7 +301,7 @@ class TasksController extends AppController {
         if (! $this->_isSetRequestData('id')) {
             $result['message'] = array(
                 'type' => 'error', 
-                'message' => __('Ошибка при передачи данных')
+                'message' => __('Ошибка при передаче данных')
             );
         } else {
             $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
@@ -344,7 +344,7 @@ class TasksController extends AppController {
         if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
                 'type' => 'error', 
-                'message' => __('Ошибка при передачи данных')
+                'message' => __('Ошибка при передаче данных')
             );
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
@@ -392,7 +392,7 @@ class TasksController extends AppController {
         if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
                 'type' => 'error', 
-                'message' => __('Ошибка при передачи данных')
+                'message' => __('Ошибка при передаче данных')
             );
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
@@ -431,7 +431,7 @@ class TasksController extends AppController {
         if (! $this->_isSetRequestData('date')) {
             $result['message'] = array(
                 'type' => 'error', 
-                'message' => __('Ошибка при передачи данных')
+                'message' => __('Ошибка при передаче данных')
             );
         } else {
             $task = $this->Task->getTasksForDay($this->Auth->user('id'), CakeTime::format('Y-m-d', $this->request->data['date']));
@@ -468,7 +468,7 @@ class TasksController extends AppController {
         if (! $this->_isSetRequestData('date')) {
             $result['message'] = array(
                 'type' => 'error', 
-                'message' => __('Ошибка при передачи данных')
+                'message' => __('Ошибка при передаче данных')
             );
         } else {
             if ($this->Task->deleteDayFromConfig($this->Auth->user('id'), $this->request->data['date'])) {
@@ -496,7 +496,7 @@ class TasksController extends AppController {
         if (! $this->_isSetRequestData('date')) {
             $result['message'] = array(
                 'type' => 'error', 
-                'message' => __('Ошибка при передачи данных')
+                'message' => __('Ошибка при передаче данных')
             );
         } else {
             $result['operation'] = Validation::date($this->request->data['date']);

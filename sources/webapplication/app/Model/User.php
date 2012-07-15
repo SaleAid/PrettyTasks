@@ -153,7 +153,7 @@ class User extends AppModel {
         'agreed' => array(
             'comparison' => array(
                 'rule' => array('comparison', 'equal to', 1),
-                'message' => 'Пожалуйста,...'
+                'message' => 'Вы должны быть согласны с правилами использования сервиса'
             )
         ),
     );
