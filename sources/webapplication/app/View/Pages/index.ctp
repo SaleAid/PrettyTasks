@@ -1,6 +1,6 @@
 
 <div class="start">
-  <img  src="/img/start.png"/>
+  <img  src="/img/commics.jpg"/>
 </div>
 <div class="row">
 				<div class="span4 box left">
@@ -8,7 +8,7 @@
                         <h1 align="center"><?php echo __('Готовься');?></h1> 
                     </div>
 					<div class="box_container">
-                        <h2></h2>
+                        <!--
                         <ul class="thumbnails">
                           <li class="">
                             <a href="#" class="thumbnail">
@@ -16,6 +16,7 @@
                             </a>
                           </li>
                         </ul>
+                        -->
                         <p>
                             Привет! Скроее всего ты человек, который стремится к лучшему. 
                             Иногда трудно себя заставить что-то делать, иногда ты о чем-то забываешь. 
@@ -29,7 +30,7 @@
 					   <h1 align="center"><?php echo __('Целься');?></h1>
                     </div>   
                     <div class="box_container">
-                        <h2></h2>
+                        <!--
                         <ul class="thumbnails">
                           <li class="">
                             <a href="#" class="thumbnail">
@@ -37,6 +38,7 @@
                             </a>
                           </li>
                         </ul>
+                        -->
                         <p>
                             Важнее всего иметь цель. Хорошо поставленная цель, это пол дела. 
                             Мы поможем тебе ставить цели и задачи. 
@@ -50,7 +52,7 @@
 					   <h1 align="center"><?php echo __('Пли!');?></h1>
                     </div>
                     <div class="box_container">  
-                        <h2></h2> 
+                        <!-- 
                         <ul class="thumbnails">
                           <li class="">
                             <a href="#" class="thumbnail">
@@ -58,6 +60,7 @@
                             </a>
                           </li>
                         </ul>
+                        -->
                         <p> Пора действовать!</p>
                         <p> Отбрось страхи, ты все сможешь!</p>
                         <p> 
