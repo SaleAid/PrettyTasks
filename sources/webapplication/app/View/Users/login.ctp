@@ -16,7 +16,7 @@
                                 )); ?>
                     <fieldset>
                     <legend><?php echo __('Войдите используя Ваш аккаунт'); ?></legend>
-                        <?php echo $this->Form->input('username',array('label'=>' Логин: ','class'=>'input-xlarge', 'placeholder'=>'Ваш логин')); ?>
+                        <?php echo $this->Form->input('email',array('label'=>' Email: ','class'=>'input-xlarge', 'placeholder'=>'Ваш email')); ?>
                 
                         <?php echo $this->Form->input('password',array('label'=>' Пароль: ','class'=>'input-xlarge', 'placeholder'=>'Ваш пароль')); ?>
                 
