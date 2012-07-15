@@ -13,6 +13,7 @@ class TasksController extends AppController {
     );
 
     public function index() {
+        $this->response->disableCache();
         $result = $this->_prepareResponse();
         $result['success'] = true;
         $result['data']['arrAllFuture'] = $this->Task->getAllFuture($this->Auth->user('id'));

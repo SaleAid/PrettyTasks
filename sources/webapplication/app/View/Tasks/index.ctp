@@ -19,9 +19,7 @@
     <?php echo $this->Html->script('tasks.'.Configure::read('App.version'));?>
     
 <?php $this->end ();?>
-
-    <!--nocache-->    
-      <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
+  <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
         <ul class="nav nav-tabs">
             <li class="addDay">
             <div class="btn-group dropdown">
@@ -232,8 +230,6 @@
           
     </div> <!-- /tabbable -->
     </div>  
-<!--/nocache-->
-
 
 
 <!-- modal editTask -->
