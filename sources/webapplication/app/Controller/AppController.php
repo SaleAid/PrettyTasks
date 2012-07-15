@@ -120,12 +120,14 @@ class AppController extends Controller {
         //        );
         //  
          */
+
         $this->_setLanguage();
         $this->__setTimeZone();
         $this->_checkMobile();
         $this->Seo->title = Configure::read('Site.title');
         $this->Seo->description = Configure::read('Site.description');
         $this->Seo->keywords = Configure::read('Site.keywords');
+
     }
 
     public function _setLanguage() {
@@ -145,6 +147,7 @@ class AppController extends Controller {
         $this->set('provider', $this->Auth->user('provider'));
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
+
     }
 
     protected function _prepareResponse() {
