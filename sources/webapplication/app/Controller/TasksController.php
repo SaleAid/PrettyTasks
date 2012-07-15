@@ -158,7 +158,7 @@ class TasksController extends AppController {
                     $result['data'] = $originTask;
                     $result['message'] = array(
                         'type' => 'error', 
-                        'message' => __('Ошибка, Задача  не изменена'), 
+                        'message' => __('Ошибка, Задача  не изменена')
                     );
                 }
             }
@@ -256,6 +256,7 @@ class TasksController extends AppController {
         );
         if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
+                'errors' => 'Wrond request data', 
                 'type' => 'error', 
                 'message' => __('Ошибка при передачи данных')
             );
@@ -283,6 +284,7 @@ class TasksController extends AppController {
                         'type' => 'error', 
                         'message' => __('Ошибка, Задача  не изменена')
                     );
+                    $result['errors'] = $this->Task->validationErrors;
                 }
             }
         }
@@ -321,6 +323,7 @@ class TasksController extends AppController {
                     'type' => 'error', 
                     'message' => __('Ошибка, Задача  не изменена')
                 );
+                $result['errors'] = $this->Task->validationErrors;
             }
         }
         $result['action'] = 'delete';
@@ -363,6 +366,7 @@ class TasksController extends AppController {
                     'type' => 'error', 
                     'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')
                 );
+                $result['errors'] = $this->Task->validationErrors;
             }
         }
         $result['action'] = 'dragOnDay';
@@ -485,8 +489,8 @@ class TasksController extends AppController {
             'result'
         ));
     }
-    
-    public function checkStatus(){
+
+    public function checkStatus() {
         $result = $this->_prepareResponse();
         if (! $this->_isSetRequestData('date')) {
             $result['message'] = array(
@@ -494,7 +498,7 @@ class TasksController extends AppController {
                 'message' => __('Ошибка при передачи данных')
             );
         } else {
-            $result['operation'] =  Validation::date($this->request->data['date']);
+            $result['operation'] = Validation::date($this->request->data['date']);
         }
         $result['action'] = 'checkStatus';
         $this->set('result', $result);
