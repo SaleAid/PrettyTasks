@@ -21,14 +21,15 @@
                                 array('controller' => 'Tasks', 'action' => 'index')
                 );?>    
           </li>
-          <?php if ($isBetaUser):?>
-          <li class="<? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "calendar") echo 'active'; ?>">
-              <?php echo $this->Html->link(
-                    __('Calendar'),
-                    array('controller' => 'calendar', 'action' => 'index')
-                );?>  
+         <!-- <?php //if ($isBetaUser):?>
+          <li class="<? //if($this->params['action'] == "index" and strtolower($this->params['controller']) == "calendar") echo 'active'; ?>">
+              <?php //echo $this->Html->link(
+                    //__('Calendar'),
+                   // array('controller' => 'calendar', 'action' => 'index')
+                //);?>  
           </li>
-          <?php endif;?>
+          <?php //endif;?>
+          -->
           <li class="<? if($this->params['action'] == "agenda" and strtolower($this->params['controller']) == "pasks") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __('Agenda'),
