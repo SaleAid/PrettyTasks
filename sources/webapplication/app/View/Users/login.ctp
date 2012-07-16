@@ -16,9 +16,9 @@
                                 )); ?>
                     <fieldset>
                     <legend><?php echo __('Войдите используя Ваш аккаунт'); ?></legend>
-                        <?php echo $this->Form->input('email',array('label'=>false,'class'=>'input-xlarge', 'placeholder'=>'Логин или адрес электронной почты')); ?>
+                        <?php echo $this->Form->input('email',array('label'=>'Логин или Емейл:','class'=>'input-xlarge', 'placeholder'=>'Логин или емейл')); ?>
                 
-                        <?php echo $this->Form->input('password',array('label'=>false,'class'=>'input-xlarge', 'placeholder'=>'Пароль')); ?>
+                        <?php echo $this->Form->input('password',array('label'=>'Пароль:','class'=>'input-xlarge', 'placeholder'=>'Пароль')); ?>
                         <?php echo $this->Form->submit(' Войти ',array('class'=>' btn btn-primary pull-left')); ?>
                          <label class="checkbox pull-left rememb">
                             <?php echo $this->Form->input('auto_login', array('label'=> __('Оставаться в системе'), 'type'=>'checkbox')); ?>

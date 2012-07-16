@@ -34,9 +34,11 @@ class UsersController extends AppController {
     public function login() {
         $this->layout = 'default';
         //if ($this->User->validates()) {
+            $message = __('Ваш емейл или пароль не совпадают');
             if( isset($this->data['User']['email']) && !Validation::email($this->data['User']['email']) ){
                   $this->request->data['User']['username'] = $this->data['User']['email'];
                   $this->Auth->authenticate['Form'] = array('fields' => array('username' => 'username'));
+                  $message = __('Ваш логин или пароль не совпадают');
             }
             if ($this->Auth->login()) {
                 if ($this->Auth->user('active')) {
@@ -55,7 +57,7 @@ class UsersController extends AppController {
                 $this->redirect($this->Auth->logout());
             } else {
                 if ($this->request->is('post')) {
-                    $this->Session->setFlash(__('Ваше email или пароль не совпадают'), 'alert', array(
+                    $this->Session->setFlash($message, 'alert', array(
                         'class' => 'alert-error'
                     ));
                 }

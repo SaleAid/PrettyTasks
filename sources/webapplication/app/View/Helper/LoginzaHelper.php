@@ -37,7 +37,7 @@ class LoginzaHelper extends AppHelper {
         $str = ' <iframe src="http://loginza.ru/api/widget?overlay=loginza&token_url='.$token_url;
         $str .='&lang='.Configure::read('Config.langURL');
         $str .=' &providers_set=vkontakte,facebook,twitter,google"'; 
-        $str .=' style="width:330px;height:161px;" scrolling="no" frameborder="no">';
+        $str .=' style="width:330px;height:206px;" scrolling="no" frameborder="no">';
         $str .=' </iframe>';
         return $str;
     }
