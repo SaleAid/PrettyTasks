@@ -957,7 +957,7 @@ function initEditAble(element){
          $(element).editable(function(value, settings) { 
                     var id = $(this).parent().attr('id');   
                     userEvent('setTitle', {id: id, title: value });
-                    return value;
+                    return convertToHtml(value);
              }
              ,{
                 indicator : "<img src='img/indicator.gif'>",
