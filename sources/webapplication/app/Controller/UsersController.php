@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('Validation', 'Utility');
 class UsersController extends AppController {
     public $name = 'Users';
 
@@ -33,6 +34,10 @@ class UsersController extends AppController {
     public function login() {
         $this->layout = 'default';
         //if ($this->User->validates()) {
+            if( isset($this->data['User']['email']) && !Validation::email($this->data['User']['email']) ){
+                  $this->request->data['User']['username'] = $this->data['User']['email'];
+                  $this->Auth->authenticate['Form'] = array('fields' => array('username' => 'username'));
+            }
             if ($this->Auth->login()) {
                 if ($this->Auth->user('active')) {
                     if (! $this->Auth->user('is_blocked')) {

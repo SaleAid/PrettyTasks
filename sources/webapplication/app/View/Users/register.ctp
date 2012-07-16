@@ -24,17 +24,17 @@
                     </div>
                </div>
         </legend>
-    	   <?php echo $this->Form->input('first_name', array('label' =>'Имя:', 'class' => 'input-xlarge'));?>
+    	   <?php echo $this->Form->input('first_name', array('label' =>'Имя:', 'class' => 'input-xlarge', 'placeholder'=>'Введите ваше имя'));?>
            
     	   <?php //echo $this->Form->input('last_name', array('label' =>'Фамилия:', 'class' => 'input-xlarge'));?>
            
-    	   <?php echo $this->Form->input('email', array('label' =>'Email:', 'class' => 'input-xlarge'));?>
+    	   <?php echo $this->Form->input('email', array('label' =>'Email:', 'class' => 'input-xlarge', 'placeholder'=>'Укажите адрес электронной почты'));?>
            
-           <?php echo $this->Form->input('username', array('label' =>'Логин:', 'class' => 'input-xlarge'));?>
+           <?php echo $this->Form->input('username', array('label' =>'Логин:', 'class' => 'input-xlarge', 'placeholder'=>'Введите ваше логин'));?>
            
-    	   <?php echo $this->Form->input('password', array('label' =>'Пароль:', 'class' => 'input-xlarge'));?>
+    	   <?php echo $this->Form->input('password', array('label' =>'Пароль:', 'class' => 'input-xlarge', 'placeholder'=>'6 знаков или больше! Будьте хитрее'));?>
            
-           <?php echo $this->Form->input('password_confirm',array('label' => 'Повторите пароль:', 'type' => 'password','class' => 'input-xlarge'));?>
+           <?php echo $this->Form->input('password_confirm',array('label' => 'Повторите пароль:', 'type' => 'password','class' => 'input-xlarge', 'placeholder'=>'Повторите пароль'));?>
            
             <p>
                 <?php echo __('Пожалуйста, подтвердите, что вы человек.'); ?>

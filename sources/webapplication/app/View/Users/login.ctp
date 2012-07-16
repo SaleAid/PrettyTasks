@@ -16,21 +16,18 @@
                                 )); ?>
                     <fieldset>
                     <legend><?php echo __('Войдите используя Ваш аккаунт'); ?></legend>
-                        <?php echo $this->Form->input('email',array('label'=>' Email: ','class'=>'input-xlarge', 'placeholder'=>'Ваш email')); ?>
+                        <?php echo $this->Form->input('email',array('label'=>false,'class'=>'input-xlarge', 'placeholder'=>'Логин или адрес электронной почты')); ?>
                 
-                        <?php echo $this->Form->input('password',array('label'=>' Пароль: ','class'=>'input-xlarge', 'placeholder'=>'Ваш пароль')); ?>
-                
-                         <label class="checkbox">
+                        <?php echo $this->Form->input('password',array('label'=>false,'class'=>'input-xlarge', 'placeholder'=>'Пароль')); ?>
+                        <?php echo $this->Form->submit(' Войти ',array('class'=>' btn btn-primary pull-left')); ?>
+                         <label class="checkbox pull-left rememb">
                             <?php echo $this->Form->input('auto_login', array('label'=> __('Оставаться в системе'), 'type'=>'checkbox')); ?>
-                            
                          </label>
                         
-                        <?php echo $this->Form->submit(' Войти ',array('class'=>' btn btn-primary')); ?>
-                        <br />
+                        <div class="clearfix"></div>
+                        
                         <?php echo $this->Html->link(' Забыли пароль? ', array('controller' => 'users', 'action' => 'password_resend')); ?>
-                        
-                        |
-                        
+                        &nbsp;&bull;&nbsp;
                         <?php echo $this->Html->link(' Регистрация ', array('controller' => 'users', 'action' => 'register')); ?>
                         
                         <?php echo $this->Form->end(); ?>
@@ -42,12 +39,7 @@
                  <fieldset>
                  <legend><?php echo __('Вы можете войти как'); ?></legend>
                     <?php echo $this->Loginza->iframeWidget(Configure::read('loginza.token_url'))?>
-                     
-                     <!-- <iframe src="http://loginza.ru/api/widget?overlay=loginza&token_url=<?php echo Configure::read('loginza.token_url');?>
-                                    &providers_set=vkontakte,facebook,twitter,google" 
-                             style="width:330px;height:244px;" scrolling="no" frameborder="no">
-                    </iframe>
-                    -->
+
                  </fieldset>   
                  </div>   
             </div>
