@@ -107,7 +107,7 @@ class AccountsController extends AppController {
         $user = $this->Session->read('tmpUser');
         if ($this->request->is('post') || $this->request->is('put')) {
             $user['email'] = $this->request->data['User']['email'];
-            if (! $this->Account->User->validateEmail($this->request->data)) {
+            if (! $this->Account->User->validateEmail($this->request->data['User']['email'])) {
                 return $this->Session->setFlash(__('Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз.'), 'alert', array(
                     'class' => 'alert-error'
                 ));
@@ -230,7 +230,7 @@ class AccountsController extends AppController {
                 $user = $result['User'];
                 $user['provider'] = $result[$this->modelClass]['provider'];
                 $this->Auth->login($user);
-                $this->Session->setFlash('Your account has been activated.', 'alert', array(
+                $this->Session->setFlash('Ваша учетная запись была активирована', 'alert', array(
                     'class' => 'alert-success'
                 ));
                 $this->redirect($this->Auth->redirect());
