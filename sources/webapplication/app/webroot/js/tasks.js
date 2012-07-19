@@ -67,24 +67,28 @@ function mesg (message){
 function checkStatus(){
     $.ajax({
         type: "POST",
-        data: {date: '2012-01-011'},
+        data: {date: GLOBAL_CONFIG.date, hash:""},
         url: "/tasks/checkstatus.json",
-        success: function (status) {
-            console.log(status);
-            
-                //if(!status){
-//                   showErrorConnection(true);
-//                }else{
-//                   showErrorConnection(false);
-//                }
+        success: function (data) {
+            if(!data.result.success){
+                mesg(data.result.message);
+            }else{
+                switch(data.result.cause){
+                    case 'changeDay':
+                        mesg(data.result.message);
+                        setTimeout(reload,5000);
+                        break;
+               }
+               showErrorConnection(false);
+            }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-               console.log('ky');
-               // if(xhr.status == '404'){
-//                    showErrorConnection(true);
-//                }else{
-//                    reload();
-//                }
+            if(xhr.status == '404' || xhr.status == 0){
+                showErrorConnection(true);
+            }else{
+                console.log(xhr);
+                reload();
+            }
        }
     });
 }
@@ -132,7 +136,7 @@ function superAjax(url, data){
                 displayLoadAjax(countAJAX);                                
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                if(xhr.status == '404'){
+            if(xhr.status == '404' || xhr.status == 0){
                     showErrorConnection(true);
                 }else{
                     reload();
@@ -654,7 +658,7 @@ function taskEdit(id, title, priority, done, date, time, timeEnd, comment){
 function onEdit(data){
     if(data.success){
         $('#editTask').modal('hide');
-        scrEdit(data.data.Task.id, data.data.Task.title, data.data.Task.priority, data.data.Task.done, data.data.Task.date, data.data.Task.time, data.data.Task.timeEnd, data.data.Task.comment);
+        scrEdit(data.data.Task.id, data.data.Task.title, data.data.Task.priority, data.data.Task.done, data.data.Task.date, data.data.Task.time, data.data.Task.timeend, data.data.Task.comment);
     }else {
         mesg(data.message);
         scrErrorEdit(data.errors);    
@@ -1207,20 +1211,14 @@ function reload(){
 }
 function showErrorConnection(status){
     if(!status){
-        intervalcheckLogin = 20000;
-        setTimeout(function() {
-            checkLogin();
-        }, intervalcheckLogin);
+        setTimeout(checkStatus, +GLOBAL_CONFIG.intervalCheckStatus);
         $('.connError').addClass('hide');
         if(connError){
             reload();
         }
         
     }else{
-        intervalcheckLogin = 10000;
-        setTimeout(function() {
-            checkLogin();
-        }, intervalcheckLogin);
+        setTimeout(checkStatus, +GLOBAL_CONFIG.intervalCheckStatusError);
         $('.connError').removeClass('hide');
         connError = true;
     }
@@ -1248,8 +1246,6 @@ function convertToText(str){
 //-----------------------------------------------------------------------
 var dropped = false;
 var countAJAX = 0;
-//var intervalcheckLogin = 600000;
-var intervalcheckLogin = 20000;
 var connError = false;
 $(function(){
        //checkStatus(); 
@@ -1273,17 +1269,12 @@ $(function(){
             }
          } 
     })
-  
     $(window).hashchange();
     $.datepicker.setDefaults(
-        $.extend($.datepicker.regional["ru"])
+        $.extend($.datepicker.regional[GLOBAL_CONFIG.dp_regional])
      );
 //
-        setTimeout(function() {
-            checkLogin();
-        }, intervalcheckLogin);(function() {
-        checkLogin();
-    }, intervalcheckLogin);
+    setTimeout(checkStatus, +GLOBAL_CONFIG.intervalCheckStatus);
     $('.help').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
     $('#addDay').tooltip({placement:'bottom',delay: { show: 500, hide: 100 }});
     $('#completed h3').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
