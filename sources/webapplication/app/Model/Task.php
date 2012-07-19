@@ -63,6 +63,10 @@ class Task extends AppModel {
                 'rule' => array('time'),
                     'allowEmpty' => true,
                     'message' => 'Некорректное время'
+            ),
+            'comparisonTime' => array(
+                'rule'    => array('comparisonTime'),
+                'message' => 'Время окончания должно быть больше начала '
             )
         ),  
         'order' => array(
@@ -152,6 +156,13 @@ class Task extends AppModel {
     private $_originData = array();
     
     private $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'done' ,'datedone', 'comment');
+    
+    public function comparisonTime($data) {
+        if ($data['timeend'] > $this->data[$this->alias]['time']) {
+            return true;
+        }
+        return false;
+    }
     
     //------------------------------
     public function get($task_id) {
@@ -393,24 +404,25 @@ class Task extends AppModel {
                                                     //'Task.order' => 'desc'
                                                 )
                                             ));
-        foreach ( $listTaskWithTime as $task ) {
-            if ($this->data[$this->alias]['time'] > $task[$this->alias]['time']) {
-                $newOrderID = $task[$this->alias]['order'] + 1;
+            foreach ( $listTaskWithTime as $task ) {
+                if ($this->data[$this->alias]['time'] > $task[$this->alias]['time']) {
+                    $newOrderID = $task[$this->alias]['order'] + 1;
+                }
             }
-        }
-	    if(!empty($listTaskWithTime) and $newOrderID == 0){
-            $newOrderID = $listTaskWithTime[0][$this->alias]['order'] - 1;
-        }
-	   if ( ! $this->_isDraggedOnDay() ) {
-            $lastOrder = $this->getLastOrderByUser_idAndDate($user_id, $date);
-	        if($newOrderID > $lastOrder){
-	            $newOrderID = $lastOrder;
-	        }
-	    }
-        if(!$newOrderID){
-           $newOrderID = 1;
-        }
-        return $newOrderID;
+    	    if(!empty($listTaskWithTime) and $newOrderID == 0){
+                $newOrderID = $listTaskWithTime[0][$this->alias]['order'] - 1;
+            }
+           
+    	   if ( ! $this->_isDraggedOnDay() and isset($this->data[$this->alias]['id']) ) {
+                $lastOrder = $this->getLastOrderByUser_idAndDate($user_id, $date);
+    	        if($newOrderID > $lastOrder){
+    	            $newOrderID = $lastOrder;
+    	        }
+    	    }
+            if(!$newOrderID){
+               $newOrderID = 1;
+            }
+            return $newOrderID;
         }
         return false;
     }

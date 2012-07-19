@@ -2,7 +2,9 @@
     <?php echo $this->Html->css('tasks.'.Configure::read('App.version')); ?>
 <?php $this->end ();?>
 
-<?php $this->start ( 'toFooter' );?>
+<?php $this->append ( 'toFooter' );?>
+    
+    <?php echo $this->element('js_global_config', array(), array('cache' => array('key' => 'js_global_config', 'config' => 'elements'))); ?> 
     
     <?php echo $this->Html->script('jquery.ui.touch-punch.min.js'); ?>
     

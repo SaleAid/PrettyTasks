@@ -493,13 +493,29 @@ class TasksController extends AppController {
 
     public function checkStatus() {
         $result = $this->_prepareResponse();
-        if (! $this->_isSetRequestData('date')) {
+        $expectedData = array(
+            'date', 
+            'hash', 
+        );
+        if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
                 'type' => 'error', 
                 'message' => __('Ошибка при передаче данных')
             );
         } else {
-            $result['operation'] = Validation::date($this->request->data['date']);
+            $result['success'] = $this->Auth->loggedIn();
+            if($result['success']){
+                //$result['operation'] = 'none';
+                if(Validation::date($this->request->data['date']) and !CakeTime::isToday($this->request->data['date'])){
+                    $result['operation'] = 'refresh';
+                    $result['cause'] = 'changeDay';
+                    $result['message'] = array(
+                        'type' => 'success', 
+                        'message' => __('Переход на новый день. Перезагрузка страницы произойдет через 5 секунд')
+                    );
+                 }                
+            }
+
         }
         $result['action'] = 'checkStatus';
         $this->set('result', $result);
