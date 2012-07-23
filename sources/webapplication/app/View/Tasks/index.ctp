@@ -192,18 +192,18 @@
                         </div>
                         <div class="filter">
                             <span>Фильтр:&nbsp; </span> 
-                            <a href=""  class="active" data="all">Все</a>
+                            <a href=""  class="active" data="all"><?php echo __('Все');?></a>
                             <span class="all badge badge-info"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all']; ?></span>,
                             &nbsp;
-                            <a href=""  data="inProcess">В Процессе</a>
+                            <a href=""  data="inProcess"><?php echo __('В Процессе');?></a>
                             <span class="inProcess  badge badge-warning"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all'] - $result['data']['arrTaskOnDaysCount'][$k]['done']; ?></span>,
                             &nbsp;
-                            <a href=""  data="completed">Выполненные</a>
+                            <a href=""  data="completed"><?php echo __('Выполненные');?></a>
                             <span class="completed badge badge-success"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['done']; ?></span>
                             
                         </div>
                         <div class="days">
-                            <a href="" data="commentDay">Комментарий</a>
+                            <a href="" data="commentDay"><?php echo __('Комментарий');?></a>
                             <label class="checkbox ratingDay" >
                                 <input type="checkbox" <?php if( isset($result['data']['arrDaysRating'][$k]) and $result['data']['arrDaysRating'][$k][0]['Day']['rating']):?> checked <?php endif; ?> date="<?php echo $k; ?>"/> Удачный день
                             </label>
@@ -238,23 +238,24 @@
 <div id="editTask" class="modal hide  in">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
-        <h3>Редактирование задачи</h3>
+        <h3><?php echo __('Редактирование задачи');?></h3>
     </div>
     <div class="modal-body">
         <div class="row">
             <div class="span6 form-horizontal">
               <div class="control-group">
-                <label class="control-label" for="eTitle">Title</label>
+                <label class="control-label" for="eTitle"><?php echo __('Заглавие');?></label>
                 <div class="controls">
                   <input type="text" class="span6" id="eTitle"/>
                 </div>
               </div>
               <div class="control-group form-inline">
-                <label class="control-label" for="eDate">Date, time?</label>
+                <label class="control-label" for="eDate"><?php echo __('Дата и время');?></label>
                 <div class="controls">
                     <input type="text"  id="eDate"/>
+                    <label><?php echo __('с');?></label>
                     <input type="text"  id="eTime"/>
-                    <label>to</label>
+                    <label><?php echo __('по');?></label>
                     <input type="text"  id="eTimeEnd"/>
                 </div>
               </div>
@@ -262,7 +263,7 @@
           
           <div class="span5">
               <div class="control-group">
-                <label class="control-label" for="eComment">Comment</label>
+                <label class="control-label" for="eComment"><?php echo __('Комментарий');?></label>
                 <div class="controls">
                   <textarea class="span4" id="eComment" rows="3"></textarea>
                 </div>
@@ -270,15 +271,15 @@
             </div>  
           <div class="priority span1 form-vertical">
           <div class="control-group">
-            <label class="control-label">Priority</label>
+            <label class="control-label"><?php echo __('Приоритет');?></label>
             <div class="controls">
               <label class="radio">
                 <input type="radio" name="priority" id="optionsRadios1" value="1" />
-                High
+                <?php echo __('Высокий');?>
               </label>
               <label class="radio">
                 <input type="radio" name="priority" id="optionsRadios2" value="0"/>
-                Normal
+                <?php echo __('Обычный');?>
               </label>
             </div>
           </div>
@@ -289,7 +290,7 @@
                 <div class="controls">
                   <label class="checkbox">
                     <input type="checkbox" id="eDone" value="option1"/>
-                    Done
+                    <?php echo __('Выполнена');?>
                   </label>
                 </div>
               </div>
@@ -297,8 +298,8 @@
     </div>
 </div>
     <div class="modal-footer">
-        <a href="" class="btn" data-dismiss="modal">Закрыть</a>
-        <button id="eSave" class="btn btn-success">Сохранить</button>
+        <a href="" class="btn" data-dismiss="modal"><?php echo __('Закрыть');?></a>
+        <button id="eSave" class="btn btn-success"><?php echo __('Сохранить');?></button>
     </div>
 </div>
 <!-- End modal -->
@@ -307,14 +308,14 @@
 <div id="commentDay" class="modal hide  in">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
-        <h3>Комментарий</h3>
+        <h3><?php echo __('Комментарий');?></h3>
     </div>
     <div class="modal-body">
         <textarea  class="" id="eCommentDay" rows="9"></textarea>
     </div>
     <div class="modal-footer">
-        <a href="" class="btn" data-dismiss="modal">Закрыть</a>
-        <button id="eCommentDaySave" class="btn btn-success">Сохранить</button>
+        <a href="" class="btn" data-dismiss="modal"><?php echo __('Закрыть');?></a>
+        <button id="eCommentDaySave" class="btn btn-success"><?php echo __('Сохранить');?></button>
     </div>
 </div>
 <!-- End modal -->
