@@ -8,7 +8,7 @@
         </a>
       <?php echo $this->Html->link(
                             '',
-                            array('controller' => 'Pages', 'action' => 'index'),
+                            array('controller' => 'pages', 'action' => 'index'),
                             array('class' => 'brand')
       );?>
 
@@ -18,7 +18,7 @@
           <li class="<? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">
                 <?php echo $this->Html->link(
                                 __('Tasks'),
-                                array('controller' => 'Tasks', 'action' => 'index')
+                                array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time()))
                 );?>    
           </li>
          <!-- <?php //if ($isBetaUser):?>
@@ -33,7 +33,7 @@
           <li class="<? if($this->params['action'] == "agenda" and strtolower($this->params['controller']) == "pasks") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __('Agenda'),
-                    '/tasks#day-future'
+                    array('controller' => 'tasks', 'action' => 'index', '#' => 'day-future')
                     //array('controller' => 'tasks', 'action' => 'agenda')
                 );?>
           </li>
