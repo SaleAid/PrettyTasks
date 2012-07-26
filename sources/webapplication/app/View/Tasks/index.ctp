@@ -109,12 +109,12 @@
             <ul class="sortable connectedSortable ui-helper-reset" date="planned">
                 <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])):?>
                     <?php foreach($result['data']['arrAllFuture'] as $item):?>
-                        <li id ="<?php echo $item['Task']['id']; ?>" class=" <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?> " date="<?php echo $item['Task']['date'];?>">
+                        <li id ="<?php echo $item['Task']['id']; ?>" class=" <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
                             <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
                             <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
                             <span class="move"><i class="icon-move"></i></span>
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                            <span class="editable <?php if($item['Task']['priority']):?> important <?php endif; ?>"><?php echo h($item['Task']['title']); ?></span>
+                            <span class="editable"><?php echo h($item['Task']['title']); ?></span>
                             <span class="commentTask"><?php echo h($item['Task']['comment']); ?></span>
                             <span class="editTask"><i class="icon-pencil"></i></a></span>
                             <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
