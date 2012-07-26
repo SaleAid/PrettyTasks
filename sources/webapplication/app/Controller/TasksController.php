@@ -361,13 +361,14 @@ class TasksController extends AppController {
                         'type' => 'success', 
                         'message' => __('Задача  не перемещена (moveTo)')
                     );
+                    $result['errors'] = $this->Task->validationErrors;
                 }
             } else {
                 $result['message'] = array(
                     'type' => 'error', 
                     'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')
                 );
-                $result['errors'] = $this->Task->validationErrors;
+                
             }
         }
         $result['action'] = 'dragOnDay';
