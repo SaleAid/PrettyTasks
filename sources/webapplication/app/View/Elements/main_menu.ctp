@@ -6,11 +6,19 @@
             <i class="icon-bar"></i>
             <i class="icon-bar"></i>
         </a>
-      <?php echo $this->Html->link(
+        <?php if ($currentUser): ?>
+        <?php echo $this->Html->link(
+                            '',
+                            array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time())),
+                            array('class' => 'brand')
+        );?>
+        <?php else: ?>
+        <?php echo $this->Html->link(
                             '',
                             array('controller' => 'pages', 'action' => 'index'),
                             array('class' => 'brand')
-      );?>
+        );?>
+        <?php endif;?>
 
       <div class="nav-collapse">
         <ul class="nav">

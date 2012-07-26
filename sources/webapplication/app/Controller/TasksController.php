@@ -368,7 +368,6 @@ class TasksController extends AppController {
                     'type' => 'error', 
                     'message' => __('Ошибка, Вы не можете делать изменения в этой задачи')
                 );
-                
             }
         }
         $result['action'] = 'dragOnDay';
@@ -496,7 +495,7 @@ class TasksController extends AppController {
         $result = $this->_prepareResponse();
         $expectedData = array(
             'date', 
-            'hash', 
+            'hash'
         );
         if (! $this->_isSetRequestData($expectedData)) {
             $result['message'] = array(
@@ -505,18 +504,17 @@ class TasksController extends AppController {
             );
         } else {
             $result['success'] = $this->Auth->loggedIn();
-            if($result['success']){
+            if ($result['success']) {
                 //$result['operation'] = 'none';
-                if(Validation::date($this->request->data['date']) and !CakeTime::isToday($this->request->data['date'])){
+                if (Validation::date($this->request->data['date']) and ! CakeTime::isToday($this->request->data['date'])) {
                     $result['operation'] = 'refresh';
                     $result['cause'] = 'changeDay';
                     $result['message'] = array(
                         'type' => 'success', 
                         'message' => __('Переход на новый день. Перезагрузка страницы произойдет через 5 секунд')
                     );
-                 }                
+                }
             }
-
         }
         $result['action'] = 'checkStatus';
         $this->set('result', $result);

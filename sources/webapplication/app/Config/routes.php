@@ -27,11 +27,12 @@
  */
 
 
-//Router::connect('/', array(
-//	'controller' => 'Pages', 'action' => 'index'
-//), array(
-//	'device' => '[m]{1}'
-//));
+Router::connect('/', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/pages', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/pages/index', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/pages/*', array('controller' => 'pages', 'action' => 'view'), array('lang' => '[a-z]{2}'));
+
 Router::connect('/:lang/:device', array(
 	'controller' => 'Tasks', 'action' => 'index'
 ), array(
@@ -52,8 +53,7 @@ Router::connect('/:lang/:device/:controller/:action', array(), array(
 	'device' => '[m]{1}',
     'lang' => '[a-z]{2}'
 ));
-Router::connect('/:lang', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
-Router::connect('/:lang/pages/*', array('controller' => 'pages', 'action' => 'view'), array('lang' => '[a-z]{2}'));
+
 Router::connect('/:lang/:controller', array('action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/:controller/:action', array(), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/:controller/:action/*', array(), array('lang' => '[a-z]{2}'));

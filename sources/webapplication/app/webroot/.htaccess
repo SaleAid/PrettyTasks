@@ -18,7 +18,7 @@ AddDefaultCharset UTF-8
 
 
 
-AuthType Basic
-AuthName "Private zone."
-AuthUserFile /home/pubftp/test1/besttask/sources/webapplication/app/webroot/.htpasswd
-require valid-user
+#AuthType Basic
+#AuthName "Private zone."
+#AuthUserFile /home/pubftp/test1/besttask/sources/webapplication/app/webroot/.htpasswd
+#require valid-user

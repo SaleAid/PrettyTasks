@@ -24,7 +24,7 @@ class AppController extends Controller {
                 'action' => 'index'
             ), 
             'logoutRedirect' => array(
-                'controller' => 'Pages', 
+                'controller' => 'pages', 
                 'action' => 'index'
             ), 
             'authError' => ' ', 
@@ -33,8 +33,10 @@ class AppController extends Controller {
             ), 
             'authenticate' => array(
                 'Form' => array(
-                    'userModel' => 'User',
-                     'fields' => array('username' => 'email')
+                    'userModel' => 'User', 
+                    'fields' => array(
+                        'username' => 'email'
+                    )
                 )
             )
         ), 
@@ -121,14 +123,22 @@ class AppController extends Controller {
         //        );
         //  
          */
-
+        $this->Auth->loginRedirect = array(
+            'controller' => 'tasks', 
+            'action' => 'index', 
+            'lang' => $this->params['lang']
+        );
+        $this->Auth->logoutRedirect = array(
+            'controller' => 'pages', 
+            'action' => 'index', 
+            'lang' => $this->params['lang']
+        );
         $this->_setLanguage();
         $this->__setTimeZone();
         $this->_checkMobile();
         $this->Seo->title = Configure::read('Site.title');
         $this->Seo->description = Configure::read('Site.description');
         $this->Seo->keywords = Configure::read('Site.keywords');
-
     }
 
     public function _setLanguage() {
@@ -148,7 +158,6 @@ class AppController extends Controller {
         $this->set('provider', $this->Auth->user('provider'));
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
-
     }
 
     protected function _prepareResponse() {

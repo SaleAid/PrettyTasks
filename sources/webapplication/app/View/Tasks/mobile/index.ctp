@@ -32,7 +32,11 @@
 	</div>
 	
 	<div data-role="footer">
-		<a href="/Tasks" rel="external">Go to full version</a>
+        <?php echo $this->Html->link(
+                            __('Go to full version'),
+                            array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time())),
+                            array('rel' => 'external')
+        );?>
 		<a href="#about">About</a>
 	</div><!-- /footer -->
 
@@ -72,7 +76,11 @@
 	</div>
 	
 	<div data-role="footer" data-position="fixed">
-		<a href="/Tasks" rel="external">Go to full version</a>
+        <?php echo $this->Html->link(
+                            __('Go to full version'),
+                            array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time())),
+                            array('rel' => 'external')
+        );?>
 		<a href="#about">About</a>
 	</div><!-- /footer -->
 
@@ -113,7 +121,11 @@
 	</div>
 	
 	<div data-role="footer" data-position="fixed">
-		<a href="/Tasks" rel="external">Go to full version</a>
+        <?php echo $this->Html->link(
+                            __('Go to full version'),
+                            array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time())),
+                            array('rel' => 'external')
+        );?>
 		<a href="#about">About</a>
 	</div><!-- /footer -->
 
@@ -166,7 +178,11 @@
 	</div>
 	
 	<div data-role="footer" data-position="fixed">
-		<a href="/Tasks" rel="external">Go to full version</a>
+        <?php echo $this->Html->link(
+                            __('Go to full version'),
+                            array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time())),
+                            array('rel' => 'external')
+        );?>
 		<a href="#about">About</a>
 	</div><!-- /footer -->
 
@@ -187,7 +203,11 @@
 	</div><!-- /content -->
 	
 	<div data-role="footer" data-position="fixed">
-		<a href="/Tasks" rel="external">Go to full version</a>
+        <?php echo $this->Html->link(
+                            __('Go to full version'),
+                            array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time())),
+                            array('rel' => 'external')
+        );?>
 		<a href="#about">About</a>
 	</div><!-- /footer -->
 </div><!-- /page two -->
