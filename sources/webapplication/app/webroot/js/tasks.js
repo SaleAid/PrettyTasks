@@ -1,4 +1,15 @@
 
+function toListValidationErrorAll(errors){
+    var listError = '';
+        $.each(errors,function(index, value) {
+            if($.isArray(value)){
+                $.each(value, function(index, val) {
+                    listError = listError +'<br/>'+ val;
+                });
+            }
+        });
+    return listError;
+}
 function getTaskForEdit(id){
     return getTaskFromPage(id);
 }
@@ -48,12 +59,12 @@ function getCommentDayElement(name){
 }
 
 
-function mesg (message){
+function mesg (message, type){
     $.jGrowl.defaults.pool = 1;
-    $.jGrowl(message.message, { 
+    $.jGrowl(message, { 
                     glue: 'before',
                     position: 'custom',
-                    theme: message.type,
+                    theme: type,
                     speed: 'fast',
                     life: '3000',
 					animateOpen: { 
@@ -71,11 +82,11 @@ function checkStatus(){
         url: "/tasks/checkstatus.json",
         success: function (data) {
             if(!data.result.success){
-                mesg(data.result.message);
+                mesg(data.result.message.message, data.result.message.type);
             }else{
                 switch(data.result.cause){
                     case 'changeDay':
-                        mesg(data.result.message);
+                        mesg(data.result.message.message, data.result.message.type);
                         setTimeout(reload,5000);
                         break;
                }
@@ -260,7 +271,7 @@ function onGetTasksByType(data){
     if(data.success){
         scrGetTasksByType(data);
     }else{
-        mesg(data.message);
+        mesg(data.message.message, data.message.type);
     }
 }
 function futureTasks(data){
@@ -387,9 +398,18 @@ function onSetCommentDay(data){
     if(data.success){
         scrSetCommentDay(data);
     }else{
-        mesg(data.message);
+        mesg(data.message.message, data.message.type);
         scrErrorSetCommentDay(data.errors);
     }
+}
+function arrErrorToList(errors){
+    var str = '<ul>';
+    if(!+errors.length){return;}
+    $.each(errors, function(index, value) {
+        str += value;
+    });
+    str += '</ul>';
+    return str;
 }
 
 function scrErrorSetCommentDay(data){
@@ -403,7 +423,7 @@ function scrErrorSetCommentDay(data){
             getCommentDayElement(index)
                         .addClass('errorEdit')
                         .attr('rel', 'tooltip')
-                        .attr('data-original-title', value[0])
+                        .attr('data-original-title', arrErrorToList(value))//value[0])
                         .tooltip({placement:'right',
                                   delay: { show: 500, hide: 100 },
                                   //trigger: 'focus',
@@ -431,7 +451,7 @@ function scrGetCommentDay(data){
 }
 function onGetCommentDay(data){
     if(!data.success){
-        mesg(data.message);    
+        mesg(data.message.message, data.message.type); 
     }
     
     scrGetCommentDay(data.data);
@@ -455,7 +475,7 @@ function srvRatingDay(date, rating){
 
 function onRatingDay(data){
     if(!data.success){
-        mesg(data.message);    
+        mesg(data.message.message, data.message.type);
     }
 }
 
@@ -479,7 +499,7 @@ function srvDeleteDay(date){
 
 function onDeleteDay(data){
     if(!data.success){
-        mesg(data.message);    
+        mesg(data.message.message, data.message.type); 
     }
 }
 
@@ -660,7 +680,7 @@ function onEdit(data){
         $('#editTask').modal('hide');
         scrEdit(data.data.Task.id, data.data.Task.title, data.data.Task.priority, data.data.Task.done, data.data.Task.date, data.data.Task.time, data.data.Task.timeend, data.data.Task.comment);
     }else {
-        mesg(data.message);
+        mesg(data.message.message, data.message.type);
         scrErrorEdit(data.errors);    
     }
     
@@ -783,7 +803,7 @@ function taskChangeOrders(id, position){
 }
 function onChangeOrders(data){
     if(!data.success){
-        mesg(data.message);    
+        mesg(data.message.message, data.message.type);    
     }
 }
 function srvChangeOrders(id, position){
@@ -800,7 +820,7 @@ function taskDragOnDay(id, date, time){
 }
 function onDragOnDay(data){
     if(!data.success){
-        mesg(data.message);    
+        mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.errors), data.message.type);    
     }
 }
 function srvDragOnDay(id, date, time){
@@ -820,7 +840,7 @@ function taskDelete(id){
 }
 function onDelete(data){
     if(!data.success){
-        mesg(data.message);    
+        mesg(data.message.message, data.message.type);    
     }
 }
 function srvDelete(id){
@@ -838,9 +858,19 @@ function taskSetDone(id, done){
     srvSetDone(id, done);
 }
 function onSetDone(data){
+    var task = data.data.Task;
 	//scrSetDone(data.data.Task.id, data.data.Task.done);
     if(!data.success){
-        mesg(data.message);    
+        mesg(data.message.message, data.message.type);
+        return;   
+    }
+    if(+task.done && +task.future){
+         if (task.time == null){
+            task.time =''; 
+         }
+         taskDragOnDay(task.id, GLOBAL_CONFIG.date, task.time);
+    }else{
+        $("li[id='"+task.id+"'].currentTask").removeClass('currentTask');
     }
 }
 function srvSetDone(id, done){
@@ -873,7 +903,7 @@ function onSetTitle(data){
         $("li[id='"+data.data.Task.id+"']").find('.time').text(data.data.Task.time.slice(0,-3));
     }
     if(!data.success){
-        mesg(data.message);    
+        mesg(data.message.message, data.message.type);    
     }
 }
 function srvSetTitle(id, title){
@@ -897,7 +927,7 @@ function onCreate(data){
     if(data.success){
         scrCreate(data);
     }else{
-        mesg(data.message);    
+        mesg(data.message.message, data.message.type);   
     }
 }
 function srvCreate(title, date){
@@ -997,6 +1027,7 @@ function initDone(element){
     $(element).on("click", function(){
         var id = $(this).parent().attr('id');
         var done = $(this).is(":checked")? 1 : 0;
+        $(this).parent().addClass('currentTask');
         userEvent('setDone', {id: id, done: done});
     });
 }
@@ -1090,8 +1121,12 @@ function initDrop(element){
                 var id = ui.draggable.attr('id');
                 var date = $(this).find( "a" ).attr( "date" );
                 var time = $.trim(ui.draggable.children('.time').text());
-                if(date == ui.draggable.attr( "date" )){
-                    mesg({type:'success', message:'Перемещение запрещено. '});
+                if(date == ui.draggable.attr( "date" ) ){
+                    mesg('Перемещение запрещено', 'success');
+                    return false;   
+                }
+                if(ui.draggable.hasClass('complete') ){
+                    mesg('Перемещение выполненых задач запрещено', 'success');
                     return false;   
                 }
                 ui.draggable.addClass('currentTask');
@@ -1115,8 +1150,10 @@ function initSortable(element){
                     dropped = false;
                     return true;
                 }
-                if(ui.item.parent().attr('date') == 'expired' || ui.item.parent().attr('date') == 'future' || ui.item.hasClass('setTime')){
-                    mesg({type:'success', message:'Перемещение запрещено. '});
+                if( ui.item.parent().attr('date') == 'expired' || 
+                    ui.item.parent().attr('date') == 'future' ||
+                    ui.item.hasClass('setTime') ){
+                    mesg('Перемещение запрещено', 'success');
                     $(this).css("color","");
                     return false;  
                 }
