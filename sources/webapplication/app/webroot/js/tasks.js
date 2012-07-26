@@ -877,6 +877,7 @@ function srvSetDone(id, done){
     superAjax('/tasks/setDone.json',{id:id, done: done});
 }
 function scrSetDone(id, done){
+     $("li[id='"+id+"']").removeAttr('style');
     var titleEl = $("li[id='"+id+"']").find('.editable');
     var doneEl = $("li[id='"+id+"']").find('.done');
     var date = $("li[id='"+id+"']").attr('date');
