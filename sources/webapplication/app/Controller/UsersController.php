@@ -101,6 +101,9 @@ class UsersController extends AppController {
                         'agreed'  => $this->request->data[$this->modelClass]['agreed']
                     );
                 if ($this->User->register($saveData)) {
+                    //TODO Application is crashed if email is not sent. 
+                    //TODO Need to use try catch to catch the exception?
+                    //TODO Please check it also at another places
                     if ($this->User->sendActivationAccount($this->User->getLastInsertID(), $this->name)) {
                         $this->Session->setFlash(__('Код активации аккаунта был выслан Вам на почту'), 'alert', array(
                             'class' => 'alert-success'

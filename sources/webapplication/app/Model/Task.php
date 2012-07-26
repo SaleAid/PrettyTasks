@@ -646,6 +646,13 @@ class Task extends AppModel {
                         ));
     }
 
+    //TODO Need to comment each function
+    /**
+     * 
+     * Enter description here ...
+     * @param unknown_type $user_id
+     * @param unknown_type $date
+     */
     public function deleteDayFromConfig($user_id, $date) {
         $config = array();
         $config = $this->User->getConfig($user_id);
@@ -653,7 +660,7 @@ class Task extends AppModel {
         return $this->User->setConfig($user_id, $config);
     }
 
-
+    //TODO Maybe this function move to another model, for example to Day?
     public function getWeekDay($index){
         $weekday = array(
                         'Sunday' => __('Sunday', true),

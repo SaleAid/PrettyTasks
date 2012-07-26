@@ -445,6 +445,8 @@ class TasksController extends AppController {
             $result['data']['day'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $this->request->data['date']);
             $result['data']['weelDayStyle'] = ($result['data']['date'] > CakeTime::format('Y-m-d', time())) ? 'future' : 'past';
             //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            
+            //TODO realy need to delete code below
             $this->layout = false;
             $view = new View($this, false);
             $view->set('type', $result['data']['weelDayStyle']);
