@@ -15,7 +15,7 @@
    Configure::write('Config.langListURL.ua', 'ukr');
    
    Configure::write('Site.name', 'Pretty Tasks');
-   Configure::write('Site.url', 'http://'.$_SERVER["HTTP_HOST"].'/');
+   Configure::write('Site.url', 'http://'.@$_SERVER["HTTP_HOST"].'/');
    Configure::write('Site.title', 'Pretty Tasks');
    Configure::write('Site.keywords', 'Pretty Tasks, tasks, gtd, goals, aims, success, schedule, time management');
    Configure::write('Site.description', 'Pretty Tasks is the prettiest personal tasks management service');

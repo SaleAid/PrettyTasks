@@ -88,7 +88,7 @@ class AccountsController extends AppController {
                     ));
                     $this->redirect('/');
                 }
-                $this->Session->setFlash(__('Возникли проблемы при отправке КодА активации аккаунта.'), 'alert', array(
+                $this->Session->setFlash(__('Возникли проблемы при отправке кода активации аккаунта.'), 'alert', array(
                     'class' => 'alert-success'
                 ));
                 $this->redirect('/');
@@ -124,7 +124,7 @@ class AccountsController extends AppController {
                         ));
                         $this->redirect('/');
                     }
-                    $this->Session->setFlash(__('Вы успешно прошли регистрацию. Возникли проблемы при отправке КодА активации аккаунта.'), 'alert', array(
+                    $this->Session->setFlash(__('Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта.'), 'alert', array(
                         'class' => 'alert-success'
                     ));
                     $this->redirect('/');
@@ -171,7 +171,7 @@ class AccountsController extends AppController {
                         $this->Session->delete('tmpUser');
                         $this->redirect('/');
                     }
-                    $this->Session->setFlash(__('Вы успешно прошли регистрацию. Возникли проблемы при отправке КодА активации аккаунта.'), 'alert', array(
+                    $this->Session->setFlash(__('Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта.'), 'alert', array(
                         'class' => 'alert-success'
                     ));
                     $this->Session->delete('tmpUser');

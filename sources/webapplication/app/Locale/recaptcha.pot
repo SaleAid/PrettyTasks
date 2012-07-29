@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-07-03 09:05+0300\n"
+"POT-Creation-Date: 2012-07-29 13:33+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -23,7 +23,7 @@ msgid "Invalid API response, please contact the site admin."
 msgstr ""
 
 #: Plugin/Recaptcha/Controller/Component/RecaptchaComponent.php:149
-msgid "Incorrect captcha"
+msgid "Некорректная капча"
 msgstr ""
 
 #: Plugin/Recaptcha/View/Helper/RecaptchaHelper.php:195
