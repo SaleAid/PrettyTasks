@@ -1,6 +1,6 @@
 <script type="text/javascript">
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-4286765-9']);
+  _gaq.push(['_setAccount', <?php echo Configure::read('GoogleAnalytics.ID');?>]);
   _gaq.push(['_trackPageview']);
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;

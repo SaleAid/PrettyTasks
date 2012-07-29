@@ -7,6 +7,9 @@
    Configure::write('Recaptcha.privateKey', '6Lff1M4SAAAAAFbUUEYXP9c92v4fXvxf3m3BcBM3');
    Configure::write('Recaptcha.theme', 'white');
    Configure::write('Recaptcha.tabindex', 2);
+   
+   Configure::write('GoogleAnalytics.ID', 'UA-29304740-1');
+   
    Configure::write('Config.language', 'rus');
    
    Configure::write('Config.langURL', 'ru');
