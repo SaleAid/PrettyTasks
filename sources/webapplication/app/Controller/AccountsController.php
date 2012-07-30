@@ -16,7 +16,7 @@ class AccountsController extends AppController {
         $this->Auth->allow('loginzalogin', 'activate', 'reactivate', 'confirm_email', 'confirm_user_data');
         if ($this->Auth->user() && in_array($this->params['action'], 
                                             array(
-                                                'loginzalogin', 
+                                                //'loginzalogin', 
                                                 'activate', 
                                                 'reactivate', 
                                                 'confirm_email', 
@@ -29,10 +29,60 @@ class AccountsController extends AppController {
     public function isAuthorized($user) {
         return true;
     }
-
+    
     public function loginzalogin() {
+
         if (! empty($this->request->data['token'])) {
             $result = $this->Account->getLoginzaUser($this->request->data['token']);
+            if($this->Auth->loggedIn()){
+                switch ($result['status']) {
+                    case 'active' :
+                        {
+                            if($result['id'] == $this->Auth->user('id')){
+                                $this->Session->setFlash(__('Этот аккаунт уже связан'), 'alert', array(
+                                    'class' => 'alert-info'
+                                )); 
+                            } else {
+                                $this->Session->setFlash(__('Этот аккаунт уже связан с другим пользователем'), 'alert', array(
+                                    'class' => 'alert-error'
+                                ));
+                            }
+                            break;
+                        }
+                    case 'newUser' :
+                        {
+                            $saveData = array(
+                                'user_id' => $this->Auth->user('id'), 
+                                'identity' => $result['identity'], 
+                                'provider' => $result['provider'], 
+                                'uid' => $result['uid'],
+                                'full_name' => $result['full_name'],
+                                'active' => 1, 
+                                //'activate_token' => null
+                            );
+                            if ($this->Account->save($saveData)) {
+                                          $this->Session->setFlash(__('Этот аккаунт успешно прикреплен'), 'alert', array(
+                                    'class' => 'alert-info'
+                                )); 
+                            } else {
+                                $this->Session->setFlash(__('Ошибка связывания аккаунта'), 'alert', array(
+                                    'class' => 'alert-error'
+                                ));
+                            }
+                            break;
+                        }
+                    case 'error' :
+                        {
+                            $this->Session->setFlash(__('Ошибка'), 'alert', array(
+                                'class' => 'alert-error'
+                            ));
+                        }
+                }
+                $this->redirect(array(
+                    'controller' => 'users',
+                    'action' => 'accounts'
+                ));
+            }                
             switch ($result['status']) {
                 case 'active' :
                     {
@@ -258,7 +308,9 @@ class AccountsController extends AppController {
         }
         $this->Account->id = $id;
         if ($this->Account->delete()) {
-            $this->Session->setFlash(__('Account deleted'));
+            $this->Session->setFlash(__('Account deleted'), 'alert', array(
+                        'class' => 'alert-error'
+                    ));
             $this->redirect(array(
                 'controller' => 'Users', 
                 'action' => 'accounts'
