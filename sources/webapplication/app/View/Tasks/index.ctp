@@ -22,7 +22,7 @@
     
 <?php $this->end ();?>
   <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs listDay">
             <li class="addDay">
             <div class="btn-group dropdown">
                 <button  id="addDay" rel="tooltip" title="Добавить новый день в список" class="btn btn-large">Добавить день</button>

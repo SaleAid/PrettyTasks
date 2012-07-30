@@ -23,7 +23,7 @@
       <div class="nav-collapse">
         <ul class="nav">
           <?php if ($currentUser): ?>
-          <li class="<? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">
+          <li class="tasks <? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">
                 <?php echo $this->Html->link(
                                 __('Tasks'),
                                 array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time()))
@@ -38,7 +38,7 @@
           </li>
           <?php //endif;?>
           -->
-          <li class="<? if($this->params['action'] == "agenda" and strtolower($this->params['controller']) == "pasks") echo 'active'; ?>">
+          <li class="agenda <? if($this->params['action'] == "agenda" and strtolower($this->params['controller']) == "pasks") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __('Agenda'),
                     array('controller' => 'tasks', 'action' => 'index', '#' => 'day-future')
@@ -46,13 +46,13 @@
                 );?>
           </li>
           <?php endif;?>
-          <li class="<? if($this->params['action'] == "contact" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
+          <li class="<? if( isset($this->params['pass'][0]) and $this->params['pass'][0] == "contact" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __('Contact'),
                     array('controller' => 'pages', 'action' => 'contact')
                 );?>
           </li>
-          <li class="<? if($this->params['action'] == "about" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
+          <li class="<? if(isset($this->params['pass'][0]) and $this->params['pass'][0] == "about" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __('About'),
                     array('controller' => 'pages', 'action' => 'about')

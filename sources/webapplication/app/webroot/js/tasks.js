@@ -595,7 +595,7 @@ function scrAddDay(date){
 }
 function activeTab(date){
     $('div.active').removeClass('active').removeClass('in');
-    $('li.active').removeClass('active');
+    $('.listDay li.active').removeClass('active');
     $('#main ul.nav-tabs a[date="'+date+'"]').tab('show');
 }
 
@@ -1293,10 +1293,12 @@ var dropped = false;
 var countAJAX = 0;
 var connError = false;
 $(function(){
-       //checkStatus(); 
+     
+
      $(window).hashchange( function(e){
         if(location.hash != "") { 
             var hash = location.hash.slice(5);
+
             var activeTab =  $('#main li.active a').attr('date');
             if(hash == activeTab) {return;}
             if(isDate(hash)){
@@ -1312,9 +1314,18 @@ $(function(){
                 location.hash = 'day-'+today;
                 $('#main a[href="#'+today+'"]').tab('show');
             }
-         } 
-    })
+            if(hash == 'future'){
+                $('.agenda').addClass('active');
+                $('.tasks').removeClass('active');
+            }else{
+                $('.agenda').removeClass('active');
+                $('.tasks').addClass('active');
+            }
+         }
+    });
     $(window).hashchange();
+
+
     $.datepicker.setDefaults(
         $.extend($.datepicker.regional[GLOBAL_CONFIG.dp_regional])
      );
@@ -1340,6 +1351,7 @@ $(function(){
     initDayClick('.day');
     initPrintClick('.print');
     
+
     $(".daysButton a").click(function(){
         var type = $(this).attr('date');
         userEvent('getTasksByType', {type: type});
