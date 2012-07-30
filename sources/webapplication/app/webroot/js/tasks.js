@@ -141,10 +141,13 @@ function superAjax(url, data){
             url:url,
             type:'POST',
             data: data,
-            success: function(data) {
+            success: function(data, textStatus, jqXHR) {
                 responseHandler(data.result);
                 countAJAX--;
-                displayLoadAjax(countAJAX);                                
+                displayLoadAjax(countAJAX); 
+                if (typeof _gaq != "undefined"){
+                    _gaq.push(["_trackEvent", "Tasks", url]);
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
             if(xhr.status == '404' || xhr.status == 0){
@@ -673,6 +676,9 @@ function scrCommentTask(id, comment){
 //----------------edit----------
 function taskEdit(id, title, priority, done, date, time, timeEnd, comment){
     //scrEdit(id, title, priority, done, date, time, timeEnd, comment);
+    if(+done && !date){
+         date = GLOBAL_CONFIG.date;
+    }
     srvEdit(id, title, priority, done, date, time, timeEnd, comment);
 }
 function onEdit(data){
@@ -696,7 +702,7 @@ function scrErrorEdit(data){
             getEditElement(index)
                         .addClass('errorEdit')
                         .attr('rel', 'tooltip')
-                        .attr('data-original-title', value[0])
+                        .attr('data-original-title', arrErrorToList(value))//value[0])
                         .tooltip({placement:'right',
                                   delay: { show: 500, hide: 100 },
                                   //trigger: 'focus',
@@ -815,6 +821,9 @@ function scrChangeOrders(id, position){
 
 //----------------dragOnDay-----
 function taskDragOnDay(id, date, time){
+    if(date == 'planned'){
+        date = '';
+    }
     scrDragOnDay(id, date, time);
     srvDragOnDay(id, date, time);
 }
@@ -824,10 +833,8 @@ function onDragOnDay(data){
     }
 }
 function srvDragOnDay(id, date, time){
-    if(date == 'planned'){
-        date = '';
-    }
-    superAjax('/tasks/dragOnDay.json',{id: id,date: date, time: time});
+
+    superAjax('/tasks/dragOnDay.json',{id: id, date: date, time: time});
 }
 function scrDragOnDay(id, date, time){
     scrDragWithTime(id, date, time);
@@ -928,7 +935,7 @@ function onCreate(data){
     if(data.success){
         scrCreate(data);
     }else{
-        mesg(data.message.message, data.message.type);   
+        mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.errors), data.message.type);   
     }
 }
 function srvCreate(title, date){
@@ -1067,8 +1074,8 @@ function initEditTask(element){
                 $('#eTimeEnd').attr("disabled","disabled");
             }
             $('#eTimeEnd').val(task.timeEnd);
-            $( "#eDate" ).val(task.date);
-            if(!task.date){
+            $("#eDate").val(task.date);
+            if (!task.date){
                 $( "#eDate" ).attr('placeholder', '---FUTURE---');
             }
             $('#editTask').modal('show');
@@ -1122,7 +1129,7 @@ function initDrop(element){
                 var id = ui.draggable.attr('id');
                 var date = $(this).find( "a" ).attr( "date" );
                 var time = $.trim(ui.draggable.children('.time').text());
-                if(date == ui.draggable.attr( "date" ) ){
+                if(date == ui.draggable.attr("date") || (date == 'planned' && !ui.draggable.attr("date")) ){
                     mesg('Перемещение запрещено', 'success');
                     return false;   
                 }
