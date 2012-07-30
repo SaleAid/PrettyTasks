@@ -11,6 +11,8 @@ class TasksController extends AppController {
     public $components = array(
         'RequestHandler'
     );
+    
+    public $layout = 'tasks';
 
     public function index() {
         $this->response->disableCache();
