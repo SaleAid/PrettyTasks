@@ -265,7 +265,7 @@
               <div class="control-group">
                 <label class="control-label" for="eComment"><?php echo __('Комментарий');?></label>
                 <div class="controls">
-                  <textarea class="span4" id="eComment" rows="3"></textarea>
+                  <textarea class="span4" id="eComment" rows="4"></textarea>
                 </div>
               </div>
             </div>  
