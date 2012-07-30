@@ -1,7 +1,6 @@
 <?php
 echo $this->Html->docType('html5');
 ?>
-
 <html>
 <head>
 <?php
@@ -39,7 +38,6 @@ echo $scripts_for_layout;
     <div id="wrapper-content">
         <div id="wrapper">
             <div class="container">
-            <?php echo $this->element('box', array(), array('cache' => array('key' => 'feedback', 'config' => 'elements'))); ?>
                 <div class="row-fluid">
                     <?php
                     echo $this->element('user_menu');
@@ -76,6 +74,11 @@ echo $this->element('ga', array(), array(
         'config' => 'elements'
     )
 ));
+?>
+<?php 
+    if(!empty($currentUser)){
+        echo $this->element('box', array(), array('cache' => array('key' => 'box', 'config' => 'elements')));    
+    }
 ?>
 <?php echo $this->element('noscript', array(), array('cache' => array('key' => 'noscript', 'config' => 'elements'))); ?>   
 </body>

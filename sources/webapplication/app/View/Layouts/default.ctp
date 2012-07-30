@@ -48,7 +48,7 @@ echo $scripts_for_layout;
             echo $this->Session->flash();
             echo $content_for_layout;
             ?>
-            <?php echo $this->element('box', array(), array('cache' => array('key' => 'feedback', 'config' => 'elements'))); ?>
+
             </div>
             
         </div>
@@ -73,7 +73,11 @@ echo $this->element('ga', array(), array(
     )
 ));
 ?>
-
+<?php 
+    if(!empty($currentUser)){
+        echo $this->element('box', array(), array('cache' => array('key' => 'box', 'config' => 'elements')));    
+    }
+?>
 <?php echo $this->element('noscript', array(), array('cache' => array('key' => 'noscript', 'config' => 'elements'))); ?> 
  </body>
 </html>
