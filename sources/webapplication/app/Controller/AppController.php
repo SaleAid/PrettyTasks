@@ -99,30 +99,10 @@ class AppController extends Controller {
     }
 
     public function beforeFilter() {
-        /*
-        //        $this->AutoLogin->settings = array(
-        //    		// Model settings
-        //    		'model' => 'User',
-        //    		'username' => 'username',
-        //    		'password' => 'password',
-        //     
-        //    		// Controller settings
-        //    		'plugin' => '',
-        //    		'controller' => 'users',
-        //    		'loginAction' => 'login',
-        //    		'logoutAction' => 'logout',
-        //     
-        //    		// Cookie settings
-        //    		'cookieName' => 'rememberMe1',
-        //    		'expires' => '+1 month',
-        //     
-        //    		// Process logic
-        //    		'active' => true,
-        //    		'redirect' => true,
-        //    		'requirePrompt' => false,
-        //        );
-        //  
-         */
+        
+
+          
+         
         $this->Auth->loginRedirect = array(
             'controller' => 'tasks', 
             'action' => 'index', 
@@ -133,6 +113,11 @@ class AppController extends Controller {
             'action' => 'index', 
             'lang' => $this->params['lang']
         );
+
+        $this->AutoLogin->username = 'email';
+        $this->AutoLogin->cookieName = 'RME';
+        $this->AutoLogin->expires = '+1 month';
+        
         $this->_setLanguage();
         $this->__setTimeZone();
         $this->_checkMobile();

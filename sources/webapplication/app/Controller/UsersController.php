@@ -41,6 +41,7 @@ class UsersController extends AppController {
             if( isset($this->data['User']['email']) && !Validation::email($this->data['User']['email']) ){
                   $this->request->data['User']['username'] = $this->data['User']['email'];
                   $this->Auth->authenticate['Form'] = array('fields' => array('username' => 'username'));
+                  $this->AutoLogin->username = 'username';  
                   $message = __('Ваш логин или пароль не совпадают');
             }
             if ($this->Auth->login()) {
