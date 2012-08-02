@@ -2,10 +2,7 @@
 echo $this->Html->docType('html5');
 ?>
 <html>
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+
 <head>
 <?php  echo $this->Html->charset();?>
     
@@ -18,15 +15,18 @@ echo $this->Html->docType('html5');
 <?php
 echo $this->Html->meta('icon');
 echo $this->Html->css('bootstrap');
-echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom');
-echo $this->Html->css('print.' . Configure::read('App.version'), null, array(
-    'media' => 'print'
-));
+//echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom');
+//echo $this->Html->css('print.' . Configure::read('App.version'), null, array(
+//    'media' => 'print'
+//));
 echo $this->fetch('toHead');
 echo $this->Html->css('start.' . Configure::read('App.version'));
 echo $scripts_for_layout;
 ?>      
-	
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->	
 </head>
 
 <body data-spy="scroll" data-target=".subnav" data-offset="50">
@@ -51,9 +51,9 @@ if(Configure::read('Config.language') =='eng'){
 }else{
     echo $this->element('footer');    
 }
-echo $this->Html->script('jquery-1.7.1.min');
-echo $this->Html->script('jquery-ui-1.8.18.custom.min');
-echo $this->Html->script('bootstrap');
+//echo $this->Html->script('jquery-1.7.1.min');
+//echo $this->Html->script('jquery-ui-1.8.18.custom.min');
+//echo $this->Html->script('bootstrap');
 //echo $this->Html->script('main.' . Configure::read('App.version'));
 echo $this->fetch('toFooter');
 echo $this->element('ga', array(), array(

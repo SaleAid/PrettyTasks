@@ -18,7 +18,7 @@
     
     <?php echo $this->Html->script('jquery-ui-i18n.min');?>
     
-    <?php echo $this->Html->script('tasks.'.Configure::read('App.version'));?>
+    <?php echo $this->Html->script('tasks.min.'.Configure::read('App.version'));?>
     
 <?php $this->end ();?>
   <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">

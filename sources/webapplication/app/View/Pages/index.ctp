@@ -1,6 +1,6 @@
 
 <div class="start">
-  <img  src="/img/comics.jpg"/>
+  <?php echo $this->Html->image("comics.". Configure::read('App.version') .".jpg"); ?>
 </div>
 <div class="row">
 				<div class="span4 box left">

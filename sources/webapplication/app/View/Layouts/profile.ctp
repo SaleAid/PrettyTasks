@@ -14,13 +14,7 @@ echo $this->Html->charset();
 <?php
 echo $this->Html->meta('icon');
 ?>
-    
-     
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    
+
 <?php
 echo $this->Html->css('bootstrap');
 echo $this->Html->css('main.' . Configure::read('App.version'));
@@ -28,7 +22,10 @@ echo $this->Html->css($this->Loginza->getCssUrl());
 echo $this->fetch('toHead');
 echo $scripts_for_layout;
 ?>
-    
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->    
 </head>
 <body>
 <div id="wrapper-all">
@@ -63,12 +60,18 @@ if(Configure::read('Config.language') =='eng'){
 }else{
     echo $this->element('footer');    
 }
-echo $this->Js->writeBuffer();
-echo $this->Html->script('jquery-1.7.1.min');
-echo $this->Html->script('bootstrap');
-echo $this->Html->script('main.' . Configure::read('App.version'));
-echo $this->fetch('toFooter');
-echo $this->element('ga', array(), array(
+?>
+<?php echo $this->Js->writeBuffer();?>
+
+<?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');?>
+
+<?php echo $this->Html->script('bootstrap');?>
+
+<?php echo $this->Html->script('main.' . Configure::read('App.version'));?>
+
+<?php echo $this->fetch('toFooter');?>
+
+<?php echo $this->element('ga', array(), array(
     'cache' => array(
         'key' => 'ga', 
         'config' => 'elements'

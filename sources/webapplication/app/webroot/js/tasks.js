@@ -1,4 +1,3 @@
-
 function toListValidationErrorAll(errors){
     var listError = '';
         $.each(errors,function(index, value) {
@@ -289,9 +288,9 @@ function futureTasks(data){
         }
         $.each(value.list,function(index, value) {
             listUl.append( AddTask(value) );
-            initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
+            initDelete(listUl.find("li[id='"+value.Task.id+"'] .deleteTask"));
             //initEditAble("li[id='"+value.Task.id+"'] .editable");
-            initDone("li[id='"+value.Task.id+"'] .done");
+            initDone(listUl.find("li[id='"+value.Task.id+"'] .done"));
             //initEditTask("li[id='"+value.Task.id+"'] .editTask");
             listUl.find(" li[id='"+value.Task.id+"'] .editTask").addClass('hide');
         });
@@ -319,9 +318,9 @@ function expiredTasks(data){
         }
         $.each(value.list,function(index, value) {
             listUl.append( AddTask(value) );
-            initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
+            initDelete(listUl.find("li[id='"+value.Task.id+"'] .deleteTask"));
             //initEditAble("li[id='"+value.Task.id+"'] .editable");
-            initDone(" li[id='"+value.Task.id+"'] .done");
+            initDone(listUl.find("li[id='"+value.Task.id+"'] .done"));
             //initEditTask("li[id='"+value.Task.id+"'] .editTask");
             listUl.find(" li[id='"+value.Task.id+"'] .editTask").addClass('hide');
         });
@@ -1404,14 +1403,15 @@ $(function(){
     //modal close 
     $('#editTask').on('hidden', function () {
         scrErrorEdit();
-    })
+    });
+    
     $('#commentDay').on('hidden', function () {
         scrErrorSetCommentDay();
-    })
+    });
     
     $('#commentDay textarea, #editTask input, #editTask textarea').change(function () {
         $(this).removeClass('errorEdit');
-    })
+    });
     
 
     
@@ -1450,4 +1450,3 @@ $(function(){
     }; 
                
 }); 	
-

@@ -6,8 +6,13 @@ App::uses('AppController', 'Controller');
  */
 class PagesController extends AppController {
 
+<<<<<<< HEAD
     public $layout = 'pages';
     
+=======
+    public $cacheAction = "1 hour";//TODO time in config
+
+>>>>>>> b0804a9680d5636988c513884514c011880f4018
     public function beforeFilter(){
         parent::beforeFilter();
         $this->Auth->allow('*');
@@ -23,6 +28,8 @@ class PagesController extends AppController {
     }
     
     public function index(){
+    	$this->response->sharable(true, 3600);//TODO time in config
+    	$this->response->expires('+1 hour');//TODO time in config
         $this->layout = 'start';
         $this->Seo->title = $this->Seo->title.' :: '.Configure::read('SEO.Pages.title.ru');
         $this->Seo->description = Configure::read('SEO.Pages.description.ru');
@@ -30,6 +37,8 @@ class PagesController extends AppController {
     }
     
     public function view(){
+    	$this->response->sharable(true, 3600);//TODO time in config
+    	$this->response->expires('+1 hour');//TODO time in config
         $pass = $this->request->pass;
         $url =  implode("/", $pass);
         if(!$result = $this->Page->view($url, Configure::read('Config.language'))){

@@ -1,12 +1,7 @@
 <?php
 echo $this->Html->docType('html5');
 ?>
-
 <html>
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
 <head>
 <?php  echo $this->Html->charset();?>
     
@@ -29,7 +24,10 @@ echo $this->Html->css('main.' . Configure::read('App.version'));
 echo $this->Html->css($this->Loginza->getCssUrl());
 echo $scripts_for_layout;
 ?>      
-	
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->	
 </head>
 
 <body data-spy="scroll" data-target=".subnav" data-offset="50">
@@ -61,12 +59,19 @@ if(Configure::read('Config.language') =='eng'){
 }else{
     echo $this->element('footer');    
 }
-echo $this->Html->script('jquery-1.7.1.min');
-echo $this->Html->script('jquery-ui-1.8.18.custom.min');
-echo $this->Html->script('bootstrap');
-echo $this->Html->script('main.' . Configure::read('App.version'));
-echo $this->fetch('toFooter');
-echo $this->element('ga', array(), array(
+?>
+
+<?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');?>
+
+<?php echo $this->Html->script('jquery-ui-1.8.18.custom.min');?>
+
+<?php echo $this->Html->script('bootstrap');?>
+
+<?php echo $this->Html->script('main.' . Configure::read('App.version'));?>
+
+<?php echo $this->fetch('toFooter');?>
+
+<?php echo $this->element('ga', array(), array(
     'cache' => array(
         'key' => 'ga', 
         'config' => 'elements'
