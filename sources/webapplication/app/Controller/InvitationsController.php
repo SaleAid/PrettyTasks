@@ -34,11 +34,17 @@ class InvitationsController extends AppController {
      */
     public function add() {
         if ($this->request->is('post')) {
-            if (! $this->Invitation->recaptcha) {
-                return;
-            }
             $string = $this->request->data['Invitation']['emails'];
             $emails = $this->_extract_email_addresses($string);
+            if ( empty($emails)) {
+                $this->Invitation->invalidate('emails', __('Введите минимум один емейл'));
+            }
+            if (! $this->Invitation->recaptcha or empty($emails) ) {
+                $this->Session->setFlash(__('Ошибка при вводе данных, поробуйте ввести еще раз'), 'alert', array(
+                    'class' => 'alert-error'
+                ));
+                return;
+            }
             if (! empty($emails)) {
                 //Firstly save it to DB
                 foreach ( $emails as $email ) {
