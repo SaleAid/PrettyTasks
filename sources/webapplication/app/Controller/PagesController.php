@@ -6,13 +6,10 @@ App::uses('AppController', 'Controller');
  */
 class PagesController extends AppController {
 
-<<<<<<< HEAD
     public $layout = 'pages';
-    
-=======
+
     public $cacheAction = "1 hour";//TODO time in config
 
->>>>>>> b0804a9680d5636988c513884514c011880f4018
     public function beforeFilter(){
         parent::beforeFilter();
         $this->Auth->allow('*');
