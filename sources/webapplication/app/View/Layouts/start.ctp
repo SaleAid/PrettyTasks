@@ -32,7 +32,13 @@ echo $scripts_for_layout;
 <body data-spy="scroll" data-target=".subnav" data-offset="50">
 <div id="wrapper-all">
     <?php
-    echo $this->element('main_menu');
+    if (!$currentUser):
+        echo $this->element('main_menu', array(), array(
+        "cache" => array('config' => 'elements', 'key' => Configure::read('Config.language'))
+    ));
+    else:
+        echo $this->element('main_menu');
+    endif;
     ?> 
     <div id="wrapper-content">
         <div id="wrapper">

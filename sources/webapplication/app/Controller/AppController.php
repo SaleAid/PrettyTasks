@@ -100,9 +100,6 @@ class AppController extends Controller {
 
     public function beforeFilter() {
         
-
-          
-         
         $this->Auth->loginRedirect = array(
             'controller' => 'tasks', 
             'action' => 'index', 
@@ -113,7 +110,7 @@ class AppController extends Controller {
             'action' => 'index', 
             'lang' => $this->params['lang']
         );
-
+        
         $this->AutoLogin->username = 'email';
         $this->AutoLogin->cookieName = 'RME';
         $this->AutoLogin->expires = '+1 month';
@@ -124,6 +121,10 @@ class AppController extends Controller {
         $this->Seo->title = Configure::read('Site.title');
         $this->Seo->description = Configure::read('Site.description');
         $this->Seo->keywords = Configure::read('Site.keywords');
+        $this->set('currentUser', $this->Auth->user());
+        $this->set('provider', $this->Auth->user('provider'));
+        $this->set('isProUser', $this->isProUser());
+        $this->set('isBetaUser', $this->isBetaUser());
     }
 
     public function _setLanguage() {
@@ -139,10 +140,7 @@ class AppController extends Controller {
     }
 
     public function beforeRender() {
-        $this->set('currentUser', $this->Auth->user());
-        $this->set('provider', $this->Auth->user('provider'));
-        $this->set('isProUser', $this->isProUser());
-        $this->set('isBetaUser', $this->isBetaUser());
+    
     }
 
     protected function _prepareResponse() {
