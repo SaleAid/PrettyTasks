@@ -1,6 +1,4 @@
 
-@import "jquery.timepicker-1.2.2.css";
-
 .modal {
     max-height: 90%;
     overflow-y: auto;
@@ -28,6 +26,8 @@
     padding-top: 5px;
     width: 776px;
     margin-left: 20px;
+    overflow:hidden;
+    height:auto;
 }
 .listTask h3 {
     padding-left: 10px;

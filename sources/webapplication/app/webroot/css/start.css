@@ -20,6 +20,11 @@ body {
 }
 
 .brand{
+    padding: 5px 20px 2px!important;
+}
+
+.brand1
+{
   background: url(../img/brand.png) no-repeat center center;
   height: 20px;
   width: 150px;

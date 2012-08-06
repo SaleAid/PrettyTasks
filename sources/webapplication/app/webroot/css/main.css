@@ -116,7 +116,11 @@ footer .right{ text-align:right; }
     max-width: none;
 }
 
-.brand
+.brand{
+    padding: 5px 20px 2px!important;
+}
+
+.brand1
 {
   background: url(../img/brand.png) no-repeat center center;
   height: 20px;
