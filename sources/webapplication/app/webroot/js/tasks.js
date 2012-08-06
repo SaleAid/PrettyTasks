@@ -528,7 +528,7 @@ function scrAddDay(date){
                     '<div class="row"> '+ 
                         '<div class="listTask"> '+
                             '<div class="margin-bottom10"> '+
-                            '<img class="print" src="/img/print.png"/> '+
+                            '<img class="print" src="/img/print.png" width="16" height="16"/> '+
                             '<h3 class="label label-info">'+date+'<span class="weekday"></span></h3> '+
                             '</div> '+
                             '<div class="well form-inline"> '+
@@ -1250,6 +1250,21 @@ function initPrintClick(element){
     });
 }
 
+function InitClock() { 
+  var TimezoneOffset = GLOBAL_CONFIG.timezone; 
+  var localTime = new Date(); 
+  var ms = localTime.getTime() + (localTime.getTimezoneOffset() * 60000) + TimezoneOffset * 3600000; 
+  var time = new Date(ms);  
+  var hour = time.getHours();  
+  var minute = time.getMinutes(); 
+  var second = time.getSeconds(); 
+  var temp = "" + ((hour < 10) ? "0" : "") + hour; 
+  temp += ((minute < 10) ? ":0" : ":") + minute; 
+  temp += ((second < 10) ? ":0" : ":") + second; 
+  document.getElementById('clock').innerHTML = temp; 
+  setTimeout("InitClock()",1000); 
+} 
+
 function reload(){
     location.reload();
 }
@@ -1293,7 +1308,7 @@ var countAJAX = 0;
 var connError = false;
 $(function(){
      
-
+    
      $(window).hashchange( function(e){
         if(location.hash != "") { 
             var hash = location.hash.slice(5);
@@ -1349,6 +1364,7 @@ $(function(){
     initCommentDay('.days a[data="commentDay"]');
     initDayClick('.day');
     initPrintClick('.print');
+    InitClock();
     
 
     $(".daysButton a").click(function(){
@@ -1450,3 +1466,4 @@ $(function(){
     }; 
                
 }); 	
+//http://jscompress.com/

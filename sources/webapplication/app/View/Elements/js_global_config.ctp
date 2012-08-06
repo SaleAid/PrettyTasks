@@ -5,6 +5,7 @@
         date: '<?php echo date("Y-m-d");?>',
         intervalCheckStatus: 60000,
         intervalCheckStatusError: 30000,
+        timezone: '<?php echo CakeTime::serverOffset() / 3600; ?>'
     }
 
 </script>
