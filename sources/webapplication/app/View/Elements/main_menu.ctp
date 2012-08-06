@@ -7,17 +7,21 @@
             <i class="icon-bar"></i>
         </a>
         <?php if ($currentUser): ?>
-        <?php echo $this->Html->link(
-                            '',
-                            array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time())),
-                            array('class' => 'brand')
-        );?>
+        <?php echo $this->Html->image("brand.". Configure::read('App.version') .".png", 
+                                        array("alt" => "Pretty Tasks",
+                                              'class' => 'brand',
+                                              'width' => 156, 
+                                              'height' => 30, 
+                                              'url' => array('controller' => 'tasks', 'action' => 'index','#' => 'day-'.$this->Time->format('Y-m-d', time())))
+            );?>
         <?php else: ?>
-        <?php echo $this->Html->link(
-                            '',
-                            array('controller' => 'pages', 'action' => 'index'),
-                            array('class' => 'brand')
-        );?>
+        <?php echo $this->Html->image("brand.". Configure::read('App.version') .".png", 
+                                        array("alt" => "Pretty Tasks",
+                                              'class' => 'brand',
+                                              'width' => 156, 
+                                              'height' => 30, 
+                                              'url' => array('controller' => 'pages', 'action' => 'index'))
+            );?>
         <?php endif;?>
 
       <div class="nav-collapse">

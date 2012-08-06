@@ -1,5 +1,6 @@
 <div class="pull-right">
-    <img class="pull-left ajaxLoader hide" src="/img/ajax-loader.gif"/>
+    <?php echo $this->Html->image("ajax-loader.". Configure::read('App.version') .".gif", array("alt" => "Print", 'class' => 'pull-left ajaxLoader hide', 'width' => 24, 'height' => 24)); ?>
+    
     <div class="pull-right">
      <?php if(!empty($currentUser)):  ?>
      <div class="btn-group">

@@ -1,4 +1,6 @@
 <?php $this->start ( 'toHead' );?>
+    <?php echo $this->Html->css('jquery.timepicker-1.2.2'); ?>
+    
     <?php echo $this->Html->css('tasks.'.Configure::read('App.version')); ?>
 <?php $this->end ();?>
 
@@ -85,7 +87,7 @@
           <div class="row">
           <div class="listTask">
             <div class="margin-bottom10">
-                <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print')); ?>
+                <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                 <h3 class="label label-info">Задачи на будущее</h3>
             </div>
             <div class="well form-inline">
@@ -130,7 +132,7 @@
               <div class="row">
                   <div class="listTask">
                   <div class="margin-bottom10">
-                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print')); ?>
+                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3>Просроченные задачи</h3>
                   </div>
                     <ul class="sortable connectedSortable ui-helper-reset " date="expired">
@@ -143,7 +145,7 @@
               <div class="row">
                   <div class="listTask">
                   <div class="margin-bottom10">
-                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print')); ?>
+                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3>Завершенные задачи</h3>
                   </div>
                     <ul class=" ui-helper-reset " date="completed">
@@ -156,7 +158,7 @@
               <div class="row">
                   <div class="listTask">
                   <div class="margin-bottom10">
-                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print')); ?>
+                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3>Будущие задачи</h3>
                   </div>
                         <ul class="sortable connectedSortable ui-helper-reset " date="future">
@@ -181,8 +183,8 @@
                 <div class="row">
                     <div class="listTask">
                         <div class="margin-bottom10">
-                            <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print')); ?>
-                            <h3 class="label label-info" ><?php echo $k; ?> - <span class="<?php echo $weelDayStyle?>"><?php echo $weekday[$this->Time->format('l', $k, true)]; ?></span></h3>
+                            <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
+                            <h3 class="label label-info" ><?php echo $k; ?> - <span class="<?php echo $weelDayStyle?>"><?php echo $weekday[$this->Time->format('l', $k, true)]; ?></span><?php if($this->Time->isToday($k)):?> - <span id="clock"></span><?php endif;?></h3>
                         </div>
                         <div class="well form-inline">
                             <div class="input-append">
@@ -321,7 +323,7 @@
 <!-- End modal -->
 
 <!-- print_brand -->
-<?php echo $this->Html->image("brand.". Configure::read('App.version') .".png", array('class' => 'print_brand')); ?>
+<?php echo $this->Html->image("brand.". Configure::read('App.version') .".png", array('class' => 'print_brand', 'width' => 156, 'height' => 30)); ?>
 
 <!-- empty list messages  -->
 <?php echo $this->element('empty_lists', array('type' => 'filterProgress', 'hide' => true));?>
