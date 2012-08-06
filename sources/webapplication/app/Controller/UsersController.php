@@ -17,13 +17,17 @@ class UsersController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('login', 'register', 'activate', 'password_resend', 'password_reset', 'reactivate');
-        if ($this->Auth->user() && in_array($this->params['action'], array(
+        if ($this->Auth->loggedIn() and in_array($this->params['action'], array(
             'login', 
             'register', 
             'activate', 
             'reactivate'
         ))) {
-            $this->redirect('/');
+            $this->redirect(array(
+                'controller' => 'tasks',
+                'action' => 'index',
+                'lang' => $this->params['lang'],
+            ));
         }
     }
 
@@ -41,7 +45,7 @@ class UsersController extends AppController {
             if( isset($this->data['User']['email']) && !Validation::email($this->data['User']['email']) ){
                   $this->request->data['User']['username'] = $this->data['User']['email'];
                   $this->Auth->authenticate['Form'] = array('fields' => array('username' => 'username'));
-                  $this->AutoLogin->username = 'username';  
+                  //$this->AutoLogin->username = 'username';  
                   $message = __('Ваш логин или пароль не совпадают');
             }
             if ($this->Auth->login()) {

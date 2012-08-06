@@ -14,6 +14,7 @@
  */
 
 App::uses('Component', 'Controller');
+App::uses('Validation', 'Utility');
 
 class AutoLoginComponent extends Component {
 
@@ -23,7 +24,11 @@ class AutoLoginComponent extends Component {
 	 * @access public
 	 * @var array
 	 */
-	public $components = array('Auth', 'Cookie');
+	public $components = array('Auth', 
+                               'Cookie' => array('httpOnly' => true,
+                                                 'name' => 'PT'
+                                                )
+        );
 
 	/**
 	 * Name of the user model.
@@ -146,8 +151,7 @@ class AutoLoginComponent extends Component {
 	 */
 	public function __construct(ComponentCollection $collection, $settings = array()) {
 		$autoLogin = (array) Configure::read('AutoLogin');
-
-		// Is debug enabled
+        // Is debug enabled
 		$this->_debug = (!empty($autoLogin['email']) && !empty($autoLogin['ips']) && in_array(env('REMOTE_ADDR'), (array) $autoLogin['ips']));
 
 		parent::__construct($collection, array_merge((array) $settings, $autoLogin));
@@ -163,8 +167,8 @@ class AutoLoginComponent extends Component {
 	public function initialize(Controller $controller) {
 		$cookie = $this->read();
 		$user = $this->Auth->user();
-
-		if (!$this->active || !empty($user) || !$controller->request->is('get')) {
+        
+        if (!$this->active || !empty($user) || !$controller->request->is('get')) {
 			return;
 
 		} else if (!$cookie) {
@@ -177,11 +181,17 @@ class AutoLoginComponent extends Component {
 			$this->delete();
 			return;
 		}
-
-		// Set the data to identify with
-		$controller->request->data[$this->model][$this->username] = $cookie['username'];
+        
+        //
+		 if( isset($cookie['username']) && !Validation::email($cookie['username']) ){
+            $this->Auth->authenticate['Form'] = array('fields' => array('username' => 'username'));
+            $this->username = 'username';
+        }
+        // Set the data to identify with
+        
+        $controller->request->data[$this->model][$this->username] = $cookie['username'];
 		$controller->request->data[$this->model][$this->password] = $cookie['password'];
-
+        
 		// Request is valid, stop startup()
 		$this->_isValidRequest = true;
 	}
@@ -202,8 +212,8 @@ class AutoLoginComponent extends Component {
 		if (isset($this->settings)) {
 			$this->_set($this->settings);
 		}
-
-		if ($this->Auth->login()) {
+        //debug($this);
+        if ($this->Auth->login()) {
 			$this->debug('login', $this->Cookie, $this->Auth->user());
 
 			if (in_array('_autoLogin', get_class_methods($controller))) {
@@ -266,8 +276,7 @@ class AutoLoginComponent extends Component {
 		if ($controller->plugin == Inflector::camelize($this->plugin) && $controller->name == Inflector::camelize($this->controller)) {
 			$data = $controller->request->data;
 			$action = isset($controller->request->params['action']) ? $controller->request->params['action'] : 'login';
-
-			switch ($action) {
+   			switch ($action) {
 				case $this->loginAction:
 					if (isset($data[$model])) {
 						$username = $data[$model][$this->username];

@@ -12,7 +12,10 @@ class AppController extends Controller {
         'Loginza' //TODO Maybe move to needed controllers only?
     );
     public $components = array(
-        'AutoLogin', 
+        'AutoLogin' => array('cookieName' => 'RM',
+                             'expires' => '+1 month',
+                             'username' => 'email'
+                            ), 
         'Session', 
         'Auth' => array(
             'loginAction' => array(
@@ -110,11 +113,7 @@ class AppController extends Controller {
             'action' => 'index', 
             'lang' => $this->params['lang']
         );
-        
-        $this->AutoLogin->username = 'email';
-        $this->AutoLogin->cookieName = 'RME';
-        $this->AutoLogin->expires = '+1 month';
-        
+        //$this->AutoLogin->username = 'email'; 
         $this->_setLanguage();
         $this->__setTimeZone();
         $this->_checkMobile();
