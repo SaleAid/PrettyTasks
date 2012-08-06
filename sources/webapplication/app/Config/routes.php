@@ -26,6 +26,9 @@
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 
+App::uses('LangRoute', 'Routing/Route');
+
+Router::defaultRouteClass('LangRoute');
 
 Router::connect('/', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));

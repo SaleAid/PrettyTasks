@@ -98,7 +98,7 @@ class InvitationsController extends AppController {
 
     protected function _extract_email_addresses($string) {
         $emails = array();
-        foreach ( preg_split('/ /', $string) as $token ) {
+        foreach ( preg_split('/[\s,;:]+/', $string) as $token ) {
             $email = filter_var(filter_var($token, FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);
             if ($email !== false) {
                 $emails[] = $email;
