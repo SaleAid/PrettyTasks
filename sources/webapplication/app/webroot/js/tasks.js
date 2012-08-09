@@ -1260,7 +1260,7 @@ function InitClock() {
   var second = time.getSeconds(); 
   var temp = "" + ((hour < 10) ? "0" : "") + hour; 
   temp += ((minute < 10) ? ":0" : ":") + minute; 
-  temp += ((second < 10) ? ":0" : ":") + second; 
+  //temp += ((second < 10) ? ":0" : ":") + second; 
   document.getElementById('clock').innerHTML = temp; 
   setTimeout("InitClock()",1000); 
 } 
