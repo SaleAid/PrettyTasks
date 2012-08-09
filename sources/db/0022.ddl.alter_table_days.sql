@@ -1,0 +1,2 @@
+ALTER TABLE  `days` ADD  `created` datetime DEFAULT NULL COMMENT 'created date time ' AFTER  `date`;
+ALTER TABLE  `days` ADD  `modified` datetime DEFAULT NULL COMMENT 'modified date time ' AFTER  `created`;
