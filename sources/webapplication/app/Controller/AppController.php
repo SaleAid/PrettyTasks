@@ -132,7 +132,7 @@ class AppController extends Controller {
             Configure::write('Config.language', $arrLang[$this->request->params['lang']]);
             Configure::write('Config.langURL', $this->request->params['lang']);
         } else {
-            if (($this->request->params['controller'] != 'accounts' and $this->request->params['action'] != 'loginzalogin') and ! $this->request->is('ajax')) {
+            if (($this->request->params['controller'] == 'accounts' and $this->request->params['action'] != 'loginzalogin') and ! $this->request->is('ajax')) {
                 $this->redirect(DS . Configure::read('Config.langURL') . $this->request->here);
             }
         }
