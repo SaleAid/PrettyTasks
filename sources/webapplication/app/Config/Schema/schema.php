@@ -31,6 +31,8 @@ class AppSchema extends CakeSchema {
 		'comment' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'comment for day', 'charset' => 'utf8'),
 		'rating' => array('type' => 'integer', 'null' => true, 'default' => '0', 'comment' => 'reference to rating'),
 		'date' => array('type' => 'date', 'null' => false, 'default' => null, 'comment' => 'date of the day'),
+        'created' => array('type' => 'datetime', 'null' => false, 'default' => null, 'comment' => 'created date time'),
+		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null, 'comment' => 'modified date time'),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'user_id' => array('column' => array('user_id', 'date'), 'unique' => 0)
