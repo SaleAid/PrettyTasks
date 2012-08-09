@@ -37,15 +37,19 @@ class User extends AppModel {
                 ), 
                 'message' => 'Поле должно быть заполнено'
              ),
-            'alphaNumeric' => array(
-                'rule'     => 'alphaNumeric',
-                'required' => true,
-                'message'  => 'Введите в поле только буквы и цифры'
-            ),
+            //'alphaNumeric' => array(
+//                'rule'     => 'alphaNumeric',
+//                'required' => true,
+//                'message'  => 'Введите в поле только буквы и цифры'
+//            ),
             'minLength' => array(
                 'rule'     => array('minLength', 2),
                 'message'  => 'Минимальная длина имени - 2 символа'
-            ),            
+            ),   
+            'maxLength' => array(
+                'rule'     => array('minLength', 2),
+                'message'  => 'Махсимальная длина имени - 50 символа'
+            ),         
         ), 
         'last_name' => array(
 //            'notEmpty' => array(
@@ -54,11 +58,11 @@ class User extends AppModel {
 //                ), 
 //                'message' => 'Поле должно быть заполнено'
 //             ),
-            'alphaNumeric' => array(
-                'rule'     => 'alphaNumeric',
-                'allowEmpty' => true,
-                'message'  => 'Введите в поле только буквы и цифры'
-            ),
+            //'alphaNumeric' => array(
+            //    'rule'     => 'alphaNumeric',
+            //    'allowEmpty' => true,
+            //    'message'  => 'Введите в поле только буквы и цифры'
+            //),
 //            'minLength' => array(
 //                'rule'     => array('minLength', 2),
 //                'message'  => 'Минимальная длина фамилии - 2 символа'
@@ -91,15 +95,15 @@ class User extends AppModel {
                 'message' => 'Поле должно быть заполнено'
              ),
             'alphaNumeric' => array(
-    			'rule'		=> 'alphaNumeric',
+    			'rule'		=> '/^\w+(\.\w+){0,}$/',
     			//'required'	=> true,
     			'on'		=> 'create',
     			'message'	=> 'Введите в поле только буквы и цифры'
     		),
     		'between' => array(
-    			'rule' 		=> array('between', 2, 15),
+    			'rule' 		=> array('between', 2, 20),
     			'on'		=> 'create',
-    			'message'	=> 'Длина логина от 2 до 15 символов',
+    			'message'	=> 'Длина логина от 2 до 20 символов',
     		),
             'isUnique' => array(
                 'rule' => 'isUnique', 

@@ -307,6 +307,7 @@ class UsersController extends AppController {
                    $this->Session->setFlash(__('Профиль был сохранен'), 'alert', array(
                         'class' => 'alert-success'
                    ));
+                   $this->redirect(array('action'=>'profile'));
                 } else {
                     $this->Session->setFlash(__('Профиль не может быть сохранен. Пожалуйста, попробуйте еще раз'), 'alert', array(
                         'class' => 'alert-error'
