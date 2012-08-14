@@ -1,0 +1,300 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2012-08-14 15:22+0300\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: Controller/TasksController.php:69;147;185;224;264;306;349;397;436;475;507
+msgid "Ошибка при передаче данных"
+msgstr ""
+
+#: Controller/TasksController.php:97
+msgid "Ошибка, некорректный тип"
+msgstr ""
+
+#: Controller/TasksController.php:158
+msgid "Задача  успешно изменена"
+msgstr ""
+
+#: Controller/TasksController.php:164;288;327
+msgid "Ошибка, Задача  не изменена"
+msgstr ""
+
+#: Controller/TasksController.php:198
+msgid "Задача успешно создана"
+msgstr ""
+
+#: Controller/TasksController.php:203
+msgid "Задача  не создана"
+msgstr ""
+
+#: Controller/TasksController.php:232
+msgid "Задача успешно перемещена"
+msgstr ""
+
+#: Controller/TasksController.php:237
+msgid "Задача не перемещена"
+msgstr ""
+
+#: Controller/TasksController.php:243;371;420
+msgid "Ошибка, Вы не можете делать изменения в этой задачи"
+msgstr ""
+
+#: Controller/TasksController.php:262
+msgid "Wrong request data"
+msgstr ""
+
+#: Controller/TasksController.php:276
+msgid "Задача успешно выполнена"
+msgstr ""
+
+#: Controller/TasksController.php:281
+msgid "Задача открыта"
+msgstr ""
+
+#: Controller/TasksController.php:316
+msgid "Задача успешно удалена"
+msgstr ""
+
+#: Controller/TasksController.php:321
+msgid "Error"
+msgstr ""
+
+#: Controller/TasksController.php:359
+msgid "Задача успешно перемещена (moveTo)"
+msgstr ""
+
+#: Controller/TasksController.php:364
+msgid "Задача  не перемещена (moveTo)"
+msgstr ""
+
+#: Controller/TasksController.php:408
+msgid "Задача успешно отредактировано"
+msgstr ""
+
+#: Controller/TasksController.php:414
+msgid "Задача не отредактировано"
+msgstr ""
+
+#: Controller/TasksController.php:460
+msgid "Задача успешно ..."
+msgstr ""
+
+#: Controller/TasksController.php:482
+msgid "День успешно удален из списка"
+msgstr ""
+
+#: Controller/TasksController.php:487
+msgid "Ошибка при  ..."
+msgstr ""
+
+#: Controller/TasksController.php:518
+msgid "Переход на новый день. Перезагрузка страницы произойдет через 5 секунд"
+msgstr ""
+
+#: View/Elements/js_global_config.ctp:11
+msgid "Перемещение запрещено"
+msgstr ""
+
+#: View/Elements/js_global_config.ctp:12
+msgid "Перемещение выполненых задач запрещено"
+msgstr ""
+
+#: View/Tasks/index.ctp:32
+msgid "Добавить новый день в список"
+msgstr ""
+
+#: View/Tasks/index.ctp:32
+msgid "Добавить день"
+msgstr ""
+
+#: View/Tasks/index.ctp:37
+msgid "Просроченные"
+msgstr ""
+
+#: View/Tasks/index.ctp:38
+msgid "Завершенные"
+msgstr ""
+
+#: View/Tasks/index.ctp:39
+msgid "Будущие"
+msgstr ""
+
+#: View/Tasks/index.ctp:45
+msgid "Планируемые"
+msgstr ""
+
+#: View/Tasks/index.ctp:49
+msgid "Today"
+msgstr "Сегодня"
+
+#: View/Tasks/index.ctp:54
+msgid "Tomorrow"
+msgstr "Завтра"
+
+#: View/Tasks/index.ctp:59
+msgid "Sunday"
+msgstr "Воскресенье"
+
+#: View/Tasks/index.ctp:60
+msgid "Monday"
+msgstr "Понедельник"
+
+#: View/Tasks/index.ctp:61
+msgid "Tuesday"
+msgstr "Вторник"
+
+#: View/Tasks/index.ctp:62
+msgid "Wednesday"
+msgstr "Среда"
+
+#: View/Tasks/index.ctp:63
+msgid "Thursday"
+msgstr "Четверг"
+
+#: View/Tasks/index.ctp:64
+msgid "Friday"
+msgstr "Пятница"
+
+#: View/Tasks/index.ctp:65
+msgid "Saturday"
+msgstr "Суббота"
+
+#: View/Tasks/index.ctp:93
+msgid "Задачи на будущее"
+msgstr ""
+
+#: View/Tasks/index.ctp:97;193;348
+msgid "+Добавить задание…"
+msgstr ""
+
+#: View/Tasks/index.ctp:99;195;350
+msgid "Добавить"
+msgstr ""
+
+#: View/Tasks/index.ctp:102;198;353
+msgid "Фильтр:"
+msgstr ""
+
+#: View/Tasks/index.ctp:103;199;354
+msgid "Все"
+msgstr ""
+
+#: View/Tasks/index.ctp:106;202;359
+msgid "В Процессе"
+msgstr ""
+
+#: View/Tasks/index.ctp:109;205;364
+msgid "Выполненные"
+msgstr ""
+
+#: View/Tasks/index.ctp:138
+msgid "Просроченные задачи"
+msgstr ""
+
+#: View/Tasks/index.ctp:151
+msgid "Завершенные задачи"
+msgstr ""
+
+#: View/Tasks/index.ctp:164
+msgid "Будущие задачи"
+msgstr ""
+
+#: View/Tasks/index.ctp:210;270;315;370
+msgid "Комментарий"
+msgstr ""
+
+#: View/Tasks/index.ctp:212;372
+msgid "Удачный день"
+msgstr ""
+
+#: View/Tasks/index.ctp:245
+msgid "Редактирование задачи"
+msgstr ""
+
+#: View/Tasks/index.ctp:251
+msgid "Заглавие"
+msgstr ""
+
+#: View/Tasks/index.ctp:257
+msgid "Дата и время"
+msgstr ""
+
+#: View/Tasks/index.ctp:260
+msgid "с"
+msgstr ""
+
+#: View/Tasks/index.ctp:262
+msgid "по"
+msgstr ""
+
+#: View/Tasks/index.ctp:278
+msgid "Приоритет"
+msgstr ""
+
+#: View/Tasks/index.ctp:282
+msgid "Высокий"
+msgstr ""
+
+#: View/Tasks/index.ctp:286
+msgid "Обычный"
+msgstr ""
+
+#: View/Tasks/index.ctp:297
+msgid "Выполнена"
+msgstr ""
+
+#: View/Tasks/index.ctp:305;321
+msgid "Закрыть"
+msgstr ""
+
+#: View/Tasks/index.ctp:306;322
+msgid "Сохранить"
+msgstr ""
+
+#: View/Tasks/index.ctp:387
+msgid "Кликните для перехода<br/> на"
+msgstr ""
+
+#: Model/Task.php:validation for field id;validation for field user_id;validation for field day_id
+msgid "Wrong ID"
+msgstr ""
+
+#: Model/Task.php:validation for field title
+msgid "Поле должно быть заполнено"
+msgstr ""
+
+#: Model/Task.php:validation for field comment
+msgid "Максимальная длина комментария не больше %d символов"
+msgstr ""
+
+#: Model/Task.php:validation for field date
+msgid "Некорректная дата"
+msgstr ""
+
+#: Model/Task.php:validation for field time;validation for field timeend
+msgid "Некорректное время"
+msgstr ""
+
+#: Model/Task.php:validation for field timeend
+msgid "Время окончания должно быть больше начала"
+msgstr ""
+
+#: Model/Task.php:validation for field order;validation for field done;validation for field future;validation for field repeatid;validation for field transfer;validation for field priority
+msgid "numeric"
+msgstr ""
+
+#: Model/Task.php:validation for field datedone;validation for field created
+msgid "datetime"
+msgstr ""
+
