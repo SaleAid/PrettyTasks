@@ -6,6 +6,14 @@ App::uses('AppModel', 'Model');
  * @property User $User
  */
 class Day extends AppModel {
+     
+    /**
+     * Validation domain
+     *
+     * @var string
+     */
+    public $validationDomain = 'days';
+
 /**
  * Validation rules
  *
@@ -26,7 +34,7 @@ class Day extends AppModel {
         'comment' => array(
             'maxLength' => array(
                 'rule'    => array('maxLength', 1000),
-                'message' => 'Максимальная длина комментария не больше 1000 символов'
+                'message' => 'Максимальная длина комментария не больше %d символов'
             )
         )  
 	);

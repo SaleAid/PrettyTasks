@@ -27,8 +27,8 @@ class AppController extends Controller {
                 'action' => 'index'
             ), 
             'logoutRedirect' => array(
-                'controller' => 'pages', 
-                'action' => 'index'
+                'controller' => 'users', 
+                'action' => 'login'
             ), 
             'authError' => ' ', 
             'authorize' => array(
@@ -109,8 +109,8 @@ class AppController extends Controller {
             'lang' => $this->params['lang']
         );
         $this->Auth->logoutRedirect = array(
-            'controller' => 'pages', 
-            'action' => 'index', 
+            'controller' => 'users', 
+            'action' => 'login', 
             'lang' => $this->params['lang']
         );
         //$this->AutoLogin->username = 'email'; 
@@ -132,7 +132,7 @@ class AppController extends Controller {
             Configure::write('Config.language', $arrLang[$this->request->params['lang']]);
             Configure::write('Config.langURL', $this->request->params['lang']);
         } else {
-            if (($this->request->params['controller'] == 'accounts' and $this->request->params['action'] != 'loginzalogin') and ! $this->request->is('ajax')) {
+            if ( $this->request->params['action'] != 'loginzalogin' and ! $this->request->is('ajax')) {
                 $this->redirect(DS . Configure::read('Config.langURL') . $this->request->here);
             }
         }

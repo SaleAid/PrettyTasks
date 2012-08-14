@@ -3,6 +3,13 @@ class Feedback extends AppModel {
     
     public $name = 'Feedback';
     
+    /**
+     * Validation domain
+     *
+     * @var string
+     */
+    public $validationDomain = 'feedbacks';
+    
     public $validate = array(
         'lang' => array(
             'notempty' => array(

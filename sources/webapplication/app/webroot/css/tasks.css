@@ -32,7 +32,9 @@
 .listTask h3 {
     padding-left: 10px;
 }    
-  
+#addDay{
+    min-width: 131px;
+}  
 div.well{
     padding: 0px;
     background-color: inherit;

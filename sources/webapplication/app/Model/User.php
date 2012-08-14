@@ -6,7 +6,9 @@ App::uses('AppModel', 'Model');
  * @property User $User
  */
 class User extends AppModel {
+    
     public $name = 'User';
+    
     public $hasMany = array('Account');
     
     
@@ -18,6 +20,13 @@ class User extends AppModel {
         'full_name' => 'CONCAT(User.first_name, " ", User.last_name)'
     );
 
+    /**
+     * Validation domain
+     *
+     * @var string
+     */
+    public $validationDomain = 'users';
+    
     /**
      * Validation rules
      *
@@ -37,19 +46,15 @@ class User extends AppModel {
                 ), 
                 'message' => 'Поле должно быть заполнено'
              ),
-            //'alphaNumeric' => array(
-//                'rule'     => 'alphaNumeric',
-//                'required' => true,
-//                'message'  => 'Введите в поле только буквы и цифры'
-//            ),
+            'alphaNumeric' => array(
+                'rule'     => 'alphaNumeric',
+                'required' => true,
+                'message'  => 'Введите в поле только буквы и цифры'
+            ),
             'minLength' => array(
                 'rule'     => array('minLength', 2),
-                'message'  => 'Минимальная длина имени - 2 символа'
-            ),   
-            'maxLength' => array(
-                'rule'     => array('minLength', 2),
-                'message'  => 'Махсимальная длина имени - 50 символа'
-            ),         
+                'message'  => 'Минимальная длина имени - %d символа'
+            ),            
         ), 
         'last_name' => array(
 //            'notEmpty' => array(
@@ -58,11 +63,11 @@ class User extends AppModel {
 //                ), 
 //                'message' => 'Поле должно быть заполнено'
 //             ),
-            //'alphaNumeric' => array(
-            //    'rule'     => 'alphaNumeric',
-            //    'allowEmpty' => true,
-            //    'message'  => 'Введите в поле только буквы и цифры'
-            //),
+            'alphaNumeric' => array(
+                'rule'     => 'alphaNumeric',
+                'allowEmpty' => true,
+                'message'  => 'Введите в поле только буквы и цифры'
+            ),
 //            'minLength' => array(
 //                'rule'     => array('minLength', 2),
 //                'message'  => 'Минимальная длина фамилии - 2 символа'
@@ -95,15 +100,15 @@ class User extends AppModel {
                 'message' => 'Поле должно быть заполнено'
              ),
             'alphaNumeric' => array(
-    			'rule'		=> '/^\w+(\.\w+){0,}$/',
+    			'rule'		=> 'alphaNumeric',
     			//'required'	=> true,
     			'on'		=> 'create',
     			'message'	=> 'Введите в поле только буквы и цифры'
     		),
     		'between' => array(
-    			'rule' 		=> array('between', 2, 20),
+    			'rule' 		=> array('between', 2, 15),
     			'on'		=> 'create',
-    			'message'	=> 'Длина логина от 2 до 20 символов',
+    			'message'	=> 'Длина логина от %d до %d символов',
     		),
             'isUnique' => array(
                 'rule' => 'isUnique', 
@@ -119,7 +124,7 @@ class User extends AppModel {
             ),
             'minLength' => array(
                 'rule'     => array('minLength', 6),
-                'message'  => 'Минимальная длина пароля - 6 символа'
+                'message'  => 'Минимальная длина пароля - %d символа'
             ), 
             'matchPasswords' => array(
                 'rule' => 'matchPasswords', 
@@ -166,7 +171,7 @@ class User extends AppModel {
         if ($data['password'] == $this->data[$this->alias]['password_confirm']) {
             return true;
         }
-        $this->invalidate('password_confirm', __('Ваш пароль не совпадает'));
+        $this->invalidate('password_confirm', __d('users', 'Ваш пароль не совпадает'));
         return false;
     }
 
@@ -252,7 +257,7 @@ class User extends AppModel {
     public function register($data) {
         $this->validate['email']['isUnique'] = array(
             'rule' => 'isUnique', 
-            'message' => _('Этот адрес уже используется. Пожалуйста, введите другой адрес электронной почты')
+            'message' => __d('users', 'Этот адрес уже используется. Пожалуйста, введите другой адрес электронной почты')
         );
         $this->set($data);
         if ($this->validates()) {

@@ -15,7 +15,7 @@ class FeedbacksController extends AppController {
                 'message'
             );
             if (!$this->_isSetRequestData($expectedData, $this->modelClass)) {
-                $this->Session->setFlash(__('Ошибка при передачи данных'), 'alert', array(
+                $this->Session->setFlash(__d('feedbacks', 'Ошибка при передачи данных'), 'alert', array(
                         'class' => 'alert-error'
                     ));
             } else {
@@ -27,14 +27,14 @@ class FeedbacksController extends AppController {
                 $feed['Feedback']['processed'] = 0;
                 $feed['Feedback']['user_id'] = $this->Auth->user('id');
                 if ($this->Feedback->save($feed)) {
-                    $this->Session->setFlash(__('Ваше сообщение было сохранено', true), 'alert', array(
+                    $this->Session->setFlash(__d('feedbacks', 'Ваше сообщение было сохранено', true), 'alert', array(
                                 'class' => 'alert-success'
                             ));
                     $this->redirect(array(
                         'action' => 'add'
                     ));
                 } else {
-                    $this->Session->setFlash(__('Ваше сообщение не удалось сохранить. Попробуйте снова.', true), 'alert', array(
+                    $this->Session->setFlash(__d('feedbacks', 'Ваше сообщение не удалось сохранить. Попробуйте снова.', true), 'alert', array(
                                             'class' => 'alert-error'
                     ));    
                 }

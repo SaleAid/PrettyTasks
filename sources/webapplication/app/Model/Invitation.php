@@ -6,11 +6,19 @@ App::uses('AppModel', 'Model');
  * @property User $User
  */
 class Invitation extends AppModel {
-/**
- * Validation rules
- *
- * @var array
- */
+    
+    /**
+     * Validation domain
+     *
+     * @var string
+     */
+    public $validationDomain = 'invitations';
+    
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
 	public $validate = array(
 		'email' => array(
 			'email' => array(

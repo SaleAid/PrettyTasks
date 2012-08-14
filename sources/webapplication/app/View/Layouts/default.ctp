@@ -63,7 +63,10 @@ if(Configure::read('Config.language') =='eng'){
 
 <?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');?>
 
-<?php echo $this->Html->script('jquery-ui-1.8.18.custom.min');?>
+<?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js');?>
+
+
+<?php //echo $this->Html->script('jquery-ui-1.8.18.custom.min');?>
 
 <?php echo $this->Html->script('bootstrap');?>
 

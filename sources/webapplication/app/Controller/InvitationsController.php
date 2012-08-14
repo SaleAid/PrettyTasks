@@ -37,10 +37,10 @@ class InvitationsController extends AppController {
             $string = $this->request->data['Invitation']['emails'];
             $emails = $this->_extract_email_addresses($string);
             if ( empty($emails)) {
-                $this->Invitation->invalidate('emails', __('Введите минимум один емейл'));
+                $this->Invitation->invalidate('emails', __d('invitations', 'Введите минимум один емейл'));
             }
             if (! $this->Invitation->recaptcha or empty($emails) ) {
-                $this->Session->setFlash(__('Ошибка при вводе данных, поробуйте ввести еще раз'), 'alert', array(
+                $this->Session->setFlash(__d('invitations', 'Ошибка при вводе данных, поробуйте ввести еще раз'), 'alert', array(
                     'class' => 'alert-error'
                 ));
                 return;
@@ -81,15 +81,15 @@ class InvitationsController extends AppController {
                     ));
                     $email->send();
                 }
-                $this->Session->setFlash(__('Приглашения разосланы'), 'alert', array(
+                $this->Session->setFlash(__d('invitations', 'Приглашения разосланы'), 'alert', array(
                     'class' => 'alert-success'
                 ));
                 $this->redirect(array(
                     'action' => 'add'
                 ));
             } else {
-                $this->Invitation->invalidate('emails', __('Введите минимум один емейл'));
-                $this->Session->setFlash(__('Ошибка при вводе данных, поробуйте ввести еще раз'), 'alert', array(
+                $this->Invitation->invalidate('emails', __d('invitations', 'Введите минимум один емейл'));
+                $this->Session->setFlash(__d('invitations', 'Ошибка при вводе данных, поробуйте ввести еще раз'), 'alert', array(
                     'class' => 'alert-error'
                 ));
             }

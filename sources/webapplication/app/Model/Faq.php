@@ -1,6 +1,14 @@
 <?php
 class Faq extends AppModel {
+    
     public $name = 'Faq';
+    /**
+     * Validation domain
+     *
+     * @var string
+     */
+    public $validationDomain = 'faqs';
+    
     public $validate = array(
         'faqcategory_id' => array(
             'maxLength' => array(

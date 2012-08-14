@@ -7,11 +7,22 @@ App::import('Vendor', 'loginza' . DS . 'LoginzaUserProfile');
  *
  */
 class Account extends AppModel {
+    
     public $name = 'Account';
+    
     public $actsAs = array(
         'Activation'
     ); //TODO Maybe rewrite model without using behavior?
+    
     public $belongsTo = 'User';
+
+    /**
+     * Validation domain
+     *
+     * @var string
+     */
+    public $validationDomain = 'accounts';
+    
     /**
      * Validation rules
      *
@@ -106,8 +117,13 @@ class Account extends AppModel {
         if ($result['User']['is_blocked']) {
             return array(
                 'status' => 'error', 
-                'msg' => __('Ваш основной аккаунт заблокирован')
+                'msg' => __d('accounts', 'Ваш основной аккаунт заблокирован')
             );
+        } elseif (!$result['User']['active']) {
+            return array(
+                'status' => 'error', 
+                'msg' => __d('accounts', 'Ваш основной аккаунт деактивирован')
+            );            
         } elseif ($result['Account']['active']) {
             $result = $result['User'];
             $result['status'] = 'active';

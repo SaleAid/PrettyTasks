@@ -11,14 +11,14 @@
                                 )); ?>
 
             <fieldset>
-    	   <legend><?php echo __('Повторная активация'); ?></legend>
-            <?php echo $this->Form->input('User.first_name',array('label' => 'Имя','class'=>'input-xlarge', 'readonly' => 'readonly')); ?>
+    	   <legend><?php echo __d('accounts', 'Повторная активация'); ?></legend>
+            <?php echo $this->Form->input('User.first_name', array('label' => __d('accounts', 'Имя'),'class' => 'input-xlarge', 'readonly' => 'readonly')); ?>
             
             <?php //echo $this->Form->input('User.last_name',array('readonly' => 'readonly')); ?>
             
-            <?php echo $this->Form->input('User.email',array('class'=>'input-xlarge', 'readonly' => 'readonly')); ?>
+            <?php echo $this->Form->input('User.email', array('class' => 'input-xlarge', 'readonly' => 'readonly')); ?>
             
-            <?php echo $this->Form->submit(__('Далее'),array('class'=>'btn btn-info '));?>
+            <?php echo $this->Form->submit(__d('accounts', 'Далее'), array('class' => 'btn btn-info '));?>
     
              <?php echo $this->Form->end();?>
     	    

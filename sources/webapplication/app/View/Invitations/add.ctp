@@ -17,31 +17,31 @@ echo $this->Form->create('Invitation',
                         ));
 ?>
 <fieldset><legend><?php
-echo __('Пригласить друзей');
+echo __d('invitations', 'Пригласить друзей');
 ?></legend>
 	<?php
 echo $this->Form->input('emails', 
                         array(
-                            'label' => __('Введите емейлы тех, кого вы хотите пригласить на сервис', true), 
+                            'label' => __d('invitations', 'Введите емейлы тех, кого вы хотите пригласить на сервис'), 
                             'type' => 'textarea', 
                             'class' => 'input-xxlarge', 
                             'error' => array(
                                 'attributes' => array(
                                     'class' => 'controls help-block'
                                 ), 
-                                'email' => __('Похоже, емейлы не правильные')
+                                'email' => __d('invitations', 'Похоже, емейлы не правильные')
                             )
                         ));
 ?>
 <p>
-    <?php echo __('Пожалуйста, подтвердите, что вы человек.'); ?>
+    <?php echo __d('invitations', 'Пожалуйста, подтвердите, что вы человек.'); ?>
 </p>
            
 <?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => Configure::read('Recaptcha.theme'))));?>
 </fieldset>
 <br />
 <?php
-echo $this->Form->submit(__('Пригласить'), array(
+echo $this->Form->submit(__d('invitations', 'Пригласить'), array(
     'class' => 'btn btn-info'
 ));
 echo $this->Form->end();

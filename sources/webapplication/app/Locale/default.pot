@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-07-29 13:33+0300\n"
+"POT-Creation-Date: 2012-08-14 15:56+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,74 +14,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Config/appconfig.php:28
+#: Config/appconfig.php:46
 msgid "Приглашение на сервис %s"
 msgstr ""
 
-#: Config/appconfig.php:29
+#: Config/appconfig.php:47
 msgid "Активация аккаунта на сервисе %s"
 msgstr ""
 
-#: Config/appconfig.php:30
+#: Config/appconfig.php:48
 msgid "Сбросить пароль на сервисе %s"
-msgstr ""
-
-#: Controller/AccountsController.php:46
-msgid "Your account not active."
-msgstr ""
-
-#: Controller/AccountsController.php:71
-msgid "An unknown error"
-msgstr ""
-
-#: Controller/AccountsController.php:86;122;168
-msgid "Код активации аккаунта был выслан Вам на почту."
-msgstr ""
-
-#: Controller/AccountsController.php:91
-msgid "Возникли проблемы при отправке кода активации аккаунта."
-msgstr ""
-
-#: Controller/AccountsController.php:111
-msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз."
-msgstr ""
-
-#: Controller/AccountsController.php:127;174
-msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта."
-msgstr ""
-
-#: Controller/AccountsController.php:239
-#: Controller/UsersController.php:142
-msgid "Invalid key."
-msgstr ""
-
-#: Controller/AccountsController.php:257
-msgid "Invalid Account"
-msgstr ""
-
-#: Controller/AccountsController.php:261
-msgid "Account deleted"
-msgstr ""
-
-#: Controller/AccountsController.php:267
-msgid "Account was not deleted"
-msgstr ""
-
-#: Controller/DaysController.php:20;42;68
-#: Controller/FeedbacksController.php:18
-msgid "Ошибка при передачи данных"
-msgstr ""
-
-#: Controller/DaysController.php:27;76
-msgid "Изменение успешно сохранено."
-msgstr ""
-
-#: Controller/DaysController.php:49
-msgid "Готово."
-msgstr ""
-
-#: Controller/DaysController.php:82
-msgid "Ошибка при сохранении комментария"
 msgstr ""
 
 #: Controller/FaqsController.php:44;54;86;135;163
@@ -106,233 +48,6 @@ msgstr ""
 
 #: Controller/FaqsController.php:122;199
 msgid "The Faq could not be deleted. Please, try again."
-msgstr ""
-
-#: Controller/FeedbacksController.php:30
-msgid "Ваше сообщение было сохранено"
-msgstr ""
-
-#: Controller/FeedbacksController.php:37
-msgid "Ваше сообщение не удалось сохранить. Попробуйте снова."
-msgstr ""
-
-#: Controller/InvitationsController.php:78
-msgid "Приглашения разосланы"
-msgstr ""
-
-#: Controller/InvitationsController.php:85
-msgid "Введите минимум один емейл"
-msgstr ""
-
-#: Controller/InvitationsController.php:86
-msgid "Ошибка при вводе данных, поробуйте ввести еще раз"
-msgstr ""
-
-#: Controller/TasksController.php:67;145;183;222;262;304;347;395;434;473;505
-#: Controller/UsersController.php:90;150;176;207;246;287
-msgid "Ошибка при передаче данных"
-msgstr ""
-
-#: Controller/TasksController.php:95
-msgid "Ошибка, некорректный тип"
-msgstr ""
-
-#: Controller/TasksController.php:156
-msgid "Задача  успешно изменена"
-msgstr ""
-
-#: Controller/TasksController.php:162;286;325
-msgid "Ошибка, Задача  не изменена"
-msgstr ""
-
-#: Controller/TasksController.php:196
-msgid "Задача успешно создана"
-msgstr ""
-
-#: Controller/TasksController.php:201
-msgid "Задача  не создана"
-msgstr ""
-
-#: Controller/TasksController.php:230
-msgid "Задача успешно перемещена"
-msgstr ""
-
-#: Controller/TasksController.php:235
-msgid "Задача не перемещена"
-msgstr ""
-
-#: Controller/TasksController.php:241;369;418
-msgid "Ошибка, Вы не можете делать изменения в этой задачи"
-msgstr ""
-
-#: Controller/TasksController.php:274
-msgid "Задача успешно выполнена"
-msgstr ""
-
-#: Controller/TasksController.php:279
-msgid "Задача открыта"
-msgstr ""
-
-#: Controller/TasksController.php:314
-msgid "Задача успешно удалена"
-msgstr ""
-
-#: Controller/TasksController.php:319
-msgid "Error"
-msgstr ""
-
-#: Controller/TasksController.php:357
-msgid "Задача успешно перемещена (moveTo)"
-msgstr ""
-
-#: Controller/TasksController.php:362
-msgid "Задача  не перемещена (moveTo)"
-msgstr ""
-
-#: Controller/TasksController.php:406
-msgid "Задача успешно отредактировано"
-msgstr ""
-
-#: Controller/TasksController.php:412
-msgid "Задача не отредактировано"
-msgstr ""
-
-#: Controller/TasksController.php:458
-msgid "Задача успешно ..."
-msgstr ""
-
-#: Controller/TasksController.php:480
-msgid "День успешно удален из списка"
-msgstr ""
-
-#: Controller/TasksController.php:485
-msgid "Ошибка при  ..."
-msgstr ""
-
-#: Controller/TasksController.php:516
-msgid "Переход на новый день. Перезагрузка страницы произойдет через 5 секунд"
-msgstr ""
-
-#: Controller/UsersController.php:37
-msgid "Ваш емейл или пароль не совпадают"
-msgstr ""
-
-#: Controller/UsersController.php:41
-msgid "Ваш логин или пароль не совпадают"
-msgstr ""
-
-#: Controller/UsersController.php:48
-msgid "Ваш аккаунт заблокирован"
-msgstr ""
-
-#: Controller/UsersController.php:108;155
-msgid "Код активации аккаунта был выслан Вам на почту"
-msgstr ""
-
-#: Controller/UsersController.php:115
-msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта"
-msgstr ""
-
-#: Controller/UsersController.php:124
-msgid "Регистрация не удалась. Заполните поля полностью"
-msgstr ""
-
-#: Controller/UsersController.php:183;212
-msgid "Ваш пароль успешно изменен"
-msgstr ""
-
-#: Controller/UsersController.php:190;221
-msgid "Ваш пароль не может быть сохранен. Пожалуйста, попробуйте еще раз"
-msgstr ""
-
-#: Controller/UsersController.php:237;257
-msgid "На Вашу почту была отправлена инструкция по сбросу пароля"
-msgstr ""
-
-#: Controller/UsersController.php:251
-msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз"
-msgstr ""
-
-#: Controller/UsersController.php:265
-msgid "В нашей базе нет пользователя с такой почтой"
-msgstr ""
-
-#: Controller/UsersController.php:296
-msgid "Профиль был сохранен"
-msgstr ""
-
-#: Controller/UsersController.php:300
-msgid "Профиль не может быть сохранен. Пожалуйста, попробуйте еще раз"
-msgstr ""
-
-#: Model/Account.php:109
-msgid "Ваш основной аккаунт заблокирован"
-msgstr ""
-
-#: Model/Task.php:666
-#: View/Tasks/index.ctp:55
-msgid "Sunday"
-msgstr ""
-
-#: Model/Task.php:667
-#: View/Tasks/index.ctp:56
-msgid "Monday"
-msgstr ""
-
-#: Model/Task.php:668
-#: View/Tasks/index.ctp:57
-msgid "Tuesday"
-msgstr ""
-
-#: Model/Task.php:669
-#: View/Tasks/index.ctp:58
-msgid "Wednesday"
-msgstr ""
-
-#: Model/Task.php:670
-#: View/Tasks/index.ctp:59
-msgid "Thursday"
-msgstr ""
-
-#: Model/Task.php:671
-#: View/Tasks/index.ctp:60
-msgid "Friday"
-msgstr ""
-
-#: Model/Task.php:672
-#: View/Tasks/index.ctp:61
-msgid "Saturday"
-msgstr ""
-
-#: Model/User.php:165;validation for field password;validation for field old_password
-msgid "Ваш пароль не совпадает"
-msgstr ""
-
-#: View/Accounts/confirm_email.ctp:14
-msgid "Введите Ваш e-mail"
-msgstr ""
-
-#: View/Accounts/confirm_email.ctp:18
-#: View/Accounts/confirm_user_data.ctp:26
-msgid " Далее "
-msgstr ""
-
-#: View/Accounts/confirm_user_data.ctp:13
-#: View/Users/register.ctp:16
-msgid "Регистрация аккаунта"
-msgstr ""
-
-#: View/Accounts/confirm_user_data.ctp:22
-#: View/Users/register.ctp:47
-msgid "Я согласен с условиями использования"
-msgstr ""
-
-#: View/Accounts/reactivate.ctp:14
-msgid "Повторная активация"
-msgstr ""
-
-#: View/Accounts/reactivate.ctp:21
-msgid "Далее"
 msgstr ""
 
 #: View/Accounts/reactivation.ctp:6
@@ -363,10 +78,7 @@ msgstr ""
 #: View/Feedbacks/index.ctp:17;67
 #: View/Feedbacks/view.ctp:67
 #: View/Invitations/index.ctp:9;44
-#: View/Users/edit.ctp:15
 #: View/Users/index.ctp:54
-#: View/Users/index1.ctp:11;46
-#: View/Users/view.ctp:37
 msgid "Actions"
 msgstr ""
 
@@ -385,7 +97,6 @@ msgstr ""
 #: View/Feedbacks/admin_add.ctp:17
 #: View/Feedbacks/admin_edit.ctp:18
 #: View/Feedbacks/edit.ctp:18
-#: View/Users/edit.ctp:12
 msgid "Submit"
 msgstr ""
 
@@ -407,9 +118,6 @@ msgstr ""
 #: View/Days/index.ctp:49
 #: View/Days/view.ctp:38
 #: View/Invitations/index.ctp:47
-#: View/Users/edit.ctp:20
-#: View/Users/index1.ctp:49
-#: View/Users/view.ctp:43
 msgid "List Users"
 msgstr ""
 
@@ -422,9 +130,6 @@ msgstr ""
 #: View/Days/index.ctp:50
 #: View/Days/view.ctp:39
 #: View/Invitations/index.ctp:48
-#: View/Users/edit.ctp:21
-#: View/Users/index1.ctp:50
-#: View/Users/view.ctp:44
 msgid "New User"
 msgstr ""
 
@@ -448,9 +153,6 @@ msgstr ""
 #: View/Feedbacks/edit.ctp:24
 #: View/Feedbacks/index.ctp:47
 #: View/Invitations/index.ctp:23
-#: View/Users/accounts.ctp:24
-#: View/Users/edit.ctp:18
-#: View/Users/index1.ctp:25
 msgid "Delete"
 msgstr ""
 
@@ -472,9 +174,6 @@ msgstr ""
 #: View/Feedbacks/index.ctp:47
 #: View/Feedbacks/view.ctp:70
 #: View/Invitations/index.ctp:23
-#: View/Users/edit.ctp:18
-#: View/Users/index1.ctp:25
-#: View/Users/view.ctp:40
 msgid "Are you sure you want to delete # %s?"
 msgstr ""
 
@@ -489,7 +188,6 @@ msgstr ""
 #: View/Feedbacks/admin_index.ctp:45
 #: View/Feedbacks/index.ctp:45
 #: View/Invitations/index.ctp:21
-#: View/Users/index1.ctp:23
 msgid "View"
 msgstr ""
 
@@ -499,14 +197,12 @@ msgstr ""
 #: View/Feedbacks/admin_index.ctp:46
 #: View/Feedbacks/index.ctp:46
 #: View/Invitations/index.ctp:22
-#: View/Users/index1.ctp:24
 msgid "Edit"
 msgstr ""
 
 #: View/Days/admin_index.ctp:33
 #: View/Days/index.ctp:33
 #: View/Invitations/index.ctp:31
-#: View/Users/index1.ctp:33
 msgid "Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}"
 msgstr ""
 
@@ -516,7 +212,6 @@ msgstr ""
 #: View/Feedbacks/admin_index.ctp:60
 #: View/Feedbacks/index.ctp:60
 #: View/Invitations/index.ctp:37
-#: View/Users/index1.ctp:39
 msgid "previous"
 msgstr ""
 
@@ -526,7 +221,6 @@ msgstr ""
 #: View/Feedbacks/admin_index.ctp:63
 #: View/Feedbacks/index.ctp:63
 #: View/Invitations/index.ctp:39
-#: View/Users/index1.ctp:41
 msgid "next"
 msgstr ""
 
@@ -549,7 +243,6 @@ msgstr ""
 #: View/Feedbacks/admin_view.ctp:4
 #: View/Feedbacks/view.ctp:4
 #: View/Users/index.ctp:12
-#: View/Users/view.ctp:4
 msgid "Id"
 msgstr ""
 
@@ -597,173 +290,6 @@ msgstr ""
 #: View/Days/admin_view.ctp:35
 #: View/Days/view.ctp:35
 msgid "Delete Day"
-msgstr ""
-
-#: View/Elements/current_user.ctp:16
-msgid "  Учётная запись"
-msgstr ""
-
-#: View/Elements/current_user.ctp:17
-msgid "  Изменить пароль"
-msgstr ""
-
-#: View/Elements/current_user.ctp:18
-msgid "  Связанные аккаунты"
-msgstr ""
-
-#: View/Elements/current_user.ctp:19
-msgid "  Пригласить друзей"
-msgstr ""
-
-#: View/Elements/current_user.ctp:22
-msgid "  Выход"
-msgstr ""
-
-#: View/Elements/current_user.ctp:26
-#: View/Users/register.ctp:51
-msgid "Регистрация"
-msgstr ""
-
-#: View/Elements/current_user.ctp:27
-msgid "Войти"
-msgstr ""
-
-#: View/Elements/empty_lists.ctp:4;22
-msgid "Здесь нет ни одной задачи! Ты крутой! Стремись почаще видеть эту надпись. Чем чаще ты ее видешь, тем успешнее ты. Она магическая. Заходи к нам. Это принесет тебе счастье."
-msgstr ""
-
-#: View/Elements/empty_lists.ctp:7
-msgid "Здесь нет ни одной задачи! Запланируй здесь то, что не знаешь когда сделать. Поехать в Италию? Сходить в кино? Придет час, и ты это сделаешь. Воспользуйся замечательной функцией переноса задач. Все для тебя! Дерзай!"
-msgstr ""
-
-#: View/Elements/empty_lists.ctp:10
-msgid "У вас нет еще ни одной выполненой задачи! Быстрее к планированию, и выполнению. Улучши свою жизнь сейчас! Не оставляй на завтра то, что можно сделать сегодня! Ну а если не успел - воспользуйся замечательной функцией переноса задач. Все для тебя! Дерзай!"
-msgstr ""
-
-#: View/Elements/empty_lists.ctp:13
-msgid "Нам жаль, что у вас не было планов в эти дни. Планируй на будущее и иди к успеху с нами!"
-msgstr ""
-
-#: View/Elements/empty_lists.ctp:16;19
-msgid "Здесь нет ни одной задачи! Запланируй себе задачи и иди к успеху с нами!"
-msgstr ""
-
-#: View/Elements/empty_lists.ctp:25
-msgid "Здесь нет ни одной задачи! Поторопись! Сделай свои дела и отдыхай. Забудь обо всем и сосредоточься на предыдущей вкладке. Выполни все свои задачи. Это принесет тебе счастье."
-msgstr ""
-
-#: View/Elements/footer.ctp:6
-msgid "Pages"
-msgstr ""
-
-#: View/Elements/footer.ctp:8
-#: View/Elements/footer_eng.ctp:8
-msgid "Home"
-msgstr ""
-
-#: View/Elements/footer.ctp:9
-#: View/Elements/footer_eng.ctp:9
-#: View/Elements/main_menu.ctp:57
-msgid "About"
-msgstr ""
-
-#: View/Elements/footer.ctp:10
-#: View/Elements/footer_eng.ctp:10
-msgid "How it works"
-msgstr ""
-
-#: View/Elements/footer.ctp:11
-#: View/Elements/footer_eng.ctp:12
-msgid "Help"
-msgstr ""
-
-#: View/Elements/footer.ctp:12
-#: View/Elements/footer_eng.ctp:13
-msgid "Login"
-msgstr ""
-
-#: View/Elements/footer.ctp:13
-#: View/Elements/footer_eng.ctp:14
-msgid "Register"
-msgstr ""
-
-#: View/Elements/footer.ctp:18
-msgid "Misc"
-msgstr ""
-
-#: View/Elements/footer.ctp:23
-#: View/Elements/footer_eng.ctp:22
-msgid "Terms and Conditions"
-msgstr ""
-
-#: View/Elements/footer.ctp:26
-msgid "To bloggers"
-msgstr ""
-
-#: View/Elements/footer.ctp:28
-#: View/Elements/footer_eng.ctp:27
-msgid "Welcome"
-msgstr ""
-
-#: View/Elements/footer.ctp:33
-msgid "Social Media"
-msgstr ""
-
-#: View/Elements/footer.ctp:38
-msgid "Bloggers about us"
-msgstr ""
-
-#: View/Elements/footer.ctp:43
-msgid "Follow us"
-msgstr ""
-
-#: View/Elements/footer.ctp:45
-msgid "On twitter"
-msgstr ""
-
-#: View/Elements/footer.ctp:46
-msgid "On facebook"
-msgstr ""
-
-#: View/Elements/footer.ctp:47
-msgid "On Google+"
-msgstr ""
-
-#: View/Elements/footer_eng.ctp:11
-msgid "Testimonials"
-msgstr ""
-
-#: View/Elements/footer_eng.ctp:21
-msgid "Privacy Policy"
-msgstr ""
-
-#: View/Elements/main_menu.ctp:28
-msgid "Tasks"
-msgstr ""
-
-#: View/Elements/main_menu.ctp:43
-msgid "Agenda"
-msgstr ""
-
-#: View/Elements/main_menu.ctp:51
-msgid "Contact"
-msgstr ""
-
-#: View/Elements/user_menu.ctp:6
-msgid "Управление профилем"
-msgstr ""
-
-#: View/Elements/user_menu.ctp:9
-msgid "Изменить пароль"
-msgstr ""
-
-#: View/Elements/user_menu.ctp:12
-msgid "Связанные аккаунты"
-msgstr ""
-
-#: View/Elements/user_menu.ctp:16
-#: View/Invitations/add.ctp:20
-msgid "Пригласить друзей"
 msgstr ""
 
 #: View/Faqs/add.ctp:4
@@ -911,7 +437,6 @@ msgstr ""
 #: View/Feedbacks/admin_view.ctp:54
 #: View/Feedbacks/view.ctp:54
 #: View/Users/index.ctp:32
-#: View/Users/view.ctp:24
 msgid "Created"
 msgstr ""
 
@@ -920,7 +445,6 @@ msgstr ""
 #: View/Feedbacks/admin_view.ctp:59
 #: View/Feedbacks/view.ctp:59
 #: View/Users/index.ctp:37
-#: View/Users/view.ctp:29
 msgid "Modified"
 msgstr ""
 
@@ -942,22 +466,6 @@ msgstr ""
 
 #: View/Faqs/index.ctp:2
 msgid "F.A.Q."
-msgstr ""
-
-#: View/Feedbacks/add.ctp:18
-msgid "Сообщение разработчикам"
-msgstr ""
-
-#: View/Feedbacks/add.ctp:28
-msgid "Тема"
-msgstr ""
-
-#: View/Feedbacks/add.ctp:29
-msgid "Сообщение"
-msgstr ""
-
-#: View/Feedbacks/add.ctp:31
-msgid "Отправить"
 msgstr ""
 
 #: View/Feedbacks/admin_add.ctp:4
@@ -1003,7 +511,6 @@ msgstr ""
 #: View/Feedbacks/admin_view.ctp:14
 #: View/Feedbacks/view.ctp:14
 #: View/Users/index.ctp:27
-#: View/Users/view.ctp:19
 msgid "Email"
 msgstr ""
 
@@ -1027,24 +534,6 @@ msgstr ""
 msgid "Processed"
 msgstr ""
 
-#: View/Invitations/add.ctp:25
-msgid "Введите емейлы тех, кого вы хотите пригласить на сервис"
-msgstr ""
-
-#: View/Invitations/add.ctp:32
-msgid "Похоже, емейлы не правильные"
-msgstr ""
-
-#: View/Invitations/add.ctp:37
-#: View/Users/password_resend.ctp:26
-#: View/Users/register.ctp:40
-msgid "Пожалуйста, подтвердите, что вы человек."
-msgstr ""
-
-#: View/Invitations/add.ctp:44
-msgid "Пригласить"
-msgstr ""
-
 #: View/Invitations/index.ctp:2
 msgid "Invitations"
 msgstr ""
@@ -1057,118 +546,16 @@ msgstr ""
 msgid "Готовься"
 msgstr ""
 
-#: View/Pages/index.ctp:30
+#: View/Pages/index.ctp:20
 msgid "Целься"
 msgstr ""
 
-#: View/Pages/index.ctp:52;70
+#: View/Pages/index.ctp:32;41
 msgid "Пли!"
-msgstr ""
-
-#: View/Tasks/index.ctp:45
-msgid "Today"
-msgstr ""
-
-#: View/Tasks/index.ctp:50
-msgid "Tomorrow"
-msgstr ""
-
-#: View/Tasks/index.ctp:195
-msgid "Все"
-msgstr ""
-
-#: View/Tasks/index.ctp:198
-msgid "В Процессе"
-msgstr ""
-
-#: View/Tasks/index.ctp:201
-msgid "Выполненные"
-msgstr ""
-
-#: View/Tasks/index.ctp:206;266;311
-msgid "Комментарий"
-msgstr ""
-
-#: View/Tasks/index.ctp:241
-msgid "Редактирование задачи"
-msgstr ""
-
-#: View/Tasks/index.ctp:247
-msgid "Заглавие"
-msgstr ""
-
-#: View/Tasks/index.ctp:253
-msgid "Дата и время"
-msgstr ""
-
-#: View/Tasks/index.ctp:256
-msgid "с"
-msgstr ""
-
-#: View/Tasks/index.ctp:258
-msgid "по"
-msgstr ""
-
-#: View/Tasks/index.ctp:274
-msgid "Приоритет"
-msgstr ""
-
-#: View/Tasks/index.ctp:278
-msgid "Высокий"
-msgstr ""
-
-#: View/Tasks/index.ctp:282
-msgid "Обычный"
-msgstr ""
-
-#: View/Tasks/index.ctp:293
-msgid "Выполнена"
-msgstr ""
-
-#: View/Tasks/index.ctp:301;317
-msgid "Закрыть"
-msgstr ""
-
-#: View/Tasks/index.ctp:302;318
-msgid "Сохранить"
 msgstr ""
 
 #: View/Tasks/mobile/index.ctp:36;80;125;182;207
 msgid "Go to full version"
-msgstr ""
-
-#: View/Users/accounts.ctp:8
-msgid "Связанные учетные записи"
-msgstr ""
-
-#: View/Users/accounts.ctp:12
-msgid "Провайдер"
-msgstr ""
-
-#: View/Users/accounts.ctp:13
-msgid "Имя"
-msgstr ""
-
-#: View/Users/accounts.ctp:14
-msgid "Дата связывания"
-msgstr ""
-
-#: View/Users/accounts.ctp:16
-msgid "Действия"
-msgstr ""
-
-#: View/Users/accounts.ctp:24
-msgid "Are you sure you want to delete this account"
-msgstr ""
-
-#: View/Users/edit.ctp:4
-#: View/Users/view.ctp:39
-msgid "Edit Profile"
-msgstr ""
-
-#: View/Users/edit.ctp:19
-#: View/Users/view.ctp:41
-msgid "List Profiles"
 msgstr ""
 
 #: View/Users/index.ctp:17
@@ -1176,197 +563,10 @@ msgid "First name"
 msgstr ""
 
 #: View/Users/index.ctp:22
-#: View/Users/view.ctp:14
 msgid "Last Name"
 msgstr ""
 
 #: View/Users/index.ctp:46
 msgid "Accounts"
-msgstr ""
-
-#: View/Users/index1.ctp:2
-msgid "Profiles"
-msgstr ""
-
-#: View/Users/index1.ctp:48
-#: View/Users/view.ctp:42
-msgid "New Profile"
-msgstr ""
-
-#: View/Users/login.ctp:18
-msgid "Войдите используя Ваш аккаунт"
-msgstr ""
-
-#: View/Users/login.ctp:24
-msgid "Оставаться в системе"
-msgstr ""
-
-#: View/Users/login.ctp:40
-msgid "Вы можете войти как"
-msgstr ""
-
-#: View/Users/password_change.ctp:12
-msgid "Изменение пароля:"
-msgstr ""
-
-#: View/Users/password_change.ctp:14
-msgid "Пожалуйста, введите свой старый пароль из соображений безопасности, а затем новый пароль дважды."
-msgstr ""
-
-#: View/Users/password_change.ctp:18
-msgid "Текущий пароль "
-msgstr ""
-
-#: View/Users/password_change.ctp:27
-msgid "Новый пароль "
-msgstr ""
-
-#: View/Users/password_change.ctp:34
-msgid "Повторите пароль "
-msgstr ""
-
-#: View/Users/password_change.ctp:39
-#: View/Users/profile.ctp:20
-msgid "Сохранить изменения"
-msgstr ""
-
-#: View/Users/password_resend.ctp:4
-msgid "Забыли пароль?"
-msgstr ""
-
-#: View/Users/password_resend.ctp:6
-msgid "Для сброса пароля введите свой адрес электронной почты."
-msgstr ""
-
-#: View/Users/password_resend.ctp:21
-msgid "Ваш адрес электронной почты:"
-msgstr ""
-
-#: View/Users/password_reset.ctp:12
-msgid "Выберите новый пароль."
-msgstr ""
-
-#: View/Users/password_reset.ctp:17
-msgid "Новый пароль:"
-msgstr ""
-
-#: View/Users/password_reset.ctp:21
-msgid "Повторите пароль:"
-msgstr ""
-
-#: View/Users/profile.ctp:13
-msgid "Здесь вы можете изменить свои основные данные."
-msgstr ""
-
-#: View/Users/view.ctp:2
-msgid "Profile"
-msgstr ""
-
-#: View/Users/view.ctp:9
-msgid "First Name"
-msgstr ""
-
-#: View/Users/view.ctp:40
-msgid "Delete Profile"
-msgstr ""
-
-#: Model/Account.php:validation for field user_id
-#: Model/Day.php:validation for field user_id
-#: Model/Faq.php:validation for field faqcategory_id
-#: Model/Faqcategory.php:validation for field user_id
-#: Model/Feedback.php:validation for field user_id
-#: Model/Invitation.php:validation for field user_id
-#: Model/Task.php:validation for field id;validation for field user_id;validation for field day_id
-#: Model/User.php:validation for field id
-msgid "Wrong ID"
-msgstr ""
-
-#: Model/Account.php:validation for field agreed
-#: Model/User.php:validation for field agreed
-msgid "Вы должны быть согласны с правилами использования сервиса"
-msgstr ""
-
-#: Model/Day.php:validation for field date
-msgid "date"
-msgstr ""
-
-#: Model/Day.php:validation for field comment
-#: Model/Task.php:validation for field comment
-msgid "Максимальная длина комментария не больше 1000 символов"
-msgstr ""
-
-#: Model/Faq.php:validation for field lang;validation for field subject
-#: Model/Faqcategory.php:validation for field name;validation for field lang
-#: Model/Feedback.php:validation for field lang
-#: Model/User.php:validation for field created
-msgid "notempty"
-msgstr ""
-
-#: Model/Faq.php:validation for field active
-#: Model/Faqcategory.php:validation for field active
-#: Model/Feedback.php:validation for field processed
-msgid "boolean"
-msgstr ""
-
-#: Model/Faq.php:validation for field user_id
-#: Model/Faqcategory.php:validation for field order
-#: Model/Feedback.php:validation for field status
-#: Model/Task.php:validation for field order;validation for field done;validation for field future;validation for field repeatid;validation for field transfer;validation for field priority
-msgid "numeric"
-msgstr ""
-
-#: Model/Feedback.php:validation for field category
-msgid "Please select a category"
-msgstr ""
-
-#: Model/Feedback.php:validation for field subject;validation for field message
-#: Model/Task.php:validation for field title
-#: Model/User.php:validation for field first_name;validation for field username;validation for field password;validation for field password_confirm;validation for field old_password
-msgid "Поле должно быть заполнено"
-msgstr ""
-
-#: Model/Invitation.php:validation for field email
-msgid "email"
-msgstr ""
-
-#: Model/Task.php:validation for field date
-msgid "Некорректная дата"
-msgstr ""
-
-#: Model/Task.php:validation for field time;validation for field timeend
-msgid "Некорректное время"
-msgstr ""
-
-#: Model/Task.php:validation for field timeend
-msgid "Время окончания должно быть больше начала "
-msgstr ""
-
-#: Model/Task.php:validation for field datedone;validation for field created
-#: Model/User.php:validation for field created;validation for field modified
-msgid "datetime"
-msgstr ""
-
-#: Model/User.php:validation for field first_name;validation for field last_name;validation for field username
-msgid "Введите в поле только буквы и цифры"
-msgstr ""
-
-#: Model/User.php:validation for field first_name
-msgid "Минимальная длина имени - 2 символа"
-msgstr ""
-
-#: Model/User.php:validation for field username
-msgid "Длина логина от 2 до 15 символов"
-msgstr ""
-
-#: Model/User.php:validation for field username
-msgid "Пользователь с таким именем уже существует"
-msgstr ""
-
-#: Model/User.php:validation for field password
-msgid "Минимальная длина пароля - 6 символа"
-msgstr ""
-
-#: Model/User.php:validation for field email
-msgid "Пожалуйста, введите Ваш адрес электронной почты"
 msgstr ""
 

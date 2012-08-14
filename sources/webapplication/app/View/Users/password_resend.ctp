@@ -1,12 +1,12 @@
 <div class="row"> 
     <div class="span10 offset1">
 <fieldset>
-		<legend><?php echo __('Забыли пароль?'); ?></legend>
+		<legend><?php echo __d('users', 'Забыли пароль?'); ?></legend>
         <p>
-            <?php echo __('Для сброса пароля введите свой адрес электронной почты.'); ?>
+            <?php echo __d('users', 'Для сброса пароля введите свой адрес электронной почты.'); ?>
         </p>
 
-<?php echo $this->Form->create('User',array('class' => 'well ',
+<?php echo $this->Form->create('User', array('class' => 'well ',
 'inputDefaults' => array(
         'format' => array('before', 'label', 'between', 'input', 'error', 'after'),
         'div' => array('class' => 'control-group'),
@@ -18,16 +18,16 @@
     
 <?php
 	echo $this->Form->input('email', array(
-		'label' => __( 'Ваш адрес электронной почты:'),
+		'label' => __d('users', 'Ваш адрес электронной почты:'),
 		'class' => 'input-xlarge',
-        'tabindex' =>1));
+        'tabindex' => 1));
 ?>
         <p>
-            <?php echo __('Пожалуйста, подтвердите, что вы человек.'); ?>
+            <?php echo __d('users', 'Пожалуйста, подтвердите, что вы человек.'); ?>
         </p>
         <?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => 'clean', 'tabindex' => 2)));?>
            
-        <?php echo $this->Form->submit('Отправть запрос',array('class'=>'btn btn-info', 'tabindex' => 2));?>
+        <?php echo $this->Form->submit(__d('users', 'Отправть запрос'), array('class'=>'btn btn-info', 'tabindex' => 2));?>
   
   	<?php echo $this->Form->end();?>
     

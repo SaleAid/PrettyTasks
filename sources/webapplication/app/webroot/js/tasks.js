@@ -1,3 +1,4 @@
+//1
 function toListValidationErrorAll(errors){
     var listError = '';
         $.each(errors,function(index, value) {
@@ -137,8 +138,8 @@ function superAjax(url, data){
      countAJAX++;
      displayLoadAjax(countAJAX);
      $.ajax({
-            url:url,
-            type:'POST',
+            url: '/'+GLOBAL_CONFIG.lang+url,
+            type: 'POST',
             data: data,
             success: function(data, textStatus, jqXHR) {
                 responseHandler(data.result);
@@ -281,7 +282,9 @@ function futureTasks(data){
     listUl.empty();
     $.each(data,function(index, value) {
         if(+value.list.length){
-            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class="'+value.weelDayStyle+'">'+value.weekDay+'</span></h3>');
+            //day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class="'+value.weekDayStyle+'">'+value.weekDay+'</span></h3>');
+            day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
+            day = $(day_tmp);
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
             initDayClick(day.children('span:first'));
             listUl.append(day);   
@@ -311,7 +314,9 @@ function expiredTasks(data){
     }
     $.each(data,function(index, value) {
         if(+value.list.length){
-            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class="'+value.weelDayStyle+'">'+value.weekDay+'</span></h3>');
+            //day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class="'+value.weekDayStyle+'">'+value.weekDay+'</span></h3>');
+            day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
+            day = $(day_tmp);
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
             initDayClick(day.children('span:first'));
             listUl.append(day);   
@@ -337,7 +342,9 @@ function completedTasks(data){
     }
     $.each(data,function(index, value) {
         if(+value.list.length){
-            day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class="'+value.weelDayStyle+'">'+value.weekDay+'</span></h3>');
+            //day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class="'+value.weekDayStyle+'">'+value.weekDay+'</span></h3>');
+            day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
+            day = $(day_tmp);
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
             initDayClick(day.children('span:first'));
             listUl.append(day);   
@@ -524,51 +531,52 @@ function scrAddDay(date){
         activeTab(date);
         return false;    
     }
-    var newTabContent = '<div class="tab-pane" id="'+date+'"> '+
-                    '<div class="row"> '+ 
-                        '<div class="listTask"> '+
-                            '<div class="margin-bottom10"> '+
-                            '<img class="print" src="/img/print.png" width="16" height="16"/> '+
-                            '<h3 class="label label-info">'+date+'<span class="weekday"></span></h3> '+
-                            '</div> '+
-                            '<div class="well form-inline"> '+
-                                '<div class="input-append"> '+
-                                    '<input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>'+
-                                    '<span class="add-on">?</span> '+
-                                '</div> '+
-                                '<button class="btn createTaskButton"> Добавить </button> '+
-                            '</div> '+
-                            '<div class="filter"> '+
-                                '<span>Фильтр:&nbsp; </span> '+
-                                '<a href="" class="active" data="all">Все</a> '+
-                                '<span class="all badge badge-info"> '+
-                                    '0'+
-                                '</span>, '+
-                                '&nbsp; '+
-                                '<a href=""  data="inProcess">В Процессе</a> '+                          
-                                '<span class="inProcess badge badge-warning"> '+
-                                    '0'+
-                                '</span>, '+
-                                '&nbsp; '+
-                                '<a href="" data="completed">Выполненные</a> '+
-                                '<span class="completed badge badge-success"> '+
-                                    '0'+
-                                '</span> '+
-                            '</div> '+
-                            '<div class="days"> '+
-                                '<a href="" data="commentDay">Комментарий</a> '+
-                                '<label class="checkbox ratingDay"> '+
-                                    '<input type="checkbox" date="'+date+'"/> Удачный день '+
-                                '</label> '+
-                            '</div> '+
-                            '<div class="clear"></div> '+
-                            '<ul class="sortable connectedSortable ui-helper-reset" date="'+date+'"> '+
-                                '<p class="loadContent" align=center> <img src="/img/ajax-loader-content.gif"/></p> '+
-                            '</ul> '+
-                        '</div> '+
-                    '</div> '+
-                '</div> ';
-                
+    //var newTabContent = '<div class="tab-pane" id="'+date+'"> '+
+//                    '<div class="row"> '+ 
+//                        '<div class="listTask"> '+
+//                            '<div class="margin-bottom10"> '+
+//                            '<img class="print" src="/img/print.png" width="16" height="16"/> '+
+//                            '<h3 class="label label-info">'+date+'<span class="weekday"></span></h3> '+
+//                            '</div> '+
+//                            '<div class="well form-inline"> '+
+//                                '<div class="input-append"> '+
+//                                    '<input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>'+
+//                                    '<span class="add-on">?</span> '+
+//                                '</div> '+
+//                                '<button class="btn createTaskButton"> Добавить </button> '+
+//                            '</div> '+
+//                            '<div class="filter"> '+
+//                                '<span>Фильтр:&nbsp; </span> '+
+//                                '<a href="" class="active" data="all">Все</a> '+
+//                                '<span class="all badge badge-info"> '+
+//                                    '0'+
+//                                '</span>, '+
+//                                '&nbsp; '+
+//                                '<a href=""  data="inProcess">В Процессе</a> '+                          
+//                                '<span class="inProcess badge badge-warning"> '+
+//                                    '0'+
+//                                '</span>, '+
+//                                '&nbsp; '+
+//                                '<a href="" data="completed">Выполненные</a> '+
+//                                '<span class="completed badge badge-success"> '+
+//                                    '0'+
+//                                '</span> '+
+//                            '</div> '+
+//                            '<div class="days"> '+
+//                                '<a href="" data="commentDay">Комментарий</a> '+
+//                                '<label class="checkbox ratingDay"> '+
+//                                    '<input type="checkbox" date="'+date+'"/> Удачный день '+
+//                                '</label> '+
+//                            '</div> '+
+//                            '<div class="clear"></div> '+
+//                            '<ul class="sortable connectedSortable ui-helper-reset" date="'+date+'"> '+
+//                                '<p class="loadContent" align=center> <img src="/img/ajax-loader-content.gif"/></p> '+
+//                            '</ul> '+
+//                        '</div> '+
+//                    '</div> '+
+//                '</div> ';
+    
+    var newTabContent = _.template($("#day_tab_content_template").html(), {date: date} );            
     $('.tab-content').append(newTabContent); 
     var listUserDay = $('#main ul.nav-tabs').children('li.userDay').get();
     var newDay = '<li class="drop userDay"><a href="#'+date+'" data-toggle="tab" date="'+date+'">'+date+'<span class="close">×</span></a></li>';
@@ -610,7 +618,7 @@ function onAddDay(data){
     list.siblings('.filter').find('span.inProcess').text(data.data.listCount.all - data.data.listCount.done);
     list.siblings('.filter').find('span.completed').text(data.data.listCount.done);
     list.parent().find('.weekday').text(" - "+data.data.weekDay);
-    list.parent().find('.weekday').addClass(data.data.weelDayStyle);
+    list.parent().find('.weekday').addClass(data.data.weekDayStyle);
     initPrintClick(list.parent().find('.print'));
     if(!$.isEmptyObject(data.data.day) && +data.data.day[data.data.date][0].Day.rating){
         $(".ratingDay input[date='"+data.data.date+"']").attr('checked','checked');
@@ -1003,7 +1011,7 @@ function initEditAble(element){
              ,{
                 indicator : "<img src='img/indicator.gif'>",
                 placeholder : "",
-                tooltip : "Щелкните чтоб отредактировать этот текст",
+                //tooltip : "Щелкните чтоб отредактировать этот текст",
                 style  : "inherit",
                 data: function(value, settings) {
                     var retval = convertToText(value);
@@ -1129,11 +1137,11 @@ function initDrop(element){
                 var date = $(this).find( "a" ).attr( "date" );
                 var time = $.trim(ui.draggable.children('.time').text());
                 if(date == ui.draggable.attr("date") || (date == 'planned' && !ui.draggable.attr("date")) ){
-                    mesg('Перемещение запрещено', 'success');
+                    mesg(GLOBAL_CONFIG.moveForbiddenMessage, 'success');
                     return false;   
                 }
                 if(ui.draggable.hasClass('complete') ){
-                    mesg('Перемещение выполненых задач запрещено', 'success');
+                    mesg(GLOBAL_CONFIG.moveCompletedForbiddenMessage, 'success');
                     return false;   
                 }
                 ui.draggable.addClass('currentTask');
@@ -1160,7 +1168,7 @@ function initSortable(element){
                 if( ui.item.parent().attr('date') == 'expired' || 
                     ui.item.parent().attr('date') == 'future' ||
                     ui.item.hasClass('setTime') ){
-                    mesg('Перемещение запрещено', 'success');
+                    mesg(GLOBAL_CONFIG.moveForbiddenMessage, 'success');
                     $(this).css("color","");
                     return false;  
                 }
@@ -1456,12 +1464,11 @@ $(function(){
     
     window.onbeforeunload = function(e) {
         if(+countAJAX && !connError){
-            var message = 'Содержимое было изменено!\nВы уверены, что хотите покинуть страницу без сохранения?';
             e = e || window.event;
             if (e) {
-                e.returnValue = message;
+                e.returnValue = GLOBAL_CONFIG.onbeforeunloadMessage;
             }
-            return message;    
+            return GLOBAL_CONFIG.onbeforeunloadMessage;
         }
     }; 
                

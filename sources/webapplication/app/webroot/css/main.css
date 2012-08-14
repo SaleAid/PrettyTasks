@@ -226,6 +226,9 @@ footer .right{ text-align:right; }
     margin-left: -300px;
     padding: 20px;
     font-size: 14px;
+    line-height: 20px;
+    white-space:normal;
+    text-indent: 15px;
 }
 .rememb{
     margin-left: 10px;

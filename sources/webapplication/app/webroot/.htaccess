@@ -4,7 +4,11 @@ AddDefaultCharset UTF-8
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.+)\.(\d+)\.(js|css|png|jpg|gif)$ $1.$3 [L]
+    RewriteRule ^(.+)\.(\d+)\.(png|jpg|gif)$ $1.$3 [L]
+    
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.+?)\.(\d.*\d+)\.(js|css)$ min/index.php?f=$1.$3 [L]
     
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
@@ -15,6 +19,9 @@ AddDefaultCharset UTF-8
     RewriteRule ^(.*)$ index.php?/$1 [QSA,L]
 </IfModule>
 
-
+AuthType Basic
+AuthName "Private zone."
+AuthUserFile /home/pubftp/test1/besttask/sources/webapplication/app/webroot/.htpasswd
+require valid-user
 
 

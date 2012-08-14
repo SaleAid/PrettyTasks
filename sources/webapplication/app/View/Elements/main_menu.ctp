@@ -29,14 +29,14 @@
           <?php if ($currentUser): ?>
           <li class="tasks <? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">
                 <?php echo $this->Html->link(
-                                __('Tasks'),
+                                __d('pages', 'Tasks'),
                                 array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time()))
                 );?>    
           </li>
          <!-- <?php //if ($isBetaUser):?>
           <li class="<? //if($this->params['action'] == "index" and strtolower($this->params['controller']) == "calendar") echo 'active'; ?>">
               <?php //echo $this->Html->link(
-                    //__('Calendar'),
+                    //__d('pages', Calendar'),
                    // array('controller' => 'calendar', 'action' => 'index')
                 //);?>  
           </li>
@@ -44,7 +44,7 @@
           -->
           <li class="agenda <? if($this->params['action'] == "agenda" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">
               <?php echo $this->Html->link(
-                    __('Agenda'),
+                    __d('pages', 'Agenda'),
                     array('controller' => 'tasks', 'action' => 'index', '#' => 'day-future')
                     //array('controller' => 'tasks', 'action' => 'agenda')
                 );?>
@@ -52,13 +52,13 @@
           <?php endif;?>
           <li class="<? if( isset($this->params['pass'][0]) and $this->params['pass'][0] == "contact" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
               <?php echo $this->Html->link(
-                    __('Contact'),
+                    __d('pages', 'Contact'),
                     array('controller' => 'pages', 'action' => 'contact')
                 );?>
           </li>
           <li class="<? if(isset($this->params['pass'][0]) and $this->params['pass'][0] == "about" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
               <?php echo $this->Html->link(
-                    __('About'),
+                    __d('pages', 'About'),
                     array('controller' => 'pages', 'action' => 'about')
                 );?>
           </li>

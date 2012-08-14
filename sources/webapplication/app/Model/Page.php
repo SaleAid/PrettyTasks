@@ -5,7 +5,15 @@ App::uses('AppModel', 'Model');
  *
  */
 class Page extends AppModel {
+    
     public $name = 'Page';
+    
+    /**
+     * Validation domain
+     *
+     * @var string
+     */
+    public $validationDomain = 'pages';
     
     public function view($url, $lang){
         return $this->find('first', array(

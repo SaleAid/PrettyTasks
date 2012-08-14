@@ -1,6 +1,15 @@
 <?php
 class Faqcategory extends AppModel {
+    
     public $name = 'Faqcategory';
+    
+    /**
+     * Validation domain
+     *
+     * @var string
+     */
+    public $validationDomain = 'faqcategories';
+    
     public $validate = array(
         'name' => array(
             'notempty' => array(

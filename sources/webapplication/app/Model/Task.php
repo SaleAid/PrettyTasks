@@ -12,6 +12,14 @@ class Task extends AppModel {
      * @var string
      */
     public $displayField = 'title';
+    
+    /**
+     * Validation domain
+     *
+     * @var string
+     */
+    public $validationDomain = 'tasks';
+    
     /**
      * Validation rules
      *
@@ -41,7 +49,7 @@ class Task extends AppModel {
         'comment' => array(
             'maxLength' => array(
                 'rule'    => array('maxLength', 1000),
-                'message' => 'Максимальная длина комментария не больше 1000 символов'
+                'message' => 'Максимальная длина комментария не больше %d символов'
             )
         ),  
         'date' => array(
@@ -66,7 +74,7 @@ class Task extends AppModel {
             ),
             'comparisonTime' => array(
                 'rule'    => array('comparisonTime'),
-                'message' => 'Время окончания должно быть больше начала '
+                'message' => 'Время окончания должно быть больше начала'
             )
         ),  
         'order' => array(
@@ -663,13 +671,13 @@ class Task extends AppModel {
     //TODO Maybe this function move to another model, for example to Day?
     public function getWeekDay($index){
         $weekday = array(
-                        'Sunday' => __('Sunday', true),
-                        'Monday' => __('Monday', true),
-                        'Tuesday' => __('Tuesday', true),
-                        'Wednesday' => __('Wednesday', true),
-                        'Thursday' => __('Thursday', true),
-                        'Friday' => __('Friday', true),
-                        'Saturday' => __('Saturday', true)
+                        'Sunday' => __d('tasks', 'Sunday'),
+                        'Monday' => __d('tasks', 'Monday'),
+                        'Tuesday' => __d('tasks', 'Tuesday'),
+                        'Wednesday' => __d('tasks', 'Wednesday'),
+                        'Thursday' => __d('tasks', 'Thursday'),
+                        'Friday' => __d('tasks', 'Friday'),
+                        'Saturday' => __d('tasks', 'Saturday')
                         );
         if(array_key_exists($index, $weekday)){
             return $weekday[$index];
