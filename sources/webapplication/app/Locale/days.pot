@@ -1,0 +1,44 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2012-08-14 15:56+0300\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: Controller/DaysController.php:20;42;68
+msgid "Ошибка при передачи данных"
+msgstr ""
+
+#: Controller/DaysController.php:27;76
+msgid "Изменение успешно сохранено."
+msgstr ""
+
+#: Controller/DaysController.php:49
+msgid "Готово"
+msgstr ""
+
+#: Controller/DaysController.php:82
+msgid "Ошибка при сохранении комментария"
+msgstr ""
+
+#: Model/Day.php:validation for field user_id
+msgid "Wrong ID"
+msgstr ""
+
+#: Model/Day.php:validation for field date
+msgid "date"
+msgstr ""
+
+#: Model/Day.php:validation for field comment
+msgid "Максимальная длина комментария не больше %d символов"
+msgstr ""
+
