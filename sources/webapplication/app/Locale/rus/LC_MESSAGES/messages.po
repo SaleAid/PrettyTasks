@@ -1,0 +1,74 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2012-08-17 21:01+0300\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: prettytasks@gmail.com\n"
+"Language-Team: prettytasks@gmail.com\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+
+#: View/Elements/connection_error.ctp:6
+msgid "Упс, похоже вывалился интернет, попробуйте воспользоваться сервисом позже или подождите пока он появится. Мы же проверим соединение еще раз через 1 минуту."
+msgstr ""
+
+#: View/Elements/empty_lists.ctp:4;22
+msgid "Здесь нет ни одной задачи! Ты крутой! Стремись почаще видеть эту надпись. Чем чаще ты ее видешь, тем успешнее ты. Она магическая. Заходи к нам. Это принесет тебе счастье."
+msgstr ""
+
+#: View/Elements/empty_lists.ctp:7
+msgid "Здесь нет ни одной задачи! Запланируй здесь то, что не знаешь когда сделать. Поехать в Италию? Сходить в кино? Придет час, и ты это сделаешь. Воспользуйся замечательной функцией переноса задач. Все для тебя! Дерзай!"
+msgstr ""
+
+#: View/Elements/empty_lists.ctp:10
+msgid "У вас нет еще ни одной выполненой задачи! Быстрее к планированию, и выполнению. Улучши свою жизнь сейчас! Не оставляй на завтра то, что можно сделать сегодня! Ну а если не успел - воспользуйся замечательной функцией переноса задач. Все для тебя! Дерзай!"
+msgstr ""
+
+#: View/Elements/empty_lists.ctp:13
+msgid "Нам жаль, что у вас не было планов в эти дни. Планируй на будущее и иди к успеху с нами!"
+msgstr ""
+
+#: View/Elements/empty_lists.ctp:16;19
+msgid "Здесь нет ни одной задачи! Запланируй себе задачи и иди к успеху с нами!"
+msgstr ""
+
+#: View/Elements/empty_lists.ctp:25
+msgid "Здесь нет ни одной задачи! Поторопись! Сделай свои дела и отдыхай. Забудь обо всем и сосредоточься на предыдущей вкладке. Выполни все свои задачи. Это принесет тебе счастье."
+msgstr ""
+
+#: View/Elements/empty_lists.ctp:28
+msgid "У вас нет прикрепленных аккаунтов. Воспользуйтесь кнопками социальных сетей, чтобы иметь возможность входить, используя аккаунт социальной сети."
+msgstr ""
+
+#: View/Elements/empty_lists.ctp:36
+msgid "О-о-о!*"
+msgstr ""
+
+#: View/Elements/js_global_config.ctp:10
+msgid "В данный момент сайт сохраняет данные на сервере, уход со страницы прервет этот процесс, что приведет к потере данных. Подождите несколько секунд, после чего вы можете спокойно закрыть страницу."
+msgstr ""
+
+#: View/Elements/noscript.ctp:6
+msgid "В вашем браузере отключен JavaScript. Пожалуйста, включите его в настройках, чтобы пользоваться сервисом"
+msgstr ""
+
+#: View/Errors/error400.ctp:11
+#: View/Errors/missing_action.ctp:11
+#: View/Errors/missing_controller.ctp:11
+#: View/Errors/missing_view.ctp:11
+msgid "— Не то чтобы совсем не попал,— сказал Пух,— но только не попал в шарик!"
+msgstr ""
+
+#: View/Errors/error400.ctp:12
+#: View/Errors/missing_action.ctp:12
+#: View/Errors/missing_controller.ctp:12
+#: View/Errors/missing_view.ctp:12
+msgid "Начать с начала"
+msgstr ""
+

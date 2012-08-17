@@ -1,0 +1,57 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2012-08-18 01:08+0300\n"
+"PO-Revision-Date: 2012-08-18 01:10+0300\n"
+"Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
+"Language-Team: prettytasks@gmail.com\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: Controller/InvitationsController.php:40;91
+msgid "Введите минимум один емейл"
+msgstr "Enter at least one email"
+
+#: Controller/InvitationsController.php:43;92
+msgid "Ошибка при вводе данных, попробуйте ввести еще раз"
+msgstr "An error occured while data enter. Please, enter again"
+
+#: Controller/InvitationsController.php:84
+msgid "Приглашения разосланы"
+msgstr "Invitations are successfully sent"
+
+#: View/Invitations/add.ctp:20
+msgid "Пригласить друзей"
+msgstr "Invite friends"
+
+#: View/Invitations/add.ctp:25
+msgid "Введите емейлы тех, кого вы хотите пригласить на сервис"
+msgstr "Enter the emails of people you want to invite"
+
+#: View/Invitations/add.ctp:32
+msgid "Похоже, емейлы не правильные"
+msgstr "The emails look wrong"
+
+#: View/Invitations/add.ctp:37
+msgid "Пожалуйста, подтвердите, что вы человек"
+msgstr "Are you a human?"
+
+#: View/Invitations/add.ctp:44
+msgid "Пригласить"
+msgstr "Invite"
+
+#: Model/Invitation.php:validation
+#: for field email
+msgid "email"
+msgstr "email"
+
+#: Model/Invitation.php:validation
+#: for field user_id
+msgid "Wrong ID"
+msgstr "Wrong ID"
+

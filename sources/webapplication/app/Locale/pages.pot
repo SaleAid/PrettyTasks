@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-14 15:56+0300\n"
+"POT-Creation-Date: 2012-08-18 01:08+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,6 +13,18 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: View/Elements/current_user.ctp:27
+#: View/Elements/footer.ctp:15
+#: View/Elements/footer_eng.ctp:14
+msgid "Register"
+msgstr ""
+
+#: View/Elements/current_user.ctp:28
+#: View/Elements/footer.ctp:14
+#: View/Elements/footer_eng.ctp:13
+msgid "Login"
+msgstr ""
 
 #: View/Elements/footer.ctp:6
 #: View/Elements/footer_eng.ctp:6
@@ -33,16 +45,6 @@ msgstr ""
 #: View/Elements/footer.ctp:10
 #: View/Elements/footer_eng.ctp:10
 msgid "How it works"
-msgstr ""
-
-#: View/Elements/footer.ctp:14
-#: View/Elements/footer_eng.ctp:13
-msgid "Login"
-msgstr ""
-
-#: View/Elements/footer.ctp:15
-#: View/Elements/footer_eng.ctp:14
-msgid "Register"
 msgstr ""
 
 #: View/Elements/footer.ctp:20

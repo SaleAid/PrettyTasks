@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-14 15:56+0300\n"
+"POT-Creation-Date: 2012-08-18 01:08+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -19,7 +19,7 @@ msgid "Введите минимум один емейл"
 msgstr ""
 
 #: Controller/InvitationsController.php:43;92
-msgid "Ошибка при вводе данных, поробуйте ввести еще раз"
+msgid "Ошибка при вводе данных, попробуйте ввести еще раз"
 msgstr ""
 
 #: Controller/InvitationsController.php:84
@@ -39,7 +39,7 @@ msgid "Похоже, емейлы не правильные"
 msgstr ""
 
 #: View/Invitations/add.ctp:37
-msgid "Пожалуйста, подтвердите, что вы человек."
+msgid "Пожалуйста, подтвердите, что вы человек"
 msgstr ""
 
 #: View/Invitations/add.ctp:44

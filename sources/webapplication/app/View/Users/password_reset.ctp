@@ -8,17 +8,17 @@
         'error' => array('attributes' => array('wrap' => 'span', 'class' => 'help-inline')),
     )));?>
     <fieldset>
-		<legend><?php echo __d('users', 'Выберите новый пароль.'); ?></legend>
+		<legend><?php echo __d('users', 'Выберите новый пароль'); ?></legend>
         
 <?php
 	
 	echo $this->Form->input('password', array(
-		'label' => __d('users', 'Новый пароль:'),
+		'label' => __d('users', 'Новый пароль'),
 		'type' => 'password',
         'class' => 'input-xlarge'));
         
 	echo $this->Form->input('password_confirm', array(
-		'label' => __d('users', 'Повторите пароль:'),
+		'label' => __d('users', 'Повторите пароль'),
 		'type' => 'password',
         'class' => 'input-xlarge'));
         

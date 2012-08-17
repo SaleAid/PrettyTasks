@@ -9,9 +9,9 @@
         'error' => array('attributes' => array('wrap' => 'span', 'class' => 'help-inline')),
     )));?>
     <fieldset>
-		<legend><?php echo __d('users', 'Изменение пароля:'); ?></legend>
+		<legend><?php echo __d('users', 'Изменение пароля'); ?></legend>
         <p>
-            <?php echo __d('users', 'Пожалуйста, введите свой старый пароль из соображений безопасности, а затем новый пароль дважды.'); ?>
+            <?php echo __d('users', 'Пожалуйста, введите свой старый пароль из соображений безопасности, а затем новый пароль дважды'); ?>
         </p>
         <?php
         	echo $this->Form->input('old_password', array(

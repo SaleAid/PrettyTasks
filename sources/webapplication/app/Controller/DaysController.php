@@ -24,7 +24,7 @@ class DaysController extends AppController {
             $result['data'] = $this->Day->setRating($this->Auth->user('id'), $this->request->data['date'],  $this->request->data['rating'])->save(); 
             $result['message'] = array(
                 'type' => 'success', 
-                'message' => __d('days', 'Изменение успешно сохранено.')
+                'message' => __d('days', 'Изменение успешно сохранено')
             );   
         }
         $result['action'] = 'setRatingDay';
@@ -73,7 +73,7 @@ class DaysController extends AppController {
                 $result['data'] = $day; 
                 $result['message'] = array(
                     'type' => 'success', 
-                    'message' => __d('days', 'Изменение успешно сохранено.')
+                    'message' => __d('days', 'Изменение успешно сохранено')
                 );    
             }else{
                 $result['errors'] = $this->Day->invalidFields();

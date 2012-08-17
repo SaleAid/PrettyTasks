@@ -1,0 +1,144 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2012-08-18 00:06+0300\n"
+"PO-Revision-Date: 2012-08-18 00:51+0300\n"
+"Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
+"Language-Team: prettytasks@gmail.com\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: Controller/AccountsController.php:42
+msgid "Этот аккаунт уже связан"
+msgstr "This account is already linked"
+
+#: Controller/AccountsController.php:46
+msgid "Этот аккаунт уже связан с другим пользователем"
+msgstr "This account is already linked to another user"
+
+#: Controller/AccountsController.php:64
+msgid "Этот аккаунт успешно прикреплен"
+msgstr "This account is successfully linked"
+
+#: Controller/AccountsController.php:68
+msgid "Ошибка связывания аккаунта"
+msgstr "Error while account binding"
+
+#: Controller/AccountsController.php:76
+msgid "Ошибка"
+msgstr "Error"
+
+#: Controller/AccountsController.php:96
+msgid "Your account not active"
+msgstr "Your account is not activated"
+
+#: Controller/AccountsController.php:124
+msgid "An unknown error"
+msgstr "An unknown error"
+
+#: Controller/AccountsController.php:139;175;221
+msgid "Код активации аккаунта был выслан Вам на почту"
+msgstr "Account activation code has been sent to your email"
+
+#: Controller/AccountsController.php:144
+msgid "Возникли проблемы при отправке кода активации аккаунта"
+msgstr "Problems occured while sending account activation code"
+
+#: Controller/AccountsController.php:164
+msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз"
+msgstr "An error occured while filling. Please, try again"
+
+#: Controller/AccountsController.php:180;227
+msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта"
+msgstr "You have been successfully registered. Problems occured while sending account activation code"
+
+#: Controller/AccountsController.php:185
+msgid "Error create account"
+msgstr "Error while acccount creating "
+
+#: Controller/AccountsController.php:233
+msgid "Error create user account"
+msgstr "Error while acccount creating "
+
+#: Controller/AccountsController.php:240
+msgid "Регистрация не удалась. Заполните поля полностью"
+msgstr "Registration was not successful. Please, fill in the fields thoroughly"
+
+#: Controller/AccountsController.php:286
+msgid "Ваша учетная запись была активирована"
+msgstr "Your account has been successfully activated"
+
+#: Controller/AccountsController.php:292
+msgid "Invalid key"
+msgstr "Invalid key"
+
+#: Controller/AccountsController.php:310
+msgid "Invalid Account"
+msgstr "Invalid Account"
+
+#: Controller/AccountsController.php:314
+msgid "Account deleted"
+msgstr "Account deleted"
+
+#: Controller/AccountsController.php:322
+msgid "Account was not deleted"
+msgstr "Account was not deleted"
+
+#: Model/Account.php:120
+msgid "Ваш основной аккаунт заблокирован"
+msgstr "Your main account is blocked"
+
+#: Model/Account.php:125
+msgid "Ваш основной аккаунт деактивирован"
+msgstr "Your main account is deactivated"
+
+#: View/Accounts/confirm_email.ctp:14
+msgid "Введите Ваш e-mail"
+msgstr "Enter your email"
+
+#: View/Accounts/confirm_email.ctp:18
+#: View/Accounts/confirm_user_data.ctp:26
+#: View/Accounts/reactivate.ctp:21
+msgid "Далее"
+msgstr "Next"
+
+#: View/Accounts/confirm_user_data.ctp:13
+msgid "Регистрация аккаунта"
+msgstr "Registration"
+
+#: View/Accounts/confirm_user_data.ctp:14
+msgid "Логин"
+msgstr "Login"
+
+#: View/Accounts/confirm_user_data.ctp:16
+#: View/Accounts/reactivate.ctp:15
+msgid "Имя"
+msgstr "Name"
+
+#: View/Accounts/confirm_user_data.ctp:22
+msgid "Я согласен с "
+msgstr "I agree to"
+
+#: View/Accounts/confirm_user_data.ctp:22
+msgid "условиями использования"
+msgstr "terms and conditions of use"
+
+#: View/Accounts/reactivate.ctp:14
+msgid "Повторная активация"
+msgstr "Reactivation"
+
+#: Model/Account.php:validation
+#: for field user_id
+msgid "Wrong ID"
+msgstr "Wrong ID"
+
+#: Model/Account.php:validation
+#: for field agreed
+msgid "Вы должны быть согласны с правилами использования сервиса"
+msgstr "you must agree to terms and conditions of use"
+

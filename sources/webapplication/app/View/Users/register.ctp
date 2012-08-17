@@ -24,27 +24,27 @@
                     </div>
                </div>
         </legend>
-    	   <?php echo $this->Form->input('first_name', array('label' =>__d('users', 'Имя:'), 'class' => 'input-xlarge', 'placeholder' => __d('users', 'Введите ваше имя')));?>
+    	   <?php echo $this->Form->input('first_name', array('label' =>__d('users', 'Имя'), 'class' => 'input-xlarge', 'placeholder' => __d('users', 'Введите ваше имя')));?>
            
     	   <?php //echo $this->Form->input('last_name', array('label' =>'Фамилия:', 'class' => 'input-xlarge'));?>
            
-    	   <?php echo $this->Form->input('email', array('label' => __d('users', 'Email:'), 'class' => 'input-xlarge', 'placeholder' => __d('users', 'Укажите адрес электронной почты')));?>
+    	   <?php echo $this->Form->input('email', array('label' => __d('users', 'Email'), 'class' => 'input-xlarge', 'placeholder' => __d('users', 'Укажите адрес электронной почты')));?>
            
-           <?php echo $this->Form->input('username', array('label' => __d('users', 'Логин:'), 'class' => 'input-xlarge', 'placeholder' => __d('users', 'Введите ваше логин')));?>
+           <?php echo $this->Form->input('username', array('label' => __d('users', 'Логин'), 'class' => 'input-xlarge', 'placeholder' => __d('users', 'Введите ваше логин')));?>
            
-    	   <?php echo $this->Form->input('password', array('label' => __d('users', 'Пароль:'), 'class' => 'input-xlarge', 'placeholder' => __d('users', '6 знаков или больше! Будьте хитрее')));?>
+    	   <?php echo $this->Form->input('password', array('label' => __d('users', 'Пароль'), 'class' => 'input-xlarge', 'placeholder' => __d('users', '6 знаков или больше! Будьте хитрее')));?>
            
-           <?php echo $this->Form->input('password_confirm',array('label' => __d('users', 'Повторите пароль:'), 'type' => 'password', 'class' => 'input-xlarge', 'placeholder' => __d('users', 'Повторите пароль')));?>
+           <?php echo $this->Form->input('password_confirm',array('label' => __d('users', 'Повторите пароль'), 'type' => 'password', 'class' => 'input-xlarge', 'placeholder' => __d('users', 'Повторите пароль')));?>
            
             <p>
-                <?php echo __d('users', 'Пожалуйста, подтвердите, что вы человек.'); ?>
+                <?php echo __d('users', 'Пожалуйста, подтвердите, что вы человек'); ?>
             </p>
            
            <?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => Configure::read('Recaptcha.theme'))));?>
            
            <br />
            <label class="checkbox">
-                <?php echo $this->Form->input('agreed', array('label'=> __d('users', 'Я согласен с ') . $this->Html->link(__d('users', 'условиями использования'), array('controller' => 'pages', 'action' => 'terms-and-conditions')), 'type'=>'checkbox', 'format' => array('before', 'label', 'between', 'error', 'after'))); ?>
+                <?php echo $this->Form->input('agreed', array('label'=> __d('users', 'Я согласен с ') . $this->Html->link(__d('users', 'условиями использования'), array('controller' => 'pages', 'action' => 'terms-and-conditions'), array('target' => '_blank')), 'type'=>'checkbox', 'format' => array('before', 'label', 'between', 'error', 'after'))); ?>
            </label>
            <br />
            <div class="grp-btn-reg">

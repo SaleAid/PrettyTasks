@@ -99,7 +99,7 @@
                 <button class="btn createTaskButton"><?php echo __d('tasks', 'Добавить'); ?></button>    
             </div>
             <div class="filter">
-                <span><?php echo __d('tasks', 'Фильтр:'); ?>&nbsp; </span> 
+                <span><?php echo __d('tasks', 'Фильтр'); ?>:&nbsp; </span> 
                 <a href="" class="active" data="all"><?php echo __d('tasks', 'Все'); ?></a>
                 <span class="all badge badge-info "><?php echo $result['data']['arrAllFutureCount']['all']; ?></span>,
                 &nbsp;
@@ -195,7 +195,7 @@
                             <button class="btn createTaskButton"><?php echo __d('tasks', 'Добавить'); ?></button>
                         </div>
                         <div class="filter">
-                            <span><?php echo __d('tasks', 'Фильтр:'); ?>&nbsp; </span> 
+                            <span><?php echo __d('tasks', 'Фильтр'); ?>:&nbsp; </span> 
                             <a href=""  class="active" data="all"><?php echo __d('tasks', 'Все');?></a>
                             <span class="all badge badge-info"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all']; ?></span>,
                             &nbsp;
@@ -350,7 +350,7 @@
 				<button class="btn createTaskButton"><?php echo __d('tasks', 'Добавить'); ?></button>
 			</div>
 			<div class="filter"> 
-				<span><?php echo __d('tasks', 'Фильтр:'); ?>&nbsp; </span> 
+				<span><?php echo __d('tasks', 'Фильтр'); ?>:&nbsp; </span> 
                 <a href=""  class="active" data="all"><?php echo __d('tasks', 'Все');?></a>
 				<span class="all badge badge-info"> 
 					0

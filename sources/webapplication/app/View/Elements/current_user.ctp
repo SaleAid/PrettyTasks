@@ -24,8 +24,8 @@
       </ul>
       </div>
     <?php else: ?>
-        <?php echo $this->Html->link(__d('users', 'Регистрация'), array('controller' => 'users', 'action' => 'register'), array('class'=> 'btn btn-success')); ?>
-        <?php echo $this->Html->link(__d('users', 'Войти'), array('controller' => 'users', 'action' => 'login'), array('class'=> 'btn btn-primary')); ?>
+        <?php echo $this->Html->link(__d('pages', 'Register'), array('controller' => 'users', 'action' => 'register'), array('class'=> 'btn btn-success')); ?>
+        <?php echo $this->Html->link(__d('pages', 'Login'), array('controller' => 'users', 'action' => 'login'), array('class'=> 'btn btn-primary')); ?>
     <?php endif; ?>
     
     </div>

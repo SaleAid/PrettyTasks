@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-14 15:56+0300\n"
+"POT-Creation-Date: 2012-08-18 01:08+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -47,7 +47,7 @@ msgid "Ваш аккаунт был активирован"
 msgstr ""
 
 #: Controller/UsersController.php:153
-msgid "Invalid key."
+msgid "Invalid key"
 msgstr ""
 
 #: Controller/UsersController.php:194;223
@@ -78,8 +78,8 @@ msgstr ""
 msgid "Профиль не может быть сохранен. Пожалуйста, попробуйте еще раз"
 msgstr ""
 
-#: Model/User.php:174;validation for field password;validation for field old_password
-msgid "Ваш пароль не совпадает"
+#: Model/User.php:174;validation for field password
+msgid "Пароли не совпадает"
 msgstr ""
 
 #: Model/User.php:260
@@ -109,27 +109,16 @@ msgstr ""
 msgid "Выход"
 msgstr ""
 
-#: View/Elements/current_user.ctp:27
-#: View/Users/login.ctp:31
-#: View/Users/register.ctp:51
-msgid "Регистрация"
-msgstr ""
-
-#: View/Elements/current_user.ctp:28
-#: View/Users/login.ctp:22
-msgid "Войти"
-msgstr ""
-
 #: View/Elements/not_active.ctp:13
 msgid "Осталось подтвердить регистрацию!"
 msgstr ""
 
 #: View/Elements/not_active.ctp:15
-msgid "При создании аккаунта на ваш e-mail было отправлено письмо с подтверждением, пожалуйста, перейдите по ссылке, указанной в данном письме."
+msgid "При создании аккаунта на ваш e-mail было отправлено письмо с подтверждением, пожалуйста, перейдите по ссылке, указанной в данном письме"
 msgstr ""
 
 #: View/Elements/not_active.ctp:17
-msgid " Заказать повторное письмо с подтверждением "
+msgid "Заказать повторное письмо с подтверждением"
 msgstr ""
 
 #: View/Elements/user_menu.ctp:4
@@ -137,6 +126,7 @@ msgid "Мой профиль"
 msgstr ""
 
 #: View/Elements/user_menu.ctp:6
+#: View/Users/profile.ctp:13
 msgid "Управление профилем"
 msgstr ""
 
@@ -161,6 +151,7 @@ msgid "Провайдер"
 msgstr ""
 
 #: View/Users/accounts.ctp:21
+#: View/Users/register.ctp:27
 msgid "Имя"
 msgstr ""
 
@@ -185,20 +176,16 @@ msgid "Войдите используя Ваш аккаунт"
 msgstr ""
 
 #: View/Users/login.ctp:19
-msgid "Логин или Емейл:"
-msgstr ""
-
-#: View/Users/login.ctp:19
-msgid "Логин или емейл"
+msgid "Логин или Емейл"
 msgstr ""
 
 #: View/Users/login.ctp:21
 #: View/Users/register.ctp:35
-msgid "Пароль:"
+msgid "Пароль"
 msgstr ""
 
-#: View/Users/login.ctp:21
-msgid "Пароль"
+#: View/Users/login.ctp:22
+msgid "Войти"
 msgstr ""
 
 #: View/Users/login.ctp:24
@@ -211,16 +198,21 @@ msgstr ""
 msgid "Забыли пароль?"
 msgstr ""
 
+#: View/Users/login.ctp:31
+#: View/Users/register.ctp:51
+msgid "Регистрация"
+msgstr ""
+
 #: View/Users/login.ctp:40
 msgid "Вы можете войти как"
 msgstr ""
 
 #: View/Users/password_change.ctp:12
-msgid "Изменение пароля:"
+msgid "Изменение пароля"
 msgstr ""
 
 #: View/Users/password_change.ctp:14
-msgid "Пожалуйста, введите свой старый пароль из соображений безопасности, а затем новый пароль дважды."
+msgid "Пожалуйста, введите свой старый пароль из соображений безопасности, а затем новый пароль дважды"
 msgstr ""
 
 #: View/Users/password_change.ctp:18
@@ -228,10 +220,12 @@ msgid "Текущий пароль"
 msgstr ""
 
 #: View/Users/password_change.ctp:27
+#: View/Users/password_reset.ctp:16
 msgid "Новый пароль"
 msgstr ""
 
 #: View/Users/password_change.ctp:34
+#: View/Users/password_reset.ctp:21
 #: View/Users/register.ctp:37
 msgid "Повторите пароль"
 msgstr ""
@@ -242,53 +236,40 @@ msgid "Сохранить изменения"
 msgstr ""
 
 #: View/Users/password_resend.ctp:6
-msgid "Для сброса пароля введите свой адрес электронной почты."
+msgid "Для сброса пароля введите свой адрес электронной почты"
 msgstr ""
 
 #: View/Users/password_resend.ctp:21
-msgid "Ваш адрес электронной почты:"
+msgid "Ваш адрес электронной почты"
 msgstr ""
 
 #: View/Users/password_resend.ctp:26
 #: View/Users/register.ctp:40
-msgid "Пожалуйста, подтвердите, что вы человек."
+msgid "Пожалуйста, подтвердите, что вы человек"
 msgstr ""
 
 #: View/Users/password_resend.ctp:30
-msgid "Отправть запрос"
+msgid "Отправить запрос"
 msgstr ""
 
 #: View/Users/password_reset.ctp:11
-msgid "Выберите новый пароль."
-msgstr ""
-
-#: View/Users/password_reset.ctp:16
-msgid "Новый пароль:"
-msgstr ""
-
-#: View/Users/password_reset.ctp:21
-#: View/Users/register.ctp:37
-msgid "Повторите пароль:"
+msgid "Выберите новый пароль"
 msgstr ""
 
 #: View/Users/password_reset.ctp:27
 msgid "Отправить"
 msgstr ""
 
-#: View/Users/profile.ctp:13
-msgid "Здесь вы можете изменить свои основные данные."
-msgstr ""
-
 #: View/Users/profile.ctp:14
-msgid "Имя пользователя:"
+msgid "Имя пользователя"
 msgstr ""
 
 #: View/Users/profile.ctp:16
-msgid "Фамилия пользователя:"
+msgid "Фамилия пользователя"
 msgstr ""
 
 #: View/Users/profile.ctp:18
-msgid "Часовой пояс:"
+msgid "Часовой пояс"
 msgstr ""
 
 #: View/Users/register.ctp:16
@@ -300,15 +281,11 @@ msgid "Или использовать аккаунт социальной се�
 msgstr ""
 
 #: View/Users/register.ctp:27
-msgid "Имя:"
-msgstr ""
-
-#: View/Users/register.ctp:27
 msgid "Введите ваше имя"
 msgstr ""
 
 #: View/Users/register.ctp:31
-msgid "Email:"
+msgid "Email"
 msgstr ""
 
 #: View/Users/register.ctp:31
@@ -316,7 +293,7 @@ msgid "Укажите адрес электронной почты"
 msgstr ""
 
 #: View/Users/register.ctp:33
-msgid "Логин:"
+msgid "Логин"
 msgstr ""
 
 #: View/Users/register.ctp:33
@@ -373,6 +350,10 @@ msgstr ""
 
 #: Model/User.php:validation for field password
 msgid "Минимальная длина пароля - %d символа"
+msgstr ""
+
+#: Model/User.php:validation for field old_password
+msgid "Неверный текущий пароль"
 msgstr ""
 
 #: Model/User.php:validation for field email
