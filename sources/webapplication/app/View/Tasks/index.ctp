@@ -37,6 +37,8 @@
                     <li ><a href="#expired" data-toggle="tab" date="expired" class="tab2"><?php echo __d('tasks', 'Просроченные'); ?></a></li>
                     <li ><a href="#completed" data-toggle="tab" date="completed"><?php echo __d('tasks', 'Завершенные'); ?></a></li>
                     <li ><a href="#future" data-toggle="tab" date="future" class="tab2"><?php echo __d('tasks', 'Будущие'); ?></a></li>
+                    <li class="divider"></li>
+                    <li ><a href="#deleted" data-toggle="tab" date="deleted" class="tab2"><?php echo __d('tasks', 'Удаленные'); ?></a></li>
                 </ul>
             </div>   
            </li>
@@ -151,6 +153,19 @@
                     <h3><?php echo __d('tasks', 'Завершенные задачи'); ?></h3>
                   </div>
                     <ul class=" ui-helper-reset " date="completed">
+                    </ul>
+                    <?php echo $this->element('empty_lists', array('type' => 'completed', 'hide' => true));?>
+                  </div>
+                </div>
+          </div>
+          <div class="tab-pane" id="deleted">
+              <div class="row">
+                  <div class="listTask">
+                  <div class="margin-bottom10">
+                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
+                    <h3><?php echo __d('tasks', 'Удаленные задачи'); ?></h3>
+                  </div>
+                    <ul class="sortable connectedSortable ui-helper-reset " date="deleted">
                     </ul>
                     <?php echo $this->element('empty_lists', array('type' => 'completed', 'hide' => true));?>
                   </div>
@@ -385,6 +400,7 @@
 
 <script type="text/template" id="day_h3_label">
     <h3 class="day label label-info margin-bottom10" rel="tooltip" title="<?php echo __d('tasks', 'Кликните для перехода<br/> на'); ?>&nbsp;<%= date %>">
-	   <span class="dayDate"><%= date %></span> - <span class="<%= weekDayStyle %>"><%= weekDay %></span>
+	   <span class="dayDate"><%= date %></span><span class="dash"> - </span><span class="<%= weekDayStyle %>"><%= weekDay %></span>
     </h3>
 </script>
+
