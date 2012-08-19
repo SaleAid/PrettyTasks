@@ -150,7 +150,7 @@ class UsersController extends AppController {
                 $this->redirect($this->Auth->redirect());
             }
         }
-        $this->Session->setFlash(__d('users', 'Invalid key.'));
+        $this->Session->setFlash(__d('users', 'Invalid key'));
         $this->redirect(array(
             'action' => 'login'
         ));

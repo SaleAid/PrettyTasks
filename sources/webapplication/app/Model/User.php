@@ -128,7 +128,7 @@ class User extends AppModel {
             ), 
             'matchPasswords' => array(
                 'rule' => 'matchPasswords', 
-                'message' => 'Ваш пароль не совпадает'
+                'message' => 'Пароли не совпадает'
             )
         ), 
         'password_confirm' => array(
@@ -148,7 +148,7 @@ class User extends AppModel {
             ), 
             'matchOldPasswords' => array(
                 'rule' => 'matchOldPasswords', 
-                'message' => 'Ваш пароль не совпадает'
+                'message' => 'Неверный текущий пароль'
             )
         ), 
         'email' => array(
@@ -171,7 +171,7 @@ class User extends AppModel {
         if ($data['password'] == $this->data[$this->alias]['password_confirm']) {
             return true;
         }
-        $this->invalidate('password_confirm', __d('users', 'Ваш пароль не совпадает'));
+        $this->invalidate('password_confirm', __d('users', 'Пароли не совпадает'));
         return false;
     }
 

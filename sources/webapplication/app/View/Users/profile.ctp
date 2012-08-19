@@ -10,12 +10,12 @@
     )));?>
 
 	<fieldset>
-		<legend><?php echo __d('users', 'Здесь вы можете изменить свои основные данные.'); ?></legend>
-        <?php echo $this->Form->input('first_name', array('label' => __d('users', 'Имя пользователя:'), 'class' => 'input-xlarge'));?>
+		<legend><?php echo __d('users', 'Управление профилем'); ?></legend>
+        <?php echo $this->Form->input('first_name', array('label' => __d('users', 'Имя пользователя'), 'class' => 'input-xlarge'));?>
            
-        <?php echo $this->Form->input('last_name', array('label' => __d('users', 'Фамилия пользователя:'), 'class' => 'input-xlarge'));?>
+        <?php echo $this->Form->input('last_name', array('label' => __d('users', 'Фамилия пользователя'), 'class' => 'input-xlarge'));?>
         
-        <?php echo $this->Form->label('timezone', __d('users', 'Часовой пояс:')); ?>
+        <?php echo $this->Form->label('timezone', __d('users', 'Часовой пояс')); ?>
 	    
         <?php echo $this->Form->select('timezone', $list)?>
         

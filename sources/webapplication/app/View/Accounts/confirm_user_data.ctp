@@ -11,9 +11,9 @@
             )));?>
         	<fieldset>
                 <legend><?php echo __d('accounts', 'Регистрация аккаунта'); ?></legend>
-            	<?php echo $this->Form->input('User.username', array('label' => __d('accounts', 'Логин:'), 'class' => 'input-xlarge')); ?>
+            	<?php echo $this->Form->input('User.username', array('label' => __d('accounts', 'Логин'), 'class' => 'input-xlarge')); ?>
                 
-            	<?php echo $this->Form->input('User.first_name', array('label' => __d('accounts', 'Имя:'), 'class' => 'input-xlarge')); ?>
+            	<?php echo $this->Form->input('User.first_name', array('label' => __d('accounts', 'Имя'), 'class' => 'input-xlarge')); ?>
             	
                 <?php //echo $this->Form->input('User.last_name',array('class' => 'input-xlarge', 'error' => array('attributes' => array('class' => 'controls help-block')))); ?> 
                 

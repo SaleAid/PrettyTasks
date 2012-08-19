@@ -1,0 +1,32 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2012-08-14 15:56+0300\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: prettytasks@gmail.com\n"
+"Language-Team: prettytasks@gmail.com\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: Model/Faq.php:validation for field faqcategory_id
+msgid "Wrong ID"
+msgstr ""
+
+#: Model/Faq.php:validation for field lang;validation for field subject
+msgid "notempty"
+msgstr ""
+
+#: Model/Faq.php:validation for field active
+msgid "boolean"
+msgstr ""
+
+#: Model/Faq.php:validation for field user_id
+msgid "numeric"
+msgstr ""
+

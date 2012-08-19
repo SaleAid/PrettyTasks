@@ -1,0 +1,138 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2012-08-17 21:01+0300\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: prettytasks@gmail.com\n"
+"Language-Team: prettytasks@gmail.com\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+
+#: Controller/AccountsController.php:42
+msgid "Этот аккаунт уже связан"
+msgstr ""
+
+#: Controller/AccountsController.php:46
+msgid "Этот аккаунт уже связан с другим пользователем"
+msgstr ""
+
+#: Controller/AccountsController.php:64
+msgid "Этот аккаунт успешно прикреплен"
+msgstr ""
+
+#: Controller/AccountsController.php:68
+msgid "Ошибка связывания аккаунта"
+msgstr ""
+
+#: Controller/AccountsController.php:76
+msgid "Ошибка"
+msgstr ""
+
+#: Controller/AccountsController.php:96
+msgid "Your account not active."
+msgstr ""
+
+#: Controller/AccountsController.php:124
+msgid "An unknown error"
+msgstr ""
+
+#: Controller/AccountsController.php:139;175;221
+msgid "Код активации аккаунта был выслан Вам на почту."
+msgstr ""
+
+#: Controller/AccountsController.php:144
+msgid "Возникли проблемы при отправке кода активации аккаунта."
+msgstr ""
+
+#: Controller/AccountsController.php:164
+msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз."
+msgstr ""
+
+#: Controller/AccountsController.php:180;227
+msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта."
+msgstr ""
+
+#: Controller/AccountsController.php:185
+msgid "Error create account"
+msgstr ""
+
+#: Controller/AccountsController.php:233
+msgid "Error create user account"
+msgstr ""
+
+#: Controller/AccountsController.php:240
+msgid "Регистрация не удалась. Заполните поля полностью"
+msgstr ""
+
+#: Controller/AccountsController.php:286
+msgid "Ваша учетная запись была активирована"
+msgstr ""
+
+#: Controller/AccountsController.php:292
+msgid "Invalid key."
+msgstr ""
+
+#: Controller/AccountsController.php:310
+msgid "Invalid Account"
+msgstr ""
+
+#: Controller/AccountsController.php:314
+msgid "Account deleted"
+msgstr ""
+
+#: Controller/AccountsController.php:322
+msgid "Account was not deleted"
+msgstr ""
+
+#: Model/Account.php:120
+msgid "Ваш основной аккаунт заблокирован"
+msgstr ""
+
+#: Model/Account.php:125
+msgid "Ваш основной аккаунт деактивирован"
+msgstr ""
+
+#: View/Accounts/confirm_email.ctp:14
+msgid "Введите Ваш e-mail"
+msgstr ""
+
+#: View/Accounts/confirm_email.ctp:18
+#: View/Accounts/confirm_user_data.ctp:26
+#: View/Accounts/reactivate.ctp:21
+msgid "Далее"
+msgstr ""
+
+#: View/Accounts/confirm_user_data.ctp:13
+msgid "Регистрация аккаунта"
+msgstr ""
+
+#: View/Accounts/confirm_user_data.ctp:14
+msgid "Логин:"
+msgstr ""
+
+#: View/Accounts/confirm_user_data.ctp:16
+msgid "Имя:"
+msgstr ""
+
+#: View/Accounts/confirm_user_data.ctp:22
+msgid "Я согласен с "
+msgstr ""
+
+#: View/Accounts/confirm_user_data.ctp:22
+msgid "условиями использования"
+msgstr ""
+
+#: View/Accounts/reactivate.ctp:14
+msgid "Повторная активация"
+msgstr ""
+
+#: View/Accounts/reactivate.ctp:15
+msgid "Имя"
+msgstr ""
+

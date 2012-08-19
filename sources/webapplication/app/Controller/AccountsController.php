@@ -93,7 +93,7 @@ class AccountsController extends AppController {
                 case 'notActive' :
                     {
                         $this->Session->write('tmpUser', $result);
-                        $this->Session->setFlash(__d('accounts', 'Your account not active.'), 'alert', array(
+                        $this->Session->setFlash(__d('accounts', 'Your account not active'), 'alert', array(
                             'class' => 'alert-info'
                         ));
                         $this->redirect(array(
@@ -136,12 +136,12 @@ class AccountsController extends AppController {
             if ($this->request->is('post') || $this->request->is('put')) {
                 $this->Session->delete('tmpUser');
                 if ($this->Account->reactivate($user_profile[$this->modelClass]['id'], $this->name)) {
-                    $this->Session->setFlash(__d('accounts', 'Код активации аккаунта был выслан Вам на почту.'), 'alert', array(
+                    $this->Session->setFlash(__d('accounts', 'Код активации аккаунта был выслан Вам на почту'), 'alert', array(
                         'class' => 'alert-success'
                     ));
                     $this->redirect('/');
                 }
-                $this->Session->setFlash(__d('accounts', 'Возникли проблемы при отправке кода активации аккаунта.'), 'alert', array(
+                $this->Session->setFlash(__d('accounts', 'Возникли проблемы при отправке кода активации аккаунта'), 'alert', array(
                     'class' => 'alert-success'
                 ));
                 $this->redirect('/');
@@ -161,7 +161,7 @@ class AccountsController extends AppController {
         if ($this->request->is('post') || $this->request->is('put')) {
             $user['email'] = $this->request->data['User']['email'];
             if (! $this->Account->User->validateEmail($this->request->data['User']['email'])) {
-                return $this->Session->setFlash(__d('accounts', 'Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз.'), 'alert', array(
+                return $this->Session->setFlash(__d('accounts', 'Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз'), 'alert', array(
                     'class' => 'alert-error'
                 ));
             }
@@ -172,12 +172,12 @@ class AccountsController extends AppController {
                 $user['activate_token'] = $this->Account->User->generateToken();
                 if ($this->Account->save($user)) {
                     if ($this->Account->sendActivationAccount($this->Account->getLastInsertID(), $this->name)) {
-                        $this->Session->setFlash(__d('accounts', 'Код активации аккаунта был выслан Вам на почту.'), 'alert', array(
+                        $this->Session->setFlash(__d('accounts', 'Код активации аккаунта был выслан Вам на почту'), 'alert', array(
                             'class' => 'alert-success'
                         ));
                         $this->redirect('/');
                     }
-                    $this->Session->setFlash(__d('accounts', 'Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта.'), 'alert', array(
+                    $this->Session->setFlash(__d('accounts', 'Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта'), 'alert', array(
                         'class' => 'alert-success'
                     ));
                     $this->redirect('/');
@@ -218,13 +218,13 @@ class AccountsController extends AppController {
                 $userTmp['activate_token'] = $this->Account->User->generateToken();
                 if ($this->Account->save($userTmp)) {
                     if ($this->Account->sendActivationAccount($this->Account->getLastInsertID(), $this->name)) {
-                        $this->Session->setFlash(__d('accounts', 'Код активации аккаунта был выслан Вам на почту.'), 'alert', array(
+                        $this->Session->setFlash(__d('accounts', 'Код активации аккаунта был выслан Вам на почту'), 'alert', array(
                             'class' => 'alert-success'
                         ));
                         $this->Session->delete('tmpUser');
                         $this->redirect('/');
                     }
-                    $this->Session->setFlash(__d('accounts', 'Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта.'), 'alert', array(
+                    $this->Session->setFlash(__d('accounts', 'Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта'), 'alert', array(
                         'class' => 'alert-success'
                     ));
                     $this->Session->delete('tmpUser');
@@ -289,7 +289,7 @@ class AccountsController extends AppController {
                 $this->redirect($this->Auth->redirect());
             }
         }
-        $this->Session->setFlash(__d('accounts', 'Invalid key.'));
+        $this->Session->setFlash(__d('accounts', 'Invalid key'));
         $this->redirect(array(
             'controller' => 'Users', 
             'action' => 'login'

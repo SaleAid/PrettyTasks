@@ -1,0 +1,76 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2012-08-17 21:01+0300\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: prettytasks@gmail.com\n"
+"Language-Team: prettytasks@gmail.com\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+
+#: Controller/FeedbacksController.php:18
+msgid "Ошибка при передачи данных"
+msgstr ""
+
+#: Controller/FeedbacksController.php:30
+msgid "Ваше сообщение было сохранено"
+msgstr ""
+
+#: Controller/FeedbacksController.php:37
+msgid "Ваше сообщение не удалось сохранить. Попробуйте снова."
+msgstr ""
+
+#: View/Feedbacks/add.ctp:18
+msgid "Сообщение разработчикам"
+msgstr ""
+
+#: View/Feedbacks/add.ctp:20
+msgid "Идея"
+msgstr ""
+
+#: View/Feedbacks/add.ctp:21
+msgid "Проблема"
+msgstr ""
+
+#: View/Feedbacks/add.ctp:22
+msgid "Вопрос"
+msgstr ""
+
+#: View/Feedbacks/add.ctp:23
+msgid "Благодарность"
+msgstr ""
+
+#: View/Feedbacks/add.ctp:28
+msgid "Тема"
+msgstr ""
+
+#: View/Feedbacks/add.ctp:29;38
+msgid "Сообщение"
+msgstr ""
+
+#: View/Feedbacks/add.ctp:31
+msgid "Отправить"
+msgstr ""
+
+#: View/Feedbacks/add.ctp:39
+msgid "Ваше мнение очень важно для нас."
+msgstr ""
+
+#: View/Feedbacks/add.ctp:40
+msgid "Пожалуйста, опишите Вашу просьбу, проблему как можно более подробно, чтобы мы могли быстрее и полнее ее проработать."
+msgstr ""
+
+#: View/Feedbacks/add.ctp:41
+msgid "Спасибо за сотрудничество."
+msgstr ""
+
+#: View/Feedbacks/add.ctp:42
+msgid "Мы делаем все, чтобы наш сервис приносил Вам наибольшую пользу и комфорт."
+msgstr ""
+

@@ -1,0 +1,105 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2012-08-18 00:06+0300\n"
+"PO-Revision-Date: 2012-08-18 01:05+0300\n"
+"Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
+"Language-Team: prettytasks@gmail.com\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: Controller/FeedbacksController.php:18
+msgid "Ошибка при передачи данных"
+msgstr "Error while data transfer"
+
+#: Controller/FeedbacksController.php:30
+msgid "Ваше сообщение было сохранено"
+msgstr "Your message has been saved"
+
+#: Controller/FeedbacksController.php:37
+msgid "Ваше сообщение не удалось сохранить. Попробуйте снова."
+msgstr "Your message has not been saved. Please, try again."
+
+#: View/Feedbacks/add.ctp:18
+msgid "Сообщение разработчикам"
+msgstr "Message to creators"
+
+#: View/Feedbacks/add.ctp:20
+msgid "Идея"
+msgstr "Idea"
+
+#: View/Feedbacks/add.ctp:21
+msgid "Проблема"
+msgstr "Problem"
+
+#: View/Feedbacks/add.ctp:22
+msgid "Вопрос"
+msgstr "Question"
+
+#: View/Feedbacks/add.ctp:23
+msgid "Благодарность"
+msgstr "Thanks"
+
+#: View/Feedbacks/add.ctp:28
+msgid "Тема"
+msgstr "Subject"
+
+#: View/Feedbacks/add.ctp:29;38
+msgid "Сообщение"
+msgstr "Message"
+
+#: View/Feedbacks/add.ctp:31
+msgid "Отправить"
+msgstr "Send"
+
+#: View/Feedbacks/add.ctp:39
+msgid "Ваше мнение очень важно для нас."
+msgstr "Your opinion is important for us."
+
+#: View/Feedbacks/add.ctp:40
+msgid "Пожалуйста, опишите Вашу просьбу, проблему как можно более подробно, чтобы мы могли быстрее и полнее ее проработать."
+msgstr "Please, describe your request or issue as detailed as possible, for us to work it out faster and more effectively."
+
+#: View/Feedbacks/add.ctp:41
+msgid "Спасибо за сотрудничество."
+msgstr "Thank you for the collaboration."
+
+#: View/Feedbacks/add.ctp:42
+msgid "Мы делаем все, чтобы наш сервис приносил Вам наибольшую пользу и комфорт."
+msgstr "We do everything to provide you the best service."
+
+#: Model/Feedback.php:validation
+#: for field lang
+msgid "notempty"
+msgstr "The field should not be empty"
+
+#: Model/Feedback.php:validation
+#: for field category
+msgid "Please select a category"
+msgstr "Please select a category"
+
+#: Model/Feedback.php:validation
+#: for field status
+msgid "numeric"
+msgstr "Please, enter a number"
+
+#: Model/Feedback.php:validation
+#: for field subject;validation message
+msgid "Поле должно быть заполнено"
+msgstr "The field should not be empty"
+
+#: Model/Feedback.php:validation
+#: for field processed
+msgid "boolean"
+msgstr "boolean"
+
+#: Model/Feedback.php:validation
+#: for field user_id
+msgid "Wrong ID"
+msgstr "Wrong ID"
+

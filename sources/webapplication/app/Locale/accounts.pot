@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-14 15:56+0300\n"
+"POT-Creation-Date: 2012-08-18 01:08+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -35,7 +35,7 @@ msgid "Ошибка"
 msgstr ""
 
 #: Controller/AccountsController.php:96
-msgid "Your account not active."
+msgid "Your account not active"
 msgstr ""
 
 #: Controller/AccountsController.php:124
@@ -43,19 +43,19 @@ msgid "An unknown error"
 msgstr ""
 
 #: Controller/AccountsController.php:139;175;221
-msgid "Код активации аккаунта был выслан Вам на почту."
+msgid "Код активации аккаунта был выслан Вам на почту"
 msgstr ""
 
 #: Controller/AccountsController.php:144
-msgid "Возникли проблемы при отправке кода активации аккаунта."
+msgid "Возникли проблемы при отправке кода активации аккаунта"
 msgstr ""
 
 #: Controller/AccountsController.php:164
-msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз."
+msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз"
 msgstr ""
 
 #: Controller/AccountsController.php:180;227
-msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта."
+msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта"
 msgstr ""
 
 #: Controller/AccountsController.php:185
@@ -75,7 +75,7 @@ msgid "Ваша учетная запись была активирована"
 msgstr ""
 
 #: Controller/AccountsController.php:292
-msgid "Invalid key."
+msgid "Invalid key"
 msgstr ""
 
 #: Controller/AccountsController.php:310
@@ -113,11 +113,12 @@ msgid "Регистрация аккаунта"
 msgstr ""
 
 #: View/Accounts/confirm_user_data.ctp:14
-msgid "Логин:"
+msgid "Логин"
 msgstr ""
 
 #: View/Accounts/confirm_user_data.ctp:16
-msgid "Имя:"
+#: View/Accounts/reactivate.ctp:15
+msgid "Имя"
 msgstr ""
 
 #: View/Accounts/confirm_user_data.ctp:22
@@ -130,10 +131,6 @@ msgstr ""
 
 #: View/Accounts/reactivate.ctp:14
 msgid "Повторная активация"
-msgstr ""
-
-#: View/Accounts/reactivate.ctp:15
-msgid "Имя"
 msgstr ""
 
 #: Model/Account.php:validation for field user_id
