@@ -51,6 +51,9 @@
                <?php /*
                <li><a href="#"><?php echo __d('pages', 'On Google+'); ?></a></li>
                */?>
+               <li>&nbsp;</li>
+               <li>&nbsp;</li>
+
 			</ul>
 		</div> 
 		

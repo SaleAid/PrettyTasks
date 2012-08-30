@@ -150,7 +150,7 @@ function superAjax(url, data){
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-            if(xhr.status == '404' || xhr.status == 0){
+                if(xhr.status == '404' || xhr.status == 0){
                     showErrorConnection(true);
                 }else{
                     reload();
@@ -200,6 +200,9 @@ function userEvent(action, data){
         case 'getTasksByType':
             taskGetTasksByType(data.type);
         break;
+        case 'deleteAll':
+            taskDeleteAll(data.confirm);
+        break;
                     
     }
 }
@@ -245,9 +248,35 @@ function responseHandler(data){
         case 'getTasksByType':
             onGetTasksByType(data);
         break;
+        case 'deleteAll':
+            onDeleteAll(data);
+        break;
     }
 
 }
+//---------------deleteAll---------
+function taskDeleteAll(confirm){
+    srvDeleteAll(confirm);    
+}
+
+function srvDeleteAll(confirm){
+    superAjax('/tasks/deleteAll.json',{confirm: confirm});
+}
+
+function scrDeleteAll(){
+    $('#deleted ul[date="deleted"]').empty().siblings('.emptyList').removeClass('hide');
+    $('.delete_all').attr('disabled', 'disabled');
+}
+function onDeleteAll(data){
+    if(!data.success){
+        mesg(data.message.message, data.message.type); 
+    }else{
+        scrDeleteAll();
+    }
+}
+
+//---------------------------------
+
 //---------------getTasksByType----
 function taskGetTasksByType(type){
     srvGetTasksByType(type);    
@@ -268,6 +297,9 @@ function scrGetTasksByType(data){
         case 'completed':
             completedTasks(data.data);
         break;           
+        case 'deleted':
+            deletedTasks(data.data);
+        break;   
      }
 }
 function onGetTasksByType(data){
@@ -353,6 +385,7 @@ function completedTasks(data){
             priority = +value.Task.priority ? 'important' : '';
             time = value.Task.time ?  value.Task.time.slice(0,-3) : '';
             timeend = value.Task.timeend ?  value.Task.timeend.slice(0,-3) : ''; 
+            
             task = '<li class="'+priority+'"> '+
             '<span class="time">'+time+'</span> '+
             '<span class="timeEnd">'+timeend+'</span> '+
@@ -360,6 +393,42 @@ function completedTasks(data){
             '</li> ';
             listUl.append( task );
             
+        });
+    });
+}
+
+function deletedTasks(data){
+    var listUl = $('#deleted ul[date="deleted"]');
+    var task, priority, time, timeend;
+    listUl.empty();
+    if($.isEmptyObject(data)){
+        listUl.siblings('.emptyList').removeClass('hide');
+        $('.delete_all').attr('disabled', 'disabled');
+    }else{
+        listUl.siblings('.emptyList').addClass('hide');
+        $('.delete_all').removeAttr('disabled');
+    }
+    $.each(data,function(index, value) {
+        if(+value.list.length){
+            //day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class="'+value.weekDayStyle+'">'+value.weekDay+'</span></h3>');
+            day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
+            day = $(day_tmp);
+            if(!index){
+                day.removeAttr('title');
+                day.find('.dash').remove();    
+            }
+            day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
+            initDayClick(day.children('span:first'));
+            listUl.append(day);   
+        }
+        $.each(value.list,function(index, value) {
+            listUl.append( AddTask(value) );
+            initDelete(listUl.find("li[id='"+value.Task.id+"'] .deleteTask"));
+            //initEditAble("li[id='"+value.Task.id+"'] .editable");
+            initDone(listUl.find("li[id='"+value.Task.id+"'] .done"));
+            //initEditTask("li[id='"+value.Task.id+"'] .editTask");
+            listUl.find(" li[id='"+value.Task.id+"'] .editTask").addClass('hide');
+            listUl.find(" li[id='"+value.Task.id+"'] .done").addClass('hide');
         });
     });
 }
@@ -531,51 +600,6 @@ function scrAddDay(date){
         activeTab(date);
         return false;    
     }
-    //var newTabContent = '<div class="tab-pane" id="'+date+'"> '+
-//                    '<div class="row"> '+ 
-//                        '<div class="listTask"> '+
-//                            '<div class="margin-bottom10"> '+
-//                            '<img class="print" src="/img/print.png" width="16" height="16"/> '+
-//                            '<h3 class="label label-info">'+date+'<span class="weekday"></span></h3> '+
-//                            '</div> '+
-//                            '<div class="well form-inline"> '+
-//                                '<div class="input-append"> '+
-//                                    '<input type="text" size="16" class="input-xxlarge createTask" placeholder=" +Добавить задание…"/>'+
-//                                    '<span class="add-on">?</span> '+
-//                                '</div> '+
-//                                '<button class="btn createTaskButton"> Добавить </button> '+
-//                            '</div> '+
-//                            '<div class="filter"> '+
-//                                '<span>Фильтр:&nbsp; </span> '+
-//                                '<a href="" class="active" data="all">Все</a> '+
-//                                '<span class="all badge badge-info"> '+
-//                                    '0'+
-//                                '</span>, '+
-//                                '&nbsp; '+
-//                                '<a href=""  data="inProcess">В Процессе</a> '+                          
-//                                '<span class="inProcess badge badge-warning"> '+
-//                                    '0'+
-//                                '</span>, '+
-//                                '&nbsp; '+
-//                                '<a href="" data="completed">Выполненные</a> '+
-//                                '<span class="completed badge badge-success"> '+
-//                                    '0'+
-//                                '</span> '+
-//                            '</div> '+
-//                            '<div class="days"> '+
-//                                '<a href="" data="commentDay">Комментарий</a> '+
-//                                '<label class="checkbox ratingDay"> '+
-//                                    '<input type="checkbox" date="'+date+'"/> Удачный день '+
-//                                '</label> '+
-//                            '</div> '+
-//                            '<div class="clear"></div> '+
-//                            '<ul class="sortable connectedSortable ui-helper-reset" date="'+date+'"> '+
-//                                '<p class="loadContent" align=center> <img src="/img/ajax-loader-content.gif"/></p> '+
-//                            '</ul> '+
-//                        '</div> '+
-//                    '</div> '+
-//                '</div> ';
-    
     var newTabContent = _.template($("#day_tab_content_template").html(), {date: date} );            
     $('.tab-content').append(newTabContent); 
     var listUserDay = $('#main ul.nav-tabs').children('li.userDay').get();
@@ -738,6 +762,7 @@ function toSeconds(t) {
     return bits[0]*3600 + bits[1]*60;
 }
 function scrDragWithTime(id, date, time){
+        var before = false;
         var task = $("li[id='"+id+"'].currentTask");
         var currentTaskDate = task.attr('date');
         var taskRemote =  $("li[id='"+id+"']:not(.currentTask)");
@@ -745,17 +770,15 @@ function scrDragWithTime(id, date, time){
         task.removeClass('currentTask');
         if(!date){
             var list = $("ul[date='planned']");
+            time = null;
+            scrTime(id, time)
         }else{
             var list = $("ul[date='"+date+"']");    
         }
         var timeList = list.find('li.setTime');
         var newPositionID;
-        var prePositionID;
-        var position;
-        var preTime;
-        var curTime;
-        var change = $.trim(task.find('.time').text())!= time || task.attr('date') != date;
-        if(change){
+        //var change = $.trim(task.find('.time').text())!= time;
+       // if(change){
             if(time){
                 var listitems = list.children('li.setTime').get();
                 listitems.sort(function(a, b) {
@@ -768,24 +791,30 @@ function scrDragWithTime(id, date, time){
                         newPositionID = $(itm).attr('id');
                     }
                 });
+                
+                if(!newPositionID && listitems.length){
+                    newPositionID = $(listitems[0]).attr('id');
+                    before = true;
+                }
            }
            task.hide('show', function() {
                 if(newPositionID != id && newPositionID){
-                    $(this).insertAfter( list.children('#'+newPositionID)).show();    
-                }else if(!+newPositionID){
-                    if(change){
-                        if(list.children().length){
-                            if(currentTaskDate == date && !time){
-                                //$(this).show();
-                            }else{
-                                $(this).prependTo(list);
-                            }
-                        }else{
-                            $(this).appendTo(list);
-                        }
-                    } 
-                }else{
-                    //$(this).show();
+                    if(before){
+                        $(this).insertBefore( list.children('#'+newPositionID)).show();
+                    }else{
+                        $(this).insertAfter( list.children('#'+newPositionID)).show();
+                    }
+                        
+                }else if(!newPositionID){
+                    if(list.children().length){
+                        //if( !(currentTaskDate == date && !time)){
+                            $(this).prependTo(list);
+                        //}else{
+                        //    $(this).appendTo(list);
+                        //}
+                    }else{
+                        $(this).appendTo(list);
+                    }
                 }                    
                 if(time){
                     $(this).addClass('setTime');
@@ -801,12 +830,17 @@ function scrDragWithTime(id, date, time){
                     initEditAble($(this).children('.editable'));
                     initEditTask($(this).children('.editTask'));
                 }
+                if($(this).children('.done').hasClass('hide')){
+                    $(this).children('.done').removeClass('hide');
+                }
                 if(currentTaskDate != date){
                     srcCountTasks(currentTaskDate);
                     srcCountTasks(date);
+                }else{
+                    srcCountTasks(date);
                 }
         });
-    }
+  //  }
 }
 
 //----------------changeOrder---
@@ -849,16 +883,17 @@ function scrDragOnDay(id, date, time){
 
 //----------------delete--------
 function taskDelete(id){
-    scrDelete(id);
     srvDelete(id);
+    scrDelete(id);
 }
 function onDelete(data){
     if(!data.success){
-        mesg(data.message.message, data.message.type);    
-    }
+        mesg(data.message.message, data.message.type);
+    }    
+        
 }
 function srvDelete(id){
-    superAjax('/tasks/deleteTask.json',{id: id});
+    superAjax('/tasks/setDelete.json',{id: id});
 }
 function scrDelete(id){
     var date = $("li[id='"+id+"']").attr('date');
@@ -1134,9 +1169,10 @@ function initDrop(element){
              drop: function( event, ui ) {
                 dropped = true;
                 var id = ui.draggable.attr('id');
-                var date = $(this).find( "a" ).attr( "date" );
+                var date = $(this).children( "a" ).attr( "date" )
                 var time = $.trim(ui.draggable.children('.time').text());
-                if(date == ui.draggable.attr("date") || (date == 'planned' && !ui.draggable.attr("date")) ){
+                //if((date == ui.draggable.attr("date")) || (date == 'planned' && !ui.draggable.attr("date")) ){
+                if((date == 'planned' && !ui.draggable.attr("date")) ){
                     mesg(GLOBAL_CONFIG.moveForbiddenMessage, 'success');
                     return false;   
                 }
@@ -1167,6 +1203,7 @@ function initSortable(element){
                 }
                 if( ui.item.parent().attr('date') == 'expired' || 
                     ui.item.parent().attr('date') == 'future' ||
+                    ui.item.parent().attr('date') == 'deleted' ||
                     ui.item.hasClass('setTime') ){
                     mesg(GLOBAL_CONFIG.moveForbiddenMessage, 'success');
                     $(this).css("color","");
@@ -1272,6 +1309,15 @@ function InitClock() {
   document.getElementById('clock').innerHTML = temp; 
   setTimeout("InitClock()",1000); 
 } 
+function initDeleteAll(element){
+    $(element).on('click', function(){
+        var answer = confirm('Are you sure you want to delete all tasks?');
+        if(answer){
+            var date = $(this).text();
+            userEvent('deleteAll', {confirm: answer});    
+        }
+    });
+}
 
 function reload(){
     location.reload();
@@ -1326,11 +1372,12 @@ $(function(){
             if(isDate(hash)){
                 hash = $.datepicker.formatDate('yy-mm-dd',$.datepicker.parseDate('yy-mm-dd', hash));
                 userEvent('addDay',{date: hash});
-            }else if(hash == "future" || hash == "expired" || hash == "completed"){
+            }else if(hash == "future" || hash == "expired" || hash == "completed" || hash == "deleted"){
                 userEvent('getTasksByType', {type: hash});
                 $('#main a[href="#'+hash+'"]').tab('show');
             }else if(hash == "planned"){
-                $('#main a[href="#'+hash+'"]').tab('show');    
+                //$('#main a[href="#'+hash+'"]').tab('show'); 
+                 userEvent('addDay',{date: hash});  
             }else{
                 var today = $.datepicker.formatDate('yy-mm-dd',new Date());
                 location.hash = 'day-'+today;
@@ -1373,11 +1420,13 @@ $(function(){
     initDayClick('.day');
     initPrintClick('.print');
     InitClock();
+    initDeleteAll('.delete_all');
     
 
     $(".daysButton a").click(function(){
         var type = $(this).attr('date');
         userEvent('getTasksByType', {type: type});
+        $(this).parent().parent().find('li').removeClass('active'); 
     });
     // edit task, modal window      
     $('#eTime').timepicker({
@@ -1471,6 +1520,8 @@ $(function(){
             return GLOBAL_CONFIG.onbeforeunloadMessage;
         }
     }; 
+
                
 }); 	
+
 //http://jscompress.com/

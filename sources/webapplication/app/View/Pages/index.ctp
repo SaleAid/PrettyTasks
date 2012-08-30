@@ -1,6 +1,6 @@
 
 <div class="start">
-  <?php echo $this->Html->image('comics.'. Configure::read('App.version') .'.jpg', array('width' => 970, 'height' => 585)); ?>
+  <?php echo $this->Html->image('comics.'. Configure::read('App.version') .'.jpg', array('width' => 970, 'height' =>355)); ?>
 </div>
 <div class="row">
 	<div class="span4 box left">
@@ -38,7 +38,8 @@
                 Доверься интуиции и жми
                
             </p>
-             <?php echo $this->Html->link(__('Пли!'),array('controller' => 'users', 'action' => 'login'),array('class'=> 'btn btn-success btn-large go')); ?>
+             <?php //echo $this->Html->link(__('Пли!'),array('controller' => 'users', 'action' => 'login'),array('class'=> 'btn btn-success btn-large go')); ?>
+             <?php echo $this->Html->link(__('Пли!'),array('controller' => 'users', 'action' => 'login'),array('class'=> 'btn btn-large btn-block btn btn-success')); ?>
         </div>
 	</div>
 </div>

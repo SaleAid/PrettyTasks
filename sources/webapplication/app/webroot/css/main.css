@@ -6,6 +6,21 @@
 @navbarLinkBackgroundHover rgba(0, 55, 72, 0.15)
 @navbarLinkBackgroundActive rgba(0, 55, 72, 0.15)
 */ 
+
+/*twitter.fix*/
+.navbar .nav > li > a{
+    line-height: 19px;
+    padding: 9px 10px 11px;
+}
+.navbar .nav .active > a,
+.navbar .nav .active > a:hover{color:#ffffff;}
+.navbar .nav > li > a:hover{color:#ffffff;}
+h1, h2, h3, h4, h5, h6 {margin: 0;}
+h3 {
+font-size: 18px;
+line-height: 27px;
+}
+/*       */
 .container, 
 #wrapper, 
 .navbar-fixed-bottom .container, 
@@ -73,6 +88,8 @@ body {
     margin-left: 70px;
 }
 
+.um{width: 200px;}
+
 /* Footer
 -------------------------------------------------- */
 footer {
@@ -128,7 +145,7 @@ footer .right{ text-align:right; }
 }
 /*feedback and invite*/
 #box{
-    z-index: 1999;
+    //z-index: 1999;
     position: fixed;
     right: 0;
     top: 30%;

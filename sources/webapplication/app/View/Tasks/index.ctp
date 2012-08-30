@@ -18,7 +18,7 @@
     
     <?php echo $this->Html->script('jquery.timepicker-1.2.2.min');?>
     
-    <?php echo $this->Html->script('jquery.inline-confirmation');?>
+    <?php echo $this->Html->script('jquery.inline-confirmation.'.Configure::read('App.version'));?>
     
     <?php echo $this->Html->script('jquery-ui-i18n.min');?>
     
@@ -28,23 +28,24 @@
   <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
         <ul class="nav nav-tabs listDay">
             <li class="addDay">
-            <div class="btn-group dropdown">
+            <div class="btn-group">
                 <button  id="addDay" rel="tooltip" title="<?php echo __d('tasks', 'Добавить новый день в список'); ?>" class="btn btn-large"><?php echo __d('tasks', 'Добавить день'); ?></button>
-                <button class="btn btn-large dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu daysButton">
-                    <li ><a href="#expired" data-toggle="tab" date="expired" class="tab2"><?php echo __d('tasks', 'Просроченные'); ?></a></li>
-                    <li ><a href="#completed" data-toggle="tab" date="completed"><?php echo __d('tasks', 'Завершенные'); ?></a></li>
-                    <li ><a href="#future" data-toggle="tab" date="future" class="tab2"><?php echo __d('tasks', 'Будущие'); ?></a></li>
-                    <li class="divider"></li>
-                    <li ><a href="#deleted" data-toggle="tab" date="deleted" class="tab2"><?php echo __d('tasks', 'Удаленные'); ?></a></li>
-                </ul>
             </div>   
            </li>
             <input type="hidden" id="dp"/>
-            <li class="drop">
-                <a href="#planned" data-toggle="tab" date="planned" class="tab2"><?php echo __d('tasks', 'Планируемые'); ?></a>
+            
+            <li class="drop ">
+                <span class="btn-group">
+                    <span class="dropdown-toggle s4 pull-right" data-toggle="dropdown" data-target="#"><span class="caret"></span></span>
+                        <ul class="dropdown-menu daysButton s5">
+                            <li ><a href="#expired" data-toggle="tab"  date="expired" class="tab2"><?php echo __d('tasks', 'Просроченные'); ?></a></li>
+                            <li ><a href="#completed" data-toggle="tab" date="completed"><?php echo __d('tasks', 'Завершенные'); ?></a></li>
+                            <li ><a href="#future" data-toggle="tab" date="future" class="tab2"><?php echo __d('tasks', 'Будущие'); ?></a></li>
+                            <li class="divider"></li>
+                            <li ><a href="#deleted" data-toggle="tab" date="deleted" class="tab2"><?php echo __d('tasks', 'Удаленные'); ?></a></li>
+                       </ul>
+                 </span>
+                <a href="#planned" data-toggle="tab" date="planned" class="tab2 "><?php echo __d('tasks', 'Планируемые'); ?></a>
             </li>
             <li class="active drop">
                 <a href="#<?php echo $this->Time->format('Y-m-d', time(), true); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', time(), true); ?>">
@@ -137,7 +138,7 @@
                   <div class="listTask">
                   <div class="margin-bottom10">
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
-                    <h3><?php echo __d('tasks', 'Просроченные задачи'); ?></h3>
+                    <h3 class="head-list-info"><?php echo __d('tasks', 'Просроченные задачи'); ?></h3>
                   </div>
                     <ul class="sortable connectedSortable ui-helper-reset " date="expired">
                     </ul>
@@ -150,7 +151,7 @@
                   <div class="listTask">
                   <div class="margin-bottom10">
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
-                    <h3><?php echo __d('tasks', 'Завершенные задачи'); ?></h3>
+                    <h3 class="head-list-info"><?php echo __d('tasks', 'Завершенные задачи'); ?></h3>
                   </div>
                     <ul class=" ui-helper-reset " date="completed">
                     </ul>
@@ -162,12 +163,18 @@
               <div class="row">
                   <div class="listTask">
                   <div class="margin-bottom10">
+                    
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
-                    <h3><?php echo __d('tasks', 'Удаленные задачи'); ?></h3>
+                    <button class="btn btn-small btn-danger pull-right delete_all" type="button"><?php echo __d('tasks', 'Удалить все');?></button>
+                    <h3 class="head-list-info">
+                        <?php echo __d('tasks', 'Удаленные задачи'); ?>&nbsp;
+                        <!--(<?php echo $this->Form->postLink(__d('tasks', 'Удалить окончательно'), array('action' => 'deleteAllDetetedTasks'),  array('class' => 'delete-all'), __('Are you sure you want to delete all tasks?')); ?>)
+                    
+                    --></h3>
                   </div>
                     <ul class="sortable connectedSortable ui-helper-reset " date="deleted">
                     </ul>
-                    <?php echo $this->element('empty_lists', array('type' => 'completed', 'hide' => true));?>
+                    <?php echo $this->element('empty_lists', array('type' => 'deleted', 'hide' => true));?>
                   </div>
                 </div>
           </div>
@@ -176,7 +183,7 @@
                   <div class="listTask">
                   <div class="margin-bottom10">
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
-                    <h3><?php echo __d('tasks', 'Будущие задачи'); ?></h3>
+                    <h3 class="head-list-info"><?php echo __d('tasks', 'Будущие задачи'); ?></h3>
                   </div>
                         <ul class="sortable connectedSortable ui-helper-reset " date="future">
                         </ul>

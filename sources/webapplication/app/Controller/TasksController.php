@@ -89,6 +89,11 @@ class TasksController extends AppController {
                         $result['data'] = $this->Task->getDays($this->Auth->user('id'), $from, $to);
                         break;
                     }
+                case 'deleted' :
+                    {
+                        $result['data'] = $this->Task->getAllDeleted($this->Auth->user('id'));
+                        break;
+                    }
                 default :
                     {
                         $result['success'] = false;
@@ -101,8 +106,9 @@ class TasksController extends AppController {
             $data = array();
             if (isset($result['data'])) {
                 foreach ( $result['data'] as $key => $value ) {
-                    if ($key) {
-                        $data[$key]['weekDay'] = $this->Task->getWeekDay(CakeTime::format('l', $key));
+                    if ($key or $result['type'] == 'deleted') {
+                        $weekDay = $this->Task->getWeekDay(CakeTime::format('l', $key));
+                        $data[$key]['weekDay'] =  $weekDay? $weekDay : __d('tasks', 'Планируемые');
                         if (CakeTime::isToday($key)) {
                             $data[$key]['weekDayStyle'] = '';
                         } else {
@@ -149,7 +155,11 @@ class TasksController extends AppController {
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                $task = $this->Task->setTitle($this->request->data['title'])->saveTask();
+                if (!$originTask['Task']['future']) {
+                    $task = $this->Task->setTitle($this->request->data['title'])->saveTask();
+                }else {
+                    $task = $this->Task->setTitle($this->request->data['title'], null, false)->saveTask();
+                }
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;
@@ -298,35 +308,89 @@ class TasksController extends AppController {
         ));
     }
 
-    public function deleteTask() {
+//    public function deleteTask() {
+//        $result = $this->_prepareResponse();
+//        if (! $this->_isSetRequestData('id')) {
+//            $result['message'] = array(
+//                'type' => 'error', 
+//                'message' => __d('tasks', 'Ошибка при передаче данных')
+//            );
+//        } else {
+//            $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
+//            if ($task) {
+//                if ($this->Task->delete()) {
+//                    $result['success'] = true;
+//                    //$result['data'] = $task;
+//                    $result['message'] = array(
+//                        'type' => 'success', 
+//                        'message' => __d('tasks', 'Задача успешно удалена')
+//                    );
+//                } else {
+//                    $result['message'] = array(
+//                        'type' => 'error', 
+//                        'message' => __d('tasks', 'Error')
+//                    );
+//                }
+//            } else {
+//                $result['message'] = array(
+//                    'type' => 'error', 
+//                    'message' => __d('tasks', 'Ошибка, Задача  не изменена')
+//                );
+//                $result['errors'] = $this->Task->validationErrors;
+//            }
+//        }
+//        $result['action'] = 'delete';
+//        $this->set('result', $result);
+//        $this->set('_serialize', array(
+//            'result'
+//        ));
+//    }
+    
+    public function setDelete() {
         $result = $this->_prepareResponse();
         if (! $this->_isSetRequestData('id')) {
             $result['message'] = array(
+                'errors' => __d('tasks', 'Wrong request data'), 
                 'type' => 'error', 
                 'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
-            $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
-            if ($task) {
-                if ($this->Task->delete()) {
-                    $result['success'] = true;
-                    //$result['data'] = $task;
-                    $result['message'] = array(
-                        'type' => 'success', 
-                        'message' => __d('tasks', 'Задача успешно удалена')
-                    );
-                } else {
-                    $result['message'] = array(
-                        'type' => 'error', 
-                        'message' => __d('tasks', 'Error')
-                    );
+            $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
+            if ($originTask) {
+                if (!$originTask['Task']['deleted']) {
+                    // set field deleted = 1
+                    $task = $this->Task->setDelete(1)->setOrder(0)->saveTask();
+                    if ($task) {
+                        $result['success'] = true;
+                        $result['data'] = $task;
+                        $result['message'] = array(
+                                'type' => 'success', 
+                                'message' => __d('tasks', 'Задача успешно перемещена в список удаленных задач')
+                         );
+                    } else {
+                        $result['data'] = $originTask;
+                        $result['message'] = array(
+                            'type' => 'error', 
+                            'message' => __d('tasks', 'Ошибка, Задача  не изменена')
+                        );
+                        $result['errors'] = $this->Task->validationErrors;
+                    }
+                }else{
+                    //delete task forever
+                    if ($this->Task->delete()) {
+                        $result['success'] = true;
+                        //$result['data'] = $task;
+                        $result['message'] = array(
+                            'type' => 'success', 
+                            'message' => __d('tasks', 'Задача успешно удалена')
+                        );
+                    } else {
+                        $result['message'] = array(
+                            'type' => 'error', 
+                            'message' => __d('tasks', 'Ошибка, Задача  не изменена')
+                        );
+                    }
                 }
-            } else {
-                $result['message'] = array(
-                    'type' => 'error', 
-                    'message' => __d('tasks', 'Ошибка, Задача  не изменена')
-                );
-                $result['errors'] = $this->Task->validationErrors;
             }
         }
         $result['action'] = 'delete';
@@ -335,7 +399,40 @@ class TasksController extends AppController {
             'result'
         ));
     }
-
+    
+    public function deleteAll(){
+        $result = $this->_prepareResponse();
+        if (! $this->_isSetRequestData('confirm')) {
+            $result['message'] = array(
+                'type' => 'error', 
+                'message' => __d('tasks', 'Ошибка при передаче данных')
+            );
+        } else {
+            if($this->Task->deleteAll(array('Task.user_id' => $this->Auth->user('id'),
+                                            'Task.deleted' => 1
+                                    ),
+                                     false))
+            {
+                $result['success'] = true;
+                $result['message'] = array(
+                        'type' => 'success', 
+                        'message' => __d('tasks', 'Задачи успешно удалены')
+                    );
+            } else {
+                $result['message'] = array(
+                    'type' => 'success', 
+                    'message' => __d('tasks', 'Задачи не удалены')
+                );
+                //$result['errors'] = $this->Task->validationErrors;
+            }
+        }
+        $result['action'] = 'deleteAll';
+        $this->set('result', $result);
+        $this->set('_serialize', array(
+            'result'
+        ));
+    }
+    
     public function dragOnDay() {
         $result = $this->_prepareResponse();
         $expectedData = array(
@@ -351,7 +448,7 @@ class TasksController extends AppController {
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                if ($this->Task->setOrder(1)->setDate($this->request->data['date'])->setTime($this->request->data['time'])->save()) {
+                if ($this->Task->setOrder(1)->setDelete(0)->setDate($this->request->data['date'])->setTime($this->request->data['time'])->save()) {
                     //if ($this->Task->dragOnDay($this->request->data['date'], $this->request->data['time'])->save()) {
                     $result['success'] = true;
                     $result['message'] = array(

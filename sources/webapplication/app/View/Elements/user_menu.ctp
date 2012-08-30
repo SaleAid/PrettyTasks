@@ -1,6 +1,6 @@
 <div class="span3">
-  <div class="well sidebar-nav">
-    <ul class="nav nav-pills nav-stacked">
+  <div class="well sidebar-nav um">
+    <ul class="nav nav-pills nav-stacked ">
       <li class="nav-header"><?php echo __d('users', 'Мой профиль');?></li>
       <li class="<? if($this->params['action'] == "profile") echo 'active'; ?>">
             <?php echo $this->Html->link(__d('users', 'Управление профилем'). $this->Html->tag('i', '', array('class' => 'icon-chevron-right pull-right')), array('controller' => 'users', 'action' => 'profile'), array('escape' => false)); ?>

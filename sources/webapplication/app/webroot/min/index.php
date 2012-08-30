@@ -58,7 +58,6 @@ if (isset($_GET['g'])) {
 }
 if (isset($_GET['f']) || isset($_GET['g'])) {
     // serve!   
-
     if (! isset($min_serveController)) {
         require 'Minify/Controller/MinApp.php';
         $min_serveController = new Minify_Controller_MinApp();
