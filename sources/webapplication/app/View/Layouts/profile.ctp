@@ -16,7 +16,7 @@ echo $this->Html->meta('icon');
 ?>
 
 <?php
-echo $this->Html->css('bootstrap');
+echo $this->Html->css('bootstrap.min');
 echo $this->Html->css('main.' . Configure::read('App.version'));
 echo $this->Html->css($this->Loginza->getCssUrl());
 echo $this->fetch('toHead');
@@ -65,7 +65,7 @@ if(Configure::read('Config.language') =='eng'){
 
 <?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');?>
 
-<?php echo $this->Html->script('bootstrap');?>
+<?php echo $this->Html->script('bootstrap.min');?>
 
 <?php echo $this->Html->script('main.' . Configure::read('App.version'));?>
 

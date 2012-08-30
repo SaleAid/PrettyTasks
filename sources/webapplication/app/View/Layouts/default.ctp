@@ -14,7 +14,7 @@ echo $this->Html->docType('html5');
    
 <?php
 echo $this->Html->meta('icon');
-echo $this->Html->css('bootstrap');
+echo $this->Html->css('bootstrap.min');
 echo $this->Html->css('jquery.jgrowl');
 echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom');
 echo $this->Html->css('print.' . Configure::read('App.version'), null, array(
@@ -68,7 +68,7 @@ if(Configure::read('Config.language') =='eng'){
 
 <?php //echo $this->Html->script('jquery-ui-1.8.18.custom.min');?>
 
-<?php echo $this->Html->script('bootstrap');?>
+<?php echo $this->Html->script('bootstrap.min');?>
 
 <?php echo $this->Html->script('main.' . Configure::read('App.version'));?>
 

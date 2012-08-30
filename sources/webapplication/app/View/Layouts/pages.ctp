@@ -14,8 +14,9 @@ echo $this->Html->docType('html5');
    
 <?php
 echo $this->Html->meta('icon');
-echo $this->Html->css('bootstrap');
+echo $this->Html->css('bootstrap.min');
 echo $this->fetch('toHead');
+echo $this->Html->css('main.' . Configure::read('App.version'));
 echo $this->Html->css('start.' . Configure::read('App.version'));
 echo $scripts_for_layout;
 ?>      
@@ -58,7 +59,7 @@ echo $this->element('ga', array(), array(
 
 <?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');?>
 
-<?php echo $this->Html->script('bootstrap');?>
+<?php echo $this->Html->script('bootstrap.min');?>
  </body>
 </html>
 
