@@ -1,6 +1,7 @@
 <?php
 App::uses('Controller', 'Controller');
 App::uses('Sanitize', 'Utility');
+//App::uses('L10n', 'I18n');
 class AppController extends Controller {
     public $helpers = array(
         'Text', 
@@ -46,6 +47,9 @@ class AppController extends Controller {
         'RequestHandler', 
         'Seo'
     );
+    
+    public $L10n = null;
+
 
     /**
      * 
@@ -103,16 +107,16 @@ class AppController extends Controller {
 
     public function beforeFilter() {
         
-        $this->Auth->loginRedirect = array(
-            'controller' => 'tasks', 
-            'action' => 'index', 
-            'lang' => $this->params['lang']
-        );
-        $this->Auth->logoutRedirect = array(
-            'controller' => 'users', 
-            'action' => 'login', 
-            'lang' => $this->params['lang']
-        );
+        //$this->Auth->loginRedirect = array(
+//            'controller' => 'tasks', 
+//            'action' => '', 
+//            'lang' => $this->request->params['lang']
+//        );
+        //$this->Auth->logoutRedirect = array(
+        //    'controller' => 'users', 
+        //    'action' => 'login', 
+            //'lang' => $this->params['lang']
+        //);
         //$this->AutoLogin->username = 'email'; 
         $this->_setLanguage();
         $this->__setTimeZone();
@@ -124,18 +128,69 @@ class AppController extends Controller {
         $this->set('provider', $this->Auth->user('provider'));
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
+        
     }
 
     public function _setLanguage() {
-        if (isset($this->request->params['lang']) and array_key_exists($this->request->params['lang'], Configure::read('Config.langListURL'))) {
-            $arrLang = Configure::read('Config.langListURL');
-            Configure::write('Config.language', $arrLang[$this->request->params['lang']]);
-            Configure::write('Config.langURL', $this->request->params['lang']);
+        $this->L10n = new L10n();
+        $params = $this->request->params;
+        if (isset($params['lang'])) {
+            $lang = $this->_hasLangList($params['lang']);
+            if($lang){
+                Configure::write('Config.langURL', $params['lang']);
+                Configure::write('Config.language', $lang);
+                return;
+            }elseif($lang = $this->_userLang()){
+                $params['lang'] = $this->L10n->map($lang);
+            }elseif($lang = $this->_browserLang()){
+                $params['lang'] = $this->L10n->map($lang);
+            }else{
+                $lang = $this->L10n->map(Configure::read('Config.language'));
+                $params['lang'] = $this->L10n->map($lang);
+            }
         } else {
-            if ( $this->request->params['action'] != 'loginzalogin' and ! $this->request->is('ajax')) {
-                $this->redirect(DS . Configure::read('Config.langURL') . $this->request->here);
+            if ( $params['action'] == 'loginzalogin' or $this->request->is('ajax')) {
+               return;  
+            }
+            if($lang = $this->_userLang()){
+                $language = $lang;
+            }elseif($lang = $this->_browserLang()){
+                $language = $lang;
+            }else{
+                $language = $this->L10n->map(Configure::read('Config.language'));
+            }
+            $params['lang'] = $this->L10n->map($language);
+        }        
+        $this->redirect($params);
+    }
+    
+    protected function _browserLang(){
+        $brLangs = CakeRequest::acceptLanguage();
+        foreach($brLangs as $brLang){
+            $lang = $this->_hasLangList($brLang);
+            if($lang){
+                return $lang;
             }
         }
+        return false;
+    }
+    
+    protected function _userLang(){
+        if($this->Auth->loggedIn()){
+            return $this->Auth->user('language');
+        }
+        return false;
+    }
+    
+    protected function _hasLangList($lang){
+        if(empty($lang)){
+           return false; 
+        }
+        $langL10n = $this->L10n->catalog($lang);
+        if($langL10n and in_array($langL10n['locale'], Configure::read('Config.lang.available'))){
+            return $langL10n['locale'];
+        }
+        return false;
     }
 
     public function beforeRender() {

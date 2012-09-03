@@ -17,7 +17,9 @@
         
         <?php echo $this->Form->label('timezone', __d('users', 'Часовой пояс')); ?>
 	    
-        <?php echo $this->Form->select('timezone', $list)?>
+        <?php echo $this->Form->select('timezone', $list, array('class' => 'input-xlarge'))?>
+        
+        <?php echo $this->Form->input('language', array('label' => __d('users', 'Язык'), 'class' => 'input-xlarge','options' => $listLang, 'empty' => ''))?>
         
         <?php echo $this->Form->submit(__d('users', 'Сохранить изменения'),array('class'=>'btn btn-large btn-info'));?>
         

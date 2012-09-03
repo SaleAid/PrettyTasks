@@ -51,6 +51,9 @@ class UsersController extends AppController {
             if ($this->Auth->login()) {
                 if ($this->Auth->user('active')) {
                     if (! $this->Auth->user('is_blocked')) {
+                        if($this->Auth->user('language')){
+                            $this->Auth->loginRedirect['lang'] = $this->L10n->map($this->Auth->user('language'));
+                        }
                         $this->redirect($this->Auth->redirect());
                     }
                     $this->Session->setFlash(__d('users', 'Ваш аккаунт заблокирован'), 'alert', array(
@@ -109,7 +112,7 @@ class UsersController extends AppController {
                         'username'          => $this->request->data[$this->modelClass]['username'],
                         'password'          => $this->request->data[$this->modelClass]['password'], 
                         'password_confirm'  => $this->request->data[$this->modelClass]['password_confirm'],
-                        'agreed'  => $this->request->data[$this->modelClass]['agreed']
+                        'language'          => Configure::read('Config.language')
                     );
                 if ($this->User->register($saveData)) {
                     //TODO Application is crashed if email is not sent. 
@@ -288,11 +291,14 @@ class UsersController extends AppController {
 
     public function profile() {
         $this->User->id = $this->Auth->user('id');
+        $L10n = new L10n();
         if ($this->request->is('post') || $this->request->is('put')) {
             $expectedData = array(
                 'first_name', 
                 'last_name',
-                'timezone' 
+                'timezone',
+                'language'
+                 
             );
             if (!$this->_isSetRequestData($expectedData, $this->modelClass)) {
                 $this->Session->setFlash(__d('users', 'Ошибка при передаче данных'), 'alert', array(
@@ -302,12 +308,19 @@ class UsersController extends AppController {
                 $data[$this->modelClass]['first_name'] = $this->request->data[$this->modelClass]['first_name'];
                 $data[$this->modelClass]['last_name'] = $this->request->data[$this->modelClass]['last_name'];
                 $data[$this->modelClass]['timezone'] = $this->request->data[$this->modelClass]['timezone'];
+                $data[$this->modelClass]['language'] = $this->request->data[$this->modelClass]['language'];
                 if ($this->User->save($data)) {
                    $this->_refreshAuth();
                    $this->Session->setFlash(__d('users', 'Профиль был сохранен'), 'alert', array(
                         'class' => 'alert-success'
                    ));
-                   $this->redirect(array('action'=>'profile'));
+                   $params = $this->request->params;
+                   if(!empty($this->request->data[$this->modelClass]['language'])){
+                        $params['lang'] = $this->L10n->map($this->request->data[$this->modelClass]['language']);
+                        $this->redirect($params);
+                   }
+                   $params['lang'] = false;
+                   $this->redirect($params);
                 } else {
                     $this->Session->setFlash(__d('users', 'Профиль не может быть сохранен. Пожалуйста, попробуйте еще раз'), 'alert', array(
                         'class' => 'alert-error'
@@ -317,6 +330,12 @@ class UsersController extends AppController {
         } else {
             $this->request->data = $this->User->read();
         }
+        
+        $langs = $L10n->catalog(Configure::read('Config.lang.available'));
+        foreach($langs as $key=>$lang){
+            $listLang[$key] = $lang['language'];
+        }
+        $this->set('listLang', $listLang);
         //TODO: Rewrite it
         $list = DateTimeZone::listAbbreviations();
         $idents = DateTimeZone::listIdentifiers();
@@ -343,7 +362,7 @@ class UsersController extends AppController {
         //debug($options);
         $this->set('list', $options);
     }
-
+    
     public function accounts() {
         $this->paginate = array(
             'conditions' => array(

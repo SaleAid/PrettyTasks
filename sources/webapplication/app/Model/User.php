@@ -165,6 +165,13 @@ class User extends AppModel {
                 'message' => 'Вы должны быть согласны с правилами использования сервиса'
             )
         ),
+        'language' => array(
+            'language' => array(
+                'rule' => array('inList', array('rus', 'eng')),
+                'allowEmpty' => true,
+                'message'  => 'bad language'
+            )
+        )
     );
   
     public function matchPasswords($data) {

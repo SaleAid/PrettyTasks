@@ -145,7 +145,7 @@ footer .right{ text-align:right; }
 }
 /*feedback and invite*/
 #box{
-    //z-index: 1999;
+    min-width: 30px;
     position: fixed;
     right: 0;
     top: 30%;
@@ -255,3 +255,20 @@ footer .right{ text-align:right; }
     margin-top: 20px;
     
 }
+.lang-top{
+    vertical-align: middle;
+    margin-right: 10px;
+    font-size: 13px;
+    border-bottom: 1px dotted white;
+    cursor: pointer;
+}
+.lang-top:hover{
+    border-bottom: none;
+    
+}
+.s6{
+    margin-left: 1px;
+    margin-top: 8px;
+    min-width: 80px;
+}
+

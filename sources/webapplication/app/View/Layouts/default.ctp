@@ -35,9 +35,11 @@ echo $scripts_for_layout;
 
 <div id="wrapper-all">
 
-    <?php
-    echo $this->element('main_menu');
-    ?> 
+    <?php if(empty($currentUser)): ?>
+        <?php echo $this->element('main_menu'); ?> 
+    <?php else: ?>
+        <?php echo $this->element('main_menu_logged'); ?>
+    <?php endif; ?>
     
     <div id="wrapper-content">
         <div id="wrapper">
@@ -81,6 +83,7 @@ if(Configure::read('Config.language') =='eng'){
     )
 ));
 ?>
+<?php echo $this->element('js_lang', array(), array('cache' => array('key' => 'js_lang', 'config' => 'elements'))); ?> 
 <?php 
     if(!empty($currentUser)){
         echo $this->element('box', array(), array('cache' => array('key' => 'box', 'config' => 'elements')));    

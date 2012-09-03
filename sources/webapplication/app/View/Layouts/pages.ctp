@@ -28,9 +28,11 @@ echo $scripts_for_layout;
 
 <body data-spy="scroll" data-target=".subnav" data-offset="50">
 <div id="wrapper-all">
-    <?php
-    echo $this->element('main_menu');
-    ?> 
+    <?php if(empty($currentUser)): ?>
+        <?php echo $this->element('main_menu'); ?> 
+    <?php else: ?>
+        <?php echo $this->element('main_menu_logged'); ?>
+    <?php endif; ?>
     <div id="wrapper-content">
         <div id="wrapper">
             <div class="container">
@@ -60,6 +62,10 @@ echo $this->element('ga', array(), array(
 <?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');?>
 
 <?php echo $this->Html->script('bootstrap.min');?>
+
+<?php echo $this->Html->script('main.' . Configure::read('App.version'));?>
+
+<?php echo $this->element('js_lang', array(), array('cache' => array('key' => 'js_lang', 'config' => 'elements'))); ?>  
  </body>
 </html>
 

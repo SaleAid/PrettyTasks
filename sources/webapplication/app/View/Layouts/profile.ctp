@@ -30,7 +30,7 @@ echo $scripts_for_layout;
 <body>
 <div id="wrapper-all">
     <?php
-    echo $this->element('main_menu');
+    echo $this->element('main_menu_logged');
     ?> 
     <div id="wrapper-content">
         <div id="wrapper">
@@ -70,6 +70,8 @@ if(Configure::read('Config.language') =='eng'){
 <?php echo $this->Html->script('main.' . Configure::read('App.version'));?>
 
 <?php echo $this->fetch('toFooter');?>
+
+<?php echo $this->element('js_lang', array(), array('cache' => array('key' => 'js_lang', 'config' => 'elements'))); ?> 
 
 <?php echo $this->element('ga', array(), array(
     'cache' => array(

@@ -30,14 +30,17 @@ App::uses('LangRoute', 'Routing/Route');
 
 Router::defaultRouteClass('LangRoute');
 
-Router::connect('/', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
+//Router::connect('/tasks2', array('controller' => 'tasks', 'action' => 'index', 'lang' => 'ru'));
+//Router::connect('/tasks1', array('controller' => 'tasks', 'action' => 'index', 'lang' => 'en'));
+
+//Router::connect('/', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/pages', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/pages/index', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/pages/*', array('controller' => 'pages', 'action' => 'view'), array('lang' => '[a-z]{2}'));
 
 Router::connect('/:lang/:device', array(
-	'controller' => 'Tasks', 'action' => 'index'
+	'controller' => 'tasks', 'action' => 'index'
 ), array(
 	'device' => '[m]{1}',
     'lang' => '[a-z]{2}'

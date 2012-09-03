@@ -59,9 +59,12 @@ if(Configure::read('Config.language') =='eng'){
 }
 //echo $this->Html->script('jquery-1.7.1.min');
 //echo $this->Html->script('jquery-ui-1.8.18.custom.min');
-//echo $this->Html->script('bootstrap.min');
-//echo $this->Html->script('main.' . Configure::read('App.version'));
+
+echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
+echo $this->Html->script('bootstrap.min');
+echo $this->Html->script('main.' . Configure::read('App.version'));
 echo $this->fetch('toFooter');
+echo $this->element('js_lang', array(), array('cache' => array('key' => 'js_lang', 'config' => 'elements')));
 echo $this->element('ga', array(), array(
     'cache' => array(
         'key' => 'ga', 

@@ -87,8 +87,11 @@ class AccountsController extends AppController {
                 case 'active' :
                     {
                         $this->Auth->login($result);
+                        if($this->Auth->user('language')){
+                            $this->Auth->loginRedirect['lang'] = $this->L10n->map($this->Auth->user('language'));
+                        }
                         $this->redirect($this->Auth->redirect());
-                        break;
+                        //break;
                     }
                 case 'notActive' :
                     {
@@ -211,6 +214,7 @@ class AccountsController extends AppController {
                 'username' => $this->request->data['User']['username'], 
                 'password' => $password, 
                 'password_confirm' => $password,
+                 'language' => Configure::read('Config.language'),
                 'agreed' => $this->request->data['User']['agreed']
             );
             if ($this->Account->User->register($saveData)) {
