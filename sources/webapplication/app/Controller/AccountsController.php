@@ -270,7 +270,7 @@ class AccountsController extends AppController {
                     ))) {
                         App::uses('CakeEmail', 'Network/Email');
                         $email = new CakeEmail();
-                        $email->template('send_password_after_activate_account', 'default');
+                        $email->template(Configure::read('Config.language') . DS . 'send_password_after_activate_account', 'default');
                         $email->emailFormat(Configure::read('Email.global.format'));
                         $email->from(Configure::read('Email.global.from'));
                         $email->to($result['User']['email']);

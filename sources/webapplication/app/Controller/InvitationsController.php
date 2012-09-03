@@ -39,6 +39,7 @@ class InvitationsController extends AppController {
             if ( empty($emails)) {
                 $this->Invitation->invalidate('emails', __d('invitations', 'Введите минимум один емейл'));
             }
+            
             if (! $this->Invitation->recaptcha or empty($emails) ) {
                 $this->Session->setFlash(__d('invitations', 'Ошибка при вводе данных, попробуйте ввести еще раз'), 'alert', array(
                     'class' => 'alert-error'
@@ -71,7 +72,7 @@ class InvitationsController extends AppController {
                 App::uses('CakeEmail', 'Network/Email');
                 foreach ( $emails2send as $address ) {
                     $email = new CakeEmail();
-                    $email->template('users_invitation', 'default');
+                    $email->template(Configure::read('Config.language') . DS . 'users_invitation', 'default');
                     $email->emailFormat(Configure::read('Email.global.format'));
                     $email->from(Configure::read('Email.global.from'));
                     $email->to($address);

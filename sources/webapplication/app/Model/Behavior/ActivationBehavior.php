@@ -24,7 +24,7 @@ class ActivationBehavior extends ModelBehavior {
         }
         $Model->read();
         $email = new CakeEmail();
-        $email->template('activate_account', 'default');
+        $email->template(Configure::read('Config.language') . DS . 'activate_account', 'default');
         $email->emailFormat(Configure::read('Email.global.format'));
         $email->from(Configure::read('Email.global.from'));
         $email->to($Model->data['User']['email']);

@@ -299,7 +299,7 @@ class User extends AppModel {
         $this->id = $id;
         $this->read();
         $email = new CakeEmail();
-        $email->template('password_resend', 'default');
+        $email->template(Configure::read('Config.language') . DS . 'password_resend', 'default');
         $email->emailFormat(Configure::read('Email.global.format'));
         $email->from(Configure::read('Email.global.from'));
         $email->to($this->data[$this->alias]['email']);

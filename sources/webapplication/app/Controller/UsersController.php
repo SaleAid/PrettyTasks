@@ -291,7 +291,6 @@ class UsersController extends AppController {
 
     public function profile() {
         $this->User->id = $this->Auth->user('id');
-        $L10n = new L10n();
         if ($this->request->is('post') || $this->request->is('put')) {
             $expectedData = array(
                 'first_name', 
@@ -331,7 +330,7 @@ class UsersController extends AppController {
             $this->request->data = $this->User->read();
         }
         
-        $langs = $L10n->catalog(Configure::read('Config.lang.available'));
+        $langs =  $this->L10n->catalog(Configure::read('Config.lang.available'));
         foreach($langs as $key=>$lang){
             $listLang[$key] = $lang['language'];
         }
