@@ -33,7 +33,7 @@ class Day extends AppModel {
 		),
         'comment' => array(
             'maxLength' => array(
-                'rule'    => array('maxLength', 1000),
+                'rule'    => array('maxLength', 5000),
                 'message' => 'Максимальная длина комментария не больше %d символов'
             )
         )  
@@ -123,6 +123,21 @@ class Day extends AppModel {
         }
         
         return array('date' => $date, 'comment' => '');
+    }
+    public function getComments($user_id, $count = 10){
+        $this->contain();
+        $result = $this->find('all', 
+                            array(
+                                'conditions' => array(
+                                    'Day.user_id' => $user_id, 
+                                    'Day.comment !=' => '',
+                                    'Day.date <=' => date("Y-m-d") 
+                                ),
+                               'fields' => $this->_dayFields,
+                               'order' => array('Day.date DESC'),
+                               'limit' => $count, 
+        ));
+        return $result;
     }
     
     public function setComment($user_id, $date, $comment=null){

@@ -7,7 +7,8 @@ App::uses('AppController', 'Controller');
  */
 class DaysController extends AppController {
 
-
+    public $layout = 'tasks';
+    
     public function setRating(){
         $result = $this->_prepareResponse();
         $expectedData = array(
@@ -88,5 +89,16 @@ class DaysController extends AppController {
         $this->set('_serialize', array(
             'result'
         ));
+    }
+    
+    public function journal(){
+        $result = $this->_prepareResponse();
+        $result['success'] = true;
+        $result['data'] = $this->Day->getComments($this->Auth->user('id'));
+        $this->set('result', $result);
+        $this->set('_serialize', array(
+            'result'
+        ));
+        //debug($result);
     }
 }
