@@ -1,5 +1,5 @@
 <?php $this->start ( 'toHead' );?>
-<?php echo $this->Html->css('jornal.'.Configure::read('App.version'));?>
+<?php echo $this->Html->css('journal.'.Configure::read('App.version'));?>
 <?php $this->end ();?>
 <div class="row">
     <div class="jl-content">
