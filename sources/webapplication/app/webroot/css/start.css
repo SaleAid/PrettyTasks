@@ -109,13 +109,13 @@ body {
     
 }
 .left .box_header {
-    background-color: #C44B00;
+    background-color: darkred;
 }
 .right .box_header {
-    background-color: #528400;
+    background-color: darkgreen;
 }
 .center .box_header {
-    background-color: #F8D927;
+    background-color: goldenrod;
 }
 .box_header h1 {
     color:white;
