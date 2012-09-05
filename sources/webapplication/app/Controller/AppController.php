@@ -134,6 +134,7 @@ class AppController extends Controller {
     public function _setLanguage() {
         $this->L10n = new L10n();
         $params = $this->request->params;
+        //pr($params);die;
         if (isset($params['lang'])) {
             $lang = $this->_hasLangList($params['lang']);
             if($lang){
@@ -160,7 +161,10 @@ class AppController extends Controller {
                 $language = $this->L10n->map(Configure::read('Config.language'));
             }
             $params['lang'] = $this->L10n->map($language);
-        }        
+        }
+        unset($params['named']);
+        unset($params['pass']);
+        //pr($params);die;        
         $this->redirect($params);
     }
     
@@ -186,8 +190,9 @@ class AppController extends Controller {
         if(empty($lang)){
            return false; 
         }
-        $langL10n = $this->L10n->catalog($lang);
-        if($langL10n and in_array($langL10n['locale'], Configure::read('Config.lang.available'))){
+        //$langL10n = $this->L10n->catalog($lang);
+        if(array_key_exists($lang, Configure::read('Config.lang.available'))){
+            $langL10n = $this->L10n->catalog($lang);
             return $langL10n['locale'];
         }
         return false;

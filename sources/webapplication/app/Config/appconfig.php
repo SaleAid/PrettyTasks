@@ -14,11 +14,8 @@
    Configure::write('Config.language', 'rus');
    Configure::write('Config.langURL', 'ru');
    
-   Configure::write('Config.lang.available.ru', 'rus');
-   Configure::write('Config.lang.available.en', 'eng');
-   
-   //Configure::write('Config.langListURL.ru', 'rus');
-   //Configure::write('Config.langListURL.en', 'eng');
+   Configure::write('Config.lang.available.ru', array('lang' => 'rus', 'name' => __d('users', 'Russian')));
+   Configure::write('Config.lang.available.en', array('lang' => 'eng', 'name' => __d('users', 'English')));
    
    Configure::write('Site.name', 'Pretty Tasks');
    Configure::write('Site.url', 'http://'.@$_SERVER["HTTP_HOST"].'/');

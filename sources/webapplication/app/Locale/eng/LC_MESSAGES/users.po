@@ -13,6 +13,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
+#: Config/appconfig.php:17
+msgid "Russian"
+msgstr ""
+
+#: Config/appconfig.php:18
+msgid "English"
+msgstr ""
+
 #: Controller/UsersController.php:44
 msgid "Ваш емейл или пароль не совпадают"
 msgstr "Your pair of email and password is not correct"

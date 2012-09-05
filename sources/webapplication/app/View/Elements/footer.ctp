@@ -53,7 +53,7 @@
                */?>
                <li>&nbsp;</li>
                <li>&nbsp;</li>
-
+                <?php echo $this->element('share'); ?> 
 			</ul>
 		</div> 
 		

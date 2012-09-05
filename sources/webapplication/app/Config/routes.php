@@ -29,8 +29,8 @@
 App::uses('LangRoute', 'Routing/Route');
 
 Router::defaultRouteClass('LangRoute');
-
-//Router::connect('/tasks2', array('controller' => 'tasks', 'action' => 'index', 'lang' => 'ru'));
+//задачи
+//Router::connect('/'. rawurlencode('задачи') .'', array('controller' => 'tasks', 'action' => 'index', 'lang' => 'ru'));
 //Router::connect('/tasks1', array('controller' => 'tasks', 'action' => 'index', 'lang' => 'en'));
 
 //Router::connect('/', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));

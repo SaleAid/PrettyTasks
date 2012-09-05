@@ -7,12 +7,24 @@ $(document).ready(function(){
     }, 5000);
 
     $('.langList a').click(function(){
-        console.log(this);
         var lang = $(this).attr('data');
         var hash = window.location.hash;
-        var pathname = window.location.pathname.slice(3);
-        var url = '/'+lang+pathname + hash;
+        var url = langUrls[lang] + hash;
         window.location.replace(url);
         return false;
     });
+    
+    $('.share').click(function (event){
+        var url = $(this).attr("href");
+        var windowName = "Share";
+        var width = 600;
+        var height = 400;
+        var left = parseInt((screen.availWidth/2) - (width/2));
+        var top = parseInt((screen.availHeight/2) - (height/2));
+        var windowFeatures = "width=" + width + ",height=" + height + ",status,resizable,left=" + left + ",top=" + top + "screenX=" + left + ",screenY=" + top;
+        window.open(url, windowName, windowFeatures);
+
+        event.preventDefault();
+    });
+            
 });

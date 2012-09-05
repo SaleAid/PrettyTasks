@@ -304,6 +304,7 @@ class UsersController extends AppController {
                         'class' => 'alert-error'
                     ));
             } else {
+
                 $data[$this->modelClass]['first_name'] = $this->request->data[$this->modelClass]['first_name'];
                 $data[$this->modelClass]['last_name'] = $this->request->data[$this->modelClass]['last_name'];
                 $data[$this->modelClass]['timezone'] = $this->request->data[$this->modelClass]['timezone'];
@@ -314,8 +315,8 @@ class UsersController extends AppController {
                         'class' => 'alert-success'
                    ));
                    $params = $this->request->params;
-                   if(!empty($this->request->data[$this->modelClass]['language'])){
-                        $params['lang'] = $this->L10n->map($this->request->data[$this->modelClass]['language']);
+                   if(!empty($data[$this->modelClass]['language'])){
+                        $params['lang'] = $this->L10n->map($data[$this->modelClass]['language']);
                         $this->redirect($params);
                    }
                    $params['lang'] = false;
@@ -330,9 +331,8 @@ class UsersController extends AppController {
             $this->request->data = $this->User->read();
         }
         
-        $langs =  $this->L10n->catalog(Configure::read('Config.lang.available'));
-        foreach($langs as $key=>$lang){
-            $listLang[$key] = $lang['language'];
+        foreach(Configure::read('Config.lang.available') as $lang){
+            $listLang[$lang['lang']] = $lang['name'];
         }
         $this->set('listLang', $listLang);
         //TODO: Rewrite it
