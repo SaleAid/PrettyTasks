@@ -178,4 +178,27 @@ class AppSchema extends CakeSchema {
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
+    public $notes = array(
+		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'comment' => 'primary key', 'charset' => 'utf8'),
+		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'index', 'collate' => 'utf8_general_ci', 'comment' => 'reference to user', 'charset' => 'utf8'),
+		'note' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 10000, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null, 'comment' => 'created date time'),
+		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null, 'comment' => 'modified date time'),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1)
+		),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
+	);
+    public $goals = array(
+		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'comment' => 'primary key', 'charset' => 'utf8'),
+		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'index', 'collate' => 'utf8_general_ci', 'comment' => 'reference to user', 'charset' => 'utf8'),
+		'goal' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 10000, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'todate' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'created date time'),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null, 'comment' => 'created date time'),
+		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null, 'comment' => 'modified date time'),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1)
+		),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
+	);
 }
