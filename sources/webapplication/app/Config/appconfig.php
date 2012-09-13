@@ -47,6 +47,9 @@
    Configure::write('Email.user.passwordResend.subject', __('Сбросить пароль на сервисе %s', Configure::read('Site.name')));
    Configure::write('App.version', '1.0.5');
    
+   Configure::write('App.Minify.css', true);
+   Configure::write('App.Minify.js', true);
+      
    Configure::write('Session.cookie', 'PrettyTasks');
    
    //Cache

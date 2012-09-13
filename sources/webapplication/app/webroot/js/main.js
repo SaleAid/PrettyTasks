@@ -1,5 +1,5 @@
 
-$(document).ready(function(){
+$().ready(function(){
     window.setTimeout(function() {
         $(".alert-success").fadeTo(1000, 0).slideUp(1000, function(){
             $(this).remove(); 
@@ -10,6 +10,19 @@ $(document).ready(function(){
         var lang = $(this).attr('data');
         var hash = window.location.hash;
         var url = langUrls[lang] + hash;
+        if( isAuth ){
+            $.ajax({
+                type: "POST",
+                data: {lang: lang},
+                url: "/users/changeLanguage.json",
+                success: function (data) {
+                    if(data.result.success){
+                        window.location.replace(url);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {}
+            });
+        }
         window.location.replace(url);
         return false;
     });
@@ -23,7 +36,6 @@ $(document).ready(function(){
         var top = parseInt((screen.availHeight/2) - (height/2));
         var windowFeatures = "width=" + width + ",height=" + height + ",status,resizable,left=" + left + ",top=" + top + "screenX=" + left + ",screenY=" + top;
         window.open(url, windowName, windowFeatures);
-
         event.preventDefault();
     });
             

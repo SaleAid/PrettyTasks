@@ -7,6 +7,7 @@
         unset( $routerArr['pass']);
         $routerArr = array_merge($pass, $named, $routerArr);
     ?>
+    var isAuth = '<?php echo $isAuth; ?>';
     var langUrls = {
         <?php foreach ( Configure::read('Config.lang.available') as $key => $value ) : ?>
         <?php echo h($value['lang']); ?>: '<?php echo $this->Html->url(array_merge($routerArr, array('lang' => $key)));?>', 

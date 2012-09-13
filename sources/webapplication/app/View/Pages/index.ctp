@@ -1,4 +1,7 @@
-
+<?php
+   echo $this->Html->css('start.'.Configure::read('App.version'), null, array('block' => 'toHead'));
+   echo $this->Html->script('main.'.Configure::read('App.version'), array('block' => 'toFooter'));
+ ?>
 <div class="start">
   <?php echo $this->Html->image('comics.'. Configure::read('App.version') .'.jpg', array('width' => 970, 'height' =>355)); ?>
 </div>

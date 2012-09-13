@@ -1,9 +1,5 @@
-<?php $this->start ( 'toHead' );?>
-    <?php echo $this->Html->css('feedbacks.'.Configure::read('App.version')); ?>
-<?php $this->end ();?>
-<?php $this->start ( 'toFooter' );?>
-    <?php echo $this->Html->script('feedbacks.'.Configure::read('App.version')); ?>
-<?php $this->end ();?>
+    <?php echo $this->Html->css('feedbacks.'.Configure::read('App.version'), null, array('block' => 'toHead')); ?>
+    <?php echo $this->Html->script('feedbacks.'.Configure::read('App.version'), array('block' => 'toFooter')); ?>
 <div class="row">
     <div class="span8 feedbacks">
     <?php echo $this->Form->create('Feedback', array('class' => 'well',

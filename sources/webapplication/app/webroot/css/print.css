@@ -1,37 +1,34 @@
-@CHARSET "UTF-8";
+@media print { 
+     .delete_all,
+     .days,
+     .filter,
+     .well,
+    .navbar,
+    .nav-tabs, 
+    #reformal_tab, 
+    #ue-feedback-tab, 
+    .furrghtd,
+    footer .container,
+    #box{
+      display: none;
+    }
+    
+    .print{
+        display: none!important;
+    }
+    #wrapper{
+        border: none !important;
+    }
+    .listTask h3{
+        text-shadow:none;
+        color: black;
+    }
+    .print_brand{
+        display: block!important;
+        position: absolute;
+        right: 0;
+        top:0;
+    }
+    .listTask h3{}
 
-/*
- * Please place your code below
- */
-
- .brand,
- .days,
- .filter,
- .well,
-.navbar,
-.nav-tabs, 
-#reformal_tab, 
-#ue-feedback-tab, 
-.furrghtd,
-footer .container,
-#box{
-  display: none;
 }
-.print{
-    display: none!important;
-}
-#wrapper{
-    border: none !important;
-}
-.listTask h3{
-    text-shadow:none;
-    color: black;
-}
-.print_brand{
-    display: block!important;
-    position: absolute;
-    right: 0;
-    top:0;
-}
-.listTask h3{}
-

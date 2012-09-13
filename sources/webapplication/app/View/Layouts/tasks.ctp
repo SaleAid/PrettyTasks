@@ -14,14 +14,8 @@ echo $this->Html->docType('html5');
 <?php
 echo $this->Html->meta('icon');
 echo $this->Html->css('bootstrap.min');
-echo $this->Html->css('jquery.jgrowl');
-echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom');
-echo $this->Html->css('print.' . Configure::read('App.version'), null, array(
-    'media' => 'print'
-));
+echo $this->Html->css($this->Loginza->getCssUrl());  
 echo $this->fetch('toHead');
-echo $this->Html->css('main.' . Configure::read('App.version'));
-echo $this->Html->css($this->Loginza->getCssUrl());
 echo $scripts_for_layout;
 ?>      
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -69,11 +63,11 @@ if(Configure::read('Config.language') =='eng'){
 
 <?php //echo $this->Html->script('http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js');?>
 
-<?php //echo $this->Html->script('jquery-ui-1.8.18.custom.min');?>
-
 <?php echo $this->Html->script('bootstrap.min');?>
 
-<?php echo $this->Html->script('main.' . Configure::read('App.version'));?>
+<?php echo $this->Html->script('jquery.ui.touch-punch.min');?>
+
+<?php //echo $this->Html->script('main.' . Configure::read('App.version'));?>
 
 <?php echo $this->fetch('toFooter');?>
 

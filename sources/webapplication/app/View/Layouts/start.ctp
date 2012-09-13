@@ -15,12 +15,7 @@ echo $this->Html->docType('html5');
 <?php
 echo $this->Html->meta('icon');
 echo $this->Html->css('bootstrap.min');
-//echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom');
-//echo $this->Html->css('print.' . Configure::read('App.version'), null, array(
-//    'media' => 'print'
-//));
 echo $this->fetch('toHead');
-echo $this->Html->css('start.' . Configure::read('App.version'));
 echo $scripts_for_layout;
 ?>      
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -57,12 +52,8 @@ if(Configure::read('Config.language') =='eng'){
 }else{
     echo $this->element('footer');    
 }
-//echo $this->Html->script('jquery-1.7.1.min');
-//echo $this->Html->script('jquery-ui-1.8.18.custom.min');
-
 echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
 echo $this->Html->script('bootstrap.min');
-echo $this->Html->script('main.' . Configure::read('App.version'));
 echo $this->fetch('toFooter');
 echo $this->element('js_lang', array(), array('cache' => array('key' => 'js_lang', 'config' => 'elements')));
 echo $this->element('ga', array(), array(

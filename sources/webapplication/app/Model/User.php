@@ -348,4 +348,17 @@ class User extends AppModel {
         $this->saveField('config', serialize($config));
         return true;
     }
+    
+    public function changeLanguage($id, $lang){
+        $this->id = $id;
+        if (! $this->exists()) {
+            return false;
+        }
+        //$this->set('language', $lang);
+        if ($this->save(array('language' => $lang), true, array('language'))) {
+            //$this->saveField('language', $lang);
+            return true;
+        }
+        
+    }
 }

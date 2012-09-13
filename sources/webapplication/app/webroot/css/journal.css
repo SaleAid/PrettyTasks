@@ -1,6 +1,9 @@
 .jl-content{
     
 }
+.row{
+    margin-left: 20px;
+}
 .jl-day{
     position: relative;
     margin: 15px 0;

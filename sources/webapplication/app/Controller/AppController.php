@@ -124,6 +124,8 @@ class AppController extends Controller {
         $this->Seo->title = Configure::read('Site.title');
         $this->Seo->description = Configure::read('Site.description');
         $this->Seo->keywords = Configure::read('Site.keywords');
+        
+        $this->set('isAuth', $this->Auth->loggedIn()); 
         $this->set('currentUser', $this->Auth->user());
         $this->set('provider', $this->Auth->user('provider'));
         $this->set('isProUser', $this->isProUser());

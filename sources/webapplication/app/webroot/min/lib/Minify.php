@@ -583,7 +583,8 @@ class Minify {
             ,self::$_options['bubbleCssImports']
             ,self::VERSION
         )));
-        return "{$prefix}_{$name}_{$md5}";
+        //return "{$prefix}_{$name}_{$md5}";
+        return "{$prefix}_{$name}";
     }
     
     /**

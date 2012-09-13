@@ -47,7 +47,15 @@ if ($min_errorLogger) {
     }
     Minify_Logger::setLogger($min_errorLogger);
 }
-
+//
+function yuiJs($js) {
+    require_once 'Minify/YUICompressor.php'; 
+    Minify_YUICompressor::$jarFile = __DIR__ . '/lib/yuicompressor-2.4.7.jar'; 
+    Minify_YUICompressor::$tempDir = '/tmp'; 
+    return Minify_YUICompressor::minifyJs($js); 
+}
+$min_serveOptions['minifiers']['application/x-javascript'] = 'yuiJs';
+//
 // check for URI versioning
 if (preg_match('/&\\d/', $_SERVER['QUERY_STRING'])) {
     $min_serveOptions['maxAge'] = 31536000;

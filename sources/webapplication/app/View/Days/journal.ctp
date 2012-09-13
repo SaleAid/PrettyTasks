@@ -1,6 +1,21 @@
-<?php $this->start ( 'toHead' );?>
-<?php echo $this->Html->css('journal.'.Configure::read('App.version'));?>
-<?php $this->end ();?>
+<?php
+    if( Configure::read('App.Minify.css') ){
+        echo $this->Html->css('min/journal.' . Configure::read('App.version'), null, array('block' => 'toHead'));
+    }else{
+       echo $this->Html->css('main.' . Configure::read('App.version'), null, array('block' => 'toHead')); 
+       echo $this->Html->css('journal.'.Configure::read('App.version'), null, array('block' => 'toHead'));
+       echo $this->Html->css('print.' . Configure::read('App.version'), null, array('block' => 'toHead'));
+       
+    }
+     if( Configure::read('App.Minify.js') ){
+        echo $this->Html->script('min/journal.' . Configure::read('App.version'), array('block' => 'toFooter'));
+    }else{
+       echo $this->Html->script('main.'.Configure::read('App.version'), array('block' => 'toFooter'));
+       echo $this->Html->script('journal.'.Configure::read('App.version'), array('block' => 'toFooter'));
+       echo $this->Html->script('print.' . Configure::read('App.version'), array('block' => 'toFooter'));
+       
+    }
+?>
 <div class="row">
   <div >
     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>

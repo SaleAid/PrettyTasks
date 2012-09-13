@@ -26,10 +26,10 @@
 
       <div class="nav-collapse">
         <ul class="nav">
-          <li class="<? if( isset($this->params['pass'][0]) and $this->params['pass'][0] == "contact" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
+          <li class="<? if( isset($this->params['pass'][0]) and $this->params['pass'][0] == "contacts" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __d('pages', 'Contact'),
-                    array('controller' => 'pages', 'action' => 'contact')
+                    array('controller' => 'pages', 'action' => 'contacts')
                 );?>
           </li>
           <li class="<? if(isset($this->params['pass'][0]) and $this->params['pass'][0] == "about" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
@@ -42,13 +42,16 @@
         <div class="pull-right">
             <span class="btn-group">
                 <span class="dropdown-toggle" data-toggle="dropdown" data-target="#">
-                    <span class="lang-top"><?php if(Configure::read('Config.language') == 'eng'){ echo __d('users', 'english'); }else {echo __d('users', 'russian');} ;?></span>
+                    <span class="lang-top">
+                        <?php echo Configure::read('Config.lang.available.'. Configure::read('Config.langURL') .'.name'); ?>
+                    </span>
                 </span>
-                    <ul class="dropdown-menu langList s6">
-                        <li ><a href="#" data="ru"><?php echo __d('users', 'russian'); ?></a></li>
-                        <li class="divider"></li>
-                        <li ><a href="#" data="en"><?php echo __d('users', 'english'); ?></a></li>
+                   <ul class="dropdown-menu langList s6">
+                    <?php foreach(Configure::read('Config.lang.available') as $lang) : ?>
+                        <li><a  href="#" data="<?php echo h($lang['lang']); ?>"><?php echo h($lang['name']); ?><?php if(Configure::read('Config.language') == $lang['lang']) : ;?>&nbsp;&nbsp;<i class="icon-ok"></i><?php endif;?></a></li>
+                    <?php endforeach; ?> 
                    </ul>
+               
              </span>  
             <?php echo $this->Html->link(__d('pages', 'Register'), array('controller' => 'users', 'action' => 'register'), array('class'=> 'btn btn-success')); ?>
             <?php echo $this->Html->link(__d('pages', 'Login'), array('controller' => 'users', 'action' => 'login'), array('class'=> 'btn btn-primary')); ?> 

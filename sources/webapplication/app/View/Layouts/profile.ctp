@@ -1,10 +1,10 @@
 <?php
-echo $this->Html->docType('html5');
+    echo $this->Html->docType('html5');
 ?>
 <html>
 <head>
 <?php
-echo $this->Html->charset();
+    echo $this->Html->charset();
 ?>
 <title><?php  echo $title_for_layout;  ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,15 +12,15 @@ echo $this->Html->charset();
 <meta name="keywords" content="<?php echo $keywords_for_layout; ?>" />
 <meta name="author" content=""/>
 <?php
-echo $this->Html->meta('icon');
+    echo $this->Html->meta('icon');
 ?>
 
 <?php
-echo $this->Html->css('bootstrap.min');
-echo $this->Html->css('main.' . Configure::read('App.version'));
-echo $this->Html->css($this->Loginza->getCssUrl());
-echo $this->fetch('toHead');
-echo $scripts_for_layout;
+    echo $this->Html->css('bootstrap.min');
+    echo $this->Html->css('main.' . Configure::read('App.version'));
+    echo $this->Html->css($this->Loginza->getCssUrl());
+    echo $this->fetch('toHead');
+    echo $scripts_for_layout;
 ?>
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>

@@ -16,8 +16,6 @@ echo $this->Html->docType('html5');
 echo $this->Html->meta('icon');
 echo $this->Html->css('bootstrap.min');
 echo $this->fetch('toHead');
-echo $this->Html->css('main.' . Configure::read('App.version'));
-echo $this->Html->css('start.' . Configure::read('App.version'));
 echo $scripts_for_layout;
 ?>      
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->

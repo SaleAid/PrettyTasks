@@ -135,7 +135,7 @@ div.well{
 
 .editable{
     display: inline-block;
-    width: 610px;
+    width: 590px;
     text-align: left;
     font-family: arial,sans-serif;
     /*font-weight: bold;*/
@@ -152,7 +152,7 @@ div.well{
 
 .editable form, .editable input {
     height: 26px !important;
-    width: 605px !important;
+    width: 586px !important;
     border: 0 !important;  
     margin: 0 0 0 1px !important;
     padding: 0 !important;
@@ -164,6 +164,10 @@ div.well{
     opacity:0.4 !important;
     filter:alpha(opacity=40) !important;
     background: transparent url('/img/line.png') 0 50% repeat-x !important;
+}
+.comment-task-icon{
+    min-width: 14px;
+    display: inline-block;
 }
 .important {
     color: red ;

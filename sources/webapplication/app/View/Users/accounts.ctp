@@ -1,6 +1,4 @@
-<?php $this->start ( 'toFooter' );?>
-    <?php echo $this->Html->script($this->Loginza->getJs()); ?>
-<?php $this->end ();?>
+<?php echo $this->Html->script($this->Loginza->getJs(), array('block' => 'toFooter')); ?>
 
 <div class="well">
         <legend><?php echo __d('users', 'Связанные учетные записи');?>

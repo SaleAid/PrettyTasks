@@ -1,28 +1,36 @@
-<?php $this->start ( 'toHead' );?>
-    <?php echo $this->Html->css('jquery.timepicker-1.2.2'); ?>
+<?php
+    if( Configure::read('App.Minify.css') ){
+        echo $this->Html->css('min/tasks.' . Configure::read('App.version'), null, array('block' => 'toHead'));
+    }else{
+       echo $this->Html->css('main.' . Configure::read('App.version'), null, array('block' => 'toHead')); 
+       echo $this->Html->css('jquery.jgrowl.'.Configure::read('App.version'), null, array('block' => 'toHead'));
+       echo $this->Html->css('print.' . Configure::read('App.version'), null, array('block' => 'toHead'));
+       echo $this->html->css('jquery.timepicker-1.2.2', null, array('block' => 'toHead'));
+       echo $this->Html->css('tasks.'. Configure::read('App.version'), null, array('block' => 'toHead'));
+       echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom', null, array('block' => 'toHead'));
+    }
     
-    <?php echo $this->Html->css('tasks.'.Configure::read('App.version')); ?>
-<?php $this->end ();?>
+    if( Configure::read('App.Minify.js') ){
+        echo $this->Html->script('min/tasks.' . Configure::read('App.version'), array('block' => 'toFooter'));
+    }else{
+       echo $this->Html->script(array(
+            'jquery.jgrowl.min',
+            'jquery.jeditable.mini',
+            'jquery.ba-hashchange.min',
+            'jquery.timepicker-1.2.2.min',
+            'jquery.inline-confirmation.'.Configure::read('App.version'),
+            'jquery-ui-i18n.min',
+       ), array('block' => 'toFooter'));
+       echo $this->Html->script('main.' . Configure::read('App.version'), array('block' => 'toFooter')); 
+       echo $this->Html->script('print.'.Configure::read('App.version'), array('block' => 'toFooter'));
+       echo $this->Html->script('tasks.' . Configure::read('App.version'), array('block' => 'toFooter'));
+       
+    }
+?>
 
 <?php $this->append ( 'toFooter' );?>
     
     <?php echo $this->element('js_global_config', array(), array('cache' => array('key' => 'js_global_config', 'config' => 'elements'))); ?> 
-    
-    <?php echo $this->Html->script('jquery.ui.touch-punch.min'); ?>
-    
-    <?php echo $this->Html->script('jquery.jgrowl.min'); ?>
-    
-    <?php echo $this->Html->script('jquery.jeditable.mini'); ?>
-    
-    <?php echo $this->Html->script('jquery.ba-hashchange.min'); ?>
-    
-    <?php echo $this->Html->script('jquery.timepicker-1.2.2.min');?>
-    
-    <?php echo $this->Html->script('jquery.inline-confirmation.'.Configure::read('App.version'));?>
-    
-    <?php echo $this->Html->script('jquery-ui-i18n.min');?>
-    
-    <?php echo $this->Html->script('tasks.'.Configure::read('App.version'));?>
     
 <?php $this->end ();?>
   <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
@@ -123,7 +131,8 @@
                             <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
                             <span class="editable"><?php echo h($item['Task']['title']); ?></span>
                             <span class="commentTask"><?php echo h($item['Task']['comment']); ?></span>
-                            <span class="editTask"><i class="icon-pencil"></i></a></span>
+                            <span class="comment-task-icon"><i class="icon-file <?php if( empty($item['Task']['comment'] )): ?> hide <?php endif; ?>"></i></span>
+                            <span class="editTask"><i class="icon-pencil"></i></span>
                             <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                         </li>
                     <?php endforeach;?>
@@ -244,6 +253,7 @@
                                     <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
                                     <span class="editable"><?php echo h($item['Task']['title']); ?></span>
                                     <span class="commentTask"><?php echo h($item['Task']['comment']); ?></span>
+                                    <span class="comment-task-icon"><i class="icon-file <?php if( empty($item['Task']['comment'] )): ?> hide <?php endif; ?>"></i></span>
                                     <span class="editTask"><i class="icon-pencil"></i></span>
                                     <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
                                 </li>

@@ -7,9 +7,12 @@
 						<ul>
 							<li><?php echo $this->Html->link(__d('pages', 'Home'), array('controller' => 'pages', 'action' => 'index'));?></li>
 							<li><?php echo $this->Html->link(__d('pages', 'About'), array('controller' => 'pages', 'action' => 'about'));?></li>
+                            <li><?php echo $this->Html->link(__d('pages', 'Contacts'), array('controller' => 'pages', 'action' => 'contacts'));?></li>
 							<li><?php echo $this->Html->link(__d('pages', 'How it works'), array('controller' => 'pages', 'action' =>  'how-it-works'));?></li>
 							<li><?php echo $this->Html->link(__d('pages', 'Testimonials'), array('controller' => 'pages', 'action' =>  'testimonials'));?></li>
-							<li><?php echo $this->Html->link(__d('pages', 'Help'), array('controller' => 'pages', 'action' => 'help'));?></li>
+							<?php /*
+            				<li><?php echo $this->Html->link(__d('pages', 'Help'), array('controller' => 'pages', 'action' => 'help'));?></li>
+            				*/ ?>
 							<li><?php echo $this->Html->link(__d('pages', 'Login'), array('controller' => 'users', 'action' => 'login'));?></li>
 							<li><?php echo $this->Html->link(__d('pages', 'Register'), array('controller' => 'users', 'action' => 'register'));?></li>
 						</ul>

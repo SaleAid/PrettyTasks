@@ -1,8 +1,8 @@
-<p>
-Здравствуйте!
+﻿<p>
+Hello!
 </p>
 <p>
-Пользователь <?php echo 'VOVA';//$user['full_name']; ?> пригласил Вас использовать сервис <a href="<?php echo Configure::read('Site.url'); ?>"><?php echo Configure::read('Site.name'); ?></a>
+A user <?php echo 'VOVA';//$user['full_name']; ?> invited you to use the service <a href="<?php echo Configure::read('Site.url'); ?>"><?php echo Configure::read('Site.name'); ?></a>
 </p>
 <p>
 Sincerely, the Team  <?php echo Configure::read('Site.name'); ?>

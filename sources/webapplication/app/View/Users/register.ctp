@@ -1,6 +1,4 @@
-<?php $this->start ( 'toFooter' );?>
-<?php echo $this->Html->script($this->Loginza->getJs()); ?>
-<?php $this->end ();?>
+<?php echo $this->Html->script($this->Loginza->getJs(), array('block' => 'toFooter')); ?>
 
 <div class="span10 offset1">
 <?php echo $this->Form->create('User', array('class' => 'well ',

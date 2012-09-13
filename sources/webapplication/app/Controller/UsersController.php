@@ -372,6 +372,16 @@ class UsersController extends AppController {
         $accounts = $this->paginate('Account');
         $this->set('accounts', $accounts);
     }
+    public function changeLanguage(){
+        $result = $this->_prepareResponse();
+        if ( $this->_isSetRequestData('lang') && $this->User->changeLanguage($this->Auth->user('id'), $this->request->data['lang'])) {
+            $result['success'] = true;
+        }
+        $this->set('result', $result);
+        $this->set('_serialize', array(
+            'result'
+        )); 
+    }
     
     protected function _refreshAuth(){
          $this->User->contain();

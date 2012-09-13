@@ -202,6 +202,11 @@ class Task extends AppModel {
             $this->_originData[$this->alias]['order'] = $this->data[$this->alias]['order'];
             $this->_originData[$this->alias]['date'] = $this->data[$this->alias]['date'];
         }
+        //if($this->data[$this->alias]['future']){
+//            $this->_originData[$this->alias]['time'] = null;
+//            $this->_originData[$this->alias]['order'] = null;
+//            $this->_originData[$this->alias]['date'] = 1;
+//        }
         return $this;
     }
 
@@ -219,12 +224,13 @@ class Task extends AppModel {
         }else{
             $data[$this->alias]['priority'] = $priority;
         }
-        
         $data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
-        
         if (! $date) {
             $future = 1;
-        }
+            //$data[$this->alias]['order'] = 1;
+        }//else{
+//            $data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
+//        }
         $data[$this->alias]['future'] = $future ? $future : 0;
         if( !$time and !$future ){
             $pattern = '/^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?/';
@@ -426,6 +432,7 @@ class Task extends AppModel {
             }
             // change order
             if ($this->_isOrderChanged()) {
+                //pr('ds');
                 return $this->_changeOrder();
             }
             // drag on the day
@@ -464,7 +471,8 @@ class Task extends AppModel {
                                                     "not" => array(
                                                         "Task.time" => null, 
                                                         //"Task.id" => $id,
-                                                        "Task.order" => 0
+                                                        //"Task.order" => 0
+                                                        'Task.deleted' => 1
                                                     ), 
                                                     "Task.user_id" => $user_id, 
                                                     "Task.date" => $date
@@ -476,7 +484,11 @@ class Task extends AppModel {
                                             ));
             foreach ( $listTaskWithTime as $task ) {
                 if ($this->data[$this->alias]['time'] > $task[$this->alias]['time']) {
-                    $newOrderID = $task[$this->alias]['order'] + 1;
+                    if ( $this->data[$this->alias]['id'] == $task[$this->alias]['id'] ){
+                        $newOrderID = $task[$this->alias]['order'];
+                    } else {
+                        $newOrderID = $task[$this->alias]['order'] + 1;
+                    }
                 }
             }
             //pr($newOrderID);

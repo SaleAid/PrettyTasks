@@ -14,8 +14,12 @@ function getTaskForEdit(id){
     return getTaskFromPage(id);
 }
 function getTaskFromPage(id){
+    var title = $('#'+id).children('.editable').text();
+    if ( ! title ){
+        title = $('#'+id).children('.editable').find('input').val();
+    }
     var data = {
-        title:    $('#'+id).children('.editable').text(),
+        title:    title,
         priority: $('#'+id).hasClass('important') ? 1: 0,
         done:     $('#'+id).children('.done').is(":checked"),
         date:     $('#'+id).attr('date'),
@@ -701,6 +705,13 @@ function scrPriority(id, priority){
 //----------------setCommentTask-------
 function scrCommentTask(id, comment){
     $("li[id='"+id+"']").find('.commentTask').text(comment);
+    if( comment ){
+        $("li[id='"+id+"']").find('.comment-task-icon i').removeClass('hide');
+    }else{
+        if( ! $("li[id='"+id+"']").find('.comment-task-icon i').hasClass('hide') ){
+            $("li[id='"+id+"']").find('.comment-task-icon i').addClass('hide');
+        }
+    }
 }
 
 
@@ -749,7 +760,20 @@ function srvEdit(id, title, priority, done, date, time, timeEnd, comment){
 }
 
 function scrEdit(id, title, priority, done, date, time, timeEnd, comment){
-    scrDragWithTime(id, date, time);
+    var task = $("li[id='"+id+"'].currentTask");
+    var currentTaskDate = task.attr('date');
+    var currentTaskTime = task.find('.time').text();
+    if(time == null){
+        time = '';
+    }
+    console.log(time);
+    console.log(currentTaskTime);
+    if (date == currentTaskDate && time == currentTaskTime){
+        task.removeClass('currentTask');
+    }else{
+       scrDragWithTime(id, date, time); 
+    }
+    
     scrDate(id,date);
     scrSetDone(id,done);
     scrSetTitle(id, title, priority);
@@ -1010,6 +1034,7 @@ function AddTask(data){
     var checked = '';
     var time = '<span class="time"></span>';
     var timeEnd = '<span class="timeEnd"></span>';
+    var comment = '';
     if (+data.Task.priority){
 		important = 'important';
 	}
@@ -1024,12 +1049,17 @@ function AddTask(data){
             timeEnd = '<span class="timeEnd">'+data.Task.timeend.slice(0,-3)+'</span>'; 
         }
     }
+    if( ! data.Task.comment ){
+        comment = 'hide';
+    }
     taskHtml = '<li id ="'+data.Task.id+'" class="'+setTime+' '+complete+' '+important+'" date="'+data.Task.date+'"> \n'+ 
                             time+'\n'+
                             timeEnd+'\n'+
                             '<span class="move"><i class="icon-move"></i></span> \n'+
                             '<input type="checkbox" class="done" '+checked+'/> \n' +
                             '<span class="editable ">'+convertToHtml(data.Task.title)+'</span> \n'+
+                            '<span class="commentTask">'+convertToHtml(data.Task.comment)+'</span> \n '+
+                            '<span class="comment-task-icon"><i class="icon-file '+comment+'"></i></span> \n'+
                             '<span class="editTask"><i class="icon-pencil"></i></a></span> \n'+
                             '<span class="deleteTask"><i class=" icon-ban-circle"></i></span> \n'+
                 '</li>';
@@ -1288,13 +1318,13 @@ function initDayClick(element){
         userEvent('addDay',{date: date});
     });
 }
-function initPrintClick(element){
-    $(element).on('click', function(){
-        window.print();
-        return false;
-    });
-}
-
+//function initPrintClick(element){
+//    $(element).on('click', function(){
+//        window.print();
+//        return false;
+//    });
+//}
+//
 function InitClock() { 
   var TimezoneOffset = GLOBAL_CONFIG.timezone; 
   var localTime = new Date(); 

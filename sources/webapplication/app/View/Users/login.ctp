@@ -1,9 +1,4 @@
-<?php $this->start ( 'toHead' );?>
-<?php echo $this->Html->css($this->Loginza->getCssUrl());?>
-<?php $this->end ();?>
-<?php $this->start ( 'toFooter' );?>
-<?php echo $this->Html->script($this->Loginza->getJs()); ?>
-<?php $this->end ();?>
+<?php echo $this->Html->script($this->Loginza->getJs(), array('block' => 'toFooter')); ?>
         <div class="login"> 
             <div class="span370">
                     <?php echo $this->Form->create('User',array('class' => 'well ',
