@@ -4,12 +4,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-17 21:01+0300\n"
-"PO-Revision-Date: 2012-08-17 23:40+0300\n"
+"POT-Creation-Date: 2012-09-18 10:25+0300\n"
+"PO-Revision-Date: 2012-09-18 10:34+0300\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
@@ -45,7 +45,11 @@ msgstr "There is no task here! Rush to completing your tasks and have a good res
 msgid "У вас нет прикрепленных аккаунтов. Воспользуйтесь кнопками социальных сетей, чтобы иметь возможность входить, используя аккаунт социальной сети."
 msgstr "You have no linked profiles. Use social network buttons to enter our service with your social network accounts."
 
-#: View/Elements/empty_lists.ctp:36
+#: View/Elements/empty_lists.ctp:31
+msgid " В этом списке будет отображаться удаленные задачи. Это очень удобно видеть, какие задачи были запланированы, но по тем или иным причинам были удалены. Для окончательно удаления воспользуйтесь кнопкой \"Удалить все\"."
+msgstr "Deleted tasks will be represented in this list. It is very convenient to see which tasks were planned but deleted because of certain reason. To delete them totally you can use the button \"Delete all\""
+
+#: View/Elements/empty_lists.ctp:39
 msgid "О-о-о!*"
 msgstr "Oh-oh-oh!*"
 

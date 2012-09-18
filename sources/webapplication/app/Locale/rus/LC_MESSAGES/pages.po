@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-17 22:34+0300\n"
-"PO-Revision-Date: 2012-08-17 22:48+0300\n"
+"POT-Creation-Date: 2012-09-18 10:25+0300\n"
+"PO-Revision-Date: 2012-09-18 10:45+0300\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "MIME-Version: 1.0\n"
@@ -25,83 +25,90 @@ msgstr "Домой"
 
 #: View/Elements/footer.ctp:9
 #: View/Elements/footer_eng.ctp:9
-#: View/Elements/main_menu.ctp:61
+#: View/Elements/main_menu.ctp:37
 msgid "About"
 msgstr "О сервисе"
 
 #: View/Elements/footer.ctp:10
 #: View/Elements/footer_eng.ctp:10
+#, fuzzy
+msgid "Contacts"
+msgstr "Контакты"
+
+#: View/Elements/footer.ctp:11
+#: View/Elements/footer_eng.ctp:11
 msgid "How it works"
 msgstr "Как это работает"
 
-#: View/Elements/footer.ctp:14
-#: View/Elements/footer_eng.ctp:13
+#: View/Elements/footer.ctp:15
+#: View/Elements/footer_eng.ctp:16
+#: View/Elements/main_menu.ctp:57
 msgid "Login"
 msgstr "Войти"
 
-#: View/Elements/footer.ctp:15
-#: View/Elements/footer_eng.ctp:14
+#: View/Elements/footer.ctp:16
+#: View/Elements/footer_eng.ctp:17
+#: View/Elements/main_menu.ctp:56
 msgid "Register"
 msgstr "Зарегистрироваться"
 
-#: View/Elements/footer.ctp:20
-#: View/Elements/footer_eng.ctp:18
+#: View/Elements/footer.ctp:21
+#: View/Elements/footer_eng.ctp:21
 msgid "Misc"
 msgstr "Общее"
 
-#: View/Elements/footer.ctp:25
-#: View/Elements/footer_eng.ctp:21
+#: View/Elements/footer.ctp:26
+#: View/Elements/footer_eng.ctp:24
 msgid "Terms and Conditions"
 msgstr "Условия использования"
 
-#: View/Elements/footer.ctp:29
-#: View/Elements/footer_eng.ctp:23
+#: View/Elements/footer.ctp:30
+#: View/Elements/footer_eng.ctp:26
 msgid "To bloggers"
 msgstr "Блогерам"
 
-#: View/Elements/footer.ctp:31
-#: View/Elements/footer_eng.ctp:25
+#: View/Elements/footer.ctp:32
+#: View/Elements/footer_eng.ctp:28
 msgid "Welcome"
 msgstr "Приглашение"
 
-#: View/Elements/footer.ctp:47
-#: View/Elements/footer_eng.ctp:40
+#: View/Elements/footer.ctp:48
+#: View/Elements/footer_eng.ctp:43
 msgid "Follow us"
 msgstr "Стань фанатом"
 
-#: View/Elements/footer.ctp:49
+#: View/Elements/footer.ctp:50
 msgid "On twitter"
 msgstr "На Твиттере"
 
-#: View/Elements/footer.ctp:50
+#: View/Elements/footer.ctp:51
 msgid "On facebook"
 msgstr "На Фейсбуке"
 
-#: View/Elements/footer_eng.ctp:11
+#: View/Elements/footer_eng.ctp:12
 msgid "Testimonials"
 msgstr "Рекомендации"
 
-#: View/Elements/footer_eng.ctp:12
-msgid "Help"
-msgstr "Помощь"
-
-#: View/Elements/footer_eng.ctp:20
+#: View/Elements/footer_eng.ctp:23
 msgid "Privacy Policy"
 msgstr "Политика конфиденциальности"
 
-#: View/Elements/footer_eng.ctp:30
+#: View/Elements/footer_eng.ctp:33
 msgid "Social Media"
 msgstr "Социальные медиа"
 
-#: View/Elements/main_menu.ctp:32
+#: View/Elements/main_menu.ctp:31
+msgid "Contact"
+msgstr "Контакты"
+
+#: View/Elements/main_menu_logged.ctp:32
 msgid "Tasks"
 msgstr "Задачи"
 
-#: View/Elements/main_menu.ctp:47
+#: View/Elements/main_menu_logged.ctp:47
 msgid "Agenda"
 msgstr "Еженедельник"
 
-#: View/Elements/main_menu.ctp:55
-msgid "Contact"
-msgstr "Контакты"
+#~ msgid "Help"
+#~ msgstr "Помощь"
 

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-18 00:06+0300\n"
-"PO-Revision-Date: 2012-08-18 00:51+0300\n"
+"POT-Creation-Date: 2012-09-18 10:25+0300\n"
+"PO-Revision-Date: 2012-09-18 10:29+0300\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "MIME-Version: 1.0\n"
@@ -33,59 +33,59 @@ msgstr "Error while account binding"
 msgid "Ошибка"
 msgstr "Error"
 
-#: Controller/AccountsController.php:96
+#: Controller/AccountsController.php:99
 msgid "Your account not active"
 msgstr "Your account is not activated"
 
-#: Controller/AccountsController.php:124
+#: Controller/AccountsController.php:127
 msgid "An unknown error"
 msgstr "An unknown error"
 
-#: Controller/AccountsController.php:139;175;221
+#: Controller/AccountsController.php:142;178;225
 msgid "Код активации аккаунта был выслан Вам на почту"
 msgstr "Account activation code has been sent to your email"
 
-#: Controller/AccountsController.php:144
+#: Controller/AccountsController.php:147
 msgid "Возникли проблемы при отправке кода активации аккаунта"
 msgstr "Problems occured while sending account activation code"
 
-#: Controller/AccountsController.php:164
+#: Controller/AccountsController.php:167
 msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз"
 msgstr "An error occured while filling. Please, try again"
 
-#: Controller/AccountsController.php:180;227
+#: Controller/AccountsController.php:183;231
 msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта"
 msgstr "You have been successfully registered. Problems occured while sending account activation code"
 
-#: Controller/AccountsController.php:185
+#: Controller/AccountsController.php:188
 msgid "Error create account"
 msgstr "Error while acccount creating "
 
-#: Controller/AccountsController.php:233
+#: Controller/AccountsController.php:237
 msgid "Error create user account"
 msgstr "Error while acccount creating "
 
-#: Controller/AccountsController.php:240
+#: Controller/AccountsController.php:244
 msgid "Регистрация не удалась. Заполните поля полностью"
 msgstr "Registration was not successful. Please, fill in the fields thoroughly"
 
-#: Controller/AccountsController.php:286
+#: Controller/AccountsController.php:290
 msgid "Ваша учетная запись была активирована"
 msgstr "Your account has been successfully activated"
 
-#: Controller/AccountsController.php:292
+#: Controller/AccountsController.php:296
 msgid "Invalid key"
 msgstr "Invalid key"
 
-#: Controller/AccountsController.php:310
+#: Controller/AccountsController.php:314
 msgid "Invalid Account"
 msgstr "Invalid Account"
 
-#: Controller/AccountsController.php:314
+#: Controller/AccountsController.php:318
 msgid "Account deleted"
 msgstr "Account deleted"
 
-#: Controller/AccountsController.php:322
+#: Controller/AccountsController.php:326
 msgid "Account was not deleted"
 msgstr "Account was not deleted"
 

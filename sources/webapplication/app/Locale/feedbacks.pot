@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-18 01:08+0300\n"
+"POT-Creation-Date: 2012-09-18 10:25+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -26,51 +26,51 @@ msgstr ""
 msgid "Ваше сообщение не удалось сохранить. Попробуйте снова."
 msgstr ""
 
-#: View/Feedbacks/add.ctp:18
+#: View/Feedbacks/add.ctp:14
 msgid "Сообщение разработчикам"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:20
+#: View/Feedbacks/add.ctp:16
 msgid "Идея"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:21
+#: View/Feedbacks/add.ctp:17
 msgid "Проблема"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:22
+#: View/Feedbacks/add.ctp:18
 msgid "Вопрос"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:23
+#: View/Feedbacks/add.ctp:19
 msgid "Благодарность"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:28
+#: View/Feedbacks/add.ctp:24
 msgid "Тема"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:29;38
+#: View/Feedbacks/add.ctp:25;34
 msgid "Сообщение"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:31
+#: View/Feedbacks/add.ctp:27
 msgid "Отправить"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:39
+#: View/Feedbacks/add.ctp:35
 msgid "Ваше мнение очень важно для нас."
 msgstr ""
 
-#: View/Feedbacks/add.ctp:40
+#: View/Feedbacks/add.ctp:36
 msgid "Пожалуйста, опишите Вашу просьбу, проблему как можно более подробно, чтобы мы могли быстрее и полнее ее проработать."
 msgstr ""
 
-#: View/Feedbacks/add.ctp:41
+#: View/Feedbacks/add.ctp:37
 msgid "Спасибо за сотрудничество."
 msgstr ""
 
-#: View/Feedbacks/add.ctp:42
+#: View/Feedbacks/add.ctp:38
 msgid "Мы делаем все, чтобы наш сервис приносил Вам наибольшую пользу и комфорт."
 msgstr ""
 

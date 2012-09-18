@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-18 01:08+0300\n"
+"POT-Creation-Date: 2012-09-18 10:25+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -34,59 +34,59 @@ msgstr ""
 msgid "Ошибка"
 msgstr ""
 
-#: Controller/AccountsController.php:96
+#: Controller/AccountsController.php:99
 msgid "Your account not active"
 msgstr ""
 
-#: Controller/AccountsController.php:124
+#: Controller/AccountsController.php:127
 msgid "An unknown error"
 msgstr ""
 
-#: Controller/AccountsController.php:139;175;221
+#: Controller/AccountsController.php:142;178;225
 msgid "Код активации аккаунта был выслан Вам на почту"
 msgstr ""
 
-#: Controller/AccountsController.php:144
+#: Controller/AccountsController.php:147
 msgid "Возникли проблемы при отправке кода активации аккаунта"
 msgstr ""
 
-#: Controller/AccountsController.php:164
+#: Controller/AccountsController.php:167
 msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз"
 msgstr ""
 
-#: Controller/AccountsController.php:180;227
+#: Controller/AccountsController.php:183;231
 msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта"
 msgstr ""
 
-#: Controller/AccountsController.php:185
+#: Controller/AccountsController.php:188
 msgid "Error create account"
 msgstr ""
 
-#: Controller/AccountsController.php:233
+#: Controller/AccountsController.php:237
 msgid "Error create user account"
 msgstr ""
 
-#: Controller/AccountsController.php:240
+#: Controller/AccountsController.php:244
 msgid "Регистрация не удалась. Заполните поля полностью"
 msgstr ""
 
-#: Controller/AccountsController.php:286
+#: Controller/AccountsController.php:290
 msgid "Ваша учетная запись была активирована"
 msgstr ""
 
-#: Controller/AccountsController.php:292
+#: Controller/AccountsController.php:296
 msgid "Invalid key"
 msgstr ""
 
-#: Controller/AccountsController.php:310
+#: Controller/AccountsController.php:314
 msgid "Invalid Account"
 msgstr ""
 
-#: Controller/AccountsController.php:314
+#: Controller/AccountsController.php:318
 msgid "Account deleted"
 msgstr ""
 
-#: Controller/AccountsController.php:322
+#: Controller/AccountsController.php:326
 msgid "Account was not deleted"
 msgstr ""
 

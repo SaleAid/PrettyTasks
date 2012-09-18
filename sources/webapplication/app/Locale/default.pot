@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-18 01:08+0300\n"
+"POT-Creation-Date: 2012-09-18 10:25+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,15 +14,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Config/appconfig.php:46
+#: Config/appconfig.php:45
 msgid "Приглашение на сервис %s"
 msgstr ""
 
-#: Config/appconfig.php:47
+#: Config/appconfig.php:46
 msgid "Активация аккаунта на сервисе %s"
 msgstr ""
 
-#: Config/appconfig.php:48
+#: Config/appconfig.php:47
 msgid "Сбросить пароль на сервисе %s"
 msgstr ""
 
@@ -78,7 +78,6 @@ msgstr ""
 #: View/Feedbacks/index.ctp:17;67
 #: View/Feedbacks/view.ctp:67
 #: View/Invitations/index.ctp:9;44
-#: View/Users/index.ctp:54
 msgid "Actions"
 msgstr ""
 
@@ -242,7 +241,6 @@ msgstr ""
 #: View/Faqs/view.ctp:4
 #: View/Feedbacks/admin_view.ctp:4
 #: View/Feedbacks/view.ctp:4
-#: View/Users/index.ctp:12
 msgid "Id"
 msgstr ""
 
@@ -262,7 +260,6 @@ msgstr ""
 #: View/Feedbacks/edit.ctp:27
 #: View/Feedbacks/index.ctp:71
 #: View/Feedbacks/view.ctp:44;74
-#: View/Users/index.ctp:10
 msgid "User"
 msgstr ""
 
@@ -436,7 +433,6 @@ msgstr ""
 #: View/Faqs/view.ctp:44
 #: View/Feedbacks/admin_view.ctp:54
 #: View/Feedbacks/view.ctp:54
-#: View/Users/index.ctp:32
 msgid "Created"
 msgstr ""
 
@@ -444,7 +440,6 @@ msgstr ""
 #: View/Faqs/view.ctp:49
 #: View/Feedbacks/admin_view.ctp:59
 #: View/Feedbacks/view.ctp:59
-#: View/Users/index.ctp:37
 msgid "Modified"
 msgstr ""
 
@@ -510,7 +505,6 @@ msgstr ""
 
 #: View/Feedbacks/admin_view.ctp:14
 #: View/Feedbacks/view.ctp:14
-#: View/Users/index.ctp:27
 msgid "Email"
 msgstr ""
 
@@ -542,31 +536,23 @@ msgstr ""
 msgid "New Invitation"
 msgstr ""
 
-#: View/Pages/index.ctp:8
+#: View/Pages/index.ctp:11
 msgid "Готовься"
 msgstr ""
 
-#: View/Pages/index.ctp:20
+#: View/Pages/index.ctp:23
 msgid "Целься"
 msgstr ""
 
-#: View/Pages/index.ctp:32;41
+#: View/Pages/index.ctp:35;45
 msgid "Пли!"
+msgstr ""
+
+#: View/Tasks/index.ctp:180
+msgid "Are you sure you want to delete all tasks?"
 msgstr ""
 
 #: View/Tasks/mobile/index.ctp:36;80;125;182;207
 msgid "Go to full version"
-msgstr ""
-
-#: View/Users/index.ctp:17
-msgid "First name"
-msgstr ""
-
-#: View/Users/index.ctp:22
-msgid "Last Name"
-msgstr ""
-
-#: View/Users/index.ctp:46
-msgid "Accounts"
 msgstr ""
 

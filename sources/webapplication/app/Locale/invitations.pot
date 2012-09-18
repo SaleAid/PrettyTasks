@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-18 01:08+0300\n"
+"POT-Creation-Date: 2012-09-18 10:25+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,15 +14,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/InvitationsController.php:40;91
+#: Controller/InvitationsController.php:40;92
 msgid "Введите минимум один емейл"
 msgstr ""
 
-#: Controller/InvitationsController.php:43;92
+#: Controller/InvitationsController.php:44;93
 msgid "Ошибка при вводе данных, попробуйте ввести еще раз"
 msgstr ""
 
-#: Controller/InvitationsController.php:84
+#: Controller/InvitationsController.php:85
 msgid "Приглашения разосланы"
 msgstr ""
 

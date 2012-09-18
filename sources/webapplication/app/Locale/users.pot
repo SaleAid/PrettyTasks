@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-18 01:08+0300\n"
+"POT-Creation-Date: 2012-09-18 10:25+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -30,90 +30,94 @@ msgstr ""
 msgid "Ваш логин или пароль не совпадают"
 msgstr ""
 
-#: Controller/UsersController.php:56
+#: Controller/UsersController.php:59
 msgid "Ваш аккаунт заблокирован"
 msgstr ""
 
-#: Controller/UsersController.php:101;161;187;218;257;298
+#: Controller/UsersController.php:104;164;190;221;260;303
 msgid "Ошибка при передаче данных"
 msgstr ""
 
-#: Controller/UsersController.php:119;166
+#: Controller/UsersController.php:122;169
 msgid "Код активации аккаунта был выслан Вам на почту"
 msgstr ""
 
-#: Controller/UsersController.php:126
+#: Controller/UsersController.php:129
 msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта"
 msgstr ""
 
-#: Controller/UsersController.php:135
+#: Controller/UsersController.php:138
 msgid "Регистрация не удалась. Заполните поля полностью"
 msgstr ""
 
-#: Controller/UsersController.php:146
+#: Controller/UsersController.php:149
 msgid "Ваш аккаунт был активирован"
 msgstr ""
 
-#: Controller/UsersController.php:153
+#: Controller/UsersController.php:156
 msgid "Invalid key"
 msgstr ""
 
-#: Controller/UsersController.php:194;223
+#: Controller/UsersController.php:197;226
 msgid "Ваш пароль успешно изменен"
 msgstr ""
 
-#: Controller/UsersController.php:201;232
+#: Controller/UsersController.php:204;235
 msgid "Ваш пароль не может быть сохранен. Пожалуйста, попробуйте еще раз"
 msgstr ""
 
-#: Controller/UsersController.php:248;268
+#: Controller/UsersController.php:251;271
 msgid "На Вашу почту была отправлена инструкция по сбросу пароля"
 msgstr ""
 
-#: Controller/UsersController.php:262
+#: Controller/UsersController.php:265
 msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз"
 msgstr ""
 
-#: Controller/UsersController.php:276
+#: Controller/UsersController.php:279
 msgid "В нашей базе нет пользователя с такой почтой"
 msgstr ""
 
-#: Controller/UsersController.php:307
+#: Controller/UsersController.php:314
 msgid "Профиль был сохранен"
 msgstr ""
 
-#: Controller/UsersController.php:312
+#: Controller/UsersController.php:325
 msgid "Профиль не может быть сохранен. Пожалуйста, попробуйте еще раз"
 msgstr ""
 
-#: Model/User.php:174;validation for field password
+#: Model/User.php:181;validation for field password
 msgid "Пароли не совпадает"
 msgstr ""
 
-#: Model/User.php:260
+#: Model/User.php:267
 msgid "Этот адрес уже используется. Пожалуйста, введите другой адрес электронной почты"
 msgstr ""
 
-#: View/Elements/current_user.ctp:17
+#: View/Elements/current_user.ctp:18
 msgid "Учётная запись"
 msgstr ""
 
-#: View/Elements/current_user.ctp:18
+#: View/Elements/current_user.ctp:19
 #: View/Elements/user_menu.ctp:9
 msgid "Изменить пароль"
 msgstr ""
 
-#: View/Elements/current_user.ctp:19
+#: View/Elements/current_user.ctp:20
 #: View/Elements/user_menu.ctp:12
 msgid "Связанные аккаунты"
 msgstr ""
 
-#: View/Elements/current_user.ctp:20
+#: View/Elements/current_user.ctp:21
 #: View/Elements/user_menu.ctp:17
 msgid "Пригласить друзей"
 msgstr ""
 
 #: View/Elements/current_user.ctp:23
+msgid "Language"
+msgstr ""
+
+#: View/Elements/current_user.ctp:32
 msgid "Выход"
 msgstr ""
 
@@ -146,72 +150,72 @@ msgstr ""
 msgid "Обратная связь"
 msgstr ""
 
-#: View/Users/accounts.ctp:6
+#: View/Users/accounts.ctp:4
 msgid "Связанные учетные записи"
 msgstr ""
 
-#: View/Users/accounts.ctp:8
+#: View/Users/accounts.ctp:6
 msgid "Прикрепите аккаунт из социальной сети"
 msgstr ""
 
-#: View/Users/accounts.ctp:20
+#: View/Users/accounts.ctp:18
 msgid "Провайдер"
 msgstr ""
 
-#: View/Users/accounts.ctp:21
-#: View/Users/register.ctp:27
+#: View/Users/accounts.ctp:19
+#: View/Users/register.ctp:25
 msgid "Имя"
 msgstr ""
 
-#: View/Users/accounts.ctp:22
+#: View/Users/accounts.ctp:20
 msgid "Дата связывания"
 msgstr ""
 
-#: View/Users/accounts.ctp:24
+#: View/Users/accounts.ctp:22
 msgid "Действия"
 msgstr ""
 
-#: View/Users/accounts.ctp:31
+#: View/Users/accounts.ctp:29
 msgid "Удалить"
 msgstr ""
 
-#: View/Users/accounts.ctp:31
+#: View/Users/accounts.ctp:29
 msgid "Вы уверены, что хотите удалить этот аккаунт?"
 msgstr ""
 
-#: View/Users/login.ctp:18
+#: View/Users/login.ctp:13
 msgid "Войдите используя Ваш аккаунт"
 msgstr ""
 
-#: View/Users/login.ctp:19
+#: View/Users/login.ctp:14
 msgid "Логин или Емейл"
 msgstr ""
 
-#: View/Users/login.ctp:21
-#: View/Users/register.ctp:35
+#: View/Users/login.ctp:16
+#: View/Users/register.ctp:33
 msgid "Пароль"
 msgstr ""
 
-#: View/Users/login.ctp:22
+#: View/Users/login.ctp:17
 msgid "Войти"
 msgstr ""
 
-#: View/Users/login.ctp:24
+#: View/Users/login.ctp:19
 msgid "Оставаться в системе"
 msgstr ""
 
-#: View/Users/login.ctp:29
+#: View/Users/login.ctp:24
 #: View/Users/password_change.ctp:23
 #: View/Users/password_resend.ctp:4
 msgid "Забыли пароль?"
 msgstr ""
 
-#: View/Users/login.ctp:31
-#: View/Users/register.ctp:51
+#: View/Users/login.ctp:26
+#: View/Users/register.ctp:49
 msgid "Регистрация"
 msgstr ""
 
-#: View/Users/login.ctp:40
+#: View/Users/login.ctp:35
 msgid "Вы можете войти как"
 msgstr ""
 
@@ -234,12 +238,12 @@ msgstr ""
 
 #: View/Users/password_change.ctp:34
 #: View/Users/password_reset.ctp:21
-#: View/Users/register.ctp:37
+#: View/Users/register.ctp:35
 msgid "Повторите пароль"
 msgstr ""
 
 #: View/Users/password_change.ctp:39
-#: View/Users/profile.ctp:22
+#: View/Users/profile.ctp:24
 msgid "Сохранить изменения"
 msgstr ""
 
@@ -252,7 +256,7 @@ msgid "Ваш адрес электронной почты"
 msgstr ""
 
 #: View/Users/password_resend.ctp:26
-#: View/Users/register.ctp:40
+#: View/Users/register.ctp:38
 msgid "Пожалуйста, подтвердите, что вы человек"
 msgstr ""
 
@@ -280,47 +284,55 @@ msgstr ""
 msgid "Часовой пояс"
 msgstr ""
 
-#: View/Users/register.ctp:16
+#: View/Users/profile.ctp:22
+msgid "Язык"
+msgstr ""
+
+#: View/Users/profile.ctp:22
+msgid "Язык не выбран"
+msgstr ""
+
+#: View/Users/register.ctp:14
 msgid "Регистрация аккаунта"
 msgstr ""
 
-#: View/Users/register.ctp:18
+#: View/Users/register.ctp:16
 msgid "Или использовать аккаунт социальной сети"
 msgstr ""
 
-#: View/Users/register.ctp:27
+#: View/Users/register.ctp:25
 msgid "Введите ваше имя"
 msgstr ""
 
-#: View/Users/register.ctp:31
+#: View/Users/register.ctp:29
 msgid "Email"
 msgstr ""
 
-#: View/Users/register.ctp:31
+#: View/Users/register.ctp:29
 msgid "Укажите адрес электронной почты"
 msgstr ""
 
-#: View/Users/register.ctp:33
+#: View/Users/register.ctp:31
 msgid "Логин"
 msgstr ""
 
-#: View/Users/register.ctp:33
+#: View/Users/register.ctp:31
 msgid "Введите ваше логин"
 msgstr ""
 
-#: View/Users/register.ctp:35
+#: View/Users/register.ctp:33
 msgid "6 знаков или больше! Будьте хитрее"
 msgstr ""
 
-#: View/Users/register.ctp:47
+#: View/Users/register.ctp:45
 msgid "Я согласен с "
 msgstr ""
 
-#: View/Users/register.ctp:47
+#: View/Users/register.ctp:45
 msgid "условиями использования"
 msgstr ""
 
-#: View/Users/register.ctp:53
+#: View/Users/register.ctp:51
 msgid "ИЛИ"
 msgstr ""
 
@@ -370,5 +382,9 @@ msgstr ""
 
 #: Model/User.php:validation for field agreed
 msgid "Вы должны быть согласны с правилами использования сервиса"
+msgstr ""
+
+#: Model/User.php:validation for field language
+msgid "bad language"
 msgstr ""
 

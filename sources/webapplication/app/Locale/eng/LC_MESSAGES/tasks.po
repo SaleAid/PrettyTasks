@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-17 22:10+0300\n"
-"PO-Revision-Date: 2012-08-17 23:51+0300\n"
+"POT-Creation-Date: 2012-09-18 10:25+0300\n"
+"PO-Revision-Date: 2012-09-18 10:37+0300\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "MIME-Version: 1.0\n"
@@ -13,126 +13,139 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: Controller/TasksController.php:69;147;185;224;264;306;349;397;436;475;507
+#: Controller/TasksController.php:69;153;195;234;274;355;408;446;494;533;572;604
 msgid "Ошибка при передаче данных"
 msgstr "Error while sending data"
 
-#: Controller/TasksController.php:97
+#: Controller/TasksController.php:102
 msgid "Ошибка, некорректный тип"
 msgstr "Error, wrong type"
 
-#: Controller/TasksController.php:158
+#: Controller/TasksController.php:111
+#: View/Tasks/index.ctp:56
+msgid "Планируемые"
+msgstr "Planned"
+
+#: Controller/TasksController.php:168
 msgid "Задача  успешно изменена"
 msgstr "Task has successfully been changed"
 
-#: Controller/TasksController.php:164;288;327
+#: Controller/TasksController.php:174;298;374;390
 msgid "Ошибка, Задача  не изменена"
 msgstr "Error, task has not been saved"
 
-#: Controller/TasksController.php:198
+#: Controller/TasksController.php:208
 msgid "Задача успешно создана"
 msgstr "Task has successfully been created"
 
-#: Controller/TasksController.php:203
+#: Controller/TasksController.php:213
 msgid "Задача  не создана"
 msgstr "Task has not been created"
 
-#: Controller/TasksController.php:232
+#: Controller/TasksController.php:242
 msgid "Задача успешно перемещена"
 msgstr "Task has successfully been moved"
 
-#: Controller/TasksController.php:237
+#: Controller/TasksController.php:247
 msgid "Задача не перемещена"
 msgstr "Task has not been moved"
 
-#: Controller/TasksController.php:243;371;420
+#: Controller/TasksController.php:253;468;517
 msgid "Ошибка, Вы не можете делать изменения в этой задачи"
 msgstr "Error, you cannot change this task"
 
-#: Controller/TasksController.php:262
+#: Controller/TasksController.php:272;353
 msgid "Wrong request data"
 msgstr "Wrong request data"
 
-#: Controller/TasksController.php:276
+#: Controller/TasksController.php:286
 msgid "Задача успешно выполнена"
 msgstr "Task has successfully been done"
 
-#: Controller/TasksController.php:281
+#: Controller/TasksController.php:291
 msgid "Задача открыта"
 msgstr "Task has successfully been opened"
 
-#: Controller/TasksController.php:316
+#: Controller/TasksController.php:368
+msgid "Задача успешно перемещена в список удаленных задач"
+msgstr "Task has been successfully move to the list of Deleted tasks"
+
+#: Controller/TasksController.php:385
 msgid "Задача успешно удалена"
 msgstr "Task has successfully been deleted"
 
-#: Controller/TasksController.php:321
-msgid "Error"
-msgstr "Error"
+#: Controller/TasksController.php:419
+msgid "Задачи успешно удалены"
+msgstr "Tasks have been successfully deleted"
 
-#: Controller/TasksController.php:359
+#: Controller/TasksController.php:424
+msgid "Задачи не удалены"
+msgstr "Tasks have not been deleted"
+
+#: Controller/TasksController.php:456
 msgid "Задача успешно перемещена (moveTo)"
 msgstr "Task has successfully been moved"
 
-#: Controller/TasksController.php:364
+#: Controller/TasksController.php:461
 msgid "Задача  не перемещена (moveTo)"
 msgstr "Task has not been moved"
 
-#: Controller/TasksController.php:408
+#: Controller/TasksController.php:505
 msgid "Задача успешно отредактировано"
 msgstr "Task has successfully been edited"
 
-#: Controller/TasksController.php:414
+#: Controller/TasksController.php:511
 msgid "Задача не отредактировано"
 msgstr "Task has not been edited"
 
-#: Controller/TasksController.php:460
+#: Controller/TasksController.php:557
 msgid "Задача успешно ..."
 msgstr "Task has successfully been ..."
 
-#: Controller/TasksController.php:482
+#: Controller/TasksController.php:579
 msgid "День успешно удален из списка"
 msgstr "Day has successfully been removed from list"
 
-#: Controller/TasksController.php:487
+#: Controller/TasksController.php:584
 msgid "Ошибка при  ..."
 msgstr "Error while ..."
 
-#: Controller/TasksController.php:518
+#: Controller/TasksController.php:615
 msgid "Переход на новый день. Перезагрузка страницы произойдет через 5 секунд"
 msgstr "Move to next day. Page will be refreshed in 5 seconds"
 
-#: Model/Task.php:674
-#: View/Tasks/index.ctp:59
+#: Model/Task.php:803
+#: View/Tasks/index.ctp:70
 msgid "Sunday"
 msgstr "Sunday"
 
-#: Model/Task.php:675
-#: View/Tasks/index.ctp:60
+#: Model/Task.php:804
+#: View/Tasks/index.ctp:71
 msgid "Monday"
 msgstr "Monday"
 
-#: Model/Task.php:676
-#: View/Tasks/index.ctp:61
+#: Model/Task.php:805
+#: View/Tasks/index.ctp:72
 msgid "Tuesday"
 msgstr "Tuesday"
 
-#: Model/Task.php:677
-#: View/Tasks/index.ctp:62
+#: Model/Task.php:806
+#: View/Tasks/index.ctp:73
 msgid "Wednesday"
 msgstr "Wednesday"
 
-#: Model/Task.php:678
-#: View/Tasks/index.ctp:63
+#: Model/Task.php:807
+#: View/Tasks/index.ctp:74
 msgid "Thursday"
 msgstr "Thursday"
 
-#: Model/Task.php:679
-#: View/Tasks/index.ctp:64
+#: Model/Task.php:808
+#: View/Tasks/index.ctp:75
 msgid "Friday"
 msgstr "Friday"
 
-#: Model/Task.php:680
-#: View/Tasks/index.ctp:65
+#: Model/Task.php:809
+#: View/Tasks/index.ctp:76
 msgid "Saturday"
 msgstr "Saturday"
 
@@ -144,131 +157,143 @@ msgstr "Moving is not allowed"
 msgid "Перемещение выполненых задач запрещено"
 msgstr "Moving of completed tasks is not allowed"
 
-#: View/Tasks/index.ctp:32
+#: View/Tasks/index.ctp:40
 msgid "Добавить новый день в список"
 msgstr "Add a new day to the list"
 
-#: View/Tasks/index.ctp:32
+#: View/Tasks/index.ctp:40
 msgid "Добавить день"
 msgstr "Add a day"
 
-#: View/Tasks/index.ctp:37
+#: View/Tasks/index.ctp:49
 msgid "Просроченные"
 msgstr "Overdue"
 
-#: View/Tasks/index.ctp:38
+#: View/Tasks/index.ctp:50
 msgid "Завершенные"
 msgstr "Completed"
 
-#: View/Tasks/index.ctp:39
+#: View/Tasks/index.ctp:51
 msgid "Будущие"
 msgstr "Future"
 
-#: View/Tasks/index.ctp:45
-msgid "Планируемые"
-msgstr "Planned"
+#: View/Tasks/index.ctp:53
+msgid "Удаленные"
+msgstr "Deleted"
 
-#: View/Tasks/index.ctp:49
+#: View/Tasks/index.ctp:60
 msgid "Today"
 msgstr "Today"
 
-#: View/Tasks/index.ctp:54
+#: View/Tasks/index.ctp:65
 msgid "Tomorrow"
 msgstr "Tomorrow"
 
-#: View/Tasks/index.ctp:93
+#: View/Tasks/index.ctp:104
 msgid "Задачи на будущее"
 msgstr "Tasks for the future"
 
-#: View/Tasks/index.ctp:97;193;348
+#: View/Tasks/index.ctp:108;224;380
 msgid "+Добавить задание…"
 msgstr "+Add task ..."
 
-#: View/Tasks/index.ctp:99;195;350
+#: View/Tasks/index.ctp:110;226;382
 msgid "Добавить"
 msgstr "Add"
 
-#: View/Tasks/index.ctp:102;198;353
+#: View/Tasks/index.ctp:113;229;385
 msgid "Фильтр"
 msgstr "Filter"
 
-#: View/Tasks/index.ctp:103;199;354
+#: View/Tasks/index.ctp:114;230;386
 msgid "Все"
 msgstr "All"
 
-#: View/Tasks/index.ctp:106;202;359
+#: View/Tasks/index.ctp:117;233;391
 msgid "В Процессе"
 msgstr "In Progress"
 
-#: View/Tasks/index.ctp:109;205;364
+#: View/Tasks/index.ctp:120;236;396
 msgid "Выполненные"
 msgstr "Completed"
 
-#: View/Tasks/index.ctp:138
+#: View/Tasks/index.ctp:150
 msgid "Просроченные задачи"
 msgstr "Overdue tasks"
 
-#: View/Tasks/index.ctp:151
+#: View/Tasks/index.ctp:163
 msgid "Завершенные задачи"
 msgstr "Completed tasks"
 
-#: View/Tasks/index.ctp:164
+#: View/Tasks/index.ctp:177
+msgid "Удалить все"
+msgstr "Delete all"
+
+#: View/Tasks/index.ctp:179
+msgid "Удаленные задачи"
+msgstr "Deleted tasks"
+
+#: View/Tasks/index.ctp:180
+msgid "Удалить окончательно"
+msgstr "Delete totally"
+
+#: View/Tasks/index.ctp:195
 msgid "Будущие задачи"
 msgstr "Future tasks"
 
-#: View/Tasks/index.ctp:210;270;315;370
+#: View/Tasks/index.ctp:241;302;347;402
 msgid "Комментарий"
 msgstr "Comment"
 
-#: View/Tasks/index.ctp:212;372
+#: View/Tasks/index.ctp:243;404
 msgid "Удачный день"
 msgstr "Lucky day"
 
-#: View/Tasks/index.ctp:245
+#: View/Tasks/index.ctp:277
 msgid "Редактирование задачи"
 msgstr "Task edit"
 
-#: View/Tasks/index.ctp:251
+#: View/Tasks/index.ctp:283
 msgid "Заглавие"
 msgstr "Title"
 
-#: View/Tasks/index.ctp:257
+#: View/Tasks/index.ctp:289
 msgid "Дата и время"
 msgstr "Date and time"
 
-#: View/Tasks/index.ctp:260
+#: View/Tasks/index.ctp:292
 msgid "с"
 msgstr "from"
 
-#: View/Tasks/index.ctp:262
+#: View/Tasks/index.ctp:294
 msgid "по"
 msgstr "to"
 
-#: View/Tasks/index.ctp:278
+#: View/Tasks/index.ctp:310
 msgid "Приоритет"
 msgstr "Priority"
 
-#: View/Tasks/index.ctp:282
+#: View/Tasks/index.ctp:314
 msgid "Высокий"
 msgstr "High"
 
-#: View/Tasks/index.ctp:286
+#: View/Tasks/index.ctp:318
 msgid "Обычный"
 msgstr "Normal"
 
-#: View/Tasks/index.ctp:297
+#: View/Tasks/index.ctp:329
 msgid "Выполнена"
 msgstr "Done"
 
-#: View/Tasks/index.ctp:305;321
+#: View/Tasks/index.ctp:337;353
 msgid "Закрыть"
 msgstr "Close"
 
-#: View/Tasks/index.ctp:306;322
+#: View/Tasks/index.ctp:338;354
 msgid "Сохранить"
 msgstr "Save"
 
-#: View/Tasks/index.ctp:387
+#: View/Tasks/index.ctp:419
 msgid "Кликните для перехода<br/> на"
 msgstr "Click to go"
 
@@ -312,4 +337,7 @@ msgstr "Please, enter numeric value"
 #: for field datedone;validation created
 msgid "datetime"
 msgstr "Please, enter date and time"
+
+#~ msgid "Error"
+#~ msgstr "Error"
 

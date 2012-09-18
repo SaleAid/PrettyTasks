@@ -1,13 +1,12 @@
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-17 21:01+0300\n"
-"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
-"Last-Translator: prettytasks@gmail.com\n"
+"POT-Creation-Date: 2012-09-18 10:25+0300\n"
+"PO-Revision-Date: 2012-09-18 10:45+0300\n"
+"Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,7 +45,11 @@ msgstr ""
 msgid "У вас нет прикрепленных аккаунтов. Воспользуйтесь кнопками социальных сетей, чтобы иметь возможность входить, используя аккаунт социальной сети."
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:36
+#: View/Elements/empty_lists.ctp:31
+msgid " В этом списке будет отображаться удаленные задачи. Это очень удобно видеть, какие задачи были запланированы, но по тем или иным причинам были удалены. Для окончательно удаления воспользуйтесь кнопкой \"Удалить все\"."
+msgstr ""
+
+#: View/Elements/empty_lists.ctp:39
 msgid "О-о-о!*"
 msgstr ""
 

@@ -1,13 +1,12 @@
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-17 21:01+0300\n"
-"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
-"Last-Translator: prettytasks@gmail.com\n"
+"POT-Creation-Date: 2012-09-18 10:25+0300\n"
+"PO-Revision-Date: 2012-09-18 10:43+0300\n"
+"Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,59 +33,59 @@ msgstr ""
 msgid "Ошибка"
 msgstr ""
 
-#: Controller/AccountsController.php:96
-msgid "Your account not active."
+#: Controller/AccountsController.php:99
+msgid "Your account not active"
 msgstr ""
 
-#: Controller/AccountsController.php:124
+#: Controller/AccountsController.php:127
 msgid "An unknown error"
 msgstr ""
 
-#: Controller/AccountsController.php:139;175;221
-msgid "Код активации аккаунта был выслан Вам на почту."
+#: Controller/AccountsController.php:142;178;225
+msgid "Код активации аккаунта был выслан Вам на почту"
 msgstr ""
 
-#: Controller/AccountsController.php:144
-msgid "Возникли проблемы при отправке кода активации аккаунта."
+#: Controller/AccountsController.php:147
+msgid "Возникли проблемы при отправке кода активации аккаунта"
 msgstr ""
 
-#: Controller/AccountsController.php:164
-msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз."
+#: Controller/AccountsController.php:167
+msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз"
 msgstr ""
 
-#: Controller/AccountsController.php:180;227
-msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта."
+#: Controller/AccountsController.php:183;231
+msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта"
 msgstr ""
 
-#: Controller/AccountsController.php:185
+#: Controller/AccountsController.php:188
 msgid "Error create account"
 msgstr ""
 
-#: Controller/AccountsController.php:233
+#: Controller/AccountsController.php:237
 msgid "Error create user account"
 msgstr ""
 
-#: Controller/AccountsController.php:240
+#: Controller/AccountsController.php:244
 msgid "Регистрация не удалась. Заполните поля полностью"
 msgstr ""
 
-#: Controller/AccountsController.php:286
+#: Controller/AccountsController.php:290
 msgid "Ваша учетная запись была активирована"
 msgstr ""
 
-#: Controller/AccountsController.php:292
-msgid "Invalid key."
-msgstr ""
-
-#: Controller/AccountsController.php:310
-msgid "Invalid Account"
+#: Controller/AccountsController.php:296
+msgid "Invalid key"
 msgstr ""
 
 #: Controller/AccountsController.php:314
+msgid "Invalid Account"
+msgstr ""
+
+#: Controller/AccountsController.php:318
 msgid "Account deleted"
 msgstr ""
 
-#: Controller/AccountsController.php:322
+#: Controller/AccountsController.php:326
 msgid "Account was not deleted"
 msgstr ""
 
@@ -113,11 +112,12 @@ msgid "Регистрация аккаунта"
 msgstr ""
 
 #: View/Accounts/confirm_user_data.ctp:14
-msgid "Логин:"
+msgid "Логин"
 msgstr ""
 
 #: View/Accounts/confirm_user_data.ctp:16
-msgid "Имя:"
+#: View/Accounts/reactivate.ctp:15
+msgid "Имя"
 msgstr ""
 
 #: View/Accounts/confirm_user_data.ctp:22
@@ -132,7 +132,13 @@ msgstr ""
 msgid "Повторная активация"
 msgstr ""
 
-#: View/Accounts/reactivate.ctp:15
-msgid "Имя"
+#: Model/Account.php:validation
+#: for field user_id
+msgid "Wrong ID"
+msgstr ""
+
+#: Model/Account.php:validation
+#: for field agreed
+msgid "Вы должны быть согласны с правилами использования сервиса"
 msgstr ""
 

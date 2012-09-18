@@ -1,13 +1,12 @@
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-17 21:01+0300\n"
-"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
-"Last-Translator: prettytasks@gmail.com\n"
+"POT-Creation-Date: 2012-09-18 10:25+0300\n"
+"PO-Revision-Date: 2012-09-18 10:44+0300\n"
+"Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,51 +25,81 @@ msgstr ""
 msgid "Ваше сообщение не удалось сохранить. Попробуйте снова."
 msgstr ""
 
-#: View/Feedbacks/add.ctp:18
+#: View/Feedbacks/add.ctp:14
 msgid "Сообщение разработчикам"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:20
+#: View/Feedbacks/add.ctp:16
 msgid "Идея"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:21
+#: View/Feedbacks/add.ctp:17
 msgid "Проблема"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:22
+#: View/Feedbacks/add.ctp:18
 msgid "Вопрос"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:23
+#: View/Feedbacks/add.ctp:19
 msgid "Благодарность"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:28
+#: View/Feedbacks/add.ctp:24
 msgid "Тема"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:29;38
+#: View/Feedbacks/add.ctp:25;34
 msgid "Сообщение"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:31
+#: View/Feedbacks/add.ctp:27
 msgid "Отправить"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:39
+#: View/Feedbacks/add.ctp:35
 msgid "Ваше мнение очень важно для нас."
 msgstr ""
 
-#: View/Feedbacks/add.ctp:40
+#: View/Feedbacks/add.ctp:36
 msgid "Пожалуйста, опишите Вашу просьбу, проблему как можно более подробно, чтобы мы могли быстрее и полнее ее проработать."
 msgstr ""
 
-#: View/Feedbacks/add.ctp:41
+#: View/Feedbacks/add.ctp:37
 msgid "Спасибо за сотрудничество."
 msgstr ""
 
-#: View/Feedbacks/add.ctp:42
+#: View/Feedbacks/add.ctp:38
 msgid "Мы делаем все, чтобы наш сервис приносил Вам наибольшую пользу и комфорт."
+msgstr ""
+
+#: Model/Feedback.php:validation
+#: for field lang
+msgid "notempty"
+msgstr "непустой"
+
+#: Model/Feedback.php:validation
+#: for field category
+msgid "Please select a category"
+msgstr "Выберите категорию"
+
+#: Model/Feedback.php:validation
+#: for field status
+msgid "numeric"
+msgstr "число"
+
+#: Model/Feedback.php:validation
+#: for field subject;validation message
+msgid "Поле должно быть заполнено"
+msgstr ""
+
+#: Model/Feedback.php:validation
+#: for field processed
+msgid "boolean"
+msgstr ""
+
+#: Model/Feedback.php:validation
+#: for field user_id
+msgid "Wrong ID"
 msgstr ""
 
