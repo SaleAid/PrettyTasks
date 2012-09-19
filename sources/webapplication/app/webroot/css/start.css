@@ -145,14 +145,24 @@ body {
 .start{
     margin-bottom: 10px;
 }
+.fire {
+    font-family: "Trebuchet MS","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 24px;
+    line-height: 21px;
+    font-weight: bold; 
+    letter-spacing: 2px;
+}
+.fire:hover{
+    color: #E4E4E4;
+}
 
 /* Footer
 -------------------------------------------------- */
 footer {
     background-color: #EDEDED;
     display: block;
-  	margin: -251px auto 0;
-	height: 230px;
+  	margin: -191px auto 0;
+	height: 170px;
 	position: relative;
     border-top: 1px solid #DFDFDF;
     font-size:12px;
@@ -200,3 +210,4 @@ footer .right{ text-align:right; }
     margin-top: 8px;
     min-width: 80px;
 }
+

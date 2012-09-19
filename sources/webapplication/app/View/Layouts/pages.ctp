@@ -15,6 +15,7 @@ echo $this->Html->docType('html5');
 <?php
 echo $this->Html->meta('icon');
 echo $this->Html->css('bootstrap.min');
+echo $this->Html->css($this->Loginza->getCssUrl());  
 echo $this->fetch('toHead');
 echo $scripts_for_layout;
 ?>      
