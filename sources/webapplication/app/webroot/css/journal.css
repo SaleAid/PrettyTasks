@@ -1,7 +1,7 @@
 .jl-content{
     
 }
-.row{
+.jl-wrap{
     margin-left: 20px;
 }
 .jl-day{
@@ -45,8 +45,8 @@
 
 .g-day{
     position: absolute;
-    top: -16px;
-    right: -16px;
+    top: -8px;
+    right: -8px;
     
 }
 

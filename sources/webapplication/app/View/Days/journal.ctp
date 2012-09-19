@@ -16,7 +16,7 @@
        
     }
 ?>
-<div class="row">
+<div class="row jl-wrap">
   <div >
     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
     <h3 class="head-list-info"><?php echo __d('days', 'Журнал'); ?></h3>
@@ -33,7 +33,7 @@
                     )); 
                 ?>
                 <?php if($day['Day']['rating']): ?>&nbsp;&nbsp;
-                    <?php echo $this->Html->image("gday.". Configure::read('App.version') .".png", array('class' => 'g-day', 'width' => 32, 'height' => 32)); ?>
+                    <?php echo $this->Html->image("gday.". Configure::read('App.version') .".png", array('class' => 'g-day', 'width' => 16, 'height' => 16)); ?>
                 <?php endif; ?>
             </span>
             <p><?php echo h($day['Day']['comment']); ?></p>
