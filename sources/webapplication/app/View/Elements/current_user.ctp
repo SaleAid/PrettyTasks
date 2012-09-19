@@ -20,12 +20,12 @@
                 <li><?php echo $this->Html->link($this->Html->tag('i', '', array('class' => 'icon-magnet')) . '&nbsp;&nbsp;' . __d('users', 'Связанные аккаунты'), array('controller' => 'users', 'action' => 'accounts'), array('escape' => false));?></li>
                 <li><?php echo $this->Html->link($this->Html->tag('i', '', array('class' => 'icon-plane')) . '&nbsp;&nbsp;' . __d('users', 'Пригласить друзей'), array('controller' => 'invitations', 'action' => 'add') ,array('escape' => false));?></li>
                 <li class="dropdown-submenu">
-                    <a tabindex="-1" href="#"><i class="icon-flag"></i>&nbsp;&nbsp;<?php echo __d('users', 'Language'); ?></a>
+                    <a tabindex="-1" href="#"><i class="icon-globe"></i>&nbsp;&nbsp;<?php echo __d('users', 'Language'); ?></a>
                     <ul class="dropdown-menu langList">
                         <?php foreach(Configure::read('Config.lang.available') as $lang) : ?>
                             <li><a tabindex="-1" href="#" data="<?php echo h($lang['lang']); ?>"><?php echo h($lang['name']); ?>&nbsp;&nbsp;<?php if(Configure::read('Config.language') == $lang['lang']) : ;?><i class="icon-ok"></i><?php endif;?></a></li>
                         <?php endforeach; ?>
-                        <li class="divider"></li>
+                        
                    </ul>
                 </li>
                 <li class="divider"></li>

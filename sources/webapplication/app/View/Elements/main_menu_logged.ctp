@@ -50,7 +50,7 @@
                 );?>
           </li>
           <?php endif;?>
-          <li class="<? if( isset($this->params['pass'][0]) and $this->params['pass'][0] == "journal" and strtolower($this->params['controller']) == "days") echo 'active'; ?>">
+          <li class="<? if($this->params['action'] == "journal" and strtolower($this->params['controller']) == "days") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __d('days', 'Journal'),
                     array('controller' => 'days', 'action' => 'journal')

@@ -40,7 +40,7 @@
           </li>
         </ul>
         <div class="pull-right">
-            <span class="btn-group">
+            <span class="dropdown">
                 <span class="dropdown-toggle" data-toggle="dropdown" data-target="#">
                     <span class="lang-top">
                         <?php echo Configure::read('Config.lang.available.'. Configure::read('Config.langURL') .'.name'); ?>
@@ -51,7 +51,6 @@
                         <li><a  href="#" data="<?php echo h($lang['lang']); ?>"><?php echo h($lang['name']); ?><?php if(Configure::read('Config.language') == $lang['lang']) : ;?>&nbsp;&nbsp;<i class="icon-ok"></i><?php endif;?></a></li>
                     <?php endforeach; ?> 
                    </ul>
-               
              </span>  
             <?php echo $this->Html->link(__d('pages', 'Register'), array('controller' => 'users', 'action' => 'register'), array('class'=> 'btn btn-success')); ?>
             <?php echo $this->Html->link(__d('pages', 'Login'), array('controller' => 'users', 'action' => 'login'), array('class'=> 'btn btn-primary')); ?> 

@@ -19,7 +19,7 @@
 	    
         <?php echo $this->Form->select('timezone', $list, array('class' => 'input-xlarge'))?>
         
-        <?php echo $this->Form->input('language', array('label' => __d('users', 'Язык'), 'class' => 'input-xlarge','options' => $listLang, 'empty' => __d('users', 'Язык не выбран')))?>
+        <?php echo $this->Form->input('language', array('label' => __d('users', 'Язык'), 'class' => 'input-xlarge','options' => $listLang, 'selected' => Configure::read('Config.language'), 'empty' => __d('users', 'Язык не выбран')))?>
         
         <?php echo $this->Form->submit(__d('users', 'Сохранить изменения'),array('class'=>'btn btn-large btn-info'));?>
         

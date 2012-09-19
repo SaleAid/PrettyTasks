@@ -38,5 +38,13 @@ $().ready(function(){
         window.open(url, windowName, windowFeatures);
         event.preventDefault();
     });
+    
+    $(window).on("resize load", function () {
+        if ( $(this).width() <= 1030 ) {
+            $('#box').addClass('hide');
+        }else {
+            $('#box').removeClass('hide');
+        }
+    });
             
 });

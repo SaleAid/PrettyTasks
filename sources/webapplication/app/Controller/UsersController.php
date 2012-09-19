@@ -335,6 +335,7 @@ class UsersController extends AppController {
             $listLang[$lang['lang']] = $lang['name'];
         }
         $this->set('listLang', $listLang);
+        
         //TODO: Rewrite it
         $list = DateTimeZone::listAbbreviations();
         $idents = DateTimeZone::listIdentifiers();

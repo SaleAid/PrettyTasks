@@ -1,3 +1,4 @@
+
 <footer>
 <div class="container">
 	<div class="row border-bottom">
@@ -6,9 +7,7 @@
 			<h2><?php echo __d('pages', 'Pages');?></h2>
 			<ul>
 				<li><?php echo $this->Html->link(__d('pages', 'Home'), array('controller' => 'pages', 'action' => 'index'));?></li>
-				<li><?php echo $this->Html->link(__d('pages', 'About'), array('controller' => 'pages', 'action' => 'about'));?></li>
-                <li><?php echo $this->Html->link(__d('pages', 'Contacts'), array('controller' => 'pages', 'action' => 'contacts'));?></li>
-				<li><?php echo $this->Html->link(__d('pages', 'How it works'), array('controller' => 'pages', 'action' =>  'how-it-works'));?></li>
+				<li><?php echo $this->Html->link(__d('pages', 'Contacts'), array('controller' => 'pages', 'action' => 'contacts'));?></li>
 				<?php /*
 				<li><?php echo $this->Html->link(__d('pages', 'Help'), array('controller' => 'pages', 'action' => 'help'));?></li>
 				*/ ?>
@@ -20,18 +19,24 @@
 		<div class="span3">
 			<h2><?php echo __d('pages', 'Misc');?></h2>
 			<ul>
-			    <?php /*
-				<li><?php echo $this->Html->link(__d('pages', 'Privacy Policy'), array('controller' => 'pages', 'action' => 'privacy-policy'));?></li>
-				*/?>
+				<li><?php echo $this->Html->link(__d('pages', 'About'), array('controller' => 'pages', 'action' => 'about'));?></li>
+                <li><?php echo $this->Html->link(__d('pages', 'How it works'), array('controller' => 'pages', 'action' =>  'how-it-works'));?></li>
 				<li><?php echo $this->Html->link(__d('pages', 'Terms and Conditions'), array('controller' => 'pages', 'action' => 'terms-and-conditions'));?></li>
+                <li><?php echo $this->Html->link(__d('pages', 'Privacy Policy'), array('controller' => 'pages', 'action' => 'privacy-policy'));?></li>
 			</ul>
 		</div>
 		<div class="span3">	
 			<h2><?php echo __d('pages', 'To bloggers');?></h2>
 			<ul>
                <li><?php echo $this->Html->link(__d('pages', 'Welcome'), array('controller' => 'pages', 'action' => 'to-bloggers'));?></li>
-			</ul>						
-		</div> 
+			</ul>
+            <h2><?php echo __d('pages', 'Follow us');?></h2>
+			<ul>
+               <li><a href="http://www.twitter.com/prettytasks" target="_blank"><?php echo __d('pages', 'On twitter');?></a></li>
+               <li><a href="http://www.facebook.com/prettytasks" target="_blank"><?php echo __d('pages', 'On facebook');?></a></li>
+            </ul>						
+		</div>
+         
 		<?php /*
 		<div class="span3">
 			<h2><?php echo __d('pages', 'Social Media');?></h2>
@@ -45,15 +50,8 @@
 		*/?>
 		
 		<div class="span3">
-			<h2><?php echo __d('pages', 'Follow us');?></h2>
-			<ul>
-               <li><a href="http://www.twitter.com/prettytasks" target="_blank"><?php echo __d('pages', 'On twitter');?></a></li>
-               <li><a href="http://www.facebook.com/prettytasks" target="_blank"><?php echo __d('pages', 'On facebook');?></a></li>
-               <?php /*
-               <li><a href="#"><?php echo __d('pages', 'On Google+'); ?></a></li>
-               */?>
-               <?php echo $this->element('share'); ?> 
-			</ul>
+			<h2><?php echo __d('pages', 'Расскажи о нас');?></h2>
+			   <?php echo $this->element('share'); ?> 
 		</div> 
 		
 	</div> 
