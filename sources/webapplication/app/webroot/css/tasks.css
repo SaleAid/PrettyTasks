@@ -51,6 +51,7 @@
 }
 .s4:hover{
     background-color: silver;
+    cursor: pointer;
 }
 .s5{
     margin-top: 28px;
@@ -58,7 +59,7 @@
 }
 
 .s4:hover .caret{
-        border-top-color: #08C;
+    border-top-color: #08C;
     border-bottom-color: #08C;
 }
 
@@ -351,4 +352,13 @@ div.jGrowl.custom {
     -webkit-border-radius:4px;
     -moz-border-radius:4px;
     border-radius:4px;
+}
+.daysButton .active a{
+    background-color: white;
+    background-image: none;
+    color: black;
+    font-weight: bold;
+}
+.weekday{
+    text-transform:capitalize;
 }

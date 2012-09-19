@@ -177,7 +177,7 @@
                     <button class="btn btn-small btn-danger pull-right delete_all" type="button"><?php echo __d('tasks', 'Удалить все');?></button>
                     <h3 class="head-list-info">
                         <?php echo __d('tasks', 'Удаленные задачи'); ?>&nbsp;
-                        <!--(<?php echo $this->Form->postLink(__d('tasks', 'Удалить окончательно'), array('action' => 'deleteAllDetetedTasks'),  array('class' => 'delete-all'), __('Are you sure you want to delete all tasks?')); ?>)
+                        <!--(<?php echo $this->Form->postLink(__d('tasks', 'Удалить окончательно'), array('action' => 'deleteAllDetetedTasks'),  array('class' => 'delete-all'), __d( 'tasks', 'Are you sure you want to delete all tasks?')); ?>)
                     
                     --></h3>
                   </div>
@@ -410,6 +410,7 @@
                     <?php echo $this->Html->image("ajax-loader-content.". Configure::read('App.version') .".gif"); ?>
                 </p>
 			</ul>
+            
 		</div>
 	</div>
 </div>
@@ -421,3 +422,10 @@
     </h3>
 </script>
 
+<script type="text/template" id="empty_list_day_tasks">
+    <% if ( type == "past") { %>
+        <?php echo $this->element('empty_lists', array('type' => 'past', 'hide' => true));?>
+    <% } else { %>
+        <?php echo $this->element('empty_lists', array('type' => 'future', 'hide' => true));?>
+    <% }  %>
+</script>

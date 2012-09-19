@@ -108,7 +108,8 @@ class TasksController extends AppController {
                 foreach ( $result['data'] as $key => $value ) {
                     if ($key or $result['type'] == 'deleted') {
                         $weekDay = $this->Task->getWeekDay(CakeTime::format('l', $key));
-                        $data[$key]['weekDay'] =  $weekDay? $weekDay : __d('tasks', 'Планируемые');
+                        $data[$key]['weekDay'] = $weekDay? $weekDay : __d('tasks', 'Планируемые');
+                        
                         if (CakeTime::isToday($key)) {
                             $data[$key]['weekDayStyle'] = '';
                         } else {
@@ -308,44 +309,6 @@ class TasksController extends AppController {
         ));
     }
 
-//    public function deleteTask() {
-//        $result = $this->_prepareResponse();
-//        if (! $this->_isSetRequestData('id')) {
-//            $result['message'] = array(
-//                'type' => 'error', 
-//                'message' => __d('tasks', 'Ошибка при передаче данных')
-//            );
-//        } else {
-//            $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
-//            if ($task) {
-//                if ($this->Task->delete()) {
-//                    $result['success'] = true;
-//                    //$result['data'] = $task;
-//                    $result['message'] = array(
-//                        'type' => 'success', 
-//                        'message' => __d('tasks', 'Задача успешно удалена')
-//                    );
-//                } else {
-//                    $result['message'] = array(
-//                        'type' => 'error', 
-//                        'message' => __d('tasks', 'Error')
-//                    );
-//                }
-//            } else {
-//                $result['message'] = array(
-//                    'type' => 'error', 
-//                    'message' => __d('tasks', 'Ошибка, Задача  не изменена')
-//                );
-//                $result['errors'] = $this->Task->validationErrors;
-//            }
-//        }
-//        $result['action'] = 'delete';
-//        $this->set('result', $result);
-//        $this->set('_serialize', array(
-//            'result'
-//        ));
-//    }
-    
     public function setDelete() {
         $result = $this->_prepareResponse();
         if (! $this->_isSetRequestData('id')) {
@@ -540,18 +503,10 @@ class TasksController extends AppController {
             $result['success'] = true;
             $result['data']['list'] = $task;
             $result['data']['date'] = $this->request->data['date'];
-            $result['data']['weekDay'] = $this->Task->getWeekDay(CakeTime::format('l', $this->request->data['date']));
+            //$result['data']['weekDay'] = $this->Task->getWeekDay(CakeTime::format('l', $this->request->data['date']));
+            //$result['data']['nameDay'] = CakeTime::format('l', $this->request->data['date']);
             $result['data']['day'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $this->request->data['date']);
             $result['data']['weekDayStyle'] = ($result['data']['date'] > CakeTime::format('Y-m-d', time())) ? 'future' : 'past';
-            //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            
-            //TODO realy need to delete code below
-            $this->layout = false;
-            $view = new View($this, false);
-            $view->set('type', $result['data']['weekDayStyle']);
-            $view->set('hide', $result['data']['listCount']['all']);
-            $view->viewPath = 'Elements';
-            $result['data']['emptyList'] = $view->render('empty_lists');
             $result['message'] = array(
                 'type' => 'success', 
                 'message' => __d('tasks', 'Задача успешно ...')

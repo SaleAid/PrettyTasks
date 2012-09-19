@@ -318,7 +318,6 @@ function futureTasks(data){
     listUl.empty();
     $.each(data,function(index, value) {
         if(+value.list.length){
-            //day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class="'+value.weekDayStyle+'">'+value.weekDay+'</span></h3>');
             day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
             day = $(day_tmp);
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
@@ -350,7 +349,6 @@ function expiredTasks(data){
     }
     $.each(data,function(index, value) {
         if(+value.list.length){
-            //day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class="'+value.weekDayStyle+'">'+value.weekDay+'</span></h3>');
             day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
             day = $(day_tmp);
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
@@ -414,7 +412,6 @@ function deletedTasks(data){
     }
     $.each(data,function(index, value) {
         if(+value.list.length){
-            //day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class="'+value.weekDayStyle+'">'+value.weekDay+'</span></h3>');
             day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
             day = $(day_tmp);
             if(!index){
@@ -435,10 +432,6 @@ function deletedTasks(data){
             listUl.find(" li[id='"+value.Task.id+"'] .done").addClass('hide');
         });
     });
-}
-
-function dayStyle(date){
-    
 }
 
 //----------------------------------
@@ -640,12 +633,17 @@ function srvAddDay(date){
 
 function onAddDay(data){
     var list = $("ul[date='"+data.data.date+"']");
-    list.after(data.data.emptyList);
+    var nameDay = $.datepicker.formatDate('DD', new Date (data.data.date));
     list.children('.loadContent').remove();
+    var emptyList = _.template($("#empty_list_day_tasks").html(), {type: data.data.weekDayStyle});
+    if($.isEmptyObject(data.data.list)){
+        emptyList = $(emptyList).removeClass('hide');
+    }
+    list.after(emptyList);
     list.siblings('.filter').find('span.all').text(data.data.listCount.all);
     list.siblings('.filter').find('span.inProcess').text(data.data.listCount.all - data.data.listCount.done);
     list.siblings('.filter').find('span.completed').text(data.data.listCount.done);
-    list.parent().find('.weekday').text(" - "+data.data.weekDay);
+    list.parent().find('.weekday').text(" - "+nameDay);
     list.parent().find('.weekday').addClass(data.data.weekDayStyle);
     initPrintClick(list.parent().find('.print'));
     if(!$.isEmptyObject(data.data.day) && +data.data.day[data.data.date][0].Day.rating){
