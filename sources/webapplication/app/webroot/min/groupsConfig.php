@@ -10,12 +10,13 @@
  *
  * See http://code.google.com/p/minify/wiki/CustomSource for other ideas
  **/
+$ver = '1.0.5';
 return array(
      
-     'journal.js.v=1.0.5' => array('//js/main.js', '//js/journal.js', '//js/print.js'),
-     'journal.css.v=1.0.5' => array('//css/main.css', '//css/journal.css', '//css/print.css'),
+     'journal.js.v='.$ver => array('//js/main.js', '//js/journal.js', '//js/print.js'),
+     'journal.css.v='.$ver => array('//css/main.css', '//css/journal.css', '//css/print.css'),
      
-     'tasks.js.v=1.0.5' => array(
+     'tasks.js.v='.$ver => array(
                                 '//js/jquery-ui-i18n.min.js',
                                 '//js/jquery.inline-confirmation.js',
                                 '//js/jquery.timepicker-1.2.2.min.js',
@@ -26,7 +27,7 @@ return array(
                                 '//js/main.js', 
                                 '//js/tasks.js'
                             ),
-     'tasks.css.v=1.0.5' => array(
+     'tasks.css.v='.$ver => array(
                                 '//css/jquery.timepicker-1.2.2.css',
                                 '//css/jquery.jgrowl.css',
                                 '//css/ui-lightness/jquery-ui-1.8.18.custom.css',
@@ -34,9 +35,9 @@ return array(
                                 '//css/tasks.css', 
                                 '//css/print.css'
                             ),
-     'start.js.v=1.0.5' => array('//js/main.js'),
+     'start.js.v='.$ver => array('//js/main.js'),
      
-     'pages.css.v=1.0.5' => array('//css/main.css', '//css/pages.css'),
+     'pages.css.v='.$ver => array('//css/main.css', '//css/pages.css'),
      
      
     // 'css' => array('//css/file1.css', '//css/file2.css'),
