@@ -37,9 +37,9 @@ class UsersController extends AppController {
 
     public function login() {
         $this->layout = 'default';
-        $this->Seo->title = $this->Seo->title.' :: '.Configure::read('SEO.Login.title.ru');
-        $this->Seo->description = Configure::read('SEO.Login.description.ru');
-        $this->Seo->keywords = Configure::read('SEO.Login.keywords.ru');
+        $this->Seo->title = $this->Seo->title.' :: '.Configure::read('SEO.Login.title.'.Configure::read('Config.langURL'));
+        $this->Seo->description = Configure::read('SEO.Login.description.'.Configure::read('Config.langURL'));
+        $this->Seo->keywords = Configure::read('SEO.Login.keywords.'.Configure::read('Config.langURL'));
         //if ($this->User->validates()) {
             $message = __d('users', 'Ваш емейл или пароль не совпадают');
             if( isset($this->data['User']['email']) && !Validation::email($this->data['User']['email']) ){
@@ -87,9 +87,9 @@ class UsersController extends AppController {
 
     public function register() {
         $this->layout = 'default';
-        $this->Seo->title = $this->Seo->title.' :: '.Configure::read('SEO.Registration.title.ru');
-        $this->Seo->description = Configure::read('SEO.Registration.description.ru');
-        $this->Seo->keywords = Configure::read('SEO.Registration.keywords.ru');
+        $this->Seo->title = $this->Seo->title.' :: '.Configure::read('SEO.Registration.title.'.Configure::read('Config.langURL'));
+        $this->Seo->description = Configure::read('SEO.Registration.description.'.Configure::read('Config.langURL'));
+        $this->Seo->keywords = Configure::read('SEO.Registration.keywords.'.Configure::read('Config.langURL'));
         if ($this->request->is('post')) {
             $expectedData = array(
                 'first_name',

@@ -22,7 +22,7 @@
    Configure::write('Site.title', 'Pretty Tasks');
    Configure::write('Site.keywords', 'Pretty Tasks, tasks, gtd, goals, aims, success, schedule, time management');
    Configure::write('Site.description', 'Pretty Tasks is the prettiest personal tasks management service');
-   //SEO
+   //SEO ru
    Configure::write('SEO.Registration.title.ru', 'Регистрация на сайте');
    Configure::write('SEO.Registration.keywords.ru', 'Pretty Tasks, gtd, tasks management, registration, управление временем, списки задач, регистрация');
    Configure::write('SEO.Registration.description.ru', 'Страница регистрации на сервисе PrettyTasks. На этой странице вы можете создать свой аккаунт');
@@ -35,16 +35,27 @@
    Configure::write('SEO.Pages.keywords.ru', 'Pretty Tasks, gtd, tasks management, управление временем, списки задач, удобная система');
    Configure::write('SEO.Pages.description.ru', 'PrettyTasks - сервис управления личными задачами с максимальной удобностью использования. Пользуйтесь интуитивно лучшей системой!');
    
+   //SEO en
+   Configure::write('SEO.Registration.title.en', 'Registering on the site');
+   Configure::write('SEO.Registration.keywords.en', 'Pretty Tasks, gtd, tasks management, todo list, registration, time management, task lists, registration');
+   Configure::write('SEO.Registration.description.en', 'Registration page at the service PrettyTasks. We create your account at this page');
    
+   Configure::write('SEO.Login.title.en', 'Login');
+   Configure::write('SEO.Login.keywords.en', 'Pretty Tasks, gtd, tasks management, todo list, login, time management, task lists, login to site');
+   Configure::write('SEO.Login.description.en', 'Login page of PrettyTasks service');
+   
+   Configure::write('SEO.Pages.title.en', 'Pleasant personal service for task management');
+   Configure::write('SEO.Pages.keywords.en', 'Pretty Tasks, gtd, tasks management, todo list, time management, task lists, easy-to-use system');
+   Configure::write('SEO.Pages.description.en', 'PrettyTasks - a service of personal task management with maximum usability. Use the best system intuitively!');
    
    Configure::write('User.default.beta', false);
    Configure::write('User.default.pro', false);
    
    Configure::write('Email.global.from', 'noreply@prettytasks.com');
    Configure::write('Email.global.format', 'html');
-   Configure::write('Email.user.invitation.subject', __('Приглашение на сервис %s'));
-   Configure::write('Email.user.activateAccount.subject', __('Активация аккаунта на сервисе %s'));
-   Configure::write('Email.user.passwordResend.subject', __('Сбросить пароль на сервисе %s'));
+   Configure::write('Email.user.invitation.subject', 'Приглашение на сервис %s');
+   Configure::write('Email.user.activateAccount.subject', 'Активация аккаунта на сервисе %s');
+   Configure::write('Email.user.passwordResend.subject', 'Сбросить пароль на сервисе %s');
    Configure::write('App.version', '1.0.5');
    
    Configure::write('App.Minify.css', true);
