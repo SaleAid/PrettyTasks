@@ -4,95 +4,80 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-09-18 10:25+0300\n"
-"PO-Revision-Date: 2012-09-18 10:35+0300\n"
-"Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
+"POT-Creation-Date: 2012-09-20 10:23+0300\n"
+"PO-Revision-Date: 2012-09-20 10:47+0200\n"
+"Last-Translator: Alexandr <afrankovskiy@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.3\n"
 
-#: View/Elements/footer.ctp:6
-#: View/Elements/footer_eng.ctp:6
+#: View/Elements/footer.ctp:7 View/Elements/footer_eng.ctp:6
 msgid "Pages"
 msgstr ""
 
-#: View/Elements/footer.ctp:8
-#: View/Elements/footer_eng.ctp:8
+#: View/Elements/footer.ctp:9 View/Elements/footer_eng.ctp:8
 msgid "Home"
 msgstr ""
 
-#: View/Elements/footer.ctp:9
-#: View/Elements/footer_eng.ctp:9
+#: View/Elements/footer.ctp:10 View/Elements/footer_eng.ctp:9
+msgid "Contacts"
+msgstr ""
+
+#: View/Elements/footer.ctp:14 View/Elements/footer_eng.ctp:14
+#: View/Elements/main_menu.ctp:56
+msgid "Login"
+msgstr "Log in"
+
+#: View/Elements/footer.ctp:15 View/Elements/footer_eng.ctp:15
+#: View/Elements/main_menu.ctp:55
+msgid "Register"
+msgstr "Sign up"
+
+#: View/Elements/footer.ctp:20 View/Elements/footer_eng.ctp:19
+msgid "Misc"
+msgstr ""
+
+#: View/Elements/footer.ctp:22 View/Elements/footer_eng.ctp:21
 #: View/Elements/main_menu.ctp:37
 msgid "About"
 msgstr ""
 
-#: View/Elements/footer.ctp:10
-#: View/Elements/footer_eng.ctp:10
-msgid "Contacts"
-msgstr ""
-
-#: View/Elements/footer.ctp:11
-#: View/Elements/footer_eng.ctp:11
+#: View/Elements/footer.ctp:23 View/Elements/footer_eng.ctp:22
 msgid "How it works"
 msgstr ""
 
-#: View/Elements/footer.ctp:15
-#: View/Elements/footer_eng.ctp:16
-#: View/Elements/main_menu.ctp:57
-msgid "Login"
-msgstr "Log in"
-
-#: View/Elements/footer.ctp:16
-#: View/Elements/footer_eng.ctp:17
-#: View/Elements/main_menu.ctp:56
-msgid "Register"
-msgstr "Sign up"
-
-#: View/Elements/footer.ctp:21
-#: View/Elements/footer_eng.ctp:21
-msgid "Misc"
-msgstr ""
-
-#: View/Elements/footer.ctp:26
-#: View/Elements/footer_eng.ctp:24
+#: View/Elements/footer.ctp:24 View/Elements/footer_eng.ctp:24
 msgid "Terms and Conditions"
 msgstr ""
 
-#: View/Elements/footer.ctp:30
-#: View/Elements/footer_eng.ctp:26
-msgid "To bloggers"
-msgstr ""
-
-#: View/Elements/footer.ctp:32
-#: View/Elements/footer_eng.ctp:28
-msgid "Welcome"
-msgstr ""
-
-#: View/Elements/footer.ctp:48
-#: View/Elements/footer_eng.ctp:43
-msgid "Follow us"
-msgstr ""
-
-#: View/Elements/footer.ctp:50
-msgid "On twitter"
-msgstr ""
-
-#: View/Elements/footer.ctp:51
-msgid "On facebook"
-msgstr ""
-
-#: View/Elements/footer_eng.ctp:12
-msgid "Testimonials"
-msgstr ""
-
-#: View/Elements/footer_eng.ctp:23
+#: View/Elements/footer.ctp:25 View/Elements/footer_eng.ctp:23
 msgid "Privacy Policy"
 msgstr ""
 
-#: View/Elements/footer_eng.ctp:33
+#: View/Elements/footer.ctp:29 View/Elements/footer_eng.ctp:29
+msgid "To bloggers"
+msgstr ""
+
+#: View/Elements/footer.ctp:31 View/Elements/footer_eng.ctp:31
+msgid "Welcome"
+msgstr ""
+
+#: View/Elements/footer.ctp:33 View/Elements/footer_eng.ctp:34
+msgid "Follow us"
+msgstr ""
+
+#: View/Elements/footer.ctp:35 View/Elements/footer_eng.ctp:36
+msgid "On twitter"
+msgstr ""
+
+#: View/Elements/footer.ctp:36 View/Elements/footer_eng.ctp:37
+msgid "On facebook"
+msgstr ""
+
+#: View/Elements/footer.ctp:53 View/Elements/footer_eng.ctp:43
 msgid "Social Media"
 msgstr ""
 
@@ -108,3 +93,38 @@ msgstr ""
 msgid "Agenda"
 msgstr ""
 
+#: View/Elements/share.ctp:6
+msgid "Share on Twitter"
+msgstr ""
+
+#: View/Elements/share.ctp:6;7;8;9
+msgid "Share on"
+msgstr ""
+
+#: View/Elements/share.ctp:6
+msgid "Twitter"
+msgstr ""
+
+#: View/Elements/share.ctp:7
+msgid "Share on Facebook"
+msgstr ""
+
+#: View/Elements/share.ctp:7
+msgid "Facebook"
+msgstr ""
+
+#: View/Elements/share.ctp:8
+msgid "Share on ВКонтакте"
+msgstr ""
+
+#: View/Elements/share.ctp:8
+msgid "ВКонтакте"
+msgstr ""
+
+#: View/Elements/share.ctp:9
+msgid "Share on Google+"
+msgstr ""
+
+#: View/Elements/share.ctp:9
+msgid "Google+"
+msgstr ""

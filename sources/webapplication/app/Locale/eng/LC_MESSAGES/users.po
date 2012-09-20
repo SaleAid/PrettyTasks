@@ -4,18 +4,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-09-18 10:25+0300\n"
-"PO-Revision-Date: 2012-09-18 10:38+0300\n"
-"Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
+"POT-Creation-Date: 2012-09-20 10:23+0300\n"
+"PO-Revision-Date: 2012-09-20 10:46+0200\n"
+"Last-Translator: Alexandr <afrankovskiy@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.3\n"
 
 #: Config/appconfig.php:17
 msgid "Russian"
-msgstr "Russian"
+msgstr "Русский"
 
 #: Config/appconfig.php:18
 msgid "English"
@@ -42,8 +43,12 @@ msgid "Код активации аккаунта был выслан Вам н�
 msgstr "Activation code has been sent to your email"
 
 #: Controller/UsersController.php:129
-msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта"
-msgstr "Your registration is successful. But there are errors while sending activation code"
+msgid ""
+"Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации "
+"аккаунта"
+msgstr ""
+"Your registration is successful. But there are errors while sending "
+"activation code"
 
 #: Controller/UsersController.php:138
 msgid "Регистрация не удалась. Заполните поля полностью"
@@ -67,7 +72,9 @@ msgstr "Your password cannot be saved. Please try again"
 
 #: Controller/UsersController.php:251;271
 msgid "На Вашу почту была отправлена инструкция по сбросу пароля"
-msgstr "The instruction on password reset has been successfully sent to your email address"
+msgstr ""
+"The instruction on password reset has been successfully sent to your email "
+"address"
 
 #: Controller/UsersController.php:265
 msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз"
@@ -85,31 +92,30 @@ msgstr "Profile has been saved"
 msgid "Профиль не может быть сохранен. Пожалуйста, попробуйте еще раз"
 msgstr "Profile cannot be saved. Please try again"
 
-#: Model/User.php:181;validation
-#: for field password
+#: Model/User.php:181;validation for field password
 msgid "Пароли не совпадает"
 msgstr "Passwords do not match"
 
 #: Model/User.php:267
-msgid "Этот адрес уже используется. Пожалуйста, введите другой адрес электронной почты"
-msgstr "This email address is already in use. Please, enter another email address"
+msgid ""
+"Этот адрес уже используется. Пожалуйста, введите другой адрес электронной "
+"почты"
+msgstr ""
+"This email address is already in use. Please, enter another email address"
 
 #: View/Elements/current_user.ctp:18
 msgid "Учётная запись"
 msgstr "Account"
 
-#: View/Elements/current_user.ctp:19
-#: View/Elements/user_menu.ctp:9
+#: View/Elements/current_user.ctp:19 View/Elements/user_menu.ctp:9
 msgid "Изменить пароль"
 msgstr "Change password"
 
-#: View/Elements/current_user.ctp:20
-#: View/Elements/user_menu.ctp:12
+#: View/Elements/current_user.ctp:20 View/Elements/user_menu.ctp:12
 msgid "Связанные аккаунты"
 msgstr "Linked accounts"
 
-#: View/Elements/current_user.ctp:21
-#: View/Elements/user_menu.ctp:17
+#: View/Elements/current_user.ctp:21 View/Elements/user_menu.ctp:17
 msgid "Пригласить друзей"
 msgstr "Invite friends"
 
@@ -126,8 +132,12 @@ msgid "Осталось подтвердить регистрацию!"
 msgstr "Please, confirm your registration!"
 
 #: View/Elements/not_active.ctp:15
-msgid "При создании аккаунта на ваш e-mail было отправлено письмо с подтверждением, пожалуйста, перейдите по ссылке, указанной в данном письме"
-msgstr "While creating the account, a confirmation letter has been sent to your email address. Please, follow the link, indicated in this letter."
+msgid ""
+"При создании аккаунта на ваш e-mail было отправлено письмо с подтверждением, "
+"пожалуйста, перейдите по ссылке, указанной в данном письме"
+msgstr ""
+"While creating the account, a confirmation letter has been sent to your "
+"email address. Please, follow the link, indicated in this letter."
 
 #: View/Elements/not_active.ctp:17
 msgid "Заказать повторное письмо с подтверждением"
@@ -137,8 +147,7 @@ msgstr "Please send confirmation email again"
 msgid "Мой профиль"
 msgstr "My profile"
 
-#: View/Elements/user_menu.ctp:6
-#: View/Users/profile.ctp:13
+#: View/Elements/user_menu.ctp:6 View/Users/profile.ctp:13
 msgid "Управление профилем"
 msgstr "Manage profile"
 
@@ -162,8 +171,7 @@ msgstr "Link social network account"
 msgid "Провайдер"
 msgstr "Provider"
 
-#: View/Users/accounts.ctp:19
-#: View/Users/register.ctp:25
+#: View/Users/accounts.ctp:19 View/Users/register.ctp:25
 msgid "Имя"
 msgstr "Name"
 
@@ -191,8 +199,7 @@ msgstr "Login using your account"
 msgid "Логин или Емейл"
 msgstr "Login or Email"
 
-#: View/Users/login.ctp:16
-#: View/Users/register.ctp:33
+#: View/Users/login.ctp:16 View/Users/register.ctp:33
 msgid "Пароль"
 msgstr "Password"
 
@@ -204,14 +211,12 @@ msgstr "Log in"
 msgid "Оставаться в системе"
 msgstr "Keep me logged in"
 
-#: View/Users/login.ctp:24
-#: View/Users/password_change.ctp:23
+#: View/Users/login.ctp:24 View/Users/password_change.ctp:23
 #: View/Users/password_resend.ctp:4
 msgid "Забыли пароль?"
 msgstr "Forgot your password?"
 
-#: View/Users/login.ctp:26
-#: View/Users/register.ctp:49
+#: View/Users/login.ctp:26 View/Users/register.ctp:49
 msgid "Регистрация"
 msgstr "Sign up"
 
@@ -224,26 +229,27 @@ msgid "Изменение пароля"
 msgstr "Change password"
 
 #: View/Users/password_change.ctp:14
-msgid "Пожалуйста, введите свой старый пароль из соображений безопасности, а затем новый пароль дважды"
-msgstr "Please, enter your current password for security reasons. Afterwards, enter new password twice."
+msgid ""
+"Пожалуйста, введите свой старый пароль из соображений безопасности, а затем "
+"новый пароль дважды"
+msgstr ""
+"Please, enter your current password for security reasons. Afterwards, enter "
+"new password twice."
 
 #: View/Users/password_change.ctp:18
 msgid "Текущий пароль"
 msgstr "Current password"
 
-#: View/Users/password_change.ctp:27
-#: View/Users/password_reset.ctp:16
+#: View/Users/password_change.ctp:27 View/Users/password_reset.ctp:16
 msgid "Новый пароль"
 msgstr "New password"
 
-#: View/Users/password_change.ctp:34
-#: View/Users/password_reset.ctp:21
+#: View/Users/password_change.ctp:34 View/Users/password_reset.ctp:21
 #: View/Users/register.ctp:35
 msgid "Повторите пароль"
 msgstr "Re-enter password"
 
-#: View/Users/password_change.ctp:39
-#: View/Users/profile.ctp:24
+#: View/Users/password_change.ctp:39 View/Users/profile.ctp:24
 msgid "Сохранить изменения"
 msgstr "Save changes"
 
@@ -255,8 +261,7 @@ msgstr "To reset your password, please enter your email"
 msgid "Ваш адрес электронной почты"
 msgstr "Your email"
 
-#: View/Users/password_resend.ctp:26
-#: View/Users/register.ctp:38
+#: View/Users/password_resend.ctp:26 View/Users/register.ctp:38
 msgid "Пожалуйста, подтвердите, что вы человек"
 msgstr "Are you a human?"
 
@@ -336,82 +341,72 @@ msgstr "terms & conditions"
 msgid "ИЛИ"
 msgstr "OR"
 
-#: Model/User.php:validation
-#: for field id
+#: Model/User.php:validation for field id
 msgid "Wrong ID"
 msgstr "Something wrong"
 
-#: Model/User.php:validation
-#: for field first_name;validation
+#: Model/User.php:validation for field first_name;validation
 #: username;validation password;validation password_confirm;validation
 #: old_password
 msgid "Поле должно быть заполнено"
 msgstr "Please fill this field, it is required"
 
-#: Model/User.php:validation
-#: for field first_name;validation
+#: Model/User.php:validation for field first_name;validation
 #: last_name;validation username
 msgid "Введите в поле только буквы и цифры"
 msgstr "Only letters and numbers are allowed "
 
-#: Model/User.php:validation
-#: for field first_name
+#: Model/User.php:validation for field first_name
 msgid "Минимальная длина имени - %d символа"
 msgstr "Minimum length is %d symbols"
 
-#: Model/User.php:validation
-#: for field created;validation modified
+#: Model/User.php:validation for field created;validation modified
 msgid "datetime"
 msgstr "Please enter date and time"
 
-#: Model/User.php:validation
-#: for field created
+#: Model/User.php:validation for field created
 msgid "notempty"
 msgstr "Please fill this field, it is required"
 
-#: Model/User.php:validation
-#: for field username
+#: Model/User.php:validation for field username
 msgid "Длина логина от %d до %d символов"
 msgstr "Login should be at least %d symbols and maximum %d symbols"
 
-#: Model/User.php:validation
-#: for field username
+#: Model/User.php:validation for field username
 msgid "Пользователь с таким именем уже существует"
 msgstr "User with such name already exists"
 
-#: Model/User.php:validation
-#: for field password
+#: Model/User.php:validation for field password
 msgid "Минимальная длина пароля - %d символа"
 msgstr "Minimum length is %d symbols"
 
-#: Model/User.php:validation
-#: for field old_password
+#: Model/User.php:validation for field old_password
 msgid "Неверный текущий пароль"
 msgstr "Wrong current password"
 
-#: Model/User.php:validation
-#: for field email
+#: Model/User.php:validation for field email
 msgid "Пожалуйста, введите Ваш адрес электронной почты"
 msgstr "Please enter email"
 
-#: Model/User.php:validation
-#: for field agreed
+#: Model/User.php:validation for field agreed
 msgid "Вы должны быть согласны с правилами использования сервиса"
 msgstr "You have to agree with Terms&Conditions"
 
-#: Model/User.php:validation
-#: for field language
+#: Model/User.php:validation for field language
 msgid "bad language"
 msgstr "bad language"
 
 #~ msgid "Здесь вы можете изменить свои основные данные"
 #~ msgstr "You can change your general info"
+
 #~ msgid "Пароль:"
 #~ msgstr "Password:"
+
 #~ msgid "Новый пароль:"
 #~ msgstr "New password:"
+
 #~ msgid "Повторите пароль:"
 #~ msgstr "Repeat your password:"
+
 #~ msgid "Имя:"
 #~ msgstr "Name:"
-

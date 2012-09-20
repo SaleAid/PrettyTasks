@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-09-18 10:25+0300\n"
+"POT-Creation-Date: 2012-09-20 10:23+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -537,19 +537,30 @@ msgid "New Invitation"
 msgstr ""
 
 #: View/Pages/index.ctp:11
+#: View/Pages/rus/index.ctp:11
 msgid "Готовься"
 msgstr ""
 
 #: View/Pages/index.ctp:23
+#: View/Pages/rus/index.ctp:23
 msgid "Целься"
 msgstr ""
 
 #: View/Pages/index.ctp:35;45
+#: View/Pages/rus/index.ctp:35;45
 msgid "Пли!"
 msgstr ""
 
-#: View/Tasks/index.ctp:180
-msgid "Are you sure you want to delete all tasks?"
+#: View/Pages/eng/index.ctp:11
+msgid "Get ready"
+msgstr ""
+
+#: View/Pages/eng/index.ctp:21
+msgid "Aim"
+msgstr ""
+
+#: View/Pages/eng/index.ctp:31;37
+msgid "Fire!"
 msgstr ""
 
 #: View/Tasks/mobile/index.ctp:36;80;125;182;207

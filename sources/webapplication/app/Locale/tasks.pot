@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-09-18 10:25+0300\n"
+"POT-Creation-Date: 2012-09-20 10:23+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/TasksController.php:69;153;195;234;274;355;408;446;494;533;572;604
+#: Controller/TasksController.php:69;154;196;235;275;318;371;409;457;496;527;559
 msgid "Ошибка при передаче данных"
 msgstr ""
 
@@ -27,91 +27,91 @@ msgstr ""
 msgid "Планируемые"
 msgstr ""
 
-#: Controller/TasksController.php:168
+#: Controller/TasksController.php:169
 msgid "Задача  успешно изменена"
 msgstr ""
 
-#: Controller/TasksController.php:174;298;374;390
+#: Controller/TasksController.php:175;299;337;353
 msgid "Ошибка, Задача  не изменена"
 msgstr ""
 
-#: Controller/TasksController.php:208
+#: Controller/TasksController.php:209
 msgid "Задача успешно создана"
 msgstr ""
 
-#: Controller/TasksController.php:213
+#: Controller/TasksController.php:214
 msgid "Задача  не создана"
 msgstr ""
 
-#: Controller/TasksController.php:242
+#: Controller/TasksController.php:243
 msgid "Задача успешно перемещена"
 msgstr ""
 
-#: Controller/TasksController.php:247
+#: Controller/TasksController.php:248
 msgid "Задача не перемещена"
 msgstr ""
 
-#: Controller/TasksController.php:253;468;517
+#: Controller/TasksController.php:254;431;480
 msgid "Ошибка, Вы не можете делать изменения в этой задачи"
 msgstr ""
 
-#: Controller/TasksController.php:272;353
+#: Controller/TasksController.php:273;316
 msgid "Wrong request data"
 msgstr ""
 
-#: Controller/TasksController.php:286
+#: Controller/TasksController.php:287
 msgid "Задача успешно выполнена"
 msgstr ""
 
-#: Controller/TasksController.php:291
+#: Controller/TasksController.php:292
 msgid "Задача открыта"
 msgstr ""
 
-#: Controller/TasksController.php:368
+#: Controller/TasksController.php:331
 msgid "Задача успешно перемещена в список удаленных задач"
 msgstr ""
 
-#: Controller/TasksController.php:385
+#: Controller/TasksController.php:348
 msgid "Задача успешно удалена"
 msgstr ""
 
-#: Controller/TasksController.php:419
+#: Controller/TasksController.php:382
 msgid "Задачи успешно удалены"
 msgstr ""
 
-#: Controller/TasksController.php:424
+#: Controller/TasksController.php:387
 msgid "Задачи не удалены"
 msgstr ""
 
-#: Controller/TasksController.php:456
+#: Controller/TasksController.php:419
 msgid "Задача успешно перемещена (moveTo)"
 msgstr ""
 
-#: Controller/TasksController.php:461
+#: Controller/TasksController.php:424
 msgid "Задача  не перемещена (moveTo)"
 msgstr ""
 
-#: Controller/TasksController.php:505
+#: Controller/TasksController.php:468
 msgid "Задача успешно отредактировано"
 msgstr ""
 
-#: Controller/TasksController.php:511
+#: Controller/TasksController.php:474
 msgid "Задача не отредактировано"
 msgstr ""
 
-#: Controller/TasksController.php:557
+#: Controller/TasksController.php:512
 msgid "Задача успешно ..."
 msgstr ""
 
-#: Controller/TasksController.php:579
+#: Controller/TasksController.php:534
 msgid "День успешно удален из списка"
 msgstr ""
 
-#: Controller/TasksController.php:584
+#: Controller/TasksController.php:539
 msgid "Ошибка при  ..."
 msgstr ""
 
-#: Controller/TasksController.php:615
+#: Controller/TasksController.php:570
 msgid "Переход на новый день. Перезагрузка страницы произойдет через 5 секунд"
 msgstr ""
 
@@ -238,6 +238,10 @@ msgstr ""
 msgid "Удалить окончательно"
 msgstr ""
 
+#: View/Tasks/index.ctp:180
+msgid "Are you sure you want to delete all tasks?"
+msgstr ""
+
 #: View/Tasks/index.ctp:195
 msgid "Будущие задачи"
 msgstr ""
@@ -294,7 +298,7 @@ msgstr ""
 msgid "Сохранить"
 msgstr ""
 
-#: View/Tasks/index.ctp:419
+#: View/Tasks/index.ctp:420
 msgid "Кликните для перехода<br/> на"
 msgstr ""
 

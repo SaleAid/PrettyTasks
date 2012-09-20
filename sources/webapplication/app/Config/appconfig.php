@@ -40,11 +40,11 @@
    Configure::write('User.default.beta', false);
    Configure::write('User.default.pro', false);
    
-   Configure::write('Email.global.from', 'noreply@besttasks.com');
+   Configure::write('Email.global.from', 'noreply@prettytasks.com');
    Configure::write('Email.global.format', 'html');
-   Configure::write('Email.user.invitation.subject', __('Приглашение на сервис %s', Configure::read('Site.name')));
-   Configure::write('Email.user.activateAccount.subject', __('Активация аккаунта на сервисе %s', Configure::read('Site.name')));
-   Configure::write('Email.user.passwordResend.subject', __('Сбросить пароль на сервисе %s', Configure::read('Site.name')));
+   Configure::write('Email.user.invitation.subject', __('Приглашение на сервис %s'));
+   Configure::write('Email.user.activateAccount.subject', __('Активация аккаунта на сервисе %s'));
+   Configure::write('Email.user.passwordResend.subject', __('Сбросить пароль на сервисе %s'));
    Configure::write('App.version', '1.0.5');
    
    Configure::write('App.Minify.css', true);

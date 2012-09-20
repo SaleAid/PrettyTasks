@@ -1,4 +1,4 @@
-﻿Hello<?php echo $fullname; ?> ( <?php echo $username; ?> ) , have you forgotten you password? <br />
+﻿Hello, <?php echo $fullname; ?> ( <?php echo $username; ?> ) , have you forgotten you password? <br />
 
 <p>
     If you want to change your password, click the link <br/>

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-17 21:01+0300\n"
+"POT-Creation-Date: 2012-09-20 10:11+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -46,23 +46,23 @@ msgstr ""
 msgid "There was an error deleting the %1$s with id: %2$s"
 msgstr ""
 
-#: Controller/Component/AuthComponent.php:347
+#: Controller/Component/AuthComponent.php:346
 msgid "You are not authorized to access that location."
 msgstr ""
 
-#: Core/Configure.php:313
+#: Core/Configure.php:310
 msgid "There is no \"%s\" adapter."
 msgstr ""
 
-#: Core/Configure.php:316
+#: Core/Configure.php:313
 msgid "The \"%s\" adapter, does not have a dump() method."
 msgstr ""
 
-#: Error/ExceptionRenderer.php:203
+#: Error/ExceptionRenderer.php:204
 msgid "Not Found"
 msgstr ""
 
-#: Error/ExceptionRenderer.php:225
+#: Error/ExceptionRenderer.php:226
 #: View/Errors/error500.ctp:22
 msgid "An Internal Error Has Occurred."
 msgstr ""
@@ -252,56 +252,56 @@ msgstr ""
 msgid "Edit %s"
 msgstr ""
 
-#: View/Helper/FormHelper.php:1664
+#: View/Helper/FormHelper.php:1668
 #: View/Scaffolds/form.ctp:23
 msgid "Submit"
 msgstr ""
 
-#: View/Helper/FormHelper.php:2504
+#: View/Helper/FormHelper.php:2524
 msgid "January"
 msgstr ""
 
-#: View/Helper/FormHelper.php:2505
+#: View/Helper/FormHelper.php:2525
 msgid "February"
 msgstr ""
 
-#: View/Helper/FormHelper.php:2506
+#: View/Helper/FormHelper.php:2526
 msgid "March"
 msgstr ""
 
-#: View/Helper/FormHelper.php:2507
+#: View/Helper/FormHelper.php:2527
 msgid "April"
 msgstr ""
 
-#: View/Helper/FormHelper.php:2508
+#: View/Helper/FormHelper.php:2528
 msgid "May"
 msgstr ""
 
-#: View/Helper/FormHelper.php:2509
+#: View/Helper/FormHelper.php:2529
 msgid "June"
 msgstr ""
 
-#: View/Helper/FormHelper.php:2510
+#: View/Helper/FormHelper.php:2530
 msgid "July"
 msgstr ""
 
-#: View/Helper/FormHelper.php:2511
+#: View/Helper/FormHelper.php:2531
 msgid "August"
 msgstr ""
 
-#: View/Helper/FormHelper.php:2512
+#: View/Helper/FormHelper.php:2532
 msgid "September"
 msgstr ""
 
-#: View/Helper/FormHelper.php:2513
+#: View/Helper/FormHelper.php:2533
 msgid "October"
 msgstr ""
 
-#: View/Helper/FormHelper.php:2514
+#: View/Helper/FormHelper.php:2534
 msgid "November"
 msgstr ""
 
-#: View/Helper/FormHelper.php:2515
+#: View/Helper/FormHelper.php:2535
 msgid "December"
 msgstr ""
 

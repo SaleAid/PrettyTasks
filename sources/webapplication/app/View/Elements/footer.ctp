@@ -50,7 +50,7 @@
 		*/?>
 		
 		<div class="span3">
-			<h2><?php echo __d('pages', 'Расскажи о нас');?></h2>
+			<h2><?php echo __d('pages', 'Social Media');?></h2>
 			   <?php echo $this->element('share'); ?> 
 		</div> 
 		

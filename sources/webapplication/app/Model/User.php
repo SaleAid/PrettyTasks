@@ -303,7 +303,7 @@ class User extends AppModel {
         $email->emailFormat(Configure::read('Email.global.format'));
         $email->from(Configure::read('Email.global.from'));
         $email->to($this->data[$this->alias]['email']);
-        $email->subject(Configure::read('Email.user.passwordResend.subject'));
+        $email->subject(__(Configure::read('Email.user.passwordResend.subject'), Configure::read('Site.name')));
         $email->viewVars(
                         array(
                             'password_token' => $this->data[$this->alias]['password_token'], 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-17 21:01+0300\n"
+"POT-Creation-Date: 2012-09-20 10:11+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -40,7 +40,7 @@ msgid "\"%s\" is not a valid value for %s. Please use one of \"%s\""
 msgstr ""
 
 #: Console/ConsoleInputOption.php:96
-msgid "Short options must be one letter."
+msgid "Short option \"%s\" is invalid, short options must be one letter."
 msgstr ""
 
 #: Console/ConsoleInputOption.php:128
@@ -99,337 +99,337 @@ msgstr ""
 msgid "<info>Arguments:</info>"
 msgstr ""
 
-#: Console/Shell.php:227
+#: Console/Shell.php:217
 msgid "<info>Welcome to CakePHP %s Console</info>"
 msgstr ""
 
-#: Console/Shell.php:229
+#: Console/Shell.php:219
 msgid "App : %s"
 msgstr ""
 
-#: Console/Shell.php:230
+#: Console/Shell.php:220
 #: Console/Command/Task/PluginTask.php:65
-#: Console/Command/Task/TestTask.php:97
+#: Console/Command/Task/TestTask.php:112
 msgid "Path: %s"
 msgstr ""
 
-#: Console/Shell.php:623
+#: Console/Shell.php:617
 msgid "<error>Error:</error> %s"
 msgstr ""
 
-#: Console/Shell.php:661
+#: Console/Shell.php:655
 msgid "<warning>File `%s` exists</warning>"
 msgstr ""
 
-#: Console/Shell.php:662
+#: Console/Shell.php:656
 msgid "Do you want to overwrite?"
 msgstr ""
 
-#: Console/Shell.php:665
+#: Console/Shell.php:659
 msgid "<error>Quitting</error>."
 msgstr ""
 
-#: Console/Shell.php:668
+#: Console/Shell.php:662
 msgid "Skip `%s`"
 msgstr ""
 
-#: Console/Shell.php:672
+#: Console/Shell.php:666
 msgid "Creating file %s"
 msgstr ""
 
-#: Console/Shell.php:679
+#: Console/Shell.php:673
 msgid "<success>Wrote</success> `%s`"
 msgstr ""
 
-#: Console/Shell.php:682
+#: Console/Shell.php:676
 msgid "<error>Could not write to `%s`</error>."
 msgstr ""
 
-#: Console/Shell.php:701
+#: Console/Shell.php:695
 msgid "PHPUnit is not installed. Do you want to bake unit test files anyway?"
 msgstr ""
 
-#: Console/Shell.php:707
+#: Console/Shell.php:701
 msgid "You can download PHPUnit from %s"
 msgstr ""
 
-#: Console/Command/AclShell.php:75
+#: Console/Command/AclShell.php:78
 msgid "Error: Your current Cake configuration is set to an ACL implementation other than DB."
 msgstr ""
 
-#: Console/Command/AclShell.php:76
+#: Console/Command/AclShell.php:79
 msgid "Please change your core config to reflect your decision to use DbAcl before attempting to use this script"
 msgstr ""
 
-#: Console/Command/AclShell.php:78
+#: Console/Command/AclShell.php:81
 msgid "Current ACL Classname: %s"
 msgstr ""
 
-#: Console/Command/AclShell.php:86
+#: Console/Command/AclShell.php:89
 #: Console/Command/BakeShell.php:86
 #: Console/Command/I18nShell.php:55
 msgid "Your database configuration was not found. Take a moment to create one."
 msgstr ""
 
-#: Console/Command/AclShell.php:131
+#: Console/Command/AclShell.php:134
 msgid "/ can not be used as an alias!"
 msgstr ""
 
-#: Console/Command/AclShell.php:131
+#: Console/Command/AclShell.php:134
 msgid "\t/ is the root, please supply a sub alias"
 msgstr ""
 
-#: Console/Command/AclShell.php:137
+#: Console/Command/AclShell.php:140
 msgid "<success>New %s</success> '%s' created."
 msgstr ""
 
-#: Console/Command/AclShell.php:139
+#: Console/Command/AclShell.php:142
 msgid "There was a problem creating a new %s '%s'."
 msgstr ""
 
-#: Console/Command/AclShell.php:155
+#: Console/Command/AclShell.php:158
 msgid "Node Not Deleted"
 msgstr ""
 
-#: Console/Command/AclShell.php:155
+#: Console/Command/AclShell.php:158
 msgid "There was an error deleting the %s. Check that the node exists."
 msgstr ""
 
-#: Console/Command/AclShell.php:157
+#: Console/Command/AclShell.php:160
 msgid "<success>%s deleted.</success>"
 msgstr ""
 
-#: Console/Command/AclShell.php:178
+#: Console/Command/AclShell.php:181
 msgid "Error in setting new parent. Please make sure the parent node exists, and is not a descendant of the node specified."
 msgstr ""
 
-#: Console/Command/AclShell.php:180
+#: Console/Command/AclShell.php:183
 msgid "Node parent set to %s"
 msgstr ""
 
-#: Console/Command/AclShell.php:198
+#: Console/Command/AclShell.php:201
 msgid "Supplied Node '%s' not found"
 msgstr ""
 
-#: Console/Command/AclShell.php:199;315;317;525
+#: Console/Command/AclShell.php:202;318;320;528
 msgid "No tree returned."
 msgstr ""
 
-#: Console/Command/AclShell.php:202
+#: Console/Command/AclShell.php:205
 msgid "Path:"
 msgstr ""
 
-#: Console/Command/AclShell.php:236
+#: Console/Command/AclShell.php:239
 msgid "%s is <success>allowed</success>."
 msgstr ""
 
-#: Console/Command/AclShell.php:238
+#: Console/Command/AclShell.php:241
 msgid "%s is <error>not allowed</error>."
 msgstr ""
 
-#: Console/Command/AclShell.php:251
+#: Console/Command/AclShell.php:254
 msgid "Permission <success>granted</success>."
 msgstr ""
 
-#: Console/Command/AclShell.php:253
+#: Console/Command/AclShell.php:256
 msgid "Permission was <error>not granted</error>."
 msgstr ""
 
-#: Console/Command/AclShell.php:266
+#: Console/Command/AclShell.php:269
 msgid "Permission denied."
 msgstr ""
 
-#: Console/Command/AclShell.php:268
+#: Console/Command/AclShell.php:271
 msgid "Permission was not denied."
 msgstr ""
 
-#: Console/Command/AclShell.php:281
+#: Console/Command/AclShell.php:284
 msgid "Permission inherited."
 msgstr ""
 
-#: Console/Command/AclShell.php:283
+#: Console/Command/AclShell.php:286
 msgid "Permission was not inherited."
 msgstr ""
 
-#: Console/Command/AclShell.php:315;317;525
+#: Console/Command/AclShell.php:318;320;528
 #: Console/Command/ApiShell.php:92
 #: Console/Command/Task/DbConfigTask.php:255
 msgid "%s not found"
 msgstr ""
 
-#: Console/Command/AclShell.php:367
+#: Console/Command/AclShell.php:370
 msgid "Type of node to create."
 msgstr ""
 
-#: Console/Command/AclShell.php:371
+#: Console/Command/AclShell.php:374
 msgid "A console tool for managing the DbAcl"
 msgstr ""
 
-#: Console/Command/AclShell.php:373
+#: Console/Command/AclShell.php:376
 msgid "Create a new ACL node"
 msgstr ""
 
-#: Console/Command/AclShell.php:375
+#: Console/Command/AclShell.php:378
 msgid "Creates a new ACL object <node> under the parent"
 msgstr ""
 
-#: Console/Command/AclShell.php:379
+#: Console/Command/AclShell.php:382
 msgid "The node selector for the parent."
 msgstr ""
 
-#: Console/Command/AclShell.php:383
+#: Console/Command/AclShell.php:386
 msgid "The alias to use for the newly created node."
 msgstr ""
 
-#: Console/Command/AclShell.php:389
+#: Console/Command/AclShell.php:392
 msgid "Deletes the ACL object with the given <node> reference"
 msgstr ""
 
-#: Console/Command/AclShell.php:391
+#: Console/Command/AclShell.php:394
 msgid "Delete an ACL node."
 msgstr ""
 
-#: Console/Command/AclShell.php:395
+#: Console/Command/AclShell.php:398
 msgid "The node identifier to delete."
 msgstr ""
 
-#: Console/Command/AclShell.php:401
+#: Console/Command/AclShell.php:404
 msgid "Moves the ACL node under a new parent."
 msgstr ""
 
-#: Console/Command/AclShell.php:403
+#: Console/Command/AclShell.php:406
 msgid "Moves the ACL object specified by <node> beneath <parent>"
 msgstr ""
 
-#: Console/Command/AclShell.php:407
+#: Console/Command/AclShell.php:410
 msgid "The node to move"
 msgstr ""
 
-#: Console/Command/AclShell.php:411
+#: Console/Command/AclShell.php:414
 msgid "The new parent for <node>."
 msgstr ""
 
-#: Console/Command/AclShell.php:417
+#: Console/Command/AclShell.php:420
 msgid "Print out the path to an ACL node."
 msgstr ""
 
-#: Console/Command/AclShell.php:420
+#: Console/Command/AclShell.php:423
 msgid "Returns the path to the ACL object specified by <node>."
 msgstr ""
 
-#: Console/Command/AclShell.php:421
+#: Console/Command/AclShell.php:424
 msgid "This command is useful in determining the inheritance of permissions for a certain object in the tree."
 msgstr ""
 
-#: Console/Command/AclShell.php:426
+#: Console/Command/AclShell.php:429
 msgid "The node to get the path of"
 msgstr ""
 
-#: Console/Command/AclShell.php:432
+#: Console/Command/AclShell.php:435
 msgid "Check the permissions between an ACO and ARO."
 msgstr ""
 
-#: Console/Command/AclShell.php:435
+#: Console/Command/AclShell.php:438
 msgid "Use this command to check ACL permissions."
 msgstr ""
 
-#: Console/Command/AclShell.php:438
+#: Console/Command/AclShell.php:441
 msgid "ARO to check."
 msgstr ""
 
-#: Console/Command/AclShell.php:439
+#: Console/Command/AclShell.php:442
 msgid "ACO to check."
 msgstr ""
 
-#: Console/Command/AclShell.php:440
+#: Console/Command/AclShell.php:443
 msgid "Action to check"
 msgstr ""
 
-#: Console/Command/AclShell.php:444
+#: Console/Command/AclShell.php:447
 msgid "Grant an ARO permissions to an ACO."
 msgstr ""
 
-#: Console/Command/AclShell.php:447
+#: Console/Command/AclShell.php:450
 msgid "Use this command to grant ACL permissions. Once executed, the ARO specified (and its children, if any) will have ALLOW access to the specified ACO action (and the ACO's children, if any)."
 msgstr ""
 
-#: Console/Command/AclShell.php:450
+#: Console/Command/AclShell.php:453
 msgid "ARO to grant permission to."
 msgstr ""
 
-#: Console/Command/AclShell.php:451
+#: Console/Command/AclShell.php:454
 msgid "ACO to grant access to."
 msgstr ""
 
-#: Console/Command/AclShell.php:452
+#: Console/Command/AclShell.php:455
 msgid "Action to grant"
 msgstr ""
 
-#: Console/Command/AclShell.php:456
+#: Console/Command/AclShell.php:459
 msgid "Deny an ARO permissions to an ACO."
 msgstr ""
 
-#: Console/Command/AclShell.php:459
+#: Console/Command/AclShell.php:462
 msgid "Use this command to deny ACL permissions. Once executed, the ARO specified (and its children, if any) will have DENY access to the specified ACO action (and the ACO's children, if any)."
 msgstr ""
 
-#: Console/Command/AclShell.php:462
+#: Console/Command/AclShell.php:465
 msgid "ARO to deny."
 msgstr ""
 
-#: Console/Command/AclShell.php:463
+#: Console/Command/AclShell.php:466
 msgid "ACO to deny."
 msgstr ""
 
-#: Console/Command/AclShell.php:464
+#: Console/Command/AclShell.php:467
 msgid "Action to deny"
 msgstr ""
 
-#: Console/Command/AclShell.php:468
+#: Console/Command/AclShell.php:471
 msgid "Inherit an ARO's parent permissions."
 msgstr ""
 
-#: Console/Command/AclShell.php:471
+#: Console/Command/AclShell.php:474
 msgid "Use this command to force a child ARO object to inherit its permissions settings from its parent."
 msgstr ""
 
-#: Console/Command/AclShell.php:474
+#: Console/Command/AclShell.php:477
 msgid "ARO to have permissions inherit."
 msgstr ""
 
-#: Console/Command/AclShell.php:475
+#: Console/Command/AclShell.php:478
 msgid "ACO to inherit permissions on."
 msgstr ""
 
-#: Console/Command/AclShell.php:476
+#: Console/Command/AclShell.php:479
 msgid "Action to inherit"
 msgstr ""
 
-#: Console/Command/AclShell.php:480
+#: Console/Command/AclShell.php:483
 msgid "View a tree or a single node's subtree."
 msgstr ""
 
-#: Console/Command/AclShell.php:483
+#: Console/Command/AclShell.php:486
 msgid "The view command will return the ARO or ACO tree."
 msgstr ""
 
-#: Console/Command/AclShell.php:484
+#: Console/Command/AclShell.php:487
 msgid "The optional node parameter allows you to return"
 msgstr ""
 
-#: Console/Command/AclShell.php:485
+#: Console/Command/AclShell.php:488
 msgid "only a portion of the requested tree."
 msgstr ""
 
-#: Console/Command/AclShell.php:489
+#: Console/Command/AclShell.php:492
 msgid "The optional node to view the subtree of."
 msgstr ""
 
-#: Console/Command/AclShell.php:493
+#: Console/Command/AclShell.php:496
 msgid "Initialize the DbAcl tables. Uses this command : cake schema create DbAcl"
 msgstr ""
 
-#: Console/Command/AclShell.php:561
+#: Console/Command/AclShell.php:564
 msgid "Could not find node using reference \"%s\""
 msgstr ""
 
@@ -610,51 +610,55 @@ msgstr ""
 msgid "Get the listing as XML."
 msgstr ""
 
-#: Console/Command/ConsoleShell.php:61;154
+#: Console/Command/ConsoleShell.php:61;180
 msgid "Model classes:"
 msgstr ""
 
-#: Console/Command/ConsoleShell.php:172
+#: Console/Command/ConsoleShell.php:69
+msgid "There was an error loading the routes config. Please check that the file exists and contains no errors."
+msgstr ""
+
+#: Console/Command/ConsoleShell.php:198
 msgid "Created %s association between %s and %s"
 msgstr ""
 
-#: Console/Command/ConsoleShell.php:175
+#: Console/Command/ConsoleShell.php:201
 msgid "Please verify you are using valid models and association types"
 msgstr ""
 
-#: Console/Command/ConsoleShell.php:200
+#: Console/Command/ConsoleShell.php:226
 msgid "Removed %s association between %s and %s"
 msgstr ""
 
-#: Console/Command/ConsoleShell.php:203
+#: Console/Command/ConsoleShell.php:229
 msgid "Please verify you are using valid models, valid current association, and valid association types"
 msgstr ""
 
-#: Console/Command/ConsoleShell.php:254
+#: Console/Command/ConsoleShell.php:280
 msgid "No result set found"
 msgstr ""
 
-#: Console/Command/ConsoleShell.php:257
+#: Console/Command/ConsoleShell.php:283
 msgid "%s is not a valid model"
 msgstr ""
 
-#: Console/Command/ConsoleShell.php:273
+#: Console/Command/ConsoleShell.php:299
 msgid "Saved record for %s"
 msgstr ""
 
-#: Console/Command/ConsoleShell.php:290
+#: Console/Command/ConsoleShell.php:316
 msgid "Please verify that you selected a valid model"
 msgstr ""
 
-#: Console/Command/ConsoleShell.php:296
+#: Console/Command/ConsoleShell.php:321
 msgid "There was an error loading the routes config. Please check that the file exists and is free of parse errors."
 msgstr ""
 
-#: Console/Command/ConsoleShell.php:299
+#: Console/Command/ConsoleShell.php:324
 msgid "Routes configuration reloaded, %d routes connected"
 msgstr ""
 
-#: Console/Command/ConsoleShell.php:314
+#: Console/Command/ConsoleShell.php:338
 msgid "Invalid command"
 msgstr ""
 
@@ -1238,7 +1242,7 @@ msgid "Enter a number from the list above,\ntype in the name of another controll
 msgstr ""
 
 #: Console/Command/Task/ControllerTask.php:425
-#: Console/Command/Task/ModelTask.php:941
+#: Console/Command/Task/ModelTask.php:943
 msgid "Exit"
 msgstr ""
 
@@ -1276,8 +1280,8 @@ msgstr ""
 
 #: Console/Command/Task/ControllerTask.php:468
 #: Console/Command/Task/FixtureTask.php:89
-#: Console/Command/Task/ModelTask.php:978
-#: Console/Command/Task/TestTask.php:534
+#: Console/Command/Task/ModelTask.php:980
+#: Console/Command/Task/TestTask.php:567
 #: Console/Command/Task/ViewTask.php:442
 msgid "Omitting all arguments and options will enter into an interactive mode."
 msgstr ""
@@ -1642,139 +1646,139 @@ msgstr ""
 msgid "Please select one of the following validation options:"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:420
+#: Console/Command/Task/ModelTask.php:422
 msgid "%s - Do not do any validation on this field."
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:424
+#: Console/Command/Task/ModelTask.php:426
 msgid "... or enter in a valid regex validation string.\n"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:454
+#: Console/Command/Task/ModelTask.php:456
 msgid "You have already chosen that validation rule,\nplease choose again"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:458
+#: Console/Command/Task/ModelTask.php:460
 msgid "Please make a valid selection."
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:480
+#: Console/Command/Task/ModelTask.php:482
 msgid "Would you like to add another validation rule?"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:499
+#: Console/Command/Task/ModelTask.php:501
 msgid "One moment while the associations are detected."
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:529
+#: Console/Command/Task/ModelTask.php:531
 msgid "None found."
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:531
+#: Console/Command/Task/ModelTask.php:533
 msgid "Please confirm the following associations:"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:686
+#: Console/Command/Task/ModelTask.php:688
 msgid "Would you like to define some additional model associations?"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:691
+#: Console/Command/Task/ModelTask.php:693
 msgid "What is the association type?"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:692
+#: Console/Command/Task/ModelTask.php:694
 msgid "Enter a number"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:694
+#: Console/Command/Task/ModelTask.php:696
 msgid "For the following options be very careful to match your setup exactly.\nAny spelling mistakes will cause errors."
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:698
+#: Console/Command/Task/ModelTask.php:700
 msgid "What is the alias for this association?"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:699
+#: Console/Command/Task/ModelTask.php:701
 msgid "What className will %s use?"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:721
+#: Console/Command/Task/ModelTask.php:723
 msgid "What is the table for this model?"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:727
+#: Console/Command/Task/ModelTask.php:729
 msgid "A helpful List of possible keys"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:728
+#: Console/Command/Task/ModelTask.php:730
 msgid "What is the foreignKey?"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:732
+#: Console/Command/Task/ModelTask.php:734
 msgid "What is the foreignKey? Specify your own."
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:735
+#: Console/Command/Task/ModelTask.php:737
 msgid "What is the associationForeignKey?"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:736
+#: Console/Command/Task/ModelTask.php:738
 msgid "What is the joinTable?"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:748
+#: Console/Command/Task/ModelTask.php:750
 msgid "Define another association?"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:817
+#: Console/Command/Task/ModelTask.php:819
 msgid "Baking model class for %s..."
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:851
+#: Console/Command/Task/ModelTask.php:853
 msgid "Possible Models based on your current database:"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:883
+#: Console/Command/Task/ModelTask.php:885
 msgid "Given your model named '%s',\nCake would expect a database table named '%s'"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:884
+#: Console/Command/Task/ModelTask.php:886
 msgid "Do you want to use this table?"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:887
+#: Console/Command/Task/ModelTask.php:889
 msgid "What is the name of the table?"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:919
+#: Console/Command/Task/ModelTask.php:921
 msgid "Your database does not have any tables."
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:937
+#: Console/Command/Task/ModelTask.php:939
 msgid "Enter a number from the list above,\ntype in the name of another model, or 'q' to exit"
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:946
+#: Console/Command/Task/ModelTask.php:948
 msgid "The model name you supplied was empty,\nor the number you selected was not an option. Please try again."
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:967
+#: Console/Command/Task/ModelTask.php:969
 msgid "Bake models."
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:969
+#: Console/Command/Task/ModelTask.php:971
 msgid "Name of the model to bake. Can use Plugin.name to bake plugin models."
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:971
+#: Console/Command/Task/ModelTask.php:973
 msgid "Bake all model files with associations and validation."
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:974
+#: Console/Command/Task/ModelTask.php:976
 msgid "Plugin to bake the model into."
 msgstr ""
 
-#: Console/Command/Task/ModelTask.php:977
+#: Console/Command/Task/ModelTask.php:979
 msgid "The connection the model table is on."
 msgstr ""
 
@@ -1979,59 +1983,59 @@ msgstr ""
 msgid "Could not find template for %s"
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:96
+#: Console/Command/Task/TestTask.php:111
 msgid "Bake Tests"
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:103
+#: Console/Command/Task/TestTask.php:118
 msgid "Incorrect type provided. Please choose one of %s"
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:129
+#: Console/Command/Task/TestTask.php:144
 msgid "Bake is detecting possible fixtures..."
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:145
+#: Console/Command/Task/TestTask.php:162
 msgid "Baking test case for %s %s ..."
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:171
+#: Console/Command/Task/TestTask.php:188
 msgid "Select an object type:"
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:181
+#: Console/Command/Task/TestTask.php:198
 msgid "Enter the type of object to bake a test for or (q)uit"
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:205
+#: Console/Command/Task/TestTask.php:222
 msgid "Choose a %s class"
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:212
+#: Console/Command/Task/TestTask.php:229
 msgid "Choose an existing class, or enter the name of a class that does not exist"
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:421
+#: Console/Command/Task/TestTask.php:453
 msgid "Bake could not detect fixtures, would you like to add some?"
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:424
+#: Console/Command/Task/TestTask.php:456
 msgid "Please provide a comma separated list of the fixtures names you'd like to use.\nExample: 'app.comment, app.post, plugin.forums.post'"
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:519
+#: Console/Command/Task/TestTask.php:552
 msgid "Bake test case skeletons for classes."
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:521
+#: Console/Command/Task/TestTask.php:554
 msgid "Type of class to bake, can be any of the following: controller, model, helper, component or behavior."
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:530
+#: Console/Command/Task/TestTask.php:563
 msgid "An existing class to bake tests for."
 msgstr ""
 
-#: Console/Command/Task/TestTask.php:533
+#: Console/Command/Task/TestTask.php:566
 msgid "CamelCased name of the plugin to bake tests for."
 msgstr ""
 

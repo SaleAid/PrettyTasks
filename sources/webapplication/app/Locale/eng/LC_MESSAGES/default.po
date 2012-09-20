@@ -4,26 +4,27 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-08-17 21:01+0300\n"
-"PO-Revision-Date: 2012-08-17 21:19+0300\n"
-"Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
+"POT-Creation-Date: 2012-09-20 10:23+0300\n"
+"PO-Revision-Date: 2012-09-20 10:49+0200\n"
+"Last-Translator: Alexandr <afrankovskiy@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.3\n"
+
+#: Config/appconfig.php:45
+msgid "Приглашение на сервис %s"
+msgstr "Invitation to Service %s"
 
 #: Config/appconfig.php:46
-msgid "Приглашение на сервис %s"
-msgstr ""
+msgid "Активация аккаунта на сервисе %s"
+msgstr "Activate your account on the service %s"
 
 #: Config/appconfig.php:47
-msgid "Активация аккаунта на сервисе %s"
-msgstr ""
-
-#: Config/appconfig.php:48
 msgid "Сбросить пароль на сервисе %s"
-msgstr ""
+msgstr "Reset the password on the service %s"
 
 #: Controller/FaqsController.php:44;54;86;135;163
 msgid "Invalid Faq"
@@ -53,31 +54,17 @@ msgstr ""
 msgid "Re-activation"
 msgstr ""
 
-#: View/Accounts/reactivation.ctp:20
-#: View/Days/add.ctp:15
-#: View/Days/admin_add.ctp:15
-#: View/Days/admin_edit.ctp:16
-#: View/Days/admin_index.ctp:10;46
-#: View/Days/admin_view.ctp:32
-#: View/Days/edit.ctp:16
-#: View/Days/index.ctp:10;46
-#: View/Days/view.ctp:32
-#: View/Faqs/add.ctp:18
-#: View/Faqs/admin_add.ctp:19
-#: View/Faqs/admin_edit.ctp:21
-#: View/Faqs/admin_index.ctp:9;49
-#: View/Faqs/admin_view.ctp:57
-#: View/Faqs/edit.ctp:19
-#: View/Faqs/view.ctp:57
-#: View/Feedbacks/admin_add.ctp:20
-#: View/Feedbacks/admin_edit.ctp:21
-#: View/Feedbacks/admin_index.ctp:17;67
-#: View/Feedbacks/admin_view.ctp:67
-#: View/Feedbacks/edit.ctp:21
-#: View/Feedbacks/index.ctp:17;67
-#: View/Feedbacks/view.ctp:67
+#: View/Accounts/reactivation.ctp:20 View/Days/add.ctp:15
+#: View/Days/admin_add.ctp:15 View/Days/admin_edit.ctp:16
+#: View/Days/admin_index.ctp:10;46 View/Days/admin_view.ctp:32
+#: View/Days/edit.ctp:16 View/Days/index.ctp:10;46 View/Days/view.ctp:32
+#: View/Faqs/add.ctp:18 View/Faqs/admin_add.ctp:19 View/Faqs/admin_edit.ctp:21
+#: View/Faqs/admin_index.ctp:9;49 View/Faqs/admin_view.ctp:57
+#: View/Faqs/edit.ctp:19 View/Faqs/view.ctp:57 View/Feedbacks/admin_add.ctp:20
+#: View/Feedbacks/admin_edit.ctp:21 View/Feedbacks/admin_index.ctp:17;67
+#: View/Feedbacks/admin_view.ctp:67 View/Feedbacks/edit.ctp:21
+#: View/Feedbacks/index.ctp:17;67 View/Feedbacks/view.ctp:67
 #: View/Invitations/index.ctp:9;44
-#: View/Users/index.ctp:54
 msgid "Actions"
 msgstr ""
 
@@ -85,49 +72,29 @@ msgstr ""
 msgid "Add Day"
 msgstr ""
 
-#: View/Days/add.ctp:12
-#: View/Days/admin_add.ctp:12
-#: View/Days/admin_edit.ctp:13
-#: View/Days/edit.ctp:13
-#: View/Faqs/add.ctp:15
-#: View/Faqs/admin_add.ctp:16
-#: View/Faqs/admin_edit.ctp:18
-#: View/Faqs/edit.ctp:16
-#: View/Feedbacks/admin_add.ctp:17
-#: View/Feedbacks/admin_edit.ctp:18
+#: View/Days/add.ctp:12 View/Days/admin_add.ctp:12 View/Days/admin_edit.ctp:13
+#: View/Days/edit.ctp:13 View/Faqs/add.ctp:15 View/Faqs/admin_add.ctp:16
+#: View/Faqs/admin_edit.ctp:18 View/Faqs/edit.ctp:16
+#: View/Feedbacks/admin_add.ctp:17 View/Feedbacks/admin_edit.ctp:18
 #: View/Feedbacks/edit.ctp:18
 msgid "Submit"
 msgstr ""
 
-#: View/Days/add.ctp:18
-#: View/Days/admin_add.ctp:18
-#: View/Days/admin_edit.ctp:20
-#: View/Days/admin_view.ctp:36
-#: View/Days/edit.ctp:20
-#: View/Days/view.ctp:36
+#: View/Days/add.ctp:18 View/Days/admin_add.ctp:18 View/Days/admin_edit.ctp:20
+#: View/Days/admin_view.ctp:36 View/Days/edit.ctp:20 View/Days/view.ctp:36
 msgid "List Days"
 msgstr ""
 
-#: View/Days/add.ctp:19
-#: View/Days/admin_add.ctp:19
-#: View/Days/admin_edit.ctp:21
-#: View/Days/admin_index.ctp:49
-#: View/Days/admin_view.ctp:38
-#: View/Days/edit.ctp:21
-#: View/Days/index.ctp:49
-#: View/Days/view.ctp:38
+#: View/Days/add.ctp:19 View/Days/admin_add.ctp:19 View/Days/admin_edit.ctp:21
+#: View/Days/admin_index.ctp:49 View/Days/admin_view.ctp:38
+#: View/Days/edit.ctp:21 View/Days/index.ctp:49 View/Days/view.ctp:38
 #: View/Invitations/index.ctp:47
 msgid "List Users"
 msgstr ""
 
-#: View/Days/add.ctp:20
-#: View/Days/admin_add.ctp:20
-#: View/Days/admin_edit.ctp:22
-#: View/Days/admin_index.ctp:50
-#: View/Days/admin_view.ctp:39
-#: View/Days/edit.ctp:22
-#: View/Days/index.ctp:50
-#: View/Days/view.ctp:39
+#: View/Days/add.ctp:20 View/Days/admin_add.ctp:20 View/Days/admin_edit.ctp:22
+#: View/Days/admin_index.ctp:50 View/Days/admin_view.ctp:39
+#: View/Days/edit.ctp:22 View/Days/index.ctp:50 View/Days/view.ctp:39
 #: View/Invitations/index.ctp:48
 msgid "New User"
 msgstr ""
@@ -140,154 +107,105 @@ msgstr ""
 msgid "Admin Edit Day"
 msgstr ""
 
-#: View/Days/admin_edit.ctp:19
-#: View/Days/admin_index.ctp:25
-#: View/Days/edit.ctp:19
-#: View/Days/index.ctp:25
-#: View/Faqs/admin_edit.ctp:24
-#: View/Faqs/admin_index.ctp:29
-#: View/Faqs/edit.ctp:22
-#: View/Feedbacks/admin_edit.ctp:24
-#: View/Feedbacks/admin_index.ctp:47
-#: View/Feedbacks/edit.ctp:24
-#: View/Feedbacks/index.ctp:47
+#: View/Days/admin_edit.ctp:19 View/Days/admin_index.ctp:25
+#: View/Days/edit.ctp:19 View/Days/index.ctp:25 View/Faqs/admin_edit.ctp:24
+#: View/Faqs/admin_index.ctp:29 View/Faqs/edit.ctp:22
+#: View/Feedbacks/admin_edit.ctp:24 View/Feedbacks/admin_index.ctp:47
+#: View/Feedbacks/edit.ctp:24 View/Feedbacks/index.ctp:47
 #: View/Invitations/index.ctp:23
 msgid "Delete"
 msgstr ""
 
-#: View/Days/admin_edit.ctp:19
-#: View/Days/admin_index.ctp:25
-#: View/Days/admin_view.ctp:35
-#: View/Days/edit.ctp:19
-#: View/Days/index.ctp:25
-#: View/Days/view.ctp:35
-#: View/Faqs/admin_edit.ctp:24
-#: View/Faqs/admin_index.ctp:29
-#: View/Faqs/admin_view.ctp:60
-#: View/Faqs/edit.ctp:22
-#: View/Faqs/view.ctp:60
-#: View/Feedbacks/admin_edit.ctp:24
-#: View/Feedbacks/admin_index.ctp:47
-#: View/Feedbacks/admin_view.ctp:70
-#: View/Feedbacks/edit.ctp:24
-#: View/Feedbacks/index.ctp:47
-#: View/Feedbacks/view.ctp:70
+#: View/Days/admin_edit.ctp:19 View/Days/admin_index.ctp:25
+#: View/Days/admin_view.ctp:35 View/Days/edit.ctp:19 View/Days/index.ctp:25
+#: View/Days/view.ctp:35 View/Faqs/admin_edit.ctp:24
+#: View/Faqs/admin_index.ctp:29 View/Faqs/admin_view.ctp:60
+#: View/Faqs/edit.ctp:22 View/Faqs/view.ctp:60
+#: View/Feedbacks/admin_edit.ctp:24 View/Feedbacks/admin_index.ctp:47
+#: View/Feedbacks/admin_view.ctp:70 View/Feedbacks/edit.ctp:24
+#: View/Feedbacks/index.ctp:47 View/Feedbacks/view.ctp:70
 #: View/Invitations/index.ctp:23
 msgid "Are you sure you want to delete # %s?"
 msgstr ""
 
-#: View/Days/admin_index.ctp:2
-#: View/Days/index.ctp:2
+#: View/Days/admin_index.ctp:2 View/Days/index.ctp:2
 msgid "Days"
 msgstr ""
 
-#: View/Days/admin_index.ctp:23
-#: View/Days/index.ctp:23
-#: View/Faqs/admin_index.ctp:27
-#: View/Feedbacks/admin_index.ctp:45
-#: View/Feedbacks/index.ctp:45
-#: View/Invitations/index.ctp:21
+#: View/Days/admin_index.ctp:23 View/Days/index.ctp:23
+#: View/Faqs/admin_index.ctp:27 View/Feedbacks/admin_index.ctp:45
+#: View/Feedbacks/index.ctp:45 View/Invitations/index.ctp:21
 msgid "View"
 msgstr ""
 
-#: View/Days/admin_index.ctp:24
-#: View/Days/index.ctp:24
-#: View/Faqs/admin_index.ctp:28
-#: View/Feedbacks/admin_index.ctp:46
-#: View/Feedbacks/index.ctp:46
-#: View/Invitations/index.ctp:22
+#: View/Days/admin_index.ctp:24 View/Days/index.ctp:24
+#: View/Faqs/admin_index.ctp:28 View/Feedbacks/admin_index.ctp:46
+#: View/Feedbacks/index.ctp:46 View/Invitations/index.ctp:22
 msgid "Edit"
 msgstr ""
 
-#: View/Days/admin_index.ctp:33
-#: View/Days/index.ctp:33
+#: View/Days/admin_index.ctp:33 View/Days/index.ctp:33
 #: View/Invitations/index.ctp:31
-msgid "Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}"
+msgid ""
+"Page {:page} of {:pages}, showing {:current} records out of {:count} total, "
+"starting on record {:start}, ending on {:end}"
 msgstr ""
 
-#: View/Days/admin_index.ctp:39
-#: View/Days/index.ctp:39
-#: View/Faqs/admin_index.ctp:42
-#: View/Feedbacks/admin_index.ctp:60
-#: View/Feedbacks/index.ctp:60
-#: View/Invitations/index.ctp:37
+#: View/Days/admin_index.ctp:39 View/Days/index.ctp:39
+#: View/Faqs/admin_index.ctp:42 View/Feedbacks/admin_index.ctp:60
+#: View/Feedbacks/index.ctp:60 View/Invitations/index.ctp:37
 msgid "previous"
 msgstr ""
 
-#: View/Days/admin_index.ctp:41
-#: View/Days/index.ctp:41
-#: View/Faqs/admin_index.ctp:45
-#: View/Feedbacks/admin_index.ctp:63
-#: View/Feedbacks/index.ctp:63
-#: View/Invitations/index.ctp:39
+#: View/Days/admin_index.ctp:41 View/Days/index.ctp:41
+#: View/Faqs/admin_index.ctp:45 View/Feedbacks/admin_index.ctp:63
+#: View/Feedbacks/index.ctp:63 View/Invitations/index.ctp:39
 msgid "next"
 msgstr ""
 
-#: View/Days/admin_index.ctp:48
-#: View/Days/admin_view.ctp:37
-#: View/Days/index.ctp:48
-#: View/Days/view.ctp:37
+#: View/Days/admin_index.ctp:48 View/Days/admin_view.ctp:37
+#: View/Days/index.ctp:48 View/Days/view.ctp:37
 msgid "New Day"
 msgstr ""
 
-#: View/Days/admin_view.ctp:2
-#: View/Days/view.ctp:2
+#: View/Days/admin_view.ctp:2 View/Days/view.ctp:2
 msgid "Day"
 msgstr ""
 
-#: View/Days/admin_view.ctp:4
-#: View/Days/view.ctp:4
-#: View/Faqs/admin_view.ctp:4
-#: View/Faqs/view.ctp:4
-#: View/Feedbacks/admin_view.ctp:4
+#: View/Days/admin_view.ctp:4 View/Days/view.ctp:4 View/Faqs/admin_view.ctp:4
+#: View/Faqs/view.ctp:4 View/Feedbacks/admin_view.ctp:4
 #: View/Feedbacks/view.ctp:4
-#: View/Users/index.ctp:12
 msgid "Id"
 msgstr ""
 
-#: View/Days/admin_view.ctp:9
-#: View/Days/view.ctp:9
-#: View/Faqs/add.ctp:25
-#: View/Faqs/admin_add.ctp:26
-#: View/Faqs/admin_edit.ctp:29
-#: View/Faqs/admin_index.ctp:55
-#: View/Faqs/admin_view.ctp:39;66
-#: View/Faqs/edit.ctp:27
-#: View/Faqs/view.ctp:39;66
-#: View/Feedbacks/admin_add.ctp:25
-#: View/Feedbacks/admin_edit.ctp:27
-#: View/Feedbacks/admin_index.ctp:71
-#: View/Feedbacks/admin_view.ctp:44;74
-#: View/Feedbacks/edit.ctp:27
-#: View/Feedbacks/index.ctp:71
+#: View/Days/admin_view.ctp:9 View/Days/view.ctp:9 View/Faqs/add.ctp:25
+#: View/Faqs/admin_add.ctp:26 View/Faqs/admin_edit.ctp:29
+#: View/Faqs/admin_index.ctp:55 View/Faqs/admin_view.ctp:39;66
+#: View/Faqs/edit.ctp:27 View/Faqs/view.ctp:39;66
+#: View/Feedbacks/admin_add.ctp:25 View/Feedbacks/admin_edit.ctp:27
+#: View/Feedbacks/admin_index.ctp:71 View/Feedbacks/admin_view.ctp:44;74
+#: View/Feedbacks/edit.ctp:27 View/Feedbacks/index.ctp:71
 #: View/Feedbacks/view.ctp:44;74
-#: View/Users/index.ctp:10
 msgid "User"
 msgstr ""
 
-#: View/Days/admin_view.ctp:14
-#: View/Days/view.ctp:14
+#: View/Days/admin_view.ctp:14 View/Days/view.ctp:14
 msgid "Comment"
 msgstr ""
 
-#: View/Days/admin_view.ctp:19
-#: View/Days/view.ctp:19
+#: View/Days/admin_view.ctp:19 View/Days/view.ctp:19
 msgid "Rating"
 msgstr ""
 
-#: View/Days/admin_view.ctp:24
-#: View/Days/view.ctp:24
+#: View/Days/admin_view.ctp:24 View/Days/view.ctp:24
 msgid "Date"
 msgstr ""
 
-#: View/Days/admin_view.ctp:34
-#: View/Days/edit.ctp:4
-#: View/Days/view.ctp:34
+#: View/Days/admin_view.ctp:34 View/Days/edit.ctp:4 View/Days/view.ctp:34
 msgid "Edit Day"
 msgstr ""
 
-#: View/Days/admin_view.ctp:35
-#: View/Days/view.ctp:35
+#: View/Days/admin_view.ctp:35 View/Days/view.ctp:35
 msgid "Delete Day"
 msgstr ""
 
@@ -295,171 +213,114 @@ msgstr ""
 msgid "Add %s"
 msgstr ""
 
-#: View/Faqs/add.ctp:4
-#: View/Faqs/admin_add.ctp:4
-#: View/Faqs/admin_edit.ctp:4
-#: View/Faqs/admin_index.ctp:51
-#: View/Faqs/admin_view.ctp:2;59;60;62
-#: View/Faqs/edit.ctp:4
-#: View/Faqs/view.ctp:2;59;60;62
+#: View/Faqs/add.ctp:4 View/Faqs/admin_add.ctp:4 View/Faqs/admin_edit.ctp:4
+#: View/Faqs/admin_index.ctp:51 View/Faqs/admin_view.ctp:2;59;60;62
+#: View/Faqs/edit.ctp:4 View/Faqs/view.ctp:2;59;60;62
 msgid "Faq"
 msgstr ""
 
-#: View/Faqs/add.ctp:21;22;24
-#: View/Faqs/admin_add.ctp:22;23;25
-#: View/Faqs/admin_edit.ctp:25;26;28
-#: View/Faqs/admin_index.ctp:52;54
-#: View/Faqs/admin_view.ctp:61;63;65
-#: View/Faqs/edit.ctp:23;24;26
-#: View/Faqs/view.ctp:61;63;65
-#: View/Feedbacks/admin_add.ctp:23;24;26
-#: View/Feedbacks/admin_edit.ctp:25;26;28
-#: View/Feedbacks/admin_index.ctp:70;72
-#: View/Feedbacks/admin_view.ctp:71;73;75
-#: View/Feedbacks/edit.ctp:25;26;28
-#: View/Feedbacks/index.ctp:70;72
-#: View/Feedbacks/view.ctp:71;73;75
+#: View/Faqs/add.ctp:21;22;24 View/Faqs/admin_add.ctp:22;23;25
+#: View/Faqs/admin_edit.ctp:25;26;28 View/Faqs/admin_index.ctp:52;54
+#: View/Faqs/admin_view.ctp:61;63;65 View/Faqs/edit.ctp:23;24;26
+#: View/Faqs/view.ctp:61;63;65 View/Feedbacks/admin_add.ctp:23;24;26
+#: View/Feedbacks/admin_edit.ctp:25;26;28 View/Feedbacks/admin_index.ctp:70;72
+#: View/Feedbacks/admin_view.ctp:71;73;75 View/Feedbacks/edit.ctp:25;26;28
+#: View/Feedbacks/index.ctp:70;72 View/Feedbacks/view.ctp:71;73;75
 msgid "List %s"
 msgstr ""
 
-#: View/Faqs/add.ctp:21
-#: View/Faqs/admin_add.ctp:22
-#: View/Faqs/admin_edit.ctp:25
-#: View/Faqs/admin_index.ctp:2
-#: View/Faqs/admin_view.ctp:61
-#: View/Faqs/edit.ctp:23
-#: View/Faqs/view.ctp:61
+#: View/Faqs/add.ctp:21 View/Faqs/admin_add.ctp:22 View/Faqs/admin_edit.ctp:25
+#: View/Faqs/admin_index.ctp:2 View/Faqs/admin_view.ctp:61
+#: View/Faqs/edit.ctp:23 View/Faqs/view.ctp:61
 msgid "Faqs"
 msgstr ""
 
-#: View/Faqs/add.ctp:22
-#: View/Faqs/admin_add.ctp:23
-#: View/Faqs/admin_edit.ctp:26
-#: View/Faqs/admin_index.ctp:52
-#: View/Faqs/admin_view.ctp:63
-#: View/Faqs/edit.ctp:24
-#: View/Faqs/view.ctp:63
+#: View/Faqs/add.ctp:22 View/Faqs/admin_add.ctp:23 View/Faqs/admin_edit.ctp:26
+#: View/Faqs/admin_index.ctp:52 View/Faqs/admin_view.ctp:63
+#: View/Faqs/edit.ctp:24 View/Faqs/view.ctp:63
 msgid "Faqcategories"
 msgstr ""
 
-#: View/Faqs/add.ctp:23;25
-#: View/Faqs/admin_add.ctp:24;26
-#: View/Faqs/admin_edit.ctp:27;29
-#: View/Faqs/admin_index.ctp:51;53;55
-#: View/Faqs/admin_view.ctp:62;64;66
-#: View/Faqs/edit.ctp:25;27
-#: View/Faqs/view.ctp:62;64;66
-#: View/Feedbacks/admin_add.ctp:25;27
-#: View/Feedbacks/admin_edit.ctp:27;29
-#: View/Feedbacks/admin_index.ctp:69;71;73
-#: View/Feedbacks/admin_view.ctp:72;74;76
-#: View/Feedbacks/edit.ctp:27;29
-#: View/Feedbacks/index.ctp:69;71;73
-#: View/Feedbacks/view.ctp:72;74;76
+#: View/Faqs/add.ctp:23;25 View/Faqs/admin_add.ctp:24;26
+#: View/Faqs/admin_edit.ctp:27;29 View/Faqs/admin_index.ctp:51;53;55
+#: View/Faqs/admin_view.ctp:62;64;66 View/Faqs/edit.ctp:25;27
+#: View/Faqs/view.ctp:62;64;66 View/Feedbacks/admin_add.ctp:25;27
+#: View/Feedbacks/admin_edit.ctp:27;29 View/Feedbacks/admin_index.ctp:69;71;73
+#: View/Feedbacks/admin_view.ctp:72;74;76 View/Feedbacks/edit.ctp:27;29
+#: View/Feedbacks/index.ctp:69;71;73 View/Feedbacks/view.ctp:72;74;76
 msgid "New %s"
 msgstr ""
 
-#: View/Faqs/add.ctp:23
-#: View/Faqs/admin_add.ctp:24
-#: View/Faqs/admin_edit.ctp:27
-#: View/Faqs/admin_index.ctp:53
-#: View/Faqs/admin_view.ctp:9;64
-#: View/Faqs/edit.ctp:25
-#: View/Faqs/view.ctp:9;64
+#: View/Faqs/add.ctp:23 View/Faqs/admin_add.ctp:24 View/Faqs/admin_edit.ctp:27
+#: View/Faqs/admin_index.ctp:53 View/Faqs/admin_view.ctp:9;64
+#: View/Faqs/edit.ctp:25 View/Faqs/view.ctp:9;64
 msgid "Faqcategory"
 msgstr ""
 
-#: View/Faqs/add.ctp:24
-#: View/Faqs/admin_add.ctp:25
-#: View/Faqs/admin_edit.ctp:28
-#: View/Faqs/admin_index.ctp:54
-#: View/Faqs/admin_view.ctp:65
-#: View/Faqs/edit.ctp:26
-#: View/Faqs/view.ctp:65
-#: View/Feedbacks/admin_add.ctp:24
-#: View/Feedbacks/admin_edit.ctp:26
-#: View/Feedbacks/admin_index.ctp:70
-#: View/Feedbacks/admin_view.ctp:73
-#: View/Feedbacks/edit.ctp:26
-#: View/Feedbacks/index.ctp:70
-#: View/Feedbacks/view.ctp:73
+#: View/Faqs/add.ctp:24 View/Faqs/admin_add.ctp:25 View/Faqs/admin_edit.ctp:28
+#: View/Faqs/admin_index.ctp:54 View/Faqs/admin_view.ctp:65
+#: View/Faqs/edit.ctp:26 View/Faqs/view.ctp:65 View/Feedbacks/admin_add.ctp:24
+#: View/Feedbacks/admin_edit.ctp:26 View/Feedbacks/admin_index.ctp:70
+#: View/Feedbacks/admin_view.ctp:73 View/Feedbacks/edit.ctp:26
+#: View/Feedbacks/index.ctp:70 View/Feedbacks/view.ctp:73
 msgid "Users"
 msgstr ""
 
-#: View/Faqs/admin_add.ctp:4
-#: View/Feedbacks/admin_add.ctp:4
+#: View/Faqs/admin_add.ctp:4 View/Feedbacks/admin_add.ctp:4
 msgid "Admin Add %s"
 msgstr ""
 
-#: View/Faqs/admin_edit.ctp:4
-#: View/Feedbacks/admin_edit.ctp:4
+#: View/Faqs/admin_edit.ctp:4 View/Feedbacks/admin_edit.ctp:4
 msgid "Admin Edit %s"
 msgstr ""
 
-#: View/Faqs/admin_index.ctp:37
-#: View/Feedbacks/admin_index.ctp:55
+#: View/Faqs/admin_index.ctp:37 View/Feedbacks/admin_index.ctp:55
 #: View/Feedbacks/index.ctp:55
-msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+msgid ""
+"Page %page% of %pages%, showing %current% records out of %count% total, "
+"starting on record %start%, ending on %end%"
 msgstr ""
 
-#: View/Faqs/admin_view.ctp:14
-#: View/Faqs/view.ctp:14
-#: View/Feedbacks/admin_view.ctp:9
-#: View/Feedbacks/view.ctp:9
+#: View/Faqs/admin_view.ctp:14 View/Faqs/view.ctp:14
+#: View/Feedbacks/admin_view.ctp:9 View/Feedbacks/view.ctp:9
 msgid "Lang"
 msgstr ""
 
-#: View/Faqs/admin_view.ctp:19
-#: View/Faqs/view.ctp:19
-#: View/Feedbacks/admin_view.ctp:29
-#: View/Feedbacks/view.ctp:29
+#: View/Faqs/admin_view.ctp:19 View/Faqs/view.ctp:19
+#: View/Feedbacks/admin_view.ctp:29 View/Feedbacks/view.ctp:29
 msgid "Subject"
 msgstr ""
 
-#: View/Faqs/admin_view.ctp:24
-#: View/Faqs/view.ctp:24
+#: View/Faqs/admin_view.ctp:24 View/Faqs/view.ctp:24
 msgid "Annotation"
 msgstr ""
 
-#: View/Faqs/admin_view.ctp:29
-#: View/Faqs/view.ctp:29
+#: View/Faqs/admin_view.ctp:29 View/Faqs/view.ctp:29
 msgid "Content"
 msgstr ""
 
-#: View/Faqs/admin_view.ctp:34
-#: View/Faqs/view.ctp:34
+#: View/Faqs/admin_view.ctp:34 View/Faqs/view.ctp:34
 msgid "Active"
 msgstr ""
 
-#: View/Faqs/admin_view.ctp:44
-#: View/Faqs/view.ctp:44
-#: View/Feedbacks/admin_view.ctp:54
-#: View/Feedbacks/view.ctp:54
-#: View/Users/index.ctp:32
+#: View/Faqs/admin_view.ctp:44 View/Faqs/view.ctp:44
+#: View/Feedbacks/admin_view.ctp:54 View/Feedbacks/view.ctp:54
 msgid "Created"
 msgstr ""
 
-#: View/Faqs/admin_view.ctp:49
-#: View/Faqs/view.ctp:49
-#: View/Feedbacks/admin_view.ctp:59
-#: View/Feedbacks/view.ctp:59
-#: View/Users/index.ctp:37
+#: View/Faqs/admin_view.ctp:49 View/Faqs/view.ctp:49
+#: View/Feedbacks/admin_view.ctp:59 View/Feedbacks/view.ctp:59
 msgid "Modified"
 msgstr ""
 
-#: View/Faqs/admin_view.ctp:59
-#: View/Faqs/edit.ctp:4
-#: View/Faqs/view.ctp:59
-#: View/Feedbacks/admin_view.ctp:69
-#: View/Feedbacks/edit.ctp:4
+#: View/Faqs/admin_view.ctp:59 View/Faqs/edit.ctp:4 View/Faqs/view.ctp:59
+#: View/Feedbacks/admin_view.ctp:69 View/Feedbacks/edit.ctp:4
 #: View/Feedbacks/view.ctp:69
 msgid "Edit %s"
 msgstr ""
 
-#: View/Faqs/admin_view.ctp:60
-#: View/Faqs/view.ctp:60
-#: View/Feedbacks/admin_view.ctp:70
-#: View/Feedbacks/view.ctp:70
+#: View/Faqs/admin_view.ctp:60 View/Faqs/view.ctp:60
+#: View/Feedbacks/admin_view.ctp:70 View/Feedbacks/view.ctp:70
 msgid "Delete %s"
 msgstr ""
 
@@ -467,69 +328,51 @@ msgstr ""
 msgid "F.A.Q."
 msgstr ""
 
-#: View/Feedbacks/admin_add.ctp:4
-#: View/Feedbacks/admin_edit.ctp:4
-#: View/Feedbacks/admin_index.ctp:69
-#: View/Feedbacks/admin_view.ctp:2;69;70;72
-#: View/Feedbacks/edit.ctp:4
-#: View/Feedbacks/index.ctp:69
+#: View/Feedbacks/admin_add.ctp:4 View/Feedbacks/admin_edit.ctp:4
+#: View/Feedbacks/admin_index.ctp:69 View/Feedbacks/admin_view.ctp:2;69;70;72
+#: View/Feedbacks/edit.ctp:4 View/Feedbacks/index.ctp:69
 #: View/Feedbacks/view.ctp:2;69;70;72
 msgid "Feedback"
 msgstr ""
 
-#: View/Feedbacks/admin_add.ctp:23
-#: View/Feedbacks/admin_edit.ctp:25
-#: View/Feedbacks/admin_index.ctp:2
-#: View/Feedbacks/admin_view.ctp:71
-#: View/Feedbacks/edit.ctp:25
-#: View/Feedbacks/index.ctp:2
+#: View/Feedbacks/admin_add.ctp:23 View/Feedbacks/admin_edit.ctp:25
+#: View/Feedbacks/admin_index.ctp:2 View/Feedbacks/admin_view.ctp:71
+#: View/Feedbacks/edit.ctp:25 View/Feedbacks/index.ctp:2
 #: View/Feedbacks/view.ctp:71
 msgid "Feedbacks"
 msgstr ""
 
-#: View/Feedbacks/admin_add.ctp:26
-#: View/Feedbacks/admin_edit.ctp:28
-#: View/Feedbacks/admin_index.ctp:72
-#: View/Feedbacks/admin_view.ctp:75
-#: View/Feedbacks/edit.ctp:28
-#: View/Feedbacks/index.ctp:72
+#: View/Feedbacks/admin_add.ctp:26 View/Feedbacks/admin_edit.ctp:28
+#: View/Feedbacks/admin_index.ctp:72 View/Feedbacks/admin_view.ctp:75
+#: View/Feedbacks/edit.ctp:28 View/Feedbacks/index.ctp:72
 #: View/Feedbacks/view.ctp:75
 msgid "Versions"
 msgstr ""
 
-#: View/Feedbacks/admin_add.ctp:27
-#: View/Feedbacks/admin_edit.ctp:29
-#: View/Feedbacks/admin_index.ctp:73
-#: View/Feedbacks/admin_view.ctp:49;76
-#: View/Feedbacks/edit.ctp:29
-#: View/Feedbacks/index.ctp:73
+#: View/Feedbacks/admin_add.ctp:27 View/Feedbacks/admin_edit.ctp:29
+#: View/Feedbacks/admin_index.ctp:73 View/Feedbacks/admin_view.ctp:49;76
+#: View/Feedbacks/edit.ctp:29 View/Feedbacks/index.ctp:73
 #: View/Feedbacks/view.ctp:49;76
 msgid "Version"
 msgstr ""
 
-#: View/Feedbacks/admin_view.ctp:14
-#: View/Feedbacks/view.ctp:14
-#: View/Users/index.ctp:27
+#: View/Feedbacks/admin_view.ctp:14 View/Feedbacks/view.ctp:14
 msgid "Email"
 msgstr ""
 
-#: View/Feedbacks/admin_view.ctp:19
-#: View/Feedbacks/view.ctp:19
+#: View/Feedbacks/admin_view.ctp:19 View/Feedbacks/view.ctp:19
 msgid "Name"
 msgstr ""
 
-#: View/Feedbacks/admin_view.ctp:24
-#: View/Feedbacks/view.ctp:24
+#: View/Feedbacks/admin_view.ctp:24 View/Feedbacks/view.ctp:24
 msgid "Status"
 msgstr ""
 
-#: View/Feedbacks/admin_view.ctp:34
-#: View/Feedbacks/view.ctp:34
+#: View/Feedbacks/admin_view.ctp:34 View/Feedbacks/view.ctp:34
 msgid "Message"
 msgstr ""
 
-#: View/Feedbacks/admin_view.ctp:39
-#: View/Feedbacks/view.ctp:39
+#: View/Feedbacks/admin_view.ctp:39 View/Feedbacks/view.ctp:39
 msgid "Processed"
 msgstr ""
 
@@ -541,39 +384,30 @@ msgstr ""
 msgid "New Invitation"
 msgstr ""
 
-#: View/Pages/index.ctp:8
+#: View/Pages/index.ctp:11 View/Pages/rus/index.ctp:11
 msgid "Готовься"
 msgstr ""
 
-#: View/Pages/index.ctp:20
+#: View/Pages/index.ctp:23 View/Pages/rus/index.ctp:23
 msgid "Целься"
 msgstr ""
 
-#: View/Pages/index.ctp:32;41
+#: View/Pages/index.ctp:35;45 View/Pages/rus/index.ctp:35;45
 msgid "Пли!"
+msgstr ""
+
+#: View/Pages/eng/index.ctp:11
+msgid "Get ready"
+msgstr ""
+
+#: View/Pages/eng/index.ctp:21
+msgid "Aim"
+msgstr ""
+
+#: View/Pages/eng/index.ctp:31;37
+msgid "Fire!"
 msgstr ""
 
 #: View/Tasks/mobile/index.ctp:36;80;125;182;207
 msgid "Go to full version"
 msgstr ""
-
-#: View/Users/index.ctp:17
-msgid "First name"
-msgstr ""
-
-#: View/Users/index.ctp:22
-msgid "Last Name"
-msgstr ""
-
-#: View/Users/index.ctp:46
-msgid "Accounts"
-msgstr ""
-
-#: View/Helper/FormHelper.php:1323
-msgid "empty"
-msgstr ""
-
-#: View/Helper/HtmlHelper.php:731
-msgid "Home"
-msgstr ""
-
