@@ -376,6 +376,7 @@ class UsersController extends AppController {
     public function changeLanguage(){
         $result = $this->_prepareResponse();
         if ( $this->_isSetRequestData('lang') && $this->User->changeLanguage($this->Auth->user('id'), $this->request->data['lang'])) {
+            Configure::write('Config.language', $this->request->data['lang']);
             $result['success'] = true;
         }
         $this->set('result', $result);
