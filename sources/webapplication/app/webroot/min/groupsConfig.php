@@ -10,7 +10,8 @@
  *
  * See http://code.google.com/p/minify/wiki/CustomSource for other ideas
  **/
-$ver = '1.0.5';
+$ver = trim(array_pop(file(dirname(dirname(dirname(__FILE__))) . '/Config/appVERSION.txt')));
+//$ver = '1.0.5';
 return array(
      
      'journal.js.v='.$ver => array('//js/main.js', '//js/journal.js', '//js/print.js'),
