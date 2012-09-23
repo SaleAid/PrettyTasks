@@ -274,7 +274,7 @@ class AccountsController extends AppController {
                         $email->emailFormat(Configure::read('Email.global.format'));
                         $email->from(Configure::read('Email.global.from'));
                         $email->to($result['User']['email']);
-                        $email->subject(Configure::read('Email.user.activateAccount.subject'));
+                        $email->subject( __(Configure::read('Email.user.activateAccount.subject'), Configure::read('Site.name')));
                         $email->viewVars(
                                         array(
                                             'username' => $result['User']['username'], 

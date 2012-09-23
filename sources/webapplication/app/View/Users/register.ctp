@@ -15,10 +15,11 @@
                 <div class="box-loginza-registr-top pull-right">
                 <span><?php echo __d('users', 'Или использовать аккаунт социальной сети'); ?></span>
                     <div class="box-icons-widget">
-                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'google')?>
-                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'facebook')?>
-                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'twitter')?>
-                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'vkontakte')?>
+                        <?php //echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'google')?>
+                        <?php //echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'facebook')?>
+                        <?php //echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'twitter')?>
+                        <?php //echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'vkontakte')?>
+                        <?php echo $this->Loginza->listIconWidget(Configure::read('loginza.token_url'))?>
                     </div>
                </div>
         </legend>
@@ -50,10 +51,11 @@
                <div class="box-loginza-registr pull-left">
                     <span><?php echo __d('users', 'ИЛИ'); ?></span>
                     <div class="box-icons-widget">
-                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'google')?>
-                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'facebook')?>
-                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'twitter')?>
-                        <?php echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'vkontakte')?>
+                        <?php //echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'google')?>
+                        <?php //echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'facebook')?>
+                        <?php //echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'twitter')?>
+                        <?php //echo $this->Loginza->iconsWidget(Configure::read('loginza.token_url'),'vkontakte')?>
+                        <?php echo $this->Loginza->listIconWidget(Configure::read('loginza.token_url'))?>
                     </div>
                </div>
            </div>

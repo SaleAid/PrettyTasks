@@ -43,6 +43,35 @@ class Account extends AppModel {
         ), 
     );
 
+    protected function _getDataFromProvider($userProfile){
+        $data = array();
+        $data['identity'] = $userProfile->identity;
+        $data['uid'] = $userProfile->uid;
+        $data['identity'] = $userProfile->identity;
+        $data['first_name'] = isset($userProfile->name->first_name) ? $userProfile->name->first_name : '';
+        $data['last_name'] = isset($userProfile->name->last_name) ? $userProfile->name->last_name : '';
+        $data['full_name'] = isset($userProfile->name->full_name) ? $userProfile->name->full_name : '';
+        $data['email'] = isset($userProfile->email) ? $userProfile->email : ''; 
+        return (array)$data;
+    }
+    
+    protected function _getDataFrom_vkontakte($data){
+        $data['full_name'] = $data['first_name'] . ' ' . $data['last_name'];
+        return $data;
+    }
+    
+    protected function _getDataFrom_linkedin($data){
+        $data['full_name'] = $data['first_name'] . ' ' . $data['last_name'];
+        return $data;
+    }
+    
+    protected function _getDataFrom_twitter($data){
+        $tmp = explode(' ',$data['full_name']);
+        $data['last_name'] = isset($tmp[1]) ? $tmp[1] : '';
+        $data['first_name'] = $tmp[0];
+        return $data;
+    }
+    
     public function getLoginzaUser($token) {
         $LoginzaAPI = new LoginzaAPI();
         $UserProfile = $LoginzaAPI->getAuthInfo($token, Configure::read('loginza.id'), md5($token . Configure::read('loginza.skey')));
@@ -51,64 +80,19 @@ class Account extends AppModel {
             $data['msg'] = $UserProfile->error_message;
             return $data;
         }
-        $data['identity'] = $UserProfile->identity;
-        switch ($UserProfile->provider) {
-            case strpos($UserProfile->provider, 'twitter') == true :
-                {
-                    $tmp = explode(' ', $UserProfile->name->full_name);
-                    if (isset($tmp[1])) {
-                        $data['last_name'] = $tmp[1];
-                    } else {
-                        $data['last_name'] = '';
-                    }
-                    $data['first_name'] = $tmp[0];
-                    $data['full_name'] = $UserProfile->name->full_name;
-                    $data['provider'] = 'twitter';
-                    $data['uid'] = $UserProfile->uid;
-                    $data['identity'] = $UserProfile->identity;
-                    $data['email'] = '';
-                    break;
-                }
-            case strpos($UserProfile->provider, 'vkontakte') == true :
-                {
-                    $data['uid'] = $UserProfile->uid;
-                    $data['first_name'] = $UserProfile->name->first_name;
-                    $data['last_name'] = $UserProfile->name->last_name;
-                    $data['full_name'] = $data['first_name'] . ' ' . $data['last_name'];
-                    $data['identity'] = $UserProfile->identity;
-                    $data['email'] = '';
-                    $data['provider'] = 'vkontakte';
-                    break;
-                }
-            case strpos($UserProfile->provider, 'google') == true :
-                {
-                    $data['provider'] = 'google';
-                    $data['uid'] = $UserProfile->uid;
-                    $data['first_name'] = $UserProfile->name->first_name;
-                    $data['last_name'] = $UserProfile->name->last_name;
-                    $data['full_name'] = $UserProfile->name->full_name;
-                    $data['identity'] = $UserProfile->identity;
-                    $data['email'] = $UserProfile->email;
-                    break;
-                }
-            case strpos($UserProfile->provider, 'facebook') !== true :
-                {
-                    $data['provider'] = 'facebook';
-                    $data['uid'] = $UserProfile->uid;
-                    $data['first_name'] = $UserProfile->name->first_name;
-                    $data['last_name'] = $UserProfile->name->last_name;
-                    $data['full_name'] = $UserProfile->name->full_name;
-                    $data['identity'] = $UserProfile->identity;
-                    $data['email'] = $UserProfile->email;
-                    break;
-                }
-            default :
-                {
-                    $data['status'] = 'error';
-                    $data['msg'] = 'Bad provider';
-                    return $data;
-                }
+        $providers = Configure::read('loginza.provider');
+        if( !in_array($UserProfile->provider, $providers) ) {
+            $data['status'] = 'error';
+            $data['msg'] = 'Bad provider';
+            return $data;
         }
+        $data = $this->_getDataFromProvider($UserProfile);
+        $data['provider'] = array_search($UserProfile->provider, $providers);
+        $providerMethod = "_getDataFrom_{$data['provider']}";
+        if( method_exists($this, $providerMethod) ){
+            $data = $this->$providerMethod($data);
+        }
+        
         $result = $this->findByUidAndProvider($data['uid'], $data['provider']);
         if (! $result) {
             $data['status'] = 'newUser';//TODO Are u sure this is the good status? Maybe better use numeric values? 

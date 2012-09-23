@@ -178,6 +178,10 @@ footer .right{ text-align:right; }
       border-radius: 4px;
 }
 
+.box-icons-widget a{
+    margin-left: 3px;
+}
+
 .box-loginza-registr-top .box-icons-widget{
     margin-top: -10px;
     display: inline-block;

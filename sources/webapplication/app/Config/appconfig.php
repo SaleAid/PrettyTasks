@@ -4,6 +4,15 @@
    Configure::write('loginza.token_url', 'http://learning-2012.org.ua/accounts/loginzalogin');
    Configure::write('loginza.widget_url', 'http://loginza.ru/js/widget.js');
    
+   Configure::write('loginza.provider', array('facebook' => 'http://www.facebook.com/',
+                                              'twitter' => 'http://twitter.com/',
+                                              'vkontakte' => 'http://vk.com/',
+                                              'google' => 'https://www.google.com/accounts/o8/ud',
+                                              'linkedin' => 'http://www.linkedin.com/'
+                                        )
+            );
+   
+   
    Configure::write('Recaptcha.publicKey', '6Lff1M4SAAAAAFQKlC0j9iy4nhQnc82o-5jmGuIa');
    Configure::write('Recaptcha.privateKey', '6Lff1M4SAAAAAFbUUEYXP9c92v4fXvxf3m3BcBM3');
    Configure::write('Recaptcha.theme', 'white');
@@ -56,7 +65,10 @@
    Configure::write('Email.user.invitation.subject', 'Приглашение на сервис %s');
    Configure::write('Email.user.activateAccount.subject', 'Активация аккаунта на сервисе %s');
    Configure::write('Email.user.passwordResend.subject', 'Сбросить пароль на сервисе %s');
-   Configure::write('App.version', '1.0.5');
+   
+   //app version 
+   //Configure::write('App.version', '1.0.5');
+   Configure::write('App.version', trim(array_pop(file(dirname(__FILE__) . DS . 'appVERSION.txt'))));
    
    Configure::write('App.Minify.css', true);
    Configure::write('App.Minify.js', true);

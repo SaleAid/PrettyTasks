@@ -1339,7 +1339,7 @@ function InitClock() {
 } 
 function initDeleteAll(element){
     $(element).on('click', function(){
-        var answer = confirm('Are you sure you want to delete all tasks?');
+        var answer = confirm(GLOBAL_CONFIG.deleteAll);
         if(answer){
             var date = $(this).text();
             userEvent('deleteAll', {confirm: answer});    
