@@ -443,21 +443,6 @@ class Task extends AppModel {
         return true;
     }
 
-    //public function beforeDelete() {
-//        $now = "'".date("Y-m-d H:i:s")."'";
-//        if ($this->updateAll(array(
-//            'Task.order' => 'Task.order -1',
-//            'modified' => $now
-//        ), array(
-//            'Task.date ' => $this->data[$this->alias]['date'], 
-//            'Task.user_id' => $this->data[$this->alias]['user_id'], 
-//            'Task.order >' => $this->data[$this->alias]['order']
-//        ))) {
-//            return true;
-//        }
-//        return false;
-//    }
-
     private function _getPositionByTime() {
         $id = isset($this->data[$this->alias]['id']) ? $this->data[$this->alias]['id'] : 0;
         $user_id = $this->data[$this->alias]['user_id'];
@@ -484,7 +469,7 @@ class Task extends AppModel {
                                             ));
             foreach ( $listTaskWithTime as $task ) {
                 if ($this->data[$this->alias]['time'] > $task[$this->alias]['time']) {
-                    if ( $this->data[$this->alias]['id'] == $task[$this->alias]['id'] ){
+                    if ( $id == $task[$this->alias]['id'] ){
                         $newOrderID = $task[$this->alias]['order'];
                     } else {
                         $newOrderID = $task[$this->alias]['order'] + 1;
