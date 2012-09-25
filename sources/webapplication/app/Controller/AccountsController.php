@@ -31,10 +31,12 @@ class AccountsController extends AppController {
     }
     
     public function loginzalogin() {
-
         if (! empty($this->request->data['token'])) {
             $result = $this->Account->getLoginzaUser($this->request->data['token']);
             if($this->Auth->loggedIn()){
+                if($lang = $this->_userLang()){
+                    Configure::write('Config.language', $lang);
+                }
                 switch ($result['status']) {
                     case 'active' :
                         {
