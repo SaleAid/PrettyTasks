@@ -1,5 +1,5 @@
 <?php 
-    $text =  urlencode(Configure::read('Site.description'));
+    $text =  urlencode(Configure::read('SEO.Pages.description.'.Configure::read('Config.langURL')));
     $url = urlencode(Configure::read('Site.url'));
 ?>
 <ul class="share-entry">
