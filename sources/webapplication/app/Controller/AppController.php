@@ -160,7 +160,8 @@ class AppController extends Controller {
             }elseif($lang = $this->_browserLang()){
                 $language = $lang;
             }else{
-                $language = $this->L10n->map(Configure::read('Config.language'));
+                //$language = $this->L10n->map(Configure::read('Config.language'));
+                $language = Configure::read('Config.language');
             }
             $params['lang'] = $this->L10n->map($language);
         }
