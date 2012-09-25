@@ -57,6 +57,8 @@
    Configure::write('SEO.Pages.keywords.en', 'Pretty Tasks, gtd, tasks management, todo list, time management, task lists, easy-to-use system');
    Configure::write('SEO.Pages.description.en', 'PrettyTasks - a service of personal task management with maximum usability. Use the best system intuitively!');
    
+   Configure::write('Share.description', __('PrettyTasks - сервис управления личными задачами с максимальной удобностью использования.'));
+   
    Configure::write('User.default.beta', false);
    Configure::write('User.default.pro', false);
    
@@ -70,8 +72,8 @@
    //Configure::write('App.version', '1.0.5');
    Configure::write('App.version', trim(array_pop(file(dirname(__FILE__) . DS . 'appVERSION.txt'))));
    
-   Configure::write('App.Minify.css', true);
-   Configure::write('App.Minify.js', true);
+   Configure::write('App.Minify.css', false);
+   Configure::write('App.Minify.js', false);
       
    Configure::write('Session.cookie', 'PrettyTasks');
    
