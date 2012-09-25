@@ -26,7 +26,7 @@
         <div class="jl-day">
             <span class="jl-title">
                 <?php 
-                    echo $this->Html->link($day['Day']['date'] .' - '. __($this->Time->format('l', $day['Day']['date'])), array( 
+                    echo $this->Html->link($day['Day']['date'] .' - '. __d('tasks', $this->Time->format('l', $day['Day']['date'])), array( 
                         'controller' => 'tasks',  
                         'action' => 'index',
                     	'#' => 'day-'.$day['Day']['date']

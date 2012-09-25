@@ -40,7 +40,8 @@
     font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
     font-size: 14px;
     line-height: 20px;
-    white-space: pre-wrap;
+    white-space: pre-line;
+    word-wrap: break-word;
 }
 
 .g-day{
