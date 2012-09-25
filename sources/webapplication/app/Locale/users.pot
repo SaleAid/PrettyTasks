@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-09-20 10:23+0300\n"
+"POT-Creation-Date: 2012-09-25 17:27+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,11 +14,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Config/appconfig.php:17
+#: Config/appconfig.php:26
 msgid "Russian"
 msgstr ""
 
-#: Config/appconfig.php:18
+#: Config/appconfig.php:27
 msgid "English"
 msgstr ""
 
@@ -158,28 +158,28 @@ msgstr ""
 msgid "Прикрепите аккаунт из социальной сети"
 msgstr ""
 
-#: View/Users/accounts.ctp:18
+#: View/Users/accounts.ctp:19
 msgid "Провайдер"
 msgstr ""
 
-#: View/Users/accounts.ctp:19
-#: View/Users/register.ctp:25
+#: View/Users/accounts.ctp:20
+#: View/Users/register.ctp:26
 msgid "Имя"
 msgstr ""
 
-#: View/Users/accounts.ctp:20
+#: View/Users/accounts.ctp:21
 msgid "Дата связывания"
 msgstr ""
 
-#: View/Users/accounts.ctp:22
+#: View/Users/accounts.ctp:23
 msgid "Действия"
 msgstr ""
 
-#: View/Users/accounts.ctp:29
+#: View/Users/accounts.ctp:30
 msgid "Удалить"
 msgstr ""
 
-#: View/Users/accounts.ctp:29
+#: View/Users/accounts.ctp:30
 msgid "Вы уверены, что хотите удалить этот аккаунт?"
 msgstr ""
 
@@ -192,7 +192,7 @@ msgid "Логин или Емейл"
 msgstr ""
 
 #: View/Users/login.ctp:16
-#: View/Users/register.ctp:33
+#: View/Users/register.ctp:34
 msgid "Пароль"
 msgstr ""
 
@@ -211,7 +211,7 @@ msgid "Забыли пароль?"
 msgstr ""
 
 #: View/Users/login.ctp:26
-#: View/Users/register.ctp:49
+#: View/Users/register.ctp:50
 msgid "Регистрация"
 msgstr ""
 
@@ -238,7 +238,7 @@ msgstr ""
 
 #: View/Users/password_change.ctp:34
 #: View/Users/password_reset.ctp:21
-#: View/Users/register.ctp:35
+#: View/Users/register.ctp:36
 msgid "Повторите пароль"
 msgstr ""
 
@@ -256,7 +256,7 @@ msgid "Ваш адрес электронной почты"
 msgstr ""
 
 #: View/Users/password_resend.ctp:26
-#: View/Users/register.ctp:38
+#: View/Users/register.ctp:39
 msgid "Пожалуйста, подтвердите, что вы человек"
 msgstr ""
 
@@ -300,39 +300,39 @@ msgstr ""
 msgid "Или использовать аккаунт социальной сети"
 msgstr ""
 
-#: View/Users/register.ctp:25
+#: View/Users/register.ctp:26
 msgid "Введите ваше имя"
 msgstr ""
 
-#: View/Users/register.ctp:29
+#: View/Users/register.ctp:30
 msgid "Email"
 msgstr ""
 
-#: View/Users/register.ctp:29
+#: View/Users/register.ctp:30
 msgid "Укажите адрес электронной почты"
 msgstr ""
 
-#: View/Users/register.ctp:31
+#: View/Users/register.ctp:32
 msgid "Логин"
 msgstr ""
 
-#: View/Users/register.ctp:31
+#: View/Users/register.ctp:32
 msgid "Введите ваше логин"
 msgstr ""
 
-#: View/Users/register.ctp:33
+#: View/Users/register.ctp:34
 msgid "6 знаков или больше! Будьте хитрее"
 msgstr ""
 
-#: View/Users/register.ctp:45
+#: View/Users/register.ctp:46
 msgid "Я согласен с "
 msgstr ""
 
-#: View/Users/register.ctp:45
+#: View/Users/register.ctp:46
 msgid "условиями использования"
 msgstr ""
 
-#: View/Users/register.ctp:51
+#: View/Users/register.ctp:52
 msgid "ИЛИ"
 msgstr ""
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-09-20 10:23+0300\n"
+"POT-Creation-Date: 2012-09-25 17:27+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -115,37 +115,37 @@ msgstr ""
 msgid "Переход на новый день. Перезагрузка страницы произойдет через 5 секунд"
 msgstr ""
 
-#: Model/Task.php:803
+#: Model/Task.php:788
 #: View/Tasks/index.ctp:70
 msgid "Sunday"
 msgstr ""
 
-#: Model/Task.php:804
+#: Model/Task.php:789
 #: View/Tasks/index.ctp:71
 msgid "Monday"
 msgstr ""
 
-#: Model/Task.php:805
+#: Model/Task.php:790
 #: View/Tasks/index.ctp:72
 msgid "Tuesday"
 msgstr ""
 
-#: Model/Task.php:806
+#: Model/Task.php:791
 #: View/Tasks/index.ctp:73
 msgid "Wednesday"
 msgstr ""
 
-#: Model/Task.php:807
+#: Model/Task.php:792
 #: View/Tasks/index.ctp:74
 msgid "Thursday"
 msgstr ""
 
-#: Model/Task.php:808
+#: Model/Task.php:793
 #: View/Tasks/index.ctp:75
 msgid "Friday"
 msgstr ""
 
-#: Model/Task.php:809
+#: Model/Task.php:794
 #: View/Tasks/index.ctp:76
 msgid "Saturday"
 msgstr ""
@@ -156,6 +156,11 @@ msgstr ""
 
 #: View/Elements/js_global_config.ctp:12
 msgid "Перемещение выполненых задач запрещено"
+msgstr ""
+
+#: View/Elements/js_global_config.ctp:13
+#: View/Tasks/index.ctp:180
+msgid "Are you sure you want to delete all tasks?"
 msgstr ""
 
 #: View/Tasks/index.ctp:40
@@ -236,10 +241,6 @@ msgstr ""
 
 #: View/Tasks/index.ctp:180
 msgid "Удалить окончательно"
-msgstr ""
-
-#: View/Tasks/index.ctp:180
-msgid "Are you sure you want to delete all tasks?"
 msgstr ""
 
 #: View/Tasks/index.ctp:195
