@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-09-20 10:23+0300\n"
+"POT-Creation-Date: 2012-09-25 17:27+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,87 +14,87 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/AccountsController.php:42
+#: Controller/AccountsController.php:44
 msgid "Этот аккаунт уже связан"
 msgstr ""
 
-#: Controller/AccountsController.php:46
+#: Controller/AccountsController.php:48
 msgid "Этот аккаунт уже связан с другим пользователем"
 msgstr ""
 
-#: Controller/AccountsController.php:64
+#: Controller/AccountsController.php:66
 msgid "Этот аккаунт успешно прикреплен"
 msgstr ""
 
-#: Controller/AccountsController.php:68
+#: Controller/AccountsController.php:70
 msgid "Ошибка связывания аккаунта"
 msgstr ""
 
-#: Controller/AccountsController.php:76
+#: Controller/AccountsController.php:78
 msgid "Ошибка"
 msgstr ""
 
-#: Controller/AccountsController.php:99
+#: Controller/AccountsController.php:101
 msgid "Your account not active"
 msgstr ""
 
-#: Controller/AccountsController.php:127
+#: Controller/AccountsController.php:129
 msgid "An unknown error"
 msgstr ""
 
-#: Controller/AccountsController.php:142;178;225
+#: Controller/AccountsController.php:144;180;227
 msgid "Код активации аккаунта был выслан Вам на почту"
 msgstr ""
 
-#: Controller/AccountsController.php:147
+#: Controller/AccountsController.php:149
 msgid "Возникли проблемы при отправке кода активации аккаунта"
 msgstr ""
 
-#: Controller/AccountsController.php:167
+#: Controller/AccountsController.php:169
 msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз"
 msgstr ""
 
-#: Controller/AccountsController.php:183;231
+#: Controller/AccountsController.php:185;233
 msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта"
 msgstr ""
 
-#: Controller/AccountsController.php:188
+#: Controller/AccountsController.php:190
 msgid "Error create account"
 msgstr ""
 
-#: Controller/AccountsController.php:237
+#: Controller/AccountsController.php:239
 msgid "Error create user account"
 msgstr ""
 
-#: Controller/AccountsController.php:244
+#: Controller/AccountsController.php:246
 msgid "Регистрация не удалась. Заполните поля полностью"
 msgstr ""
 
-#: Controller/AccountsController.php:290
+#: Controller/AccountsController.php:292
 msgid "Ваша учетная запись была активирована"
 msgstr ""
 
-#: Controller/AccountsController.php:296
+#: Controller/AccountsController.php:298
 msgid "Invalid key"
 msgstr ""
 
-#: Controller/AccountsController.php:314
+#: Controller/AccountsController.php:316
 msgid "Invalid Account"
 msgstr ""
 
-#: Controller/AccountsController.php:318
+#: Controller/AccountsController.php:320
 msgid "Account deleted"
 msgstr ""
 
-#: Controller/AccountsController.php:326
+#: Controller/AccountsController.php:328
 msgid "Account was not deleted"
 msgstr ""
 
-#: Model/Account.php:120
+#: Model/Account.php:104
 msgid "Ваш основной аккаунт заблокирован"
 msgstr ""
 
-#: Model/Account.php:125
+#: Model/Account.php:109
 msgid "Ваш основной аккаунт деактивирован"
 msgstr ""
 

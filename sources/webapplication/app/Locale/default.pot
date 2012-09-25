@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-09-20 10:23+0300\n"
+"POT-Creation-Date: 2012-09-25 17:27+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,18 +13,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-
-#: Config/appconfig.php:45
-msgid "Приглашение на сервис %s"
-msgstr ""
-
-#: Config/appconfig.php:46
-msgid "Активация аккаунта на сервисе %s"
-msgstr ""
-
-#: Config/appconfig.php:47
-msgid "Сбросить пароль на сервисе %s"
-msgstr ""
 
 #: Controller/FaqsController.php:44;54;86;135;163
 msgid "Invalid Faq"

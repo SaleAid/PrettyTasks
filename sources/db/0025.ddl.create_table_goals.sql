@@ -4,7 +4,7 @@ CREATE TABLE `goals` (
   `goal` varchar(10000) NOT NULL,
   `todate` date DEFAULT NULL,
   `user_id` char(36) NOT NULL,
-  `created` datetime DEFAULT NOT NULL,
-  `modified` datetime DEFAULT NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
