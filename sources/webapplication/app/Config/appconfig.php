@@ -41,8 +41,8 @@
    Configure::write('SEO.Login.description.ru', 'Страница входа(логина) на сервис PrettyTasks');
    
    Configure::write('SEO.Pages.title.ru', 'Приятный личный сервис управления задачами');
-   Configure::write('SEO.Pages.keywords.ru', 'Pretty Tasks, gtd, tasks management, управление временем, списки задач, удобная система');
-   Configure::write('SEO.Pages.description.ru', 'PrettyTasks - сервис управления личными задачами с максимальной удобностью использования. Пользуйтесь интуитивно лучшей системой!');
+   Configure::write('SEO.Pages.keywords.ru', 'Pretty Tasks, gtd, tasks management, todo list, управление временем, списки задач, удобная система');
+   Configure::write('SEO.Pages.description.ru', 'PrettyTasks - сервис управления личными задачами с максимальной удобностью использования. Пользуйтесь лучшей системой интуитивно и с удовольствием!');
    
    //SEO en
    Configure::write('SEO.Registration.title.en', 'Registering on the site');
@@ -57,16 +57,16 @@
    Configure::write('SEO.Pages.keywords.en', 'Pretty Tasks, gtd, tasks management, todo list, time management, task lists, easy-to-use system');
    Configure::write('SEO.Pages.description.en', 'PrettyTasks - a service of personal task management with maximum usability. Use the best system intuitively!');
    
-   Configure::write('Share.description', __('PrettyTasks - сервис управления личными задачами с максимальной удобностью использования.'));
+   Configure::write('Share.description', __d('appconfig', 'PrettyTasks - сервис управления личными задачами с максимальной удобностью использования.'));
    
    Configure::write('User.default.beta', false);
    Configure::write('User.default.pro', false);
    
    Configure::write('Email.global.from', 'noreply@prettytasks.com');
    Configure::write('Email.global.format', 'html');
-   Configure::write('Email.user.invitation.subject', 'Приглашение на сервис %s');
-   Configure::write('Email.user.activateAccount.subject', 'Активация аккаунта на сервисе %s');
-   Configure::write('Email.user.passwordResend.subject', 'Сбросить пароль на сервисе %s');
+   Configure::write('Email.user.invitation.subject', __d('appconfig', 'Приглашение на сервис %s'));
+   Configure::write('Email.user.activateAccount.subject', __d('appconfig', 'Активация аккаунта на сервисе %s'));
+   Configure::write('Email.user.passwordResend.subject', __d('appconfig', 'Сбросить пароль на сервисе %s'));
    
    //app version 
    //Configure::write('App.version', '1.0.5');
