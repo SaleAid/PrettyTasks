@@ -14,19 +14,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Model/Faqcategory.php:validation for field name;validation for field lang
-msgid "notempty"
+#: Config/appconfig.php:60
+msgid "PrettyTasks - сервис управления личными задачами с максимальной удобностью использования."
 msgstr ""
 
-#: Model/Faqcategory.php:validation for field order
-msgid "numeric"
+#: Config/appconfig.php:67
+msgid "Приглашение на сервис %s"
 msgstr ""
 
-#: Model/Faqcategory.php:validation for field active
-msgid "boolean"
+#: Config/appconfig.php:68
+msgid "Активация аккаунта на сервисе %s"
 msgstr ""
 
-#: Model/Faqcategory.php:validation for field user_id
-msgid "Wrong ID"
+#: Config/appconfig.php:69
+msgid "Сбросить пароль на сервисе %s"
 msgstr ""
 
