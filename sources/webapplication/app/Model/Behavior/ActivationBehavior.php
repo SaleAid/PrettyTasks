@@ -28,7 +28,7 @@ class ActivationBehavior extends ModelBehavior {
         $email->emailFormat(Configure::read('Email.global.format'));
         $email->from(Configure::read('Email.global.from'));
         $email->to($Model->data['User']['email']);
-        $email->subject( __(Configure::read('Email.user.activateAccount.subject'), Configure::read('Site.name')));
+        $email->subject( __d('appconfig', Configure::read('Email.user.activateAccount.subject'), Configure::read('Site.name')));
         $email->viewVars(array( 'controllerName' => $controllerName,
                                 'activate_token' => $Model->data[$Model->alias]['activate_token'], 
                                 'full_name' => $Model->data[$Model->alias]['full_name'])
