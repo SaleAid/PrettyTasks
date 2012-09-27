@@ -202,11 +202,6 @@ class Task extends AppModel {
             $this->_originData[$this->alias]['order'] = $this->data[$this->alias]['order'];
             $this->_originData[$this->alias]['date'] = $this->data[$this->alias]['date'];
         }
-        //if($this->data[$this->alias]['future']){
-//            $this->_originData[$this->alias]['time'] = null;
-//            $this->_originData[$this->alias]['order'] = null;
-//            $this->_originData[$this->alias]['date'] = 1;
-//        }
         return $this;
     }
 
@@ -224,13 +219,13 @@ class Task extends AppModel {
         }else{
             $data[$this->alias]['priority'] = $priority;
         }
-        $data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
+        //$data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
         if (! $date) {
             $future = 1;
-            //$data[$this->alias]['order'] = 1;
-        }//else{
-//            $data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
-//        }
+            $data[$this->alias]['order'] = 1;
+        }else{
+            $data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
+        }
         $data[$this->alias]['future'] = $future ? $future : 0;
         if( !$time and !$future ){
             $pattern = '/^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?/';
@@ -333,6 +328,13 @@ class Task extends AppModel {
         }
         return false;
     }
+    
+    private function _isCreateFuture() {
+        if( !isset($this->data[$this->alias]['id']) && $this->data[$this->alias]['future'] ){
+            return true;
+        }
+        return false;
+    }
 
     private function _changeOrder() {
         $now = "'".date("Y-m-d H:i:s")."'";
@@ -419,9 +421,27 @@ class Task extends AppModel {
         }
         return false;    
     }
+    
+    public function _changeOrderAfterCreateFuture(){
+        $now = "'".date("Y-m-d H:i:s")."'";
+        if ($this->updateAll(array(
+            'Task.order' => 'Task.order + 1',
+            'modified' => $now
+        ), array(
+            'Task.future' => 1, 
+            'Task.user_id' => $this->data[$this->alias]['user_id'], 
+            'Task.deleted' => 0, 
+        ))) {
+            return true;
+        }
+        return false;    
+    }
 
     public function beforeSave() {
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
+        if( $this->_isCreateFuture() ) {
+            return $this->_changeOrderAfterCreateFuture();
+        }
         if ($this->_originData) {
             if ($order = $this->_getPositionByTime() and ! $this->_isDeleted()) {
                 $this->setOrder($order);
@@ -708,7 +728,7 @@ class Task extends AppModel {
         do {
             $days[] = $from;
             $from = date("Y-m-d", strtotime($from . "+1 day"));
-        } while($from < $to);
+        } while($from <= $to);
         if(is_array($arrDays)){
             sort($arrDays);
             $days = array_merge($days, $arrDays);

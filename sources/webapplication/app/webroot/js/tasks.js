@@ -1010,8 +1010,11 @@ function scrCreate(data){
     if(data.data.Task.future){
         date = 'planned';
         data.data.Task.date = '';    
+        $("ul[date='"+date+"']").prepend(AddTask(data.data));
+    } else {
+        $("ul[date='"+date+"']").append(AddTask(data.data));    
     }
-    $("ul[date='"+date+"']").append(AddTask(data.data));
+    
     initDelete("li[id='"+data.data.Task.id+"'] .deleteTask");
     initEditAble("li[id='"+data.data.Task.id+"'] .editable");
     initDone("li[id='"+data.data.Task.id+"'] .done");
