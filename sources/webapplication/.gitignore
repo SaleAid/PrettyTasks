@@ -1,6 +1,4 @@
-/app/Config/core.php
-/app/Config/database.php
-/app/Config/config.php
+/app/Config
 /app/tmp
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins
@@ -8,5 +6,4 @@
 /build
 /dist
 .DS_Store
-tags
-/app/webroot/.htaccess
+/tags

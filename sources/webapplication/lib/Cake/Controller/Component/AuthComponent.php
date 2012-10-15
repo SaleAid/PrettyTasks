@@ -287,8 +287,8 @@ class AuthComponent extends Component {
 			$url = $request->url;
 		}
 		$url = Router::normalize($url);
-        $loginAction = Router::normalize($this->loginAction);
-        		
+		$loginAction = Router::normalize($this->loginAction);
+
 		$allowedActions = $this->allowedActions;
 		$isAllowed = (
 			$this->allowedActions == array('*') ||
@@ -323,15 +323,16 @@ class AuthComponent extends Component {
 				}
 			}
 		}
-        if (empty($this->authorize) || $this->isAuthorized($this->user())) {
+		if (empty($this->authorize) || $this->isAuthorized($this->user())) {
 			return true;
 		}
-        $this->flash($this->authError);
+
+		$this->flash($this->authError);
 		$default = '/';
 		if (!empty($this->loginRedirect)) {
 			$default = $this->loginRedirect;
 		}
-        $controller->redirect($controller->referer($default), null, true);
+		$controller->redirect($controller->referer($default, true), null, true);
 		return false;
 	}
 
@@ -600,8 +601,7 @@ class AuthComponent extends Component {
  * @return string Redirect URL
  */
 	public function redirect($url = null) {
-		
-        if (!is_null($url)) {
+		if (!is_null($url)) {
 			$redir = $url;
 			$this->Session->write('Auth.redirect', $redir);
 		} elseif ($this->Session->check('Auth.redirect')) {
@@ -614,7 +614,7 @@ class AuthComponent extends Component {
 		} else {
 			$redir = $this->loginRedirect;
 		}
-        return Router::normalize($redir);
+		return Router::normalize($redir);
 	}
 
 /**
