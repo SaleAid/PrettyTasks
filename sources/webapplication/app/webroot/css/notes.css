@@ -1,0 +1,18 @@
+#notes li.editing .edit {
+	display: block;
+	width: 444px;
+	padding: 13px 15px 14px 20px;
+	margin: 0;
+}
+
+#notes li.editing .view {
+	display: none;
+}
+
+#notes li .view label {
+	word-break: break-word;
+}
+
+#notes li .edit {
+	display: none;
+}
