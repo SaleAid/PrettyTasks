@@ -6,7 +6,7 @@
 </p> 
 
 <p>
-    <a href="<?php echo Router::url(array('controller' => 'users', 'action' => 'password_reset', $password_token), true); ?>"><?php echo Router::url(array('controller' => 'users', 'action' => 'password_reset', $password_token), true); ?></a> .
+    <a href="<?php echo Router::url(array('controller' => 'users', 'action' => 'password_reset', $password_token), true); ?>"><?php echo Router::url(array('controller' => 'users', 'action' => 'password_reset', $password_token), true); ?></a>
 </p>
 
 <p>If you don't want to change your password, please ignore this message. Your password will remain the same. </p>
