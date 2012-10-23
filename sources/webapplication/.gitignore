@@ -1,7 +1,9 @@
+.gitignore
 /app/Config/core.php
 /app/Config/database.php
 /app/Config/config.php
-/app/tmp
+/app/tmp/
+/app/webroot/tmp/
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins
 /vendors
