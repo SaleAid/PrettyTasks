@@ -205,10 +205,10 @@ div.well{
     color: red;
 }
 
-.icon-move:hover{cursor: move}
+/*.icon-move:hover{cursor: move}*/
 
 .ui-state-highlight { background: #DEECBB !important; }
-
+.ui-state-highlight-cp { background: #D8E3FC !important; }
 .close:hover{
     opacity:1;
     filter:alpha(opacity=100);
@@ -311,6 +311,9 @@ div.jGrowl.custom {
 .move {
     padding: 5px;   
     cursor: move;
+}
+.cp{
+    cursor: crosshair;
 }
 .inline-confirmation-confirm, .inline-confirmation-cancel{
     cursor: pointer;

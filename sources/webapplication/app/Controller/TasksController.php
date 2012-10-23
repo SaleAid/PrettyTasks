@@ -22,9 +22,17 @@ class TasksController extends AppController {
         $result['data']['arrAllFutureCount']['all'] = count($result['data']['arrAllFuture']);
         $result['data']['arrAllFutureCount']['done'] = count(array_filter($result['data']['arrAllFuture'], create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;')));
         $result['data']['arrAllExpired'] = $this->Task->getAllExpired($this->Auth->user('id'));
-        $from = CakeTime::format('Y-m-d', time());
+        //$result['data']['inConfig'] = false;
+        //$result['data']['yesterdayDisp'] = false;
+        //$from = CakeTime::format('Y-m-d', time());
+        $from = CakeTime::format('Y-m-d', '-1 days');
         $to = CakeTime::format('Y-m-d', '+6 days');
         $dayConfig = $this->Task->User->getConfig($this->Auth->user('id'), 'day');
+        //if ( in_array($from, $dayConfig) ){
+        //    $result['data']['inConfig'] = true;
+            //pr(CakeTime::wasYesterday($from));die;
+        //}
+        //pr($dayConfig);die;
         $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to, $dayConfig);
         foreach ( $result['data']['arrTaskOnDays'] as $key => $value ) {
             $done = array_filter($value, create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;'));
@@ -35,6 +43,11 @@ class TasksController extends AppController {
         $result['data']['arrDaysRating'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $from, $to, $dayConfig);
         $result['data']['arrAllOverdue'] = $this->Task->getAllOverdue($this->Auth->user('id'));
         $result['data']['arrAllCompleted'] = $this->Task->getAllCompleted($this->Auth->user('id'));
+        //if($result['data']['arrTaskOnDaysCount'][$from]['all'] && $result['data']['arrTaskOnDaysCount'][$from]['all'] > $result['data']['arrTaskOnDaysCount'][$from]['done'] ){
+        //    $result['data']['yesterdayDisp'] = true;
+        //} 
+        //pr($result);die;
+        
         $this->set('result', $result);
         $this->set('_serialize', array(
             'result'
@@ -222,7 +235,50 @@ class TasksController extends AppController {
             'result'
         ));
     }
-
+    
+    public function cloneTask() {
+        $result = $this->_prepareResponse();
+        $expectedData = array(
+            'date', 
+            'id'
+        );
+        if (! $this->_isSetRequestData($expectedData)) {
+            $result['message'] = array(
+                'type' => 'error', 
+                'message' => __d('tasks', 'Ошибка при передаче данных')
+            );
+        } else {
+            $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
+            if ($task) {
+                $cloneTask = $this->Task->create($this->Auth->user('id'), $task['Task']['title'], $this->request->data['date'], $task['Task']['time'], null, $task['Task']['priority'], $task['Task']['future'], 1)->saveTask();
+                if ($cloneTask) {
+                    $result['success'] = true;
+                    $result['data'] = $cloneTask;
+                    $result['message'] = array(
+                        'type' => 'success', 
+                        'message' => __d('tasks', 'Задача успешно склонирована')
+                    );
+                } else {
+                    $result['message'] = array(
+                        'type' => 'error', 
+                        'message' => __d('tasks', 'Задача  не склонирована')
+                    );
+                    $result['errors'] = $this->Task->validationErrors;
+                }
+            } else{
+                $result['message'] = array(
+                        'type' => 'error', 
+                        'message' => __d('tasks', 'Задача не существует')
+                );
+            }
+        }
+        $result['action'] = 'clone';
+        $this->set('result', $result);
+        $this->set('_serialize', array(
+            'result'
+        ));
+    }
+    
     public function changeOrders() {
         $result = $this->_prepareResponse();
         $expectedData = array(

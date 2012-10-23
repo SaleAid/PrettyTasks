@@ -55,6 +55,13 @@
                  </span>
                 <a href="#planned" data-toggle="tab" date="planned" class="tab2 "><?php echo __d('tasks', 'Планируемые'); ?></a>
             </li>
+          <?php //if ( $result['data']['yesterdayDisp'] ): ?>
+          <li class="drop">
+            <a href="#<?php echo $this->Time->format('Y-m-d', '-1 days', true); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', '-1 days', true); ?>">
+                 <?php echo __d('tasks', 'Yesterday'); ?>
+            </a>
+          </li>
+          <?php //endif;?>
             <li class="active drop">
                 <a href="#<?php echo $this->Time->format('Y-m-d', time(), true); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', time(), true); ?>">
                 <?php echo __d('tasks', 'Today'); ?>
@@ -85,7 +92,10 @@
           <?php endfor; ?>
           
           <?php foreach($result['data']['arrTaskOnDays'] as $k => $v):?>
-          <?php if($k > $this->Time->format('Y-m-d', '+6 days') or $k < $this->Time->format('Y-m-d', time())):?>
+          <?php if($k > $this->Time->format('Y-m-d', '+6 days') or 
+                    $k < $this->Time->format('Y-m-d', '-1 days') //and !$this->Time->wasYesterday($k)) or 
+                    //($this->Time->wasYesterday($k) and !$result['data']['yesterdayDisp'] and $result['data']['inConfig'])
+                    ):?>
             <li class="drop userDay"> <a href="#<?php echo $k;?>"
                              data-toggle="tab"
                               date = "<?php echo $k; ?>">
@@ -202,15 +212,18 @@
           </div>
           <?php 
             foreach($result['data']['arrTaskOnDays'] as $k => $v):
-            $weelDayStyle = '';
-            $type = 'today';
-            if($k > $this->Time->format('Y-m-d', time())){
-                $weelDayStyle = 'future';
-                $type = 'future';
-            }elseif($k < $this->Time->format('Y-m-d', time())){
-                $weelDayStyle = 'past';
-                $type = 'past';
-            }
+                $weelDayStyle = '';
+                $type = 'today';
+                if($k > $this->Time->format('Y-m-d', time())){
+                    $weelDayStyle = 'future';
+                    $type = 'future';
+                }elseif($k < $this->Time->format('Y-m-d', time())){
+                    $weelDayStyle = 'past';
+                    $type = 'past';
+                }
+                //if(($this->Time->wasYesterday($k) and !$result['data']['yesterdayDisp'] and !$result['data']['inConfig'])){
+//                    continue;
+//                }
           ?>
             <div class="tab-pane <?php if($this->Time->isToday($k)):?>active<?php endif;?>" id="<?php echo $k; ?>" >
                 <div class="row">

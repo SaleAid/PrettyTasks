@@ -168,6 +168,9 @@ function userEvent(action, data){
         case 'create':
             taskCreate(data.title, data.date);
         break;
+        case 'clone':
+            taskClone(data.id, data.date);
+        break;
         case 'setTitle':
             taskSetTitle(data.id, data.title);
         break;
@@ -215,6 +218,9 @@ function responseHandler(data){
     switch(data.action){
         case 'create':
              onCreate(data);
+        break;
+        case 'clone':
+             onClone(data);
         break;
         case 'setTitle':
             onSetTitle(data);
@@ -990,6 +996,26 @@ function scrSetTitle(id, title_text, priority){
         $("li[id='"+id+"']").removeClass('important');
     }
 }
+//----------------clone --------
+function taskClone(id, date){
+    srvClone(id, date);
+}
+function onClone(data){
+    if(data.success){
+        scrCreate(data);
+    }else{
+        mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.errors), data.message.type);   
+    }
+}
+function srvClone(id, date){
+    if(date == 'planned'){
+                date = '';
+    }
+    superAjax('/tasks/cloneTask.json',{id: id, date: date });
+}
+function scrClone(data){
+    scrCreate(data);
+}
 
 //----------------create -------- 
 function taskCreate(title, date){
@@ -1196,9 +1222,11 @@ function initDrop(element){
     $(element, $tabs ).droppable({
              tolerance:'pointer', 
              accept: ".connectedSortable li",
-             hoverClass: "hover", 
+             hoverClass: "hover",
              drop: function( event, ui ) {
                 dropped = true;
+                var isACopy = event.ctrlKey == true;
+    
                 var id = ui.draggable.attr('id');
                 var date = $(this).children( "a" ).attr( "date" )
                 var time = $.trim(ui.draggable.children('.time').text());
@@ -1211,8 +1239,13 @@ function initDrop(element){
                     mesg(GLOBAL_CONFIG.moveCompletedForbiddenMessage, 'success');
                     return false;   
                 }
-                ui.draggable.addClass('currentTask');
-                userEvent('dragOnDay', {id: id, date: date, time:time});
+                if(isACopy) {
+                    userEvent('clone', {id: id, date: date});
+                    //return false;
+                }else{
+                    ui.draggable.addClass('currentTask');
+                    userEvent('dragOnDay', {id: id, date: date, time:time});    
+                }
             } 
     }).disableSelection();
 }
@@ -1225,8 +1258,11 @@ function initSortable(element){
             cursor: 'move', 
             placeholder: "ui-state-highlight",
             handle: 'span.move',
+            start: function(e, ui){
+                isDragging = true;
+            },
             update : function(e, ui){
-                if(dropped){
+                if(dropped || e.ctrlKey){
                     $(this).removeAttr("style");
                     $(this).sortable('cancel');
                     dropped = false;
@@ -1245,7 +1281,8 @@ function initSortable(element){
                 var position = ui.item.index()+1;
                 userEvent('changeOrders', {id: id, position: position});
             },
-          stop: function(event, ui) {
+          stop: function(e, ui) {
+                isDragging = false;
                 if(dropped){
                     dropped = false;
                     return true;
@@ -1319,13 +1356,7 @@ function initDayClick(element){
         userEvent('addDay',{date: date});
     });
 }
-//function initPrintClick(element){
-//    $(element).on('click', function(){
-//        window.print();
-//        return false;
-//    });
-//}
-//
+
 function InitClock() { 
   var TimezoneOffset = GLOBAL_CONFIG.timezone; 
   var localTime = new Date(); 
@@ -1391,9 +1422,26 @@ function convertToText(str){
 var dropped = false;
 var countAJAX = 0;
 var connError = false;
+var pressCtrl = false;
+var isDragging = false;
 $(function(){
      
-    
+   // $(document).keydown(function (e) {
+//        if(e.ctrlKey && isDragging){
+//            pressCtrl = true;
+//            $('.move').addClass('cp');
+//        }
+//    });
+//    
+//    $(document).keyup(function (e) {
+//        if(pressCtrl){
+//            pressCtrl = false;
+//            $('.move').removeClass('cp');
+//        }
+//    });
+               
+               
+               
      $(window).hashchange( function(e){
         if(location.hash != "") { 
             var hash = location.hash.slice(5);

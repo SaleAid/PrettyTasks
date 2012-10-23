@@ -19,7 +19,7 @@
                 
                 <?php echo $this->Form->input('User.email', array('readonly' => 'readonly', 'class' => 'input-xlarge'));?>
                 <label class="checkbox">
-                    <?php echo $this->Form->input('agreed', array('label'=>  __d('accounts', 'Я согласен с ').$this->Html->link(__d('accounts', 'условиями использования'),array('controller' => 'pages', 'action' => 'terms-and-conditions')), 'type'=>'checkbox', 'format' => array('before', 'label', 'between', 'error', 'after'))); ?>
+                    <?php echo $this->Form->input('agreed', array('label'=>  __d('accounts', 'Я согласен с').'&nbsp;'.$this->Html->link(__d('accounts', 'условиями использования'),array('controller' => 'pages', 'action' => 'terms-and-conditions')), 'type'=>'checkbox', 'format' => array('before', 'label', 'between', 'error', 'after'))); ?>
                 </label>
            
             	
