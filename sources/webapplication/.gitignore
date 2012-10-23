@@ -4,7 +4,7 @@
 /app/Config/config.php
 /app/tmp/
 /app/webroot/tmp/
-/app/Config
+#/app/Config
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins
 /vendors
