@@ -44,7 +44,7 @@ Router::defaultRouteClass('LangRoute');
 //Router::connect('/'. rawurlencode('задачи') .'', array('controller' => 'tasks', 'action' => 'index', 'lang' => 'ru'));
 //Router::connect('/tasks1', array('controller' => 'tasks', 'action' => 'index', 'lang' => 'en'));
 
-//Router::connect('/', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
+Router::connect('/', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/pages', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/pages/index', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
