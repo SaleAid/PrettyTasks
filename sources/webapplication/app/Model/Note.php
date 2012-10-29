@@ -63,7 +63,7 @@ class Note extends AppModel {
 
     private $_originData = array();
     
-    private $_fields = array('id', 'note', 'order');
+    private $_fields = array('id', 'note', 'order', 'modified');
     
     public function isOwner($id, $user_id) {
         $this->contain();
@@ -81,6 +81,9 @@ class Note extends AppModel {
         $this->contain();
         $notes = $this->find('all', 
                         array(
+                            'order' => array(
+                                'Note.modified' => 'ASC'
+                            ), 
                             'conditions' => array(
                                     array(
                                         'Note.user_id' => $user_id

@@ -60,9 +60,16 @@ class NotesController extends AppController {
                 );
                 $action = $this->request->data['action'];
                 $data = $this->Note->editNote($saveData, $action)->saveNote();
-                
-                $result['data'] = $data['Note'];
-                $result['success'] = true;
+                if( $data ){
+                    $result['data'] = $data['Note'];
+                    $result['success'] = true;    
+                }else{
+                    $result['message'] = array(
+                        'type' => 'error', 
+                        'message' => __d('tasks', 'Заметка  не ....')
+                    );
+                    $result['errors'] = $this->Note->validationErrors;    
+                }
             }      
         }
         $result['action'] = $this->params['data']['action']; 
@@ -70,6 +77,23 @@ class NotesController extends AppController {
         $this->set('_serialize', 'object');
         
         
+	}
+    
+    public function delete($id = null) {
+        if (!$this->request->is('post') && !$this->request->is('delete')) {
+			throw new MethodNotAllowedException();
+		}
+        $result = $this->_prepareResponse();
+		$originNote = $this->Note->isOwner($id, $this->Auth->user('id'));
+        if ($originNote) {
+            
+        }
+		if ($this->Note->delete()) {
+			//$result['success'] = true;  
+		}
+        //$result['action'] = $this->params['data']['action']; 
+        $this->set('object', $result);
+        $this->set('_serialize', 'object');
 	}
 
    // 

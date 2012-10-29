@@ -35,23 +35,45 @@
                    <h3 class="label label-info"><?php echo __d('notes', 'Notes'); ?></h3>
                 </div>
                 <div class="well form-inline">
-                    <div class="input-append">
-                        <input id="new-note" type="text" size="16" class="input-xxlarge new-note" placeholder="<?php echo __d('tasks', '+Add note…'); ?>"/><span class="add-on">?</span>
-                    </div>
+                    <input id="new-note" type="text" size="16" class="input-xxlarge new-note" placeholder="<?php echo __d('tasks', '+Add note…'); ?>"/>
                     <button id="add-note" class="btn add-note"><?php echo __d('tasks', 'Добавить'); ?></button>    
                 </div>
               </div>
               <div class="clear"></div>
-                <ul id="notes" class="sortable connectedSortable ui-helper-reset">
+                <div class="create-new-note">
+                    <?php echo $this->Html->image("create-new-note-eng.". Configure::read('App.version') .".png", array("alt" => "", 'class' => '', 'width' => 180, 'height' => 178)); ?>
+                </div>
+                <ul id="notes" class="notes">
+                
                 </ul>
     </div>
 </div>
 <!-- tmp -->
 <script type="text/template" id="item-template" />
-  <div class="view">
-    <label> Note = <%= note %> || order = <%= order %></label>
-    <a class="destroy"></a>
+  <div class="note-box">
+  <a class="note-remove" href="#"><i class="icon-remove-sign"></i></a>
+    <div class="note">
+        <p><%= note %></p>
+        <a class="destroy"></a>
+    </div>
+    <div class="modified label label-info"><%= modified %></div>
   </div>
-  <input class="edit" type="text" value="<%= note %>" />
+</script>
+<!-- modal -->
+<script id="modal-edit-note" type="text/template">
+    <div id="edit-note" class="modal">
+        <div class="modal-header">
+            <a class="close close-edit" data-dismiss="modal">×</a>
+            <h3><?php echo __d('notes', 'Edit');?></h3>
+        </div>
+        <div class="modal-body">
+            <textarea  class="text-note" id="text-note" rows="9"><%= note %></textarea>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn close-edit"><?php echo __d('tasks', 'Закрыть');?></a>
+            <button id="save-note" class="btn btn-success"><?php echo __d('tasks', 'Сохранить');?></button>
+        </div>
+    </div>
+    <div class="modal-backdrop"></div>
 </script>
  
