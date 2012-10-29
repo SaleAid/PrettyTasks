@@ -42,7 +42,6 @@ class NotesController extends AppController {
         $expectedData = array(
             'id',
             'note',
-            'order',
             'action'
         );
         if (! $this->_isSetRequestData($expectedData)) {
@@ -56,7 +55,6 @@ class NotesController extends AppController {
                 $saveData = array(
                     'id' => $this->request->data['id'],
                     'note' => $this->request->data['note'],
-                    'order' => $this->request->data['order']
                 );
                 $action = $this->request->data['action'];
                 $data = $this->Note->editNote($saveData, $action)->saveNote();

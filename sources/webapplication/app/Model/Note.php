@@ -63,7 +63,7 @@ class Note extends AppModel {
 
     private $_originData = array();
     
-    private $_fields = array('id', 'note', 'order', 'modified');
+    private $_fields = array('id', 'note', 'modified');
     
     public function isOwner($id, $user_id) {
         $this->contain();
@@ -119,7 +119,7 @@ class Note extends AppModel {
     
     public function createNote($user_id, $note, $order = null){
         $this->data[$this->alias]['user_id'] = $user_id;
-        $this->data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser($user_id) + 1;
+        //$this->data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser($user_id) + 1;
         $this->data[$this->alias]['note'] = $note;
         return $this;
     }
