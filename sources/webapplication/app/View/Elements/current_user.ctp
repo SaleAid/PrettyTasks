@@ -1,6 +1,6 @@
 <div class="pull-right">
     <?php echo $this->Html->image("ajax-loader.". Configure::read('App.version') .".gif", array("alt" => "Print", 'class' => 'pull-left ajaxLoader hide', 'width' => 24, 'height' => 24)); ?>
-    <a class=" btn-note btn btn-info btn-small pull-left" href="#"><i class="icon-leaf"></i></a>
+    <a class=" btn-note btn btn-info btn-small pull-left" href="#" rel="tooltip" title="<?php echo __d('tasks', 'Добавить заметку'); ?>"><i class="icon-leaf"></i></a>
     <ul class="pull-right user-menu-ul">
      <?php if(!empty($currentUser)): ?>
      <li class="btn-group">

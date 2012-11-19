@@ -1,5 +1,22 @@
     $(function(){
    
+   function mesg (message){
+    $.jGrowl.defaults.pool = 1;
+    $.jGrowl(message, { 
+                    glue: 'before',
+                    position: 'top-right',
+                    theme: 'success',
+                    speed: 'fast',
+                    life: '3000',
+					animateOpen: { 
+						height: "show"
+					},
+					animateClose: { 
+						height: "hide"
+					}
+     });
+}
+
    window.Note = Backbone.Model.extend({
     
         urlRoot: "/notes",
@@ -69,7 +86,8 @@
         },
 
         show: function() {
-            $(document.body).append(this.render().el);                
+            $(document.body).append(this.render().el);
+            this.$el.find('#text-note').focus();                
         },
 
         close: function() {
@@ -77,26 +95,33 @@
         },
         
         updateNote: function(){
-            value = $.trim(this.$el.find('#text-note').val());
-            if( !value ) return;
+            $('.ajaxLoader').removeClass('hide');
+            var value = $.trim(this.$el.find('#text-note').val());
+            var that = this;
+            //if( !value ) return;
             if( this.model ){
-               if( value == this.model.get('note') ) {
+               var oldValue = this.model.get('note');
+               if( value == oldValue) {
                     return;
                }
                this.model.save({note: value, action: 'changeNote'},  {
                 success: function(model, response){
                     if( !response.success ){
-                        console.log(response);
-                        console.log(model);
+                        //console.log(response);
+                        //console.log(response.message.message);
+                        mesg(response.message.message);
+                        model.set({note: oldValue});
+                        model.change();
                         return false;
+                    }else {
+                        that.close();
                     }
                 }    
                });   
             } else {
                 Notes.create({note: value});    
             }
-            
-            this.close();
+        $('.ajaxLoader').addClass('hide');    
         }
     });
   

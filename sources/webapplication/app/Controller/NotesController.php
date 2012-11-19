@@ -62,6 +62,7 @@ class NotesController extends AppController {
                     $result['data'] = $data['Note'];
                     $result['success'] = true;    
                 }else{
+                    //$this->response->statusCode(500);
                     $result['message'] = array(
                         'type' => 'error', 
                         'message' => __d('tasks', 'Заметка  не ....')

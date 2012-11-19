@@ -296,3 +296,16 @@ footer .right{ text-align:right; }
 .btn-note:hover .icon-leaf{
     background-image: url("/img/glyphicons-halflings.png");
 }
+/*jGrowl theme */
+div.jGrowl div.success {
+    background-color: #008040;
+    color: yellow;
+}
+div.jGrowl div.info {
+    background-color: #804040;
+    color: yellow;
+}
+div.jGrowl div.error {
+    background-color: red;
+    color: yellow;
+}

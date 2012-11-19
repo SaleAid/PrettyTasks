@@ -235,7 +235,7 @@ div.well{
 .errorTooltip .tooltip-inner{background-color: red; }
 .tooltip.right .tooltip-arrow{ border-right-color: red;}
 
-/*jGrowl theme */
+/*jGrowl theme 
 div.jGrowl div.success {
     background-color: #008040;
     color: yellow;
@@ -251,7 +251,7 @@ div.jGrowl div.error {
 div.jGrowl.custom {
 	right: 0px;
 	top: 25px;
-}
+}*/
 .day{
     margin-top: 4px;
 }

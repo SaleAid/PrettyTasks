@@ -3,7 +3,7 @@
         echo $this->Html->css('min/tasks.' . Configure::read('App.version'), null, array('block' => 'toHead'));
     }else{
        echo $this->Html->css('main.' . Configure::read('App.version'), null, array('block' => 'toHead')); 
-       //echo $this->Html->css('jquery.jgrowl.'.Configure::read('App.version'), null, array('block' => 'toHead'));
+       echo $this->Html->css('jquery.jgrowl.'.Configure::read('App.version'), null, array('block' => 'toHead'));
        echo $this->Html->css('print.' . Configure::read('App.version'), null, array('block' => 'toHead'));
        echo $this->html->css('jquery.timepicker-1.2.2', null, array('block' => 'toHead'));
        echo $this->Html->css('notes.'. Configure::read('App.version'), null, array('block' => 'toHead'));
