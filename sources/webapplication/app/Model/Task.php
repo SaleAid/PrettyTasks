@@ -238,7 +238,7 @@ class Task extends AppModel {
             preg_match($pattern, $title, $matches);
             if( isset($matches[0]) ){
                 $data[$this->alias]['time'] = CakeTime::format('H:i:s', $matches[0]);
-                $data[$this->alias]['title'] = substr($title,5);
+                $data[$this->alias]['title'] = substr($title, 5);
             }    
         }
         return $data;

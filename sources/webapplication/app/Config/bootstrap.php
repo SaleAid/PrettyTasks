@@ -26,5 +26,14 @@ CakeLog::config('error', array(
 ));
 
 config('appconfig');
+
 CakePlugin::load('Recaptcha');
+
+CakePlugin::load(array(
+    'OAuth' => array('routes' => true)
+));
  
+CakePlugin::load(array(
+    'ApiV1' => array('routes' => true)
+));
+  
