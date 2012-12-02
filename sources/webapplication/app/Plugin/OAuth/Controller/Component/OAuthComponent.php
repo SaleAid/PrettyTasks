@@ -42,7 +42,7 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
  * 
  * @var array
  */
-	protected $allowedActions = array('token', 'authorize', 'login');
+	protected $allowedActions = array('token', 'authorize', 'login', 'success');
 
 /**
  * An array containing the model and fields to authenticate users against

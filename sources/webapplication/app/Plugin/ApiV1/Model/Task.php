@@ -160,7 +160,7 @@ class Task extends ApiV1AppModel {
     private $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'deleted', 'done' ,'datedone', 'comment');
     
     public function comparisonTime($data) {
-        if ($data['timeend'] > $this->data[$this->alias]['time']) {
+        if ( !empty($this->data[$this->alias]['time']) and $data['timeend'] > $this->data[$this->alias]['time']) {
             return true;
         }
         return false;
@@ -282,7 +282,395 @@ class Task extends ApiV1AppModel {
                             'fields' => $this->_taskFields,
                         ));
     }
+    
+    //-----------------------------------------------------------------------------------
+    //$date = null, $time = null, $order = null, $priority = null, $future = null, $clone = null, $comment = ''
+    public function create($user_id, $params) {
+        extract($params);
+        $title = isset($title) ? $title : null;
+        $date = isset($date) ? $date : null;
+        $time = isset($time) ? $time : null;
+        $timeend = isset($timeend) ? $timeend : null;
+        $order = isset($order) ? $order : null;
+        $priority = isset($priority) ? $priority : null;
+        $future = isset($future) ? $future : null;
+        $comment = isset($comment) ? $comment : null;
+        $clone = isset($clone) ? $clone : null;
+        $this->data = $this->_prepareTask($user_id, $title, $date, $time, $timeend, $order, $priority, $future, $comment);
+        if($this->data[$this->alias]['time']){
+            $this->_originData[$this->alias]['time'] = null;
+            $this->_originData[$this->alias]['order'] = $this->data[$this->alias]['order'];
+            $this->_originData[$this->alias]['date'] = $this->data[$this->alias]['date'];
+            $this->_originData[$this->alias]['deleted'] = $this->data[$this->alias]['deleted'];
+        }
+        if($clone){
+            unset($this->id);
+        }
+        return $this;
+    }
 
+    private function _prepareTask($user_id, $title, $date = null, $time = null, $timeend = null, $order = null, $priority = null, $future = null, $comment ='') {
+        $data[$this->alias]['user_id'] = $user_id;
+        $data[$this->alias]['title'] = $title;
+        $data[$this->alias]['date'] = $date;
+        $data[$this->alias]['comment'] = $comment;
+        $data[$this->alias]['deleted'] = 0;
+        $data[$this->alias]['done'] = 0;
+        $data[$this->alias]['datedone'] = null;
+         
+        if($priority == null){
+            if (strpos($title, '!') === false) {
+                $data[$this->alias]['priority'] = 0;
+            } else {
+                $data[$this->alias]['priority'] = 1;
+            }    
+        }else{
+            $data[$this->alias]['priority'] = $priority;
+        }
+        if (! $date) {
+            $future = 1;
+            $time = null;
+            $data[$this->alias]['order'] = 1;
+        }else{
+            $data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
+            $future = 0;
+        }
+        $data[$this->alias]['time'] = $time;
+        $data[$this->alias]['timeend'] = $timeend;
+        $data[$this->alias]['future'] = $future ? $future : 0;
+        if( !$time and !$future ){
+            $pattern = '/^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?/';
+            preg_match($pattern, $title, $matches);
+            if( isset($matches[0]) ){
+                $data[$this->alias]['time'] = CakeTime::format('H:i:s', $matches[0]);
+                $data[$this->alias]['title'] = substr($title, 5);
+            }    
+        }
+        return $data;
+    }
+    
+    public function update( $data ){
+    	
+    	//check priority in title...
+    	if( !isset($data['priority']) and isset($data['title']) ){
+            if (strpos($data['title'], '!') === false) {
+                $data['priority'] = 0;
+            } else {
+                $data['priority'] = 1;
+            }
+        }
+    	//check time in title
+        if ( isset($data['title']) ) {
+	        $pattern = '/^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?/';
+	        preg_match($pattern, $data['title'], $matches);
+	        if( (!isset($data['future']) or !$data['future']) and isset($matches[0]) ){
+	            $data['time'] = $matches[0].':00';
+	            $data['title'] = substr($data['title'], 5);
+	        }
+        }
+        //check future ...
+        if( isset($data['date']) ){
+            if( empty($data['date']) ){
+                $data['future'] = 1;
+                $data['time'] = $data['timeend'] = null;        
+            } else {
+                $data['future'] = 0;
+            }
+        }
+        
+        //check  delete ...
+        if( isset($data['deleted']) and $data['deleted'] ){
+            $data['order'] = 0;
+         }
+        
+        //check  done
+        if( isset($data['done']) ){
+            if( $data['done'] ) {
+                $data['datedone'] = date("Y-m-d H:i:s");
+            } else {
+                $data['datedone'] = null;
+            }
+        }
+        if ( $this->_isDraggedOnDay() ) {
+        	$this->data[$this->alias]['order'] = 1;
+        }
+        return $this->save($data);
+    }
+    
+    public function beforeSave() {
+        //pr($this->data);die;
+        $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
+        if( $this->_isCreateFuture() ) {
+            return $this->_changeOrderAfterCreateFuture();
+        }
+        if ($this->_originData) {
+            if ($order = $this->_getPositionByTime() and !$this->_isDeleted()) {
+                $this->setOrder($order);
+            }
+            //change order after recoverd task
+            if($this->_isRecovered()){
+                return $this->_changeOrderAfterRecovered();
+            }
+            // change order
+            if ($this->_isOrderChanged()) {
+                //pr('ds');
+                return $this->_changeOrder();
+            }
+            // drag on the day
+            if ($this->_isDraggedOnDay()) {
+                return $this->_dragOnDay();
+            }
+        }
+        return true;
+    }
+    
+    public function beforeDelete() {
+        if ( !$this->data[$this->alias]['order'] ) {
+            return true;
+        }
+        $now = "'".date("Y-m-d H:i:s")."'";
+        if ($this->updateAll(array(
+            'Task.order' => 'Task.order -1',
+            'modified' => $now
+        ), array(
+            'Task.date ' => $this->data[$this->alias]['date'], 
+            'Task.user_id' => $this->data[$this->alias]['user_id'], 
+            'Task.order >' => $this->data[$this->alias]['order']
+        ))) {
+            return true;
+        }
+        return false;
+    }
+    
+    private function _isOrderChanged() {
+        if ($this->_originData[$this->alias]['order'] != $this->data[$this->alias]['order'] and $this->_originData[$this->alias]['date'] == $this->data[$this->alias]['date']) {
+            return true;
+        }
+        return false;
+    }
+
+    private function _isDraggedOnDay() {
+        if ($this->_originData[$this->alias]['date'] != $this->data[$this->alias]['date'] && isset($this->data[$this->alias]['id'])) {
+            return true;
+        }
+        return false;
+    }
+
+    private function _isOrderChangedWithTime() {
+        if ((CakeTime::format('H:i', $this->_originData[$this->alias]['time']) != CakeTime::format('H:i', $this->data[$this->alias]['time']) and 
+                ! empty($this->data[$this->alias]['time']) and 
+                $this->_originData[$this->alias]['date'] == $this->data[$this->alias]['date']) 
+            or 
+                //($this->_originData[$this->alias]['date'] != $this->data[$this->alias]['date'] and
+                ! empty($this->data[$this->alias]['time'])) {
+            return true;
+        }
+        return false;
+    }
+    private function _isRecovered(){
+        if( isset($this->data[$this->alias]['deleted']) && !$this->data[$this->alias]['deleted'] && $this->_originData[$this->alias]['deleted']){
+            return true;
+        }
+        return false;
+    }
+    
+    private function _isDeleted() {
+        if( isset($this->data[$this->alias]['deleted']) && $this->data[$this->alias]['deleted'] ){
+            return true;
+        }
+        return false;
+    }
+    
+    private function _isCreateFuture() {
+        if( !isset($this->data[$this->alias]['id']) && $this->data[$this->alias]['future'] ){
+            return true;
+        }
+        return false;
+    }
+
+    private function _changeOrder() {
+        $now = "'".date("Y-m-d H:i:s")."'";
+        if( $this->_isDeleted()){
+            if ($this->updateAll(array(
+                'Task.order' => 'Task.order -1',
+                'modified' => $now
+            ), array(
+                'Task.date ' => $this->data[$this->alias]['date'], 
+                'Task.user_id' => $this->data[$this->alias]['user_id'], 
+                'Task.order >' => $this->_originData[$this->alias]['order']
+            ))) {
+                return true;
+            }
+            return false;    
+        }
+
+        if ($this->_originData[$this->alias]['order'] < $this->data[$this->alias]['order'] ) {
+            $operation = '-1';
+            $start = $this->_originData[$this->alias]['order'];
+            $end = $this->data[$this->alias]['order'];
+        } else {
+            $operation = '+1';
+            $start = $this->data[$this->alias]['order'];
+            $end = $this->_originData[$this->alias]['order'];
+        }
+        
+        if ($this->updateAll(array(
+            'Task.order' => 'Task.order ' . $operation,
+            'modified' => $now
+        ), 
+                            array(
+                                'Task.date ' => $this->data[$this->alias]['date'], 
+                                'Task.user_id' => $this->data[$this->alias]['user_id'],
+                                'Task.deleted' => 0,
+                                'Task.order between  ? and ?' => array(
+                                    $start, 
+                                    $end
+                                )
+                            ))) {
+            return true;
+        }
+        return false;
+    }
+
+    private function _dragOnDay() {
+        $now = "'".date("Y-m-d H:i:s")."'";
+        if ($this->updateAll(array(
+            'Task.order' => 'Task.order -1',
+            'modified' => $now
+        ), 
+                            array(
+                                'Task.date ' => $this->_originData[$this->alias]['date'], 
+                                'Task.user_id' => $this->data[$this->alias]['user_id'], 
+                                'Task.order >' => $this->_originData[$this->alias]['order'], 
+                                'Task.id <>' => $this->data[$this->alias]['id']
+                            )) and $this->updateAll(array(
+            'Task.order' => 'Task.order +1',
+            'modified' => $now
+        ), 
+                                                array(
+                                                    'Task.date ' => $this->data[$this->alias]['date'], 
+                                                    'Task.user_id' => $this->data[$this->alias]['user_id'],  
+                                                    'Task.order >' => $this->data[$this->alias]['order'] - 1, 
+                                                    'Task.id <>' => $this->data[$this->alias]['id']
+                                                ))) {
+            return true;
+        }
+        return false;
+    }
+    
+    public function _changeOrderAfterRecovered(){
+        $now = "'".date("Y-m-d H:i:s")."'";
+        if ($this->updateAll(array(
+            'Task.order' => 'Task.order + 1',
+            'modified' => $now
+        ), array(
+            'Task.date ' => $this->data[$this->alias]['date'], 
+            'Task.user_id' => $this->data[$this->alias]['user_id'], 
+             'Task.order >' => $this->data[$this->alias]['order'] - 1, 
+             'Task.id <>' => $this->data[$this->alias]['id']
+        ))) {
+            return true;
+        }
+        return false;    
+    }
+    
+    public function _changeOrderAfterCreateFuture(){
+        $now = "'".date("Y-m-d H:i:s")."'";
+        if ($this->updateAll(array(
+            'Task.order' => 'Task.order + 1',
+            'modified' => $now
+        ), array(
+            'Task.future' => 1, 
+            'Task.user_id' => $this->data[$this->alias]['user_id'], 
+            'Task.deleted' => 0, 
+        ))) {
+            return true;
+        }
+        return false;    
+    }
+
+   private function _getPositionByTime() {
+        $id = isset($this->data[$this->alias]['id']) ? $this->data[$this->alias]['id'] : 0;
+        $user_id = $this->data[$this->alias]['user_id'];
+        $date = $this->data[$this->alias]['date'];
+        $newOrderID = 0;
+        if ($this->_isOrderChangedWithTime()) {
+            
+            $this->contain();
+            
+            $listTaskWithTime = $this->find('all', 
+                                            array(
+                                                'conditions' => array(
+                                                    "not" => array(
+                                                        "Task.time" => null, 
+                                                        //"Task.id" => $id,
+                                                        //"Task.order" => 0
+                                                        'Task.deleted' => 1
+                                                    ), 
+                                                    "Task.user_id" => $user_id, 
+                                                    "Task.date" => $date
+                                                ), 
+                                                'order' => array(
+                                                    'Task.time' => 'ASC', 
+                                                    'Task.order' => 'ASC'
+                                                )
+                                            ));
+            
+            foreach ( $listTaskWithTime as $task ) {
+                if ($this->data[$this->alias]['time'] > $task[$this->alias]['time']) {
+                    if ( $id == $task[$this->alias]['id'] ){
+                        $newOrderID = $task[$this->alias]['order'];
+                    } else {
+                        $newOrderID = $task[$this->alias]['order'] + 1;
+                    }
+                }
+            }
+           
+           if(!empty($listTaskWithTime) and $newOrderID == 0){
+                $newOrderID = $listTaskWithTime[0][$this->alias]['order'];
+           }
+           if ( (!$this->_isDraggedOnDay() and !$this->_isRecovered()) and isset($this->data[$this->alias]['id']) ) {
+                $lastOrder = $this->getLastOrderByUser_idAndDate($user_id, $date);
+    	        if($newOrderID > $lastOrder){
+    	            $newOrderID = $lastOrder;
+    	        }
+    	    }
+            if(!$newOrderID){
+               $newOrderID = 1;
+            }
+            return $newOrderID;
+        }
+        return false;
+    }
+    
+    public function getLastOrderByUser_idAndDate($user_id, $date) {
+        $lastOrder = $this->find('first', 
+                                array(
+                                    'fields' => array(
+                                        'Task.order'
+                                    ), 
+                                    'order' => array(
+                                        'Task.order' => 'desc'
+                                    ), 
+                                    'conditions' => array(
+                                        'AND' => array(
+                                            array(
+                                                'Task.user_id' => $user_id
+                                            ), 
+                                            array(
+                                                'Task.date' => $date
+                                            ),
+                                            array(
+                                                'Task.deleted' => 0
+                                            )
+                                        )
+                                    )
+                                ));
+        if ($lastOrder) {
+            return $lastOrder[$this->alias]['order'];
+        }
+        return false;
+    }
 
 //---------------------------------------------------------------------- end code 
 
@@ -296,7 +684,7 @@ class Task extends ApiV1AppModel {
         return $this;
     }
     
-    public function setTime($time, $timeEnd=null){
+    public function setTime($time, $timeEnd = null){
         if ($this->data[$this->alias]['future']){
             $time = null;
         }

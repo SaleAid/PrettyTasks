@@ -33,9 +33,12 @@ class OAuthController extends OAuthAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		//$this->OAuth->authenticate = array('fields' => array('username' => 'email'));
-		$this->Auth->allow($this->OAuth->allowedActions);
-		$this->Security->blackHoleCallback = 'blackHole';
+		$this->Auth->allow( $this->OAuth->allowedActions);
+        
+        $this->Security->blackHoleCallback = 'blackHole';
 	}
+    
+   
 
 /**
  * Example Authorize Endpoint
@@ -100,6 +103,7 @@ class OAuthController extends OAuthAppController {
 	public function login () {
 	   	$OAuthParams = $this->OAuth->getAuthorizeParams();
         if ($this->request->is('post')) {
+            //pr($this->request);die;
 			$this->validateRequest();
 
 			//Attempted login
@@ -205,9 +209,13 @@ class OAuthController extends OAuthAppController {
 		}
 	}
     
-    public function addC(){
-        $client = $this->OAuth->Client->add('http://client.learning-2012.org.ua/test.php');
-        debug($client);die;
+    public function success(){
+        $this->layout = false;
     }
+    
+    //public function addC(){
+//        $client = $this->OAuth->Client->add('http://localhost');
+//        debug($client);die;
+//    }
 
 }

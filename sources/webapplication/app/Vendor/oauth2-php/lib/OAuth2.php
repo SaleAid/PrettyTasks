@@ -601,12 +601,14 @@ class OAuth2 {
 		// Basic authorization header
 		$authHeaders = isset($authHeaders) ? $authHeaders : $this->getAuthorizationHeader();
 		//
+        
         //
         //todo need delete!!!!!!!!!!!!!!!!!!!!!!
         //
         //
         $authHeaders['PHP_AUTH_USER'] = false;
 		////////////////////////////////////////////
+        
         // Filter input data
 		$input = filter_var_array($inputData, $filters);
 		
@@ -623,7 +625,6 @@ class OAuth2 {
 		if (!$this->storage->checkRestrictedGrantType($client[0], $input["grant_type"])) {
 			throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_UNAUTHORIZED_CLIENT, 'The grant type is unauthorized for this client_id');
 		}
-		
 		// Do the granting
 		switch ($input["grant_type"]) {
 			case self::GRANT_TYPE_AUTH_CODE:
@@ -927,8 +928,7 @@ class OAuth2 {
 				$result["fragment"] = $this->createAccessToken($client_id, $user_id, $scope);
 			}
 		}
-
-		return array($redirect_uri, $result);
+        return array($redirect_uri, $result);
 	}
 
 	// Other/utility functions.
