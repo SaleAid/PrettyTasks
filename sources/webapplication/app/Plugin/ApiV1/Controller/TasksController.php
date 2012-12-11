@@ -14,16 +14,6 @@ class TasksController extends ApiV1AppController {
 	
 	public $components = array('OAuth.OAuth');
 	
-	
-/**
- * beforeFilter
- *  
- */
-//	public function beforeFilter() {
-//		parent::beforeFilter();
-//    }
-    
- 
     public function lists(){
         if ( !$this->request->is('get') ) {
             throw new ForbiddenException();
@@ -175,6 +165,59 @@ class TasksController extends ApiV1AppController {
         $this->set('_serialize', 'result');
     }
     
+    public function move(){
+       if ( !$this->request->isPost() or !isset($this->request->data['id']) ) {
+            $result['error'] = array(
+                'message' => __d('tasks', 'Ошибка при передаче данных')
+            );
+        } else {
+            $originTask = $this->Task->isOwner($this->request->data['id'], $this->OAuth->user('id'));
+            if ($originTask) {
+                $params = array();
+                if( isset($this->request->data['todate']) ) {
+                    $params['todate'] = $this->request->data['todate'];
+                }
+                if( isset($this->request->data['after']) ) {
+                    if( empty($this->request->data['after']) ) {
+                        $params['position'] = 1;
+                    } else {
+                        $afterTask = $this->Task->findByIdAndUser_id($this->request->data['after'], $this->OAuth->user('id'));
+                        if ( $afterTask ) {
+                           $params['position'] = $afterTask['Task']['order'] + 1;
+                           $params['todate'] = $afterTask['Task']['date'];      
+                        }else {
+                            $result['error'] = array(
+                                'message' => __d('tasks', 'Ошибка, Вы не являетесь хозяином этой задачи')
+                            );   
+                        }    
+                    }
+                } else if ( isset($this->request->data['position']) ) {
+                    $params['position'] = $this->request->data['position'];
+                } else {
+                    $result['error'] = array(
+                        'message' => __d('tasks', 'Ошибка, необходимо передать новую позицию для задачи или айди задачи куда нужно перенести')
+                    );
+                }
+               
+                if ( !isset($result) ) {
+                	$task = $this->Task->move($params);
+                	if ( $task ) {
+                    	$result = $this->taskObj($task);
+                	} else {
+                		$result['error'] = $this->Task->validationErrors;
+                	}
+                }               
+            } else {
+                $result['error'] = array(
+                    'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи')
+                );
+            }
+            
+        }
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');    
+    }
+    
     public function delete() {
         if ( !$this->request->isPost() or !isset($this->request->data['id']) ) {
             $result['error'] = array(
@@ -218,11 +261,11 @@ class TasksController extends ApiV1AppController {
 		$taskObj->date = $task['Task']['date'];
         $taskObj->time = $task['Task']['time'];
         $taskObj->timeend = $task['Task']['timeend'];
-        $taskObj->priority = $task['Task']['priority'];
-        $taskObj->order = $task['Task']['order'];
-        $taskObj->future = $task['Task']['future'];
-        $taskObj->deleted = $task['Task']['deleted'];
-        $taskObj->done = $task['Task']['done'];
+        $taskObj->priority = (int) $task['Task']['priority'];
+        $taskObj->order = (int) $task['Task']['order'];
+        $taskObj->future = (int) $task['Task']['future'];
+        $taskObj->deleted = (int) $task['Task']['deleted'];
+        $taskObj->done = (int) $task['Task']['done'];
         $taskObj->datedone = $task['Task']['datedone'];
         $taskObj->comment = $task['Task']['comment'];
         

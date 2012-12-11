@@ -397,6 +397,25 @@ class Task extends ApiV1AppModel {
         return $this->save($data);
     }
     
+    public function move( $params ) {
+        extract($params);
+        if ( isset($todate) ){
+            $this->setDate($todate);
+        } else {
+            $todate = date("Y-m-d");
+        }
+        $user_id = $this->data[$this->alias]['user_id'];
+        $lastOrder = $this->getLastOrderByUser_idAndDate($user_id, $todate);
+        if( $position > $lastOrder and $this->_isDraggedOnDay() ) {
+            $position = $lastOrder + 1;    
+        }
+        if( $position > $lastOrder and !$this->_isDraggedOnDay() ) {
+            $position = $lastOrder;    
+        }
+        $this->setOrder($position);
+        return $this->save();
+    }
+    
     public function beforeSave() {
         //pr($this->data);die;
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
@@ -680,7 +699,6 @@ class Task extends ApiV1AppModel {
              ->setDone($done)
              ->setTitle($title, $priority, false)
              ->setCommnet($comment);
-        //$this->data = $this->_prepareTask($user_id, $title, $date, $time, $order, $priority, $future, $checktime);
         return $this;
     }
     
