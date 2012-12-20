@@ -17,6 +17,13 @@
 !/app/tmp/tests/empty
 
 
+
+/app/Config/core.php
+/app/Config/database.php
+/app/Config/config.php
+/app/tmp/
+/app/webroot/tmp/
+#/app/Config
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins
 /vendors

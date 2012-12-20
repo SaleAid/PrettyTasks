@@ -195,21 +195,24 @@ class Task extends AppModel {
         return false;
     }
 
-    public function create($user_id, $title, $date = null, $time = null, $order = null, $priority = null, $future = null, $checktime = null) {
-        $this->data = $this->_prepareTask($user_id, $title, $date, $time, $order, $priority, $future, $checktime);
+    public function create($user_id, $title, $date = null, $time = null, $order = null, $priority = null, $future = null, $clone = null) {
+        $this->data = $this->_prepareTask($user_id, $title, $date, $time, $order, $priority, $future);
         if($this->data[$this->alias]['time']){
             $this->_originData[$this->alias]['time'] = null;
             $this->_originData[$this->alias]['order'] = $this->data[$this->alias]['order'];
             $this->_originData[$this->alias]['date'] = $this->data[$this->alias]['date'];
         }
+        if($clone){
+            unset($this->id);
+        }
         return $this;
     }
 
-    private function _prepareTask($user_id, $title, $date = null, $time = null, $order = null, $priority = null, $future = null, $checktime = null) {
+    private function _prepareTask($user_id, $title, $date = null, $time = null, $order = null, $priority = null, $future = null) {
         $data[$this->alias]['user_id'] = $user_id;
         $data[$this->alias]['title'] = $title;
         $data[$this->alias]['date'] = $date;
-        $data[$this->alias]['time'] = $time;
+       
         if($priority == null){
             if (strpos($title, '!') === false) {
                 $data[$this->alias]['priority'] = 0;
@@ -222,10 +225,13 @@ class Task extends AppModel {
         //$data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
         if (! $date) {
             $future = 1;
+            $time = null;
             $data[$this->alias]['order'] = 1;
         }else{
             $data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
+            $future = 0;
         }
+         $data[$this->alias]['time'] = $time;
         $data[$this->alias]['future'] = $future ? $future : 0;
         if( !$time and !$future ){
             $pattern = '/^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?/';
@@ -298,7 +304,7 @@ class Task extends AppModel {
     }
 
     private function _isDraggedOnDay() {
-        if ($this->_originData[$this->alias]['date'] != $this->data[$this->alias]['date']) {
+        if ($this->_originData[$this->alias]['date'] != $this->data[$this->alias]['date'] && isset($this->data[$this->alias]['id'])) {
             return true;
         }
         return false;

@@ -121,7 +121,7 @@ msgid "Имя"
 msgstr "Name"
 
 #: View/Accounts/confirm_user_data.ctp:22
-msgid "Я согласен с "
+msgid "Я согласен с"
 msgstr "I agree to"
 
 #: View/Accounts/confirm_user_data.ctp:22

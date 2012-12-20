@@ -10,7 +10,7 @@ class User extends AppModel {
     public $name = 'User';
     
     public $hasMany = array('Account');
-    
+   
     
     public $actsAs = array(
         'Activation'
@@ -303,7 +303,7 @@ class User extends AppModel {
         $email->emailFormat(Configure::read('Email.global.format'));
         $email->from(Configure::read('Email.global.from'));
         $email->to($this->data[$this->alias]['email']);
-        $email->subject(__(Configure::read('Email.user.passwordResend.subject'), Configure::read('Site.name')));
+        $email->subject(__d('mail', Configure::read('Email.user.passwordResend.subject'), Configure::read('Site.name')));
         $email->viewVars(
                         array(
                             'password_token' => $this->data[$this->alias]['password_token'], 
@@ -320,6 +320,28 @@ class User extends AppModel {
     public function getUser($id) {
         $this->contain();
         return $this->findByIdAndBlocked($id, 0);
+    }
+    
+    public function getActiveUsers($limit = 100, $page = 1, $beta = 0) {
+        $this->contain();
+        $conditions['User.active'] = 1;
+        $conditions['User.is_blocked'] = 0;
+        $conditions['User.beta'] = $beta;
+        return $this->find('all', 
+                        array(
+                            'conditions' => $conditions,
+                            'fields' => array('id', 'email', 'full_name', 'language'),
+                            'limit' => $limit,
+                            'page' => $page
+        ));
+    }
+    
+    public function getCountActiveUsers($beta = 0) {
+        $this->contain();
+        $conditions['User.active'] = 1;
+        $conditions['User.is_blocked'] = 0;
+        $conditions['User.beta'] = $beta;
+        return $this->find('count', array('conditions' => $conditions));
     }
 
     public function getConfig($id, $field = null) {

@@ -76,7 +76,7 @@ class InvitationsController extends AppController {
                     $email->emailFormat(Configure::read('Email.global.format'));
                     $email->from(Configure::read('Email.global.from'));
                     $email->to($address);
-                    $email->subject(__d('appconfig', Configure::read('Email.user.invitation.subject'), Configure::read('Site.name')));
+                    $email->subject(__d('mail', Configure::read('Email.user.invitation.subject'), Configure::read('Site.name')));
                     $email->viewVars(array(
                         'user' => $this->Auth->user()
                     ));

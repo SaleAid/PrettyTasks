@@ -14,19 +14,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Model/Faq.php:validation for field faqcategory_id
+#: Model/Note.php:validation for field user_id
 msgid "Wrong ID"
 msgstr ""
 
-#: Model/Faq.php:validation for field lang;validation for field subject
-msgid "notempty"
+#: Model/Note.php:validation for field date
+msgid "date"
 msgstr ""
 
-#: Model/Faq.php:validation for field active
-msgid "boolean"
-msgstr ""
-
-#: Model/Faq.php:validation for field user_id
-msgid "numeric"
+#: Model/Note.php:validation for field note
+msgid "Максимальная длина комментария не больше %d символов"
 msgstr ""
 

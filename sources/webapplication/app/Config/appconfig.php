@@ -26,6 +26,8 @@
    Configure::write('Config.lang.available.ru', array('lang' => 'rus', 'name' => __d('users', 'Russian')));
    Configure::write('Config.lang.available.en', array('lang' => 'eng', 'name' => __d('users', 'English')));
    
+   define('FULL_BASE_URL', 'http://learning-2012.org.ua');
+   
    Configure::write('Site.name', 'Pretty Tasks');
    Configure::write('Site.url', 'http://'.@$_SERVER["HTTP_HOST"].'/');
    Configure::write('Site.title', 'Pretty Tasks');
@@ -64,9 +66,10 @@
    
    Configure::write('Email.global.from', 'noreply@prettytasks.com');
    Configure::write('Email.global.format', 'html');
-   Configure::write('Email.user.invitation.subject', __d('appconfig', 'Приглашение на сервис %s'));
-   Configure::write('Email.user.activateAccount.subject', __d('appconfig', 'Активация аккаунта на сервисе %s'));
-   Configure::write('Email.user.passwordResend.subject', __d('appconfig', 'Сбросить пароль на сервисе %s'));
+   Configure::write('Email.user.invitation.subject', __d('mail', 'Приглашение на сервис %s'));
+   Configure::write('Email.user.activateAccount.subject', __d('mail', 'Активация аккаунта на сервисе %s'));
+   Configure::write('Email.user.passwordResend.subject', __d('mail', 'Сбросить пароль на сервисе %s'));
+   Configure::write('Email.user.todayDigest.subject', __d('mail', 'Today digest on Pretty Tasks'));
    
    //app version 
    //Configure::write('App.version', '1.0.5');
