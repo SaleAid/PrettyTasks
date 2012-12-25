@@ -6,6 +6,13 @@
 #main{
     
 }
+
+.tab-content{
+    float: right;
+}
+.listDay{
+   
+}
 .clear{clear: both;}
 .sortable { list-style-type: none; margin: 0; padding: 0;  }
 .label-info{
@@ -24,6 +31,7 @@
 }
 .listTask{
     padding-top: 5px;
+    padding-bottom: 10px;    
     width: 776px;
     margin-left: 20px;
     overflow:hidden;
@@ -31,10 +39,14 @@
 }
 .listTask h3 {
     padding-left: 10px;
-}    
+}  
+.listTask .label {
+    display: block;
+}
 #addDay{
-    min-width: 165px;
+    min-width: 164px;
     margin-right: 1px;
+    margin-left: 1px;
     font-size: 15px;
 }  
 
@@ -232,7 +244,13 @@ div.well{
      -moz-box-shadow: 0 0 6px #d59392!important;
           box-shadow: 0 0 6px #d59392!important;
 }
-.errorTooltip .tooltip-inner{background-color: red; }
+.errorTooltip{
+    position: fixed;
+}
+.errorTooltip .tooltip-inner{
+    background-color: red;
+    
+}
 .tooltip.right .tooltip-arrow{ border-right-color: red;}
 
 /*jGrowl theme 
@@ -365,3 +383,7 @@ div.jGrowl.custom {
 .weekday{
     text-transform:capitalize;
 }
+.drop .btn-group{
+    display: inline;
+}
+

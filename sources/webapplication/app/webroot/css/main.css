@@ -1,5 +1,8 @@
 /* Tweak navbar brand link to be super sleek
 -------------------------------------------------- 
+@baseFontSize 13px
+@baseLineHeight 18px
+@navbarHeight 39px
 @navbarBackground #0094C0
 @navbarBackgroundHighlight #007CA1
 @navbarLinkColor @white
@@ -7,6 +10,23 @@
 @navbarLinkBackgroundActive rgba(0, 55, 72, 0.15)
 */ 
 
+@media (max-width: 979px) {
+  #wrapper-content {
+    padding: 0px 5px 276px 5px !important;
+    }
+    .navbar-fixed-top {
+        margin-bottom: 2px;
+    }
+    .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner {
+        padding: 0px;
+        margin-right: -10px;
+    }
+    
+    footer {
+         padding-left: 20px;
+    }
+
+}
 /*twitter.fix*/
 .navbar .nav > li > a{
     line-height: 19px;
@@ -49,10 +69,11 @@ body {
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
+    min-width: 980px;
  }
 
 #wrapper-content{
-    padding: 50px 5px 220px 5px ;
+    padding: 48px 5px 186px 5px ;
 }
 
 #wrapper{
@@ -73,19 +94,24 @@ body {
 
 /* Footer
 -------------------------------------------------- */
-footer {
+footer  {
     background-color: #EDEDED;
     display: block;
   	margin: -191px auto 0;
-	height: 170px;
+	
 	position: relative;
-    border-top: 1px solid #DFDFDF;
     font-size:12px;
 	font-family:Arial;
 	font-weight:normal;
 	color:#adadad;
 	text-shadow:#fff 1px 1px 1px;
-    padding: 10px 0
+    
+}
+footer .container{
+    height: 170px;
+    border-top: 1px solid #DFDFDF;
+    padding: 10px 0;
+    background-color: #EDEDED;
 }
 
 footer h2{
@@ -241,6 +267,7 @@ footer .right{ text-align:right; }
     
 }
 .lang-top{
+    color: white;
     vertical-align: middle;
     margin-right: 10px;
     font-size: 13px;
@@ -306,6 +333,10 @@ div.jGrowl div.info {
     color: yellow;
 }
 div.jGrowl div.error {
-    background-color: red;
+    background-color: red !important;
     color: yellow;
+}
+div.jGrowl.custom {
+	right: 0px;
+	top: 25px;
 }

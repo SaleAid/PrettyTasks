@@ -10,9 +10,11 @@ function toListValidationErrorAll(errors){
         });
     return listError;
 }
+
 function getTaskForEdit(id){
     return getTaskFromPage(id);
 }
+
 function getTaskFromPage(id){
     var title = $('#'+id).children('.editable').text();
     if ( ! title ){
@@ -62,9 +64,8 @@ function getCommentDayElement(name){
     return element;
 }
 
-
 function mesg (message, type){
-    $.jGrowl.defaults.pool = 1;
+	$.jGrowl.defaults.pool = 1;
     $.jGrowl(message, { 
                     glue: 'before',
                     position: 'custom',
@@ -79,6 +80,7 @@ function mesg (message, type){
 					}
      });
 }
+
 function checkStatus(){
     $.ajax({
         type: "POST",
@@ -129,6 +131,7 @@ function checkLogin(){
        }
     });
 }
+
 function displayLoadAjax(count){
     if(!+count){
         $('.ajaxLoader').addClass('hide');
@@ -136,6 +139,7 @@ function displayLoadAjax(count){
         $('.ajaxLoader').removeClass('hide');
     }
 }
+
 //-------------------------------------
 function superAjax(url, data){
      var result = null;
@@ -264,6 +268,7 @@ function responseHandler(data){
     }
 
 }
+
 //---------------deleteAll---------
 function taskDeleteAll(confirm){
     srvDeleteAll(confirm);    
@@ -484,12 +489,13 @@ function onSetCommentDay(data){
     }
 }
 function arrErrorToList(errors){
-    var str = '<ul>';
+    var str = '';
+    //var str = '<ul>';
     if(!+errors.length){return;}
     $.each(errors, function(index, value) {
         str += value;
     });
-    str += '</ul>';
+    //str += '</ul>';
     return str;
 }
 
@@ -605,23 +611,35 @@ function scrAddDay(date){
     }
     var newTabContent = _.template($("#day_tab_content_template").html(), {date: date} );            
     $('.tab-content').append(newTabContent); 
-    var listUserDay = $('#main ul.nav-tabs').children('li.userDay').get();
-    var newDay = '<li class="drop userDay"><a href="#'+date+'" data-toggle="tab" date="'+date+'">'+date+'<span class="close">×</span></a></li>';
-    var afterDay = null;
-    listUserDay.sort(function(a, b) {
-        var compA = $(a).find('a').attr('date');
-        var compB = $(b).find('a').attr('date');
-        return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
-    });
-    $.each(listUserDay, function(idx, itm) { 
-        if(date > $(itm).find('a').attr('date')){
-            afterDay = $(itm);
-        }
-    });
-    if(afterDay){
-        $(newDay).insertAfter( afterDay );                
-    }else{
-        $(newDay).insertAfter( $("#main ul.nav-tabs li:not('.userDay'):last") );   
+    var today = new Date();
+    var yesterday = new Date();
+    yesterday.setDate(today.getDate()-1);
+    yesterday = $.datepicker.formatDate('yy-mm-dd', yesterday);
+    today = $.datepicker.formatDate('yy-mm-dd', today);
+    
+    if(yesterday == date) {
+           var newDay = '<li class="drop userDay"><a href="#'+date+'" data-toggle="tab" date="'+date+'">'+GLOBAL_CONFIG.yesterday+'<span class="close">×</span></a></li>';
+           beforeDay = $('.listDay li a[date='+today+']').parent();
+           $(newDay).insertBefore( beforeDay );
+    } else {
+        var listUserDay = $('#main ul.nav-tabs').children('li.userDay').get();
+        var afterDay = null;
+        var newDay = '<li class="drop userDay"><a href="#'+date+'" data-toggle="tab" date="'+date+'">'+date+'<span class="close">×</span></a></li>';
+        listUserDay.sort(function(a, b) {
+            var compA = $(a).find('a').attr('date');
+            var compB = $(b).find('a').attr('date');
+            return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+        });
+        $.each(listUserDay, function(idx, itm) { 
+            if(date > $(itm).find('a').attr('date')){
+                afterDay = $(itm);
+            }
+        });
+        if(afterDay){
+            $(newDay).insertAfter( afterDay );                
+        }else{
+            $(newDay).insertAfter( $("#main ul.nav-tabs li:not('.userDay'):last") );   
+        }    
     }
     initTab('#main ul.nav-tabs a[date="'+date+'"]');
     activeTab(date);
@@ -770,8 +788,8 @@ function scrEdit(id, title, priority, done, date, time, timeEnd, comment){
     if(time == null){
         time = '';
     }
-    console.log(time);
-    console.log(currentTaskTime);
+    //console.log(time);
+    //console.log(currentTaskTime);
     if (date == currentTaskDate && time == currentTaskTime){
         task.removeClass('currentTask');
     }else{
@@ -789,6 +807,8 @@ function toSeconds(t) {
     var bits = t.split(':');
     return bits[0]*3600 + bits[1]*60;
 }
+
+
 function scrDragWithTime(id, date, time){
         var before = false;
         var task = $("li[id='"+id+"'].currentTask");
@@ -819,8 +839,7 @@ function scrDragWithTime(id, date, time){
                         newPositionID = $(itm).attr('id');
                     }
                 });
-                
-                if(!newPositionID && listitems.length){
+            	if(!newPositionID && listitems.length){
                     newPositionID = $(listitems[0]).attr('id');
                     before = true;
                 }
@@ -1025,7 +1044,7 @@ function onCreate(data){
     if(data.success){
         scrCreate(data);
     }else{
-        mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.errors), data.message.type);   
+    	mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.errors), data.message.type);   
     }
 }
 function srvCreate(title, date){
@@ -1205,6 +1224,7 @@ function initCreateTask(element){
         }
     });
 }
+
 function initCreateTaskButton(element){
     $(element).on('click', function(e){
         var title = $(this).parent().find('.createTask').val();
@@ -1268,15 +1288,30 @@ function initSortable(element){
                     dropped = false;
                     return true;
                 }
+                
                 if( ui.item.parent().attr('date') == 'expired' || 
-                    ui.item.parent().attr('date') == 'future' ||
-                    ui.item.parent().attr('date') == 'deleted' ||
-                    ui.item.hasClass('setTime') ){
+                		ui.item.parent().attr('date') == 'future' ||
+                		ui.item.parent().attr('date') == 'deleted' 
+                		//|| ui.item.hasClass('setTime') 
+                    ){
                     mesg(GLOBAL_CONFIG.moveForbiddenMessage, 'success');
                     $(this).css("color","");
                     return false;  
                 }
-
+                if (ui.item.hasClass('setTime') ){
+                	var listitems = ui.item.parent().children('li.setTime').get();
+                	var error = false;
+                	$.each(listitems, function(idx, itm) { 
+                            if(toSeconds($(itm).find('.time').text()) > toSeconds($(listitems[idx + 1]).find('.time').text())){
+                            	error = true;
+                        		return false;
+                            }
+                     });
+                	if (error){
+                		return false;
+                	}
+                }
+                
                 var id = ui.item.attr('id');
                 var position = ui.item.index()+1;
                 userEvent('changeOrders', {id: id, position: position});
@@ -1291,10 +1326,23 @@ function initSortable(element){
         
     }).disableSelection();
 }
+
 function initTab(element){
      $(element).on('shown', function (e) {
-            window.location.hash= 'day-'+e.target.hash.slice(1);
+	var tab_id = $(this).attr('date');
+	setFiler(tab_id);
+	window.location.hash= 'day-'+e.target.hash.slice(1);
     })
+}
+
+function setFiler(tab_id){
+    var filter = $.cookie('filter');
+    //filter ='completed';
+    if(filter){
+	$('.tab-content').find('#'+tab_id)
+			 .find('.filter a[data="'+filter+'"]')
+			 .trigger('click');
+    }
 }
 
 function initTabDelte(element){
@@ -1312,6 +1360,7 @@ function initFilter(element){
         listTasks.children('li').removeClass('hide');
         listTasks.find(".emptyList").addClass('hide');
         $(this).siblings('a').removeClass('active');
+        $.cookie('filter', type, { expires: 7 });
         switch(type){
             case 'all':
                 $(this).addClass('active');
@@ -1384,6 +1433,7 @@ function initDeleteAll(element){
 function reload(){
     location.reload();
 }
+
 function showErrorConnection(status){
     if(!status){
         setTimeout(checkStatus, +GLOBAL_CONFIG.intervalCheckStatus);
@@ -1410,10 +1460,12 @@ function isDate(value){
     }
     return isDate;
 }
+
 function convertToHtml(str){
   //Encode Entities
   return $("<div/>").text(str).html();
 }
+
 function convertToText(str){
     //Dencode Entities
     return $("<div/>").html(str).text();
@@ -1424,6 +1476,7 @@ var countAJAX = 0;
 var connError = false;
 var pressCtrl = false;
 var isDragging = false;
+
 $(function(){
      
    // $(document).keydown(function (e) {
@@ -1500,7 +1553,7 @@ $(function(){
     initPrintClick('.print');
     InitClock();
     initDeleteAll('.delete_all');
-    
+    setFiler($('.listDay .active').children('a').attr('date'));
 
     $(".daysButton a").click(function(){
         var type = $(this).attr('date');
@@ -1513,6 +1566,7 @@ $(function(){
                     maxTime: '23:59',
                     interval: 15,
                     startHour: 6,
+                    zindex : 9999,
                     change: function(time) {
                         $('#eTimeEnd').timepicker('option', 'minTime', time, 'maxTime', '23:59').removeAttr('disabled');
                         $(this).removeClass('errorEdit');
@@ -1523,6 +1577,7 @@ $(function(){
                     timeFormat: 'HH:mm',
                     maxTime: '23:59',
                     interval: 15,
+                    zindex : 9999,
                     change: function(time) {
                         $(this).removeClass('errorEdit');
                     }
@@ -1598,7 +1653,16 @@ $(function(){
             }
             return GLOBAL_CONFIG.onbeforeunloadMessage;
         }
-    }; 
+    };
+    
+    // side bar
+    //var $window = $(window)
+//    $('.listDay').affix({
+//      offset: {
+//        top: function () { return $window.width() <= 980 ? 290 : 210 }
+//      , bottom: 470
+//      }
+//    }) 
 
                
 }); 	

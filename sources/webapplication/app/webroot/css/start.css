@@ -6,6 +6,25 @@
 @navbarLinkBackgroundHover rgba(0, 55, 72, 0.15)
 @navbarLinkBackgroundActive rgba(0, 55, 72, 0.15)
 */ 
+
+@media (max-width: 979px) {
+  #wrapper-content {
+    padding: 0px 5px 276px 5px !important;
+    }
+    .navbar-fixed-top {
+        margin-bottom: 2px;
+    }
+    .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner {
+        padding: 0px;
+        margin-right: -10px;
+    }
+    
+    footer {
+         padding-left: 20px;
+    }
+
+}
+
 /*twitter.fix*/
 .navbar .nav > li > a{
     line-height: 19px;
@@ -16,8 +35,8 @@
 .navbar .nav > li > a:hover{color:#ffffff;}
 h1, h2, h3, h4, h5, h6 {margin: 0;}
 h3 {
-font-size: 18px;
-line-height: 27px;
+    font-size: 18px;
+    line-height: 27px;
 }
 /*       */          
 html {
@@ -25,7 +44,7 @@ html {
 }
 
 body {
-  width: 100%;
+  
   height: 100%;
   overflow-y: scroll;  
   position: relative;
@@ -46,32 +65,17 @@ body {
      margin: 0 auto;
 } 
 
-.navbar .dropdown-menu.no-collapse {
-    background-color: #ffffff;
-    border-color: rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-    border-style: solid;
-    border-width: 1px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    display: none;
-    float: left;
-    margin: 0;
-    padding: 4px 0;
-    position: absolute;
-    top: 100%;
-}
-
-
 
 #wrapper-all {
 	margin: 0 auto;
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
+    min-width: 980px;
  }
 
 #wrapper-content{
-    padding: 50px 5px 276px 5px ;
+    padding: 42px 5px 257px 5px ;
 }
 
 #wrapper{
@@ -158,19 +162,24 @@ body {
 
 /* Footer
 -------------------------------------------------- */
-footer {
+footer  {
     background-color: #EDEDED;
     display: block;
   	margin: -191px auto 0;
-	height: 170px;
+	
 	position: relative;
-    border-top: 1px solid #DFDFDF;
     font-size:12px;
 	font-family:Arial;
 	font-weight:normal;
 	color:#adadad;
 	text-shadow:#fff 1px 1px 1px;
-    padding: 10px 0
+    
+}
+footer .container{
+    height: 170px;
+    border-top: 1px solid #DFDFDF;
+    padding: 10px 0;
+    background-color: #EDEDED;
 }
 
 footer h2{
@@ -195,6 +204,7 @@ footer .copyright{
 footer .right{ text-align:right; }
 
 .lang-top{
+    color: white;
     vertical-align: middle;
     margin-right: 10px;
     font-size: 13px;
