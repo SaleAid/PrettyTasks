@@ -23,9 +23,10 @@
         'tabindex' => 1));
 ?>
         <p>
-            <?php echo __d('users', 'Пожалуйста, подтвердите, что вы человек'); ?>
+            <?php //echo __d('users', 'Пожалуйста, подтвердите, что вы человек'); ?>
         </p>
-        <?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => 'clean', 'tabindex' => 2)));?>
+        <?php //echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => 'clean', 'tabindex' => 2)));?>
+        <?php echo $this->Captcha->input(); ?>
         <br/>   
         <?php echo $this->Form->submit(__d('users', 'Отправить запрос'), array('class'=>'btn btn-info', 'tabindex' => 2));?>
   

@@ -14,6 +14,7 @@
         echo $this->Html->script('min/tasks.' . Configure::read('App.version'), array('block' => 'toFooter'));
     }else{
        echo $this->Html->script(array(
+            'jquery.cookie',
             'jquery.jgrowl.min',
             'jquery.jeditable.mini',
             'jquery.ba-hashchange.min',
@@ -37,7 +38,7 @@
         <ul class="nav nav-tabs listDay">
             <li class="addDay">
             <div class="btn-group">
-                <button  id="addDay" rel="tooltip" title="<?php echo __d('tasks', 'Добавить новый день в список'); ?>" class="btn btn-large"><?php echo __d('tasks', 'Добавить день'); ?></button>
+                <button  id="addDay" rel="tooltip" title="<?php echo __d('tasks', 'Добавить новый день в список'); ?>" class="btn btn-block btn-large"><?php echo __d('tasks', 'Добавить день'); ?></button>
             </div>   
            </li>
             <input type="hidden" id="dp"/>
@@ -55,13 +56,14 @@
                  </span>
                 <a href="#planned" data-toggle="tab" date="planned" class="tab2 "><?php echo __d('tasks', 'Планируемые'); ?></a>
             </li>
-          <?php //if ( $result['data']['yesterdayDisp'] ): ?>
+          <?php if ( $result['data']['inConfig'] or $result['data']['yesterdayDisp']  ): ?>
           <li class="drop">
             <a href="#<?php echo $this->Time->format('Y-m-d', '-1 days', true); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', '-1 days', true); ?>">
                  <?php echo __d('tasks', 'Yesterday'); ?>
+                 <span class="close">×</span>
             </a>
           </li>
-          <?php //endif;?>
+          <?php endif;?>
             <li class="active drop">
                 <a href="#<?php echo $this->Time->format('Y-m-d', time(), true); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', time(), true); ?>">
                 <?php echo __d('tasks', 'Today'); ?>
@@ -93,8 +95,8 @@
           
           <?php foreach($result['data']['arrTaskOnDays'] as $k => $v):?>
           <?php if($k > $this->Time->format('Y-m-d', '+6 days') or 
-                    $k < $this->Time->format('Y-m-d', '-1 days') //and !$this->Time->wasYesterday($k)) or 
-                    //($this->Time->wasYesterday($k) and !$result['data']['yesterdayDisp'] and $result['data']['inConfig'])
+                    $k < $this->Time->format('Y-m-d', '-1 days') and !$this->Time->wasYesterday($k) 
+                    //or ($this->Time->wasYesterday($k) and !$result['data']['yesterdayDisp'] and $result['data']['inConfig'])
                     ):?>
             <li class="drop userDay"> <a href="#<?php echo $k;?>"
                              data-toggle="tab"

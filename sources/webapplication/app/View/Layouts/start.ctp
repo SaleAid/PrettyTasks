@@ -7,7 +7,8 @@ echo $this->Html->docType('html5');
 <?php  echo $this->Html->charset();?>
     
 <title><?php  echo $title_for_layout;  ?></title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1"/>
 <meta name="description" content="<?php echo $description_for_layout; ?>" />
 <meta name="keywords" content="<?php echo $keywords_for_layout; ?>" />
 <meta name="author" content=""/>
@@ -18,6 +19,8 @@ echo $this->Html->css('bootstrap.min');
 echo $this->Html->css($this->Loginza->getCssUrl());  
 echo $this->fetch('toHead');
 echo $scripts_for_layout;
+//echo $this->Html->css('bootstrap-responsive.min');
+
 ?>      
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -27,6 +30,7 @@ echo $scripts_for_layout;
 
 <body data-spy="scroll" data-target=".subnav" data-offset="50">
 <div id="wrapper-all">
+    
     <?php
     if (!$currentUser):
         echo $this->element('main_menu', array(), array(
@@ -36,6 +40,7 @@ echo $scripts_for_layout;
         echo $this->element('main_menu');
     endif;
     ?> 
+    
     <div id="wrapper-content">
         <div id="wrapper">
             <div class="container">
@@ -43,6 +48,7 @@ echo $scripts_for_layout;
             echo $this->Session->flash();
             echo $content_for_layout;
             ?>
+            
             </div>
         </div>
     </div>

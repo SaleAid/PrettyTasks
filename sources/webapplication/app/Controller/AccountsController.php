@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('Validation', 'Utility');
 class AccountsController extends AppController {
     public $name = 'Accounts';
     public $components = array(
@@ -165,7 +166,7 @@ class AccountsController extends AppController {
         $user = $this->Session->read('tmpUser');
         if ($this->request->is('post') || $this->request->is('put')) {
             $user['email'] = $this->request->data['User']['email'];
-            if (! $this->Account->User->validateEmail($this->request->data['User']['email'])) {
+            if (! Validation::email($user['email'])) {
                 return $this->Session->setFlash(__d('accounts', 'Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз'), 'alert', array(
                     'class' => 'alert-error'
                 ));
@@ -303,7 +304,7 @@ class AccountsController extends AppController {
     }
 
     /**
-     * delete method
+     * delete account
      *
      * @param string $id
      * @return void

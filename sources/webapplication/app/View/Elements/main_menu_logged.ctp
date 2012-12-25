@@ -1,11 +1,19 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
+    <?php
+        if (Configure::read('debug') > 0) {
+            echo $this->element('test_server', array(), array(
+                "cache" => array('config' => 'elements', 'key' => Configure::read('Config.language'))
+            ));
+        }
+    ?>
+    
     <div class="container">
-        <a class="btn btn-navbar" data-toggle="collapse" data-target="nav-collapse">
+       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <i class="icon-bar"></i>
             <i class="icon-bar"></i>
             <i class="icon-bar"></i>
-        </a>
+        </button>
         <?php if ($currentUser): ?>
         <?php echo $this->Html->image("brand.". Configure::read('App.version') .".png", 
                                         array("alt" => "Pretty Tasks",

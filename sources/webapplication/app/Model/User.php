@@ -235,28 +235,21 @@ class User extends AppModel {
         return false;
     }
 
-    public function validateEmail($email) {
-        $this->set(array('email'  => $email));
-        if ($this->validates(array(
-            'fieldList' => array('email'),
-        ))) {
-            return true;
-        }
-        return false;
-    }
+    //public function validateEmail($email) {
+//        $this->set(array('email'  => $email));
+//        if ($this->validates(array(
+//            'fieldList' => array('email'),
+//        ))) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     public function checkEmail($data) {
-       $this->set(array('email'  => $data));
-       if ($this->validates(array(
-            'fieldList' => array(
-                'email'
-            )
-        ))) {
-            $user = $this->findByEmail($data);
-            if ($user) {
-                return $user[$this->alias]['id'];
-            }
-            return false;
+        $this->contain();
+        $user = $this->findByEmail($data, array('id'));
+        if ($user) {
+            return $user[$this->alias]['id'];
         }
         return false;
     }
@@ -345,6 +338,7 @@ class User extends AppModel {
     }
 
     public function getConfig($id, $field = null) {
+        $result = array();
         $this->contain();
         $config = $this->find('first', array(
             'conditions' => array(
@@ -354,15 +348,17 @@ class User extends AppModel {
                 'User.config'
             )
         ));
-        $config = unserialize($config['User']['config']);
+        if(isset($config['User']['config']) and !empty($config['User']['config'])){
+            $result = unserialize($config['User']['config']);    
+        }
         if ($field) {
-            if (isset($config[$field])) {
-                return (array)$config[$field];
+            if (isset($result[$field])) {
+                return (array) $result[$field];
             } else {
                 return array();
             }
         }
-        return $config;
+        return $result;
     }
 
     public function setConfig($id, $config, $field = null) {

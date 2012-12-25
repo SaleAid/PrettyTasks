@@ -5,6 +5,7 @@ class UsersController extends AppController {
     public $name = 'Users';
 
     public $components = array(
+        'Captcha',
         'Recaptcha.Recaptcha' => array(
             'actions' => array(
                 'register', 
@@ -16,7 +17,7 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('login', 'register', 'activate', 'password_resend', 'password_reset', 'reactivate');
+        $this->Auth->allow('login', 'register', 'activate', 'password_resend', 'password_reset', 'reactivate', 'captcha');
         if ($this->Auth->loggedIn() and in_array($this->params['action'], array(
             'login', 
             'register', 
@@ -36,6 +37,7 @@ class UsersController extends AppController {
     }
 
     public function login() {
+        
         $this->layout = 'default';
         $this->Seo->title = $this->Seo->title.' :: '.Configure::read('SEO.Login.title.'.Configure::read('Config.langURL'));
         $this->Seo->description = Configure::read('SEO.Login.description.'.Configure::read('Config.langURL'));
@@ -114,7 +116,7 @@ class UsersController extends AppController {
                         'password_confirm'  => $this->request->data[$this->modelClass]['password_confirm'],
                         'language'          => Configure::read('Config.language')
                     );
-                if ($this->User->register($saveData)) {
+                if ($this->Captcha->validateCaptcha() and $this->User->register($saveData)) {
                     //TODO Application is crashed if email is not sent. 
                     //TODO Need to use try catch to catch the exception?
                     //TODO Please check it also at another places
@@ -135,7 +137,7 @@ class UsersController extends AppController {
                 } else {
                     unset($this->request->data[$this->modelClass]['password']);
                     unset($this->request->data[$this->modelClass]['password_confirm']);
-                    return $this->Session->setFlash(__d('users', 'Регистрация не удалась. Заполните поля полностью'), 'alert', array(
+                    $this->Session->setFlash(__d('users', 'Регистрация не удалась. Заполните поля полностью'), 'alert', array(
                         'class' => 'alert-error'
                     ));
                 }
@@ -261,7 +263,7 @@ class UsersController extends AppController {
                         'class' => 'alert-error'
                     ));
             } else {
-                if (! $this->User->validateEmail($this->request->data[$this->modelClass]['email'])) {
+                if (!$this->Captcha->validateCaptcha() and !Validation::email($this->data[$this->modelClass]['email'])) {
                     return $this->Session->setFlash(__d('users', 'Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз'), 'alert', array(
                         'class' => 'alert-error'
                     ));
@@ -276,7 +278,7 @@ class UsersController extends AppController {
                         ));
                     }
                 }
-                return $this->Session->setFlash(__d('users', 'В нашей базе нет пользователя с такой почтой'), 'alert', array(
+                $this->Session->setFlash(__d('users', 'В нашей базе нет пользователя с такой почтой'), 'alert', array(
                     'class' => 'alert-error'
                 ));
             }

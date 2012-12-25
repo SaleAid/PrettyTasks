@@ -10,7 +10,8 @@ class AppController extends Controller {
         'Js', 
         'Time', 
         'Session', 
-        'Loginza' //TODO Maybe move to needed controllers only?
+        'Loginza', //TODO Maybe move to needed controllers only?
+        //'Captcha'
     );
     public $components = array(
         'AutoLogin' => array('cookieName' => 'RM',
@@ -45,7 +46,8 @@ class AppController extends Controller {
             )
         ), 
         'RequestHandler', 
-        'Seo'
+        'Seo',
+        'Captcha'   
     );
     
     public $L10n = null;
@@ -106,18 +108,8 @@ class AppController extends Controller {
     }
 
     public function beforeFilter() {
+        //$this->Auth->allow('captcha');
         
-        //$this->Auth->loginRedirect = array(
-//            'controller' => 'tasks', 
-//            'action' => '', 
-//            'lang' => $this->request->params['lang']
-//        );
-        //$this->Auth->logoutRedirect = array(
-        //    'controller' => 'users', 
-        //    'action' => 'login', 
-            //'lang' => $this->params['lang']
-        //);
-        //$this->AutoLogin->username = 'email'; 
         $this->_setLanguage();
         $this->__setTimeZone();
         $this->_checkMobile();
@@ -229,5 +221,13 @@ class AppController extends Controller {
             return isset($request[$data]);
         }
         return true;
+    }
+    
+    public function captcha() {
+        //comment out the code below if the captcha doesn't render on localhost,For Unix/Linux Servers it works fine.
+       /* $this->Captcha->configCaptcha(array(
+         'pathType'=>2
+         ));*/
+         $this->Captcha->getCaptcha();
     }
 }

@@ -199,7 +199,7 @@ msgstr ""
 msgid "Удаленные"
 msgstr ""
 
-#: View/Tasks/index.ctp:61
+#: View/Tasks/index.ctp:62
 msgid "Yesterday"
 msgstr ""
 

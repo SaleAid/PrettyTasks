@@ -165,6 +165,11 @@ class Task extends AppModel {
     
     private $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'deleted', 'done' ,'datedone', 'comment');
     
+    /**
+     * set true if method 
+     */
+    private $_move = false;
+    
     public function comparisonTime($data) {
         if ($data['timeend'] > $this->data[$this->alias]['time']) {
             return true;
@@ -449,7 +454,7 @@ class Task extends AppModel {
             return $this->_changeOrderAfterCreateFuture();
         }
         if ($this->_originData) {
-            if ($order = $this->_getPositionByTime() and ! $this->_isDeleted()) {
+            if ($order = $this->_getPositionByTime() and ! $this->_isDeleted()  and !$this->_move) {
                 $this->setOrder($order);
             }
             //change order after recoverd task
@@ -458,7 +463,6 @@ class Task extends AppModel {
             }
             // change order
             if ($this->_isOrderChanged()) {
-                //pr('ds');
                 return $this->_changeOrder();
             }
             // drag on the day
@@ -570,6 +574,11 @@ class Task extends AppModel {
         $this->data[$this->alias]['order'] = $order;
         return $this;
     }
+    
+    public function setMove(){
+        $this->_move = true;
+        return $this;
+    }
 
     public function setFuture($future) {
         $this->data[$this->alias]['future'] = $future;
@@ -615,6 +624,55 @@ class Task extends AppModel {
     public function setDelete($delete) {
         $this->data[$this->alias]['deleted'] = $delete;
         return $this;
+    }
+    
+    public function checkPositionWithTime($position, $date = null){
+    	if (!$this->data[$this->alias]['time']){
+            return true;
+        }
+        $user_id = $this->data[$this->alias]['user_id'];
+    	$id = $this->data[$this->alias]['id'];
+    	if (!$date) {
+            $date =  $this->data[$this->alias]['date']; 
+    	}
+    	$this->contain();
+        $tasksWithTime = $this->find('all', 
+                                            array(
+                                                'conditions' => array(
+                                                    "not" => array(
+                                                        "Task.time" => null, 
+                                                        'Task.deleted' => 1,
+                                            			'Task.id' => $id
+                                                    ), 
+                                                    "Task.user_id" => $user_id, 
+                                                    "Task.date" => $date
+                                                ), 
+                                                'order' => array(
+                                                    'Task.time' => 'ASC', 
+                                                    'Task.order' => 'ASC'
+                                                ),
+                                                'fields' => array('id', 'order', 'time')
+                                            ));
+        
+    	if(isset($tasksWithTime[0][$this->alias])){
+            foreach ($tasksWithTime as $task){
+        	$tasks[$task['Task']['order']] = strtotime($task['Task']['time']);
+            }
+    	}
+        $task = strtotime($this->data[$this->alias]['time']);
+        if(isset($tasks[$position]) and !$tasks[$position] == $task){
+            return false;
+        }
+        $tasks[$position] = $task;
+        ksort($tasks);
+        //debug($tasks);die;
+        foreach ( $tasks as $k => $v ) {
+            $next = next($tasks);
+            if ( $next and $v > $next) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public function getAllExpired($user_id) {
@@ -770,10 +828,10 @@ class Task extends AppModel {
     
     private function _setDayToConfig($user_id, $date) {
         $config = $this->User->getConfig($user_id);
-        if (! is_array($config) || ! in_array($date, $config)) {
+        if ( !array_key_exists('day', $config) or !in_array($date, $config['day']) ) {
             $config['day'][] = $date;
+            $this->User->setConfig($user_id, $config);
         }
-        $this->User->setConfig($user_id, $config);
     }
 
     public function getTasksForDay($user_id, $date) {
@@ -802,10 +860,15 @@ class Task extends AppModel {
      * @param unknown_type $date
      */
     public function deleteDayFromConfig($user_id, $date) {
-        $config = array();
         $config = $this->User->getConfig($user_id);
-        unset($config['day'][array_search($date, $config['day'])]);
-        return $this->User->setConfig($user_id, $config);
+        if(array_key_exists('day', $config)){
+            $key = array_search($date, $config['day']);
+            if($key){
+                unset($config['day'][$key]);
+                return $this->User->setConfig($user_id, $config);
+            }    
+        }
+        return true;
     }
 
     //TODO Maybe this function move to another model, for example to Day?

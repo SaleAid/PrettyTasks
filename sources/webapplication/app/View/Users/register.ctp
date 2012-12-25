@@ -35,11 +35,14 @@
            
            <?php echo $this->Form->input('password_confirm',array('label' => __d('users', 'Повторите пароль'), 'type' => 'password', 'class' => 'input-xlarge', 'placeholder' => __d('users', 'Повторите пароль')));?>
            
+           <?php echo $this->Captcha->input(); ?>
+           
             <p>
-                <?php echo __d('users', 'Пожалуйста, подтвердите, что вы человек'); ?>
+                <?php //echo __d('users', 'Пожалуйста, подтвердите, что вы человек'); ?>
             </p>
            
-           <?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => Configure::read('Recaptcha.theme'))));?>
+           
+           <?php //echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => Configure::read('Recaptcha.theme'))));?>
            
            <br />
            <label class="checkbox">

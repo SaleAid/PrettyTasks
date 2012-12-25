@@ -14,12 +14,12 @@ class Note extends AppModel {
      */
     public $validationDomain = 'notes';
 
-/**
- * Validation rules
- *
- * @var array
- */
-	public $validate = array(
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public $validate = array(
         'user_id' => array(
 			'maxLength' => array(
                 'rule'    => array('maxLength', 36),
@@ -43,7 +43,7 @@ class Note extends AppModel {
                 'message' => 'Поле должно быть заполнено' 
             )
         )  
-	);
+    );
 
 /**
  * belongsTo associations

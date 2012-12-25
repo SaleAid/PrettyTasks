@@ -25,6 +25,7 @@
                         &nbsp;&bull;&nbsp;
                         <?php echo $this->Html->link(__d('users', 'Регистрация'), array('controller' => 'users', 'action' => 'register')); ?>
                         
+                        
                         <?php echo $this->Form->end(); ?>
                     </fieldset>
                             

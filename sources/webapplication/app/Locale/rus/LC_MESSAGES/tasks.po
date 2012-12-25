@@ -179,6 +179,10 @@ msgstr ""
 msgid "Today"
 msgstr "Сегодня"
 
+#: View/Tasks/index.ctp:62
+msgid "Yesterday"
+msgstr "Вчера"
+
 #: View/Tasks/index.ctp:65
 msgid "Tomorrow"
 msgstr "Завтра"

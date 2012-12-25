@@ -22,17 +22,17 @@ class TasksController extends AppController {
         $result['data']['arrAllFutureCount']['all'] = count($result['data']['arrAllFuture']);
         $result['data']['arrAllFutureCount']['done'] = count(array_filter($result['data']['arrAllFuture'], create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;')));
         $result['data']['arrAllExpired'] = $this->Task->getAllExpired($this->Auth->user('id'));
-        //$result['data']['inConfig'] = false;
-        //$result['data']['yesterdayDisp'] = false;
+        $result['data']['inConfig'] = false;
+        $result['data']['yesterdayDisp'] = false;
         //$from = CakeTime::format('Y-m-d', time());
         $from = CakeTime::format('Y-m-d', '-1 days');
         $to = CakeTime::format('Y-m-d', '+6 days');
         $dayConfig = $this->Task->User->getConfig($this->Auth->user('id'), 'day');
-        //if ( in_array($from, $dayConfig) ){
-        //    $result['data']['inConfig'] = true;
+        if ( in_array($from, $dayConfig) ){
+            $result['data']['inConfig'] = true;
             //pr(CakeTime::wasYesterday($from));die;
-        //}
-        //pr($dayConfig);die;
+        }
+        //pr($dayConfig);
         $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to, $dayConfig);
         foreach ( $result['data']['arrTaskOnDays'] as $key => $value ) {
             $done = array_filter($value, create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;'));
@@ -43,11 +43,15 @@ class TasksController extends AppController {
         $result['data']['arrDaysRating'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $from, $to, $dayConfig);
         $result['data']['arrAllOverdue'] = $this->Task->getAllOverdue($this->Auth->user('id'));
         $result['data']['arrAllCompleted'] = $this->Task->getAllCompleted($this->Auth->user('id'));
-        //if($result['data']['arrTaskOnDaysCount'][$from]['all'] && $result['data']['arrTaskOnDaysCount'][$from]['all'] > $result['data']['arrTaskOnDaysCount'][$from]['done'] ){
-        //    $result['data']['yesterdayDisp'] = true;
-        //} 
-        //pr($result);die;
-        
+        if($result['data']['arrTaskOnDaysCount'][$from]['all'] && $result['data']['arrTaskOnDaysCount'][$from]['all'] > $result['data']['arrTaskOnDaysCount'][$from]['done'] ){
+            $result['data']['yesterdayDisp'] = true;
+        } else {
+            if ( !$result['data']['inConfig'] ){
+                unset($result['data']['arrTaskOnDaysCount'][$from]);
+                unset($result['data']['arrTaskOnDays'][$from]);
+                
+            }
+        }
         $this->set('result', $result);
         $this->set('_serialize', array(
             'result'
@@ -292,17 +296,24 @@ class TasksController extends AppController {
             );
         } else {
             if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-                if ($this->Task->setOrder($this->request->data['position'])->save()) {
-                    $result['success'] = true;
-                    $result['message'] = array(
-                        'type' => 'success', 
-                        'message' => __d('tasks', 'Задача успешно перемещена')
-                    );
+                if($this->Task->checkPositionWithTime($this->request->data['position'])){
+                    if ($this->Task->setMove()->setOrder($this->request->data['position'])->save()) {
+                        $result['success'] = true;
+                        $result['message'] = array(
+                            'type' => 'success', 
+                            'message' => __d('tasks', 'Задача успешно перемещена')
+                        );
+                    } else {
+                        $result['message'] = array(
+                            'type' => 'success', 
+                            'message' => __d('tasks', 'Задача не перемещена')
+                        );
+                    }
                 } else {
                     $result['message'] = array(
-                        'type' => 'success', 
-                        'message' => __d('tasks', 'Задача не перемещена')
-                    );
+                            'type' => 'success', 
+                            'message' => __d('tasks', 'Ошибка, некорректная позиция')
+                        );
                 }
             } else {
                 $result['message'] = array(

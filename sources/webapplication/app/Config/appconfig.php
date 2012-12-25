@@ -64,7 +64,7 @@
    Configure::write('User.default.beta', false);
    Configure::write('User.default.pro', false);
    
-   Configure::write('Email.global.from', 'noreply@prettytasks.com');
+   Configure::write('Email.global.from', array('noreply@prettytasks.com' => 'Pretty Tasks'));
    Configure::write('Email.global.format', 'html');
    Configure::write('Email.user.invitation.subject', __d('mail', 'Приглашение на сервис %s'));
    Configure::write('Email.user.activateAccount.subject', __d('mail', 'Активация аккаунта на сервисе %s'));
