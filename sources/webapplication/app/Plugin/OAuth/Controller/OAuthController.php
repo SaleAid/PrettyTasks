@@ -9,6 +9,7 @@
  *  
  */
 
+App::uses('Validation', 'Utility');
 App::uses('OAuthAppController', 'OAuth.Controller');
 
 /**
@@ -68,7 +69,7 @@ class OAuthController extends OAuthAppController {
 			}
 
 			//Did they accept the form? Adjust accordingly
-			$accepted = $this->request->data['accept'] == 'Yep';
+			$accepted = $this->request->data['accept'] == 'Allow';
             //debug($userId);
 			try {
 				$this->OAuth->finishClientAuthorization($accepted, $userId, $this->request->data['Authorize']);
@@ -103,9 +104,14 @@ class OAuthController extends OAuthAppController {
 	public function login () {
 	   	$OAuthParams = $this->OAuth->getAuthorizeParams();
         if ($this->request->is('post')) {
-            //pr($this->request);die;
-			$this->validateRequest();
-
+            	$this->validateRequest();
+			$message = __d('users', 'Ваш емейл или пароль не совпадают');
+			if( isset($this->data['User']['email']) && !Validation::email($this->data['User']['email']) ){
+			      $this->request->data['User']['username'] = $this->data['User']['email'];
+			      $this->Auth->authenticate['Form'] = array('fields' => array('username' => 'username'));
+			      //$this->AutoLogin->username = 'username';  
+			      $message = __d('users', 'Ваш логин или пароль не совпадают');
+			}
 			//Attempted login
 			if ($this->Auth->login()) {
 				//Write this to session so we can log them out after authenticating
@@ -117,7 +123,12 @@ class OAuthController extends OAuthAppController {
 				//Off we go
 				$this->redirect(array('action' => 'authorize'));
 			} else {
-				$this->Session->setFlash(__('Username or password is incorrect'), 'default', array(), 'auth');
+				$this->Session->setFlash($message, 'alert', array(
+					'class' => 'alert-error'
+					),
+					'auth'
+				);
+				//$this->Session->setFlash(__('Username or password is incorrect'), 'default', array(), 'auth');
 			}
 		}
 		$this->set(compact('OAuthParams'));
