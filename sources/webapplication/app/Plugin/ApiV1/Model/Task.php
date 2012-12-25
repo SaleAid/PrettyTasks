@@ -24,6 +24,10 @@ class Task extends ApiV1AppModel {
 			'maxLength' => array(
                 'rule'    => array('maxLength', 36),
                 'message' => 'Wrong ID',
+            ),
+            'isUnique' => array(
+                'rule' => 'isUnique', 
+                'message' => 'ID уже существует'
             )
         ), 
         'user_id' => array(
@@ -242,6 +246,8 @@ class Task extends ApiV1AppModel {
                             'order' => $order, 
                             'conditions' => $conditions,
                             'fields' => $this->_taskFields,
+                            'limit' => $count,
+                            'page' => $page
                         ));
     }
 
@@ -260,6 +266,8 @@ class Task extends ApiV1AppModel {
                             'order' => $order, 
                             'conditions' => $conditions,
                             'fields' => $this->_taskFields,
+                            'limit' => $count,
+                            'page' => $page
                         ));
     }
    
@@ -280,6 +288,8 @@ class Task extends ApiV1AppModel {
                             'order' => $order, 
                             'conditions' => $conditions,
                             'fields' => $this->_taskFields,
+                            'limit' => $count,
+                            'page' => $page
                         ));
     }
     
@@ -297,6 +307,11 @@ class Task extends ApiV1AppModel {
         $comment = isset($comment) ? $comment : null;
         $clone = isset($clone) ? $clone : null;
         $this->data = $this->_prepareTask($user_id, $title, $date, $time, $timeend, $order, $priority, $future, $comment);
+        if ( isset($id) ) {
+            //$this->Task->create();
+            $this->data[$this->alias]['id'] = $id;
+        }
+        
         if($this->data[$this->alias]['time']){
             $this->_originData[$this->alias]['time'] = null;
             $this->_originData[$this->alias]['order'] = $this->data[$this->alias]['order'];
@@ -317,6 +332,7 @@ class Task extends ApiV1AppModel {
         $data[$this->alias]['deleted'] = 0;
         $data[$this->alias]['done'] = 0;
         $data[$this->alias]['datedone'] = null;
+        
          
         if($priority == null){
             if (strpos($title, '!') === false) {

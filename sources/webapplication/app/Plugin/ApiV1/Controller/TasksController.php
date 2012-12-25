@@ -12,7 +12,6 @@ App::uses('Validation', 'Utility');
  */
 class TasksController extends ApiV1AppController {
 	
-	public $components = array('OAuth.OAuth');
 	
     public function lists(){
         if ( !$this->request->is('get') ) {
@@ -82,6 +81,7 @@ class TasksController extends ApiV1AppController {
             );
         } else {
             $listFields = array(
+                'id',
             	'title',
                 'priority',
                 'done',
@@ -91,6 +91,11 @@ class TasksController extends ApiV1AppController {
                 'timeend'
             );
             $saveData = $this->saveData( $listFields );
+            if( isset($saveData['id']) and !Validation::uuid($saveData['id']) ) {
+                $result['error'] = array(
+	                'message' => __d('tasks', 'error, the wrong ID')
+	            );
+            }
             if( isset($saveData['time']) and ( !isset($saveData['date']) or empty($saveData['date'])) ) {
                 $result['error'] = array(
 	                'message' => __d('tasks', 'Error, date field required')
