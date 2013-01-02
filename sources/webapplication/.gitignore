@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .gitignore
 /app/Config/core.php
 /app/Config/database.php
@@ -5,6 +6,27 @@
 /app/tmp/
 /app/webroot/tmp/
 #/app/Config
+=======
+/app/Config
+
+/app/tmp/*
+/app/tmp/*
+/app/tmp/cache/models/*
+/app/tmp/cache/persistent/*
+/app/tmp/cache/views/*
+/app/tmp/logs/*
+/app/tmp/sessions/*
+/app/tmp/tests/*
+!/app/tmp/empty
+!/app/tmp/cache/models/empty
+!/app/tmp/cache/persistent/empty
+!/app/tmp/cache/views/empty
+!/app/tmp/logs/empty
+!/app/tmp/sessions/empty
+!/app/tmp/tests/empty
+
+
+>>>>>>> 189c0c625065a232d5d9c48eca30b2693615a7bd
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins
 /vendors

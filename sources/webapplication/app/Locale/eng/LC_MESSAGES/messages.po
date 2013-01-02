@@ -1,5 +1,5 @@
 # LANGUAGE translation of CakePHP Application
-# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Copyright YEAR NAME <EMAIL@ADDRESS> 
 #
 msgid ""
 msgstr ""
@@ -35,7 +35,7 @@ msgstr "We're sorry you had no plans for these days. Plan your future and rush t
 
 #: View/Elements/empty_lists.ctp:16;19
 msgid "Здесь нет ни одной задачи! Запланируй себе задачи и иди к успеху с нами!"
-msgstr "There is no task here! Plan you day and rush to the success with us!"
+msgstr "There is no task here! Plan your day and rush to the success with us!"
 
 #: View/Elements/empty_lists.ctp:25
 msgid "Здесь нет ни одной задачи! Поторопись! Сделай свои дела и отдыхай. Забудь обо всем и сосредоточься на предыдущей вкладке. Выполни все свои задачи. Это принесет тебе счастье."
