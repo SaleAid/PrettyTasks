@@ -1,3 +1,4 @@
+// notes backbone
     $(function(){
    
    function mesg (message){
