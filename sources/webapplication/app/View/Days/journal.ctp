@@ -5,7 +5,7 @@
        echo $this->Html->css('main.' . Configure::read('App.version'), null, array('block' => 'toHead')); 
        echo $this->Html->css('journal.'.Configure::read('App.version'), null, array('block' => 'toHead'));
        echo $this->Html->css('print.' . Configure::read('App.version'), null, array('block' => 'toHead'));
-       
+       echo $this->Html->css('jquery.jgrowl.'.Configure::read('App.version'), null, array('block' => 'toHead'));
     }
      if( Configure::read('App.Minify.js') ){
         echo $this->Html->script('min/journal.' . Configure::read('App.version'), array('block' => 'toFooter'));
@@ -13,6 +13,7 @@
        echo $this->Html->script('main.'.Configure::read('App.version'), array('block' => 'toFooter'));
        echo $this->Html->script('journal.'.Configure::read('App.version'), array('block' => 'toFooter'));
        echo $this->Html->script('print.' . Configure::read('App.version'), array('block' => 'toFooter'));
+       echo $this->Html->script('jquery.jgrowl.min.' . Configure::read('App.version'), array('block' => 'toFooter'));
        
     }
 ?>
