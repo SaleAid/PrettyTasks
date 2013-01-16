@@ -58,12 +58,7 @@
                 );?>
           </li>
           <?php endif;?>
-          <li class="<? if($this->params['action'] == "journal" and strtolower($this->params['controller']) == "days") echo 'active'; ?>">
-              <?php echo $this->Html->link(
-                    __d('days', 'Journal'),
-                    array('controller' => 'days', 'action' => 'journal')
-                );?>
-          </li>
+
         <?php if ($isBetaUser):?>
           <li class="<? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "notes") echo 'active'; ?>">
               <?php echo $this->Html->link(
@@ -72,7 +67,12 @@
                 ); ?>  
           </li>
           <?php endif;?>
-        
+         <li class="<? if($this->params['action'] == "journal" and strtolower($this->params['controller']) == "days") echo 'active'; ?>">
+              <?php echo $this->Html->link(
+                    __d('days', 'Journal'),
+                    array('controller' => 'days', 'action' => 'journal')
+                );?>
+          </li>
         </ul>
         <?php echo $this->element('current_user'); ?> 
          

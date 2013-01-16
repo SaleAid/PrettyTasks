@@ -14,8 +14,8 @@ $ver = trim(array_pop(file(dirname(dirname(dirname(__FILE__))) . '/Config/appVER
 //$ver = '1.0.5';
 return array(
      
-     'journal.js.v='.$ver => array('//js/main.js', '//js/journal.js', '//js/print.js'),
-     'journal.css.v='.$ver => array('//css/main.css', '//css/journal.css', '//css/print.css'),
+     'journal.js.v='.$ver => array('//js/main.js', '//js/journal.js', '//js/print.js', '//js/jquery.jgrowl.min.js'),
+     'journal.css.v='.$ver => array('//css/main.css', '//css/journal.css', '//css/print.css', '//css/jquery.jgrowl.css'),
      
      'tasks.js.v='.$ver => array(
                                 '//js/jquery-ui-i18n.min.js',

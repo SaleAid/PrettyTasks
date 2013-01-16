@@ -432,7 +432,7 @@
 </script>
 
 <script type="text/template" id="day_h3_label">
-    <h3 class="day label label-info margin-bottom10" rel="tooltip" title="<?php echo __d('tasks', 'Кликните для перехода<br/> на'); ?>&nbsp;<%= date %>">
+    <h3 class="day label label-info margin-bottom10" rel="tooltip" title="<?php echo __d('tasks', 'Кликните для перехода на'); ?>&nbsp;<%= date %>">
 	   <span class="dayDate"><%= date %></span><span class="dash"> - </span><span class="<%= weekDayStyle %>"><%= weekDay %></span>
     </h3>
 </script>
