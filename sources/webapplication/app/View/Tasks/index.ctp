@@ -29,12 +29,7 @@
     }
 ?>
 
-<?php $this->append ( 'toFooter' );?>
-    
-    <?php echo $this->element('js_global_config', array(), array('cache' => array('key' => 'js_global_config', 'config' => 'elements'))); ?> 
-    
-<?php $this->end ();?>
-  <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
+<div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
         <ul class="nav nav-tabs listDay">
             <li class="addDay">
             <div class="btn-group">
