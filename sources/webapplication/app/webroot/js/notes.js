@@ -325,7 +325,7 @@ jQuery(function( $ ) {
             $("li[data-id='"+data.id+"']").hide( "drop", { direction: "left" }, "slow", function(){
                 list.prepend(this);
                 $(this).show();
-                $(this).children('.note').text( data.title );
+                $(this).find('.title-note').text( data.title );
             } ); 
         },
         getUpdateElement: function (name){
