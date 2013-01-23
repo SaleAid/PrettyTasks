@@ -41,7 +41,7 @@ class Note extends AppModel {
 				'rule' => array('date'),
 			)
 		),
-        'note' => array(
+        'title' => array(
             'maxLength' => array(
                 'rule'    => array('maxLength', 64000),
                 'message' => 'Максимальная длина комментария не больше %d символов'
@@ -73,7 +73,7 @@ class Note extends AppModel {
 
     private $_originData = array();
     
-    private $_fields = array('id', 'note', 'modified');
+    private $_fields = array('id', 'title', 'modified');
     
     public function isOwner($id, $user_id) {
         $this->contain();
@@ -107,7 +107,7 @@ class Note extends AppModel {
    public function search( $user_id, $query, $count = 50, $page = 1 ){
         $this->contain();
 	    $conditions = array(
-                        'Note.note LIKE' => '%'.$query.'%', 
+                        'Note.title LIKE' => '%'.$query.'%', 
                         'Note.user_id' => $user_id
                     );
 	    $order =  array(
@@ -124,15 +124,13 @@ class Note extends AppModel {
     }
     
     public function update($title){
-        $this->data[$this->alias]['note'] = $title;
+        $this->data[$this->alias]['title'] = $title;
         return $this;   
     }
     
-    public function create($user_id, $title, $id = null){
-        
-        $this->data[$this->alias]['id'] = $id;
+    public function create($user_id, $title){
         $this->data[$this->alias]['user_id'] = $user_id;
-        $this->data[$this->alias]['note'] = $title;
+        $this->data[$this->alias]['title'] = $title;
         return $this;
     }
     

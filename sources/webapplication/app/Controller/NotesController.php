@@ -33,31 +33,21 @@ class NotesController extends AppController {
                 'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
-            $title = $this->request->data['title'];
-            $id = isset($this->request->data['id']) ? $this->request->data['id'] : null;
-            if( !empty($id) and !Validation::uuid($id) ) {
-                $result['error'] = array(
-	                'message' => __d('tasks', 'Error, the wrong ID')
-	            );
-            }
-            if ( !isset($result['error']) ) {
-                $note = $this->Note->create($this->Auth->user('id'), $title, $id)->save();
-                
-                if ( $note ) {
-                	$result['data'] = new NoteObj($note);
-                    $result['success'] = true;
-                    $result['message'] = array(
-                        'type' => 'info', 
-                        'message' => __d('tasks', 'Заметка  успешно создана')
-                    ); 
-            	} else {
-            	   $result['message'] = array(
-                        'type' => 'error', 
-                        'message' => __d('tasks', 'Заметка  не создана')
-                    );
-            		$result['errors'] = $this->Note->validationErrors;
-            	}
-            }
+            $note = $this->Note->create($this->Auth->user('id'), $this->request->data['title'])->save();
+            if ( $note ) {
+            	$result['data'] = new NoteObj($note);
+                $result['success'] = true;
+                $result['message'] = array(
+                    'type' => 'info', 
+                    'message' => __d('tasks', 'Заметка  успешно создана')
+                ); 
+        	} else {
+        	   $result['message'] = array(
+                    'type' => 'error', 
+                    'message' => __d('tasks', 'Заметка  не создана')
+                );
+        		$result['errors'] = $this->Note->validationErrors;
+        	}
         }
         $result['action'] = 'create'; 
         $this->set('result', $result);

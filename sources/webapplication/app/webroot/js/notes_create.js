@@ -9,8 +9,6 @@ jQuery(function( $ ) {
     var connError = false;
     
     var Utils = {
-		// https://gist.github.com/1308368
-		uuid: function(a,b){for(b=a='';a++<36;b+=a*51&52?(a^15?8^Math.random()*(a^20?16:4):4).toString(16):'-');return b},
 		
         displayLoadAjax: function( count ){
             if(!+count){
@@ -131,14 +129,14 @@ jQuery(function( $ ) {
         },
         update: function() {
 			var title = $.trim( $('#edit-note').find('#text-note').val() );
-            AppNotes.userEvent('create', {title: title, id: Utils.uuid() });
+            AppNotes.userEvent('create', {title: title});
         },
 		
         //--------------------------------------------
         userEvent: function( action, data ){
             switch( action ){
                 case 'create':
-                    this.noteCreate(data.title, data.id);
+                    this.noteCreate(data.title);
                 break;
             }
         },
@@ -151,8 +149,8 @@ jQuery(function( $ ) {
         },
         
         // create 
-        noteCreate: function(title, id){
-            this.srvCreate(title, id);
+        noteCreate: function(title){
+            this.srvCreate(title);
         },
         
         onCreate: function( data ){
@@ -165,8 +163,8 @@ jQuery(function( $ ) {
             }
         },
         
-        srvCreate: function( title, id ){
-            Utils.superAjax('/notes/create.json', {title: title, id: id }, AppNotes.responseHandler);
+        srvCreate: function( title ){
+            Utils.superAjax('/notes/create.json', {title: title }, AppNotes.responseHandler);
         },
         
         getUpdateElement: function (name){

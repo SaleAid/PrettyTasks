@@ -7,10 +7,7 @@ jQuery(function( $ ) {
     var connError = false;
     
     var Utils = {
-		// https://gist.github.com/1308368
-		uuid: function(a,b){for(b=a='';a++<36;b+=a*51&52?(a^15?8^Math.random()*(a^20?16:4):4).toString(16):'-');return b},
-		
-        displayLoadAjax: function( count ){
+		displayLoadAjax: function( count ){
             if(!+count){
                 $('.ajaxLoader').addClass('hide');
             }else{
@@ -185,7 +182,7 @@ jQuery(function( $ ) {
                     return;
     			}
                 $input.removeClass('errorEdit');   
-    			AppNotes.userEvent('create', {title: val, id: Utils.uuid() });
+    			AppNotes.userEvent('create', {title: val });
     			$input.val('');
                     
             }
@@ -236,7 +233,7 @@ jQuery(function( $ ) {
         userEvent: function( action, data ){
             switch( action ){
                 case 'create':
-                    this.noteCreate(data.title, data.id);
+                    this.noteCreate(data.title);
                 break;
                 case 'update':
                     this.noteUpdate(data.id, data.title);
@@ -262,8 +259,8 @@ jQuery(function( $ ) {
         },
         
         // create 
-        noteCreate: function(title, id){
-            this.srvCreate(title, id);
+        noteCreate: function(title){
+            this.srvCreate(title);
         },
         onCreate: function( data ){
             if( data.success ){
@@ -276,11 +273,11 @@ jQuery(function( $ ) {
                     
             }
         },
-        srvCreate: function( title, id ){
-            Utils.superAjax('/notes/create.json', {title: title, id: id }, AppNotes.responseHandler);
+        srvCreate: function( title ){
+            Utils.superAjax('/notes/create.json', {title: title }, AppNotes.responseHandler);
         },
         renderCreate: function( data ){
-            this.$noteList.prepend(this.noteTemplate({ id:data.id, title: Utils.convertToHtml(data.title), modified: data.modified }))
+            this.$noteList.prepend(this.noteTemplate({ id: data.id, title: Utils.convertToHtml(data.title), modified: data.modified }))
                           .slideDown('slow');
             this.inlineConfirmation('li[data-id='+data.id+'] .note-remove');
         },

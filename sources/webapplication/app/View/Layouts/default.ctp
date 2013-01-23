@@ -15,6 +15,7 @@ echo $this->Html->docType('html5');
 <?php
     echo $this->Html->meta('icon');
     echo $this->Html->css('bootstrap.min');
+    echo $this->Html->css('jquery.jgrowl.'.Configure::read('App.version'));
     echo $this->fetch('toHead');
     echo $this->Html->css('main.' . Configure::read('App.version'));
     echo $this->Html->css($this->Loginza->getCssUrl());
@@ -64,6 +65,15 @@ if(Configure::read('Config.language') =='eng'){
 
 <?php echo $this->Html->script('main.' . Configure::read('App.version'));?>
 
+<?php 
+    if(!empty($currentUser)){
+        echo $this->Html->script('http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');
+        echo $this->Html->script('jquery.jgrowl.min');
+        echo $this->element('box', array(), array('cache' => array('key' => 'box', 'config' => 'elements')));
+        echo $this->element('js_global_config', array(), array('cache' => array('key' => 'js_global_config', 'config' => 'elements')));     
+    }
+?>
+
 <?php echo $this->fetch('toFooter');?>
 
 <?php echo $this->element('ga', array(), array(
@@ -74,12 +84,7 @@ if(Configure::read('Config.language') =='eng'){
 ));
 ?>
 <?php echo $this->element('js_lang', array(), array('cache' => array('key' => 'js_lang', 'config' => 'elements'))); ?> 
-<?php 
-    if(!empty($currentUser)){
-        echo $this->element('box', array(), array('cache' => array('key' => 'box', 'config' => 'elements'))); 
-        echo $this->element('js_global_config', array(), array('cache' => array('key' => 'js_global_config', 'config' => 'elements')));   
-    }
-?>
+
 <?php echo $this->element('noscript', array(), array('cache' => array('key' => 'noscript', 'config' => 'elements'))); ?> 
  </body>
 </html>
