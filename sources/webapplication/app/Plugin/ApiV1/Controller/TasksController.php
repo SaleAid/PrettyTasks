@@ -57,7 +57,7 @@ class TasksController extends ApiV1AppController {
                     }
                 default :
                     {
-                        $result['error'] = array(
+                        $result['errors'][] = array(
                             'message' => __d('tasks', 'Ошибка, некорректный тип')
                         );
                     }
@@ -66,7 +66,7 @@ class TasksController extends ApiV1AppController {
         		$result[] = $this->taskObj($task);
         	}
         } else {
-            $result['error'] = array(
+            $result['errors'][] = array(
                 'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         }
@@ -76,13 +76,12 @@ class TasksController extends ApiV1AppController {
     
     public function create(){
         if ( !$this->request->isPost() ) {
-            $result['error'] = array(
+            $result['errors'][] = array(
                 'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
             $listFields = array(
-                'id',
-            	'title',
+                'title',
                 'priority',
                 'done',
                 'comment',
@@ -91,28 +90,30 @@ class TasksController extends ApiV1AppController {
                 'timeend'
             );
             $saveData = $this->saveData( $listFields );
-            if( isset($saveData['id']) and !Validation::uuid($saveData['id']) ) {
-                $result['error'] = array(
-	                'message' => __d('tasks', 'error, the wrong ID')
+            $tag = isset($this->request->data['tag']) ? $this->request->data['tag'] : null ;
+            if( empty($tag)) {
+                $result['errors'][] = array(
+	                'message' => __d('tasks', 'errors, the wrong tag')
 	            );
             }
             if( isset($saveData['time']) and ( !isset($saveData['date']) or empty($saveData['date'])) ) {
-                $result['error'] = array(
-	                'message' => __d('tasks', 'Error, date field required')
+                $result['errors'][] = array(
+	                'message' => __d('tasks', 'errors, date field required')
 	            );
             }
         	if( isset($saveData['timeEnd']) and ( !isset($saveData['time']) or empty($saveData['time'])) ) {
-                $result['error'] = array(
-	                'message' => __d('tasks', 'Error, time field required')
+                $result['errors'][] = array(
+	                'message' => __d('tasks', 'errors, time field required')
 	            );
             }
             if ( !isset($result) ) {
                 $task = $this->Task->create($this->OAuth->user('id'), $saveData)->save();
-                //pr($task);die;
-            	if ( $task ) {
+                if ( $task ) {
                 	$result = $this->taskObj($task);
+                    $result->tag = $tag;
             	} else {
-            		$result['error'] = $this->Task->validationErrors;
+            	    $result['tag'] = $tag;
+            		$result['errors'] = $this->Task->validationerrorss;
             	}
             }
 
@@ -123,7 +124,7 @@ class TasksController extends ApiV1AppController {
     
     public function update(){
         if ( !$this->request->isPost() or !isset($this->request->data['id']) ) {
-            $result['error'] = array(
+            $result['errors'][] = array(
                 'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
@@ -142,13 +143,13 @@ class TasksController extends ApiV1AppController {
                 );
                 $saveData = $this->saveData( $listFields );
                 if( isset($saveData['time']) and ( !isset($saveData['date']) or empty($saveData['date'])) ) {
-                    $result['error'] = array(
-		                'message' => __d('tasks', 'Error, date field required')
+                    $result['errors'][] = array(
+		                'message' => __d('tasks', 'errors, date field required')
 		            );
                 }
             	if( isset($saveData['timeEnd']) and ( !isset($saveData['time']) or empty($saveData['time'])) ) {
-                    $result['error'] = array(
-		                'message' => __d('tasks', 'Error, time field required')
+                    $result['errors'][] = array(
+		                'message' => __d('tasks', 'errors, time field required')
 		            );
                 }
                 if ( !isset($result) ) {
@@ -156,12 +157,12 @@ class TasksController extends ApiV1AppController {
                 	if ( $task ) {
                     	$result = $this->taskObj($task);
                 	} else {
-                		$result['error'] = $this->Task->validationErrors;
+                		$result['errors'][] = $this->Task->validationerrorss;
                 	}
                 }
                 
             } else {
-                $result['error'] = array(
+                $result['errors'][] = array(
                     'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи')
                 );
             }
@@ -172,7 +173,7 @@ class TasksController extends ApiV1AppController {
     
     public function move(){
        if ( !$this->request->isPost() or !isset($this->request->data['id']) ) {
-            $result['error'] = array(
+            $result['errors'][] = array(
                 'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
@@ -191,7 +192,7 @@ class TasksController extends ApiV1AppController {
                            $params['position'] = $afterTask['Task']['order'] + 1;
                            $params['todate'] = $afterTask['Task']['date'];      
                         }else {
-                            $result['error'] = array(
+                            $result['errors'][] = array(
                                 'message' => __d('tasks', 'Ошибка, Вы не являетесь хозяином этой задачи')
                             );   
                         }    
@@ -199,7 +200,7 @@ class TasksController extends ApiV1AppController {
                 } else if ( isset($this->request->data['position']) ) {
                     $params['position'] = $this->request->data['position'];
                 } else {
-                    $result['error'] = array(
+                    $result['errors'][] = array(
                         'message' => __d('tasks', 'Ошибка, необходимо передать новую позицию для задачи или айди задачи куда нужно перенести')
                     );
                 }
@@ -209,11 +210,11 @@ class TasksController extends ApiV1AppController {
                 	if ( $task ) {
                     	$result = $this->taskObj($task);
                 	} else {
-                		$result['error'] = $this->Task->validationErrors;
+                		$result['errors'][] = $this->Task->validationerrorss;
                 	}
                 }               
             } else {
-                $result['error'] = array(
+                $result['errors'][] = array(
                     'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи')
                 );
             }
@@ -225,7 +226,7 @@ class TasksController extends ApiV1AppController {
     
     public function delete() {
         if ( !$this->request->isPost() or !isset($this->request->data['id']) ) {
-            $result['error'] = array(
+            $result['errors'][] = array(
                 'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
@@ -234,12 +235,12 @@ class TasksController extends ApiV1AppController {
                     if ($this->Task->delete()) {
                         $result = true;
                     } else {
-                        $result['error'] = array(
+                        $result['errors'][] = array(
                             'message' => __d('tasks', 'Ошибка, Задача  не изменена')
                         );
                     }             
             } else {
-                $result['error'] = array(
+                $result['errors'][] = array(
                     'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи')
                 );
             }

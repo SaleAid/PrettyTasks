@@ -101,10 +101,11 @@ class AppController extends Controller {
     }
 
     private function __setTimeZone() {
-        $timezone = $this->Auth->user('timezone');
-        if ($timezone) {
-            date_default_timezone_set($timezone);
-        }
+        date_default_timezone_set(Configure::read('Config.timezone'));
+        //$timezone = $this->Auth->user('timezone');
+        //if ($timezone) {
+            //date_default_timezone_set($timezone);
+        //}
     }
 
     public function beforeFilter() {
