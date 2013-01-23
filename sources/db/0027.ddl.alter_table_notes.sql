@@ -1,0 +1,1 @@
+ALTER TABLE  `notes` CHANGE  `note`  `title` VARCHAR( 64000 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
