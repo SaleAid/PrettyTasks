@@ -20,6 +20,9 @@
    
    Configure::write('GoogleAnalytics.ID', 'UA-29304740-1');
    
+   // default timezone
+   Configure::write('Config.timezone', 'UTC');
+   
    Configure::write('Config.language', 'rus');
    Configure::write('Config.langURL', 'ru');
    
@@ -79,6 +82,8 @@
    Configure::write('App.Minify.js', false);
       
    Configure::write('Session.cookie', 'PrettyTasks');
+   
+   
    
    //Cache
    //Cache::config('elements', array(
