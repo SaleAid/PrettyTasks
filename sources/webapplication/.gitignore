@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-.gitignore
-/app/Config/core.php
-/app/Config/database.php
-/app/Config/config.php
-/app/tmp/
-/app/webroot/tmp/
-#/app/Config
-=======
 /app/Config
 
 /app/tmp/*
@@ -25,8 +16,6 @@
 !/app/tmp/sessions/empty
 !/app/tmp/tests/empty
 
-
->>>>>>> 189c0c625065a232d5d9c48eca30b2693615a7bd
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins
 /vendors

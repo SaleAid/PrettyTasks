@@ -830,7 +830,7 @@ class DboSource extends DataSource {
 		}
 		if (preg_match('/^([\w-]+)\((.*)\)$/', $data, $matches)) { // Functions
 			return $this->cacheMethod(__FUNCTION__, $cacheKey,
-				 $matches[1] . '(' . $this->name($matches[2]) . ')'
+				$matches[1] . '(' . $this->name($matches[2]) . ')'
 			);
 		}
 		if (
@@ -2574,7 +2574,11 @@ class DboSource extends DataSource {
 		$value = $this->value($value, $type);
 
 		if (!$virtual && $key !== '?') {
-			$isKey = (strpos($key, '(') !== false || strpos($key, ')') !== false);
+			$isKey = (
+				strpos($key, '(') !== false ||
+				strpos($key, ')') !== false ||
+				strpos($key, '|') !== false
+			);
 			$key = $isKey ? $this->_quoteFields($key) : $this->name($key);
 		}
 

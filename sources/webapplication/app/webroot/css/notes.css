@@ -1,9 +1,6 @@
 .listTask{
     margin-left: 20px;
 }
-.label-info{
-    padding: 6px 10px;
-}
 div.well{
     padding: 0px;
     background-color: inherit;
@@ -12,29 +9,17 @@ div.well{
     margin-bottom: 10px;
     margin-top: 10px;
 }
-#notes li.editing .edit {
-	display: block;
-	width: 444px;
-	padding: 13px 15px 14px 20px;
-	margin: 0;
+#new-note{
+     resize: none;
+     resize: vertical; 
+     width: 851px;
+}
+#notes-list{
+        
 }
 
-#notes li.editing .view {
-	display: none;
-}
-
-#notes li .view label {
-	word-break: break-word;
-}
-
-#notes li .edit {
-	display: none;
-}
-.note-box:first-child{
-    margin-left: 1px;
-}
 .notes{
-    margin: 0 0 0 25px;
+    margin: 0 0 0 20px;
     padding: 0;
     border: 0;
     outline: 0;
@@ -45,58 +30,136 @@ div.well{
 }
 .note-box{
     position: relative;
-    background: url('/img/note.png') no-repeat;
-    margin-right: 1px;
-    margin-bottom: 1px;
-    width: 180px;
-    height: 200px;
     float: left;
+    width: 229px;
+    height: auto;
+    border-bottom: 1px solid #B1B1B1;
+    margin: 0px 9px 18px 0px;
+    background-color: white;
+    border: 1px solid #DDD;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.note-box:hover{
+    border: 1px solid #fff;
+    -webkit-box-shadow: 1px 0 15px rgba(0,0,0,0.25);
+    -moz-box-shadow: 1px 0 15px rgba(0,0,0,0.25);
+    box-shadow: 1px 0 15px rgba(0,0,0,0.25);
 }
 .note{
-    padding: 30px 5px 10px 15px;
-    height: 130px;
-    width: 150px;
-    overflow:hidden;
-    word-break: break-word;
-    white-space: pre-line;
+    
+    width: 100%;
+    margin-bottom: 4px;
+    height: 60px;
+    
+    
 }
-
+.note textarea {
+    height: 50px;
+    width: 215px;
+    resize: none;
+    border: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: none;
+    cursor: text;
+    
+       
+}
+.note textarea:focus, .note textarea:active, .note textarea:hover {
+    
+    border:none;
+    outline: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+.add-note{
+    vertical-align: bottom;
+    width: 82px;
+}
 .note:hover{
     cursor: text;
 }
-
-.text-note{
-    width: 510px;
-}
-
 .create-new-note{
-    height: 178px;
-    width: 170px;
-    margin-left: 20px;
-    margin-bottom: 1px;
-    margin-top: 18px;
-    float: left;
+    display: none;
+    vertical-align: top;
 }
-
 .create-new-note:hover{
   opacity:0.6;
   filter:alpha(opacity=60); 
   cursor: pointer;
 }
 .modified{
-    
-    margin-left: 10px;
+    font-size: 11px;
+    color: #999;
+    margin-left: 4px;
+}
+.note-box:hover .modified{
+    color: #F5BE00;    
+}
+.buttons {
+    list-style: none;
     position: absolute;
-    bottom: 18px;
-    left: 0px;
+    bottom: 4px;
+    right: 3px;
+}
+.buttons li{
+    margin-left: 5px;
+    float: left;
+}
+.buttons li a{
+    margin-left: 5px;
+    float: left;
+    opacity: 0.3;
+}
+.buttons li a:hover{
+    opacity: 1;
 }
 
-.note-remove{
-    position: absolute;
-    top: 8px;
-    right: 17px;
-}
 
 .note-remove:hover .icon-remove-sign{
     background-image: url("../img/glyphicons-halflings-white.png");
+}
+
+.head-list-info{
+    background-color:#d9edf7;
+    color:#3a87ad;
+    font-weight: normal;
+    font-size: 16px;
+    padding:0px 35px 0px 14px;
+    margin-bottom:18px;
+    text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
+    border:1px solid #bce8f1;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+}
+
+.n-del{
+    padding-left: 1px;
+    margin-left: -1px;
+    background-color: #b94a48;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.view-note{
+    height: 400px;
+    
+    left: 50%;
+}
+.view-note .modal-body{
+    max-height: 400px;
+}
+
+.view-note .modal-body .text-note{
+    height: 300px;
+    width: 97%;
+    cursor: text;
+    background-color: white ;
+    resize: none; 
+    
 }

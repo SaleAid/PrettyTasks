@@ -20,6 +20,16 @@ class Note extends AppModel {
      * @var array
      */
     public $validate = array(
+        'id' => array(
+			'maxLength' => array(
+                'rule'    => array('maxLength', 36),
+                'message' => 'Wrong ID',
+            ),
+            'isUnique' => array(
+                'rule' => 'isUnique', 
+                'message' => 'ID уже существует'
+            )
+        ), 
         'user_id' => array(
 			'maxLength' => array(
                 'rule'    => array('maxLength', 36),
@@ -31,9 +41,9 @@ class Note extends AppModel {
 				'rule' => array('date'),
 			)
 		),
-        'note' => array(
+        'title' => array(
             'maxLength' => array(
-                'rule'    => array('maxLength', 1000),
+                'rule'    => array('maxLength', 64000),
                 'message' => 'Максимальная длина комментария не больше %d символов'
             ),
             'notempty' => array(
@@ -63,7 +73,7 @@ class Note extends AppModel {
 
     private $_originData = array();
     
-    private $_fields = array('id', 'note', 'modified');
+    private $_fields = array('id', 'title', 'modified');
     
     public function isOwner($id, $user_id) {
         $this->contain();
@@ -76,85 +86,56 @@ class Note extends AppModel {
         return false;
     }
     
-    public function getNotes($user_id){
-        $object = array();
+    public function getNotes( $user_id, $count = 50, $page = 1 ){
         $this->contain();
-        $notes = $this->find('all', 
+	    $conditions = array(
+                        'Note.user_id' => $user_id, 
+                    );
+	    $order =  array(
+                    'Note.modified' => 'DESC'
+                );
+        return $this->find('all', 
                         array(
-                            'order' => array(
-                                'Note.modified' => 'ASC'
-                            ), 
-                            'conditions' => array(
-                                    array(
-                                        'Note.user_id' => $user_id
-                                    ), 
-                              
-                            ),
+                            'order' => $order, 
+                            'conditions' => $conditions, 
                             'fields' => $this->_fields,
+			                'limit' => $count,
+                            'page' => $page
                         ));
-        if(isset($notes[0][$this->alias])){
-            $object = array_map(create_function('$row', 'return $row[\'Note\'];'), $notes);    
-        }
-        return $object;
     }
     
-    public function getLastOrderByUser($user_id) {
-        $lastOrder = $this->find('first', 
-                                array(
-                                    'fields' => array(
-                                        'Note.order'
-                                    ), 
-                                    'order' => array(
-                                        'Note.order' => 'desc'
-                                    ), 
-                                    'conditions' => array(
-                                         'Note.user_id' => $user_id
-                                    )
-                                ));
-        if ($lastOrder) {
-            return $lastOrder[$this->alias]['order'];
-        }
-        return false;
+   public function search( $user_id, $query, $count = 50, $page = 1 ){
+        $this->contain();
+	    $conditions = array(
+                        'Note.title LIKE' => '%'.$query.'%', 
+                        'Note.user_id' => $user_id
+                    );
+	    $order =  array(
+                    'Note.modified' => 'ASC'
+                );
+        return $this->find('all', 
+                        array(
+                            'order' => $order, 
+                            'conditions' => $conditions, 
+                            'fields' => $this->_fields,
+			                'limit' => $count,
+                            'page' => $page
+                        ));
     }
     
-    public function createNote($user_id, $note, $order = null){
+    public function update($title){
+        $this->data[$this->alias]['title'] = $title;
+        return $this;   
+    }
+    
+    public function create($user_id, $title){
         $this->data[$this->alias]['user_id'] = $user_id;
-        //$this->data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser($user_id) + 1;
-        $this->data[$this->alias]['note'] = $note;
+        $this->data[$this->alias]['title'] = $title;
         return $this;
     }
-    
-    public function editNote($data = array(), $action){
-        
-        if( method_exists($this, $action) ){
-            return $this->$action($data);
-        }
-        return $this;    
-    }
-    
-    protected function changeNote($data){
-         $this->data[$this->alias]['note'] = $data['note'];
-        return $this;
-    }
-    
     
     public function beforeSave() {
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
-    }
-    
-    public function saveNote(){
-            $save = $this->save();
-            if (is_array($save)){
-                foreach($save[$this->alias] as $key => $value){
-                    if(!in_array($key, $this->_fields)){
-                        unset($save[$this->alias][$key]);
-                    }
-                }
-                return $save;
-            }
-            else{
-                return false;
-            }
     }
 
 

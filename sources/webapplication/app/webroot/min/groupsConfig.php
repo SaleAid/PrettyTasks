@@ -13,9 +13,17 @@
 $ver = trim(array_pop(file(dirname(dirname(dirname(__FILE__))) . '/Config/appVERSION.txt')));
 //$ver = '1.0.5';
 return array(
+
+     'notes.js.v='.$ver => array(
+                                '//js/main.js',
+                                '//js/jquery.inline-confirmation.js', 
+                                '//js/jquery.jgrowl.min.js',
+                                '//js/notes.js'
+                            ),
+     'notes.css.v='.$ver => array('//css/jquery.jgrowl.css', '//css/main.css', '//css/notes.css'),  
      
-     'journal.js.v='.$ver => array('//js/main.js', '//js/journal.js', '//js/print.js'),
-     'journal.css.v='.$ver => array('//css/main.css', '//css/journal.css', '//css/print.css'),
+     'journal.js.v='.$ver => array('//js/main.js', '//js/journal.js', '//js/print.js', '//js/jquery.jgrowl.min.js'),
+     'journal.css.v='.$ver => array('//css/main.css', '//css/journal.css', '//css/print.css', '//css/jquery.jgrowl.css'),
      
      'tasks.js.v='.$ver => array(
                                 '//js/jquery-ui-i18n.min.js',
@@ -23,7 +31,8 @@ return array(
                                 '//js/jquery.timepicker-1.2.2.min.js',
                                 '//js/jquery.ba-hashchange.min.js',
                                 '//js/jquery.jeditable.mini.js', 
-                                '//js/jquery.jgrowl.min.js', 
+                                '//js/jquery.jgrowl.min.js',
+                                '//js/jquery.cookie.js', 
                                 '//js/print.js', 
                                 '//js/main.js', 
                                 '//js/tasks.js'

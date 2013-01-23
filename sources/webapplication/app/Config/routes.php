@@ -28,17 +28,18 @@
 
 App::uses('LangRoute', 'Routing/Route');
 
-Router::resourceMap(array(
-    array('action' => 'index', 'method' => 'GET', 'id' => false),
-    array('action' => 'view', 'method' => 'GET', 'id' => true),
-    array('action' => 'add', 'method' => 'POST', 'id' => false),
-    array('action' => 'edit', 'method' => 'PUT', 'id' => true),
-    array('action' => 'delete', 'method' => 'DELETE', 'id' => true),
-    array('action' => 'update', 'method' => 'POST', 'id' => true)
-));
-Router::mapResources('notes');
-Router::parseExtensions('xml', 'json', 'xhtml', 'html');
+//Router::resourceMap(array(
+//    array('action' => 'index', 'method' => 'GET', 'id' => false),
+//    array('action' => 'view', 'method' => 'GET', 'id' => true),
+//    array('action' => 'add', 'method' => 'POST', 'id' => false),
+//    array('action' => 'edit', 'method' => 'PUT', 'id' => true),
+//    array('action' => 'delete', 'method' => 'DELETE', 'id' => true),
+//    array('action' => 'update', 'method' => 'POST', 'id' => true)
+//));
+//Router::mapResources('notes');
 Router::defaultRouteClass('LangRoute');
+Router::parseExtensions('xml', 'json', 'xhtml', 'html');
+
 
 //задачи
 //Router::connect('/'. rawurlencode('задачи') .'', array('controller' => 'tasks', 'action' => 'index', 'lang' => 'ru'));

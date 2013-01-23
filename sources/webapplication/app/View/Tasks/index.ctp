@@ -29,12 +29,7 @@
     }
 ?>
 
-<?php $this->append ( 'toFooter' );?>
-    
-    <?php echo $this->element('js_global_config', array(), array('cache' => array('key' => 'js_global_config', 'config' => 'elements'))); ?> 
-    
-<?php $this->end ();?>
-  <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
+<div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
         <ul class="nav nav-tabs listDay">
             <li class="addDay">
             <div class="btn-group">
@@ -432,7 +427,7 @@
 </script>
 
 <script type="text/template" id="day_h3_label">
-    <h3 class="day label label-info margin-bottom10" rel="tooltip" title="<?php echo __d('tasks', 'Кликните для перехода<br/> на'); ?>&nbsp;<%= date %>">
+    <h3 class="day label label-info margin-bottom10" rel="tooltip" title="<?php echo __d('tasks', 'Кликните для перехода на'); ?>&nbsp;<%= date %>">
 	   <span class="dayDate"><%= date %></span><span class="dash"> - </span><span class="<%= weekDayStyle %>"><%= weekDay %></span>
     </h3>
 </script>

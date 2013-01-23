@@ -82,7 +82,8 @@ if(Configure::read('Config.language') =='eng'){
 ?>
 <?php 
     if(!empty($currentUser)){
-        echo $this->element('box', array(), array('cache' => array('key' => 'box', 'config' => 'elements')));    
+        echo $this->element('box', array(), array('cache' => array('key' => 'box', 'config' => 'elements')));
+        echo $this->element('js_global_config', array(), array('cache' => array('key' => 'js_global_config', 'config' => 'elements')));     
     }
 ?>
 <?php echo $this->element('noscript', array(), array('cache' => array('key' => 'noscript', 'config' => 'elements'))); ?> 

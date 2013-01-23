@@ -303,9 +303,10 @@ class FormHelper extends AppHelper {
  *   can be overridden when calling input()
  * - `encoding` Set the accept-charset encoding for the form.  Defaults to `Configure::read('App.encoding')`
  *
- * @param string|array $model The model object which the form is being defined for. Should
- *   include the plugin name for plugin forms.  e.g. `ContactManager.Contact`.
+ * @param mixed $model The model name for which the form is being defined. Should
+ *   include the plugin name for plugin models. e.g. `ContactManager.Contact`.
  *   If an array is passed and $options argument is empty, the array will be used as options.
+ *   If `false` no model is used.
  * @param array $options An array of html attributes and options.
  * @return string An formatted opening FORM tag.
  * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#options-for-create
@@ -1336,7 +1337,7 @@ class FormHelper extends AppHelper {
 
 		$showEmpty = $this->_extractOption('empty', $attributes);
 		if ($showEmpty) {
-			$showEmpty = ($showEmpty === true) ? __('empty') : $showEmpty;
+			$showEmpty = ($showEmpty === true) ? __d('cake', 'empty') : $showEmpty;
 			$options = array('' => $showEmpty) + $options;
 		}
 		unset($attributes['empty']);
@@ -1383,6 +1384,10 @@ class FormHelper extends AppHelper {
 
 		$hiddenField = isset($attributes['hiddenField']) ? $attributes['hiddenField'] : true;
 		unset($attributes['hiddenField']);
+
+		if (isset($value) && is_bool($value)) {
+			$value = $value ? 1 : 0;
+		}
 
 		foreach ($options as $optValue => $optTitle) {
 			$optionsHere = array('value' => $optValue);
@@ -1531,7 +1536,8 @@ class FormHelper extends AppHelper {
 			$this->_secure($secure, array_merge($field, array($suffix)));
 		}
 
-		return $this->Html->useTag('file', $options['name'], array_diff_key($options, array('name' => '')));
+		$exclude = array('name' => '', 'value' => '');
+		return $this->Html->useTag('file', $options['name'], array_diff_key($options, $exclude));
 	}
 
 /**
@@ -2606,7 +2612,8 @@ class FormHelper extends AppHelper {
 	}
 
 /**
- * Sets field defaults and adds field to form security input hash
+ * Sets field defaults and adds field to form security input hash.
+ * Will also add a 'form-error' class if the field contains validation errors.
  *
  * ### Options
  *

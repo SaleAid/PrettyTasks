@@ -54,7 +54,7 @@ function yuiJs($js) {
     Minify_YUICompressor::$tempDir = '/tmp'; 
     return Minify_YUICompressor::minifyJs($js); 
 }
-$min_serveOptions['minifiers']['application/x-javascript'] = 'yuiJs';
+//$min_serveOptions['minifiers']['application/x-javascript'] = 'yuiJs';
 //
 // check for URI versioning
 if (preg_match('/&\\d/', $_SERVER['QUERY_STRING'])) {

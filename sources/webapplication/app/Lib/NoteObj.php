@@ -8,7 +8,7 @@ class NoteObj {
     
     public  function __construct( array $note ){
         $this->id = $note['Note']['id'];
-        $this->title = $note['Note']['note'];
+        $this->title = $note['Note']['title'];
         $this->modified = $note['Note']['modified'];
     }
 } 
