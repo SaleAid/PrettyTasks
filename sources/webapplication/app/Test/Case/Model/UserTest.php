@@ -35,5 +35,8 @@ class UserTestCase extends CakeTestCase {
 
 		parent::tearDown();
 	}
+	
+	public function testEmpty() {
+	}
 
 }

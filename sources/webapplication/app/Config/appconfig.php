@@ -29,7 +29,7 @@
    Configure::write('Config.lang.available.ru', array('lang' => 'rus', 'name' => __d('users', 'Russian')));
    Configure::write('Config.lang.available.en', array('lang' => 'eng', 'name' => __d('users', 'English')));
    
-   define('FULL_BASE_URL', 'http://learning-2012.org.ua');
+   define('FULL_BASE_URL', 'http://prettytasks.lcom');
    
    Configure::write('Site.name', 'Pretty Tasks');
    Configure::write('Site.url', 'http://'.@$_SERVER["HTTP_HOST"].'/');
