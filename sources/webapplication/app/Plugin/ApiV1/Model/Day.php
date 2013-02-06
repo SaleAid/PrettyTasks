@@ -102,7 +102,8 @@ class Day extends ApiV1AppModel {
                         'Day.user_id' => $user_id, 
                     );
 	    $order =  array(
-                    'Day.modified' => 'ASC'
+                    'Day.modified' => 'ASC',
+                    'Day.date' => 'DESC',
                 );
         return $this->find('all', 
                         array(

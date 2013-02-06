@@ -20,7 +20,7 @@ class DaysController extends ApiV1AppController {
         	if ( $count > 100 ) $count = 100;
         	$page = isset($this->request->query['page']) ? $this->request->query['page'] : null;
         	$user_id = $this->OAuth->user('id');
-        	$dayss = $this->Day->getByUser_id($user_id, $count, $page);
+        	$days = $this->Day->getByUser_id($user_id, $count, $page);
         	foreach ($days as $day) {
         	    $result[] = new DayObj($day);
             }    
