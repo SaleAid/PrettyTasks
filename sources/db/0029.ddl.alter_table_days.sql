@@ -1,0 +1,2 @@
+ALTER TABLE  `days` ADD  `created` DATETIME NOT NULL ,
+ADD  `modified` DATETIME NOT NULL
