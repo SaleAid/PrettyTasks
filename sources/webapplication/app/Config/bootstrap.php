@@ -47,5 +47,4 @@ CakePlugin::load(array(
     'AppVK' => array('routes' => true)
 ));
 
-CakePlugin::load('Tags');
   
