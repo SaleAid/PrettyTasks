@@ -29,7 +29,13 @@
    Configure::write('Config.lang.available.ru', array('lang' => 'rus', 'name' => __d('users', 'Russian')));
    Configure::write('Config.lang.available.en', array('lang' => 'eng', 'name' => __d('users', 'English')));
    
-   define('FULL_BASE_URL', 'http://learning-2012.org.ua');
+   //define('FULL_BASE_URL', 'http://learning-2012.org.ua');
+   if (isset($_SERVER['REQUEST_URI']))
+        $_SERVER['REQUEST_URI'] = str_replace('://', ':%2F%2F', $_SERVER['REQUEST_URI']);
+   //pr($_SERVER['REQUEST_URI']);
+   //pr(urldecode( $_SERVER['REQUEST_URI'])); die;
+
+   //define('FULL_BASE_URL', '');
    
    Configure::write('Site.name', 'Pretty Tasks');
    Configure::write('Site.url', 'http://'.@$_SERVER["HTTP_HOST"].'/');

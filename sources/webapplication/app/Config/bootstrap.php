@@ -1,4 +1,10 @@
 <?php
+
+Configure::write('Dispatcher.filters', array(
+        'AssetDispatcher',
+                'CacheDispatcher'
+                ));
+
 Cache::config('default', array(
     'engine' => 'File'
 ));
@@ -36,4 +42,10 @@ CakePlugin::load(array(
 CakePlugin::load(array(
     'ApiV1' => array('routes' => true)
 ));
+
+CakePlugin::load(array(
+    'AppVK' => array('routes' => true)
+));
+
+CakePlugin::load('Tags');
   

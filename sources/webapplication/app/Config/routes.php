@@ -72,6 +72,8 @@ Router::connect('/:lang/:device/:controller/:action', array(), array(
     'lang' => '[a-z]{2}'
 ));
 
+CakePlugin::routes();
+
 Router::connect('/:lang/:controller', array('action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/:controller/:action', array(), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/:controller/:action/*', array(), array('lang' => '[a-z]{2}'));
@@ -83,7 +85,7 @@ Router::connect('/:lang/:controller/:action/*', array(), array('lang' => '[a-z]{
  * Load all plugin routes.  See the CakePlugin documentation on 
  * how to customize the loading of plugin routes.
  */
-CakePlugin::routes();
+
 
 /**
  * Load the CakePHP default routes. Remove this if you do not want to use
