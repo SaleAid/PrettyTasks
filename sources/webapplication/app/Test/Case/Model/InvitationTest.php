@@ -33,5 +33,8 @@ class InvitationTestCase extends CakeTestCase {
 
 		parent::tearDown();
 	}
+	
+	public function testEmpty() {
+	}
 
 }
