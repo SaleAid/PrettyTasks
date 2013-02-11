@@ -7,6 +7,8 @@ App::uses('AppModel', 'Model');
  */
 class Note extends AppModel {
      
+    public $actsAs = array('Taggable');
+    
     /**
      * Validation domain
      *
@@ -98,7 +100,7 @@ class Note extends AppModel {
                         array(
                             'order' => $order, 
                             'conditions' => $conditions, 
-                            'fields' => $this->_fields,
+                            //'fields' => $this->_fields,
 			                'limit' => $count,
                             'page' => $page
                         ));
@@ -117,7 +119,7 @@ class Note extends AppModel {
                         array(
                             'order' => $order, 
                             'conditions' => $conditions, 
-                            'fields' => $this->_fields,
+                            //'fields' => $this->_fields,
 			                'limit' => $count,
                             'page' => $page
                         ));
@@ -136,7 +138,12 @@ class Note extends AppModel {
     
     public function beforeSave() {
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
+        if(isset($this->data[$this->alias]['title'])){
+            $this->_checkTags($this->data[$this->alias]['title'], 'title');
+        }
     }
+    
+    
 
 
 }

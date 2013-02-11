@@ -8,6 +8,9 @@ App::uses('Validation', 'Utility');
  * @property Task $Task
  */
 class TasksController extends AppController {
+    
+    public $helpers = array('Task');
+    
     public $components = array(
         'RequestHandler'
     );
@@ -15,6 +18,7 @@ class TasksController extends AppController {
     public $layout = 'tasks';
 
     public function index() {
+        
         $this->response->disableCache();
         $result = $this->_prepareResponse();
         $result['success'] = true;
@@ -52,6 +56,7 @@ class TasksController extends AppController {
                 
             }
         }
+        //debug($result);die;
         $this->set('result', $result);
         $this->set('_serialize', array(
             'result'
@@ -63,9 +68,7 @@ class TasksController extends AppController {
         $result['success'] = true;
         $result['data']['arrAllOverdue'] = $this->Task->getAllOverdue($this->Auth->user('id'));
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function getCompleted() {
@@ -73,9 +76,7 @@ class TasksController extends AppController {
         $result['success'] = true;
         $result['data']['arrAllCompleted'] = $this->Task->getAllCompleted($this->Auth->user('id'));
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function getTasksByType() {
@@ -141,9 +142,7 @@ class TasksController extends AppController {
         $result['data'] = $data;
         $result['action'] = 'getTasksByType';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function agenda() {
@@ -154,9 +153,7 @@ class TasksController extends AppController {
         $dayConfig = $this->Task->User->getConfig($this->Auth->user('id'), 'day');
         $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to);
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function setTitle() {
@@ -191,14 +188,13 @@ class TasksController extends AppController {
                         'type' => 'error', 
                         'message' => __d('tasks', 'Ошибка, Задача  не изменена')
                     );
+                    $result['errors'] = $this->Task->validationErrors;
                 }
             }
         }
         $result['action'] = 'setTitle';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function addNewTask() {
@@ -235,9 +231,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'create';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
     
     public function cloneTask() {
@@ -278,9 +272,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'clone';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
     
     public function changeOrders() {
@@ -324,9 +316,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'changeOrders';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function setDone() {
@@ -371,9 +361,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'setDone';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function setDelete() {
@@ -425,9 +413,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'delete';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
     
     public function deleteAll(){
@@ -458,9 +444,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'deleteAll';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
     
     public function dragOnDay() {
@@ -501,9 +485,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'dragOnDay';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function editTask() {
@@ -550,9 +532,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'edit';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function getTasksForDay() {
@@ -581,9 +561,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'addDay';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function deleteDay() {
@@ -609,9 +587,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'deleteDay';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function checkStatus() {
@@ -641,9 +617,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'checkStatus';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
     //----------------------------------------------------------------------
 }

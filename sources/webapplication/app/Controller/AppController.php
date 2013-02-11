@@ -107,13 +107,15 @@ class AppController extends Controller {
             //date_default_timezone_set($timezone);
         //}
     }
-
+    
     public function beforeFilter() {
         //$this->Auth->allow('captcha');
         
+        //pr($this->request->params);die;
         $this->_setLanguage();
         $this->__setTimeZone();
         $this->_checkMobile();
+        
         $this->Seo->title = Configure::read('Site.title');
         $this->Seo->description = Configure::read('Site.description');
         $this->Seo->keywords = Configure::read('Site.keywords');
@@ -129,7 +131,7 @@ class AppController extends Controller {
     public function _setLanguage() {
         $this->L10n = new L10n();
         $params = $this->request->params;
-        //pr($params);die;
+        //pr($this->request);die;
         if (isset($params['lang'])) {
             $lang = $this->_hasLangList($params['lang']);
             if($lang){
@@ -158,8 +160,12 @@ class AppController extends Controller {
             }
             $params['lang'] = $this->L10n->map($language);
         }
-        unset($params['named']);
-        unset($params['pass']);
+        if(empty($params['named']))
+            unset($params['named']);
+        if(empty($params['pass']))
+            unset($params['pass']);
+        if( !empty($this->request->query))   
+            $params['?'] = $this->request->query;
         //pr($params);die;        
         $this->redirect($params);
     }
@@ -186,16 +192,11 @@ class AppController extends Controller {
         if(empty($lang)){
            return false; 
         }
-        //$langL10n = $this->L10n->catalog($lang);
         if(array_key_exists($lang, Configure::read('Config.lang.available'))){
             $langL10n = $this->L10n->catalog($lang);
             return $langL10n['locale'];
         }
         return false;
-    }
-
-    public function beforeRender() {
-    
     }
 
     protected function _prepareResponse() {

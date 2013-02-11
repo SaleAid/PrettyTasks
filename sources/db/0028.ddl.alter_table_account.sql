@@ -1,0 +1,1 @@
+ALTER TABLE  `accounts` CHANGE  `uid`  `uid` VARCHAR( 100 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT  'the unique id of the social network';
