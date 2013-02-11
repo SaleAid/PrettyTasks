@@ -31,6 +31,13 @@ class Day extends AppModel {
 				'rule' => array('date'),
 			)
 		),
+        'rating' => array(
+            'boolean' => array(
+                'rule' => array(
+                    'boolean'
+                )
+            )
+        ),
         'comment' => array(
             'maxLength' => array(
                 'rule'    => array('maxLength', 5000),

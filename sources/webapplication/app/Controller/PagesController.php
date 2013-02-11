@@ -8,16 +8,9 @@ class PagesController extends AppController {
     
     public $layout = 'pages';
 
-    /*
-    public $cacheAction = array(
-        'index' => array(
-            'duration' => 3600
-        )
-    );
-	*/
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('*');
+        $this->Auth->allow();
         
         if ($this->Auth->loggedIn() and in_array($this->params['action'], array(
             '', 
@@ -26,7 +19,6 @@ class PagesController extends AppController {
             $this->redirect(array(
                 'controller' => 'tasks', 
                 'action' => 'index', 
-                //'lang' => $this->params['lang']
             ));
         }
     

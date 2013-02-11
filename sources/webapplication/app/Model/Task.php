@@ -6,6 +6,8 @@ App::uses('AppModel', 'Model');
  * @property User $User
  */
 class Task extends AppModel {
+    
+    public $actsAs = array('Taggable');
     /**
      * Display field
      *
@@ -44,6 +46,10 @@ class Task extends AppModel {
                     'notempty'
                 ),
                 'message' => 'Поле должно быть заполнено' 
+            ),
+            'maxLength' => array(
+                'rule'    => array('maxLength', 255),
+                'message' => 'Максимальная длина задачи не больше %d символов'
             )
         ),
         'comment' => array(
@@ -165,6 +171,7 @@ class Task extends AppModel {
     
     private $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'deleted', 'done' ,'datedone', 'comment');
     
+    private $_taskFieldsSave = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'deleted', 'done' ,'datedone', 'comment', 'tags');
     /**
      * set true if method 
      */
@@ -179,8 +186,15 @@ class Task extends AppModel {
     
     //------------------------------
     public function get($task_id) {
-        $this->contain();
-        $task = $this->findById($task_id);
+        $this->contain('Tag.name');
+        $result = $this->find('first', 
+                        array(
+                            'conditions' => array(
+                                'Task.id' => $task_id, 
+                            ),
+                            'fields' => $this->_taskFields,
+                        ));
+        $task[$this->alias] = $result[$this->alias];
         if ($task) {
             $this->_originData = $task;
             $this->set($task);
@@ -450,6 +464,10 @@ class Task extends AppModel {
 
     public function beforeSave() {
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
+        //check and add tags
+        if(isset($this->data[$this->alias]['title'])){
+            $this->_checkTags($this->data[$this->alias]['title'], 'title');
+        }
         if( $this->_isCreateFuture() ) {
             return $this->_changeOrderAfterCreateFuture();
         }
@@ -676,7 +694,7 @@ class Task extends AppModel {
     }
 
     public function getAllExpired($user_id) {
-        $this->contain();
+        $this->contain('Tag');
         return $this->find('all', 
                         array(
                             'order' => array(
@@ -695,7 +713,7 @@ class Task extends AppModel {
     
     public function getAllOverdue($user_id) {
         $result = array();
-        $this->contain();
+        $this->contain('Tag');
         $tasks = $this->find('all', 
                         array(
                             'order' => array(
@@ -721,7 +739,7 @@ class Task extends AppModel {
     
     public function getAllCompleted($user_id) {
         $result = array();
-        $this->contain();
+        $this->contain('Tag');
         $tasks = $this->find('all', 
                         array(
                             'order' => array(
@@ -747,7 +765,7 @@ class Task extends AppModel {
 
     public function getAllDeleted($user_id) {
         $result = array();
-        $this->contain();
+        $this->contain('Tag');
         $tasks = $this->find('all', 
                         array(
                             'order' => array(
@@ -771,7 +789,7 @@ class Task extends AppModel {
     }
     
     public function getAllFuture($user_id) {
-        $this->contain();
+        $this->contain('Tag');
         return $this->find('all', 
                         array(
                             'order' => array(
@@ -798,7 +816,7 @@ class Task extends AppModel {
             $days = array_merge($days, $arrDays);
             $days = array_unique($days);
         }
-        $this->contain();
+        $this->contain('Tag');
         $result = $this->find('all', 
                             array(
                                 'order' => array(
@@ -813,7 +831,7 @@ class Task extends AppModel {
                                                'Task.date'=> '0000-00-00'
                                               )
                                 ),
-                                'fields' => $this->_taskFields,
+                                //'fields' => $this->_taskFields,
                             ));
         foreach ( $days as $v ) {
             $data[$v] = array();
@@ -836,7 +854,7 @@ class Task extends AppModel {
 
     public function getTasksForDay($user_id, $date) {
         $this->_setDayToConfig($user_id, $date);
-        $this->contain();
+        $this->contain('Tag');
         return $this->find('all', 
                         array(
                             'order' => array(
@@ -891,7 +909,7 @@ class Task extends AppModel {
             $save = $this->save();
             if (is_array($save)){
                 foreach($save[$this->alias] as $key => $value){
-                    if(!in_array($key, $this->_taskFields)){
+                    if(!in_array($key, $this->_taskFieldsSave)){
                         unset($save[$this->alias][$key]);
                     }
                 }
@@ -901,5 +919,8 @@ class Task extends AppModel {
                 return false;
             }
     }
+    
+    //----------------------------------------------------
+   
 
 }

@@ -21,7 +21,8 @@ class NotesController extends AppController {
     	    $result[] = new NoteObj($note);
         }    
         
-    	$this->set('result', $result);
+    	
+        $this->set('result', $result);
         $this->set('_serialize', 'result');
     
     }

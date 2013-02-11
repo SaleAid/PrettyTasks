@@ -33,7 +33,7 @@
         <?php endif;?>
 
       <div class="nav-collapse">
-        <ul class="nav">
+        <ul class="nav top">
           <li class="<? if( isset($this->params['pass'][0]) and $this->params['pass'][0] == "contacts" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __d('pages', 'Contact'),

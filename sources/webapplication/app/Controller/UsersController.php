@@ -6,18 +6,18 @@ class UsersController extends AppController {
 
     public $components = array(
         'Captcha',
-        'Recaptcha.Recaptcha' => array(
-            'actions' => array(
-                'register', 
-                'password_resend' 
-            )
-        )
+        //'Recaptcha.Recaptcha' => array(
+//            'actions' => array(
+//                'register', 
+//                'password_resend' 
+//            )
+//        )
     );
     public $layout = 'profile';
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('login', 'register', 'activate', 'password_resend', 'password_reset', 'reactivate', 'captcha');
+        $this->Auth->allow('login', 'register', 'activate', 'password_resend', 'password_reset', 'reactivate', 'captcha', 'checkVK');
         if ($this->Auth->loggedIn() and in_array($this->params['action'], array(
             'login', 
             'register', 
@@ -35,7 +35,7 @@ class UsersController extends AppController {
     public function isAuthorized($user) {
         return true;
     }
-
+    
     public function login() {
         
         $this->layout = 'default';
@@ -116,6 +116,7 @@ class UsersController extends AppController {
                         'password_confirm'  => $this->request->data[$this->modelClass]['password_confirm'],
                         'language'          => Configure::read('Config.language')
                     );
+                    
                 if ($this->Captcha->validateCaptcha() and $this->User->register($saveData)) {
                     //TODO Application is crashed if email is not sent. 
                     //TODO Need to use try catch to catch the exception?
@@ -152,10 +153,12 @@ class UsersController extends AppController {
                     'class' => 'alert-success'
                 ));
                 $this->Auth->login($result[$this->modelClass]);
-                $this->redirect($this->Auth->redirect());
+                $this->redirect($this->Auth->redirectUrl());
             }
         }
-        $this->Session->setFlash(__d('users', 'Invalid key'));
+        $this->Session->setFlash(__d('users', 'Invalid key'), 'alert', array(
+                    'class' => 'alert-error'
+                ));
         $this->redirect(array(
             'action' => 'login'
         ));

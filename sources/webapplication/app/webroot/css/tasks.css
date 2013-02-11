@@ -10,16 +10,17 @@
 .tab-content{
     float: right;
 }
-.listDay{
-   
-}
+
 .clear{clear: both;}
+
 .sortable { list-style-type: none; margin: 0; padding: 0;  }
+
 .label-info{
     padding: 6px 0;
 }
 
 .sortable li {
+    position: relative;
     width: 770px;
     background: none;
     height: 33px;
@@ -40,7 +41,7 @@
 .listTask h3 {
     padding-left: 10px;
 }  
-.listTask .label {
+.listTask .day {
     display: block;
 }
 #addDay{
@@ -48,7 +49,15 @@
     margin-right: 1px;
     margin-left: 1px;
     font-size: 15px;
-}  
+} 
+
+.tags{
+    margin-bottom: 2px;
+}
+
+.tags:hover{
+    cursor: pointer;
+}
 
 
 .s4{
@@ -136,7 +145,7 @@ div.well{
 .print{
     display: inline-block;
     float: right;
-    margin: 4px 7px 4px 0;
+    margin: 7px 7px 4px 0;
 }
 .print:hover, .help:hover{
     cursor: pointer;
@@ -152,29 +161,37 @@ div.well{
 }
 
 .editable{
+    margin-left: 5px;
     display: inline-block;
     width: 590px;
     text-align: left;
     font-family: arial,sans-serif;
-    /*font-weight: bold;*/
     font-size: 100%;
-    overflow:hidden;
+    overflow: hidden;
     height:  33px !important;
-    line-height: 33px;
-    border: 0 !important;  
-    margin: 0 !important;
-    padding: 0 !important;
+    line-height: 35px;
 }
 
-.editable:hover{cursor: text;}
+.editable:hover{
+    cursor: text;
+    border: none!important;
+}
 
-.editable form, .editable input {
-    height: 26px !important;
-    width: 586px !important;
-    border: 0 !important;  
-    margin: 0 0 0 1px !important;
-    padding: 0 !important;
+.editable form {
+    margin: 0;
+    padding: 0;
     color: blue;
+}
+.editable input{
+    margin-left: 1px;
+    margin-bottom: 2px!important;
+    height: 25px !important;
+    width: 583px !important;
+    border: none!important;
+    background-color: #E3F9FB;
+}
+.editable input:focus{
+    outline: none;
 }
 
 .complete {
@@ -239,43 +256,7 @@ div.well{
     margin-left: 5px;
     width: 50px;
 }
-/*
-.errorEdit{
-    border-color: #B94A48!important;
-    background-color: #fff8f8 !important;
-}
-.errorEdit:focus {
-  border-color: #953b39!important;
-  -webkit-box-shadow: 0 0 6px #d59392!important;
-     -moz-box-shadow: 0 0 6px #d59392!important;
-          box-shadow: 0 0 6px #d59392!important;
-}
-.errorTooltip{
-    position: fixed;
-}
-.errorTooltip .tooltip-inner{
-    background-color: red;
-    
-}
-.tooltip.right .tooltip-arrow{ border-right-color: red;}
 
-/*jGrowl theme 
-div.jGrowl div.success {
-    background-color: #008040;
-    color: yellow;
-}
-div.jGrowl div.info {
-    background-color: #804040;
-    color: yellow;
-}
-div.jGrowl div.error {
-    background-color: red;
-    color: yellow;
-}
-div.jGrowl.custom {
-	right: 0px;
-	top: 25px;
-}*/
 .day{
     margin-top: 4px;
 }
@@ -367,19 +348,7 @@ div.jGrowl.custom {
     margin-top: 2px;
 }
 
-.head-list-info{
-    background-color:#d9edf7;
-    color:#3a87ad;
-    font-weight: normal;
-    font-size: 16px;
-    padding:0px 35px 0px 14px;
-    margin-bottom:18px;
-    text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
-    border:1px solid #bce8f1;
-    -webkit-border-radius:4px;
-    -moz-border-radius:4px;
-    border-radius:4px;
-}
+
 .daysButton .active a{
     background-color: white;
     background-image: none;
@@ -392,4 +361,13 @@ div.jGrowl.custom {
 .drop .btn-group{
     display: inline;
 }
+.tag-date{
+    position: absolute;
+    right: 100px;
+    top: 8px;
+}
 
+.tag-date:hover{
+    cursor: pointer;
+    color: black;
+}

@@ -46,7 +46,7 @@ class Account extends AppModel {
     protected function _getDataFromProvider($userProfile){
         $data = array();
         $data['identity'] = $userProfile->identity;
-        $data['uid'] = $userProfile->uid;
+        $data['uid'] = isset($userProfile->uid) ? $userProfile->uid : '';
         $data['identity'] = $userProfile->identity;
         $data['first_name'] = isset($userProfile->name->first_name) ? $userProfile->name->first_name : '';
         $data['last_name'] = isset($userProfile->name->last_name) ? $userProfile->name->last_name : '';
@@ -93,7 +93,7 @@ class Account extends AppModel {
             $data = $this->$providerMethod($data);
         }
         
-        $result = $this->findByUidAndProvider($data['uid'], $data['provider']);
+        $result = $this->findByIdentityAndProvider($data['identity'], $data['provider']);
         if (! $result) {
             $data['status'] = 'newUser';//TODO Are u sure this is the good status? Maybe better use numeric values? 
             return $data;
