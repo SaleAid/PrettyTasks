@@ -49,15 +49,16 @@ class Day extends AppModel {
 							'message' => 'Максимальная длина комментария не больше %d символов'
 					)
 			),
-            'rating' => array(
-                'boolean' => array(
-                    'rule' => array(
-                        'boolean'
-                    )
-                )
-            )
- 	);
-
+			'rating' => array(
+					'boolean' => array(
+							'rule' => array(
+									'boolean'
+							),
+							'allowEmpty' => true
+					)
+			)
+	);
+	
 	// The Associations below have been created with all possible keys, those
 	// that are not needed can be removed
 	
@@ -214,13 +215,16 @@ class Day extends AppModel {
 	 *        	default = 10
 	 * @return Ambigous <multitype:, NULL, mixed>
 	 */
-	public function getComments($user_id, $count = 10) {//Rewrite syntax, add $to & $from
+	public function getComments($user_id, $count = 10, $toDate = null, $fromDate = null) { // Rewrite syntax, add $to & $from
+		if (!$toDate){
+			$toDate = date("Y-m-d");
+		}
 		$this->contain();
 		$result = $this->find('all', array(
 				'conditions' => array(
 						'Day.user_id' => $user_id,
 						'Day.comment !=' => '',
-						'Day.date <=' => date("Y-m-d")
+						'Day.date <=' => $toDate
 				),
 				'fields' => $this->_dayFields,
 				'order' => array(

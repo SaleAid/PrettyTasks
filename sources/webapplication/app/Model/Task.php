@@ -39,7 +39,8 @@ class Task extends AppModel {
 			'maxLength' => array(
                 'rule'    => array('maxLength', 36),
                 'message' => 'Wrong ID',
-            )
+            ),
+        	'uuid'
         ), 
         'title' => array(
             'notempty' => array(

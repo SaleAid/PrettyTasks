@@ -45,63 +45,39 @@ class TaskTestCase extends CakeTestCase {
      */
     public function testIsOwner() {
         //Test false
-        $task_id = 1;
-        $user_id = 2;
+        $task_id = '51228719-0bb4-446c-8319-3259b43b9fe0';
+        $user_id = '510ff517-ba68-4b27-86f5-2651b43b9fe1';
         $task = $this->Task->isOwner($task_id, $user_id);
         $this->assertFalse($task);
         //Test false
-        $task_id = 7;
-        $user_id = 2;
+        $task_id = '51228719-0bb4-446c-8319-3259b43b9fe0';
+        $user_id = '510ff517-ba68-4b27-86f5-2651b43b9fe0';
         $task = $this->Task->isOwner($task_id, $user_id);
-        $this->assertFalse($task);
-        //Test true
-        $task_id = 1;
-        $user_id = 1;
         $expected['Task'] = array(
-            'id' => 1, 
-            'user_id' => 1, 
-            'title' => 'Lorem ipsum dolor sit amet', 
-            'date' => '2012-05-13', 
-            'time' => '23:38:38', 
-            'timeend' => '23:38:38', 
-            'datedone' => '2012-05-13 23:38:38', 
-            'order' => 1, 
-            'done' => 1, 
-            'future' => 1, 
-            'repeatid' => 1, 
-            'transfer' => 1, 
-            'priority' => 1, 
-            'day_id' => 1, 
-            'dateremind' => '2012-05-13', 
-            'created' => '2012-05-13 23:38:38', 
-            'modified' => '2012-05-13 23:38:38'
+			'id' => '51228719-0bb4-446c-8319-3259b43b9fe0',
+			'user_id' => '510ff517-ba68-4b27-86f5-2651b43b9fe0',
+			'title' => 'Lorem ipsum dolor sit amet',
+			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+			'date' => '2013-02-18',
+			'time' => '19:55:05',
+			'timeend' => '19:55:05',
+			'datedone' => '2013-02-18 19:55:05',
+			'order' => '1',
+			'done' => '1',
+			'future' => '1',
+			'deleted' => '1',
+			'repeatid' => '1',
+			'transfer' => '1',
+			'priority' => '1',
+			'day_id' => 'Lorem ipsum dolor sit amet',
+			'dateremind' => '2013-02-18',
+			'created' => '2013-02-18 19:55:05',
+			'modified' => '2013-02-18 19:55:05',
+        	'tags' => ''
         );
         $task = $this->Task->isOwner($task_id, $user_id);
         $this->assertEqual($task, $expected);
-        //Test true
-        $task_id = 3;
-        $user_id = 2;
-        $expected['Task'] = array(
-            'id' => 3, 
-            'user_id' => 2, 
-            'title' => 'Lorem ipsum dolor sit amet', 
-            'date' => '2012-05-13', 
-            'time' => '23:38:38', 
-            'timeend' => '23:38:38', 
-            'datedone' => '2012-05-13 23:38:38', 
-            'order' => 1, 
-            'done' => 1, 
-            'future' => 1, 
-            'repeatid' => 1, 
-            'transfer' => 1, 
-            'priority' => 1, 
-            'day_id' => 1, 
-            'dateremind' => '2012-05-13', 
-            'created' => '2012-05-13 23:38:38', 
-            'modified' => '2012-05-13 23:38:38'
-        );
-        $task = $this->Task->isOwner($task_id, $user_id);
-        $this->assertEqual($task, $expected);
+       
     }
 
     /**

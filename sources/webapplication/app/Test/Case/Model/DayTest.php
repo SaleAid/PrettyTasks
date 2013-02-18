@@ -300,7 +300,7 @@ class DayTestCase extends CakeTestCase {
 	public function test_getComments() {
 		$user_id = '510ff517-ba68-4b27-86f5-2651b43b9fe0';
 		$date = '2013-02-04';
-		$comments = $this->Day->getComments($user_id);
+		$comments = $this->Day->getComments($user_id, null, '2013-02-04');
 		$expected = array(
 				array(
 						'Day' => array(
@@ -328,7 +328,7 @@ class DayTestCase extends CakeTestCase {
 		$user_id = '510ff517-ba68-4b27-86f5-2651b43b9fe0';
 		$date = '2013-02-04';
 		$count = 1;
-		$comments = $this->Day->getComments($user_id, $count);
+		$comments = $this->Day->getComments($user_id, $count, '2013-02-04');
 		$expected = array(
 				array(
 						'Day' => array(
