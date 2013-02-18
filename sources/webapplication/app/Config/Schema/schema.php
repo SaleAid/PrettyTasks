@@ -138,8 +138,12 @@ class AppSchema extends CakeSchema {
 
 	public $goals = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'comment' => 'primary key', 'charset' => 'utf8'),
-		'description' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'Title of goal', 'charset' => 'utf8'),
+		'comment' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'fromdate' => array('type' => 'date', 'null' => true, 'default' => null),
 		'todate' => array('type' => 'date', 'null' => true, 'default' => null),
+		'datedone' => array('type' => 'datetime', 'null' => true, 'default' => null),
+		'done' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 1, 'comment' => 'Flag that goal is done'),
 		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
@@ -239,8 +243,8 @@ class AppSchema extends CakeSchema {
 	public $tasks = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'comment' => 'primary key', 'charset' => 'utf8'),
 		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'index', 'collate' => 'utf8_general_ci', 'comment' => 'reference to user', 'charset' => 'utf8'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100, 'collate' => 'utf8_general_ci', 'comment' => 'task\'s title', 'charset' => 'utf8'),
-		'comment' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'Title of task', 'charset' => 'utf8'),
+		'comment' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'date' => array('type' => 'date', 'null' => true, 'default' => null, 'key' => 'index', 'comment' => 'data and time for task'),
 		'time' => array('type' => 'time', 'null' => true, 'default' => null, 'comment' => 'Flag for check time, if not set, task has only date'),
 		'timeend' => array('type' => 'time', 'null' => true, 'default' => null),
