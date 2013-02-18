@@ -15,8 +15,7 @@ class DayTestCase extends CakeTestCase {
 	 */
 	public $fixtures = array(
 			'app.day',
-			'app.user',
-			'app.account'
+			'app.user'
 	);
 
 	/**
@@ -52,7 +51,7 @@ class DayTestCase extends CakeTestCase {
 		$day = $this->Day->isDayFound($user_id, '2013-02-04');
 		$this->assertTrue(! empty($day[$this->Day->alias]['id']));
 		$expected = array(
-				'Day' => array(
+				$this->Day->alias => array(
 						'id' => '510fcd9b-7858-455d-8316-1666b43b9fe0',
 						'user_id' => '510ff517-ba68-4b27-86f5-2651b43b9fe0',
 						'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
@@ -66,7 +65,7 @@ class DayTestCase extends CakeTestCase {
 		$this->assertFalse($day2);
 		
 		$expected = array(
-				'Day' => array(
+				$this->Day->alias => array(
 						'date' => '2013-02-03',
 						'user_id' => '510ff517-ba68-4b27-86f5-2651b43b9fe0',
 						'rating' => 0
@@ -175,7 +174,7 @@ class DayTestCase extends CakeTestCase {
 		$expected = array(
 				'2013-01-04' => array(
 						array( // Remove this array after fix
-								'Day' => array(
+								$this->Day->alias => array(
 										'id' => '510fcd9b-7858-455d-8316-1666b43b9fe3',
 										'user_id' => '510ff517-ba68-4b27-86f5-2651b43b9fe0',
 										'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
@@ -191,7 +190,7 @@ class DayTestCase extends CakeTestCase {
 		$expected = array(
 				'2013-01-04' => array(
 						array( // Remove this array after fix
-								'Day' => array(
+								$this->Day->alias => array(
 										'id' => '510fcd9b-7858-455d-8316-1666b43b9fe3',
 										'user_id' => '510ff517-ba68-4b27-86f5-2651b43b9fe0',
 										'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
@@ -202,7 +201,7 @@ class DayTestCase extends CakeTestCase {
 				),
 				'2013-01-05' => array(
 						array( // Remove this array after fix
-								'Day' => array(
+								$this->Day->alias => array(
 										'id' => '510fcd9b-7858-455d-8316-1666b43b9fe4',
 										'user_id' => '510ff517-ba68-4b27-86f5-2651b43b9fe0',
 										'comment' => null,
@@ -221,7 +220,7 @@ class DayTestCase extends CakeTestCase {
 		$expected = array(
 				'2013-01-04' => array(
 						array( // Remove this array after fix
-								'Day' => array(
+								$this->Day->alias => array(
 										'id' => '510fcd9b-7858-455d-8316-1666b43b9fe3',
 										'user_id' => '510ff517-ba68-4b27-86f5-2651b43b9fe0',
 										'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
@@ -232,7 +231,7 @@ class DayTestCase extends CakeTestCase {
 				),
 				'2013-01-05' => array(
 						array( // Remove this array after fix
-								'Day' => array(
+								$this->Day->alias => array(
 										'id' => '510fcd9b-7858-455d-8316-1666b43b9fe4',
 										'user_id' => '510ff517-ba68-4b27-86f5-2651b43b9fe0',
 										'comment' => null,
@@ -243,7 +242,7 @@ class DayTestCase extends CakeTestCase {
 				),
 				'2013-02-04' => array(
 						array( // Remove this array after fix
-								'Day' => array(
+								$this->Day->alias => array(
 										'id' => '510fcd9b-7858-455d-8316-1666b43b9fe0',
 										'user_id' => '510ff517-ba68-4b27-86f5-2651b43b9fe0',
 										'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
@@ -254,7 +253,7 @@ class DayTestCase extends CakeTestCase {
 				),
 				'2013-02-05' => array(
 						array( // Remove this array after fix
-								'Day' => array(
+								$this->Day->alias => array(
 										'id' => '510fcd9b-7858-455d-8316-1666b43b9fe2',
 										'user_id' => '510ff517-ba68-4b27-86f5-2651b43b9fe0',
 										'comment' => 'Comment for 2013-02-05. Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
@@ -303,17 +302,16 @@ class DayTestCase extends CakeTestCase {
 		$comments = $this->Day->getComments($user_id, null, '2013-02-04');
 		$expected = array(
 				array(
-						'Day' => array(
+						$this->Day->alias => array(
 								'id' => '510fcd9b-7858-455d-8316-1666b43b9fe0',
 								'user_id' => '510ff517-ba68-4b27-86f5-2651b43b9fe0',
 								'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 								'rating' => '1',
 								'date' => '2013-02-04'
 						)
-				)
-				,
+				),
 				array(
-						'Day' => array(
+						$this->Day->alias => array(
 								'id' => '510fcd9b-7858-455d-8316-1666b43b9fe3',
 								'user_id' => '510ff517-ba68-4b27-86f5-2651b43b9fe0',
 								'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
@@ -321,7 +319,6 @@ class DayTestCase extends CakeTestCase {
 								'date' => '2013-01-04'
 						)
 				)
-				
 		);
 		$this->assertEqual($comments, $expected);
 		//
@@ -331,14 +328,14 @@ class DayTestCase extends CakeTestCase {
 		$comments = $this->Day->getComments($user_id, $count, '2013-02-04');
 		$expected = array(
 				array(
-						'Day' => array(
+						$this->Day->alias => array(
 								'id' => '510fcd9b-7858-455d-8316-1666b43b9fe0',
 								'user_id' => '510ff517-ba68-4b27-86f5-2651b43b9fe0',
 								'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 								'rating' => '1',
 								'date' => '2013-02-04'
 						)
-				)		
+				)
 		);
 		$this->assertEqual($comments, $expected);
 	}
