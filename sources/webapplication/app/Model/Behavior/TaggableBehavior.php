@@ -50,6 +50,8 @@ class TaggableBehavior extends ModelBehavior {
 		'tagClass' => 'Tag',
 		'taggedAlias' => 'Tagged',
 		'taggedClass' => 'Tagged',
+        'userTagAlias' => 'UserTag',
+		'userTagClass' => 'UserTag',
 		'foreignKey' => 'foreign_key',
 		'associationForeignKey' => 'tag_id',
 		'cacheOccurrence' => true,
@@ -57,7 +59,8 @@ class TaggableBehavior extends ModelBehavior {
 		'unsetInAfterFind' => false,
 		'resetBinding' => false,
 		'taggedCounter' => false,
-		'deleteTagsOnEmptyField' => false
+		'deleteTagsOnEmptyField' => false,
+		'maxlengthTag' => 10
 	);
 
 /**
@@ -90,6 +93,10 @@ class TaggableBehavior extends ModelBehavior {
 		$model->$tagAlias->bindModel(array('hasMany' => array(
 			$taggedAlias => array(
 				'className' => $taggedClass))), $resetBinding);
+    
+        $model->$tagAlias->bindModel(array('belongsTo' => array(
+			$userTagAlias => array(
+				'className' => $userTagClass))), $resetBinding);
 	}
 
 /**
@@ -109,7 +116,7 @@ class TaggableBehavior extends ModelBehavior {
 			if (!empty($tag)) {
 				$key = $this->multibyteKey($model, $tag);
 				if ( !empty($key) ) {
-					$tags[] = array('name' => $tag, 'keyname' => $key);
+					$tags[] = array('name' => $key);
 				}
 			}
 		}
@@ -135,7 +142,9 @@ class TaggableBehavior extends ModelBehavior {
         if ( !empty($foreignKey) || $foreignKey === false ) {
 			$tagAlias = $this->settings[$model->alias]['tagAlias'];
 			$taggedAlias = $this->settings[$model->alias]['taggedAlias'];
+            $userTagAlias = $this->settings[$model->alias]['userTagAlias'];
 			$tagModel = $model->{$tagAlias};
+            $userTagModel = $tagModel->{$userTagAlias};
 
 			extract($this->disassembleTags($model, $tags));
             
@@ -145,7 +154,6 @@ class TaggableBehavior extends ModelBehavior {
 					'conditions' => array(
 						$tagAlias . '.name' => Set::extract($tags, '{n}.name')),
 					'fields' => array(
-						$tagAlias . '.keyname',
 						$tagAlias . '.name',
 						$tagAlias . '.id')));
                 if (!empty($existingTags)) {
@@ -168,6 +176,10 @@ class TaggableBehavior extends ModelBehavior {
 					$tagModel->create();
 					$tagModel->save($newTag);
 					$newTagIds[] = $tagModel->id;
+                    
+                    $userTagModel->create();
+					$userTagModel->save(array('tag_id' => $tagModel->id, 'user_id' => $user_id));
+                    
 				}
 
 				if ($foreignKey !== false) {
@@ -287,6 +299,7 @@ class TaggableBehavior extends ModelBehavior {
 		$str = str_replace('?', '', $str);
 		$str = trim($str);
 		$str = preg_replace('#\x20+#', '', $str);
+		$str = String::truncate($str, $this->settings[$model->alias]['maxlengthTag'], array('exact' => true, 'ellipsis' =>''));
 		return $str;
 	}
 
@@ -324,9 +337,9 @@ class TaggableBehavior extends ModelBehavior {
  * @param AppModel $model
  */
 	public function afterSave(Model $model, $created) {
-	    $user_id = $model->data[$model->alias]['user_id'];
-		$hasTags = !empty($model->data[$model->alias][$this->settings[$model->alias]['field']]);
+	    $hasTags = !empty($model->data[$model->alias][$this->settings[$model->alias]['field']]);
 		if ($this->settings[$model->alias]['automaticTagging'] == true && $hasTags) {
+			$user_id = $model->data[$model->alias]['user_id'];
 			$this->saveTags($model, $model->data[$model->alias][$this->settings[$model->alias]['field']], $model->id, $user_id);
 		} else if (!$hasTags && $this->settings[$model->alias]['deleteTagsOnEmptyField']) {
 			$this->deleteTagged($model);

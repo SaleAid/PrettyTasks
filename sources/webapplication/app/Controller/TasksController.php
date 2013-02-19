@@ -209,14 +209,19 @@ class TasksController extends AppController {
                 'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
-            if (! empty($this->request->data['date'])) {
+            
+            if (! empty($this->request->data['date']) && Validation::date($this->request->data['date'])) {
                 $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->saveTask();
             } else {
-                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], null, null, null, 0, 1)->saveTask();
+                $date = empty($this->request->data['date']) ? '' : ' #'.$this->request->data['date'];
+                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'] . $date, null, null, null, 0, 1)->saveTask();
             }
             if ($task) {
                 $result['success'] = true;
                 $result['data'] = $task;
+                if( isset($date) ){
+                    $result['data']['list'] = $this->request->data['date'];
+                }
                 $result['message'] = array(
                     'type' => 'success', 
                     'message' => __d('tasks', 'Задача успешно создана')
@@ -543,17 +548,21 @@ class TasksController extends AppController {
                 'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
-            $task = $this->Task->getTasksForDay($this->Auth->user('id'), CakeTime::format('Y-m-d', $this->request->data['date']));
+            if( $this->request->data['date'] =='planned' ){
+                $task = $this->Task->getAllFuture($this->Auth->user('id'));
+            }else{
+                $task = $this->Task->getTasksForDay($this->Auth->user('id'), CakeTime::format('Y-m-d', $this->request->data['date']));
+                $result['data']['day'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $this->request->data['date']);
+                $result['data']['weekDayStyle'] = ($result['data']['date'] > CakeTime::format('Y-m-d', time())) ? 'future' : 'past';    
+            }
+            
             $done = array_filter($task, create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;'));
             $result['data']['listCount']['all'] = count($task);
             $result['data']['listCount']['done'] = count($done);
             $result['success'] = true;
             $result['data']['list'] = $task;
             $result['data']['date'] = $this->request->data['date'];
-            //$result['data']['weekDay'] = $this->Task->getWeekDay(CakeTime::format('l', $this->request->data['date']));
-            //$result['data']['nameDay'] = CakeTime::format('l', $this->request->data['date']);
-            $result['data']['day'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $this->request->data['date']);
-            $result['data']['weekDayStyle'] = ($result['data']['date'] > CakeTime::format('Y-m-d', time())) ? 'future' : 'past';
+            
             $result['message'] = array(
                 'type' => 'success', 
                 'message' => __d('tasks', 'Задача успешно ...')

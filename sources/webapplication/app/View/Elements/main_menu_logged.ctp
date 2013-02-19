@@ -45,7 +45,7 @@
           <li class="lists <? //if($this->params['action'] == "index" and strtolower($this->params['controller']) == "lists") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __d('pages', 'Lists'),
-                    array('controller' => 'tasks', 'action' => 'index', '#' => 'list')
+                    array('controller' => 'tasks', 'action' => 'index', '#' => 'lists')
                 ); ?>  
           </li>
           <?php endif;?>

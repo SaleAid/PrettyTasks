@@ -73,7 +73,7 @@ class DaysController extends AppController {
                     'message' => __d('days', 'Изменение успешно сохранено')
                 );    
             }else{
-                $result['errors'] = $this->Day->invalidFields();
+                $result['errors'] = $this->Day->validationErrors;
                     $result['message'] = array(
                         'type' => 'error', 
                         'message' => __d('days', 'Ошибка при сохранении комментария'),

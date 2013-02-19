@@ -32,6 +32,7 @@
 <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
         <ul class="nav nav-tabs listDay">
             <li class="hide"><a href="#lists" data-toggle="tab" date="lists"><?php echo __d('tasks', 'Lists'); ?></a></li>
+            <li class="hide"><a href="#list" data-toggle="tab" date="list"><?php echo __d('tasks', 'List'); ?></a></li>
             <li class="addDay">
             <div class="btn-group">
                 <button  id="addDay" rel="tooltip" title="<?php echo __d('tasks', 'Добавить новый день в список'); ?>" class="btn btn-block btn-large"><?php echo __d('tasks', 'Добавить день'); ?></button>
@@ -205,6 +206,20 @@
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3 class="head-list-info"><span class="tag-name"><?php echo __d('tasks', 'Lists'); ?></span></h3>
                   </div>
+                        <div class="clear"></div>
+                        <ul class="lists" date="lists">
+                        </ul>
+                        <?php //echo $this->element('empty_lists', array('type' => 'lists', 'hide' => true));?>
+                    </div>
+                </div>
+          </div>
+          <div class="tab-pane" id="list">
+              <div class="row">
+                  <div class="listTask">
+                  <div class="margin-bottom10">
+                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
+                    <h3 class="head-list-info"><span class="tag-name"><?php echo __d('tasks', 'Lists'); ?></span></h3>
+                  </div>
                         <div class="well form-inline">
                             <div class="input-append">
                                 <input type="text" size="16" class="input-xxlarge createTask" placeholder="<?php echo __d('tasks', '+Добавить задание…'); ?>"/>
@@ -225,10 +240,10 @@
                             
                         </div>
                         <div class="days">
-                            <a href="" data="commentDay"><?php echo __d('tasks', 'Комментарий'); ?></a>
+                            <a href="" data="commentTag"><?php echo __d('tasks', 'Комментарий'); ?></a>
                         </div>
                         <div class="clear"></div>
-                        <ul class="sortable connectedSortable ui-helper-reset filtered" date="lists">
+                        <ul class="sortable connectedSortable ui-helper-reset filtered" date="list">
                         </ul>
                         <?php //echo $this->element('empty_lists', array('type' => 'lists', 'hide' => true));?>
                     </div>

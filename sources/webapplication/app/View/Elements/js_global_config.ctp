@@ -11,7 +11,8 @@
         moveForbiddenMessage: '<?php echo __d('tasks', 'Перемещение запрещено') ;?>',
         moveCompletedForbiddenMessage: '<?php echo __d('tasks', 'Перемещение выполненых задач запрещено') ;?>',
         deleteAll: '<?php echo  __d('tasks', 'Are you sure you want to delete all tasks?') ;?>',
-        yesterday: '<?php echo __d('tasks', 'Yesterday'); ?>'
+        yesterday: '<?php echo __d('tasks', 'Yesterday'); ?>',
+        planned: '<?php echo __d('tasks', 'Планируемые'); ?>'
     };
     
 </script>

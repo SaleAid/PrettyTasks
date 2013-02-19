@@ -208,6 +208,12 @@ function userEvent(action, data){
         case 'setCommentDay':
             taskSetCommentDay(data.date, data.comment);
         break;
+        case 'getCommentTag':
+            taskGetCommentTag(data.tag);
+        break;
+        case 'setCommentTag':
+            taskSetCommentTag(data.tag, data.comment);
+        break;
         case 'getTasksByType':
             taskGetTasksByType(data.type);
         break;
@@ -216,6 +222,9 @@ function userEvent(action, data){
         break;
         case 'getListByTag':
             taskGetListByTag(data.tag);
+        break;
+        case 'getLists':
+            taskGetLists();
         break;
                     
     }
@@ -262,6 +271,12 @@ function responseHandler(data){
         case 'setCommentDay':
             onSetCommentDay(data);
         break;
+        case 'getCommentTag':
+            onGetCommentTag(data);
+        break;
+        case 'setCommentTag':
+            onSetCommentTag(data);
+        break;
         case 'getTasksByType':
             onGetTasksByType(data);
         break;
@@ -271,14 +286,56 @@ function responseHandler(data){
         case 'getListByTag':
             onGetListByTag(data);
         break;
+        case 'getLists':
+            onGetLists(data);
+        break;
     }
 
 }
 
+//---------------getLists-------------
+function taskGetLists(){
+    $('#lists').find('ul[date="lists"]').empty().append(_.template($("#ajax_loader_content").html()));
+    srvGetLists();
+}
+
+function srvGetLists(){
+    superAjax('/lists/getlists.json');
+}
+
+function scrGetLists(data){
+    $list = $('#lists');
+    $listUl = $list.find('ul[date="lists"]');
+    $listUl.empty();
+    if(!data){return;}
+    $.each( data, function(index, value) {
+            $listUl.append('<li><span class="tags label label-important" data-tag="'+value+'">&#x23;'+value+'</span></li>');
+    });
+}
+
+function onGetLists(data){
+    $('#lists .row').show();
+    if(!data.success){
+        $('#lists .row').hide();
+        mesg(data.message.message, data.message.type); 
+    }else{
+        $('#lists .row').find('ul[date="lists"]').hide('blind', 100, function(){
+            $(this).empty();
+            scrGetLists(data.data);
+            $(this).show('fade', 200);
+        });
+    }
+}
+
 //---------------getListByTag---------
 function taskGetListByTag(tag){
-    $('#lists').find('ul[date="lists"]').empty().append(_.template($("#ajax_loader_content").html()));
-    srvGetListByTag(tag);
+    if(tag){
+        $('#list').find('ul[date="list"]').empty().append(_.template($("#ajax_loader_content").html()));
+        srvGetListByTag(tag);    
+    } else {
+        taskGetLists();
+    }
+    
 }
 
 function srvGetListByTag(tag){
@@ -286,73 +343,84 @@ function srvGetListByTag(tag){
 }
 
 function scrGetListByTag(data){
-    $list = $('#lists');
-    $list.find('.tag-name').text(location.hash.slice(6));
-    $listUl = $list.find('ul[date="lists"]');
-    $listUl.attr('data-tag', location.hash.slice(6));
+    $list = $('#list');
+    $list.find('.tag-name').text(data.tag);
+    $listUl = $list.find('ul[date="list"]');
+    $listUl.attr('data-tag', data.tag);
+    $listUl.data('tag', data.tag);
+    window.location.hash= 'list-'+data.tag;
     var alltasks = 0;
     var donetasks = 0;
-    if(!data){return;}
-    $.each( data, function(index, task) {
+    if(!data.tasks){return;}
+    $.each( data.tasks, function(index, task) {
             alltasks++;
-            liClass = '';
-            done = '';
-            time = '';
-            timeend = '';
-            comment_status ='';
-            date = '';
-            comment = task.Task.comment;
-            if(task.Task.time != null){
-                time = task.Task.time.slice(0,-3);
-                liClass += ' setTime'
-            }
-            if(task.Task.timeend != null){
-                timeend = task.Task.timeend.slice(0,-3);
-            }
-            if (+task.Task.done){
-                liClass +=' complete';
-                done = 'checked';
+            if (+task.done){
                 donetasks++;
             }
-            if (+task.Task.priority){
-                liClass +=' important';    
-            }
-            if (!task.Task.comment || task.Task.comment == null){
-                comment_status =' hide';
-                comment = '';    
-            }
-            if (task.Task.date != null){
-                date = task.Task.date;    
-            }
-            title = wrapTags(task.Task.title, task.Task.tags);
-            tmp_task = _.template($("#task_tag").html(), {
-                                      id: task.Task.id,
-                                      date: date, 
-                                      liClass: liClass,
-                                      time: time,
-                                      timeend: timeend,
-                                      checked: done,
-                                      title: title,
-                                      comment: comment,
-                                      comment_status: comment_status
-            });
-            
+            tmp_task = addTagToList(task);
             $listUl.append(tmp_task);
-            initDelete($listUl.find("li[id='"+task.Task.id+"'] .deleteTask"));
-            initEditAble($listUl.find("li[id='"+task.Task.id+"'] .editable"));   
+            initDelete($listUl.find("li[id='"+task.id+"'] .deleteTask"));
+            initEditAble($listUl.find("li[id='"+task.id+"'] .editable"));   
     });
     $listUl.siblings('.filter').find('span.all').text(alltasks);
     $listUl.siblings('.filter').find('span.inProcess').text(alltasks - donetasks);
     $listUl.siblings('.filter').find('span.completed').text(donetasks);
     
 }
+
+function addTagToList(task){
+        liClass = '';
+        done = '';
+        time = '';
+        timeend = '';
+        comment_status ='';
+        date = '';
+        comment = task.comment;
+        if(task.time != null){
+            time = task.time.slice(0,-3);
+            liClass += ' setTime'
+        }
+        if(task.timeend != null){
+            timeend = task.timeend.slice(0,-3);
+        }
+        if (+task.done){
+            liClass +=' complete';
+            done = 'checked';
+        }
+        if (+task.priority){
+            liClass +=' important';    
+        }
+        if (!task.comment || task.comment == null){
+            comment_status =' hide';
+            comment = '';    
+        }
+        if (task.date != null){
+            date = task.date;    
+        }
+        title = wrapTags(task.title, task.tags);
+        return _.template($("#task_tag").html(), {
+                                  id: task.id,
+                                  date: date, 
+                                  liClass: liClass,
+                                  time: time,
+                                  timeend: timeend,
+                                  checked: done,
+                                  title: title,
+                                  comment: comment,
+                                  comment_status: comment_status
+        });
+}
 function onGetListByTag(data){
-    $('#lists .row').show();
+    $('#list .row').show();
     if(!data.success){
-        $('#lists .row').hide();
-        mesg(data.message.message, data.message.type); 
+        $('#list .row').hide();
+        //mesg(data.message.message, data.message.type);
+        window.location.hash= 'lists';
+        $('.lists').addClass('active');
+        userEvent('getLists');
+        activeTab('lists');
     }else{
-        $('#lists .row').find('ul[date="lists"]').hide('blind', 100, function(){
+        $('#list .row').find('ul[date="list"]').hide('blind', 100, function(){
             $(this).empty();
             scrGetListByTag(data.data);
             $(this).show('fade', 200);
@@ -555,6 +623,55 @@ function srcCountTasks(date, drop){
             $(value).siblings('.emptyList').addClass('hide');
         }
     });
+}
+
+//---------------setCommnetTag-----
+function taskSetCommentTag(tag, comment){
+    srvSetCommentTag(tag, comment);    
+}
+
+function srvSetCommentTag(tag, comment){
+    superAjax('/lists/setCommentTag.json',{tag: tag, comment: comment});
+}
+
+function scrSetCommentTag(tag){
+	$('#commentDay').data('tag', null).attr('data-tag', null);
+	
+    $('#eCommentDay').text(null);
+    $('#commentDay').modal('hide');
+    
+}
+function onSetCommentTag(data){
+    
+    if(data.success){
+        scrSetCommentTag(data);
+    }else{
+        mesg(data.message.message, data.message.type);
+        scrErrorSetCommentDay(data.errors);
+    }
+}
+//---------------getCommnetTag-----
+function taskGetCommentTag(tag){
+    srvGetCommentTag(tag);    
+}
+
+function srvGetCommentTag(tag){
+    superAjax('/lists/getCommentTag.json',{tag: tag});
+}
+
+function scrGetCommentTag(data){
+	$('#commentDay').data('tag', data.tag).attr('data-tag', data.tag);
+	$('#eCommentDay').val(data.comment);
+    $('#commentDay').modal('show');
+    
+        
+}
+function onGetCommentTag(data){
+	if(!data.success){
+        mesg(data.message.message, data.message.type); 
+    }
+    
+    scrGetCommentTag(data.data);
 }
 
 //---------------setCommnetDay-----
@@ -906,6 +1023,10 @@ function toSeconds(t) {
     return bits[0]*3600 + bits[1]*60;
 }
 
+function _refreshDays(date){
+    refreshDays.push(date);
+    refreshDays = _.uniq(refreshDays);
+}
 
 function scrDragWithTime(id, date, time){
         var before = false;
@@ -915,9 +1036,15 @@ function scrDragWithTime(id, date, time){
         taskRemote.remove();
         task.removeClass('currentTask');
         if(task.find('.tag-date').length > 0) {
-            task.find('.tag-date').text(date);
-            refreshDays.push(currentTaskDate, date);
-            refreshDays = _.uniq(refreshDays);
+            var date_text = date;
+            task.attr('date', date);
+            if(!date){
+                date_text = GLOBAL_CONFIG.planned;
+                date ='planned';
+            }
+            task.find('.tag-date').text(date_text);
+            _refreshDays(date);
+            _refreshDays(currentTaskDate);
             return;
         }
         if(!date){
@@ -1180,9 +1307,13 @@ function srvCreate(title, date){
 }
 function scrCreate(data){
     date = data.data.Task.date;
-    if(data.data.Task.future){
+    if(data.data.list){
+            $("ul[data-tag='"+data.data.list+"']").prepend(addTagToList(data.data.Task));
+            _refreshDays('planned');
+            date = 'list';
+    } else if(data.data.Task.future){
         date = 'planned';
-        data.data.Task.date = '';    
+        data.data.Task.date = '';
         $("ul[date='"+date+"']").prepend(AddTask(data.data));
     } else {
         $("ul[date='"+date+"']").append(AddTask(data.data));    
@@ -1360,6 +1491,15 @@ function initCommentDay(element){
     });
 }
 
+function initCommentTag(element){
+    $(document).on("click", element, function(){
+        var tag = $(this).parent().siblings('ul:first').data('tag');
+        userEvent('getCommentTag', {tag: tag});
+        return false;
+    });
+}
+
+
 function initCreateTask(element){
     $(element).on('keypress', function(e){
         var code = (e.keyCode ? e.keyCode : e.which);
@@ -1368,6 +1508,9 @@ function initCreateTask(element){
             var date = $(this).parent().parent().siblings("ul").attr('date');
             if(date == 'planned'){
                 date = '';
+            }
+            if(date == 'list'){
+                date = $(this).parent().parent().siblings("ul").data('tag');
             }
             userEvent('create', {title: title, date: date });
             $(this).val(null);
@@ -1383,6 +1526,9 @@ function initCreateTaskButton(element){
         var date = $(this).parent().parent().siblings("ul").attr('date');
         if(date == 'planned'){
             date = '';
+        }
+        if(date == 'list'){
+                date = $(this).parent().parent().siblings("ul").data('tag');
         }
         userEvent('create', {title: title, date: date });
         $(this).parent().find('.createTask').val(null);
@@ -1402,7 +1548,7 @@ function initDrop(element){
                 var id = ui.draggable.attr('id');
                 var date = $(this).children( "a" ).attr( "date" )
                 var time = $.trim(ui.draggable.children('.time').text());
-                //if((date == ui.draggable.attr("date")) || (date == 'planned' && !ui.draggable.attr("date")) ){
+                
                 if((date == 'planned' && !ui.draggable.attr("date")) ){
                     mesg(GLOBAL_CONFIG.moveForbiddenMessage, 'success');
                     return false;   
@@ -1411,9 +1557,9 @@ function initDrop(element){
                     mesg(GLOBAL_CONFIG.moveCompletedForbiddenMessage, 'success');
                     return false;   
                 }
-                if(ui.draggable.children('.tag-date').length > 0 ){
-                   ui.draggable.children('.tag-date').remove(); 
-                }
+                //if(ui.draggable.children('.tag-date').length > 0 ){
+//                   ui.draggable.children('.tag-date').remove(); 
+//                }
                 if(isACopy) {
                     userEvent('clone', {id: id, date: date});
                     //return false;
@@ -1485,7 +1631,7 @@ function initSortable(element){
 function initTab(element){
     $(element).on('shown', function (e) {
     	var tab_id = $(this).attr('date');
-        if(tab_id == 'lists'){
+        if(tab_id == 'list' || tab_id == 'lists'){
             //window.location.hash= 'list';
         }else{
             var index = _.indexOf(refreshDays, tab_id);
@@ -1675,20 +1821,25 @@ $(function(){
                
      $(window).hashchange( function(e){
         if(location.hash != "") { 
-            var pattern_list=/^#list($|-.+)/;
-            var lists = pattern_list.test(location.hash);
-            if (lists ){
+            var pattern_list=/^#list(s$|-.+)/;
+            var list = pattern_list.test(location.hash);
+            if (list){
                 $('.nav.top li').removeClass('active');
-                $('.lists').addClass('active');
-                var tag = location.hash.slice(6);
-                userEvent('getListByTag', {tag: tag});
-                activeTab('lists');
+                if (location.hash == "#lists" ){
+                    $('.lists').addClass('active');
+                    userEvent('getLists');
+                    activeTab('lists');
+                }else{
+                    var tag = location.hash.slice(6);
+                    userEvent('getListByTag', {tag: tag});
+                    activeTab('list');    
+                }
+                
             } else{
                 var hash = location.hash.slice(5);
                 var aTab =  $('#main li.active a').attr('date');
                 if(hash == aTab) {return;}
                 if(isDate(hash)){
-                    console.log('ke');
                     hash = $.datepicker.formatDate('yy-mm-dd',$.datepicker.parseDate('yy-mm-dd', hash));
                     userEvent('addDay',{date: hash});
                 }else if(hash == "future" || hash == "expired" || hash == "completed" || hash == "deleted"){
@@ -1736,6 +1887,7 @@ $(function(){
     initTabDelte('li a[data-toggle="tab"] .close');
     initFilter('.filter a');
     initCommentDay('.days a[data="commentDay"]');
+    initCommentTag('.days a[data="commentTag"]');
     initDayClick('.day');
     initDayClick('.tag-date');
     
@@ -1796,8 +1948,13 @@ $(function(){
     
     $("#eCommentDaySave").click(function(){
             var date = $('#commentDay').attr('date');
+            var tag = $('#commentDay').data('tag');
             var comment = $('#eCommentDay').val();
-            userEvent('setCommentDay',{date: date, comment: comment });
+            if(tag){
+            	userEvent('setCommentTag',{tag: tag, comment: comment });
+            } else {
+            	userEvent('setCommentDay',{date: date, comment: comment });
+            }
     });
     
     //modal close 
@@ -1807,6 +1964,9 @@ $(function(){
     
     $('#commentDay').on('hidden', function () {
         scrErrorSetCommentDay();
+        $('#commentDay').removeAttr('date');
+        $('#commentDay').data('tag', null).attr('data-tag', null);
+    	
     });
     
     $('#commentDay textarea, #editTask input, #editTask textarea').change(function () {

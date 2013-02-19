@@ -26,7 +26,11 @@ class Tag extends AppModel {
 	public $hasMany = array(
 		'Tagged' => array(
 			'className' => 'Tagged',
-			'foreignKey' => 'tag_id'));
+			'foreignKey' => 'tag_id'),
+		'UserTag' => array(
+			'className' => 'UserTag',
+			'foreignKey' => 'tag_id')
+	);
 
 /**
  * HABTM associations
@@ -34,6 +38,7 @@ class Tag extends AppModel {
  * @var array $hasAndBelongsToMany
  */
 	public $hasAndBelongsToMany = array();
+	
 
 /**
  * Validation rules
@@ -42,24 +47,7 @@ class Tag extends AppModel {
  */
 	public $validate = array(
 		'name' => array('rule' => 'notEmpty'),
-		'keyname' => array('rule' => 'notEmpty'));
-
-/**
- * Returns the data for a single tag
- *
- * @param string keyname
- * @return array
- */
-	public function view($keyName = null) {
-		$result = $this->find('first', array(
-			'conditions' => array(
-				$this->alias . '.keyname' => $keyName)));
-
-		if (empty($result)) {
-			throw new CakeException(__d('tags', 'Invalid Tag.'));
-		}
-		return $result;
-	}
+	);
 
 
 /**
@@ -68,17 +56,23 @@ class Tag extends AppModel {
  * @param array post data, should be Contoller->data
  * @return boolean
  */
-	public function add($postData = null) {
-	   	if (isset($postData[$this->alias]['tags'])) {
-			$this->Behaviors->attach('Taggable', array(
-				'resetBinding' => true,
-				'automaticTagging' => false));
-			$this->Tag = $this;
-			$result = $this->saveTags($postData[$this->alias]['tags'], false, false);
-			unset($this->Tag);
-			$this->Behaviors->detach('Taggable');
-			return $result;
-		}
+	public function add($tag) {
+                if (!empty($tag)) {
+                        $tag = $this->multibyteKey($tag);
+                        return $this->save(array('name' => $tag));
+                }
+        }
+        
+	public function multibyteKey($string = null) {
+		$str = mb_strtolower($string);
+		$str = preg_replace('/\xE3\x80\x80/', ' ', $str);
+		$str = str_replace(array('_', '-'), '', $str);
+		$str = preg_replace( '#[:\#\*"()~$^{}`@+=;,<>!&%\.\]\/\'\\\\|\[]#', "\x20", $str );
+		$str = str_replace('?', '', $str);
+		$str = trim($str);
+		$str = preg_replace('#\x20+#', '', $str);
+		$str = String::truncate($str, 10, array('exact' => true, 'ellipsis' =>''));
+		return $str;
 	}
 
 /**
