@@ -139,10 +139,10 @@ class AppSchema extends CakeSchema {
 	public $goals = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'comment' => 'primary key', 'charset' => 'utf8'),
 		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'Title of goal', 'charset' => 'utf8'),
+        'title' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'Title of goal', 'charset' => 'utf8'),
 		'comment' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'fromdate' => array('type' => 'date', 'null' => true, 'default' => null),
-		'todate' => array('type' => 'date', 'null' => true, 'default' => null),
+        'fromdate' => array('type' => 'date', 'null' => true, 'default' => null),
+        'todate' => array('type' => 'date', 'null' => true, 'default' => null),
 		'datedone' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'done' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 1, 'comment' => 'Flag that goal is done'),
 		'deleted' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 1),
@@ -228,15 +228,12 @@ class AppSchema extends CakeSchema {
 
 	public $tags = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'identifier' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 30, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'keyname' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'weight' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 2),
+		'name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 30, 'key' => 'unique', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'UNIQUE_TAG' => array('column' => array('identifier', 'keyname'), 'unique' => 1)
+			'UNIQUE_TAG' => array('column' => 'name', 'unique' => 1)
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
@@ -297,6 +294,17 @@ class AppSchema extends CakeSchema {
 			'email' => array('column' => 'email', 'unique' => 1),
 			'invite_token' => array('column' => 'invite_token', 'unique' => 1),
 			'username' => array('column' => array('username', 'password'), 'unique' => 0)
+		),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
+	);
+
+	public $users_tags = array(
+		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8', 'key' => 'primary'),
+		'tag_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'comment' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 10000, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'indexes' => array(
+			
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
