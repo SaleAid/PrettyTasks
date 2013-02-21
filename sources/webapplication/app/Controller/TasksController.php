@@ -548,6 +548,7 @@ class TasksController extends AppController {
                 'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
+            $result['data']['date'] = $this->request->data['date'];            
             if( $this->request->data['date'] =='planned' ){
                 $task = $this->Task->getAllFuture($this->Auth->user('id'));
             }else{
@@ -561,7 +562,7 @@ class TasksController extends AppController {
             $result['data']['listCount']['done'] = count($done);
             $result['success'] = true;
             $result['data']['list'] = $task;
-            $result['data']['date'] = $this->request->data['date'];
+            
             
             $result['message'] = array(
                 'type' => 'success', 

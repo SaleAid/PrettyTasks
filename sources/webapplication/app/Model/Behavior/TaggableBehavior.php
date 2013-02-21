@@ -59,7 +59,7 @@ class TaggableBehavior extends ModelBehavior {
 		'unsetInAfterFind' => false,
 		'resetBinding' => false,
 		'taggedCounter' => false,
-		'deleteTagsOnEmptyField' => false,
+		'deleteTagsOnEmptyField' => true,
 		'maxlengthTag' => 10
 	);
 
@@ -299,7 +299,7 @@ class TaggableBehavior extends ModelBehavior {
 		$str = str_replace('?', '', $str);
 		$str = trim($str);
 		$str = preg_replace('#\x20+#', '', $str);
-		$str = String::truncate($str, $this->settings[$model->alias]['maxlengthTag'], array('exact' => true, 'ellipsis' =>''));
+		$str = String::truncate($str, $model->{$this->settings[$model->alias]['tagAlias']}->maxLengthTag, array('exact' => true, 'ellipsis' =>''));
 		return $str;
 	}
 

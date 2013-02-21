@@ -309,7 +309,7 @@ function scrGetLists(data){
     $listUl.empty();
     if(!data){return;}
     $.each( data, function(index, value) {
-            $listUl.append('<li><span class="tags label label-important" data-tag="'+value+'">&#x23;'+value+'</span></li>');
+            $listUl.append('<li><span class="tags label label-important" data-tag="'+value+'">&#x23;'+value+'></span></li>');
     });
 }
 
@@ -1244,7 +1244,8 @@ function scrSetTitle(id, title_text, tags, priority){
     var $task = $("li[id='"+id+"'].currentTask");
     var title = $task.find('.editable');
     if($task.find('.tag-date').length > 0) {
-        if(_.indexOf(tags, $task.parent().data('tag') == -1)){
+        _refreshDays($task.attr('date'));
+        if(_.indexOf(tags, $task.parent().data('tag')) == -1){
             $task.addClass('need-remove');     
         }
     }

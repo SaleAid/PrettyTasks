@@ -14,11 +14,36 @@ class ListsController extends AppController {
     
     public function getlists(){
         $result['data'] =  Set::extract($this->UserTag->find('all', array(
-                        'contain' => 'Tag.name',
-                        'conditions' => array('UserTag.user_id =' => $this->Auth->user('id')),
-                            )
-                      ), '{n}.Tag.name');
+                                'contain' => array(
+                                        'Tag' => array(
+                                                'order' => 'Tag.name ASC',
+                                                'fields' => 'name'
+                                    )
+                                ),
+                                'conditions' => array('UserTag.user_id =' => $this->Auth->user('id')),
+                                )
+                          ), '{n}.Tag.name');
        
+        //$db = $this->UserTag->getDataSource();
+//        $res = $db->fetchAll(
+//            '
+//            select tagged.*, tags.* from tagged 
+//                    join users_tags on tagged.tag_id = users_tags.tag_id 
+//                    join tags on tagged.tag_id = tags.id
+//                    join users_tags on tagged.tag_id = tags.id 
+//                    where users_tags.user_id = ?
+//            ',
+//            array($this->Auth->user('id'))
+//        );
+//        $tags = Set::extract($res, '{n}.tags');
+//         pr($res1);
+//        foreach( $tags as $key => $value){
+//            //create_function('$v,$w','return max($v,is_array($w)? count($w): 1);')
+//            $value['tagged'] = count(array_filter($res, create_function('$val', 'return $val[\'tagged\'][\'tag_id\'] ==  "'. $value['tags']['id'].'";')));
+//            $res1[] = $value;
+//        }
+//        pr($res1);die;
+        
         $result['success'] = true;
         $result['action'] = 'getLists';
         $this->set('result', $result);
@@ -111,13 +136,16 @@ class ListsController extends AppController {
                  'user_id' => $this->Auth->user('id'),
                  'model' => 'Task')
             );
-            //$result['data'] = $tasks;
+            $resultTasks = $tasksId = array();
             foreach( $tasks as $key => $task){
                 if( !$task['Task']['deleted'] ){
-                    $task = $this->Task->read(null, $task['Task']['id']);
-                    $result['data']['tasks'][$key] = $task['Task'];    
+                    $tasksId[] = $task['Task']['id'];     
                 }
             }
+            if($tasksId){
+                $resultTasks = $this->Task->getTasksById($tasksId);
+            }
+            $result['data']['tasks'] = Set::extract($resultTasks, '{n}.Task');
             $result['success'] = true;
             $result['data']['tag'] = $tag;
         }

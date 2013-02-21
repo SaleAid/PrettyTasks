@@ -49,7 +49,8 @@ class Tag extends AppModel {
 		'name' => array('rule' => 'notEmpty'),
 	);
 
-
+    public $maxLengthTag = 30;
+    
 /**
  * Pre-populates the tag table with entered tags
  *
@@ -71,7 +72,7 @@ class Tag extends AppModel {
 		$str = str_replace('?', '', $str);
 		$str = trim($str);
 		$str = preg_replace('#\x20+#', '', $str);
-		$str = String::truncate($str, 10, array('exact' => true, 'ellipsis' =>''));
+		$str = String::truncate($str, $this->maxLengthTag, array('exact' => true, 'ellipsis' =>''));
 		return $str;
 	}
 

@@ -204,9 +204,20 @@ class Task extends AppModel {
         }
         return false;
     }
+    
+    public function getTasksById($tasksId) {
+        $this->contain('Tag.name');
+        return $this->find('all', 
+                        array(
+                            'conditions' => array(
+                                'Task.id' => $tasksId, 
+                            ),
+                            'fields' => $this->_taskFields,
+                        ));
+    }
 
     public function isOwner($task_id, $user_id) {
-        $this->contain();
+        $this->contain('Tag.name');
         $task = $this->findByIdAndUser_id($task_id, $user_id);
         if ($task) {
             $this->_originData = $task;
@@ -319,6 +330,13 @@ class Task extends AppModel {
 
     private function _isOrderChanged() {
         if ($this->_originData[$this->alias]['order'] != $this->data[$this->alias]['order'] and $this->_originData[$this->alias]['date'] == $this->data[$this->alias]['date']) {
+            return true;
+        }
+        return false;
+    }
+    
+    private function _isTitleChanged() {
+        if ( !isset($this->_originData[$this->alias]['title']) || $this->_originData[$this->alias]['title'] != $this->data[$this->alias]['title'] ) {
             return true;
         }
         return false;
@@ -467,8 +485,8 @@ class Task extends AppModel {
     public function beforeSave() {
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
         //check and add tags
-        if(isset($this->data[$this->alias]['title'])){
-            $this->_checkTags($this->data[$this->alias]['title'], 'title');
+        if( $this->_isTitleChanged() ){
+            $this->_checkTags('title');
         }
         if( $this->_isCreateFuture() ) {
             return $this->_changeOrderAfterCreateFuture();
@@ -915,6 +933,7 @@ class Task extends AppModel {
                         unset($save[$this->alias][$key]);
                     }
                 }
+                unset($save['Tag']);
                 return $save;
             }
             else{
