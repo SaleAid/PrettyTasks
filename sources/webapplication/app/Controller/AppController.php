@@ -108,10 +108,22 @@ class AppController extends Controller {
         //}
     }
     
-    public function beforeFilter() {
-        //$this->Auth->allow('captcha');
+    private function __userTimeZoneOffset(){
+        $timezone = $this->Auth->user('timezone');
         
-        //pr($this->request->params);die;
+        if (!$timezone) {
+            return;    
+        }
+        $dateTimeZoneServer = new DateTimeZone(Configure::read('Config.timezone'));
+        $dateTimeZoneUser = new DateTimeZone($timezone);
+        $dateTimeServer = new DateTime("now", $dateTimeZoneServer);
+        $dateTimeUser = new DateTime("now", $dateTimeZoneUser);
+        $timeOffset = $dateTimeZoneUser->getOffset($dateTimeServer);
+        return $timeOffset;
+    }
+    
+    public function beforeFilter() {
+        
         $this->_setLanguage();
         $this->__setTimeZone();
         $this->_checkMobile();
@@ -123,6 +135,7 @@ class AppController extends Controller {
         $this->set('isAuth', $this->Auth->loggedIn()); 
         $this->set('currentUser', $this->Auth->user());
         $this->set('provider', $this->Auth->user('provider'));
+        $this->set('timezone', $this->__userTimeZoneOffset());
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
         
