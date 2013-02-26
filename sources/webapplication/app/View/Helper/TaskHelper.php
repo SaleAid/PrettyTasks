@@ -28,7 +28,7 @@ class TaskHelper extends AppHelper {
         $pr_checked = $done ? ' checked' : '';
         $pr_comment_status = empty($comment) ? 'hide': '';
         
-        $str = '<li id ="'.$id.'" class="'. $liClass .'" date="'.$date .'">';
+        $str = '<li id ="'.$id.'" class="'. $liClass .'" date="'.$date .'" data-continued="'.$continued.'">';
             $str .= '<span class="time">'. $pr_time .'</span>';
             $str .= '<span class="timeEnd">'. $pr_timeend .'</span>';
             $str .= '<span class="move"><i class="icon-move"></i></span>';
@@ -43,8 +43,24 @@ class TaskHelper extends AppHelper {
         return $str;
     }
     
+    public function addTaskLi(){
+        $str =' <li id ="<%= id %>" class="<%= liClass %>" date="<%= date %>" data-continued="<%= continued %>">';
+            $str .= '<span class="time"><%= time %></span>';
+            $str .= '<span class="timeEnd"><%= timeend %></span>';
+            $str .= '<span class="move"><i class="icon-move"></i></span>';
+            $str .= '<input type="checkbox" class="done" value="1" <%= checked %>/>';
+            $str .= '<span class="editable"><%= title %></span>';
+            $str .= '<span class="commentTask"><%= comment %></span>';
+            $str .= '<span class="comment-task-icon"><i class="icon-file <%= comment_status %>"></i></span>';
+            $str .= '<span class="editTask"><i class="icon-pencil"></i></span>';
+            $str .= '<span class="deleteTask"><i class="icon-ban-circle"></i></span>';
+        $str .= '</li>';
+        
+        return $str;
+    }
+    
     public function taskLiTag(){
-        $str =' <li id ="<%= id %>" class="<%= liClass %>" date="<%= date %>">';
+        $str =' <li id ="<%= id %>" class="<%= liClass %>" date="<%= date %>" data-continued="<%= continued %>">';
             $str .= '<span class="time"><%= time %></span>';
             $str .= '<span class="timeEnd"><%= timeend %></span>';
             $str .= '<span class="move"><i class="icon-move"></i></span>';

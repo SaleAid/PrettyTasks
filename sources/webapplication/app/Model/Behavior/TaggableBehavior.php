@@ -60,7 +60,7 @@ class TaggableBehavior extends ModelBehavior {
 		'resetBinding' => false,
 		'taggedCounter' => false,
 		'deleteTagsOnEmptyField' => true,
-		'maxlengthTag' => 10
+		//'maxlengthTag' => 10
 	);
 
 /**

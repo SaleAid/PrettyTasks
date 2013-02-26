@@ -55,6 +55,7 @@
     margin-bottom: 2px;
 }
 
+
 .tags:hover{
     cursor: pointer;
 }
@@ -367,12 +368,39 @@ div.well{
     top: 8px;
 }
 
-.tag-date:hover{
+.tag-date:hover, .tags-list:hover{
     cursor: pointer;
-    color: black;
+    color: #C0EEF1;
 }
 .lists li{
     list-style: none;
     float: left;
     margin-right: 5px;
+}
+
+.tags-list{
+    margin-bottom: 2px;
+}
+.tags-list:hover .close-tag{
+    opacity: 0.2;
+    filter: alpha(opacity=0.2);
+}
+.close-tag{
+    margin-right: -2px;
+    margin-left: 5px;
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+    text-shadow: 0 1px 0 #ffffff;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.tags-list:hover .close-tag:hover{
+    opacity: 0.5;
+    filter: alpha(opacity=0.5);
+}
+
+.done-continued{
+    margin-left: 100px;
 }

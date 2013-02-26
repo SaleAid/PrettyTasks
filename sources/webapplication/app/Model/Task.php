@@ -112,6 +112,13 @@ class Task extends AppModel {
                 )
             )
         ),
+        'continued' => array(
+            'numeric' => array(
+                'rule' => array(
+                    'boolean'
+                )
+            )
+        ),
         'repeatid' => array(
             'numeric' => array(
                 'rule' => array(
@@ -171,9 +178,9 @@ class Task extends AppModel {
     );
     private $_originData = array();
     
-    private $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'deleted', 'done' ,'datedone', 'comment');
+    private $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'deleted', 'done' ,'datedone', 'continued', 'comment');
     
-    private $_taskFieldsSave = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'deleted', 'done' ,'datedone', 'comment', 'tags');
+    private $_taskFieldsSave = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'deleted', 'done' ,'datedone', 'continued', 'comment', 'tags');
     /**
      * set true if method 
      */
@@ -576,12 +583,13 @@ class Task extends AppModel {
         return false;
     }
 
-    public function setEdit($title, $priority, $comment=null, $date=null, $time=null, $timeEnd=null, $done=null){
+    public function setEdit($title, $priority, $continued=0, $comment=null, $date=null, $time=null, $timeEnd=null, $done=null){
         $this->setDate($date)
              ->setTime($time, $timeEnd)
              ->setDone($done)
              ->setTitle($title, $priority, false)
-             ->setCommnet($comment);
+             ->setCommnet($comment)
+             ->setContinued($continued);
         //$this->data = $this->_prepareTask($user_id, $title, $date, $time, $order, $priority, $future, $checktime);
         return $this;
     }
@@ -622,6 +630,11 @@ class Task extends AppModel {
         $this->data[$this->alias]['future'] = $future;
         return $this;
     }
+    public function setContinued($continued) {
+        $this->data[$this->alias]['continued'] = $continued;
+        return $this;
+    }
+    
 
     public function setTitle($title, $priority = null, $checkTime = true) {
         $this->data[$this->alias]['title'] = $title;
@@ -752,7 +765,7 @@ class Task extends AppModel {
                             'fields' => $this->_taskFields,
                         ));
         foreach($tasks as $item){
-            $result[$item['Task']['date']][] = $item;
+            $result[$item['Task']['date']][] = $item['Task'];
         }
         return $result;
     }
@@ -778,7 +791,7 @@ class Task extends AppModel {
                             'fields' => $this->_taskFields,
                         ));
         foreach($tasks as $item){
-            $result[$item['Task']['date']][] = $item;
+            $result[$item['Task']['date']][] = $item['Task'];
         }
         return $result;
     }
@@ -803,7 +816,7 @@ class Task extends AppModel {
                             'fields' => $this->_taskFields,
                         ));
         foreach($tasks as $item){
-            $result[$item['Task']['date']][] = $item;
+            $result[$item['Task']['date']][] = $item['Task'];
         }
         return $result;
     }
@@ -823,6 +836,29 @@ class Task extends AppModel {
                             ),
                             'fields' => $this->_taskFields,
                         ));
+    }
+    
+    public function getAllContinued($user_id) {
+        $this->contain('Tag');
+        $tasks = $this->find('all', 
+                        array(
+                            'order' => array(
+                                'Task.date' => 'ASC', 
+                                'Task.order' => 'ASC'
+                            ), 
+                            'conditions' => array(
+                                'Task.user_id' => $user_id, 
+                                'Task.continued' => 1,
+                                'Task.done' => 0,
+                                'Task.deleted' => 0,
+                                'Task.date <=' => date('Y-m-d', strtotime('+30 days'))
+                            ),
+                            'fields' => $this->_taskFields,
+                        ));
+        foreach($tasks as $item){
+            $result[$item['Task']['date']][] = $item['Task'];
+        }
+        return $result;
     }
 
     public function getDays($user_id, $from, $to, $arrDays = null) {
@@ -857,6 +893,7 @@ class Task extends AppModel {
             $data[$v] = array();
         }
         foreach($result as $item){
+            unset($item['Tag']);
             $data[$item['Task']['date']][] = $item;
         }
    

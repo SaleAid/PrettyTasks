@@ -112,6 +112,11 @@ class TasksController extends AppController {
                         $result['data'] = $this->Task->getAllDeleted($this->Auth->user('id'));
                         break;
                     }
+                case 'continued' :
+                    {
+                        $result['data'] = $this->Task->getAllContinued($this->Auth->user('id'));
+                        break;
+                    }
                 default :
                     {
                         $result['success'] = false;
@@ -502,7 +507,8 @@ class TasksController extends AppController {
             'date', 
             'time', 
             'timeEnd', 
-            'done', 
+            'done',
+            'continued', 
             'comment'
         );
         if (! $this->_isSetRequestData($expectedData)) {
@@ -513,7 +519,15 @@ class TasksController extends AppController {
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                $task = $this->Task->setEdit($this->request->data['title'], $this->request->data['priority'], $this->request->data['comment'], $this->request->data['date'], $this->request->data['time'], $this->request->data['timeEnd'], $this->request->data['done'])->saveTask();
+                $task = $this->Task->setEdit($this->request->data['title'], 
+                                             $this->request->data['priority'], 
+                                             $this->request->data['continued'],
+                                             $this->request->data['comment'], 
+                                             $this->request->data['date'], 
+                                             $this->request->data['time'], 
+                                             $this->request->data['timeEnd'], 
+                                             $this->request->data['done']
+                                             )->saveTask();
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;

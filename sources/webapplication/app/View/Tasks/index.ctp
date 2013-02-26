@@ -47,6 +47,7 @@
                             <li ><a href="#expired" data-toggle="tab"  date="expired" class="tab2"><?php echo __d('tasks', 'Просроченные'); ?></a></li>
                             <li ><a href="#completed" data-toggle="tab" date="completed"><?php echo __d('tasks', 'Завершенные'); ?></a></li>
                             <li ><a href="#future" data-toggle="tab" date="future" class="tab2"><?php echo __d('tasks', 'Будущие'); ?></a></li>
+                            <li ><a href="#continued" data-toggle="tab" date="continued" class="tab2"><?php echo __d('tasks', 'Длительные'); ?></a></li>
                             <li class="divider"></li>
                             <li ><a href="#deleted" data-toggle="tab" date="deleted" class="tab2"><?php echo __d('tasks', 'Удаленные'); ?></a></li>
                        </ul>
@@ -130,7 +131,7 @@
                 <span class="completed badge badge-success"><?php echo $result['data']['arrAllFutureCount']['done']; ?></span>
             </div>
             <div class="clear"></div>
-            <ul class="sortable connectedSortable ui-helper-reset filtered" date="planned">
+            <ul class="sortable connectedSortable ui-helper-reset filtered" date="planned" data-refresh="1">
                 <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])):?>
                     <?php foreach($result['data']['arrAllFuture'] as $item):?>
                         <?php echo $this->Task->taskLi($item['Task']);?>
@@ -148,7 +149,7 @@
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3 class="head-list-info"><?php echo __d('tasks', 'Просроченные задачи'); ?></h3>
                   </div>
-                    <ul class="sortable connectedSortable ui-helper-reset " date="expired">
+                    <ul class="sortable connectedSortable ui-helper-reset " date="expired" data-refresh="1">
                     </ul>
                     <?php echo $this->element('empty_lists', array('type' => 'overdue', 'hide' => true));?>
                    </div>
@@ -161,9 +162,22 @@
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3 class="head-list-info"><?php echo __d('tasks', 'Завершенные задачи'); ?></h3>
                   </div>
-                    <ul class=" ui-helper-reset " date="completed">
+                    <ul class=" ui-helper-reset " date="completed" data-refresh="1">
                     </ul>
                     <?php echo $this->element('empty_lists', array('type' => 'completed', 'hide' => true));?>
+                  </div>
+                </div>
+          </div>
+          <div class="tab-pane" id="continued">
+              <div class="row">
+                  <div class="listTask">
+                  <div class="margin-bottom10">
+                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
+                    <h3 class="head-list-info"><?php echo __d('tasks', 'Длительные задачи'); ?></h3>
+                  </div>
+                    <ul class="sortable connectedSortable ui-helper-reset " date="continued" data-refresh="1">
+                    </ul>
+                    <?php echo $this->element('empty_lists', array('type' => 'continued', 'hide' => true));?>
                   </div>
                 </div>
           </div>
@@ -180,7 +194,7 @@
                     
                     --></h3>
                   </div>
-                    <ul class="sortable connectedSortable ui-helper-reset " date="deleted">
+                    <ul class="sortable connectedSortable ui-helper-reset " date="deleted" data-refresh="1">
                     </ul>
                     <?php echo $this->element('empty_lists', array('type' => 'deleted', 'hide' => true));?>
                   </div>
@@ -193,7 +207,7 @@
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3 class="head-list-info"><?php echo __d('tasks', 'Будущие задачи'); ?></h3>
                   </div>
-                        <ul class="sortable connectedSortable ui-helper-reset " date="future">
+                        <ul class="sortable connectedSortable ui-helper-reset " date="future" data-refresh="1">
                         </ul>
                         <?php echo $this->element('empty_lists', array('type' => 'future', 'hide' => true));?>
                     </div>
@@ -243,7 +257,7 @@
                             <a href="" data="commentTag"><?php echo __d('tasks', 'Комментарий'); ?></a>
                         </div>
                         <div class="clear"></div>
-                        <ul class="sortable connectedSortable ui-helper-reset filtered" date="list">
+                        <ul class="sortable connectedSortable ui-helper-reset filtered" date="list" data-refresh="1">
                         </ul>
                         <?php //echo $this->element('empty_lists', array('type' => 'lists', 'hide' => true));?>
                     </div>
@@ -296,7 +310,7 @@
                             </label>
                         </div>
                         <div class="clear"></div>
-                        <ul id="sortable<?php echo $k; ?>" class="sortable connectedSortable ui-helper-reset filtered" date="<?php echo $k; ?>">
+                        <ul id="sortable-<?php echo $k; ?>" class="sortable connectedSortable ui-helper-reset filtered" date="<?php echo $k; ?>" data-refresh="0">
                             <?php foreach($v as $item):?>
                                 <?php echo $this->Task->taskLi($item['Task']);?>
                             <?php endforeach;?>
@@ -364,14 +378,17 @@
         </div>
         
         </div>
-              <div class="control-group">
-                <div class="controls">
-                  <label class="checkbox">
+              <div class="done-continued">
+                <label class="checkbox">
+                    <input type="checkbox" id="eContinued"/>
+                    <?php echo __d('tasks', 'Длительная');?>
+                </label>
+                <label class="checkbox">
                     <input type="checkbox" id="eDone" value="option1"/>
                     <?php echo __d('tasks', 'Выполнена');?>
-                  </label>
-                </div>
+                </label>
               </div>
+              
         </div>
     </div>
 </div>
@@ -447,7 +464,7 @@
 				</label>
 			</div>
 			<div class="clear"></div>
-			<ul class="sortable connectedSortable ui-helper-reset filtered" date="<%= date %>"> 
+			<ul class="sortable connectedSortable ui-helper-reset filtered" date="<%= date %>" data-refresh="0"> 
 				<p class="loadContent" align=center>
                     <?php echo $this->Html->image("ajax-loader-content.". Configure::read('App.version') .".gif"); ?>
                 </p>
@@ -481,4 +498,7 @@
 
 <script type="text/template" id="task_tag">
         <?php echo $this->Task->taskLiTag();?>
+</script>
+<script type="text/template" id="add_task">
+        <?php echo $this->Task->addTaskLi();?>
 </script>

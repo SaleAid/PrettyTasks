@@ -27,7 +27,8 @@ function getTaskFromPage(id){
         date:     $('#'+id).attr('date'),
         time:     $('#'+id).children('.time').text(),
         timeEnd:  $('#'+id).children('.timeEnd').text(),   
-        comment:  $('#'+id).children('.commentTask').text()   
+        comment:  $('#'+id).children('.commentTask').text(),
+        continued: +$('#'+id).data('continued')    
     };
     return data;
 }
@@ -191,7 +192,7 @@ function userEvent(action, data){
             taskChangeOrders(data.id, data.position);
         break; 
         case 'edit':
-            taskEdit(data.id, data.title, data.priority, data.done, data.date, data.time, data.timeEnd, data.comment);
+            taskEdit(data.id, data.title, data.priority, data.continued, data.done, data.date, data.time, data.timeEnd, data.comment);
         break;
         case 'addDay':
             taskAddDay(data.date, data.refresh);
@@ -309,7 +310,7 @@ function scrGetLists(data){
     $listUl.empty();
     if(!data){return;}
     $.each( data, function(index, value) {
-            $listUl.append('<li><span class="tags label label-important" data-tag="'+value+'">&#x23;'+value+'></span></li>');
+            $listUl.append('<li><span class="tags-list label label-important" data-tag="'+value+'">&#x23;'+value+'<span class="close-tag">×</span></span></li>');
     });
 }
 
@@ -407,14 +408,14 @@ function addTagToList(task){
                                   checked: done,
                                   title: title,
                                   comment: comment,
-                                  comment_status: comment_status
+                                  comment_status: comment_status,
+                                  continued : +task.continued
         });
 }
 function onGetListByTag(data){
     $('#list .row').show();
     if(!data.success){
         $('#list .row').hide();
-        //mesg(data.message.message, data.message.type);
         window.location.hash= 'lists';
         $('.lists').addClass('active');
         userEvent('getLists');
@@ -475,7 +476,11 @@ function scrGetTasksByType(data){
         break;           
         case 'deleted':
             deletedTasks(data.data);
-        break;   
+        break;
+        case 'continued':
+            continuedTasks(data.data);
+        break;
+           
      }
 }
 function onGetTasksByType(data){
@@ -485,6 +490,74 @@ function onGetTasksByType(data){
         mesg(data.message.message, data.message.type);
     }
 }
+
+function addTaskNew(task){
+        liClass = '';
+        done = '';
+        time = '';
+        timeend = '';
+        comment_status ='';
+        date = '';
+        comment = task.comment;
+        if(task.time != null){
+            time = task.time.slice(0,-3);
+            liClass += ' setTime'
+        }
+        if(task.timeend != null){
+            timeend = task.timeend.slice(0,-3);
+        }
+        if (+task.done){
+            liClass +=' complete';
+            done = 'checked';
+        }
+        if (+task.priority){
+            liClass +=' important';    
+        }
+        if (!task.comment || task.comment == null){
+            comment_status =' hide';
+            comment = '';    
+        }
+        if (task.date != null){
+            date = task.date;    
+        }
+        title = wrapTags(task.title, task.tags);
+        return _.template($("#add_task").html(), {
+                                  id: task.id,
+                                  date: date, 
+                                  liClass: liClass,
+                                  time: time,
+                                  timeend: timeend,
+                                  checked: done,
+                                  title: title,
+                                  comment: comment,
+                                  comment_status: comment_status,
+                                  continued : +task.continued
+        });
+}
+
+function continuedTasks(data){
+    var $listUl = $('#continued ul[date="continued"]');
+    $listUl.empty();
+    $.each(data, function(index, value) {
+        if(+value.list.length){
+            day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
+            day = $(day_tmp);
+            day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
+            $listUl.append(day);   
+        }
+        $.each(value.list, function(index, task) {
+            $listUl.append( addTaskNew(task) );
+            initDelete($listUl.find("li[id='"+task.id+"'] .deleteTask"));
+            initEditAble($listUl.find("li[id='"+task.id+"'] .editable"));
+        });
+    });
+    if(!+$listUl.children('li').length){
+        $listUl.siblings('.emptyList').removeClass('hide');
+    }else{
+        $listUl.siblings('.emptyList').addClass('hide');
+    }
+}
+
 function futureTasks(data){
     var listUl = $('#future ul[date="future"]');
     listUl.empty();
@@ -493,13 +566,12 @@ function futureTasks(data){
             day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
             day = $(day_tmp);
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
-            //initDayClick(day.children('span:first'));
             listUl.append(day);   
         }
         $.each(value.list,function(index, value) {
-            listUl.append( AddTask(value) );
+            listUl.append( addTaskNew(value.Task) );
             initDelete(listUl.find("li[id='"+value.Task.id+"'] .deleteTask"));
-            //initDone(listUl.find("li[id='"+value.Task.id+"'] .done"));
+            initEditAble(listUl.find("li[id='"+value.Task.id+"'] .editable"));
             listUl.find(" li[id='"+value.Task.id+"'] .editTask").addClass('hide');
         });
     });
@@ -522,14 +594,13 @@ function expiredTasks(data){
             day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
             day = $(day_tmp);
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
-            //initDayClick(day.children('span:first'));
             listUl.append(day);   
         }
         $.each(value.list,function(index, value) {
-            listUl.append( AddTask(value) );
-            initDelete(listUl.find("li[id='"+value.Task.id+"'] .deleteTask"));
-            //initDone(listUl.find("li[id='"+value.Task.id+"'] .done"));
-            listUl.find(" li[id='"+value.Task.id+"'] .editTask").addClass('hide');
+            listUl.append( addTaskNew(value) );
+            initDelete(listUl.find("li[id='"+value.id+"'] .deleteTask"));
+            initEditAble(listUl.find("li[id='"+value.id+"'] .editable"));
+            listUl.find(" li[id='"+value.id+"'] .editTask").addClass('hide');
         });
     });
 }
@@ -547,18 +618,17 @@ function completedTasks(data){
             day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
             day = $(day_tmp);
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
-            //initDayClick(day.children('span:first'));
             listUl.append(day);   
         }
         $.each(value.list,function(index, value) {
-            priority = +value.Task.priority ? 'important' : '';
-            time = value.Task.time ?  value.Task.time.slice(0,-3) : '';
-            timeend = value.Task.timeend ?  value.Task.timeend.slice(0,-3) : ''; 
+            priority = +value.priority ? 'important' : '';
+            time = value.time ?  value.time.slice(0,-3) : '';
+            timeend = value.timeend ?  value.timeend.slice(0,-3) : ''; 
             
             task = '<li class="'+priority+'"> '+
             '<span class="time">'+time+'</span> '+
             '<span class="timeEnd">'+timeend+'</span> '+
-            '<span class="title">'+wrapTags(value.Task.title, value.Task.tags)+'</span> '+
+            '<span class="title">'+wrapTags(value.title, value.tags)+'</span> '+
             '</li> ';
             listUl.append( task );
             
@@ -590,11 +660,11 @@ function deletedTasks(data){
             listUl.append(day);   
         }
         $.each(value.list,function(index, value) {
-            listUl.append( AddTask(value) );
-            initDelete(listUl.find("li[id='"+value.Task.id+"'] .deleteTask"));
+            listUl.append( addTaskNew(value) );
+            initDelete(listUl.find("li[id='"+value.id+"'] .deleteTask"));
             //initEditAble("li[id='"+value.Task.id+"'] .editable");
-            listUl.find(" li[id='"+value.Task.id+"'] .editTask").addClass('hide');
-            listUl.find(" li[id='"+value.Task.id+"'] .done").addClass('hide');
+            listUl.find(" li[id='"+value.id+"'] .editTask").addClass('hide');
+            listUl.find(" li[id='"+value.id+"'] .done").addClass('hide');
         });
     });
 }
@@ -604,7 +674,7 @@ function deletedTasks(data){
 function srcCountTasks(date, drop){
     var listTasks = [];
     if(date == ''){
-        date ='planned';
+        date = 'planned';
     }
     if(drop){
         listTasks.push($("ul[date='"+date+"']"));   
@@ -873,7 +943,6 @@ function onAddDay(data){
     var nameDay = $.datepicker.formatDate('DD', new Date (data.data.date));
     list.empty();
     list.siblings('.emptyList ').remove();
-    ///list.children('.loadContent').remove();
     var emptyList = _.template($("#empty_list_day_tasks").html(), {type: data.data.weekDayStyle});
     if($.isEmptyObject(data.data.list)){
         emptyList = $(emptyList).removeClass('hide');
@@ -892,8 +961,6 @@ function onAddDay(data){
         list.append(AddTask(value));
         initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
         initEditAble("li[id='"+value.Task.id+"'] .editable");
-        //initDone("li[id='"+value.Task.id+"'] .done");
-        //initEditTask("li[id='"+value.Task.id+"'] .editTask");
     });
     initCreateTask($("ul[date='"+data.data.date+"']").parent().find(".createTask"));
     initCreateTaskButton($("ul[date='"+data.data.date+"']").parent().parent().find(".createTaskButton"));
@@ -909,7 +976,7 @@ function onAddDay(data){
 // --------------setDate--------
 
 function scrDate(id, date){
-    var task = $("li[id='"+id+"']");
+    var task = $("li[id='"+id+"'].currentTask");
     if(date){
         task.attr('date',date);    
     }else{
@@ -919,7 +986,7 @@ function scrDate(id, date){
 
 //----------------setTime-------
 function scrTime(id, time, timeEnd){
-    var task = $("li[id='"+id+"']");
+    var task = $("li[id='"+id+"'].currentTask");
     if(time){
         task.find('.time').text(time);
         task.find('.timeEnd').text(timeEnd);    
@@ -931,7 +998,7 @@ function scrTime(id, time, timeEnd){
 
 //----------------setPriority-------
 function scrPriority(id, priority){
-    var task = $("li[id='"+id+"']");
+    var task = $("li[id='"+id+"'].currentTask");
     if(+priority){
         task.addClass('impotant');
     }else{
@@ -953,17 +1020,16 @@ function scrCommentTask(id, comment){
 
 
 //----------------edit----------
-function taskEdit(id, title, priority, done, date, time, timeEnd, comment){
-    //scrEdit(id, title, priority, done, date, time, timeEnd, comment);
+function taskEdit(id, title, priority, continued, done, date, time, timeEnd, comment){
     if(+done && !date){
          date = GLOBAL_CONFIG.date;
     }
-    srvEdit(id, title, priority, done, date, time, timeEnd, comment);
+    srvEdit(id, title, priority, continued, done, date, time, timeEnd, comment);
 }
 function onEdit(data){
     if(data.success){
         $('#editTask').modal('hide');
-        scrEdit(data.data.Task.id, data.data.Task.title, data.data.Task.tags, data.data.Task.priority, data.data.Task.done, data.data.Task.date, data.data.Task.time, data.data.Task.timeend, data.data.Task.comment);
+        scrEdit(data.data.Task.id, data.data.Task.title, data.data.Task.tags, data.data.Task.priority, data.data.Task.continued, data.data.Task.done, data.data.Task.date, data.data.Task.time, data.data.Task.timeend, data.data.Task.comment);
     }else {
         mesg(data.message.message, data.message.type);
         scrErrorEdit(data.errors);    
@@ -992,23 +1058,17 @@ function scrErrorEdit(data){
     
 }
 
-function srvEdit(id, title, priority, done, date, time, timeEnd, comment){
-    superAjax('/tasks/editTask.json',{id: id, title: title, priority: priority, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment});
+function srvEdit(id, title, priority, continued, done, date, time, timeEnd, comment){
+    superAjax('/tasks/editTask.json',{id: id, title: title, priority: priority, continued: continued, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment});
 }
 
-function scrEdit(id, title, tags, priority, done, date, time, timeEnd, comment){
+function scrEdit(id, title, tags, priority, continued, done, date, time, timeEnd, comment){
     var task = $("li[id='"+id+"'].currentTask");
+    task.data('continued', continued).attr('data-continued', continued);
     var currentTaskDate = task.attr('date');
     var currentTaskTime = task.find('.time').text();
     if(time == null){
         time = '';
-    }
-
-    //console.log(currentTaskTime);
-    if (date == currentTaskDate && time == currentTaskTime){
-        task.removeClass('currentTask');
-    }else{
-       scrDragWithTime(id, date, time); 
     }
     
     scrDate(id,date);
@@ -1016,6 +1076,17 @@ function scrEdit(id, title, tags, priority, done, date, time, timeEnd, comment){
     scrSetTitle(id, title, tags, priority);
     scrTime(id, time, timeEnd);
     scrCommentTask(id, comment);
+    
+    if (date == currentTaskDate && time == currentTaskTime){
+        task.removeClass('currentTask');
+    }else{
+       scrDragWithTime(id, date, time); 
+    }
+    
+    if(+task.parent().data('refresh')){
+       _refreshDays(date);
+    }
+    
 }
 
 function toSeconds(t) {
@@ -1024,8 +1095,10 @@ function toSeconds(t) {
 }
 
 function _refreshDays(date){
-    refreshDays.push(date);
-    refreshDays = _.uniq(refreshDays);
+    if(date){
+        refreshDays.push(date);
+        refreshDays = _.uniq(refreshDays);    
+    }
 }
 
 function scrDragWithTime(id, date, time){
@@ -1054,10 +1127,9 @@ function scrDragWithTime(id, date, time){
         }else{
             var list = $("ul[date='"+date+"']");    
         }
-        var timeList = list.find('li.setTime');
-        var newPositionID;
-        //var change = $.trim(task.find('.time').text())!= time;
-       // if(change){
+        if(list.length > 0) {
+            var timeList = list.find('li.setTime');
+            var newPositionID;
             if(time){
                 var listitems = list.children('li.setTime').get();
                 listitems.sort(function(a, b) {
@@ -1085,11 +1157,7 @@ function scrDragWithTime(id, date, time){
                         
                 }else if(!newPositionID){
                     if(list.children().length){
-                        //if( !(currentTaskDate == date && !time)){
-                            $(this).prependTo(list);
-                        //}else{
-                        //    $(this).appendTo(list);
-                        //}
+                        $(this).prependTo(list);
                     }else{
                         $(this).appendTo(list);
                     }
@@ -1110,14 +1178,17 @@ function scrDragWithTime(id, date, time){
                 if($(this).children('.done').hasClass('hide')){
                     $(this).children('.done').removeClass('hide');
                 }
+                
                 if(currentTaskDate != date){
                     srcCountTasks(currentTaskDate, true);
-                    srcCountTasks(date, true);
-                }else{
-                    srcCountTasks(date, true);
                 }
-        });
-  //  }
+            });    
+        } else {
+            task.remove();
+        }
+        srcCountTasks(date, true);
+        
+        
 }
 
 //----------------changeOrder---
@@ -1173,9 +1244,20 @@ function srvDelete(id){
     superAjax('/tasks/setDelete.json',{id: id});
 }
 function scrDelete(id){
-    var date = $("li[id='"+id+"']").attr('date');
-    $("li[id='"+id+"']").remove();
-    srcCountTasks(date);
+    var $task = $("li[id='"+id+"'].currentTask");
+    var date = $task.attr('date');
+    if(!$task.attr('date')){
+            date = 'planned';
+        }
+    if(+$task.parent().data('refresh')){
+       _refreshDays(date);
+    }
+    if($task.find('.tag-date').length > 0) {
+        date = $task.parent().data('tag');
+    }
+    
+    $task.remove();
+    srcCountTasks(date, true);
 }
 
 //----------------setDone-------
@@ -1243,12 +1325,19 @@ function srvSetTitle(id, title){
 function scrSetTitle(id, title_text, tags, priority){
     var $task = $("li[id='"+id+"'].currentTask");
     var title = $task.find('.editable');
+    date = $task.attr('date');
+    if(!$task.attr('date')){
+        date = 'planned';
+    }
+    if(+$task.parent().data('refresh')){
+       _refreshDays(date);
+    }
     if($task.find('.tag-date').length > 0) {
-        _refreshDays($task.attr('date'));
         if(_.indexOf(tags, $task.parent().data('tag')) == -1){
             $task.addClass('need-remove');     
         }
     }
+    
     title_text = wrapTags(title_text, tags);
     title.html(title_text);   
     if(priority == 1){
@@ -1331,7 +1420,7 @@ function scrCreate(data){
         scrDragWithTime(data.data.Task.id, data.data.Task.date, data.data.Task.time);
         $("li[id='"+data.data.Task.id+"']").find('.time').text(data.data.Task.time.slice(0,-3));
     }
-    srcCountTasks(date); 	
+    srcCountTasks(date, true); 	
 }
 function AddTask(data){
     var important ='';
@@ -1402,7 +1491,7 @@ function initEditAble(element){
 }
 
 function initTags(){
-    $(document).on('click', '.tags', function(e) {
+    $(document).on('click', '.tags-list, .tags', function(e) {
         var tag = $(this).attr('data-tag');
         if(tag){
             window.location.hash= '#list-'+tag;    
@@ -1422,11 +1511,12 @@ function initDelete(element){
               bindsOnEvent: "click",
               confirmCallback: function(el) {
                  el.parent().fadeIn();
+                 el.parent().addClass('currentTask');
                  var id = el.parent().attr('id');
                  userEvent('delete', {id: id});
               },
               cancelCallback: function(el) {
-                 //mesg('Отмена удаления .');
+                 //mesg('.');
               },
     });
 }
@@ -1469,6 +1559,11 @@ function initEditTask(element){
             }else {
                 $('#editTask').find('#eDone').removeAttr('checked');
             }
+            if(task.continued){
+                $('#editTask').find('#eContinued').attr('checked','checked');
+            }else {
+                $('#editTask').find('#eContinued').removeAttr('checked');
+            }
             $('#eTime').val(task.time);
             if(task.time){
                 $('#eTimeEnd').timepicker('option', 'minTime', task.time, 'maxTime', '23:59').removeAttr('disabled');
@@ -1477,9 +1572,9 @@ function initEditTask(element){
             }
             $('#eTimeEnd').val(task.timeEnd);
             $("#eDate").val(task.date);
-            if (!task.date){
-                $( "#eDate" ).attr('placeholder', '---FUTURE---');
-            }
+            //if (!task.date){
+//                $( "#eDate" ).attr('placeholder', '---FUTURE---');
+//            }
             $('#editTask').modal('show');
     });
 }
@@ -1569,7 +1664,7 @@ function initDrop(element){
                     userEvent('dragOnDay', {id: id, date: date, time:time});    
                 }
             } 
-    });//.disableSelection();
+    });
 }
 
 function initSortable(element){
@@ -1593,8 +1688,9 @@ function initSortable(element){
                 
                 if( ui.item.parent().attr('date') == 'expired' || 
                 		ui.item.parent().attr('date') == 'future' ||
-                		ui.item.parent().attr('date') == 'deleted' 
-                		//|| ui.item.hasClass('setTime') 
+                		ui.item.parent().attr('date') == 'deleted' ||
+                        ui.item.parent().attr('date') == 'continued' 
+                		|| ui.item.parent().data('tag') 
                     ){
                     mesg(GLOBAL_CONFIG.moveForbiddenMessage, 'success');
                     $(this).css("color","");
@@ -1626,7 +1722,7 @@ function initSortable(element){
                 }
         },
         
-    });//.disableSelection();
+    });
 }
 
 function initTab(element){
@@ -1731,9 +1827,12 @@ function initDayClick(element){
 }
 
 function InitClock() { 
-  var TimezoneOffset = GLOBAL_CONFIG.timezone; 
-  var localTime = new Date(); 
-  var ms = localTime.getTime() + (localTime.getTimezoneOffset() * 60000) + TimezoneOffset * 3600000; 
+  var TimezoneOffset = GLOBAL_CONFIG.timezone;
+  var localTime = new Date();
+  if(TimezoneOffset == ''){
+        TimezoneOffset = localTime.getTimezoneOffset() * -60;
+  } 
+  var ms = localTime.getTime() + (localTime.getTimezoneOffset() * 60000) + TimezoneOffset * 1000; 
   var time = new Date(ms);  
   var hour = time.getHours();  
   var minute = time.getMinutes(); 
@@ -1742,7 +1841,7 @@ function InitClock() {
   temp += ((minute < 10) ? ":0" : ":") + minute; 
   //temp += ((second < 10) ? ":0" : ":") + second; 
   document.getElementById('clock').innerHTML = temp; 
-  setTimeout("InitClock()",1000); 
+  setTimeout("InitClock()", 1000); 
 } 
 function initDeleteAll(element){
     $(element).on('click', function(){
@@ -1804,22 +1903,6 @@ var refreshDays = [];
 
 $(function(){
      
-   // $(document).keydown(function (e) {
-//        if(e.ctrlKey && isDragging){
-//            pressCtrl = true;
-//            $('.move').addClass('cp');
-//        }
-//    });
-//    
-//    $(document).keyup(function (e) {
-//        if(pressCtrl){
-//            pressCtrl = false;
-//            $('.move').removeClass('cp');
-//        }
-//    });
-               
-               
-               
      $(window).hashchange( function(e){
         if(location.hash != "") { 
             var pattern_list=/^#list(s$|-.+)/;
@@ -1843,7 +1926,7 @@ $(function(){
                 if(isDate(hash)){
                     hash = $.datepicker.formatDate('yy-mm-dd',$.datepicker.parseDate('yy-mm-dd', hash));
                     userEvent('addDay',{date: hash});
-                }else if(hash == "future" || hash == "expired" || hash == "completed" || hash == "deleted"){
+                }else if( $.inArray(hash, ["expired", "completed", "deleted", "continued", "future"]) != -1 ){
                     userEvent('getTasksByType', {type: hash});
                     $('#main a[href="#'+hash+'"]').tab('show');
                 }else if(hash == "planned"){
@@ -1940,11 +2023,12 @@ $(function(){
             var title = $.trim($('#editTask').find('#eTitle').val());
             var priority = $.trim($('input:radio[name="priority"]:checked', '#editTask').val());
             var done = $.trim($('#editTask').find('#eDone').is(":checked")? 1: 0);
+            var continued = $.trim($('#editTask').find('#eContinued').is(":checked")? 1: 0);
             var date = $.trim($( "#eDate" ).val());
             var time = $.trim($('#eTime').val());
             var timeEnd = $.trim($('#eTimeEnd').val());
             var comment = $.trim($('#eComment').val());
-            userEvent('edit',{id: id,title: title, priority: priority, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment });
+            userEvent('edit',{id: id,title: title, priority: priority, continued: continued, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment });
     });
     
     $("#eCommentDaySave").click(function(){
