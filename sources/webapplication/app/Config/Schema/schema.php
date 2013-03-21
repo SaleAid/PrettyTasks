@@ -84,7 +84,7 @@ class AppSchema extends CakeSchema {
 		'lang' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 3, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'order' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'active' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'key' => 'index'),
-		'user_id' => array('type' => 'string', 'null' => false, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
@@ -138,18 +138,22 @@ class AppSchema extends CakeSchema {
 
 	public $goals = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'comment' => 'primary key', 'charset' => 'utf8'),
-		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-        'title' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'Title of goal', 'charset' => 'utf8'),
+		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'Title of goal', 'charset' => 'utf8'),
 		'comment' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-        'fromdate' => array('type' => 'date', 'null' => true, 'default' => null),
-        'todate' => array('type' => 'date', 'null' => true, 'default' => null),
+		'fromdate' => array('type' => 'date', 'null' => true, 'default' => null, 'key' => 'index'),
+		'todate' => array('type' => 'date', 'null' => true, 'default' => null, 'key' => 'index'),
 		'datedone' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'done' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 1, 'comment' => 'Flag that goal is done'),
 		'deleted' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 1),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1)
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'todate' => array('column' => 'todate', 'unique' => 0),
+			'fromdate' => array('column' => 'fromdate', 'unique' => 0),
+			'user_id' => array('column' => 'user_id', 'unique' => 0),
+			'user_and_dates' => array('column' => array('user_id', 'fromdate', 'todate'), 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
@@ -252,7 +256,7 @@ class AppSchema extends CakeSchema {
 		'future' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 1, 'comment' => 'flag that task is for future'),
 		'deleted' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 1),
 		'continued' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 1, 'comment' => 'flag that task is for continued'),
-        'repeatid' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 1, 'key' => 'index', 'comment' => 'id of repeated task\'s series'),
+		'repeatid' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 1, 'key' => 'index', 'comment' => 'id of repeated task\'s series'),
 		'transfer' => array('type' => 'integer', 'null' => true, 'default' => '0', 'comment' => 'count of transfer of task'),
 		'priority' => array('type' => 'integer', 'null' => true, 'default' => '0', 'comment' => 'priority of task'),
 		'day_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),

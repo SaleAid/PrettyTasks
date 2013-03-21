@@ -7,98 +7,195 @@ App::uses('AppModel', 'Model');
  * @property User $User
  */
 class Goal extends AppModel {
-	
-	/**
-	 * Display field
-	 *
-	 * @var string
-	 */
-	public $displayField = 'title';
-	
-	/**
-	 * Validation rules
-	 *
-	 * @var array
-	 */
-	public $validate = array(
-			'title' => array(
-					'notempty' => array(
-							'rule' => array(
-									'notempty'
-							)
-					)
-			),
-			'user_id' => array(
-					'uuid' => array(
-							'rule' => array(
-									'uuid'
-							)
-					)
-			)
-	);
-	
-	// The Associations below have been created with all possible keys, those that are not needed can be removed
-	
-	/**
-	 * belongsTo associations
-	 *
-	 * @var array
-	 */
-	public $belongsTo = array(
-			'User' => array(
-					'className' => 'User',
-					'foreignKey' => 'user_id',
-					'conditions' => '',
-					'fields' => '',
-					'order' => ''
-			)
-	);
-	/**
-	 * Allowed fields
-	 *
-	 * @var array
-	 */
-	private $_allowedFields = array(
-			'id',
-			'title',
-			'comment',
-			'fromdate',
-			'todate',
-			'datedone',
-			'done',
-			'deleted',
-			'user_id'
-	);
-	/**
-	 * Get goals
-	 * 
-	 * @param string $userId
-	 * @param string $fromDate
-	 * @param string $toDate
-	 * @param array $additioanlOptions
-	 * @return Ambigous <multitype:, NULL, mixed>
-	 * @todo METHOD is not ready YET!!!
-	 */
-	public function getGoals($userId, $fromDate = null, $toDate = null, $additioanlOptions = array()) {
-		$conditions = array(
-				$this->alias . '.user_id' => $userId,
-				$this->alias . '.fromdate' => null,
-				$this->alias . '.todate' => null
-		);
-		if ($fromDate) {
-			unset($conditions[$this->alias . '.fromdate']);
-			$conditions[$this->alias . '.fromdate <= '] = $fromDate; // ??
-		}
-		if ($toDate) {
-			unset($conditions[$this->alias . '.todate']);
-			$conditions[$this->alias . '.todate <= '] = $toDate; // ??
-		}
-		$options['conditions'] = $conditions;
-		$options['fields'] = $this->_allowedFields;
-		$options['order'] = 'todate ASC, fromdate DESC';
-		$options = array_merge($options, $additioanlOptions);
-		$this->contain();
-		//debug($options);
-		return $this->find('all', $options);
-	}
+    
+    /**
+     * Display field
+     *
+     * @var string
+     */
+    public $displayField = 'title';
+    
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public $validate = array(
+            'title' => array(
+                    'notempty' => array(
+                            'rule' => array(
+                                    'notempty'
+                            )
+                    )
+            ),
+            'user_id' => array(
+                    'uuid' => array(
+                            'rule' => array(
+                                    'uuid'
+                            )
+                    )
+            )
+    );
+    
+    /**
+     * Allow custom find methods
+     */
+    public $findMethods = array(
+            'current' => true,
+            'expired' => true,
+            'closed' => true,
+            'future' => true
+    );
+    
+    // The Associations below have been created with all possible keys, those that are not needed can be removed
+    
+    /**
+     * belongsTo associations
+     *
+     * @var array
+     */
+    public $belongsTo = array(
+            'User' => array(
+                    'className' => 'User',
+                    'foreignKey' => 'user_id',
+                    'conditions' => '',
+                    'fields' => '',
+                    'order' => ''
+            )
+    );
+    /**
+     * Allowed fields
+     *
+     * @var array
+     */
+    private $_allowedFields = array(
+            'id',
+            'title',
+            'comment',
+            'fromdate',
+            'todate',
+            'datedone',
+            'done',
+            'deleted',
+            'user_id'
+    );
+
+    /**
+     * Get goals.
+     *
+     * $UserId is required parameter.
+     * $Date is required parameter. Actual goals are shown for this date.
+     *
+     * $toDate is optional parameter. This is the date after which goals are not selected.
+     * $additioanlOptions - options for finder, see http://book.cakephp.org/2.0/en/models/retrieving-your-data.html#find.
+     * This array will be merged with inner options array, and it can redefine options.
+     *
+     * Defaults $Date= today, toDate = date, count = 25 , order goal.todate ASC, goal.fromdate DESC
+     *
+     * @param string $userId            
+     * @param string $date            
+     * @param string $todate            
+     * @param array $additioanlOptions            
+     * @access public
+     * @return Ambigous <multitype:, NULL, mixed>
+     * @todo METHOD is not ready YET!!!
+     */
+    // public function getCurrent($userId, $date = null, $toDate = null, $additioanlOptions = array()) {
+    protected function _findCurrent($state, $query, $results = array()) {
+        if ($state == 'before') {
+            // debug($query);
+            $fromdate = isset($query['conditions'][$this->alias . '.periodFrom']) ? $query['conditions'][$this->alias . '.periodFrom'] : date("Y-m-d");
+            $todate = isset($query['conditions'][$this->alias . '.periodTo']) ? $query['conditions'][$this->alias . '.periodTo'] : $fromdate;
+            unset($query['conditions'][$this->alias . '.periodFrom']);
+            unset($query['conditions'][$this->alias . '.periodTo']);
+            $conditions = array(
+                    'OR' => array(
+                            array( // Start in period
+                                    $this->alias . '.fromdate >=' => $fromdate,
+                                    $this->alias . '.fromdate <=' => $todate
+                            ),
+                            array( // End in period
+                                    $this->alias . '.todate >=' => $fromdate,
+                                    $this->alias . '.todate <=' => $todate
+                            ),
+                            array( // Period between start and end
+                                    $this->alias . '.fromdate <=' => $fromdate,
+                                    $this->alias . '.todate >=' => $todate
+                            )
+                    )
+            );
+            $query['fields'] = $query['fields'] ? $query['fields'] : $this->_allowedFields;
+            $query['conditions'] = array_merge($conditions, $query['conditions']);
+            // debug($query);
+            return $query;
+        }
+        return $results;
+    }
+
+    protected function _findExpired($state, $query, $results = array()) {
+        if ($state == 'before') {
+            $todate = isset($query['conditions'][$this->alias . '.periodTo']) ? $query['conditions'][$this->alias . '.periodTo'] : date("Y-m-d");
+            unset($query['conditions'][$this->alias . '.periodTo']);
+            $conditions = array(
+                    $this->alias . '.todate <' => $todate,
+                    $this->alias . '.done' => 0
+            );
+            $query['fields'] = $query['fields'] ? $query['fields'] : $this->_allowedFields;
+            $query['conditions'] = array_merge($conditions, $query['conditions']);
+            return $query;
+        }
+        return $results;
+    }
+
+    protected function _findClosed($state, $query, $results = array()) {
+        if ($state == 'before') {
+            // debug($query);
+            $conditions = array(
+                    $this->alias . '.done' => 1
+            );
+            $fromdate = isset($query['conditions'][$this->alias . '.periodFrom']) ? $query['conditions'][$this->alias . '.periodFrom'] : null;
+            $todate = isset($query['conditions'][$this->alias . '.periodTo']) ? $query['conditions'][$this->alias . '.periodTo'] : null;
+            unset($query['conditions'][$this->alias . '.periodFrom']);
+            unset($query['conditions'][$this->alias . '.periodTo']);
+            if ($fromdate && $todate) {
+                $conditions = array_merge($conditions, array(
+                        'OR' => array(
+                                array( // Start in period
+                                        $this->alias . '.fromdate >=' => $fromdate,
+                                        $this->alias . '.fromdate <=' => $todate
+                                ),
+                                array( // End in period
+                                        $this->alias . '.todate >=' => $fromdate,
+                                        $this->alias . '.todate <=' => $todate
+                                ),
+                                array( // Period between start and end
+                                        $this->alias . '.fromdate <=' => $fromdate,
+                                        $this->alias . '.todate >=' => $todate
+                                )
+                        )
+                ));
+            }
+            $query['fields'] = $query['fields'] ? $query['fields'] : $this->_allowedFields;
+            $query['conditions'] = array_merge($conditions, $query['conditions']);
+            // debug($query);
+            return $query;
+        }
+        return $results;
+    }
+
+    protected function _findFuture($state, $query, $results = array()) {
+        if ($state == 'before') {
+            $fromdate = isset($query['conditions'][$this->alias . '.periodFrom']) ? $query['conditions'][$this->alias . '.periodFrom'] : date("Y-m-d");
+            unset($query['conditions'][$this->alias . '.periodFrom']);
+            unset($query['conditions'][$this->alias . '.periodTo']);
+            $conditions = array(
+                    $this->alias . '.fromdate >' => $fromdate,
+                    $this->alias . '.todate >' => $fromdate,
+            );
+            $query['fields'] = $query['fields'] ? $query['fields'] : $this->_allowedFields;
+            $query['conditions'] = array_merge($conditions, $query['conditions']);
+            return $query;
+        }
+        return $results;
+    }
 }

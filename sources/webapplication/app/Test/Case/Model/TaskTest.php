@@ -3,6 +3,8 @@ App::uses('Task', 'Model');
 App::uses('CakeTime', 'Utility');
 /**
  * Task Test Case
+ * 
+ * @property Task $Task
  *
  */
 class TaskTestCase extends CakeTestCase {
