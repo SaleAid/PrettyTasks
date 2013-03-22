@@ -44,7 +44,9 @@ class Goal extends AppModel {
             'current' => true,
             'expired' => true,
             'closed' => true,
-            'future' => true
+            'future' => true,
+            'planned' => true,
+            'deleted' => true
     );
     
     // The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -190,7 +192,36 @@ class Goal extends AppModel {
             unset($query['conditions'][$this->alias . '.periodTo']);
             $conditions = array(
                     $this->alias . '.fromdate >' => $fromdate,
-                    $this->alias . '.todate >' => $fromdate,
+                    $this->alias . '.todate >' => $fromdate
+            );
+            $query['fields'] = $query['fields'] ? $query['fields'] : $this->_allowedFields;
+            $query['conditions'] = array_merge($conditions, $query['conditions']);
+            return $query;
+        }
+        return $results;
+    }
+
+    protected function _findPlanned($state, $query, $results = array()) {
+        if ($state == 'before') {
+            unset($query['conditions'][$this->alias . '.periodFrom']);
+            unset($query['conditions'][$this->alias . '.periodTo']);
+            $conditions = array(
+                    $this->alias . '.fromdate' => null,
+                    $this->alias . '.todate' => null
+            );
+            $query['fields'] = $query['fields'] ? $query['fields'] : $this->_allowedFields;
+            $query['conditions'] = array_merge($conditions, $query['conditions']);
+            return $query;
+        }
+        return $results;
+    }
+
+    protected function _findDeleted($state, $query, $results = array()) {
+        if ($state == 'before') {
+            unset($query['conditions'][$this->alias . '.periodFrom']);
+            unset($query['conditions'][$this->alias . '.periodTo']);
+            $conditions = array(
+                    $this->alias . '.deleted' => 1
             );
             $query['fields'] = $query['fields'] ? $query['fields'] : $this->_allowedFields;
             $query['conditions'] = array_merge($conditions, $query['conditions']);
