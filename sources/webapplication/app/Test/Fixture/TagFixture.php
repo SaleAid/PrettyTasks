@@ -28,12 +28,6 @@ class TagFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
-		array(
-			'id' => '51372d54-c388-4071-8d7c-15bcb43b9fe0',
-			'name' => 'Lorem ipsum dolor sit amet',
-			'created' => '2013-03-06 11:49:40',
-			'modified' => '2013-03-06 11:49:40'
-		),
 	);
 
 }

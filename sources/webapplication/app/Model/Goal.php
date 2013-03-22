@@ -134,6 +134,13 @@ class Goal extends AppModel {
         return $results;
     }
 
+    /**
+     * 
+     * @param unknown_type $state
+     * @param unknown_type $query
+     * @param unknown_type $results
+     * @return multitype:|unknown
+     */
     protected function _findExpired($state, $query, $results = array()) {
         if ($state == 'before') {
             $todate = isset($query['conditions'][$this->alias . '.periodTo']) ? $query['conditions'][$this->alias . '.periodTo'] : date("Y-m-d");
@@ -148,7 +155,14 @@ class Goal extends AppModel {
         }
         return $results;
     }
-
+    
+    /**
+     * 
+     * @param unknown_type $state
+     * @param unknown_type $query
+     * @param unknown_type $results
+     * @return multitype:|unknown
+     */
     protected function _findClosed($state, $query, $results = array()) {
         if ($state == 'before') {
             // debug($query);
@@ -184,7 +198,14 @@ class Goal extends AppModel {
         }
         return $results;
     }
-
+    
+    /**
+     * 
+     * @param unknown_type $state
+     * @param unknown_type $query
+     * @param unknown_type $results
+     * @return multitype:|unknown
+     */
     protected function _findFuture($state, $query, $results = array()) {
         if ($state == 'before') {
             $fromdate = isset($query['conditions'][$this->alias . '.periodFrom']) ? $query['conditions'][$this->alias . '.periodFrom'] : date("Y-m-d");
@@ -200,7 +221,14 @@ class Goal extends AppModel {
         }
         return $results;
     }
-
+    
+    /**
+     * 
+     * @param unknown_type $state
+     * @param unknown_type $query
+     * @param unknown_type $results
+     * @return multitype:|unknown
+     */
     protected function _findPlanned($state, $query, $results = array()) {
         if ($state == 'before') {
             unset($query['conditions'][$this->alias . '.periodFrom']);
@@ -215,7 +243,14 @@ class Goal extends AppModel {
         }
         return $results;
     }
-
+    
+    /**
+     * 
+     * @param unknown_type $state
+     * @param unknown_type $query
+     * @param unknown_type $results
+     * @return multitype:|unknown
+     */
     protected function _findDeleted($state, $query, $results = array()) {
         if ($state == 'before') {
             unset($query['conditions'][$this->alias . '.periodFrom']);
