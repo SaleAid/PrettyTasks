@@ -8,6 +8,8 @@ App::uses('AppController', 'Controller');
  */
 class NotesController extends AppController {
 
+    public $helpers = array('Tag');
+    
     public $layout = 'notes';
     
     public function index() {

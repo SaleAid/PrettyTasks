@@ -17,6 +17,53 @@ class TasksController extends AppController {
     
     public $layout = 'tasks';
 
+    public function repeated(){
+        $result = $this->_prepareResponse();
+        $expectedData = array(
+            'id', 
+            'recur'
+        );
+        if (! $this->_isSetRequestData($expectedData)) {
+            $result['message'] = array(
+                'type' => 'error', 
+                'message' => __d('tasks', 'Ошибка при передаче данных')
+            );
+        } else {
+            $recur = $this->request->data['recur'];
+            $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
+            if ($originTask) {
+                if(!$originTask['Task']['repeatid']){
+                    $this->Task->repeated($recur);    
+                }
+                
+                //if ($task) {
+                    $result['success'] = true;
+                    //$result['data'] = $task;
+                    $result['message'] = array(
+                        'type' => 'success', 
+                        'message' => __d('tasks', 'Задача  успешно изменена')
+                    );
+                //} else {
+//                    $result['data'] = $originTask;
+//                    $result['message'] = array(
+//                        'type' => 'error', 
+//                        'message' => __d('tasks', 'Ошибка, Задача  не изменена')
+//                    );
+//                    $result['errors'] = $this->Task->validationErrors;
+//                }
+            } else {
+                $result['message'] = array(
+                    'type' => 'error', 
+                    'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи')
+                );
+            }
+        }
+        $result['action'] = 'repeated';
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');
+    }
+    
+    
     public function index() {
         
         $this->response->disableCache();
@@ -216,10 +263,10 @@ class TasksController extends AppController {
         } else {
             
             if (! empty($this->request->data['date']) && Validation::date($this->request->data['date'])) {
-                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->saveTask();
+                $task = $this->Task->createTask($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->saveTask();
             } else {
                 $date = empty($this->request->data['date']) ? '' : ' #'.$this->request->data['date'];
-                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'] . $date, null, null, null, 0, 1)->saveTask();
+                $task = $this->Task->createTask($this->Auth->user('id'), $this->request->data['title'] . $date, null, null, null, 0, 1)->saveTask();
             }
             if ($task) {
                 $result['success'] = true;
@@ -258,7 +305,7 @@ class TasksController extends AppController {
         } else {
             $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($task) {
-                $cloneTask = $this->Task->create($this->Auth->user('id'), $task['Task']['title'], $this->request->data['date'], $task['Task']['time'], null, $task['Task']['priority'], $task['Task']['future'], 1)->saveTask();
+                $cloneTask = $this->Task->createTask($this->Auth->user('id'), $task['Task']['title'], $this->request->data['date'], $task['Task']['time'], null, $task['Task']['priority'], $task['Task']['future'], 1)->saveTask();
                 if ($cloneTask) {
                     $result['success'] = true;
                     $result['data'] = $cloneTask;
@@ -343,6 +390,7 @@ class TasksController extends AppController {
             );
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
+            pr($this->Task->isfirst());
             if ($originTask) {
                 $task = $this->Task->setDone($this->request->data['done'])->saveTask();
                 if ($task) {

@@ -28,7 +28,8 @@ function getTaskFromPage(id){
         time:     $('#'+id).children('.time').text(),
         timeEnd:  $('#'+id).children('.timeEnd').text(),   
         comment:  $('#'+id).children('.commentTask').text(),
-        continued: +$('#'+id).data('continued')    
+        continued: +$('#'+id).data('continued'),
+        repeated: +$('#'+id).data('repeated')    
     };
     return data;
 }
@@ -227,6 +228,9 @@ function userEvent(action, data){
         case 'getLists':
             taskGetLists();
         break;
+        case 'repeated':
+            taskRepeated(data.id, data.recur);
+        break;
                     
     }
 }
@@ -290,8 +294,33 @@ function responseHandler(data){
         case 'getLists':
             onGetLists(data);
         break;
+        case 'repeated':
+            onRepeated(data);
+        break;
     }
 
+}
+//---------------repeated-------------
+function taskRepeated(id, recur){
+    srvRepeated(id, recur);
+}
+
+function srvRepeated(id, recur){
+    superAjax('/tasks/repeated.json', {id: id, recur: recur});
+}
+
+function scrRepeated(data){
+    
+}
+
+function onRepeated(data){
+    if(data.success){
+        $('#repeatTask').modal('hide');
+        //scrEdit(data.data.Task.id, data.data.Task.title, data.data.Task.tags, data.data.Task.priority, data.data.Task.continued, data.data.Task.done, data.data.Task.date, data.data.Task.time, data.data.Task.timeend, data.data.Task.comment);
+    }else {
+        mesg(data.message.message, data.message.type);
+        //scrErrorEdit(data.errors);    
+    }
 }
 
 //---------------getLists-------------
@@ -377,6 +406,8 @@ function addTagToList(task){
         comment_status ='';
         date = '';
         comment = task.comment;
+        repeated = 0;
+        continued = 0;
         if(task.time != null){
             time = task.time.slice(0,-3);
             liClass += ' setTime'
@@ -398,6 +429,13 @@ function addTagToList(task){
         if (task.date != null){
             date = task.date;    
         }
+        if (task.repeated){
+            repeated = 1;    
+        }
+        if(task.hasOwnProperty('continued')){
+            continued = task.continued;
+        }
+        
         title = wrapTags(task.title, task.tags);
         return _.template($("#task_tag").html(), {
                                   id: task.id,
@@ -409,7 +447,9 @@ function addTagToList(task){
                                   title: title,
                                   comment: comment,
                                   comment_status: comment_status,
-                                  continued : +task.continued
+                                  continued : +continued,
+                                  repeated : +repeated
+                                  
         });
 }
 function onGetListByTag(data){
@@ -531,7 +571,9 @@ function addTaskNew(task){
                                   title: title,
                                   comment: comment,
                                   comment_status: comment_status,
-                                  continued : +task.continued
+                                  continued: 0,
+                                  repeated: 0
+                                  
         });
 }
 
@@ -1447,8 +1489,12 @@ function AddTask(data){
     if( ! data.Task.comment ){
         comment = 'hide';
     }
+    var date = data.Task.date;
+    if( data.Task.date == null ){
+        date = '';
+    }
     var title = wrapTags(data.Task.title, data.Task.tags);
-    taskHtml = '<li id ="'+data.Task.id+'" class="'+setTime+' '+complete+' '+important+'" date="'+data.Task.date+'">'+ 
+    taskHtml = '<li id ="'+data.Task.id+'" class="'+setTime+' '+complete+' '+important+'" date="'+date+'">'+ 
                             time+
                             timeEnd+
                             '<span class="move"><i class="icon-move"></i></span>'+
@@ -1572,11 +1618,89 @@ function initEditTask(element){
             }
             $('#eTimeEnd').val(task.timeEnd);
             $("#eDate").val(task.date);
-            //if (!task.date){
-//                $( "#eDate" ).attr('placeholder', '---FUTURE---');
-//            }
+            if (!task.date){
+                $('.continued-task').hide();
+                $('.repeated-task').hide();
+            } else {
+                $('.continued-task').show();
+                $('.repeated-task').show();
+            }
+            if (task.repeated){
+                $('#editTask').find('#eRepeat').attr('checked','checked');
+            }else {
+                $('#editTask').find('#eRepeat').removeAttr('checked');
+            }
             $('#editTask').modal('show');
     });
+}
+
+function initRepeatTask(){
+     $('#eRepeat').on("click", function(){
+    	 $('#repeatTask').modal('show');
+     });
+     var $repeatedTask = $('#repeatTask');
+     var $until = $repeatedTask.find("input[name='until']");
+     $until.change(function() {
+    	 $(this).siblings("input[type='text']").focus();
+    	 $.each($until, function(index, value){
+    		 if(!$(value).is(':checked')) {
+    			$(value).siblings("input[type='text']").val('');
+		     }
+    	 });
+    	 
+     });
+     $repeatedTask.find('#date').datepicker({ 
+         dateFormat: 'yy-mm-dd',
+         showAnim: 'clip',
+     });
+     $('#freq').change(function() {
+	    $repeatedTask.find('.days-weekly').hide();
+        $("[class^=interval]").hide();
+        switch($(this).val()){
+            case 'dally':
+                $(".interval-d").show();
+            break;
+            case 'weekly':
+                $repeatedTask.find('.week input:checkbox').attr('checked', false);
+                //$repeatedTask.find('.week input:checkbox:first').attr('checked', true);
+                $repeatedTask.find('.days-weekly').show();
+                $(".interval-w").show();
+            break;
+            case 'monthly':
+                //$repeatedTask.find('.days-weekly').show();
+                $(".interval-m").show();
+            break;
+            case 'yearly':
+                $(".interval-y").show();
+            break;
+        }       
+     });
+     
+     //create repeated 
+     $("#saveRepeate").click(function(){
+            var id = $('#editTask').attr('task_id');
+            var recur = {};
+            var byDays = [];
+            recur.freq = $('#freq').val();
+            recur.interval = $('#interval').val();
+            recur.until = $("input[name=until]:checked").val();
+            if (recur.until == 'after'){
+                recur.count = $("input[name=until]:checked + #count").val();
+            }
+            if (recur.until == 'date'){
+                recur.date = $("input[name=until]:checked + #date").val();
+            }
+            if(recur.freq == 'weekly'){
+               $repeatedTask.find('.week input:checkbox:checked').each(function(){
+                    byDays.push($(this).val());
+                });
+                if(byDays.length > 0){
+                    recur.byDays = byDays;
+                } 
+            }
+            console.log(recur);
+            userEvent('repeated',{id: id, recur: recur});
+    }); 
 }
 
 function initCommentDay(element){
@@ -1902,7 +2026,6 @@ var isDragging = false;
 var refreshDays = [];
 
 $(function(){
-     
      $(window).hashchange( function(e){
         if(location.hash != "") { 
             var pattern_list=/^#list(s$|-.+)/;
@@ -1979,7 +2102,7 @@ $(function(){
     InitClock();
     initDeleteAll('.delete_all');
     setFiler($('.listDay .active').children('a').attr('date'));
-    
+    initRepeatTask();
 
     
     

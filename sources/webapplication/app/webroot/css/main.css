@@ -91,8 +91,6 @@ body {
   height: 100%;
   overflow-y: scroll;  
   position: relative;
-  //background-color: #FBFBFB;
-  
 }
 
 #wrapper-all {
@@ -169,7 +167,7 @@ footer .copyright{
 footer .right{ text-align:right; }
 
 .ajaxLoader{
-    margin: 9px 4px 0 0 ;
+    margin: 6px 4px 0 0;
     max-width: none;
 }
 
@@ -348,7 +346,7 @@ footer .right{ text-align:right; }
     margin: 0 0 6px 4px;
 }
 .btn-note{
-    margin-top: 8px!important;
+    /*margin-top: 8px!important;*/
 }
 .btn-note .icon-leaf{
     background-image: url("/img/glyphicons-halflings-white.png");

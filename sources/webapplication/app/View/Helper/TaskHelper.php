@@ -3,32 +3,29 @@ class TaskHelper extends AppHelper {
 
     public $separator = "' ";
     
-    public $helpers = array('Time');
+    public $helpers = array('Time', 'Tag');
     
     public function taskLi($data){
         extract($data);
         $liClass = '';
+        $repeated = 0;
         if ($time)
             $liClass .=' setTime';
         if ($done)
             $liClass .=' complete';    
         if ($priority)
             $liClass .=' important';
-        $title = h($title);
+        if ($repeatid)
+            $repeated = 1;
         if (!empty($tags)){
-            foreach( $tags as $tag ){
-                if (!empty($tag)){
-                    $tag = h($tag);
-                    $title = str_replace('#'.$tag, '<span class="tags label label-important" data-tag="'.$tag.'">&#x23;'.$tag.'</span>', $title);
-                }
-            }
+            $title = $this->Tag->wrap($title, $tags);
         }
         $pr_time = $time ? $this->Time->format('H:i', $time, true) : '';
         $pr_timeend = $timeend ? $this->Time->format('H:i', $timeend,true) : '';
         $pr_checked = $done ? ' checked' : '';
         $pr_comment_status = empty($comment) ? 'hide': '';
         
-        $str = '<li id ="'.$id.'" class="'. $liClass .'" date="'.$date .'" data-continued="'.$continued.'">';
+        $str = '<li id ="'.$id.'" class="'. $liClass .'" date="'.$date .'" data-continued="'.$continued.'" data-repeated="'.$repeated.'">';
             $str .= '<span class="time">'. $pr_time .'</span>';
             $str .= '<span class="timeEnd">'. $pr_timeend .'</span>';
             $str .= '<span class="move"><i class="icon-move"></i></span>';
@@ -44,7 +41,7 @@ class TaskHelper extends AppHelper {
     }
     
     public function addTaskLi(){
-        $str =' <li id ="<%= id %>" class="<%= liClass %>" date="<%= date %>" data-continued="<%= continued %>">';
+        $str =' <li id ="<%= id %>" class="<%= liClass %>" date="<%= date %>" data-continued="<%= continued %>" data-repeated="<%= repeated %>" >';
             $str .= '<span class="time"><%= time %></span>';
             $str .= '<span class="timeEnd"><%= timeend %></span>';
             $str .= '<span class="move"><i class="icon-move"></i></span>';
@@ -60,7 +57,7 @@ class TaskHelper extends AppHelper {
     }
     
     public function taskLiTag(){
-        $str =' <li id ="<%= id %>" class="<%= liClass %>" date="<%= date %>" data-continued="<%= continued %>">';
+        $str =' <li id ="<%= id %>" class="<%= liClass %>" date="<%= date %>" data-continued="<%= continued %>" data-repeated="<%= repeated %>" >';
             $str .= '<span class="time"><%= time %></span>';
             $str .= '<span class="timeEnd"><%= timeend %></span>';
             $str .= '<span class="move"><i class="icon-move"></i></span>';

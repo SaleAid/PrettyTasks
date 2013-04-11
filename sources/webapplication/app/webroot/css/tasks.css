@@ -1,8 +1,4 @@
 
-.modal {
-    max-height: 90%;
-    overflow-y: auto;
-}
 #main{
     
 }
@@ -87,6 +83,7 @@
 
 div.well{
     padding: 0px;
+    padding-left: 3px;
     background-color: inherit;
     border: none;
     box-shadow: none;
@@ -121,7 +118,8 @@ div.well{
 }
 .ratingDay input[type="checkbox"] {
    margin-left: 0;
-   margin-right: 2px; 
+   margin-right: 2px;
+   margin-top: 2px; 
 }
 .days a{
     vertical-align: top;
@@ -404,3 +402,29 @@ div.well{
 .done-continued{
     margin-left: 100px;
 }
+#eComment, #eCommentDay{
+    resize: none;
+    resize: vertical; 
+}
+
+.form-repeat{
+    margin-left: 30px;
+}
+
+.form-repeat td{
+    vertical-align: baseline;
+}
+.form-repeat td.label-td{
+    text-align: right;
+}
+
+.form-repeat input {
+    margin-bottom: 0;
+}
+.form-repeat .week label{
+    display: inline-block;
+}
+.form-repeat .week input {
+    margin-bottom: 5px;
+}
+.ui-datepicker{ z-index: 9999 !important;}

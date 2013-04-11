@@ -8,6 +8,8 @@
        echo $this->html->css('jquery.timepicker-1.2.2', null, array('block' => 'toHead'));
        echo $this->Html->css('tasks.'. Configure::read('App.version'), null, array('block' => 'toHead'));
        echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom', null, array('block' => 'toHead'));
+       echo $this->Html->css('bootstrap-modal', null, array('block' => 'toHead'));
+       
     }
     
     if( Configure::read('App.Minify.js') ){
@@ -21,6 +23,8 @@
             'jquery.timepicker-1.2.2.min',
             'jquery.inline-confirmation.'.Configure::read('App.version'),
             'jquery-ui-i18n.min',
+            'bootstrap-modalmanager',
+            'bootstrap-modal'
        ), array('block' => 'toFooter'));
        echo $this->Html->script('main.' . Configure::read('App.version'), array('block' => 'toFooter')); 
        echo $this->Html->script('print.'.Configure::read('App.version'), array('block' => 'toFooter'));
@@ -326,94 +330,10 @@
     </div>  
 
 
-<!-- modal editTask -->
-<div id="editTask" class="modal hide  in">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">×</a>
-        <h3><?php echo __d('tasks', 'Редактирование задачи');?></h3>
-    </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="span6 form-horizontal">
-              <div class="control-group">
-                <label class="control-label" for="eTitle"><?php echo __d('tasks', 'Заглавие');?></label>
-                <div class="controls">
-                  <input type="text" class="span6" id="eTitle"/>
-                </div>
-              </div>
-              <div class="control-group form-inline">
-                <label class="control-label" for="eDate"><?php echo __d('tasks', 'Дата и время');?></label>
-                <div class="controls">
-                    <input type="text"  id="eDate"/>
-                    <label><?php echo __d('tasks', 'с');?></label>
-                    <input type="text"  id="eTime"/>
-                    <label><?php echo __d('tasks', 'по');?></label>
-                    <input type="text"  id="eTimeEnd"/>
-                </div>
-              </div>
-          <div class="row">
-          
-          <div class="span5">
-              <div class="control-group">
-                <label class="control-label" for="eComment"><?php echo __d('tasks', 'Комментарий');?></label>
-                <div class="controls">
-                  <textarea class="span4" id="eComment" rows="4"></textarea>
-                </div>
-              </div>
-            </div>  
-          <div class="priority span1 form-vertical">
-          <div class="control-group">
-            <label class="control-label"><?php echo __d('tasks', 'Приоритет');?></label>
-            <div class="controls">
-              <label class="radio">
-                <input type="radio" name="priority" id="optionsRadios1" value="1" />
-                <?php echo __d('tasks', 'Высокий');?>
-              </label>
-              <label class="radio">
-                <input type="radio" name="priority" id="optionsRadios2" value="0"/>
-                <?php echo __d('tasks', 'Обычный');?>
-              </label>
-            </div>
-          </div>
-        </div>
-        
-        </div>
-              <div class="done-continued">
-                <label class="checkbox">
-                    <input type="checkbox" id="eContinued"/>
-                    <?php echo __d('tasks', 'Длительная');?>
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" id="eDone" value="option1"/>
-                    <?php echo __d('tasks', 'Выполнена');?>
-                </label>
-              </div>
-              
-        </div>
-    </div>
-</div>
-    <div class="modal-footer">
-        <a href="" class="btn" data-dismiss="modal"><?php echo __d('tasks', 'Закрыть');?></a>
-        <button id="eSave" class="btn btn-success"><?php echo __d('tasks', 'Сохранить');?></button>
-    </div>
-</div>
-<!-- End modal -->
+<?php echo $this->element('edit_task', array(), array('cache' => array('key' => 'edit_task', 'config' => 'elements'))); ?>
+<?php echo $this->element('repeat_task', array(), array('cache' => array('key' => 'repeat_task', 'config' => 'elements'))); ?>
 
-<!-- modal commentDay -->
-<div id="commentDay" class="modal hide  in">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">×</a>
-        <h3><?php echo __d('tasks', 'Комментарий');?></h3>
-    </div>
-    <div class="modal-body">
-        <textarea  class="" id="eCommentDay" rows="9"></textarea>
-    </div>
-    <div class="modal-footer">
-        <a href="" class="btn" data-dismiss="modal"><?php echo __d('tasks', 'Закрыть');?></a>
-        <button id="eCommentDaySave" class="btn btn-success"><?php echo __d('tasks', 'Сохранить');?></button>
-    </div>
-</div>
-<!-- End modal -->
+<?php echo $this->element('comment_day', array(), array('cache' => array('key' => 'comment_day', 'config' => 'elements'))); ?>
 
 <!-- print_brand -->
 <?php echo $this->Html->image("brand.". Configure::read('App.version') .".png", array('class' => 'print_brand', 'width' => 156, 'height' => 30)); ?>
@@ -425,7 +345,6 @@
 <?php echo $this->element('connection_error', array(), array('cache' => array('key' => 'connection_error', 'config' => 'elements'))); ?>
 
 <!-- Templates -->
-
 <script type="text/template" id="day_tab_content_template">
     <div class="tab-pane" id="<%= date %>"> 
 	<div class="row">  

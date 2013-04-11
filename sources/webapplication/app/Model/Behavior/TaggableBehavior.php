@@ -62,6 +62,8 @@ class TaggableBehavior extends ModelBehavior {
 		'deleteTagsOnEmptyField' => true,
 		//'maxlengthTag' => 10
 	);
+    
+    
 
 /**
  * Setup

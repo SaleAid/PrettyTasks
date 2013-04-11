@@ -1,7 +1,7 @@
 <?php 
-   Configure::write('loginza.id', '14377');
-   Configure::write('loginza.skey', '21013aca17787a9d1b8cf4be7c7f5aeb');
-   Configure::write('loginza.token_url', 'http://learning-2012.org.ua/accounts/loginzalogin');
+   Configure::write('loginza.id', '47177');
+   Configure::write('loginza.skey', '51a1fb251f0acf7c54a8e1fd15668014');
+   Configure::write('loginza.token_url', 'http://beta2.prettytasks.com/accounts/loginzalogin');
    Configure::write('loginza.widget_url', 'http://loginza.ru/js/widget.js');
    
    Configure::write('loginza.provider', array('facebook' => 'http://www.facebook.com/',
@@ -82,9 +82,15 @@
    
    Configure::write('App.Minify.css', false);
    Configure::write('App.Minify.js', false);
+   
+   //
+   Configure::write('App.allowHTTPS', false);
+   Configure::write('App.maintenanceMode', false);
       
    Configure::write('Session.cookie', 'PrettyTasks');
    
+   //repeated tasks
+   Configure::write('Repeated.MaxCount', 360);
    
    
    //Cache

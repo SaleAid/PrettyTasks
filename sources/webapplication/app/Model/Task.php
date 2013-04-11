@@ -7,7 +7,7 @@ App::uses('AppModel', 'Model');
  */
 class Task extends AppModel {
     
-    public $actsAs = array('Taggable');
+    public $actsAs = array('Taggable', 'Ordered');
     /**
      * Display field
      *
@@ -120,11 +120,11 @@ class Task extends AppModel {
             )
         ),
         'repeatid' => array(
-            'numeric' => array(
-                'rule' => array(
-                    'numeric'
-                )
-            )
+            'maxLength' => array(
+                'rule'    => array('maxLength', 36),
+                'message' => 'Wrong ID',
+            ),
+        	//'uuid'
         ),
         'transfer' => array(
             'numeric' => array(
@@ -176,11 +176,13 @@ class Task extends AppModel {
             'order' => ''
         ),
     );
+    
+    
     private $_originData = array();
     
-    private $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'deleted', 'done' ,'datedone', 'continued', 'comment');
+    private $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'future', 'deleted', 'done' ,'datedone', 'continued', 'repeatid', 'comment');
     
-    private $_taskFieldsSave = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'order', 'future', 'deleted', 'done' ,'datedone', 'continued', 'comment', 'tags');
+    private $_taskFieldsSave = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'future', 'deleted', 'done' ,'datedone', 'continued', 'repeatid', 'comment', 'tags');
     /**
      * set true if method 
      */
@@ -234,7 +236,7 @@ class Task extends AppModel {
         return false;
     }
 
-    public function create($user_id, $title, $date = null, $time = null, $order = null, $priority = null, $future = null, $clone = null) {
+    public function createTask($user_id, $title, $date = null, $time = null, $order = null, $priority = null, $future = null, $clone = null) {
         $this->data = $this->_prepareTask($user_id, $title, $date, $time, $order, $priority, $future);
         if($this->data[$this->alias]['time']){
             $this->_originData[$this->alias]['time'] = null;
@@ -265,9 +267,11 @@ class Task extends AppModel {
         if (! $date) {
             $future = 1;
             $time = null;
-            $data[$this->alias]['order'] = 1;
+            //$data[$this->alias]['order'] = 1;
+            $this->_createOfFirst = true;
         }else{
-            $data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
+            //$data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
+            //$data[$this->alias]['order'] = 111;
             $future = 0;
         }
          $data[$this->alias]['time'] = $time;
@@ -317,7 +321,7 @@ class Task extends AppModel {
         return $this->find('all', 
                         array(
                             'order' => array(
-                                'Task.order' => 'ASC'
+                                //'Task.order' => 'ASC'
                             ), 
                             'conditions' => array(
                                 'AND' => array(
@@ -732,7 +736,7 @@ class Task extends AppModel {
                         array(
                             'order' => array(
                                 'Task.date' => 'DESC', 
-                                'Task.order' => 'ASC'
+                                //'Task.order' => 'ASC'
                             ), 
                             'conditions' => array(
                                 'Task.user_id' => $user_id, 
@@ -751,7 +755,7 @@ class Task extends AppModel {
                         array(
                             'order' => array(
                                 'Task.date' => 'DESC', 
-                                'Task.order' => 'ASC'
+                               // 'Task.order' => 'ASC'
                             ), 
                             'conditions' => array(
                                 'Task.user_id' => $user_id, 
@@ -777,7 +781,7 @@ class Task extends AppModel {
                         array(
                             'order' => array(
                                 'Task.date' => 'DESC', 
-                                'Task.order' => 'ASC'
+                               // 'Task.order' => 'ASC'
                             ), 
                             'conditions' => array(
                                 'Task.user_id' => $user_id, 
@@ -827,7 +831,7 @@ class Task extends AppModel {
                         array(
                             'order' => array(
                                 'Task.date' => 'ASC', 
-                                'Task.order' => 'ASC'
+                                //'Task.order' => 'ASC'
                             ), 
                             'conditions' => array(
                                 'Task.user_id' => $user_id, 
@@ -839,12 +843,13 @@ class Task extends AppModel {
     }
     
     public function getAllContinued($user_id) {
+        $result = array();
         $this->contain('Tag');
         $tasks = $this->find('all', 
                         array(
                             'order' => array(
                                 'Task.date' => 'ASC', 
-                                'Task.order' => 'ASC'
+                                //'Task.order' => 'ASC'
                             ), 
                             'conditions' => array(
                                 'Task.user_id' => $user_id, 
@@ -872,12 +877,12 @@ class Task extends AppModel {
             $days = array_merge($days, $arrDays);
             $days = array_unique($days);
         }
-        $this->contain('Tag');
+        $this->contain('Tag', 'Ordered');
         $result = $this->find('all', 
                             array(
                                 'order' => array(
                                     'Task.date' => 'ASC', 
-                                    'Task.order' => 'ASC'
+                                    //'Task.order' => 'ASC'
                                 ), 
                                 'conditions' => array(
                                     'Task.user_id' => $user_id, 
@@ -889,6 +894,7 @@ class Task extends AppModel {
                                 ),
                                 //'fields' => $this->_taskFields,
                             ));
+                            //pr($result);die;
         foreach ( $days as $v ) {
             $data[$v] = array();
         }
@@ -916,7 +922,7 @@ class Task extends AppModel {
                         array(
                             'order' => array(
                                 'Task.date' => 'ASC', 
-                                'Task.order' => 'ASC'
+                               // 'Task.order' => 'ASC'
                             ), 
                             'conditions' => array(
                                 'Task.user_id' => $user_id, 
@@ -938,7 +944,7 @@ class Task extends AppModel {
         $config = $this->User->getConfig($user_id);
         if(array_key_exists('day', $config)){
             $key = array_search($date, $config['day']);
-            if($key){
+            if($key !== false){
                 unset($config['day'][$key]);
                 return $this->User->setConfig($user_id, $config);
             }    
@@ -978,7 +984,128 @@ class Task extends AppModel {
             }
     }
     
-    //----------------------------------------------------
-   
-
+    public function repeated($recur, $task_id = null){
+        $taskDate = $this->data[$this->alias]['date'];
+        $days = $this->_repeatedDays($recur, $taskDate);
+        if($days){
+            $repeatid = $this->data[$this->alias]['id'];
+            $repeatedTask = $this->data[$this->alias];
+            
+            $repeatedTask['repeatid'] = $this->data[$this->alias]['id'];
+            //$repeatedTask['order'] = 1;
+            foreach($days as $day){
+                unset($this->_originData); 
+                unset($this->data);
+                unset($this->id);
+                $this->createTask(  $repeatedTask['user_id'],
+                                    $repeatedTask['title'],
+                                    $day,
+                                    $repeatedTask['time'],
+                                    null,
+                                    $repeatedTask['priority'],
+                                    $repeatedTask['future'],
+                                    null
+                );
+                $this->data[$this->alias]['repeatid'] = $repeatid;
+                $this->save();
+                if($this->validationErrors)
+                    pr($this->validationErrors);
+            }
+        }
+        return true;
+    }
+    
+    protected function _repeatedDays($recur, $beginDate){
+        /*
+            recur:RRULE:FREQ=DAILY;INTERVAL=2
+            recur:RRULE:FREQ=WEEKLY;BYDAY=SU,TU,TH
+            recur:RRULE:FREQ=WEEKLY;INTERVAL=4;BYDAY=SU
+            recur:RRULE:FREQ=MONTHLY;BYDAY=1SU
+            recur:RRULE:FREQ=MONTHLY + day task
+            recur:RRULE:FREQ=YEARLY;INTERVAL=5
+            recur:RRULE:FREQ=YEARLY;UNTIL=20300303;INTERVAL=5
+            recur:RRULE:FREQ=YEARLY;COUNT=5;INTERVAL=8
+        */
+        $days = array();
+        $week = array('sun','mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun');
+        $countRepeated = Configure::read('Repeated.MaxCount');
+        $endDateRepeated = null;
+        $begin = new DateTime( $beginDate );
+        extract($recur);
+        
+        if( !isset($freq) or !isset($interval)){
+            return false;
+        }
+        $interval = $interval * 1;
+        if( isset($until) ){
+            switch($until){
+                case 'after':
+                    if(isset($count) and Validation::naturalNumber($count) and $count <= $countRepeated){
+                        $countRepeated = $count;
+                    }
+                break;
+                case 'date':
+                    if( isset($date) and Validation::date($date)){
+                        $endDateRepeated = new DateTime($date);
+                    }
+                break;
+            }
+        }
+        switch($freq){
+                case 'dally': 
+                    $begin->modify("+$interval day");
+                    while($countRepeated > 0 and (!$endDateRepeated or $endDateRepeated >= $begin) ){
+                        $days[] = $begin->format('Y-m-d');
+                        $begin->modify("+$interval day");
+                        $countRepeated--;
+                    }
+                break;
+                case 'weekly':
+                    if( isset($byDays) and is_array($byDays)){
+                      foreach($byDays as $k => $v){
+                          if(!in_array($v, $week)){
+                                unset($byDays[$k]);    
+                          }    
+                      }
+                      array_unique($byDays);
+	                }
+                    $begin->modify("+$interval week");
+                    while($countRepeated > 0 and count($days) < Configure::read('Repeated.MaxCount') 
+                           and (!$endDateRepeated or $endDateRepeated >= $begin)) {
+		                if(isset($byDays)){
+                            foreach($byDays as $v){
+                                $days[] = $begin->format('Y-m-d');
+                                $begin->modify("$v this week");
+                            }
+                            $begin->modify("+$interval week");
+                            $countRepeated--;    
+                        } else {
+                            $days[] = $begin->format('Y-m-d');
+                            $begin->modify("+$interval week");
+                            $countRepeated--;
+                        }
+                    }
+                break;
+                case 'monthly':
+                    $begin->modify("+$interval month"); 
+                    while($countRepeated > 0 and (!$endDateRepeated or $endDateRepeated >= $begin)){
+                        $days[] = $begin->format('Y-m-d');
+                        $begin->modify("+$interval month");
+                        $countRepeated--;
+                    }
+                break;
+                case 'yearly':
+                    $begin->modify("+$interval year"); 
+                    while($countRepeated > 0 and (!$endDateRepeated or $endDateRepeated >= $begin)){
+                        $days[] = $begin->format('Y-m-d');
+                        $begin->modify("+$interval year");
+                        $countRepeated--;
+                    }
+                break;
+            }
+        sort($days);
+        $days = array_slice($days, 0, Configure::read('Repeated.MaxCount')); 
+        return $days;
+    }
+    
 }

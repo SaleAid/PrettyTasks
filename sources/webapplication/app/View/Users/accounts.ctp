@@ -18,6 +18,7 @@
                 <tr>
                     <th><?php echo __d('users', 'Провайдер');?></th>
                     <th><?php echo __d('users', 'Имя');?></th>
+                    <th><?php echo __d('users', 'Identity');?></th>
                     <th><?php echo __d('users', 'Дата связывания');?></th>
                     
                     <th class="actions"><?php echo __d('users', 'Действия');?></th>
@@ -26,6 +27,7 @@
                    <tr>   
                         <td><?php echo $this->Loginza->logo($item['Account']['provider']); ?>&nbsp;</td>
                         <td><?php echo h($item['Account']['full_name']); ?>&nbsp;</td>
+                        <td><?php echo h($item['Account']['identity']); ?>&nbsp;</td>
                         <td><?php echo h($item['Account']['created']); ?>&nbsp;</td>
                         <td class="actions"><?php echo $this->Form->postLink(__d('users', 'Удалить'), array('controller' => 'Accounts', 'action' => 'delete', $item['Account']['id']), null, __d('users', 'Вы уверены, что хотите удалить этот аккаунт?')); ?></td>
                    </tr>
