@@ -253,7 +253,7 @@ class Task extends AppModel {
         $data[$this->alias]['user_id'] = $user_id;
         $data[$this->alias]['title'] = $title;
         $data[$this->alias]['date'] = $date;
-       
+        $data[$this->alias]['createFirst'] = false;
         if($priority == null){
             if (strpos($title, '!') === false) {
                 $data[$this->alias]['priority'] = 0;
@@ -263,18 +263,16 @@ class Task extends AppModel {
         }else{
             $data[$this->alias]['priority'] = $priority;
         }
-        //$data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
         if (! $date) {
-            $future = 1;
+            $data[$this->alias]['oList'] = 'planned';
+            $future = 0; // need 1
             $time = null;
-            //$data[$this->alias]['order'] = 1;
-            $this->_createOfFirst = true;
+            $data[$this->alias]['createFirst'] = true;
         }else{
-            //$data[$this->alias]['order'] = $order ? $order : $this->getLastOrderByUser_idAndDate($user_id, $date) + 1;
-            //$data[$this->alias]['order'] = 111;
+            $data[$this->alias]['oList'] = $date;
             $future = 0;
         }
-         $data[$this->alias]['time'] = $time;
+        $data[$this->alias]['time'] = $time;
         $data[$this->alias]['future'] = $future ? $future : 0;
         if( !$time and !$future ){
             $pattern = '/^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?/';
@@ -287,35 +285,7 @@ class Task extends AppModel {
         return $data;
     }
 
-    public function getLastOrderByUser_idAndDate($user_id, $date) {
-        $lastOrder = $this->find('first', 
-                                array(
-                                    'fields' => array(
-                                        'Task.order'
-                                    ), 
-                                    'order' => array(
-                                        'Task.order' => 'desc'
-                                    ), 
-                                    'conditions' => array(
-                                        'AND' => array(
-                                            array(
-                                                'Task.user_id' => $user_id
-                                            ), 
-                                            array(
-                                                'Task.date' => $date
-                                            ),
-                                            array(
-                                                'Task.deleted' => 0
-                                            )
-                                        )
-                                    )
-                                ));
-        if ($lastOrder) {
-            return $lastOrder[$this->alias]['order'];
-        }
-        return false;
-    }
-
+    
     public function getAllForDate($user_id, $date) {
         $this->contain();
         return $this->find('all', 
