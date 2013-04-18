@@ -155,6 +155,11 @@ class OAuthController extends OAuthAppController {
  *	- client_id
  *	- client_secret
  *  
+ * 4)  social_code - exchange id from social network for token
+ * - network
+ * - uid
+ * - client_id
+ * - client_secret
  */
 	public function token(){
 		$this->autoRender = false;

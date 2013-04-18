@@ -189,13 +189,14 @@ class OAuth2 {
 	const GRANT_TYPE_CLIENT_CREDENTIALS = 'client_credentials';
 	const GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';
 	const GRANT_TYPE_EXTENSIONS = 'extensions';
+    const GRANT_TYPE_SOCIAL_CODE_CREDENTIALS = 'social_code';
 	
 	/**
 	 * Regex to filter out the grant type.
 	 * NB: For extensibility, the grant type can be a URI
 	 * @see http://tools.ietf.org/html/draft-ietf-oauth-v2-20#section-4.5
 	 */
-	const GRANT_TYPE_REGEXP = '#^(authorization_code|token|password|client_credentials|refresh_token|http://.*)$#';
+	const GRANT_TYPE_REGEXP = '#^(social_code|authorization_code|token|password|client_credentials|refresh_token|http://.*)$#';
 	
 	/**
 	 * @}
@@ -591,6 +592,8 @@ class OAuth2 {
 			"username" => array("flags" => FILTER_REQUIRE_SCALAR),
 			"password" => array("flags" => FILTER_REQUIRE_SCALAR),
 			"refresh_token" => array("flags" => FILTER_REQUIRE_SCALAR),
+            "network" => array("flags" => FILTER_REQUIRE_SCALAR),
+            "uid" => array("flags" => FILTER_REQUIRE_SCALAR),
 		);
 		
 		// Input data by default can be either POST or GET
@@ -673,6 +676,22 @@ class OAuth2 {
 				}
 				break;
 			
+            case self::GRANT_TYPE_SOCIAL_CODE_CREDENTIALS:
+				//if (!($this->storage instanceof IOAuth2GrantUser)) {
+				//	throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_UNSUPPORTED_GRANT_TYPE);
+				//}
+				
+				if (!$input["uid"] || !$input["network"]) {
+					throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_INVALID_REQUEST, 'Missing parameters. "uid" and "network" required');
+				}
+				
+				$stored = $this->storage->checkSocialCodeCredentials($client[0], $input["uid"], $input["network"]);
+				
+				if ($stored === FALSE) {
+					throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_INVALID_GRANT);
+				}
+				break;
+            
 			case self::GRANT_TYPE_CLIENT_CREDENTIALS:
 				if (!($this->storage instanceof IOAuth2GrantClient)) {
 					throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_UNSUPPORTED_GRANT_TYPE);

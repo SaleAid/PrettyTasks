@@ -99,12 +99,12 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
 /**
  * Array of globally supported grant types
  * 
- * By default = array('authorization_code', 'refresh_token', 'password');
+ * By default = array('authorization_code', 'refresh_token', 'password', 'social_code');
  * Other grant mechanisms are not supported in the current release
  * 
  * @var array
  */
-	public $grantTypes = array('authorization_code', 'refresh_token', 'password');
+	public $grantTypes = array('authorization_code', 'refresh_token', 'password', 'social_code');
 /**
 * OAuth2 Object
 * 
@@ -568,6 +568,38 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
 		}
 		return false;
 	}
+
+
+/**
+ * Grant type: social_code_credentials
+ * 
+ * @see IOAuth2GrantSocialCode::checkSocialCodeCredentials()
+ * 
+ * @param type $client_id
+ * @param type $uid
+ * @param type $network 
+ */
+	public function checkSocialCodeCredentials($client_id, $uid, $network) {
+	    if( !array_key_exists($network, Configure::read('API.SocialLogin.AllowedClients')) 
+           or 
+            !in_array($client_id, Configure::read('API.SocialLogin.AllowedClients.'. $network)) ){
+		  return false;
+		}
+        
+        $user = $this->User->Account->find('first', array(
+		   'conditions' => array(
+		       'Account.uid' => $uid,
+		       'Account.provider' => $network,
+               'Account.active' => 1
+			),
+		    //'recursive' => -1
+		));
+        if ($user and !$user['User']['is_blocked']) {
+			return array('user_id' => $user['User'][$this->User->primaryKey]);
+		}
+		return false;
+	}
+
 
 /**
  * Grant type: authorization_code
