@@ -68,6 +68,13 @@ class TasksController extends AppController {
         
         $this->response->disableCache();
         $result = $this->_prepareResponse();
+        
+        App::uses('DateList', 'Model');
+        
+        $DateList = new DateList($this->Auth->user('id'), '2013-05-06');
+        
+        pr($DateList->getAll());
+        
         $result['success'] = true;
         $result['data']['arrAllFuture'] = $this->Task->getAllFuture($this->Auth->user('id'));
         $result['data']['arrAllFutureCount']['all'] = count($result['data']['arrAllFuture']);

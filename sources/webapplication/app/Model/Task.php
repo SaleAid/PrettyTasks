@@ -1,5 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('DateList', 'Model');
 /**
  * Task Model
  *
@@ -7,7 +8,7 @@ App::uses('AppModel', 'Model');
  */
 class Task extends AppModel {
     
-    public $actsAs = array('Taggable', 'Ordered');
+    public $actsAs = array('Taggable');
     /**
      * Display field
      *
@@ -85,13 +86,13 @@ class Task extends AppModel {
                 'message' => 'Время окончания должно быть больше начала'
             )
         ),  
-        'order' => array(
-            'numeric' => array(
-                'rule' => array(
-                    'numeric'
-                )
-            )
-        ),
+        //'order' => array(
+//            'numeric' => array(
+//                'rule' => array(
+//                    'numeric'
+//                )
+//            )
+//        ),
         'done' => array(
             'numeric' => array(
                 'rule' => array(
@@ -236,6 +237,13 @@ class Task extends AppModel {
         return false;
     }
 
+    public function afterSave($created){
+        if( $created ){
+            $DateList = new DateList($this->data[$this->alias]['user_id'], $this->data[$this->alias]['date']);
+            $DateList->addToList($this->id);
+        } 
+    }
+    
     public function createTask($user_id, $title, $date = null, $time = null, $order = null, $priority = null, $future = null, $clone = null) {
         $this->data = $this->_prepareTask($user_id, $title, $date, $time, $order, $priority, $future);
         if($this->data[$this->alias]['time']){
@@ -254,6 +262,7 @@ class Task extends AppModel {
         $data[$this->alias]['title'] = $title;
         $data[$this->alias]['date'] = $date;
         $data[$this->alias]['createFirst'] = false;
+        
         if($priority == null){
             if (strpos($title, '!') === false) {
                 $data[$this->alias]['priority'] = 0;
@@ -263,6 +272,7 @@ class Task extends AppModel {
         }else{
             $data[$this->alias]['priority'] = $priority;
         }
+        
         if (! $date) {
             $data[$this->alias]['oList'] = 'planned';
             $future = 0; // need 1
@@ -272,6 +282,7 @@ class Task extends AppModel {
             $data[$this->alias]['oList'] = $date;
             $future = 0;
         }
+        
         $data[$this->alias]['time'] = $time;
         $data[$this->alias]['future'] = $future ? $future : 0;
         if( !$time and !$future ){
@@ -847,7 +858,7 @@ class Task extends AppModel {
             $days = array_merge($days, $arrDays);
             $days = array_unique($days);
         }
-        $this->contain('Tag', 'Ordered');
+        $this->contain('Tag');
         $result = $this->find('all', 
                             array(
                                 'order' => array(
