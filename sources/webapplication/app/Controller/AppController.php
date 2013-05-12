@@ -123,7 +123,6 @@ class AppController extends Controller {
     }
     
     public function beforeFilter() {
-        
         $this->_setLanguage();
         $this->__setTimeZone();
         $this->_checkMobile();

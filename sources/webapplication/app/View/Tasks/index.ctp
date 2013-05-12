@@ -138,7 +138,7 @@
             <ul class="sortable connectedSortable ui-helper-reset filtered" date="planned" data-refresh="1">
                 <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])):?>
                     <?php foreach($result['data']['arrAllFuture'] as $item):?>
-                        <?php echo $this->Task->taskLi($item['Task']);?>
+                        <?php echo $this->Task->taskLi($item);?>
                     <?php endforeach;?>
                 <?php endif;?>   
             </ul>
@@ -316,7 +316,7 @@
                         <div class="clear"></div>
                         <ul id="sortable-<?php echo $k; ?>" class="sortable connectedSortable ui-helper-reset filtered" date="<?php echo $k; ?>" data-refresh="0">
                             <?php foreach($v as $item):?>
-                                <?php echo $this->Task->taskLi($item['Task']);?>
+                                <?php echo $this->Task->taskLi($item);?>
                             <?php endforeach;?>
                         </ul>
                         <?php echo $this->element('empty_lists', array('type' => $type, 'hide' => $result['data']['arrTaskOnDaysCount'][$k]['all']));?>

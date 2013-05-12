@@ -611,10 +611,10 @@ function futureTasks(data){
             listUl.append(day);   
         }
         $.each(value.list,function(index, value) {
-            listUl.append( addTaskNew(value.Task) );
-            initDelete(listUl.find("li[id='"+value.Task.id+"'] .deleteTask"));
-            initEditAble(listUl.find("li[id='"+value.Task.id+"'] .editable"));
-            listUl.find(" li[id='"+value.Task.id+"'] .editTask").addClass('hide');
+            listUl.append( addTaskNew(value) );
+            initDelete(listUl.find("li[id='"+value.id+"'] .deleteTask"));
+            initEditAble(listUl.find("li[id='"+value.id+"'] .editable"));
+            listUl.find(" li[id='"+value.id+"'] .editTask").addClass('hide');
         });
     });
     if(!+listUl.children('li').length){
@@ -1001,11 +1001,11 @@ function onAddDay(data){
     }
     $.each(data.data.list,function(index, value) {
         list.append(AddTask(value));
-        initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
-        initEditAble("li[id='"+value.Task.id+"'] .editable");
+        initDelete( "li[id='"+value.id+"'] .deleteTask");
+        initEditAble("li[id='"+value.id+"'] .editable");
     });
-    initCreateTask($("ul[date='"+data.data.date+"']").parent().find(".createTask"));
-    initCreateTaskButton($("ul[date='"+data.data.date+"']").parent().parent().find(".createTaskButton"));
+//    initCreateTask($("ul[date='"+data.data.date+"']").parent().find(".createTask"));
+//    initCreateTaskButton($("ul[date='"+data.data.date+"']").parent().parent().find(".createTaskButton"));
     initDrop($("li a[date='"+data.data.date+"']").parent());
     initSortable("ul[date='"+data.data.date+"'].sortable");
     initRatingDay(".ratingDay input[date='"+data.data.date+"']");
@@ -1438,33 +1438,31 @@ function srvCreate(title, date){
     superAjax('/tasks/addNewTask.json',{title: title, date: date });
 }
 function scrCreate(data){
-    date = data.data.Task.date;
+    date = data.data.date;
     if(data.data.list){
-            $("ul[data-tag='"+data.data.list+"']").prepend(addTagToList(data.data.Task));
+            $("ul[data-tag='"+data.data.list+"']").prepend(addTagToList(data.data));
             _refreshDays('planned');
             date = 'list';
-    } else if(data.data.Task.future){
+    } else if(data.data.future){
         date = 'planned';
-        data.data.Task.date = '';
+        data.data.date = '';
         $("ul[date='"+date+"']").prepend(AddTask(data.data));
     } else {
         $("ul[date='"+date+"']").append(AddTask(data.data));    
     }
     
-    initDelete("li[id='"+data.data.Task.id+"'] .deleteTask");
-    initEditAble("li[id='"+data.data.Task.id+"'] .editable");
-    //initDone("li[id='"+data.data.Task.id+"'] .done");
-    //initEditTask("li[id='"+data.data.Task.id+"'] .editTask");
-    $("li[id='"+data.data.Task.id+"']").parent().siblings('.filter').children('a.active').trigger('click');
-    if(data.data.Task.time){
-        $("li[id='"+data.data.Task.id+"']").addClass('currentTask');
-        $("li[id='"+data.data.Task.id+"']").find('.time').text(null);
-        scrDragWithTime(data.data.Task.id, data.data.Task.date, data.data.Task.time);
-        $("li[id='"+data.data.Task.id+"']").find('.time').text(data.data.Task.time.slice(0,-3));
+    initDelete("li[id='"+data.data.id+"'] .deleteTask");
+    initEditAble("li[id='"+data.data.id+"'] .editable");
+    $("li[id='"+data.data.id+"']").parent().siblings('.filter').children('a.active').trigger('click');
+    if(data.data.time){
+        $("li[id='"+data.data.id+"']").addClass('currentTask');
+        $("li[id='"+data.data.id+"']").find('.time').text(null);
+        scrDragWithTime(data.data.id, data.data.date, data.data.time);
+        $("li[id='"+data.data.id+"']").find('.time').text(data.data.time.slice(0,-3));
     }
     srcCountTasks(date, true); 	
 }
-function AddTask(data){
+function AddTask(task){
     var important ='';
 	var setTime ='';
     var complete ='';
@@ -1472,35 +1470,35 @@ function AddTask(data){
     var time = '<span class="time"></span>';
     var timeEnd = '<span class="timeEnd"></span>';
     var comment = '';
-    if (+data.Task.priority){
+    if (+task.priority){
 		important = 'important';
 	}
-    if (+data.Task.done){
+    if (+task.done){
 		complete = ' complete';
         checked = ' checked';
 	}
-    if (data.Task.time){
+    if (task.time){
 		setTime = ' setTime';
-        time = '<span class="time">'+data.Task.time.slice(0,-3)+'</span>';
-        if(data.Task.timeend){
-            timeEnd = '<span class="timeEnd">'+data.Task.timeend.slice(0,-3)+'</span>'; 
+        time = '<span class="time">'+task.time.slice(0,-3)+'</span>';
+        if(task.timeend){
+            timeEnd = '<span class="timeEnd">'+task.timeend.slice(0,-3)+'</span>'; 
         }
     }
-    if( ! data.Task.comment ){
+    if( ! task.comment ){
         comment = 'hide';
     }
-    var date = data.Task.date;
-    if( data.Task.date == null ){
+    var date = task.date;
+    if( task.date == null ){
         date = '';
     }
-    var title = wrapTags(data.Task.title, data.Task.tags);
-    taskHtml = '<li id ="'+data.Task.id+'" class="'+setTime+' '+complete+' '+important+'" date="'+date+'">'+ 
+    var title = wrapTags(task.title, task.tags);
+    taskHtml = '<li id ="'+task.id+'" class="'+setTime+' '+complete+' '+important+'" date="'+date+'">'+ 
                             time+
                             timeEnd+
                             '<span class="move"><i class="icon-move"></i></span>'+
                             '<input type="checkbox" class="done" '+checked+'/>'+
                             '<span class="editable ">'+title+'</span>'+
-                            '<span class="commentTask">'+convertToHtml(data.Task.comment)+'</span>'+
+                            '<span class="commentTask">'+convertToHtml(task.comment)+'</span>'+
                             '<span class="comment-task-icon"><i class="icon-file '+comment+'"></i></span>'+
                             '<span class="editTask"><i class="icon-pencil"></i></a></span>'+
                             '<span class="deleteTask"><i class=" icon-ban-circle"></i></span>'+
@@ -1721,7 +1719,8 @@ function initCommentTag(element){
 
 
 function initCreateTask(element){
-    $(element).on('keypress', function(e){
+    $(document).on("keypress", element, function(e){
+    //$(element).on('keypress', function(e){
         var code = (e.keyCode ? e.keyCode : e.which);
         if(code == 13) {
             var title = $(this).val();
@@ -1732,6 +1731,7 @@ function initCreateTask(element){
             if(date == 'list'){
                 date = $(this).parent().parent().siblings("ul").data('tag');
             }
+            
             userEvent('create', {title: title, date: date });
             $(this).val(null);
             e.preventDefault();
@@ -1741,7 +1741,8 @@ function initCreateTask(element){
 }
 
 function initCreateTaskButton(element){
-    $(element).on('click', function(e){
+    $(document).on("click", element, function(e){
+    //$(element).on('click', function(e){
         var title = $(this).parent().find('.createTask').val();
         var date = $(this).parent().parent().siblings("ul").attr('date');
         if(date == 'planned'){

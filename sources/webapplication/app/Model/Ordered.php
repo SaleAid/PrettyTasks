@@ -44,8 +44,79 @@ class Ordered extends AppModel {
             'user_id' => $userId, 
             'order' => $order
         );
+        if( $toFirst ){
+            $this->__incrementPositionsOnLowerItems(1, $modelAlias, $list, $userId);
+        }
         $this->create($data);
-        $this->save();    
+        $this->save();
+            
+    }
+    
+    /**
+     * Inserts an item on a certain position
+     *
+     */
+    public function insert($modelAlias, $list, $foreignKey, $userId, $position){
+        $data = array(
+            'foreign_key' => $foreignKey,
+            'list' => $list,
+            'model' => $modelAlias,
+            'user_id' => $userId, 
+            'order' => $position
+        );
+        $this->__incrementPositionsOnLowerItems($position, $modelAlias, $list, $userId);
+        $this->create($data);
+        $this->save();
+    }
+    
+    /**
+     * Moves all lower items one position down
+     *
+     * @return boolean
+     */
+	private function __incrementPositionsOnLowerItems($position, $modelAlias, $list, $userId) {
+	   	return $this->updateAll(
+			array(
+                $this->alias . '.order' => $this->alias . '.order +1',
+                $this->alias . '.modified' => "'" . date("Y-m-d H:i:s") . "'"
+                ),
+			array(
+                $this->alias . '.order >=' => $position,
+                $this->alias . '.list' => $list,
+                $this->alias . '.model' => $modelAlias,
+                $this->alias . '.user_id' => $userId,
+                )
+		  );
+	}
+    
+    /**
+     * This has the effect of moving all the lower items up one
+     *
+     * @return boolean
+     */
+	private function __decrementPositionsOnLowerItems($position, $modelAlias, $list, $userId) {
+		return $this->updateAll(
+			array(
+                $this->alias . '.order' => $this->alias . '.order -1',
+                $this->alias . '.modified' => "'" . date("Y-m-d H:i:s") . "'"
+            ),
+			array(
+                $this->alias . '.order >' => $position,
+                $this->alias . '.list' => $list,
+                $this->alias . '.model' => $modelAlias,
+                $this->alias . '.user_id' => $userId,
+            )
+		);
+    }
+    
+    public function beforeDelete(){
+        $this->__decrementPositionsOnLowerItems(
+                                        $this->data[$this->alias]['order'], 
+                                        $this->data[$this->alias]['model'],
+                                        $this->data[$this->alias]['list'],
+                                        $this->data[$this->alias]['user_id']
+                                        );
+        return true;
     }
 
 }

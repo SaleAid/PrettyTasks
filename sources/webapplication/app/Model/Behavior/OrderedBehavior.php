@@ -16,7 +16,7 @@ class OrderedBehavior extends ModelBehavior {
 /**
  * Default settings
  *
- * taggedClass           	- class name of the HABTM association table between tags and models
+ * orderedClass           	- class name of the HABTM association table between tags and models
  * field                 	- the fieldname that contains the raw tags as string
  * foreignKey            	- foreignKey used in the HABTM association
  *
@@ -48,6 +48,7 @@ class OrderedBehavior extends ModelBehavior {
 		$model->data[$model->alias]['createFirst'] = false;
         
         extract($this->settings[$model->alias]);
+        
         $model->bindModel(array('hasOne' => array(
 			$orderedAlias => array(
 				'className' => $orderedClass,
@@ -73,8 +74,11 @@ class OrderedBehavior extends ModelBehavior {
         } 
     }
     
-    protected function _createOrder(Model $Model){
+    protected function _deleteOrder(Model $Model){
         
+    }
+    
+    protected function _createOrder(Model $Model){
         $orderedAlias = $this->settings[$Model->alias]['orderedAlias']; 
         $orderedModel = $Model->{$orderedAlias};
         
@@ -83,6 +87,7 @@ class OrderedBehavior extends ModelBehavior {
         }
         $oList = $Model->data[$Model->alias]['oList'];
         $order = $this->_startOrder; 
+        
         if( !$Model->data[$Model->alias]['createFirst'] ){
             $order = $this->_newOrder($Model, $oList);
         }
@@ -97,28 +102,29 @@ class OrderedBehavior extends ModelBehavior {
         $orderedModel->save();
     }
     
-    private function _highest(Model $Model, $oList) {
-		$options = array(
+    protected function _lastPosition(Model $Model, $oList) {
+		$field = $this->settings[$Model->alias]['field'];
+        $options = array(
                 'conditions' => array(
                                       'list' => $oList, 
                                       'model' => $Model->alias, 
                                       'user_id' => $Model->data[$Model->alias]['user_id']
                 ),
-				'order' => $this->settings[$Model->alias]['field'] . ' DESC', 
-				'fields' => array($this->settings[$Model->alias]['field']), 
+				'order' => $field . ' DESC', 
+				'fields' => array($field), 
 				'recursive' => -1);
 		$orderedAlias = $this->settings[$Model->alias]['orderedAlias']; 
         $orderedModel = $Model->{$orderedAlias};
         $last = $orderedModel->find('first', $options);
-		return $last;
+        
+        return (!empty($last)) ? $last[$Model->alias][$field] : 0;
 	}
+    
+    protected function _getPosition(Model $Model, $oList){}
 
-	private function _newOrder($Model, $oList) {
-		$highest = $this->_highest($Model, $oList);
-        if(empty($highest)){
-            return $this->_startOrder;
-        }
-        return $highest[$this->settings[$Model->alias]['orderedAlias']][$this->settings[$Model->alias]['field']] + 1;		
+	protected function _newOrder($Model, $oList) {
+		$lastPosition = $this->_lastPosition($Model, $oList);
+        return $lastPosition + 1;		
 	}	
     
     
