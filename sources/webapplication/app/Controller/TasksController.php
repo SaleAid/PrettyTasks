@@ -7,6 +7,9 @@ App::uses('ManyDateList', 'Model');
 App::uses('FutureList', 'Model');
 App::uses('OverdueList', 'Model');
 App::uses('CompletedList', 'Model');
+App::uses('DeletedList', 'Model');
+App::uses('ContinuedList', 'Model');
+
 /**
  * Tasks Controller
  *
@@ -107,9 +110,6 @@ class TasksController extends AppController {
         $result['data']['arrTaskOnDaysCount'] = $data_count;
         
         $result['data']['arrDaysRating'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $beginDate, $endDate, $dayConfig);
-        //$result['data']['arrAllOverdue'] = $this->Task->getItemsOverdue($this->Auth->user('id'));
-        //$result['data']['arrAllCompleted'] = $this->Task->getItemsCompleted($this->Auth->user('id'));
-        //$result['data']['arrAllExpired'] = $this->Task->getItemsExpired($this->Auth->user('id'));
         if($result['data']['arrTaskOnDaysCount'][$beginDate]['all'] && $result['data']['arrTaskOnDaysCount'][$beginDate]['all'] > $result['data']['arrTaskOnDaysCount'][$beginDate]['done'] ){
             $result['data']['yesterdayDisp'] = true;
         } else {
@@ -161,19 +161,35 @@ class TasksController extends AppController {
                     }
                 case 'future' :
                     {
-                        $from = CakeTime::format('Y-m-d', time());
-                        $to = CakeTime::format('Y-m-d', '+7 days');
-                        $result['data'] = $this->Task->getDays($this->Auth->user('id'), $from, $to);
+                        $beginDate = CakeTime::format('Y-m-d', time());
+                        $endDate = CakeTime::format('Y-m-d', '+7 days');
+                        $arrayDates = ManyDateList::arrayDates($beginDate, $endDate);
+                        $ManyDateList = new ManyDateList($this->Auth->user('id'), $arrayDates);
+                        $data = $ManyDateList->getItems();
+                        foreach($data as $item){
+                            $resultTasks[$item['date']][] = $item;
+                        }
+                        $result['data'] = $resultTasks;
                         break;
                     }
                 case 'deleted' :
                     {
-                        $result['data'] = $this->Task->getAllDeleted($this->Auth->user('id'));
+                        $DeletedList = new DeletedList($this->Auth->user('id'));
+                        $data = $DeletedList->getItems();
+                        foreach($data as $item){
+                            $resultTasks[$item['date']][] = $item;
+                        }
+                        $result['data'] = $resultTasks;
                         break;
                     }
                 case 'continued' :
                     {
-                        $result['data'] = $this->Task->getAllContinued($this->Auth->user('id'));
+                        $ContinuedList = new ContinuedList($this->Auth->user('id'));
+                        $data = $ContinuedList->getItems();
+                        foreach($data as $item){
+                            $resultTasks[$item['date']][] = $item;
+                        }
+                        $result['data'] = $resultTasks;
                         break;
                     }
                 default :
@@ -209,7 +225,7 @@ class TasksController extends AppController {
         $this->set('_serialize', 'result');
     }
 
-    public function agenda() {
+   /* public function agenda() {
         $result = $this->_prepareResponse();
         $result['success'] = true;
         $from = CakeTime::format('Y-m-d', time());
@@ -219,7 +235,7 @@ class TasksController extends AppController {
         $this->set('result', $result);
         $this->set('_serialize', 'result');
     }
-
+   */
     public function setTitle() {
         $result = $this->_prepareResponse();
         $expectedData = array(
@@ -274,7 +290,7 @@ class TasksController extends AppController {
             );
         } else {
             
-            if (! empty($this->request->data['date']) && Validation::date($this->request->data['date'])) {
+            if (!empty($this->request->data['date']) && Validation::date($this->request->data['date'])) {
                 $task = $this->Task->createTask($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->saveTask();
             } else {
                 $date = empty($this->request->data['date']) ? '' : ' #'.$this->request->data['date'];
@@ -358,7 +374,11 @@ class TasksController extends AppController {
         } else {
             $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($task) {
-                $DateList = new DateList($this->Auth->user('id'), $task['Task']['date']);
+                $name = $task['Task']['date'];
+            if($task['Task']['future']){
+                $name = 'planned';
+            }
+                $DateList = new DateList($this->Auth->user('id'), $name);
                 //if($this->Task->checkPositionWithTime($this->request->data['position'])){
                     if(true){
                     if ( $DateList->reOrder($task['Task']['id'], $this->request->data['position']) ) {
@@ -625,11 +645,9 @@ class TasksController extends AppController {
         } else {
             $result['data']['date'] = $this->request->data['date'];            
             if( $this->request->data['date'] =='planned' ){
-                //$task = $this->Task->getItemsFuture($this->Auth->user('id'));
                 $FutureList = new FutureList($this->Auth->user('id'));
                 $tasks = $FutureList->getItems();
             }else{
-                //$task = $this->Task->getTasksForDay($this->Auth->user('id'), CakeTime::format('Y-m-d', $this->request->data['date']));
                 $DateList = new DateList($this->Auth->user('id'), CakeTime::format('Y-m-d', $this->request->data['date']));
                 $tasks = $DateList->getItems();
                 $this->Task->setDayToConfig($this->Auth->user('id'), CakeTime::format('Y-m-d', $this->request->data['date']));

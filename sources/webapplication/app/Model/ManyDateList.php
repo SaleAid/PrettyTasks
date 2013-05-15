@@ -1,7 +1,6 @@
 <?php 
 
 App::uses('MainList', 'Model');
-App::uses('Ordered', 'Model');
 App::uses('Task', 'Model');
 
 class ManyDateList extends MainList{
@@ -13,9 +12,10 @@ class ManyDateList extends MainList{
     
     public static function arrayDates($beginDate, $endDate, $arrayDates = array()){
         $dates = array();
-        while( $beginDate <= $endDate ) { 
-            $dates[] = $beginDate;
-            $beginDate = date("Y-m-d", strtotime($beginDate . "+1 day"));
+        $currentDate = $beginDate;
+        while( $currentDate <= $endDate ) { 
+            $dates[] = $currentDate;
+            $currentDate = date("Y-m-d", strtotime($currentDate . "+1 day"));
         }
         $arrayDates = array_merge($dates, $arrayDates);
         $arrayDates = array_unique($arrayDates);
@@ -24,10 +24,9 @@ class ManyDateList extends MainList{
     }
     
     public function getItems(){
-        $ordered = new Ordered(); 
         $this->_model->bindModel(array('hasOne' => array(
-                    $ordered->alias => array(
-        				'className' => $ordered->alias,
+                    'Ordered' => array(
+        				'className' => 'Ordered',
                         'foreignKey' => 'foreign_key',
                         'type' => 'inner',
                     ),
@@ -37,16 +36,16 @@ class ManyDateList extends MainList{
         $data = $this->_model->find('all', 
                         array(
                             'order' => array(
-                              $ordered->alias . '.list' => 'ASC',
-                              $ordered->alias . '.order' => 'ASC',
+                                 'Ordered.list' => 'ASC',
+                                 'Ordered.order' => 'ASC',
                             ), 
                             'conditions' => array(
-                                 $ordered->alias . '.user_id' => $this->_userId, 
-                                 $ordered->alias . '.list' => $this->_name,
-                                 $ordered->alias . '.model' => $this->_model->alias
+                                 'Ordered.user_id' => $this->_userId, 
+                                 'Ordered.list' => $this->_name,
+                                 'Ordered.model' => $this->_model->alias
                             ),
-                            //'contain' => array('Ordered', 'Tag'),
-                            'fields' => array('Task.*'),
+                            'contain' => array('Ordered', 'Tag'),
+                            'fields' => $this->_model->getFields(),
                         ));
         $data = array_map( 
             function($task) { 

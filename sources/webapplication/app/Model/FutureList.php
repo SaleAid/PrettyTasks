@@ -1,7 +1,6 @@
 <?php 
 
 App::uses('MainList', 'Model');
-App::uses('Ordered', 'Model');
 App::uses('Task', 'Model');
 
 class FutureList extends MainList{
@@ -12,10 +11,9 @@ class FutureList extends MainList{
     }
     
     public function getItems($count = 50, $page = 1){
-        $ordered = new Ordered(); 
         $this->_model->bindModel(array('hasOne' => array(
-			$ordered->alias => array(
-    				'className' => $ordered->alias,
+			'Ordered' => array(
+    				'className' => 'Ordered',
                     'foreignKey' => 'foreign_key',
                     'type' => 'inner',
                     )
@@ -25,15 +23,15 @@ class FutureList extends MainList{
         $data = $this->_model->find('all', 
                         array(
                             'order' => array(
-                               $ordered->alias . '.order' => 'ASC', 
+                               'Ordered.order' => 'ASC', 
                             ), 
                             'conditions' => array(
-                                 $ordered->alias . '.user_id' => $this->_userId, 
-                                 $ordered->alias . '.list' => $this->_name,
-                                 $ordered->alias . '.model' => $this->_model->alias
+                                 'Ordered.user_id' => $this->_userId, 
+                                 'Ordered.list' => $this->_name,
+                                 'Ordered.model' => $this->_model->alias
                             ),
                             'contain' => array('Ordered', 'Tag'),
-                            'fields' => array('Task.*'),
+                            'fields' => $this->_model->getFields(),
                             'limit' => $count,
                             'page' => $page
                         ));

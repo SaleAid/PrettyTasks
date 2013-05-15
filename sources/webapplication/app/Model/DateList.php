@@ -1,7 +1,5 @@
 <?php 
-
 App::uses('MainList', 'Model');
-App::uses('Ordered', 'Model');
 App::uses('Task', 'Model');
 
 class DateList extends MainList{
@@ -9,15 +7,6 @@ class DateList extends MainList{
     public function __construct($userId, $name){
         parent::__construct($userId, $name);
         $this->_model = ClassRegistry::init('Task');
-        $this->_ordered = ClassRegistry::init('Ordered');   
-    }
-    
-    public function removeFromList($foreignKey){
-        $idItem = $this->isInList($foreignKey);
-        if($idItem){
-            return $this->_ordered->delete($idItem);    
-        }
-        return false;
     }
     
     /**
@@ -36,44 +25,19 @@ class DateList extends MainList{
                         )
                     );
          if($result){
-            
             $this->_ordered->set($result);
             return $result[$this->_ordered->alias]['id'];
          }
          return false;
-        
-	}
+    }
 
-    
-    public function reOrder($foreignKey, $position){
-        $idItem = $this->isInList($foreignKey);
-        if($idItem){
-            $this->_ordered->delete($idItem);    
-            $this->insert($foreignKey, $position);
-            return true;
-        }
-        return false;
-    }
-    
-    public function addToList($foreignKey, $toFirst = false ){
-        $this->_ordered->add($this->_model->alias, $this->_name, $foreignKey, $this->_userId, $toFirst);
-    }
-    
-    public function addToListWithTime($foreignKey, $time){
+    public function addToListWithTime($foreignKey, $time, $toFirst = false){
         $position = $this->getPositionItemWithTime($time);
         if(!$position){
-            $this->addToList($foreignKey);
+            $this->addToList($foreignKey, $toFirst);
         } else {
             $this->insert($foreignKey, $position);
         }
-        
-    }
-    /**
-     * Inserts an item on a certain position
-     *
-     */
-    public function insert($foreignKey, $position){
-        $this->_ordered->insert($this->_model->alias, $this->_name, $foreignKey, $this->_userId, $position);
     }
     
     protected function getPositionItemWithTime($time){
@@ -93,13 +57,12 @@ class DateList extends MainList{
             $position = $item[$this->_ordered->alias]['order'] + 1;
         }
         return $position;
-        
     }
     
     protected function getItemsWithTime(){
         $this->_model->bindModel(array('hasOne' => array(
-			$this->_ordered->alias => array(
-    				'className' => $this->_ordered->alias,
+			'Ordered' => array(
+    				'className' => 'Ordered',
                     'foreignKey' => 'foreign_key',
                     'type' => 'inner',
                     )
@@ -112,24 +75,21 @@ class DateList extends MainList{
                                 $this->_model->alias . '.time' => 'ASC', 
                             ), 
                             'conditions' => array(
-                                 $this->_ordered->alias . '.user_id' => $this->_userId, 
-                                 $this->_ordered->alias . '.list' => $this->_name,
-                                 $this->_ordered->alias . '.model' => $this->_model->alias,
+                                 'Ordered.user_id' => $this->_userId, 
+                                 'Ordered.list' => $this->_name,
+                                 'Ordered.model' => $this->_model->alias,
                                  'not' => array( $this->_model->alias . '.time' => null ), 
                             ),
                             'contain' => array('Ordered'),
-                            //'fields' => array('Task.*')
+                            //'fields' => $this->_model->getFields(),
                         ));
         return $data;
     }
     
-    
-    
     public function getItems($count = 50, $page = 1){
-        $ordered = new Ordered(); 
         $this->_model->bindModel(array('hasOne' => array(
-			$ordered->alias => array(
-    				'className' => $ordered->alias,
+			'Ordered' => array(
+    				'className' => 'Ordered',
                     'foreignKey' => 'foreign_key',
                     'type' => 'inner',
                     )
@@ -139,15 +99,15 @@ class DateList extends MainList{
         $data = $this->_model->find('all', 
                         array(
                             'order' => array(
-                               $ordered->alias . '.order' => 'ASC', 
+                               'Ordered.order' => 'ASC', 
                             ), 
                             'conditions' => array(
-                                 $ordered->alias . '.user_id' => $this->_userId, 
-                                 $ordered->alias . '.list' => $this->_name,
-                                 $ordered->alias . '.model' => $this->_model->alias
+                                 'Ordered.user_id' => $this->_userId, 
+                                 'Ordered.list' => $this->_name,
+                                 'Ordered.model' => $this->_model->alias
                             ),
                             'contain' => array('Ordered', 'Tag'),
-                            'fields' => array('Task.*'),
+                            'fields' => $this->_model->getFields(),
                             'limit' => $count,
                             'page' => $page
                         ));
@@ -158,6 +118,5 @@ class DateList extends MainList{
             $data 
         ); 
         return $data;
-        
     }
 }

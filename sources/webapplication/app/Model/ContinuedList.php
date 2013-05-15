@@ -3,10 +3,10 @@
 App::uses('MainList', 'Model');
 App::uses('Task', 'Model');
 
-class OverdueList extends MainList{
+class ContinuedList extends MainList{
     
     public function __construct($userId){
-        parent::__construct($userId, 'overdue');
+        parent::__construct($userId, 'continued');
         $this->_model = ClassRegistry::init('Task');   
     }
     
@@ -29,8 +29,9 @@ class OverdueList extends MainList{
                             'conditions' => array(
                                  $this->_model->alias . '.user_id' => $this->_userId, 
                                  $this->_model->alias . '.done' => 0,
+                                 $this->_model->alias . '.continued' => 1,
                                  $this->_model->alias . '.deleted' => 0,
-                                 $this->_model->alias . '.date <' => date('Y-m-d'),
+                                 $this->_model->alias . '.date <=' => date('Y-m-d', strtotime('+30 days'))
                             ),
                             'contain' => array('Ordered', 'Tag'),
                             'fields' => $this->_model->getFields(),

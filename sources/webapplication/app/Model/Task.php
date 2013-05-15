@@ -181,10 +181,13 @@ class Task extends AppModel {
     
     private $_originData = array();
     
-    private $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'future', 'deleted', 'done' ,'datedone', 'continued', 'repeatid', 'comment');
+    public $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'future', 'deleted', 'done' ,'datedone', 'continued', 'repeatid', 'comment');
     
     private $_taskFieldsSave = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'future', 'deleted', 'done' ,'datedone', 'continued', 'repeatid', 'comment', 'tags');
     
+    public function getFields(){
+        return $this->_taskFields;
+    }
     
     public function comparisonTime($data) {
         if ($data['timeend'] > $this->data[$this->alias]['time']) {
@@ -255,19 +258,26 @@ class Task extends AppModel {
                 $DateList = new DateList($this->data[$this->alias]['user_id'], $list);
                 $DateList->removeFromList($this->data[$this->alias]['id']);    
             }
-            
+            //if day changed
             if ($this->_isDraggedOnDay()){
                 $originDate = empty($this->_originData[$this->alias]['date']) ? 'planned' : $this->_originData[$this->alias]['date'];
                 $originDateList = new DateList($this->data[$this->alias]['user_id'], $originDate);
-                $originDateList->removeFromList($this->_originData[$this->alias]['id']);
-                
-                //add to new list
+                if($originDateList->removeFromList($this->_originData[$this->alias]['id'])){
+                    //add to new list
+                    $DateList = new DateList($this->data[$this->alias]['user_id'], $list);
+                    if(empty($this->data[$this->alias]['time'])){
+                        $DateList->addToList($this->id, true);    
+                    }else{
+                        $DateList->addToListWithTime($this->id, $this->data[$this->alias]['time'], true);    
+                    }    
+                }
+            }
+            //if only time chenged and not nulls
+            if ($this->_isTimeChanged() and !$this->_isDraggedOnDay()){
                 $DateList = new DateList($this->data[$this->alias]['user_id'], $list);
-                if(empty($this->data[$this->alias]['time'])){
-                    $DateList->addToList($this->id, true);    
-                }else{
-                    $DateList->addToListWithTime($this->id, $this->data[$this->alias]['time']);    
-                }    
+                if($DateList->removeFromList($this->data[$this->alias]['id'])){
+                    $DateList->addToListWithTime($this->id, $this->data[$this->alias]['time'], true);
+                }
             }
         }
         
@@ -316,31 +326,6 @@ class Task extends AppModel {
         return $data;
     }
 
-    
-    public function getAllForDate($user_id, $date) {
-        $this->contain();
-        return $this->find('all', 
-                        array(
-                            'order' => array(
-                                //'Task.order' => 'ASC'
-                            ), 
-                            'conditions' => array(
-                                'AND' => array(
-                                    array(
-                                        'Task.user_id' => $user_id
-                                    ), 
-                                    array(
-                                        'Task.date' => $date
-                                    ),
-                                    array(
-                                        'Task.deleted' => 0
-                                    )
-                                )
-                            )
-                        ));
-    }
-
-    
     private function _isTitleChanged() {
         if ( !isset($this->_originData[$this->alias]['title']) || $this->_originData[$this->alias]['title'] != $this->data[$this->alias]['title'] ) {
             return true;
@@ -355,9 +340,15 @@ class Task extends AppModel {
         return false;
     }
 
-    
     private function _isDeleted() {
         if( isset($this->data[$this->alias]['deleted']) && $this->data[$this->alias]['deleted'] ){
+            return true;
+        }
+        return false;
+    }
+    
+    private function _isTimeChanged() {
+        if(!empty($this->data[$this->alias]['time']) && CakeTime::format('H:i', $this->_originData[$this->alias]['time']) != CakeTime::format('H:i', $this->data[$this->alias]['time'])){
             return true;
         }
         return false;
@@ -414,7 +405,6 @@ class Task extends AppModel {
         return $this;
     }
     
-
     public function setTitle($title, $priority = null, $checkTime = true) {
         $this->data[$this->alias]['title'] = $title;
         if($priority != null){
@@ -456,144 +446,6 @@ class Task extends AppModel {
         return $this;
     }
     
-    
-
-    public function getAllExpired($user_id) {
-        $this->contain('Tag');
-        return $this->find('all', 
-                        array(
-                            'order' => array(
-                                'Task.date' => 'DESC', 
-                                //'Task.order' => 'ASC'
-                            ), 
-                            'conditions' => array(
-                                'Task.user_id' => $user_id, 
-                                'Task.done' => 0, 
-                                'Task.date <' => date('Y-m-d'),
-                                'Task.deleted' => 0
-                            ),
-                            'fields' => $this->_taskFields,
-                        ));
-    }
-    
-    public function getAllOverdue($user_id) {
-        $result = array();
-        $this->contain('Tag');
-        $tasks = $this->find('all', 
-                        array(
-                            'order' => array(
-                                'Task.date' => 'DESC', 
-                               // 'Task.order' => 'ASC'
-                            ), 
-                            'conditions' => array(
-                                'Task.user_id' => $user_id, 
-                                'Task.done' => 0, 
-                                'Task.date <' => date('Y-m-d'),
-                                'Task.deleted' => 0,
-                                'not' => array('Task.date'=> null,
-                                               'Task.date'=> '0000-00-00'
-                                              )
-                            ),
-                            'fields' => $this->_taskFields,
-                        ));
-        foreach($tasks as $item){
-            $result[$item['Task']['date']][] = $item['Task'];
-        }
-        return $result;
-    }
-    
-    public function getAllCompleted($user_id) {
-        $result = array();
-        $this->contain('Tag');
-        $tasks = $this->find('all', 
-                        array(
-                            'order' => array(
-                                'Task.date' => 'DESC', 
-                               // 'Task.order' => 'ASC'
-                            ), 
-                            'conditions' => array(
-                                'Task.user_id' => $user_id, 
-                                'Task.done' => 1,
-                                'Task.deleted' => 0, 
-                                'not' => array('Task.date'=> null,
-                                               'Task.date'=> '0000-00-00'
-                                              )
-                                //'Task.date <' => CakeTime::format('Y-m-d', time())
-                            ),
-                            'fields' => $this->_taskFields,
-                        ));
-        foreach($tasks as $item){
-            $result[$item['Task']['date']][] = $item['Task'];
-        }
-        return $result;
-    }
-
-    public function getAllDeleted($user_id) {
-        $result = array();
-        $this->contain('Tag');
-        $tasks = $this->find('all', 
-                        array(
-                            'order' => array(
-                                'Task.date' => 'DESC', 
-                                'Task.modified' => 'DESC'
-                            ), 
-                            'conditions' => array(
-                                'Task.user_id' => $user_id, 
-                                'Task.deleted' => 1, 
-                                //'not' => array('Task.date'=> null,
-                                //               'Task.date'=> '0000-00-00'
-                                //              )
-                                //'Task.date <' => CakeTime::format('Y-m-d', time())
-                            ),
-                            'fields' => $this->_taskFields,
-                        ));
-        foreach($tasks as $item){
-            $result[$item['Task']['date']][] = $item['Task'];
-        }
-        return $result;
-    }
-    
-    public function getAllFuture($user_id) {
-        $this->contain('Tag');
-        return $this->find('all', 
-                        array(
-                            'order' => array(
-                                'Task.date' => 'ASC', 
-                                //'Task.order' => 'ASC'
-                            ), 
-                            'conditions' => array(
-                                'Task.user_id' => $user_id, 
-                                'Task.future' => 1,
-                                'Task.deleted' => 0
-                            ),
-                            'fields' => $this->_taskFields,
-                        ));
-    }
-    
-    public function getAllContinued($user_id) {
-        $result = array();
-        $this->contain('Tag');
-        $tasks = $this->find('all', 
-                        array(
-                            'order' => array(
-                                'Task.date' => 'ASC', 
-                                //'Task.order' => 'ASC'
-                            ), 
-                            'conditions' => array(
-                                'Task.user_id' => $user_id, 
-                                'Task.continued' => 1,
-                                'Task.done' => 0,
-                                'Task.deleted' => 0,
-                                'Task.date <=' => date('Y-m-d', strtotime('+30 days'))
-                            ),
-                            'fields' => $this->_taskFields,
-                        ));
-        foreach($tasks as $item){
-            $result[$item['Task']['date']][] = $item['Task'];
-        }
-        return $result;
-    }
-
     public function setDayToConfig($user_id, $date) {
         $config = $this->User->getConfig($user_id);
         if ( !array_key_exists('day', $config) or !in_array($date, $config['day']) ) {
