@@ -16,10 +16,11 @@ class Ordered extends AppModel {
 	public $useTable = 'ordered';
     
     
-    protected function _lastPosition($modelAlias, $list, $userId) {
+    protected function _lastPosition($modelAlias, $list, $listId, $userId) {
 		$options = array(
                 'conditions' => array(
-                                      'list' => $list, 
+                                      'list' => $list,
+                                      'list_id' => $listId, 
                                       'model' => $modelAlias, 
                                       'user_id' => $userId
                 ),
@@ -32,20 +33,21 @@ class Ordered extends AppModel {
 	}
     
     
-    public function add($modelAlias, $list, $foreignKey, $userId, $toFirst = false){
+    public function add($modelAlias, $list, $listId, $foreignKey, $userId, $toFirst = false){
         $order = 1; 
         if( !$toFirst ){
-            $order = $this->_lastPosition($modelAlias, $list, $userId) + 1;
+            $order = $this->_lastPosition($modelAlias, $list, $listId, $userId) + 1;
         }
         $data = array(
             'foreign_key' => $foreignKey,
             'list' => $list,
+            'list_id' => $listId, 
             'model' => $modelAlias,
             'user_id' => $userId, 
             'order' => $order
         );
         if( $toFirst ){
-            $this->__incrementPositionsOnLowerItems(1, $modelAlias, $list, $userId);
+            $this->__incrementPositionsOnLowerItems(1, $modelAlias, $list, $listId, $userId);
         }
         $this->create($data);
         $this->save();
@@ -56,15 +58,16 @@ class Ordered extends AppModel {
      * Inserts an item on a certain position
      *
      */
-    public function insert($modelAlias, $list, $foreignKey, $userId, $position){
+    public function insert($modelAlias, $list, $listId, $foreignKey, $userId, $position){
         $data = array(
             'foreign_key' => $foreignKey,
             'list' => $list,
+            'list_id' => $listId, 
             'model' => $modelAlias,
             'user_id' => $userId, 
             'order' => $position
         );
-        $this->__incrementPositionsOnLowerItems($position, $modelAlias, $list, $userId);
+        $this->__incrementPositionsOnLowerItems($position, $modelAlias, $list, $listId, $userId);
         $this->create($data);
         $this->save();
     }
@@ -74,15 +77,16 @@ class Ordered extends AppModel {
      *
      * @return boolean
      */
-	private function __incrementPositionsOnLowerItems($position, $modelAlias, $list, $userId) {
+	private function __incrementPositionsOnLowerItems($position, $modelAlias, $list, $listId, $userId) {
 	   	return $this->updateAll(
 			array(
-                $this->alias . '.order' => $this->alias . '.order +1',
+                $this->alias . '.order' => $this->alias . '.order + 1',
                 $this->alias . '.modified' => "'" . date("Y-m-d H:i:s") . "'"
                 ),
 			array(
                 $this->alias . '.order >=' => $position,
                 $this->alias . '.list' => $list,
+                $this->alias . '.list_id' => $listId, 
                 $this->alias . '.model' => $modelAlias,
                 $this->alias . '.user_id' => $userId,
                 )
@@ -94,15 +98,16 @@ class Ordered extends AppModel {
      *
      * @return boolean
      */
-	private function __decrementPositionsOnLowerItems($position, $modelAlias, $list, $userId) {
+	private function __decrementPositionsOnLowerItems($position, $modelAlias, $list, $listId, $userId) {
 		return $this->updateAll(
 			array(
-                $this->alias . '.order' => $this->alias . '.order -1',
+                $this->alias . '.order' => $this->alias . '.order - 1',
                 $this->alias . '.modified' => "'" . date("Y-m-d H:i:s") . "'"
             ),
 			array(
                 $this->alias . '.order >' => $position,
                 $this->alias . '.list' => $list,
+                $this->alias . '.list_id' => $listId,
                 $this->alias . '.model' => $modelAlias,
                 $this->alias . '.user_id' => $userId,
             )
@@ -114,6 +119,7 @@ class Ordered extends AppModel {
                                         $this->data[$this->alias]['order'], 
                                         $this->data[$this->alias]['model'],
                                         $this->data[$this->alias]['list'],
+                                        $this->data[$this->alias]['list_id'],
                                         $this->data[$this->alias]['user_id']
                                         );
         return true;

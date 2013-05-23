@@ -8,6 +8,7 @@ class ManyDateList extends MainList{
     public function __construct($userId, $arrayDates = array()){
         parent::__construct($userId, $arrayDates);
         $this->_model = ClassRegistry::init('Task');
+        $this->_listId = 'DateList';
     }
     
     public static function arrayDates($beginDate, $endDate, $arrayDates = array()){
@@ -42,6 +43,7 @@ class ManyDateList extends MainList{
                             'conditions' => array(
                                  'Ordered.user_id' => $this->_userId, 
                                  'Ordered.list' => $this->_name,
+                                 'Ordered.list_id' => $this->_listId,
                                  'Ordered.model' => $this->_model->alias
                             ),
                             'contain' => array('Ordered', 'Tag'),

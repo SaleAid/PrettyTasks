@@ -190,7 +190,7 @@ function userEvent(action, data){
             taskDragOnDay(data.id, data.date, data.time);
         break;
         case 'changeOrders':
-            taskChangeOrders(data.id, data.position);
+            taskChangeOrders(data.list, data.id, data.position);
         break; 
         case 'edit':
             taskEdit(data.id, data.title, data.priority, data.continued, data.done, data.date, data.time, data.timeEnd, data.comment);
@@ -723,6 +723,7 @@ function srcCountTasks(date, drop){
     }else{
         listTasks = $("ul.filtered > li[date='"+date+"']").parent();    
     }
+    
     $.each(listTasks, function(index, value) {
         var all = $(value).children('li').length;
         var done = $(value).children('li.complete').length;
@@ -1224,27 +1225,28 @@ function scrDragWithTime(id, date, time){
                 if(currentTaskDate != date){
                     srcCountTasks(currentTaskDate, true);
                 }
+                srcCountTasks(date, true);
             });    
         } else {
             task.remove();
         }
-        srcCountTasks(date, true);
+        //srcCountTasks(date, true);
         
         
 }
 
 //----------------changeOrder---
-function taskChangeOrders(id, position){
+function taskChangeOrders(list, id, position){
     scrChangeOrders(id, position);
-    srvChangeOrders(id, position);
+    srvChangeOrders(list, id, position);
 }
 function onChangeOrders(data){
     if(!data.success){
         mesg(data.message.message, data.message.type);    
     }
 }
-function srvChangeOrders(id, position){
-    superAjax('/tasks/changeOrders.json',{id: id, position: position});
+function srvChangeOrders(list, id, position){
+    superAjax('/tasks/changeOrders.json',{list:list, id: id, position: position});
 }
 function scrChangeOrders(id, position){
     $("li[id='"+id+"']").removeAttr('style');
@@ -1815,13 +1817,13 @@ function initSortable(element){
                 		ui.item.parent().attr('date') == 'future' ||
                 		ui.item.parent().attr('date') == 'deleted' ||
                         ui.item.parent().attr('date') == 'continued' 
-                		|| ui.item.parent().data('tag') 
+                		//|| ui.item.parent().data('tag') 
                     ){
                     mesg(GLOBAL_CONFIG.moveForbiddenMessage, 'success');
                     $(this).css("color","");
                     return false;  
                 }
-                if (ui.item.hasClass('setTime') ){
+                if (ui.item.hasClass('setTime') && !ui.item.parent().data('tag')){
                 	var listitems = ui.item.parent().children('li.setTime').get();
                 	var error = false;
                 	$.each(listitems, function(idx, itm) { 
@@ -1836,8 +1838,15 @@ function initSortable(element){
                 }
                 
                 var id = ui.item.attr('id');
-                var position = ui.item.index()+1;
-                userEvent('changeOrders', {id: id, position: position});
+                var position = ui.item.index() + 1;
+                var list = {name:'date'};
+                
+                if(ui.item.parent().data('tag')){
+                    list = {name: 'tag', tag: ui.item.parent().data('tag')};
+                    
+                }
+                
+                userEvent('changeOrders', {list:list, id: id, position: position});
             },
           stop: function(e, ui) {
                 isDragging = false;
@@ -1876,7 +1885,6 @@ function initTab(element){
 
 function setFiler(tab_id){
     var filter = $.cookie('filter');
-    //filter ='completed';
     if(filter){
 	$('.tab-content').find('#'+tab_id)
 			 .find('.filter a[data="'+filter+'"]')

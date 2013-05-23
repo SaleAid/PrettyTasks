@@ -37,6 +37,7 @@ class OverdueList extends MainList{
                             'limit' => $count,
                             'page' => $page
                         ));
+        
         $data = array_map( 
             function($task) { 
                 return $task['Task']; 

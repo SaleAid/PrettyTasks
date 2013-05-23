@@ -1,6 +1,5 @@
 <?php
 App::uses('AppModel', 'Model');
-App::uses('DateList', 'Model');
 /**
  * Task Model
  *
@@ -86,13 +85,6 @@ class Task extends AppModel {
                 'message' => 'Время окончания должно быть больше начала'
             )
         ),  
-        //'order' => array(
-//            'numeric' => array(
-//                'rule' => array(
-//                    'numeric'
-//                )
-//            )
-//        ),
         'done' => array(
             'numeric' => array(
                 'rule' => array(
@@ -215,17 +207,6 @@ class Task extends AppModel {
         return false;
     }
     
-    public function getTasksById($tasksId) {
-        $this->contain('Tag.name');
-        return $this->find('all', 
-                        array(
-                            'conditions' => array(
-                                'Task.id' => $tasksId, 
-                            ),
-                            'fields' => $this->_taskFields,
-                        ));
-    }
-
     public function isOwner($task_id, $user_id) {
         $this->contain('Tag.name');
         $task = $this->findByIdAndUser_id($task_id, $user_id);
@@ -238,46 +219,22 @@ class Task extends AppModel {
     }
 
     public function afterSave($created){
-        if ($this->data[$this->alias]['date']){
-            $list = $this->data[$this->alias]['date'];
-            $toFirst = false;
-        } else {
-            $list = 'planned';
-            $toFirst = true;
-        }
+        $this->getEventManager()->attach(new TaskEventListener());
+        //
         if( $created ){
-            $DateList = new DateList($this->data[$this->alias]['user_id'], $list);
-            if(empty($this->data[$this->alias]['time'])){
-                $DateList->addToList($this->id, $toFirst);    
-            }else{
-                $DateList->addToListWithTime($this->id, $this->data[$this->alias]['time']);    
-            }
+            $this->getEventManager()->dispatch(new CakeEvent('Model.Task.afterCreate', $this));
         } else { 
-        
+            //delete task form lists
             if ($this->_isDeleted()){
-                $DateList = new DateList($this->data[$this->alias]['user_id'], $list);
-                $DateList->removeFromList($this->data[$this->alias]['id']);    
+                $this->getEventManager()->dispatch(new CakeEvent('Model.Task.afterSetDeleted', $this));    
             }
             //if day changed
             if ($this->_isDraggedOnDay()){
-                $originDate = empty($this->_originData[$this->alias]['date']) ? 'planned' : $this->_originData[$this->alias]['date'];
-                $originDateList = new DateList($this->data[$this->alias]['user_id'], $originDate);
-                if($originDateList->removeFromList($this->_originData[$this->alias]['id'])){
-                    //add to new list
-                    $DateList = new DateList($this->data[$this->alias]['user_id'], $list);
-                    if(empty($this->data[$this->alias]['time'])){
-                        $DateList->addToList($this->id, true);    
-                    }else{
-                        $DateList->addToListWithTime($this->id, $this->data[$this->alias]['time'], true);    
-                    }    
-                }
+                $this->getEventManager()->dispatch(new CakeEvent('Model.Task.afterMoveToDate', $this, array('originTask' => $this->_originData[$this->alias])));
             }
-            //if only time chenged and not nulls
+            //if only time changed and not null
             if ($this->_isTimeChanged() and !$this->_isDraggedOnDay()){
-                $DateList = new DateList($this->data[$this->alias]['user_id'], $list);
-                if($DateList->removeFromList($this->data[$this->alias]['id'])){
-                    $DateList->addToListWithTime($this->id, $this->data[$this->alias]['time'], true);
-                }
+                $this->getEventManager()->dispatch(new CakeEvent('Model.Task.afterChangeTime', $this));    
             }
         }
         
@@ -354,12 +311,20 @@ class Task extends AppModel {
         return false;
     }
     
+    private function _isRecovered(){
+        if( isset($this->data[$this->alias]['deleted']) && !$this->data[$this->alias]['deleted'] && $this->_originData[$this->alias]['deleted']){
+            return true;
+        }
+        return false;
+    }
+    
     public function beforeSave() {
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
         //check and add tags
-        if( $this->_isTitleChanged() ){
+        if( $this->_isTitleChanged() || $this->_isRecovered() ){
             $this->_checkTags('title');
         }
+        
         return true;
     }
 

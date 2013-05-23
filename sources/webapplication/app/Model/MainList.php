@@ -5,6 +5,7 @@ App::uses('Ordered', 'Model');
 class MainList{
     
     protected $_name;
+    protected $_listId;
     protected $_model;
     protected $_userId;
     protected $_ordered;
@@ -16,7 +17,7 @@ class MainList{
     }
     
     public function addToList($foreignKey, $toFirst = false){
-        $this->_ordered->add($this->_model->alias, $this->_name, $foreignKey, $this->_userId, $toFirst);
+        $this->_ordered->add($this->_model->alias, $this->_name, $this->_listId, $foreignKey, $this->_userId, $toFirst);
     }
     
     public function removeFromList($foreignKey){
@@ -42,7 +43,7 @@ class MainList{
      *
      */
     public function insert($foreignKey, $position){
-        $this->_ordered->insert($this->_model->alias, $this->_name, $foreignKey, $this->_userId, $position);
+        $this->_ordered->insert($this->_model->alias, $this->_name, $this->_listId, $foreignKey, $this->_userId, $position);
     }
     
     /**

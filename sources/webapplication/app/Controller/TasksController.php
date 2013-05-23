@@ -4,11 +4,13 @@ App::uses('AppController', 'Controller');
 App::uses('Validation', 'Utility');
 App::uses('DateList', 'Model');
 App::uses('ManyDateList', 'Model');
-App::uses('FutureList', 'Model');
+App::uses('PlannedList', 'Model');
 App::uses('OverdueList', 'Model');
 App::uses('CompletedList', 'Model');
 App::uses('DeletedList', 'Model');
 App::uses('ContinuedList', 'Model');
+App::uses('TagList', 'Model');
+App::uses('TaskEventListener', 'Event');
 
 /**
  * Tasks Controller
@@ -86,8 +88,8 @@ class TasksController extends AppController {
         $tasks = $ManyDateList->getItems();
         
         $result['success'] = true;
-        $FutureList = new FutureList($this->Auth->user('id'));
-        $result['data']['arrAllFuture'] = $FutureList->getItems();
+        $PlannedList = new PlannedList($this->Auth->user('id'));
+        $result['data']['arrAllFuture'] = $PlannedList->getItems();
         $result['data']['arrAllFutureCount']['all'] = count($result['data']['arrAllFuture']);
         $result['data']['arrAllFutureCount']['done'] = count(array_filter($result['data']['arrAllFuture'], create_function('$val', 'return $val[\'done\'] == 1;')));
         
@@ -225,17 +227,6 @@ class TasksController extends AppController {
         $this->set('_serialize', 'result');
     }
 
-   /* public function agenda() {
-        $result = $this->_prepareResponse();
-        $result['success'] = true;
-        $from = CakeTime::format('Y-m-d', time());
-        $to = CakeTime::format('Y-m-d', '+7 days');
-        $dayConfig = $this->Task->User->getConfig($this->Auth->user('id'), 'day');
-        $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to);
-        $this->set('result', $result);
-        $this->set('_serialize', 'result');
-    }
-   */
     public function setTitle() {
         $result = $this->_prepareResponse();
         $expectedData = array(
@@ -363,6 +354,7 @@ class TasksController extends AppController {
     public function changeOrders() {
         $result = $this->_prepareResponse();
         $expectedData = array(
+            'list',
             'id', 
             'position'
         );
@@ -374,14 +366,27 @@ class TasksController extends AppController {
         } else {
             $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($task) {
-                $name = $task['Task']['date'];
-            if($task['Task']['future']){
-                $name = 'planned';
-            }
-                $DateList = new DateList($this->Auth->user('id'), $name);
-                //if($this->Task->checkPositionWithTime($this->request->data['position'])){
-                    if(true){
-                    if ( $DateList->reOrder($task['Task']['id'], $this->request->data['position']) ) {
+                switch($this->request->data['list']['name']){
+                    case 'date':
+                        if($task['Task']['future']){
+                            $List = new PlannedList($this->Auth->user('id'), 'planned');
+                        }else{
+                            $List = new DateList($this->Auth->user('id'), $task['Task']['date']);    
+                        }
+                        break;
+                    case 'tag':
+                        $options['conditions'] = array('Tag.name' => $this->request->data['list']['tag']);
+        	            $options['fields'] = array('id');
+        	            $options['contain'] = array();
+        	            $tag = $this->Task->Tag->find('first', $options);
+                        $List = new TagList($this->Auth->user('id'), $tag['Tag']['id'], 'Task');
+                        break;
+                    default:
+                        $List = null;                            
+                }
+                
+                if($List !== null){
+                    if ( $List->reOrder($task['Task']['id'], $this->request->data['position']) ) {
                         $result['success'] = true;
                         $result['message'] = array(
                             'type' => 'success', 
@@ -389,14 +394,14 @@ class TasksController extends AppController {
                         );
                     } else {
                         $result['message'] = array(
-                            'type' => 'success', 
+                            'type' => 'error', 
                             'message' => __d('tasks', 'Задача не перемещена')
                         );
                     }
                 } else {
                     $result['message'] = array(
-                            'type' => 'success', 
-                            'message' => __d('tasks', 'Ошибка, некорректная позиция')
+                            'type' => 'error', 
+                            'message' => __d('tasks', 'Ошибка, некорректный список')
                         );
                 }
             } else {
@@ -645,8 +650,8 @@ class TasksController extends AppController {
         } else {
             $result['data']['date'] = $this->request->data['date'];            
             if( $this->request->data['date'] =='planned' ){
-                $FutureList = new FutureList($this->Auth->user('id'));
-                $tasks = $FutureList->getItems();
+                $PlannedList = new PlannedList($this->Auth->user('id'));
+                $tasks = $PlannedList->getItems();
             }else{
                 $DateList = new DateList($this->Auth->user('id'), CakeTime::format('Y-m-d', $this->request->data['date']));
                 $tasks = $DateList->getItems();

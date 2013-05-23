@@ -7,6 +7,7 @@ class DateList extends MainList{
     public function __construct($userId, $name){
         parent::__construct($userId, $name);
         $this->_model = ClassRegistry::init('Task');
+        $this->_listId = get_class($this);
     }
     
     /**
@@ -17,10 +18,11 @@ class DateList extends MainList{
 		$result = $this->_ordered->find('first', 
                         array(
                             'conditions' => array(
-                                 $this->_ordered->alias . '.user_id' => $this->_userId, 
-                                 $this->_ordered->alias . '.list' => $this->_name,
-                                 $this->_ordered->alias . '.model' => $this->_model->alias,
-                                 $this->_ordered->alias . '.foreign_key' => $foreignKey,
+                                 'Ordered.user_id' => $this->_userId, 
+                                 'Ordered.list' => $this->_name,
+                                 'Ordered.list_id' => $this->_listId,
+                                 'Ordered.model' => $this->_model->alias,
+                                 'Ordered.foreign_key' => $foreignKey,
                             ),
                         )
                     );
@@ -77,6 +79,7 @@ class DateList extends MainList{
                             'conditions' => array(
                                  'Ordered.user_id' => $this->_userId, 
                                  'Ordered.list' => $this->_name,
+                                 'Ordered.list_id' => $this->_listId,
                                  'Ordered.model' => $this->_model->alias,
                                  'not' => array( $this->_model->alias . '.time' => null ), 
                             ),
@@ -104,6 +107,7 @@ class DateList extends MainList{
                             'conditions' => array(
                                  'Ordered.user_id' => $this->_userId, 
                                  'Ordered.list' => $this->_name,
+                                 'Ordered.list_id' => $this->_listId,
                                  'Ordered.model' => $this->_model->alias
                             ),
                             'contain' => array('Ordered', 'Tag'),

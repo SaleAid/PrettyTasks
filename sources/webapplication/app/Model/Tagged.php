@@ -8,8 +8,9 @@
  * @copyright Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-App::uses('AppModel', 'Model');
 
+App::uses('AppModel', 'Model');
+App::uses('TagList', 'Model');
 /**
  * Tagged model
  *
@@ -112,5 +113,20 @@ class Tagged extends AppModel {
 		}
 	}
     
+    public function beforeDelete($cascade = true) {
+         $result = $this->find('first', array(
+            'conditions' => array($this->alias . '.id' => $this->id),
+            'contain' => array()
+         ));
+         if(!empty($result)){
+            $TagList = new TagList(
+                                $result[$this->alias]['user_id'],
+                                $result[$this->alias]['tag_id'], 
+                                $result[$this->alias]['model']
+            );
+            $TagList->removeFromList($result[$this->alias]['foreign_key']);    
+         }
+         return true;
+    }
 
 }
