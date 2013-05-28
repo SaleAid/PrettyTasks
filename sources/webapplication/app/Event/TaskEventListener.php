@@ -1,5 +1,4 @@
  <?php
-App::uses('TagList', 'Model');
 App::uses('DateList', 'Model');
 App::uses('PlannedList', 'Model');
 App::uses('CakeEventListener', 'Event');

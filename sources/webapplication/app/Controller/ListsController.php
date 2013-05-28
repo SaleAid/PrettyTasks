@@ -14,7 +14,7 @@ class ListsController extends AppController {
     public function index() {}
     
     public function getlists(){
-        $result['data'] =  Set::extract($this->UserTag->find('all', array(
+         $data =  $this->UserTag->find('all', array(
                                 'contain' => array(
                                         'Tag' => array(
                                                 'order' => 'Tag.name ASC',
@@ -23,7 +23,10 @@ class ListsController extends AppController {
                                 ),
                                 'conditions' => array('UserTag.user_id =' => $this->Auth->user('id')),
                                 )
-                          ), '{n}.Tag.name');
+                          );
+                          
+        //pr($data);die;
+        $result['data'] = Set::extract($data, '{n}.Tag.name');
        
         $result['success'] = true;
         $result['action'] = 'getLists';

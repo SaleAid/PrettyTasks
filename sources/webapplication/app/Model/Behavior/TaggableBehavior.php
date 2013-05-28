@@ -9,7 +9,7 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 App::uses('ModelBehavior', 'Model');
-App::uses('TagList', 'Model');
+App::uses('TagEventListener', 'Event');
 
 /**
  * Taggable Behavior
@@ -99,6 +99,7 @@ class TaggableBehavior extends ModelBehavior {
         $model->$tagAlias->bindModel(array('belongsTo' => array(
 			$userTagAlias => array(
 				'className' => $userTagClass))), $resetBinding);
+        $model->getEventManager()->attach(new TagEventListener());
 	}
 
 /**
@@ -146,7 +147,6 @@ class TaggableBehavior extends ModelBehavior {
             $userTagModel = $tagModel->{$userTagAlias};
 
 			extract($this->disassembleTags($model, $tags));
-            //pr($tags);
             if (!empty($tags)) {
 				$existingTags = $tagModel->find('all', array(
 					'contain' => array(),
@@ -175,6 +175,7 @@ class TaggableBehavior extends ModelBehavior {
 					$existingTagIds = $alreadyTagged = array();
 					$newTags = $tags;
 				}
+                $newTagIds = array();
                 foreach ($newTags as $key => $newTag) {
 					$tagModel->create();
 					$tagModel->save($newTag);
@@ -185,6 +186,8 @@ class TaggableBehavior extends ModelBehavior {
                     
 				}
                 
+                $allTagIds = array_merge($existingTagIds, $newTagIds);
+                
                 $existingUserTagsId = $userTagModel->find('all', array(
 					'contain' => array(),
 					'conditions' => array(
@@ -193,7 +196,6 @@ class TaggableBehavior extends ModelBehavior {
                         ),
 					'fields' => array($userTagAlias . '.tag_id')
                 ));
-                
                 $uNewTagIds = array();    
                 if(!empty($existingUserTagsId)){
                     foreach($existingUserTagsId as $uTagId) {
@@ -250,22 +252,22 @@ class TaggableBehavior extends ModelBehavior {
 
 						$oldTagIds = Set::extract($oldTagIds, '/Tagged/tag_id');
 						$tagModel->{$taggedAlias}->deleteAll($deleteAll, false, true);
-					} elseif ($this->settings[$model->alias]['taggedCounter'] && !empty($alreadyTagged)) {
-						$tagModel->{$taggedAlias}->updateAll(array('times_tagged' => 'times_tagged + 1'), array('Tagged.tag_id' => $alreadyTagged));
 					}
-                    
                     foreach ($existingTagIds as $tagId) {
 						$data[$taggedAlias]['tag_id'] = $tagId;
 						$data[$taggedAlias]['model'] = $model->name;
 						$data[$taggedAlias]['foreign_key'] = $foreignKey;
                         $data[$taggedAlias]['user_id'] = $user_id;
 						$tagModel->{$taggedAlias}->create();
-						if( $tagModel->{$taggedAlias}->save($data) ){
-                            //todo add event
-                            $TagList = new TagList($user_id, $tagId, $model->name);
-                            $TagList->addToList($foreignKey);    
-                        }
-					}
+						$tagModel->{$taggedAlias}->save($data);
+                        //todo add event
+                        //$TagList = new TagList($user_id, $tagId, $model->name);
+                        //$TagList->addToList($foreignKey);    
+                    }
+                    //pr($allTagIds);
+                    foreach($allTagIds as $tagId){
+                        $model->getEventManager()->dispatch(new CakeEvent('Model.Tag.addToList', null, array('tagId' => $tagId, 'userId' => $user_id, 'model' => $model->name, 'foreignKey' => $foreignKey)));
+                    }
 
 					//To update occurrence
 					if ($this->settings[$model->alias]['cacheOccurrence']) {
