@@ -24,9 +24,9 @@ class AppModel extends Model {
         $tags = array();
         if( isset($matches[1]) ){
             foreach($matches[1] as $key => $tag){
+                $tag = $this->multibyteKey($tag);
                 if( !empty($tag)){
-                	$tag = $this->multibyteKey($tag);
-                    $tags[] = $tag;
+                	$tags[] = $tag;
                     $title = str_replace($matches[0][$key], '#'.$tag, $title);
                 }
             }

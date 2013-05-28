@@ -11,7 +11,7 @@ class TaskEventListener implements CakeEventListener {
       'Model.Task.afterSetDeleted' => 'eventAfterSetDeletedTask',
       'Model.Task.afterCreate' => 'eventAfterCreateTask', 
       'Model.Task.afterMoveToDate' => 'eventAfterMoveToDateTask',
-      'Model.Task.afterChangeTime' => 'eventafterChangeTimeTask',
+      'Model.Task.afterChangeTime' => 'eventAfterChangeTimeTask',
     );
   }
  
@@ -70,7 +70,7 @@ class TaskEventListener implements CakeEventListener {
     }
   }
   
-  public function eventafterChangeTimeTask($event){
+  public function eventAfterChangeTimeTask($event){
     $task = $event->subject->data[$event->subject->alias];
     $DateList = new DateList($task['user_id'], $task['date']);
     if($DateList->removeFromList($task['id'])){
