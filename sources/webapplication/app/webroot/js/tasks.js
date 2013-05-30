@@ -339,7 +339,7 @@ function scrGetLists(data){
     $listUl.empty();
     if(!data){return;}
     $.each( data, function(index, value) {
-            $listUl.append('<li><span class="tags-list label label-important" data-tag="'+value+'">&#x23;'+value+'<span class="close-tag">×</span></span></li>');
+            $listUl.append('<li><span class="tags-list label label-important" data-tag="'+value.name+'">&#x23;'+value.name+'<span class="close-tag">×</span></span><span"> x '+value.count+'</span></li>');
     });
 }
 

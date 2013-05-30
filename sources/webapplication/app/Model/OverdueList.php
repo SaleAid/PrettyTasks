@@ -16,6 +16,11 @@ class OverdueList extends MainList{
     				'className' => 'Ordered',
                     'foreignKey' => 'foreign_key',
                     'type' => 'inner',
+                    'conditions' => array(
+                            'Ordered.list = Task.date',
+                            'Ordered.model' => 'Task',
+                            'Ordered.list_id' => 'DateList',
+                        )
                     )
                 )
             )
@@ -31,6 +36,7 @@ class OverdueList extends MainList{
                                  $this->_model->alias . '.done' => 0,
                                  $this->_model->alias . '.deleted' => 0,
                                  $this->_model->alias . '.date <' => date('Y-m-d'),
+                                 
                             ),
                             'contain' => array('Ordered', 'Tag'),
                             'fields' => $this->_model->getFields(),
@@ -43,8 +49,7 @@ class OverdueList extends MainList{
                 return $task['Task']; 
             }, 
             $data 
-        ); 
+        );
         return $data;
-        
     }
 }

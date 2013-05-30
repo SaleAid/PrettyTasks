@@ -16,6 +16,11 @@ class CompletedList extends MainList{
     				'className' => 'Ordered',
                     'foreignKey' => 'foreign_key',
                     'type' => 'inner',
+                    'conditions' => array(
+                            'Ordered.list = Task.date',
+                            'Ordered.model' => 'Task',
+                            'Ordered.list_id' => 'DateList',
+                        )
                     )
                 )
             )

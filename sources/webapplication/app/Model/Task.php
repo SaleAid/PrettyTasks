@@ -1,4 +1,5 @@
 <?php
+App::uses('TaskEventListener', 'Event');
 App::uses('AppModel', 'Model');
 /**
  * Task Model
@@ -217,9 +218,14 @@ class Task extends AppModel {
         }
         return false;
     }
+    
+    public function __construct($id = false, $table = null, $ds = null) {
+         parent::__construct($id, $table, $ds);
+         $this->getEventManager()->attach(new TaskEventListener());
+    }
 
     public function afterSave($created){
-        $this->getEventManager()->attach(new TaskEventListener());
+        //$this->getEventManager()->attach(new TaskEventListener());
         //
         if( $created ){
             $this->getEventManager()->dispatch(new CakeEvent('Model.Task.afterCreate', $this));
@@ -471,6 +477,7 @@ class Task extends AppModel {
     }
     
     public function repeated($recur, $task_id = null){
+        return true;
         $taskDate = $this->data[$this->alias]['date'];
         $days = $this->_repeatedDays($recur, $taskDate);
         if($days){
@@ -480,6 +487,7 @@ class Task extends AppModel {
             $repeatedTask['repeatid'] = $this->data[$this->alias]['id'];
             //$repeatedTask['order'] = 1;
             foreach($days as $day){
+                //pr($day);
                 unset($this->_originData); 
                 unset($this->data);
                 unset($this->id);
@@ -487,12 +495,12 @@ class Task extends AppModel {
                                     $repeatedTask['title'],
                                     $day,
                                     $repeatedTask['time'],
-                                    null,
                                     $repeatedTask['priority'],
                                     $repeatedTask['future'],
                                     null
                 );
                 $this->data[$this->alias]['repeatid'] = $repeatid;
+                //pr($this->data);
                 $this->save();
                 if($this->validationErrors)
                     pr($this->validationErrors);

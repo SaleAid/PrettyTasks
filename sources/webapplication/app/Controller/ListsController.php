@@ -1,6 +1,7 @@
 <?php
 App::uses('TagList', 'Model');
 App::uses('AppController', 'Controller');
+
 /**
  * Notes Controller
  *
@@ -24,9 +25,17 @@ class ListsController extends AppController {
                                 'conditions' => array('UserTag.user_id =' => $this->Auth->user('id')),
                                 )
                           );
-                          
-        //pr($data);die;
-        $result['data'] = Set::extract($data, '{n}.Tag.name');
+        
+        $data = array_map( 
+            function($item) { 
+                return array(
+                            'name' => $item['Tag']['name'],
+                            'count' => $item['UserTag']['task_occurrence']
+                        ); 
+            }, 
+            $data 
+        );                   
+        $result['data'] = $data;
        
         $result['success'] = true;
         $result['action'] = 'getLists';
@@ -99,8 +108,6 @@ class ListsController extends AppController {
 	        $this->set('_serialize', 'result');
         }
     }
-    
-    
     
     public function getTasksByTag(){
         $result = $this->_prepareResponse();

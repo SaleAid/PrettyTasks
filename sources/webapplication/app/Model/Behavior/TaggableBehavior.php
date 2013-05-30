@@ -260,11 +260,8 @@ class TaggableBehavior extends ModelBehavior {
                         $data[$taggedAlias]['user_id'] = $user_id;
 						$tagModel->{$taggedAlias}->create();
 						$tagModel->{$taggedAlias}->save($data);
-                        //todo add event
-                        //$TagList = new TagList($user_id, $tagId, $model->name);
-                        //$TagList->addToList($foreignKey);    
                     }
-                    //pr($allTagIds);
+                    
                     foreach($allTagIds as $tagId){
                         $model->getEventManager()->dispatch(new CakeEvent('Model.Tag.addToList', null, array('tagId' => $tagId, 'userId' => $user_id, 'model' => $model->name, 'foreignKey' => $foreignKey)));
                     }
