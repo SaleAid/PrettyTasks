@@ -65,6 +65,11 @@ class Account extends AppModel {
         return $data;
     }
     
+    protected function _getDataFrom_google($data){
+        $data['full_name'] = $data['first_name'] . ' ' . $data['last_name'];
+        return $data;
+    }
+    
     protected function _getDataFrom_twitter($data){
         $tmp = explode(' ',$data['full_name']);
         $data['last_name'] = isset($tmp[1]) ? $tmp[1] : '';

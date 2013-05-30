@@ -89,7 +89,7 @@ class Note extends AppModel {
     }
     
     public function getNotes( $user_id, $count = 50, $page = 1 ){
-        $this->contain();
+        $this->contain('Tag');
 	    $conditions = array(
                         'Note.user_id' => $user_id, 
                     );
@@ -107,7 +107,7 @@ class Note extends AppModel {
     }
     
    public function search( $user_id, $query, $count = 50, $page = 1 ){
-        $this->contain();
+        $this->contain('Tag');
 	    $conditions = array(
                         'Note.title LIKE' => '%'.$query.'%', 
                         'Note.user_id' => $user_id
@@ -139,7 +139,7 @@ class Note extends AppModel {
     public function beforeSave() {
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
         if(isset($this->data[$this->alias]['title'])){
-            $this->_checkTags($this->data[$this->alias]['title'], 'title');
+            $this->_checkTags('title');
         }
     }
     

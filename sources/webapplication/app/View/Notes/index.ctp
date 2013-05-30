@@ -35,7 +35,7 @@
                    <?php foreach($result as $note):?> 
                         <li class="note-box" data-id="<?php echo h($note->id); ?>">
                             <div class="note">
-                                <textarea readonly class="title-note"><?php echo h($note->title); ?> </textarea>
+                                <div class="title-note"><?php echo $this->Tag->wrap($note->title, $note->tags); ?> </div>
                             </div>
                             <div class="modified"><?php echo h($note->modified); ?></div>
                             <ul class="buttons">
@@ -52,7 +52,7 @@
 <script type="text/template" id="note-template" />
   <li class="note-box" data-id="<%= id %>">
     <div class="note">
-        <textarea class="title-note" readonly><%= title %></textarea>
+        <div class="title-note" ><%= title %></div>
     </div>
     <div class="modified"><%= modified %></div>
     <ul class="buttons">

@@ -1,4 +1,5 @@
 <?php
+
 App::uses('Controller', 'Controller');
 App::uses('Sanitize', 'Utility');
 //App::uses('L10n', 'I18n');
@@ -123,7 +124,6 @@ class AppController extends Controller {
     }
     
     public function beforeFilter() {
-        
         $this->_setLanguage();
         $this->__setTimeZone();
         $this->_checkMobile();

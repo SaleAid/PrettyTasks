@@ -9,7 +9,7 @@ if( strtolower($this->params['controller']) != "notes" ) {
 }
 ?>
 
-<a class=" btn-note btn btn-info btn-small pull-left" href="#" rel="tooltip" title="<?php echo __d('tasks', 'Добавить заметку'); ?>">
+<a class="btn-note btn btn-info btn-small" href="#" rel="tooltip" title="<?php echo __d('tasks', 'Добавить заметку'); ?>">
     <i class="icon-leaf"></i>
 </a>
 

@@ -9,6 +9,7 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 App::uses('ModelBehavior', 'Model');
+App::uses('TagEventListener', 'Event');
 
 /**
  * Taggable Behavior
@@ -60,8 +61,9 @@ class TaggableBehavior extends ModelBehavior {
 		'resetBinding' => false,
 		'taggedCounter' => false,
 		'deleteTagsOnEmptyField' => true,
-		//'maxlengthTag' => 10
 	);
+    
+    
 
 /**
  * Setup
@@ -97,6 +99,7 @@ class TaggableBehavior extends ModelBehavior {
         $model->$tagAlias->bindModel(array('belongsTo' => array(
 			$userTagAlias => array(
 				'className' => $userTagClass))), $resetBinding);
+        $model->getEventManager()->attach(new TagEventListener());
 	}
 
 /**
@@ -109,8 +112,7 @@ class TaggableBehavior extends ModelBehavior {
  */
 	public function disassembleTags(Model $model, $tags = array()) {
 		$array = $tags;
-
-		$tags = array();
+        $tags = array();
 		foreach ($array as $tag) {
 			$tag = trim($tag);
 			if (!empty($tag)) {
@@ -120,8 +122,7 @@ class TaggableBehavior extends ModelBehavior {
 				}
 			}
 		}
-
-		return compact('tags');
+        return compact('tags');
 	}
 
 /**
@@ -138,8 +139,7 @@ class TaggableBehavior extends ModelBehavior {
  * @return array
  */
 	public function saveTags(Model $model, $tags = array(), $foreignKey = null, $user_id = null, $update = true) {
-		//if (is_string($string) && !empty($string) && (!empty($foreignKey) || $foreignKey === false)) {
-        if ( !empty($foreignKey) || $foreignKey === false ) {
+		if ( !empty($foreignKey) || $foreignKey === false ) {
 			$tagAlias = $this->settings[$model->alias]['tagAlias'];
 			$taggedAlias = $this->settings[$model->alias]['taggedAlias'];
             $userTagAlias = $this->settings[$model->alias]['userTagAlias'];
@@ -147,15 +147,18 @@ class TaggableBehavior extends ModelBehavior {
             $userTagModel = $tagModel->{$userTagAlias};
 
 			extract($this->disassembleTags($model, $tags));
-            
             if (!empty($tags)) {
 				$existingTags = $tagModel->find('all', array(
 					'contain' => array(),
 					'conditions' => array(
-						$tagAlias . '.name' => Set::extract($tags, '{n}.name')),
+						$tagAlias . '.name' => Set::extract($tags, '{n}.name')
+                    ),
 					'fields' => array(
 						$tagAlias . '.name',
-						$tagAlias . '.id')));
+						$tagAlias . '.id')
+                    )
+                );
+                
                 if (!empty($existingTags)) {
 					foreach ($existingTags as $existing) {
 						$existingTagNames[] = $existing[$tagAlias]['name'];
@@ -172,7 +175,8 @@ class TaggableBehavior extends ModelBehavior {
 					$existingTagIds = $alreadyTagged = array();
 					$newTags = $tags;
 				}
-				foreach ($newTags as $key => $newTag) {
+                $newTagIds = array();
+                foreach ($newTags as $key => $newTag) {
 					$tagModel->create();
 					$tagModel->save($newTag);
 					$newTagIds[] = $tagModel->id;
@@ -181,8 +185,38 @@ class TaggableBehavior extends ModelBehavior {
 					$userTagModel->save(array('tag_id' => $tagModel->id, 'user_id' => $user_id));
                     
 				}
-
-				if ($foreignKey !== false) {
+                
+                $allTagIds = array_merge($existingTagIds, $newTagIds);
+                
+                $existingUserTagsId = $userTagModel->find('all', array(
+					'contain' => array(),
+					'conditions' => array(
+						$userTagAlias . '.tag_id' => $existingTagIds,
+                        $userTagAlias . '.user_id' => $user_id
+                        ),
+					'fields' => array($userTagAlias . '.tag_id')
+                ));
+                $uNewTagIds = array();    
+                if(!empty($existingUserTagsId)){
+                    foreach($existingUserTagsId as $uTagId) {
+						if (!in_array($uTagId[$userTagAlias]['tag_id'], $existingTagIds)) {
+							array_push($uNewTagIds, $uTagId[$userTagAlias]['tag_id']);
+						}
+					}    
+                }else{
+                    $uNewTagIds = $existingTagIds;
+                }
+                
+                if (!empty($newTagIds)) {
+                    $uNewTagIds = array_merge($uNewTagIds, $newTagIds);
+                }
+                
+                foreach ($uNewTagIds as $key => $newTagId) {
+					$userTagModel->create();
+					$userTagModel->save(array('tag_id' => $newTagId, 'user_id' => $user_id));
+                }
+                
+                if ($foreignKey !== false) {
 					if (!empty($newTagIds)) {
 						$existingTagIds = array_merge($existingTagIds, $newTagIds);
 					}
@@ -191,7 +225,8 @@ class TaggableBehavior extends ModelBehavior {
 						'conditions' => array(
 							$taggedAlias . '.model' => $model->name,
 							$taggedAlias . '.foreign_key' => $foreignKey,
-							$taggedAlias . '.tag_id' => $existingTagIds),
+							$taggedAlias . '.tag_id' => $existingTagIds,
+                            ),
                         'fields' => 'Tagged.tag_id'));
 
 					$deleteAll = array(
@@ -203,8 +238,8 @@ class TaggableBehavior extends ModelBehavior {
 						$existingTagIds = array_diff($existingTagIds, $alreadyTagged);
 						$deleteAll['NOT'] = array($taggedAlias . '.tag_id' => $alreadyTagged);
 					}
-
-					$newTagIds = $oldTagIds = array();
+                    
+                    $newTagIds = $oldTagIds = array();
 
 					if ($update == true) {
 						$oldTagIds = $tagModel->{$taggedAlias}->find('all', array(
@@ -212,23 +247,24 @@ class TaggableBehavior extends ModelBehavior {
 							'conditions' => array(
 								$taggedAlias . '.model' => $model->name,
 								$taggedAlias . '.foreign_key' => $foreignKey,
-							),
+                            ),
 							'fields' => 'Tagged.tag_id'));
 
 						$oldTagIds = Set::extract($oldTagIds, '/Tagged/tag_id');
-						$tagModel->{$taggedAlias}->deleteAll($deleteAll, false);
-					} elseif ($this->settings[$model->alias]['taggedCounter'] && !empty($alreadyTagged)) {
-						$tagModel->{$taggedAlias}->updateAll(array('times_tagged' => 'times_tagged + 1'), array('Tagged.tag_id' => $alreadyTagged));
+						$tagModel->{$taggedAlias}->deleteAll($deleteAll, false, true);
 					}
-
-					foreach ($existingTagIds as $tagId) {
+                    foreach ($existingTagIds as $tagId) {
 						$data[$taggedAlias]['tag_id'] = $tagId;
 						$data[$taggedAlias]['model'] = $model->name;
 						$data[$taggedAlias]['foreign_key'] = $foreignKey;
                         $data[$taggedAlias]['user_id'] = $user_id;
-						$tagModel->{$taggedAlias}->create($data);
-						$tagModel->{$taggedAlias}->save();
-					}
+						$tagModel->{$taggedAlias}->create();
+						$tagModel->{$taggedAlias}->save($data);
+                    }
+                    
+                    foreach($allTagIds as $tagId){
+                        $model->getEventManager()->dispatch(new CakeEvent('Model.Tag.addToList', null, array('tagId' => $tagId, 'userId' => $user_id, 'model' => $model->name, 'foreignKey' => $foreignKey)));
+                    }
 
 					//To update occurrence
 					if ($this->settings[$model->alias]['cacheOccurrence']) {
@@ -240,10 +276,13 @@ class TaggableBehavior extends ModelBehavior {
 							),
 							'fields' => 'Tagged.tag_id'));
 
-						$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
+						if (!empty($newTagIds)) {
+							$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
+						}
+                        
 						$tagIds = array_merge($oldTagIds, $newTagIds);
-
-						$this->cacheOccurrence($model, $tagIds);
+                        $tagIds = array_unique($tagIds);
+						$this->cacheOccurrence($model, $tagIds, $user_id);
 					}
 				}
 			}
@@ -257,30 +296,51 @@ class TaggableBehavior extends ModelBehavior {
  *
  * @param object $model instance of a model
  * @param string $tagId Tag UUID
+ * @param string $userId User UUID
  * @return void
  */
-	public function cacheOccurrence(Model $model, $tagIds) {
+	public function cacheOccurrence(Model $model, $tagIds, $userId) {
 		if (is_string($tagIds) || is_int($tagIds)) {
 			$tagIds = array($tagIds);
 		}
-
-		foreach ($tagIds as $tagId) {
+        foreach ($tagIds as $tagId) {
 			$fieldName = Inflector::underscore($model->name) . '_occurrence';
 			$tagModel = $model->{$this->settings[$model->alias]['tagAlias']};
-			$taggedModel = $tagModel->{$this->settings[$model->alias]['taggedAlias']};
-			$data = array('id' => $tagId);
-
-			if ($tagModel->hasField($fieldName)) {
+			$userTagModel = $tagModel->{$this->settings[$model->alias]['userTagAlias']};
+            $taggedModel = $tagModel->{$this->settings[$model->alias]['taggedAlias']};
+            
+            $id = $userTagModel->find('first', 
+                        array(
+                            'contain' => array(),
+                            'conditions' => array(
+                                'tag_id' => $tagId,
+                                'user_id' => $userId
+                             ),
+                            'fields' => array('id')
+                        )
+                    );
+			if(!empty($id)){
+			     $data = array('id' => $id[$this->settings[$model->alias]['userTagAlias']]['id']);
+			}else{
+    			 $data = array(
+                    'tag_id' => $tagId,
+                    'user_id' => $userId
+                ); 
+			}
+            
+            if ($userTagModel->hasField($fieldName)) {
 				$data[$fieldName] = $taggedModel->find('count', array(
 					'conditions' => array(
 						'Tagged.tag_id' => $tagId,
-						'Tagged.model' => $model->name)));
+						'Tagged.model' => $model->name,
+                        'Tagged.user_id' => $userId)));
 			}
 
 			$data['occurrence'] = $taggedModel->find('count', array(
 				'conditions' => array(
-					'Tagged.tag_id' => $tagId)));
-			$tagModel->save($data, array('validate' => false, 'callbacks' => false));
+					'Tagged.tag_id' => $tagId,
+                    'Tagged.user_id' => $userId)));
+            $userTagModel->save($data, array('validate' => false, 'callbacks' => false));
 		}
 	}
 
@@ -325,7 +385,7 @@ class TaggableBehavior extends ModelBehavior {
 	}
     
     public function tagArray(Model $model, $data = null) {
-		if ($data) {
+		if (!empty($data)) {
 			return Set::extract($data, '{n}.name');
         }
 		return '';
@@ -338,11 +398,11 @@ class TaggableBehavior extends ModelBehavior {
  */
 	public function afterSave(Model $model, $created) {
 	    $hasTags = !empty($model->data[$model->alias][$this->settings[$model->alias]['field']]);
+        $user_id = $model->data[$model->alias]['user_id'];
 		if ($this->settings[$model->alias]['automaticTagging'] == true && $hasTags) {
-			$user_id = $model->data[$model->alias]['user_id'];
 			$this->saveTags($model, $model->data[$model->alias][$this->settings[$model->alias]['field']], $model->id, $user_id);
 		} else if (!$hasTags && $this->settings[$model->alias]['deleteTagsOnEmptyField']) {
-			$this->deleteTagged($model);
+			$this->deleteTagged($model, $user_id);
 		}
 	}
 
@@ -351,15 +411,31 @@ class TaggableBehavior extends ModelBehavior {
  * Delete associated Tags if record has no tags and deleteTagsOnEmptyField is true
  * @param object Model instance
  */
-	public function deleteTagged(Model $model){
+	public function deleteTagged(Model $model, $userId){
 		extract($this->settings[$model->alias]);
 		$tagModel = $model->{$tagAlias};
-		$tagModel->{$taggedAlias}->deleteAll(
+		
+        $tagIds = $tagModel->{$taggedAlias}->find('all', array(
+							'contain' => array(),
+							'conditions' => array(
+								$taggedAlias . '.model' => $model->name,
+								$taggedAlias . '.foreign_key' => $model->id,
+							),
+							'fields' => 'Tagged.tag_id'));
+        
+        $tagModel->{$taggedAlias}->deleteAll(
 			array(
 				$taggedAlias . '.model' => $model->name,
 				$taggedAlias . '.foreign_key' => $model->id,
-			)
+			),
+            true,
+            true
 		);
+        if(!empty($tagIds)){
+            $tagIds = Set::extract($tagIds, '{n}.Tagged.tag_id');
+            $this->cacheOccurrence($model, $tagIds, $userId);
+        }
+ 
 	}
 
 /**
@@ -372,10 +448,9 @@ class TaggableBehavior extends ModelBehavior {
  */
 	public function afterFind(Model $model, $results, $primary) {
 		extract($this->settings[$model->alias]);
-        
         foreach ($results as $key => $row) {
 			$row[$model->alias][$field] = '';
-			if (isset($row[$tagAlias]) && !empty($row[$tagAlias])) {
+            if (isset($row[$tagAlias]) && !empty($row[$tagAlias])) {
 				//$row[$model->alias][$field] = $this->tagArrayToString($model, $row[$tagAlias]);
                 $row[$model->alias][$field] = $this->tagArray($model, $row[$tagAlias]);
                 if ($unsetInAfterFind == true) {

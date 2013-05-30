@@ -1,8 +1,11 @@
 
 <div class="pull-right">
-    <?php echo $this->Html->image("ajax-loader.". Configure::read('App.version') .".gif", array("alt" => "Print", 'class' => 'pull-left ajaxLoader hide', 'width' => 24, 'height' => 24)); ?>
-    <?php echo $this->element('note_create'); ?> 
+    
+     
     <ul class="pull-right user-menu-ul">
+        <?php echo $this->Html->image("ajax-loader.". Configure::read('App.version') .".gif", array("alt" => "Print", 'class' => 'ajaxLoader hide', 'width' => 24, 'height' => 24)); ?>
+        <?php echo $this->element('note_create'); ?>
+       
      <?php if(!empty($currentUser)): ?>
      <li class="btn-group">
      <?php echo $this->Html->link($this->Html->tag('i', '',

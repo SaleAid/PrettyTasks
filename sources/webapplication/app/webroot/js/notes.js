@@ -105,6 +105,20 @@ jQuery(function( $ ) {
           return $("<div/>").text(str).html();
         },
         
+        wrapTags: function( title, tags ){
+            var that = this;
+            title = that.convertToHtml(title);
+            if(tags){
+                $.each(tags, function(index, value) {
+                    if( value ){
+                        value = that.convertToHtml(value);
+                        title = title.split('#'+value).join('<span class="tags label label-important" data-tag="'+value+'">&#x23;'+value+'</span>');    
+                    }
+                });
+            }
+            return title;
+        },
+                
         convertToText: function( str ){
             //Dencode Entities
             return $("<div/>").html(str).text();
@@ -137,6 +151,8 @@ jQuery(function( $ ) {
             list.on( 'click', '.note-view', this.view );
             this.inlineConfirmation('.note-remove');
             list.on( 'click', '#save-note', this.update );
+            list.on( 'click', '.tags', this.clickTags );
+            
         },
 		blurIntput: function(){
 		  AppNotes.$new_note.blur(function(){
@@ -228,6 +244,14 @@ jQuery(function( $ ) {
            
         },
         
+        clickTags: function(){
+            var tag = $(this).attr('data-tag');
+            if(tag){
+                window.location = '/'+GLOBAL_CONFIG.lang+'/tasks#list-'+tag;    
+            }
+            return false;
+        },
+        
         
         //--------------------------------------------
         userEvent: function( action, data ){
@@ -277,7 +301,7 @@ jQuery(function( $ ) {
             Utils.superAjax('/notes/create.json', {title: title }, AppNotes.responseHandler);
         },
         renderCreate: function( data ){
-            this.$noteList.prepend(this.noteTemplate({ id: data.id, title: Utils.convertToHtml(data.title), modified: data.modified }))
+            this.$noteList.prepend(this.noteTemplate({ id: data.id, title: Utils.wrapTags(data.title, data.tags), modified: data.modified }))
                           .slideDown('slow');
             this.inlineConfirmation('li[data-id='+data.id+'] .note-remove');
         },
@@ -322,7 +346,7 @@ jQuery(function( $ ) {
             $("li[data-id='"+data.id+"']").hide( "drop", { direction: "left" }, "slow", function(){
                 list.prepend(this);
                 $(this).show();
-                $(this).find('.title-note').text( data.title );
+                $(this).find('.title-note').html( Utils.wrapTags(data.title, data.tags) );
             } ); 
         },
         getUpdateElement: function (name){
@@ -360,12 +384,7 @@ jQuery(function( $ ) {
 
 	AppNotes.init();
     
-    //setTimeout(checkStatus, +GLOBAL_CONFIG.intervalCheckStatus);
     
-    //$('.help').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
-    //$('#addDay').tooltip({placement:'bottom',delay: { show: 500, hide: 100 }});
-    //$('#completed h3').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
-
     window.onbeforeunload = function(e) {
         if(+countAJAX && !connError){
             e = e || window.event;
