@@ -180,11 +180,9 @@ class TaggableBehavior extends ModelBehavior {
 					$tagModel->create();
 					$tagModel->save($newTag);
 					$newTagIds[] = $tagModel->id;
-                    
-                    $userTagModel->create();
-					$userTagModel->save(array('tag_id' => $tagModel->id, 'user_id' => $user_id));
-                    
-				}
+                    //$userTagModel->create();
+					//$userTagModel->save(array('tag_id' => $tagModel->id, 'user_id' => $user_id));
+                }
                 
                 $allTagIds = array_merge($existingTagIds, $newTagIds);
                 
@@ -210,7 +208,6 @@ class TaggableBehavior extends ModelBehavior {
                 if (!empty($newTagIds)) {
                     $uNewTagIds = array_merge($uNewTagIds, $newTagIds);
                 }
-                
                 foreach ($uNewTagIds as $key => $newTagId) {
 					$userTagModel->create();
 					$userTagModel->save(array('tag_id' => $newTagId, 'user_id' => $user_id));
@@ -253,6 +250,7 @@ class TaggableBehavior extends ModelBehavior {
 						$oldTagIds = Set::extract($oldTagIds, '/Tagged/tag_id');
 						$tagModel->{$taggedAlias}->deleteAll($deleteAll, false, true);
 					}
+                    
                     foreach ($existingTagIds as $tagId) {
 						$data[$taggedAlias]['tag_id'] = $tagId;
 						$data[$taggedAlias]['model'] = $model->name;
