@@ -69,7 +69,7 @@ class Opauth {
 			'lib_dir' => dirname(__FILE__).'/',
 			'strategy_dir' => dirname(__FILE__).'/Strategy/'
 		), $this->config);
-		
+		//pr($this->env);die;
 		if (!class_exists('OpauthStrategy')) {
 			require $this->env['lib_dir'].'OpauthStrategy.php';
 		}

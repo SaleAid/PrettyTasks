@@ -37,8 +37,10 @@ App::uses('LangRoute', 'Routing/Route');
 //    array('action' => 'update', 'method' => 'POST', 'id' => true)
 //));
 //Router::mapResources('notes');
+
 Router::defaultRouteClass('LangRoute');
 Router::parseExtensions('xml', 'json', 'xhtml', 'html');
+
 
 
 //задачи
@@ -50,6 +52,7 @@ Router::connect('/:lang', array('controller' => 'pages', 'action' => 'index'), a
 Router::connect('/:lang/pages', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/pages/index', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/pages/*', array('controller' => 'pages', 'action' => 'view'), array('lang' => '[a-z]{2}'));
+
 
 Router::connect('/:lang/:device', array(
 	'controller' => 'tasks', 'action' => 'index'
@@ -71,6 +74,19 @@ Router::connect('/:lang/:device/:controller/:action', array(), array(
 	'device' => '[m]{1}',
     'lang' => '[a-z]{2}'
 ));
+
+//login && singup
+Router::connect('/:lang/login', array('controller' => 'accounts', 'action' => 'login'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/login/selectmode', array('controller' => 'accounts', 'action' => 'selectMode'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/accounts/confirm-social-links', array('controller' => 'accounts', 'action' => 'confirmSocialLinks'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/accounts/register/success', array('controller' => 'accounts', 'action' => 'register_success'), array('lang' => '[a-z]{2}'));
+/**
+ * Opauth callback
+ */
+	Router::connect(
+		'/opauth-complete/*', 
+		array('controller' => 'accounts', 'action' => 'opauth_complete')
+  );
 
 CakePlugin::routes();
 

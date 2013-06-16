@@ -1503,7 +1503,7 @@ function AddTask(task){
                             '<span class="commentTask">'+convertToHtml(task.comment)+'</span>'+
                             '<span class="comment-task-icon"><i class="icon-file '+comment+'"></i></span>'+
                             '<span class="editTask"><i class="icon-pencil"></i></a></span>'+
-                            '<span class="deleteTask"><i class=" icon-ban-circle"></i></span>'+
+                            '<span class="deleteTask"><i class=" icon-trash"></i></span> \n'+
                 '</li>';
     return taskHtml;
 }
@@ -1550,9 +1550,9 @@ function initTags(){
 function initDelete(element){
     $(element).inlineConfirmation({
               //reverse: true,
-              confirm: "<a href='#'><i class='icon-ok-sign'></i></a>",
-              cancel: "<a href='#'><i class='icon-remove-sign '></i></a>",
-              separator: " ",
+              confirm: "<i class='icon-trash icon-white t-del'></i>",
+              cancel: "",
+              separator: "",
               expiresIn: 3,
               bindsOnEvent: "click",
               confirmCallback: function(el) {
@@ -1562,7 +1562,7 @@ function initDelete(element){
                  userEvent('delete', {id: id});
               },
               cancelCallback: function(el) {
-                 //mesg('.');
+                 //mesg('Отмена удаления .');
               },
     });
 }
@@ -1972,7 +1972,6 @@ function InitClock() {
   var second = time.getSeconds(); 
   var temp = "" + ((hour < 10) ? "0" : "") + hour; 
   temp += ((minute < 10) ? ":0" : ":") + minute; 
-  //temp += ((second < 10) ? ":0" : ":") + second; 
   document.getElementById('clock').innerHTML = temp; 
   setTimeout("InitClock()", 1000); 
 } 

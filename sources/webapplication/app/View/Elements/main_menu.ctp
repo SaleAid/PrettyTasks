@@ -60,8 +60,8 @@
                     <?php endforeach; ?> 
                    </ul>
              </span>  
-            <?php echo $this->Html->link(__d('pages', 'Register'), array('controller' => 'users', 'action' => 'register'), array('class'=> 'btn btn-success')); ?>
-            <?php echo $this->Html->link(__d('pages', 'Login'), array('controller' => 'users', 'action' => 'login'), array('class'=> 'btn btn-primary')); ?> 
+            <?php echo $this->Html->link(__d('pages', 'Register'), array('controller' => 'accounts', 'action' => 'register'), array('class'=> 'btn btn-success')); ?>
+            <?php echo $this->Html->link(__d('pages', 'Login'), array('controller' => 'accounts', 'action' => 'login'), array('class'=> 'btn btn-primary')); ?> 
         </div> 
       </div>
     

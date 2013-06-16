@@ -61,7 +61,6 @@ Configure::write('Opauth.security_salt', Configure::read('Security.salt'));
  * Directory where Opauth strategies reside
  */
 Configure::write('Opauth.strategy_dir', dirname(dirname(__FILE__)).'/Strategy/');
-
 /**
  * Strategy
  * Refer to individual strategy's documentation on configuration requirements.
@@ -74,4 +73,4 @@ Configure::write('Opauth.strategy_dir', dirname(dirname(__FILE__)).'/Strategy/')
  * ));
  *
  */
-Configure::write('Opauth.Strategy', array());
+//Configure::write('Opauth.Strategy', array());

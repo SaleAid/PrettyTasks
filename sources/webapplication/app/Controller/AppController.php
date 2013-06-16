@@ -11,18 +11,17 @@ class AppController extends Controller {
         'Js', 
         'Time', 
         'Session', 
-        'Loginza', //TODO Maybe move to needed controllers only?
-        //'Captcha'
     );
     public $components = array(
         'AutoLogin' => array('cookieName' => 'RM',
                              'expires' => '+1 month',
                              'username' => 'email'
                             ), 
-        'Session', 
+        'Session',
+        'Cookie', 
         'Auth' => array(
             'loginAction' => array(
-                'controller' => 'users', 
+                'controller' => 'accounts', 
                 'action' => 'login'
             ), 
             'loginRedirect' => array(
@@ -30,7 +29,7 @@ class AppController extends Controller {
                 'action' => 'index'
             ), 
             'logoutRedirect' => array(
-                'controller' => 'users', 
+                'controller' => 'accounts', 
                 'action' => 'login'
             ), 
             'authError' => ' ', 
@@ -39,7 +38,7 @@ class AppController extends Controller {
             ), 
             'authenticate' => array(
                 'Form' => array(
-                    'userModel' => 'User', 
+                    'userModel' => 'Account', 
                     'fields' => array(
                         'username' => 'email'
                     )
@@ -103,17 +102,23 @@ class AppController extends Controller {
 
     private function __setTimeZone() {
         date_default_timezone_set(Configure::read('Config.timezone'));
-        //$timezone = $this->Auth->user('timezone');
-        //if ($timezone) {
-            //date_default_timezone_set($timezone);
-        //}
+    }
+    
+    private function __userTimeZone(){
+        $timezone = $this->Auth->user('timezone');
+        
+        if (!$timezone) {
+            $timezone_offset = $this->Auth->user('timezone_offset');
+            return  timezone_name_from_abbr("", $timezone_offset, 0);    
+        }
+        return $timezone;
     }
     
     private function __userTimeZoneOffset(){
         $timezone = $this->Auth->user('timezone');
-        
+        //$timezone_offset = $this->Auth->user('timezone_offset');
         if (!$timezone) {
-            return;    
+            return ;    
         }
         $dateTimeZoneServer = new DateTimeZone(Configure::read('Config.timezone'));
         $dateTimeZoneUser = new DateTimeZone($timezone);
@@ -134,8 +139,8 @@ class AppController extends Controller {
         
         $this->set('isAuth', $this->Auth->loggedIn()); 
         $this->set('currentUser', $this->Auth->user());
-        $this->set('provider', $this->Auth->user('provider'));
-        $this->set('timezone', $this->__userTimeZoneOffset());
+        $this->set('timezoneOffset', $this->__userTimeZoneOffset());
+        $this->set('timezone', $this->__userTimeZone());
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
         
@@ -160,7 +165,7 @@ class AppController extends Controller {
                 $params['lang'] = $this->L10n->map($lang);
             }
         } else {
-            if ( $params['action'] == 'loginzalogin' or $this->request->is('ajax')) {
+            if ( $params['action'] == 'loginzalogin' or $this->request->is('ajax') or $params['action'] == 'opauth_complete') {
                return;  
             }
             if($lang = $this->_userLang()){

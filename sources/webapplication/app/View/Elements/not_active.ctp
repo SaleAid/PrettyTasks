@@ -15,7 +15,7 @@ if (!isset($close)) {
         <?php echo __d('users', 'При создании аккаунта на ваш e-mail было отправлено письмо с подтверждением, пожалуйста, перейдите по ссылке, указанной в данном письме'); ?>
     </p> 
      <?php echo $this->Form->postLink(__d('users', 'Заказать повторное письмо с подтверждением'),
-                                         array('controller' => 'users', 'action' => 'reactivate'),
+                                         array('controller' => 'accounts', 'action' => 'reactivate'),
                                          array('class' => 'btn btn-info', 
                                                 'data' => array('email' => $email))); ?>
     

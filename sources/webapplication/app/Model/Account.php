@@ -1,7 +1,6 @@
 <?php
+App::uses('CakeEmail', 'Network/Email');
 App::uses('AppModel', 'Model');
-App::import('Vendor', 'loginza' . DS . 'LoginzaAPI');
-App::import('Vendor', 'loginza' . DS . 'LoginzaUserProfile');
 /**
  * User Model
  *
@@ -9,10 +8,6 @@ App::import('Vendor', 'loginza' . DS . 'LoginzaUserProfile');
 class Account extends AppModel {
     
     public $name = 'Account';
-    
-    public $actsAs = array(
-        'Activation'
-    ); //TODO Maybe rewrite model without using behavior?
     
     public $belongsTo = 'User';
 
@@ -29,109 +24,304 @@ class Account extends AppModel {
      * @var array
      */
     public $validate = array(
+        'id' => array(
+			'maxLength' => array(
+                'rule'    => array('maxLength', 36),
+                'message' => 'Wrong ID',
+            ),
+        	'uuid'
+        ), 
+        'provider' => array(
+             'notEmpty' => array(
+                'rule' => array(
+                    'notEmpty'
+                ), 
+                'message' => 'Поле должно быть заполнено'
+             ),
+        ),
+        'full_name' => array(
+             'notEmpty' => array(
+                'rule' => array(
+                    'notEmpty'
+                ), 
+                'message' => 'Поле должно быть заполнено'
+             ),
+        ),
         'user_id' => array(
 			'maxLength' => array(
                 'rule'    => array('maxLength', 36),
                 'message' => 'Wrong ID',
             )
         ),
+        'login' => array(
+            'notEmpty' => array(
+                'rule' => array(
+                    'notEmpty'
+                ), 
+                'message' => 'Поле должно быть заполнено'
+             ),
+            'alphaNumeric' => array(
+    			'rule'		=> 'alphaNumeric',
+    			'on'		=> 'create',
+    			'message'	=> 'Введите в поле только буквы и цифры'
+    		),
+    		'between' => array(
+    			'rule' 		=> array('between', 2, 30),
+    			'on'		=> 'create',
+    			'message'	=> 'Длина логина от %d до %d символов',
+    		),
+            'isUnique' => array(
+                'rule' => 'isUnique', 
+                'message' => 'Пользователь с таким логином уже существует'
+            )
+        ), 
+        'password' => array(
+            'notEmpty' => array(
+                'rule' => array(
+                    'notEmpty'
+                ), 
+                'message' => 'Поле должно быть заполнено'
+            ),
+            'minLength' => array(
+                'rule'     => array('minLength', 6),
+                'message'  => 'Минимальная длина пароля - %d символа'
+            ), 
+            'matchPasswords' => array(
+                'rule' => 'matchPasswords', 
+                'message' => 'Пароли не совпадает'
+            )
+        ), 
+        'password_confirm' => array(
+            'notEmpty' => array(
+                'rule' => array(
+                    'notEmpty'
+                ), 
+                'message' => 'Поле должно быть заполнено'
+            )
+        ), 
+        'old_password' => array(
+            'notEmpty' => array(
+                'rule' => array(
+                    'notEmpty'
+                ), 
+                'message' => 'Поле должно быть заполнено'
+            ), 
+            'matchOldPasswords' => array(
+                'rule' => 'matchOldPasswords', 
+                'message' => 'Неверный текущий пароль'
+            )
+        ),
+        'email' => array(
+             'Email' => array(
+                'rule' => array(
+                    'email'
+                ), 
+                'message' => 'Пожалуйста, введите Ваш адрес электронной почты'
+            ),
+            'isUniqueLocal' => array(
+                'rule' => array(
+                    'emailLocal'
+                ), 
+                'message' => 'Этот адрес уже используется. Пожалуйста, введите другой адрес электронной почты'
+            )
+            
+        ),
         'agreed' => array(
             'comparison' => array(
+                'on' => 'create',
                 'rule' => array('comparison', 'equal to', 1),
                 'message' => 'Вы должны быть согласны с правилами использования сервиса'
             )
+        ),
+        'created' => array(
+            'datetime' => array(
+                'rule' => array(
+                    'datetime'
+                )
+            ), 
+            'notempty' => array(
+                'rule' => array(
+                    'notempty'
+                )
+            )
         ), 
+        'modified' => array(
+            'datetime' => array(
+                'rule' => array(
+                    'datetime'
+                )
+            ), 
+            'notempty' => array(
+                'rule' => array(
+                    'notempty'
+                )
+            )
+        ),  
+        
     );
 
-    protected function _getDataFromProvider($userProfile){
-        $data = array();
-        $data['identity'] = $userProfile->identity;
-        $data['uid'] = isset($userProfile->uid) ? $userProfile->uid : '';
-        $data['identity'] = $userProfile->identity;
-        $data['first_name'] = isset($userProfile->name->first_name) ? $userProfile->name->first_name : '';
-        $data['last_name'] = isset($userProfile->name->last_name) ? $userProfile->name->last_name : '';
-        $data['full_name'] = isset($userProfile->name->full_name) ? $userProfile->name->full_name : '';
-        $data['email'] = isset($userProfile->email) ? $userProfile->email : ''; 
-        return (array)$data;
-    }
-    
-    protected function _getDataFrom_vkontakte($data){
-        $data['full_name'] = $data['first_name'] . ' ' . $data['last_name'];
-        return $data;
-    }
-    
-    protected function _getDataFrom_linkedin($data){
-        $data['full_name'] = $data['first_name'] . ' ' . $data['last_name'];
-        return $data;
-    }
-    
-    protected function _getDataFrom_google($data){
-        $data['full_name'] = $data['first_name'] . ' ' . $data['last_name'];
-        return $data;
-    }
-    
-    protected function _getDataFrom_twitter($data){
-        $tmp = explode(' ',$data['full_name']);
-        $data['last_name'] = isset($tmp[1]) ? $tmp[1] : '';
-        $data['first_name'] = $tmp[0];
-        return $data;
-    }
-    
-    public function getLoginzaUser($token) {
-        $LoginzaAPI = new LoginzaAPI();
-        $UserProfile = $LoginzaAPI->getAuthInfo($token, Configure::read('loginza.id'), md5($token . Configure::read('loginza.skey')));
-        if (isset($UserProfile->error_type)) {
-            $data['status'] = 'error';
-            $data['msg'] = $UserProfile->error_message;
-            return $data;
-        }
-        $providers = Configure::read('loginza.provider');
-        if( !in_array($UserProfile->provider, $providers) ) {
-            $data['status'] = 'error';
-            $data['msg'] = 'Bad provider';
-            return $data;
-        }
-        $data = $this->_getDataFromProvider($UserProfile);
-        $data['provider'] = array_search($UserProfile->provider, $providers);
-        $providerMethod = "_getDataFrom_{$data['provider']}";
-        if( method_exists($this, $providerMethod) ){
-            $data = $this->$providerMethod($data);
-        }
+   public function emailLocal($check) {
+        $conditions['Account.email'] = $check['email'];
+        $conditions['Account.provider'] = 'local';
         
-        $result = $this->findByIdentityAndProvider($data['identity'], $data['provider']);
-        if (! $result) {
-            $data['status'] = 'newUser';//TODO Are u sure this is the good status? Maybe better use numeric values? 
-            return $data;
+        $existingEmail = $this->find('first', array(
+            'conditions' =>$conditions,
+            'fields' => array('id'),
+            'recursive' => -1
+        ));
+        return empty($existingEmail) ? true : false;
+    }
+   
+    public function matchPasswords($data) {
+        if ($data['password'] == $this->data[$this->alias]['password_confirm']) {
+            return true;
         }
-        if ($result['User']['is_blocked']) {
-            return array(
-                'status' => 'error', 
-                'msg' => __d('accounts', 'Ваш основной аккаунт заблокирован')
-            );
-        } elseif (!$result['User']['active']) {
-            return array(
-                'status' => 'error', 
-                'msg' => __d('accounts', 'Ваш основной аккаунт деактивирован')
-            );            
-        } elseif ($result['Account']['active']) {
-            $result = $result['User'];
-            $result['status'] = 'active';
-            $result['provider'] = $data['provider'];
-            return $result;
-        } else {
-            $data['status'] = 'notActive';
-            return array_merge((array)$result, (array)$data);
-        }
+        $this->invalidate('password_confirm', __d('users', 'Пароли не совпадает'));
         return false;
     }
 
-    public function reactivate($id, $controllerName) {
+    public function matchOldPasswords($data) {
+        $password = $this->field('password', array(
+            $this->alias . '.id' => $this->data[$this->alias]['id']
+        ));
+        if ($password === Security::hash($data['old_password'], null, true)) {
+            return true;
+        }
+        return false;
+    }
+    
+    public function generateToken() {
+        return Security::hash(mt_rand() . Configure::read('Security.salt') . time() . mt_rand());
+    }
+    
+    public function register($data) {
+        $this->set($data);
+        if ($this->validates()) {
+            $data['password'] = AuthComponent::password($data['password']);
+            $data['activate_token'] = $this->generateToken();
+            $data['invite_token'] = $this->generateToken();
+            $data['provider'] = 'local';
+            if ($this->save($data, false)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public function sendActivationAccount($id){
+        $this->id = $id;
+        if (!$this->exists()) {
+	        return false;
+        }
+        $this->read();
+        $email = new CakeEmail();
+        $email->template(Configure::read('Config.language') . DS . 'activate_account', 'default');
+        $email->emailFormat(Configure::read('Email.global.format'));
+        $email->from(Configure::read('Email.global.from'));
+        $email->to($this->data[$this->alias]['email']);
+        $email->subject( __d('mail', Configure::read('Email.user.activateAccount.subject'), Configure::read('Site.name')));
+        $email->viewVars(array( 'activate_token' => $this->data[$this->alias]['activate_token'], 
+                                'full_name' => $this->data[$this->alias]['full_name'])
+                        );
+        return $email->send();
+    }
+    
+    public function sendPasswordResend($id) {
+        $this->id = $id;
+        $this->read();
+        $email = new CakeEmail();
+        $email->template(Configure::read('Config.language') . DS . 'password_resend', 'default');
+        $email->emailFormat(Configure::read('Email.global.format'));
+        $email->from(Configure::read('Email.global.from'));
+        $email->to($this->data[$this->alias]['email']);
+        $email->subject(__d('mail', Configure::read('Email.user.passwordResend.subject'), Configure::read('Site.name')));
+        $email->viewVars(
+                        array(
+                            'password_token' => $this->data[$this->alias]['password_token'], 
+                            'fullname' => $this->data[$this->alias]['full_name'], 
+                            'login' => $this->data[$this->alias]['login']
+                        ));
+        return $email->send();
+    }
+    
+    public function activate($token){
+        $this->contain();
+        $user = $this->findByActivate_token($token);
+        if($user){
+	        $user[$this->alias]['activate_token'] = null;
+            return $this->save($user, true, array('activate_token'));
+    	}
+        return false;
+    }
+    
+    
+    
+    public function reactivate($email) {
+        $account = $this->findByEmailAndActiveAndProvider($email, 0, 'local');
+        if ($account) {
+            $this->set($account);
+            $this->saveField('activate_token', $this->generateToken());
+            return $this->sendActivationAccount($account[$this->alias]['id']);
+        }
+        return false;
+    }
+    
+    public function checkEmail($email) {
+        $this->contain();
+        $account = $this->findByEmailAndProvider($email, 'local', array('id'));
+        if ($account) {
+            return $account[$this->alias]['id'];
+        }
+        return false;
+    }
+    
+    public function password_resend($id) {
         $this->id = $id;
         if (! $this->exists()) {
             return false;
         }
-        $this->saveField('activate_token', $this->User->generateToken());
-        return $this->sendActivationAccount($id, $controllerName); 
+        $this->saveField('password_token', $this->generateToken());
+        if ($this->sendPasswordResend($id)) {
+            return true;
+        }
+        return false;
     }
+    
+    public function checkPasswordToken($token) {
+        $result = $this->find('first', array(
+            'conditions' => array(
+                $this->alias . '.password_token' => $token
+            ), 
+            'fields' => array(
+                $this->alias . '.id'
+            )
+        ));
+        if($result){
+            return $result[$this->alias]['id'];    
+        }
+        return false;
+    }
+    
+    public function password_change($id, $password, $password_confirm, $old_password = null, $reset = null) {
+        $this->set(array(
+                'id'                => $id,
+                'password'          => $password,
+                'password_confirm'  => $password_confirm
+        ));
+        $fieds = array('id', 'password', 'password_confirm');
+        if(!$reset){
+            $this->set('old_password', $old_password);
+            array_push($fieds, 'old_password');
+        }
+        if ($this->validates(array('fieldList' => $fieds))) {
+            $this->saveField('password', AuthComponent::password($password));
+            $this->saveField('password_token', null);
+            return true;
+        }
+        return false;
+    }
+
+
 }
+
 

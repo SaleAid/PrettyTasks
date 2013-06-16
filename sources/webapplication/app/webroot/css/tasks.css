@@ -160,21 +160,22 @@ div.well{
 }
 
 .editable{
-    margin-left: 5px;
     display: inline-block;
-    width: 590px;
+    width: 601px;
     text-align: left;
-    font-family: arial,sans-serif;
+    font-family: arial, sans-serif;
+    /*font-weight: bold;*/
     font-size: 100%;
-    overflow: hidden;
+    overflow:hidden;
     height:  33px !important;
-    line-height: 35px;
+    line-height: 36px;
+    border: 0 !important;  
+    /*margin: 0 !important;*/
+    margin-left: 5px;
+    padding: 0 !important;
 }
 
-.editable:hover{
-    cursor: text;
-    border: none!important;
-}
+.editable:hover{cursor: text;}
 
 .editable form {
     margin: 0;
@@ -182,12 +183,13 @@ div.well{
     color: blue;
 }
 .editable input{
-    margin-left: 1px;
+    margin-left: 0px;
     margin-bottom: 2px!important;
-    height: 25px !important;
-    width: 583px !important;
+    height: 26px !important;
+    width: 600px !important;
     border: none!important;
-    background-color: #E3F9FB;
+    outline: none;
+    background-color: #FEFEF3;
 }
 .editable input:focus{
     outline: none;
@@ -427,4 +429,21 @@ div.well{
 .form-repeat .week input {
     margin-bottom: 5px;
 }
-.ui-datepicker{ z-index: 9999 !important;}
+
+.listTask .icon-pencil, .icon-move, .icon-file, .icon-trash{
+    opacity: 0.2;
+}
+.listTask .icon-pencil:hover, .icon-move:hover, .icon-file:hover, .icon-trash:hover{
+    opacity: 1;
+}
+.t-del{
+    opacity: 1;
+    margin-top: -1px;
+    padding-left: 1px;
+    margin-left: -1px;
+    background-color: #b94a48;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.ui-datepicker, .ui-timepicker-container{ z-index: 9999 !important;}

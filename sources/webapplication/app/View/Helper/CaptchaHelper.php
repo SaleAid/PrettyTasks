@@ -29,7 +29,8 @@ class CaptchaHelper extends AppHelper{
 	protected function writeCaptcha($controller){
 	    $model = Inflector::classify($controller);
         $error = $this->captchaerror ? 'error': '';
-		$out = '<div class="control-group required '.$error.'">';
+		$out = '<div class="control-group required '.$error.' captcha">';
+        $out .= '<label class="control-label">';
         $out .= $this->Html->image($this->Html->url(array('controller' => $controller, 'action' => 'captcha'), true), array('id' => 'cakecaptcha'));
 		$out .= "<br/>";
 		
@@ -37,10 +38,10 @@ class CaptchaHelper extends AppHelper{
              . $this->Html->url(array('controller' => $controller, 'action' => 'captcha')) 
              . '?\'+Math.random(); document.getElementById(\'captcha-form\').focus();" id="change-image"> '
              .'Not readable?</a>';
-		
+		$out .= "</label>";
 		$out .= $this->Form->input('cakecaptcha', array('id ' => 'captcha-form',
                                                         'name' => 'data['.$model.'][captcha]',
-                                                        'label' => '',
+                                                        'label' => false,
                                                         'div' => false,
                                                         'class' => 'input-xlarge'
         ));

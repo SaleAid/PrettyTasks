@@ -1,5 +1,5 @@
-
 $().ready(function(){
+    
     window.setTimeout(function() {
         $(".alert-success").fadeTo(1000, 0).slideUp(1000, function(){
             $(this).remove(); 
@@ -10,20 +10,25 @@ $().ready(function(){
         var lang = $(this).attr('data');
         var hash = window.location.hash;
         var url = langUrls[lang] + hash;
+        //console.log(url);
         if( isAuth ){
             $.ajax({
                 type: "POST",
                 data: {lang: lang},
                 url: "/users/changeLanguage.json",
                 success: function (data) {
-                    if(data.result.success){
-                        window.location.replace(url);
-                    }
+                    //if(data.result.success){
+                        //window.location.replace(url);
+                        //window.location.href = url;
+                    //}
                 },
-                error: function (xhr, ajaxOptions, thrownError) {}
+                error: function (xhr, ajaxOptions, thrownError) {},
+                complete: function(){
+                    window.location = url;
+                }
             });
         }
-        window.location.replace(url);
+        window.location = url;
         return false;
     });
     

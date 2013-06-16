@@ -34,7 +34,7 @@ class TaskHelper extends AppHelper {
             $str .= '<span class="commentTask">'. $comment .'</span>';
             $str .= '<span class="comment-task-icon"><i class="icon-file '. $pr_comment_status.'"></i></span>';
             $str .= '<span class="editTask"><i class="icon-pencil"></i></span>';
-            $str .= '<span class="deleteTask"><i class=" icon-ban-circle"></i></span>';
+            $str .= '<span class="deleteTask"><i class=" icon-trash"></i></span>';
         $str .= '</li>';
 
         return $str;
@@ -50,7 +50,7 @@ class TaskHelper extends AppHelper {
             $str .= '<span class="commentTask"><%= comment %></span>';
             $str .= '<span class="comment-task-icon"><i class="icon-file <%= comment_status %>"></i></span>';
             $str .= '<span class="editTask"><i class="icon-pencil"></i></span>';
-            $str .= '<span class="deleteTask"><i class="icon-ban-circle"></i></span>';
+            $str .= '<span class="deleteTask"><i class=" icon-trash"></i></span>';
         $str .= '</li>';
         
         return $str;
@@ -67,7 +67,7 @@ class TaskHelper extends AppHelper {
             $str .= '<span class="commentTask"><%= comment %></span>';
             $str .= '<span class="comment-task-icon"><i class="icon-file <%= comment_status %>"></i></span>';
             $str .= '<span class="editTask"><i class="icon-pencil"></i></span>';
-            $str .= '<span class="deleteTask"><i class="icon-ban-circle"></i></span>';
+            $str .= '<span class="deleteTask"><i class=" icon-trash"></i></span>';
         $str .= '</li>';
         
         return $str;

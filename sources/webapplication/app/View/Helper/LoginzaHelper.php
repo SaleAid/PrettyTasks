@@ -16,12 +16,18 @@ class LoginzaHelper extends AppHelper {
         if (! $provider) {
             return '';
         }
+        if ($provider == 'local') {
+            return '<span >PT&nbsp;</span>';
+        }
         return "<span class=\"providers_ico_sprite {$provider}_ico\">&nbsp;</span>";
     }
 
     public function logo($provider) {
         if (! $provider) {
             return '';
+        }
+        if ($provider == 'local') {
+            return '<span >&nbsp;PrettyTasks&nbsp;</span>';
         }
         return "<span class=\"providers_sprite {$provider}\">&nbsp;</span>";
     }

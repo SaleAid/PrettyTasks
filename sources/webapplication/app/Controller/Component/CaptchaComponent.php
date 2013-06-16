@@ -14,7 +14,7 @@ class CaptchaComponent extends Component {
 	
     public $components = array('Session', 'RequestHandler');
 	
-	public $width  = 284;
+	public $width  = 160;
 
     /** Height of the image */
     public $height = 70;

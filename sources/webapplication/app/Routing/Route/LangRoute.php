@@ -7,7 +7,9 @@ class LangRoute extends CakeRoute {
     public function match($url) {
         //debug(LangRoute::$lang);
         if (LangRoute::$lang && !isset($url['lang'])) {
-            $url['lang'] = LangRoute::$lang;
+           if(empty($url['plugin'])){
+                $url['lang'] = LangRoute::$lang;
+           } 
         }
         //print_r($url);
         return parent::match($url);

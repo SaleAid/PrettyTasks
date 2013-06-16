@@ -14,7 +14,8 @@ class OpauthAppController extends AppController {
 	 */
 	public $Opauth;
 	
-	/**
+	 public function _setLanguage() {}
+    /**
 	 * {@inheritDoc}
 	 */
 	public function __construct($request = null, $response = null) {
@@ -42,7 +43,7 @@ class OpauthAppController extends AppController {
 		/**
 		* Fetch auth response, based on transport configuration for callback
 		*/
-		switch(Configure::read('Opauth.callback_transport')){	
+        switch(Configure::read('Opauth.callback_transport')){	
 			case 'session':
 				if (!session_id()){
 					session_start();
@@ -55,7 +56,7 @@ class OpauthAppController extends AppController {
 				break;
 			case 'post':
 				$response = unserialize(base64_decode( $_POST['opauth'] ));
-				break;
+                break;
 			case 'get':
 				$response = unserialize(base64_decode( $_GET['opauth'] ));
 				break;
@@ -136,6 +137,6 @@ class OpauthAppController extends AppController {
 		}
 		
 		App::import('Vendor', 'Opauth.Opauth/lib/Opauth/Opauth');
-		$this->Opauth = new Opauth( $config, $run );
+        $this->Opauth = new Opauth( $config, $run );
 	}
 }

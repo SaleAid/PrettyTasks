@@ -43,6 +43,10 @@ CakePlugin::load(array(
     'ApiV1' => array('routes' => true)
 ));
 
+CakePlugin::load(
+    'Opauth', array('routes' => true, 'bootstrap' => true
+));
+
 //CakePlugin::load(array(
 //    'AppVK' => array('routes' => true)
 //));
