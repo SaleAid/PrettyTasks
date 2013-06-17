@@ -8,56 +8,24 @@ class AppSchema extends CakeSchema {
 	public function after($event = array()) {
 	}
 
-	public $access_tokens = array(
-		'oauth_token' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 40, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'client_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'expires' => array('type' => 'integer', 'null' => false, 'default' => null),
-		'scope' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'oauth_token', 'unique' => 1)
-		),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
-	);
-
 	public $accounts = array(
-		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'comment' => 'primary key', 'charset' => 'utf8'),
+		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'comment' => 'primary key', 'charset' => 'utf8', 'key' => 'primary'),
 		'uid' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 100, 'collate' => 'utf8_general_ci', 'comment' => 'the unique id of the social network', 'charset' => 'utf8'),
+		'master' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 1),
 		'provider' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 40, 'collate' => 'utf8_general_ci', 'comment' => 'provider name (google,facebook,twitter,vkontakte)', 'charset' => 'utf8'),
-		'identity' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'identity', 'charset' => 'utf8'),
+		'login' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'password' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 40, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'password_token' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'email' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'full_name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100, 'collate' => 'utf8_general_ci', 'comment' => 'full_name', 'charset' => 'utf8'),
 		'activate_token' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 128, 'collate' => 'utf8_general_ci', 'comment' => 'key for activation account', 'charset' => 'utf8'),
 		'active' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 4, 'comment' => 'flag that account is active'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null, 'comment' => 'created date time'),
+		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'comment' => 'reference to user', 'charset' => 'utf8'),
-		'last_login' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'agreed' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 4),
 		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1)
-		),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
-	);
-
-	public $auth_codes = array(
-		'code' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 40, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'client_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'redirect_uri' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 200, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'expires' => array('type' => 'integer', 'null' => false, 'default' => null),
-		'scope' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'code', 'unique' => 1)
-		),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
-	);
-
-	public $clients = array(
-		'client_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'client_secret' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 40, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'redirect_uri' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'user_id' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'client_id', 'unique' => 1)
+			
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
@@ -84,7 +52,7 @@ class AppSchema extends CakeSchema {
 		'lang' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 3, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'order' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'active' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'key' => 'index'),
-		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'user_id' => array('type' => 'string', 'null' => false, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
@@ -138,22 +106,18 @@ class AppSchema extends CakeSchema {
 
 	public $goals = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'comment' => 'primary key', 'charset' => 'utf8'),
-		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'Title of goal', 'charset' => 'utf8'),
-		'comment' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'fromdate' => array('type' => 'date', 'null' => true, 'default' => null, 'key' => 'index'),
-		'todate' => array('type' => 'date', 'null' => true, 'default' => null, 'key' => 'index'),
+		'todate' => array('type' => 'date', 'null' => true, 'default' => null),
 		'datedone' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'done' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 1, 'comment' => 'Flag that goal is done'),
 		'deleted' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 1),
+		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'Title of goal', 'charset' => 'utf8'),
+		'comment' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'fromdate' => array('type' => 'date', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'todate' => array('column' => 'todate', 'unique' => 0),
-			'fromdate' => array('column' => 'fromdate', 'unique' => 0),
-			'user_id' => array('column' => 'user_id', 'unique' => 0),
-			'user_and_dates' => array('column' => array('user_id', 'fromdate', 'todate'), 'unique' => 0)
+			'PRIMARY' => array('column' => 'id', 'unique' => 1)
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
@@ -182,6 +146,22 @@ class AppSchema extends CakeSchema {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
+	public $ordered = array(
+		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'model' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'list' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'list_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'foreign_key' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'order' => array('type' => 'integer', 'null' => false, 'default' => null),
+		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1)
+		),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
+	);
+
 	public $pages = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'comment' => 'primary key', 'charset' => 'utf8'),
 		'url' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 45, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
@@ -199,33 +179,18 @@ class AppSchema extends CakeSchema {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
-	public $refresh_tokens = array(
-		'refresh_token' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 40, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'client_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'expires' => array('type' => 'integer', 'null' => false, 'default' => null),
-		'scope' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'refresh_token', 'unique' => 1)
-		),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
-	);
-
 	public $tagged = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'foreign_key' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'tag_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'model' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'language' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 6, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'times_tagged' => array('type' => 'integer', 'null' => false, 'default' => '1'),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'UNIQUE_TAGGING' => array('column' => array('model', 'foreign_key', 'tag_id', 'language'), 'unique' => 1),
-			'INDEX_TAGGED' => array('column' => 'model', 'unique' => 0),
-			'INDEX_LANGUAGE' => array('column' => 'language', 'unique' => 0)
+			'UNIQUE_TAGGING' => array('column' => array('model', 'foreign_key', 'tag_id'), 'unique' => 1),
+			'INDEX_TAGGED' => array('column' => 'model', 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
@@ -251,12 +216,11 @@ class AppSchema extends CakeSchema {
 		'time' => array('type' => 'time', 'null' => true, 'default' => null, 'comment' => 'Flag for check time, if not set, task has only date'),
 		'timeend' => array('type' => 'time', 'null' => true, 'default' => null),
 		'datedone' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'order' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 4, 'key' => 'index', 'comment' => 'order for sorting tasks'),
 		'done' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 1, 'comment' => 'Flag that task is done'),
 		'future' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 1, 'comment' => 'flag that task is for future'),
 		'deleted' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 1),
 		'continued' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 1, 'comment' => 'flag that task is for continued'),
-		'repeatid' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 1, 'key' => 'index', 'comment' => 'id of repeated task\'s series'),
+		'repeatid' => array('type' => 'string', 'null' => true, 'default' => '0', 'length' => 36, 'key' => 'index', 'collate' => 'utf8_general_ci', 'comment' => 'id of repeated task\'s series', 'charset' => 'utf8'),
 		'transfer' => array('type' => 'integer', 'null' => true, 'default' => '0', 'comment' => 'count of transfer of task'),
 		'priority' => array('type' => 'integer', 'null' => true, 'default' => '0', 'comment' => 'priority of task'),
 		'day_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
@@ -266,9 +230,8 @@ class AppSchema extends CakeSchema {
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'date' => array('column' => 'date', 'unique' => 0),
-			'order' => array('column' => 'order', 'unique' => 0),
 			'repeatid' => array('column' => 'repeatid', 'unique' => 0),
-			'user_date_order' => array('column' => array('user_id', 'date', 'order'), 'unique' => 0),
+			'user_date_order' => array('column' => array('user_id', 'date'), 'unique' => 0),
 			'user_id' => array('column' => 'user_id', 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
@@ -276,16 +239,10 @@ class AppSchema extends CakeSchema {
 
 	public $users = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'comment' => 'primary key', 'charset' => 'utf8'),
-		'username' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'index', 'collate' => 'utf8_general_ci', 'comment' => 'username', 'charset' => 'utf8'),
-		'password' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 40, 'collate' => 'utf8_general_ci', 'comment' => 'password', 'charset' => 'utf8'),
-		'password_token' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 128, 'collate' => 'utf8_general_ci', 'comment' => '      password_token', 'charset' => 'utf8'),
-		'first_name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'comment' => 'user name', 'charset' => 'utf8'),
-		'last_name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'comment' => 'user last name', 'charset' => 'utf8'),
-		'email' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'key' => 'unique', 'collate' => 'utf8_general_ci', 'comment' => 'user email', 'charset' => 'utf8'),
-		'activate_token' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 128, 'collate' => 'utf8_general_ci', 'comment' => 'activate_token', 'charset' => 'utf8'),
 		'invite_token' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 32, 'key' => 'unique', 'collate' => 'utf8_general_ci', 'comment' => 'token for invitations', 'charset' => 'utf8'),
 		'timezone' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'language' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 3, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'timezone_offset' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 6, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null, 'comment' => 'created date time'),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null, 'comment' => 'modified date time'),
 		'active' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'comment' => 'flag that user is active'),
@@ -296,9 +253,7 @@ class AppSchema extends CakeSchema {
 		'config' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'email' => array('column' => 'email', 'unique' => 1),
-			'invite_token' => array('column' => 'invite_token', 'unique' => 1),
-			'username' => array('column' => array('username', 'password'), 'unique' => 0)
+			'invite_token' => array('column' => 'invite_token', 'unique' => 1)
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
@@ -308,6 +263,10 @@ class AppSchema extends CakeSchema {
 		'tag_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'comment' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 10000, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'occurrence' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+		'task_occurrence' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+		'note_occurrence' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+		'goal_occurrence' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'indexes' => array(
 			
 		),
