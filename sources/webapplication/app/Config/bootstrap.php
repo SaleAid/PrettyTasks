@@ -33,7 +33,11 @@ CakeLog::config('error', array(
 
 config('appconfig');
 
-CakePlugin::load('Recaptcha');
+config('opauth_config');
+
+//config('user_config');
+
+//CakePlugin::load('Recaptcha');
 
 CakePlugin::load(array(
     'OAuth' => array('routes' => true)
