@@ -118,12 +118,11 @@ div.well{
 }
 .ratingDay input[type="checkbox"] {
    margin-left: 0;
-   margin-right: 2px;
+   margin-right: 5px;
    margin-top: 2px; 
 }
 .days a{
     vertical-align: top;
-    margin-right: 15px;
     text-decoration: none;
     border-bottom: 1px dashed;
 }

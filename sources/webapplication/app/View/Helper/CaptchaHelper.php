@@ -31,19 +31,21 @@ class CaptchaHelper extends AppHelper{
         $error = $this->captchaerror ? 'error': '';
 		$out = '<div class="control-group required '.$error.' captcha">';
         $out .= '<label class="control-label">';
+        
+        $out .= '<a href="#" onclick="document.getElementById(\'cakecaptcha\').src=\'' 
+             . $this->Html->url(array('controller' => $controller, 'action' => 'captcha')) 
+             . '?\'+Math.random(); document.getElementById(\'captcha-form\').focus();" id="change-image"> ';
+             
         $out .= $this->Html->image($this->Html->url(array('controller' => $controller, 'action' => 'captcha'), true), array('id' => 'cakecaptcha'));
 		$out .= "<br/>";
 		
-        $out .= '<a href="#" onclick="document.getElementById(\'cakecaptcha\').src=\'' 
-             . $this->Html->url(array('controller' => $controller, 'action' => 'captcha')) 
-             . '?\'+Math.random(); document.getElementById(\'captcha-form\').focus();" id="change-image"> '
-             .'Not readable?</a>';
+        $out .= 'Not readable?</a>';
 		$out .= "</label>";
 		$out .= $this->Form->input('cakecaptcha', array('id ' => 'captcha-form',
                                                         'name' => 'data['.$model.'][captcha]',
                                                         'label' => false,
                                                         'div' => false,
-                                                        'class' => 'input-xlarge'
+                                                        'class' => 'input-xlarge captcha-input'
         ));
 	   if($this->captchaerror) {
     	    $out .= "<span class='help-inline'>".$this->captchaerror."</span>";

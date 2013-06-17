@@ -58,9 +58,9 @@ class AccountsController extends AppController {
                 $user['full_name'] = $this->Auth->user('full_name');
                 $this->Auth->login($user);
                 if (! $this->Auth->user('is_blocked')) {
-                    if($this->Session->check('auth-new-accounts')){
-                        $this->redirect(array('action' => 'confirmSocialLinks'));
-                    }
+                    //if($this->Session->check('auth-new-accounts')){
+                    //    $this->redirect(array('action' => 'confirmSocialLinks'));
+                    //}
                     $this->_redirectAfterLogin();
                 }
                 $this->Session->setFlash(__d('users', 'Ваш аккаунт заблокирован'), 'alert', array(
@@ -88,7 +88,7 @@ class AccountsController extends AppController {
         if($this->Auth->user('language')){
             $this->Auth->loginRedirect['lang'] = $this->L10n->map($this->Auth->user('language'));
         }
-        return $this->redirect($this->Auth->redirectUrl());
+        return $this->redirect($this->Auth->loginRedirect);
     }
     
     private function _confirmSocialLink(){
@@ -122,7 +122,8 @@ class AccountsController extends AppController {
                 if(count($newAccounts)){
                     $this->Session->write('auth-new-accounts', $newAccounts);
                 }else{
-                    $result = array('status' => 2, 'action' => $action, 'message' => __d('accounts', 'Добавлен'));
+                    //$result = array('status' => 2, 'action' => $action, 'message' => __d('accounts', 'Добавлен'));
+                    $result['status'] = 2;
                 }
             }else{
                 $result = array('status' => 0, 'message' => __d('accounts', 'Ошибка отсутствует такой аккаунт'));
@@ -153,6 +154,7 @@ class AccountsController extends AppController {
                             )
                         );   
                     }
+                    $this->Session->delete('auth-new-accounts');
                 } elseif(isset($this->request->data['denyAll'])){
                     $this->Session->delete('auth-new-accounts');
                 }
@@ -242,7 +244,6 @@ class AccountsController extends AppController {
     }
     
     private function _linked($accData){
-        //pr($accData);die;
         $this->Session->delete('link-new-accounts');
         switch ($accData['status']) {
                 case 1 :
@@ -293,8 +294,7 @@ class AccountsController extends AppController {
             $auth = $this->data['auth'];
             
             $result = $this->AccountSocial->check($auth);
-            //pr($auth);pr($result);
-            //die;
+            
             if ($this->Auth->loggedIn() && $this->Session->check('link-new-accounts')) {
                 return $this->_linked($result);
             }
@@ -528,7 +528,7 @@ class AccountsController extends AppController {
             $expectedData = array(
                 'full_name',
                 'email',
-                'login',
+                //'login',
                 'password', 
                 'password_confirm',
                 //'agreed'
@@ -541,10 +541,9 @@ class AccountsController extends AppController {
                 $saveData = array(
                     'full_name'        => $this->request->data[$this->modelClass]['full_name'],
                     'email'             => $this->request->data[$this->modelClass]['email'],
-                    'login'          => $this->request->data[$this->modelClass]['login'],
+                    //'login'          => $this->request->data[$this->modelClass]['login'],
                     'password'          => $this->request->data[$this->modelClass]['password'], 
                     'password_confirm'  => $this->request->data[$this->modelClass]['password_confirm'],
-                    //'language'          => Configure::read('Config.language')
                 );
                 if ($this->Captcha->validateCaptcha() and $this->Account->register($saveData)) {
                     $this->Session->write('new-register-account', $this->Account->getLastInsertID());

@@ -15,14 +15,15 @@
            
     	   <?php echo $this->Form->input('email', array('label' => array('text' => __d('accounts', 'Email'), 'class' => 'control-label'), 'class' => 'input-xlarge', 'placeholder' => __d('accounts', 'Укажите адрес электронной почты'), 'type' => 'text', 'required' => true));?>
            
-           <?php echo $this->Form->input('login', array('label' => array('text' => __d('accounts', 'Логин'), 'class' => 'control-label'), 'class' => 'input-xlarge', 'placeholder' => __d('accounts', 'Введите ваше логин')));?>
+           <?php //echo $this->Form->input('login', array('label' => array('text' => __d('accounts', 'Логин'), 'class' => 'control-label'), 'class' => 'input-xlarge', 'placeholder' => __d('accounts', 'Введите ваше логин')));?>
            
     	   <?php echo $this->Form->input('password', array('label' => array('text' => __d('accounts', 'Пароль'), 'class' => 'control-label'), 'class' => 'input-xlarge', 'placeholder' => __d('accounts', '6 знаков или больше! Будьте хитрее')));?>
            
            <?php echo $this->Form->input('password_confirm',array('label' => array('text' => __d('accounts', 'Повторите пароль'), 'class' => 'control-label'), 'type' => 'password', 'class' => 'input-xlarge', 'placeholder' => __d('accounts', 'Повторите пароль')));?>
            
            <?php echo $this->Captcha->input(); ?>
-            
+           
+                      
            <div class="grp-btn-reg">
                
                <div class="box-loginza-registr pull-right">

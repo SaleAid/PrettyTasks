@@ -53,7 +53,7 @@ class Account extends AppModel {
                 'message' => 'Wrong ID',
             )
         ),
-        'login' => array(
+        /*'login' => array(
             'notEmpty' => array(
                 'rule' => array(
                     'notEmpty'
@@ -74,7 +74,7 @@ class Account extends AppModel {
                 'rule' => 'isUnique', 
                 'message' => 'Пользователь с таким логином уже существует'
             )
-        ), 
+        ), */
         'password' => array(
             'notEmpty' => array(
                 'rule' => array(
@@ -239,7 +239,7 @@ class Account extends AppModel {
                         array(
                             'password_token' => $this->data[$this->alias]['password_token'], 
                             'fullname' => $this->data[$this->alias]['full_name'], 
-                            'login' => $this->data[$this->alias]['login']
+                            //'login' => $this->data[$this->alias]['login']
                         ));
         return $email->send();
     }

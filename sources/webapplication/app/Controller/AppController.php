@@ -144,6 +144,13 @@ class AppController extends Controller {
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
         
+        if( $this->Auth->loggedIn() && 
+            $this->Session->check('auth-new-accounts') && 
+            !($this->request->params['controller'] == 'accounts' && $this->request->params['action'] == 'confirmSocialLinks'))
+        {
+            $this->redirect(array('controller' => 'accounts', 'action' => 'confirmSocialLinks'));
+        }
+        
     }
 
     public function _setLanguage() {

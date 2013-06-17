@@ -1,3 +1,15 @@
+@media (max-width: 800px) { 
+    .container, #wrapper, .navbar-fixed-bottom .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container, .span12 {
+    width: 520px;
+    }
+    #wrapper-all {
+	margin: 0 auto;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+   min-width: 520px;
+ }
+}
 body {
     background-color: #f5f5f5;
   }
@@ -90,3 +102,6 @@ body {
     vertical-align: middle;
     font-size: 14px;
 }
+.captcha-input{
+    margin-top: 20px;
+}    
