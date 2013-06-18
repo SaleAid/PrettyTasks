@@ -55,10 +55,11 @@
                         <input type="checkbox" id="eContinued"/>
                         <?php echo __d('tasks', 'Длительная');?>
                     </label>
-                    <label class="checkbox pull-right repeated-task">
+                    <!--<label class="checkbox pull-right repeated-task">
                         <input type="checkbox" id="eRepeat" value="option1"/>
-                        <?php echo __d('tasks', 'Повторить');?>...
+                        <?php //echo __d('tasks', 'Повторить');?>...
                     </label>
+                    -->
                 </div>
                 <div class="form-inline">
 	                <label class="checkbox">

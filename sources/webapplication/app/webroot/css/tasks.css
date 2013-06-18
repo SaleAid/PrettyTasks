@@ -286,8 +286,8 @@ div.well{
 }
 .inline-confirmation-block{
     margin-left: 5px;
-    vertical-align: top !important;
 }
+
 /*modal window*/
 #editTask{
     width: 600px;

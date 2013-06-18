@@ -22,12 +22,17 @@ class TasksController extends AppController {
     public $helpers = array('Task');
     
     public $components = array(
-        'RequestHandler'
+        'RequestHandler',
+        //'Security' => array(
+//            'csrfUseOnce' => false
+//        )
     );
+    
     
     public $layout = 'tasks';
     
     public function repeated(){
+        return;
         $result = $this->_prepareResponse();
         $expectedData = array(
             'id', 

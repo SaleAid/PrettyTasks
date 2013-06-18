@@ -35,7 +35,7 @@
                         )); 
                     ?>
                     <?php if($day['Day']['rating']): ?>&nbsp;&nbsp;
-                        <?php echo $this->Html->image("gday.". Configure::read('App.version') .".png", array('class' => 'g-day', 'width' => 16, 'height' => 16)); ?>
+                        <?php echo $this->Html->image("gday.". Configure::read('App.version') .".png", array('title' => __d('users', 'Good day'), 'class' => 'g-day', 'width' => 20, 'height' => 20)); ?>
                     <?php endif; ?>
                 </span>
                 <p><?php echo h($day['Day']['comment']); ?></p>

@@ -143,10 +143,12 @@ class UsersController extends AppController {
          $this->User->contain();
          $user = $this->User->read(false, $this->Auth->user('id'));
          $user = $user[$this->modelClass];
+         //pr($this->Auth->user());die;
          $user['account_id'] = $this->Auth->user('id');
          $user['provider'] = $this->Auth->user('provider');
          $user['full_name'] = $this->Auth->user('full_name');
-         $this->Auth->login($user);
+         $this->Session->write('Auth.User', $user);
+         //$this->Auth->login($user);
     }
 }
 
