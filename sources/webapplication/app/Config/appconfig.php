@@ -1,4 +1,10 @@
 <?php 
+   //AutoLogin key
+   
+   Configure::write('AutoLogin.hash.key', 'DYhG91a3b0qyJf6Isxfs2guVoUubWw2vniR2G0FgaC9mi');
+   Configure::write('AutoLogin.cookie.key', '762s852342393096574123125535496749683645');
+   Configure::write('AutoLogin.rmb.key', '176859309634235745535424967496845121');
+   
    Configure::write('GoogleAnalytics.ID', 'UA-29304740-1');
    
    // default timezone

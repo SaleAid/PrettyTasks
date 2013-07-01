@@ -2,7 +2,7 @@
 
 App::uses('Controller', 'Controller');
 App::uses('Sanitize', 'Utility');
-//App::uses('L10n', 'I18n');
+
 class AppController extends Controller {
     public $helpers = array(
         'Text', 
@@ -13,12 +13,8 @@ class AppController extends Controller {
         'Session', 
     );
     public $components = array(
-        'AutoLogin' => array('cookieName' => 'RM',
-                             'expires' => '+1 month',
-                             'username' => 'email'
-                            ), 
+        'AutoLogin', 
         'Session',
-        'Cookie', 
         'Auth' => array(
             'loginAction' => array(
                 'controller' => 'accounts', 

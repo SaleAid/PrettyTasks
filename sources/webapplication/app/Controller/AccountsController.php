@@ -10,7 +10,6 @@ class AccountsController extends AppController {
     public $components = array(
         'RequestHandler', 
         'Captcha',
-        'Cookie'
     );
     
      public $helpers = array(
@@ -85,6 +84,16 @@ class AccountsController extends AppController {
     }
     
     private function _redirectAfterLogin(){
+        //$cookie = $this->AutoLogin1->read();
+        $user = $this->Auth->user();
+        $autoLogin = true;
+        
+        if (!empty($user) && $autoLogin) {
+			$this->AutoLogin->write($user, $this->request->header('User-Agent'));
+        } else if (!$autoLogin) {
+			$this->AutoLogin->delete();
+		}
+        
         if($this->Auth->user('language')){
             $this->Auth->loginRedirect['lang'] = $this->L10n->map($this->Auth->user('language'));
         }
@@ -228,6 +237,7 @@ class AccountsController extends AppController {
     }
     
     public function logout() {
+        $this->AutoLogin->delete();
         $this->redirect($this->Auth->logout());
     }
     

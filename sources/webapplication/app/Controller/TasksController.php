@@ -23,9 +23,6 @@ class TasksController extends AppController {
     
     public $components = array(
         'RequestHandler',
-        //'Security' => array(
-//            'csrfUseOnce' => false
-//        )
     );
     
     
