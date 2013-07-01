@@ -1,3 +1,7 @@
+!empty
+
+
+
 .gitignore
 .buildpath
 .project
@@ -8,3 +12,5 @@
 sources/webapplication/app/Config/database.php
 sources/webapplication/app/Config/core.php
 sources/webapplication/app/webroot/.htaccess
+sources/webapplication/app/tmp/*
+sources/webapplication/app/webroot/tmp/*
