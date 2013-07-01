@@ -3,18 +3,9 @@
  * AutoLoginComponent
  *
  * A CakePHP Component that will automatically login the Auth session for a duration if the user requested to (saves data to cookies).
- *
- * @version		3.5.1
- * @author		Miles Johnson - http://milesj.me
- * @copyright	Copyright 2006-2011, Miles Johnson, Inc.
- * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		http://milesj.me/code/cakephp/auto-login
- * 
- * @modified 	Mark Scherer - 2012-01-08 ms
  */
-
+App::uses('Security', 'Utility');
 App::uses('Component', 'Controller');
-App::uses('Validation', 'Utility');
 
 class AutoLoginComponent extends Component {
 
@@ -24,10 +15,12 @@ class AutoLoginComponent extends Component {
 	 * @access public
 	 * @var array
 	 */
-	public $components = array('Auth', 
-                               'Cookie' => array('httpOnly' => true,
-                                                 'name' => 'PT'
-                                                )
+	public $components = array(
+                'Auth', 
+                'Cookie' => array(
+                        'httpOnly' => true,
+                        'name' => 'PT',
+                )
         );
 
 	/**
@@ -39,52 +32,12 @@ class AutoLoginComponent extends Component {
 	public $model = 'User';
 
 	/**
-	 * Field name for login username.
-	 *
-	 * @access public
-	 * @var string
-	 */
-	public $username = 'username';
-
-	/**
-	 * Field name for login password.
-	 *
-	 * @access public
-	 * @var string
-	 */
-	public $password = 'password';
-
-	/**
-	 * Plugin name if component is placed within a plugin.
-	 *
-	 * @access public
-	 * @var string
-	 */
-	public $plugin = '';
-
-	/**
 	 * Users login/logout controller.
 	 *
 	 * @access public
 	 * @var string
 	 */
-	public $controller = 'users';
-
-	/**
-	 * Users login action.
-	 *
-	 * @access public
-	 * @var string
-	 */
-	public $loginAction = 'login';
-
-	/**
-	 * Users logout controller.
-	 *
-	 * @access public
-	 * @var string
-	 */
-	public $logoutAction = 'logout';
+	public $controller = 'Accounts';
 
 	/**
 	 * Name of the auto login cookie.
@@ -92,7 +45,7 @@ class AutoLoginComponent extends Component {
 	 * @access public
 	 * @var string
 	 */
-	public $cookieName = 'autoLogin';
+	public $cookieName = 'aLpT';
 
 	/**
 	 * Duration in cookie length, using strtotime() format.
@@ -101,6 +54,14 @@ class AutoLoginComponent extends Component {
 	 * @var string
 	 */
 	public $expires = '+2 weeks';
+
+	/**
+	 * Domain used on a local environment (localhost).
+	 *
+	 * @access public
+	 * @var boolean
+	 */
+	public $cookieLocalDomain = false;
 
 	/**
 	 * Force a redirect after successful auto login.
@@ -125,7 +86,7 @@ class AutoLoginComponent extends Component {
 	 * @var boolean
 	 */
 	public $active = true;
-	
+
 	/**
 	 * Should we debug?
 	 *
@@ -135,65 +96,17 @@ class AutoLoginComponent extends Component {
 	protected $_debug = false;
 
 	/**
-	 * Determines whether to trigger startup() logic.
-	 *
-	 * @access protected
-	 * @var boolean
-	 */
-	protected $_isValidRequest = false;
-
-	/**
 	 * Initialize settings and debug.
 	 *
 	 * @access public
-	 * @param ComponentCollection $collection
-	 * @param array $settings
-	 */
-	public function __construct(ComponentCollection $collection, $settings = array()) {
-		$autoLogin = (array) Configure::read('AutoLogin');
-        // Is debug enabled
-		$this->_debug = (!empty($autoLogin['email']) && !empty($autoLogin['ips']) && in_array(env('REMOTE_ADDR'), (array) $autoLogin['ips']));
-
-		parent::__construct($collection, array_merge((array) $settings, $autoLogin));
-	}
-
-	/**
-	 * Detect cookie and hash and test for successful login persistence.
-	 *
-	 * @access public
 	 * @param Controller $controller
-	 * @return void
 	 */
 	public function initialize(Controller $controller) {
-		$cookie = $this->read();
-		$user = $this->Auth->user();
-        
-        if (!$this->active || !empty($user) || !$controller->request->is('get')) {
-			return;
+		
+        $autoLogin = (array) Configure::read('AutoLogin');
 
-		} else if (!$cookie) {
-			$this->debug('cookieFail', $this->Cookie, $user);
-			$this->delete();
-			return;
-
-		} else if (empty($cookie['hash']) || $cookie['hash'] != $this->Auth->password($cookie['username'] . $cookie['time'])) {
-			$this->debug('hashFail', $this->Cookie, $user);
-			$this->delete();
-			return;
-		}
-        
-        //
-		 if( isset($cookie['username']) && !Validation::email($cookie['username']) ){
-            $this->Auth->authenticate['Form'] = array('fields' => array('username' => 'username'));
-            $this->username = 'username';
-        }
-        // Set the data to identify with
-        
-        $controller->request->data[$this->model][$this->username] = $cookie['username'];
-		$controller->request->data[$this->model][$this->password] = $cookie['password'];
-        
-		// Request is valid, stop startup()
-		$this->_isValidRequest = true;
+		// Is debug enabled?
+		$this->_debug = (!empty($autoLogin['ips']) && in_array(env('REMOTE_ADDR'), (array) $autoLogin['ips']));
 	}
 
 	/**
@@ -204,123 +117,94 @@ class AutoLoginComponent extends Component {
 	 * @return void
 	 */
 	public function startup(Controller $controller) {
-		if (!$this->_isValidRequest) {
-			return;
-		}
-
-		// Backwards support
+	   
+		$this->Cookie->type('rijndael');
+        $this->Cookie->key = Configure::read('AutoLogin.cookie.key');
+        
+        // Backwards support
 		if (isset($this->settings)) {
 			$this->_set($this->settings);
 		}
-        //debug($this);
-        if ($this->Auth->login()) {
+
+		// Detect cookie or login
+		$cookie = $this->read();
+        $user = $this->Auth->user();
+        //pr($cookie);
+        
+        
+		if (!$this->active || !empty($user) || !$controller->request->is('get')) {
+			return;
+
+		} else if ($cookie === null) {
+			$this->debug('cookieFail', $this->Cookie, $user);
+			$this->delete();
+			return;
+
+		} else if (empty($cookie['hash']) || $cookie['hash'] !== $this->Auth->password(Configure::read('AutoLogin.hash.key') . $cookie['account'] . $cookie['time'])
+                    || empty($cookie['user_agent']) || $cookie['user_agent'] !== $controller->request->header('User-Agent')
+            ) {
+			$this->debug('hashFail', $this->Cookie, $user);
+			$this->delete();
+			return;
+		}
+
+		// Set the data to identify with
+		$result = $this->_getUserByememberKey($cookie['rmb_key'], $cookie['account']);
+        if(!$result){
+            $this->delete();
+			return;
+        }
+        
+        $user = $result['User'];
+        $user['account_id'] = $result['Account'][0]['id'];
+        $user['provider'] = $result['Account'][0]['provider'];
+        $user['full_name'] = $result['Account'][0]['full_name'];
+        
+        if ($this->Auth->login($user)) {
 			$this->debug('login', $this->Cookie, $this->Auth->user());
 
 			if (in_array('_autoLogin', get_class_methods($controller))) {
-				call_user_func_array(array($controller, '_autoLogin'), array(
-					$this->Auth->user()
-				));
+				call_user_func(array($controller, '_autoLogin'), $this->Auth->user());
 			}
 
 			if ($this->redirect) {
 				$controller->redirect(array(), 301);
 			}
-			
 		} else {
 			$this->debug('loginFail', $this->Cookie, $this->Auth->user());
 
 			if (in_array('_autoLoginError', get_class_methods($controller))) {
-				call_user_func_array(array($controller, '_autoLoginError'), array(
-					$this->read()
-				));
+				call_user_func(array($controller, '_autoLoginError'), $this->read());
 			}
 		}
 	}
 
-	/**
-	 * Automatically process logic when hitting login/logout actions.
-	 *
-	 * @access public
-	 * @param Controller $controller
-	 * @param string $url
-	 * @param int $status
-	 * @param boolean $exit
-	 * @return void
-	 */
-	public function beforeRedirect(Controller $controller, $url, $status = null, $exit = true) {
-		if (!$this->active) {
-			return;
-		}
-
-		$model = $this->model;
-
-		if (is_array($this->Auth->loginAction)) {
-			if (!empty($this->Auth->loginAction['controller'])) {
-				$this->controller = $this->Auth->loginAction['controller'];
-			}
-
-			if (!empty($this->Auth->loginAction['action'])) {
-				$this->loginAction = $this->Auth->loginAction['action'];
-			}
-
-			if (!empty($this->Auth->loginAction['plugin'])) {
-				$this->plugin = $this->Auth->loginAction['plugin'];
-			}
-		}
-
-		if (empty($this->controller)) {
-			$this->controller = Inflector::pluralize($model);
-		}
-
-		// Is called after user login/logout validates, but before auth redirects
-		if ($controller->plugin == Inflector::camelize($this->plugin) && $controller->name == Inflector::camelize($this->controller)) {
-			$data = $controller->request->data;
-			$action = isset($controller->request->params['action']) ? $controller->request->params['action'] : 'login';
-   			switch ($action) {
-				case $this->loginAction:
-					if (isset($data[$model])) {
-						$username = $data[$model][$this->username];
-						$password = $data[$model][$this->password];
-						$autoLogin = isset($data[$model]['auto_login']) ? $data[$model]['auto_login'] : !$this->requirePrompt;
-
-						if (!empty($username) && !empty($password) && $autoLogin) {
-							$this->save($username, $password);
-
-						} else if (!$autoLogin) {
-							$this->delete();
-						}
-					}
-				break;
-
-				case $this->logoutAction:
-					$this->debug('logout', $this->Cookie, $this->Auth->user());
-					$this->delete();
-				break;
-			}
-		}
-	}
-
+	
 	/**
 	 * Read the AutoLogin cookie and base64_decode().
 	 *
 	 * @access public
-	 * @return array|boolean
+	 * @return array|null
 	 */
 	public function read() {
 		$cookie = $this->Cookie->read($this->cookieName);
-
-		if (empty($cookie) || !is_array($cookie)) {
-			return false;
+        if (empty($cookie) || !is_array($cookie)) {
+			return null;
+		}
+        
+		if (isset($cookie['account'])) {
+			$cookie['account'] = base64_decode($cookie['account']);
 		}
 
-		if (isset($cookie['username'])) {
-			$cookie['username'] = base64_decode($cookie['username']);
+		if (isset($cookie['rmb_key'])) {
+		    //$cookie['rmb_key'] = Security::cipher($user['rmb_key'], Configure::read('AutoLogin.rmb.key'));
+			//$cookie['rmb_key'] = Security::rijndael($cookie['rmb_key'], Configure::read('AutoLogin.rmb.key'), 'decrypt');
+            $cookie['rmb_key'] = base64_decode($cookie['rmb_key']);
 		}
-
-		if (isset($cookie['password'])) {
-			$cookie['password'] = base64_decode($cookie['password']);
+        
+        if (isset($cookie['user_agent'])) {
+			$cookie['user_agent'] = base64_decode($cookie['user_agent']);
 		}
-
 		return $cookie;
 	}
 
@@ -332,22 +216,60 @@ class AutoLoginComponent extends Component {
 	 * @param string $password
 	 * @return void
 	 */
-	public function save($username, $password) {
+	public function write($user, $userAgent) {
 		$time = time();
 
-		$cookie = array();
-		$cookie['username'] = base64_encode($username);
-		$cookie['password'] = base64_encode($password);
-		$cookie['hash'] = $this->Auth->password($username . $time);
+        if(empty($user['rmb_key'])){
+           $user['rmb_key'] = $this->_getRememberKey();
+        }
+        
+        $cookie = array();
+		$cookie['account'] = base64_encode($user['account_id']);
+        //$cookie['rmb_key'] = Security::cipher($user['rmb_key'], Configure::read('AutoLogin.rmb.key'));
+		//$cookie['rmb_key'] = Security::rijndael($user['rmb_key'], Configure::read('AutoLogin.rmb.key'), 'encrypt');
+        $cookie['rmb_key'] = base64_encode($user['rmb_key']);
+        $cookie['user_agent'] = base64_encode($userAgent);
+		$cookie['hash'] = $this->Auth->password(Configure::read('AutoLogin.hash.key') . $user['account_id'] . $time);
 		$cookie['time'] = $time;
-
-		if (env('REMOTE_ADDR') == '127.0.0.1' || env('HTTP_HOST') == 'localhost') {
-			$this->Cookie->domain = false;
+        if (env('REMOTE_ADDR') === '127.0.0.1' || env('HTTP_HOST') === 'localhost') {
+			$this->Cookie->domain = $this->cookieLocalDomain;
 		}
-
-		$this->Cookie->write($this->cookieName, $cookie, true, $this->expires);
+        $this->Cookie->write($this->cookieName, $cookie, true, $this->expires);
 		$this->debug('cookieSet', $cookie, $this->Auth->user());
-	}
+    }
+    
+    private function _getRememberKey(){
+        $userModel = ClassRegistry::init('User');
+        $user = $userModel->find('first', array(
+            'conditions' => array(
+                'User.id' => $this->Auth->user('id')
+            ),
+            'fields' => array('rmb_key', 'id'),
+            'contain' => array()
+        ));
+        
+        if(empty($user['User']['rmb_key'])){
+            $user['User']['rmb_key'] = Security::generateAuthKey();
+            $user = $userModel->save($user, true, array('rmb_key'));
+        }
+        return isset($user['User']['rmb_key']) ? $user['User']['rmb_key'] : false;
+    }
+    
+    private function _getUserByememberKey($key, $accountId){
+        $userModel = ClassRegistry::init('User');
+        return $userModel->find('first', array(
+            'conditions' => array(
+                'User.rmb_key' => $key
+            ),
+            'contain' => array('Account' => array(
+                                    'conditions' => array(
+                                    'Account.id' => $accountId
+                                )
+                            )
+            )
+        ));
+        
+    }
 
 	/**
 	 * Delete the cookie.
@@ -385,12 +307,12 @@ class AutoLoginComponent extends Component {
 			$debug = (array) Configure::read('AutoLogin');
 			$content = "";
 
-			if (!empty($cookie) || !empty($user)) {
-				if (!empty($cookie)) {
+			if ($cookie || $user) {
+				if ($cookie) {
 					$content .= "Cookie information: \n\n" . print_r($cookie, true) . "\n\n\n";
 				}
 
-				if (!empty($user)) {
+				if ($user) {
 					$content .= "User information: \n\n" . print_r($user, true);
 				}
 			} else {
