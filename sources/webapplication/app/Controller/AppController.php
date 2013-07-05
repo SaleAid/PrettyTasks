@@ -50,8 +50,9 @@ class AppController extends Controller {
     /**
      *
      *
+     *
      * Cake autorization function
-     * 
+     *
      * @param unknown_type $user            
      */
     public function isAuthorized($user) {
@@ -61,8 +62,9 @@ class AppController extends Controller {
     /**
      *
      *
+     *
      * Checking user have pro account
-     * 
+     *
      * @access public
      * @return boolean
      */
@@ -73,8 +75,9 @@ class AppController extends Controller {
     /**
      *
      *
+     *
      * Checking user have access to beta functions
-     * 
+     *
      * @access public
      * @return boolean
      */
@@ -84,12 +87,11 @@ class AppController extends Controller {
 
     /**
      * Checks any conditions about version of site.
-     * 
+     *
      * @return boolean
      */
     public function isMobileVersion() {
-        return (isset($this->request->params['device']) and ($this->request->params['device'] == 'm'));
-        // ||$this->RequestHandler->isMobile ()
+        return (isset($this->request->params['device']) and ($this->request->params['device'] == 'm')) || $this->RequestHandler->isMobile();
         // TODO add smarty auto detection
         // $this->layout = 'default';
     }
