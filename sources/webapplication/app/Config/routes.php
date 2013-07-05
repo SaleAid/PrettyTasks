@@ -28,17 +28,20 @@
 
 App::uses('LangRoute', 'Routing/Route');
 
-Router::resourceMap(array(
-    array('action' => 'index', 'method' => 'GET', 'id' => false),
-    array('action' => 'view', 'method' => 'GET', 'id' => true),
-    array('action' => 'add', 'method' => 'POST', 'id' => false),
-    array('action' => 'edit', 'method' => 'PUT', 'id' => true),
-    array('action' => 'delete', 'method' => 'DELETE', 'id' => true),
-    array('action' => 'update', 'method' => 'POST', 'id' => true)
-));
-Router::mapResources('notes');
-Router::parseExtensions('xml', 'json', 'xhtml', 'html');
+//Router::resourceMap(array(
+//    array('action' => 'index', 'method' => 'GET', 'id' => false),
+//    array('action' => 'view', 'method' => 'GET', 'id' => true),
+//    array('action' => 'add', 'method' => 'POST', 'id' => false),
+//    array('action' => 'edit', 'method' => 'PUT', 'id' => true),
+//    array('action' => 'delete', 'method' => 'DELETE', 'id' => true),
+//    array('action' => 'update', 'method' => 'POST', 'id' => true)
+//));
+//Router::mapResources('notes');
+
 Router::defaultRouteClass('LangRoute');
+Router::parseExtensions('xml', 'json', 'xhtml', 'html');
+
+
 
 //задачи
 //Router::connect('/'. rawurlencode('задачи') .'', array('controller' => 'tasks', 'action' => 'index', 'lang' => 'ru'));
@@ -49,6 +52,7 @@ Router::connect('/:lang', array('controller' => 'pages', 'action' => 'index'), a
 Router::connect('/:lang/pages', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/pages/index', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/pages/*', array('controller' => 'pages', 'action' => 'view'), array('lang' => '[a-z]{2}'));
+
 
 Router::connect('/:lang/:device', array(
 	'controller' => 'tasks', 'action' => 'index'
@@ -71,6 +75,21 @@ Router::connect('/:lang/:device/:controller/:action', array(), array(
     'lang' => '[a-z]{2}'
 ));
 
+//login && singup
+Router::connect('/:lang/login', array('controller' => 'accounts', 'action' => 'login'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/login/selectmode', array('controller' => 'accounts', 'action' => 'selectMode'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/accounts/confirm-social-links', array('controller' => 'accounts', 'action' => 'confirmSocialLinks'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/accounts/register/success', array('controller' => 'accounts', 'action' => 'register_success'), array('lang' => '[a-z]{2}'));
+/**
+ * Opauth callback
+ */
+	Router::connect(
+		'/opauth-complete/*', 
+		array('controller' => 'accounts', 'action' => 'opauth_complete')
+  );
+
+CakePlugin::routes();
+
 Router::connect('/:lang/:controller', array('action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/:controller/:action', array(), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/:controller/:action/*', array(), array('lang' => '[a-z]{2}'));
@@ -82,7 +101,7 @@ Router::connect('/:lang/:controller/:action/*', array(), array('lang' => '[a-z]{
  * Load all plugin routes.  See the CakePlugin documentation on 
  * how to customize the loading of plugin routes.
  */
-CakePlugin::routes();
+
 
 /**
  * Load the CakePHP default routes. Remove this if you do not want to use

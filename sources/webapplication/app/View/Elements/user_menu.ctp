@@ -6,7 +6,7 @@
             <?php echo $this->Html->link(__d('users', 'Управление профилем'). $this->Html->tag('i', '', array('class' => 'icon-chevron-right pull-right')), array('controller' => 'users', 'action' => 'profile'), array('escape' => false)); ?>
       </li>
       <li class="<? if($this->params['action'] == "password_change") echo 'active'; ?>">
-            <?php echo $this->Html->link(__d('users', 'Изменить пароль'). $this->Html->tag('i', '', array('class' => 'icon-chevron-right pull-right')), array('controller' => 'users', 'action' => 'password_change'), array('escape' => false)); ?>
+            <?php echo $this->Html->link(__d('users', 'Изменить пароль'). $this->Html->tag('i', '', array('class' => 'icon-chevron-right pull-right')), array('controller' => 'accounts', 'action' => 'password_change'), array('escape' => false)); ?>
       </li>
       <li class="<? if($this->params['action'] == "accounts") echo 'active'; ?>">
             <?php echo $this->Html->link(__d('users', 'Связанные аккаунты'). $this->Html->tag('i', '', array('class' => 'icon-chevron-right pull-right')), array('controller' => 'users', 'action' => 'accounts'), array('escape' => false)); ?>

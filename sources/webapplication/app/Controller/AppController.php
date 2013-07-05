@@ -1,7 +1,8 @@
 <?php
+
 App::uses('Controller', 'Controller');
 App::uses('Sanitize', 'Utility');
-//App::uses('L10n', 'I18n');
+
 class AppController extends Controller {
     public $helpers = array(
         'Text', 
@@ -10,18 +11,13 @@ class AppController extends Controller {
         'Js', 
         'Time', 
         'Session', 
-        'Loginza', //TODO Maybe move to needed controllers only?
-        //'Captcha'
     );
     public $components = array(
-        'AutoLogin' => array('cookieName' => 'RM',
-                             'expires' => '+1 month',
-                             'username' => 'email'
-                            ), 
-        'Session', 
+        'AutoLogin', 
+        'Session',
         'Auth' => array(
             'loginAction' => array(
-                'controller' => 'users', 
+                'controller' => 'accounts', 
                 'action' => 'login'
             ), 
             'loginRedirect' => array(
@@ -29,7 +25,7 @@ class AppController extends Controller {
                 'action' => 'index'
             ), 
             'logoutRedirect' => array(
-                'controller' => 'users', 
+                'controller' => 'accounts', 
                 'action' => 'login'
             ), 
             'authError' => ' ', 
@@ -38,7 +34,7 @@ class AppController extends Controller {
             ), 
             'authenticate' => array(
                 'Form' => array(
-                    'userModel' => 'User', 
+                    'userModel' => 'Account', 
                     'fields' => array(
                         'username' => 'email'
                     )
@@ -101,34 +97,62 @@ class AppController extends Controller {
     }
 
     private function __setTimeZone() {
-        $timezone = $this->Auth->user('timezone');
-        if ($timezone) {
-            date_default_timezone_set($timezone);
-        }
+        date_default_timezone_set(Configure::read('Config.timezone'));
     }
-
-    public function beforeFilter() {
-        //$this->Auth->allow('captcha');
+    
+    private function __userTimeZone(){
+        $timezone = $this->Auth->user('timezone');
         
+        if (!$timezone) {
+            $timezone_offset = $this->Auth->user('timezone_offset');
+            return  timezone_name_from_abbr("", $timezone_offset, 0);    
+        }
+        return $timezone;
+    }
+    
+    private function __userTimeZoneOffset(){
+        $timezone = $this->Auth->user('timezone');
+        //$timezone_offset = $this->Auth->user('timezone_offset');
+        if (!$timezone) {
+            return ;    
+        }
+        $dateTimeZoneServer = new DateTimeZone(Configure::read('Config.timezone'));
+        $dateTimeZoneUser = new DateTimeZone($timezone);
+        $dateTimeServer = new DateTime("now", $dateTimeZoneServer);
+        $dateTimeUser = new DateTime("now", $dateTimeZoneUser);
+        $timeOffset = $dateTimeZoneUser->getOffset($dateTimeServer);
+        return $timeOffset;
+    }
+    
+    public function beforeFilter() {
         $this->_setLanguage();
         $this->__setTimeZone();
         $this->_checkMobile();
+        
         $this->Seo->title = Configure::read('Site.title');
         $this->Seo->description = Configure::read('Site.description');
         $this->Seo->keywords = Configure::read('Site.keywords');
         
         $this->set('isAuth', $this->Auth->loggedIn()); 
         $this->set('currentUser', $this->Auth->user());
-        $this->set('provider', $this->Auth->user('provider'));
+        $this->set('timezoneOffset', $this->__userTimeZoneOffset());
+        $this->set('timezone', $this->__userTimeZone());
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
+        
+        if( $this->Auth->loggedIn() && 
+            $this->Session->check('auth-new-accounts') && 
+            !($this->request->params['controller'] == 'accounts' && $this->request->params['action'] == 'confirmSocialLinks'))
+        {
+            $this->redirect(array('controller' => 'accounts', 'action' => 'confirmSocialLinks'));
+        }
         
     }
 
     public function _setLanguage() {
         $this->L10n = new L10n();
         $params = $this->request->params;
-        //pr($params);die;
+        //pr($this->request);die;
         if (isset($params['lang'])) {
             $lang = $this->_hasLangList($params['lang']);
             if($lang){
@@ -144,7 +168,7 @@ class AppController extends Controller {
                 $params['lang'] = $this->L10n->map($lang);
             }
         } else {
-            if ( $params['action'] == 'loginzalogin' or $this->request->is('ajax')) {
+            if ( $params['action'] == 'loginzalogin' or $this->request->is('ajax') or $params['action'] == 'opauth_complete') {
                return;  
             }
             if($lang = $this->_userLang()){
@@ -157,8 +181,12 @@ class AppController extends Controller {
             }
             $params['lang'] = $this->L10n->map($language);
         }
-        unset($params['named']);
-        unset($params['pass']);
+        if(empty($params['named']))
+            unset($params['named']);
+        if(empty($params['pass']))
+            unset($params['pass']);
+        if( !empty($this->request->query))   
+            $params['?'] = $this->request->query;
         //pr($params);die;        
         $this->redirect($params);
     }
@@ -185,16 +213,11 @@ class AppController extends Controller {
         if(empty($lang)){
            return false; 
         }
-        //$langL10n = $this->L10n->catalog($lang);
         if(array_key_exists($lang, Configure::read('Config.lang.available'))){
             $langL10n = $this->L10n->catalog($lang);
             return $langL10n['locale'];
         }
         return false;
-    }
-
-    public function beforeRender() {
-    
     }
 
     protected function _prepareResponse() {

@@ -11,8 +11,8 @@ class NotesController extends ApiV1AppController {
 
     public function lists(){
         if ( !$this->request->is('get') ) {
-            $result['error'] = array(
-                'message' => __d('tasks', 'Ошибка при передаче данных')
+            $result['errors'][] = array(
+                'message' => __d('notes', 'Ошибка при передаче данных')
             );
         }else {
             $result = $notes = array();
@@ -31,16 +31,16 @@ class NotesController extends ApiV1AppController {
     
     public function read(){
 	if ( !$this->request->isGet() or !isset($this->request->query['id']) ) {
-            $result['error'] = array(
-                'message' => __d('tasks', 'Ошибка при передаче данных')
+            $result['errors'][] = array(
+                'message' => __d('notes', 'Ошибка при передаче данных')
             );
         } else {
             $note = $this->Note->isOwner($this->request->query['id'], $this->OAuth->user('id'));
             if ($note) {
 		$result =  new NoteObj($note);                   
             } else {
-                $result['error'] = array(
-                    'message' => __d('tasks', 'Ошибка, Вы не можете читать эту заметку')
+                $result['errors'][] = array(
+                    'message' => __d('notes', 'Ошибка, Вы не можете читать эту заметку')
                 );
             }
         }
@@ -51,8 +51,8 @@ class NotesController extends ApiV1AppController {
     
     public function update(){
         if ( !$this->request->isPost() or !isset($this->request->data['id']) or !isset($this->request->data['title']) ) {
-            $result['error'] = array(
-                'message' => __d('tasks', 'Ошибка при передаче данных')
+            $result['errors'][] = array(
+                'message' => __d('notes', 'Ошибка при передаче данных')
             );
         } else {
             $originNote = $this->Note->isOwner($this->request->data['id'], $this->OAuth->user('id'));
@@ -62,11 +62,11 @@ class NotesController extends ApiV1AppController {
 	          if ( $note ) {
 	              $result = new NoteObj($note);
 	          } else {
-		         $result['error'] = $this->Note->validationErrors;
+		         $result['errors'] = $this->Note->validationerrorss;
 	          }
             } else {
-                $result['error'] = array(
-                    'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой заметки')
+                $result['errors'][] = array(
+                    'message' => __d('notes', 'Ошибка, Вы не можете делать изменения в этой заметки')
                 );
             }
         }
@@ -76,8 +76,8 @@ class NotesController extends ApiV1AppController {
     
      public function delete() {
         if ( !$this->request->isPost() or !isset($this->request->data['id']) ) {
-            $result['error'] = array(
-                'message' => __d('tasks', 'Ошибка при передаче данных')
+            $result['errors'][] = array(
+                'message' => __d('notes', 'Ошибка при передаче данных')
             );
         } else {
             $note = $this->Note->isOwner($this->request->data['id'], $this->OAuth->user('id'));
@@ -85,13 +85,13 @@ class NotesController extends ApiV1AppController {
                     if ($this->Note->delete()) {
                         $result = true;
                     } else {
-                        $result['error'] = array(
-                            'message' => __d('tasks', 'Ошибка, note  не изменена')
+                        $result['errors'][] = array(
+                            'message' => __d('notes', 'Ошибка, note  не изменена')
                         );
                     }             
             } else {
-                $result['error'] = array(
-                    'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой note`s')
+                $result['errors'][] = array(
+                    'message' => __d('notes', 'Ошибка, Вы не можете делать изменения в этой note`s')
                 );
             }
         }
@@ -101,8 +101,8 @@ class NotesController extends ApiV1AppController {
     
     public function search(){
         if ( !$this->request->is('get') or !isset($this->request->query['query']) ) {
-            $result['error'] = array(
-                'message' => __d('tasks', 'Ошибка при передаче данных')
+            $result['errors'][] = array(
+                'message' => __d('notes', 'Ошибка при передаче данных')
             );
         }else {
             $result = $notes = array();
@@ -122,23 +122,25 @@ class NotesController extends ApiV1AppController {
     
   public function create(){
         if ( !$this->request->isPost() or !isset($this->request->data['title']) ) {
-            $result['error'] = array(
-                'message' => __d('tasks', 'Ошибка при передаче данных')
+            $result['errors'][] = array(
+                'message' => __d('notes', 'Ошибка при передаче данных')
             );
         } else {
             $title = $this->request->data['title'];
-            $id = isset($this->request->data['id']) ? $this->request->data['id'] : null;
-            if( !empty($id) and !Validation::uuid($id) ) {
-                $result['error'] = array(
-	                'message' => __d('tasks', 'Error, the wrong ID')
+            $tag = isset($this->request->data['tag']) ? $this->request->data['tag'] : null;
+            if( empty($tag) ) {
+                $result['errors'][] = array(
+	                'message' => __d('notes', 'errors, the wrong tag')
 	            );
             }
             if ( !isset($result) ) {
-                $note = $this->Note->create($this->OAuth->user('id'), $title, $id)->save();
+                $note = $this->Note->create($this->OAuth->user('id'), $title)->save();
                 if ( $note ) {
                 	$result = new NoteObj($note);
-            	} else {
-            		$result['error'] = $this->Note->validationErrors;
+                    $result->tag = $tag;
+                } else {
+                    $result['tag'] = $tag;
+            		$result['errors'] = $this->Note->validationerrorss;
             	}
             }
         }

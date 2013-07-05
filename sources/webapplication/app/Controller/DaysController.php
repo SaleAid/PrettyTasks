@@ -30,9 +30,7 @@ class DaysController extends AppController {
         }
         $result['action'] = 'setRatingDay';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
     
     public function getComment(){
@@ -52,9 +50,7 @@ class DaysController extends AppController {
         }
         $result['action'] = 'getCommentDay';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
     
     public function setComment(){
@@ -77,7 +73,7 @@ class DaysController extends AppController {
                     'message' => __d('days', 'Изменение успешно сохранено')
                 );    
             }else{
-                $result['errors'] = $this->Day->invalidFields();
+                $result['errors'] = $this->Day->validationErrors;
                     $result['message'] = array(
                         'type' => 'error', 
                         'message' => __d('days', 'Ошибка при сохранении комментария'),
@@ -86,9 +82,7 @@ class DaysController extends AppController {
         }
         $result['action'] = 'setCommentDay';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
     
     public function journal(){
@@ -96,9 +90,7 @@ class DaysController extends AppController {
         $result['success'] = true;
         $result['data'] = $this->Day->getComments($this->Auth->user('id'));
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
         //debug($result);
     }
 }

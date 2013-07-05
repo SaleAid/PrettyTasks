@@ -16,12 +16,18 @@ class LoginzaHelper extends AppHelper {
         if (! $provider) {
             return '';
         }
+        if ($provider == 'local') {
+            return '<span >PT&nbsp;</span>';
+        }
         return "<span class=\"providers_ico_sprite {$provider}_ico\">&nbsp;</span>";
     }
 
     public function logo($provider) {
         if (! $provider) {
             return '';
+        }
+        if ($provider == 'local') {
+            return '<span >&nbsp;PrettyTasks&nbsp;</span>';
         }
         return "<span class=\"providers_sprite {$provider}\">&nbsp;</span>";
     }
@@ -40,7 +46,7 @@ class LoginzaHelper extends AppHelper {
         $str = ' <iframe src="http://loginza.ru/api/widget?overlay=loginza&token_url='.urlencode($token_url);
         $str .= '&lang='.Configure::read('Config.langURL');
         $str .= '&providers_set=' . $this->_providers() . '"'; 
-        $str .= ' style="width:330px;height:226px;" scrolling="no" frameborder="no">';
+        $str .= ' style="width:330px;height:206px;" scrolling="no" frameborder="no">';
         $str .= '</iframe>';
         return $str;
     }

@@ -33,6 +33,9 @@
         case 'journal':
             $message = __d('messages', 'Сейчас ваш журнал пуст. Добавляйте комментарии к дням, и вы будете писать историю своей жизни.');                
             break;
+        case 'password_change':
+            $message = __d('messages', 'Для изменения пароля необходимо войти через локальный аккаунт .');
+            break;
         default:
             return; 
     }

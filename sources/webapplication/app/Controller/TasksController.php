@@ -2,82 +2,135 @@
 App::uses('CakeTime', 'Utility');
 App::uses('AppController', 'Controller');
 App::uses('Validation', 'Utility');
+App::uses('DateList', 'Model');
+App::uses('ManyDateList', 'Model');
+App::uses('PlannedList', 'Model');
+App::uses('OverdueList', 'Model');
+App::uses('CompletedList', 'Model');
+App::uses('DeletedList', 'Model');
+App::uses('ContinuedList', 'Model');
+App::uses('TagList', 'Model');
+App::uses('TaskEventListener', 'Event');
+
 /**
  * Tasks Controller
  *
  * @property Task $Task
  */
 class TasksController extends AppController {
+    
+    public $helpers = array('Task');
+    
     public $components = array(
-        'RequestHandler'
+        'RequestHandler',
     );
     
+    
     public $layout = 'tasks';
-
+    
+    public function repeated(){
+        return;
+        $result = $this->_prepareResponse();
+        $expectedData = array(
+            'id', 
+            'recur'
+        );
+        if (! $this->_isSetRequestData($expectedData)) {
+            $result['message'] = array(
+                'type' => 'error', 
+                'message' => __d('tasks', 'Ошибка при передаче данных')
+            );
+        } else {
+            $recur = $this->request->data['recur'];
+            $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
+            if ($originTask) {
+                if(!$originTask['Task']['repeatid']){
+                    $this->Task->repeated($recur);    
+                }
+                
+                //if ($task) {
+                    $result['success'] = true;
+                    //$result['data'] = $task;
+                    $result['message'] = array(
+                        'type' => 'success', 
+                        'message' => __d('tasks', 'Задача  успешно изменена')
+                    );
+                //} else {
+//                    $result['data'] = $originTask;
+//                    $result['message'] = array(
+//                        'type' => 'error', 
+//                        'message' => __d('tasks', 'Ошибка, Задача  не изменена')
+//                    );
+//                    $result['errors'] = $this->Task->validationErrors;
+//                }
+            } else {
+                $result['message'] = array(
+                    'type' => 'error', 
+                    'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи')
+                );
+            }
+        }
+        $result['action'] = 'repeated';
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');
+    }
+    
+    
     public function index() {
+        
         $this->response->disableCache();
         $result = $this->_prepareResponse();
+        
+        $beginDate = CakeTime::format('Y-m-d', '-1 days');
+        $endDate = CakeTime::format('Y-m-d', '+6 days');
+        
+        $dayConfig = $this->Task->User->getConfig($this->Auth->user('id'), 'day');
+        $arrayDates = ManyDateList::arrayDates($beginDate, $endDate, $dayConfig);
+        $ManyDateList = new ManyDateList($this->Auth->user('id'), $arrayDates);
+        $tasks = $ManyDateList->getItems();
+        
         $result['success'] = true;
-        $result['data']['arrAllFuture'] = $this->Task->getAllFuture($this->Auth->user('id'));
+        $PlannedList = new PlannedList($this->Auth->user('id'));
+        $result['data']['arrAllFuture'] = $PlannedList->getItems();
         $result['data']['arrAllFutureCount']['all'] = count($result['data']['arrAllFuture']);
-        $result['data']['arrAllFutureCount']['done'] = count(array_filter($result['data']['arrAllFuture'], create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;')));
-        $result['data']['arrAllExpired'] = $this->Task->getAllExpired($this->Auth->user('id'));
+        $result['data']['arrAllFutureCount']['done'] = count(array_filter($result['data']['arrAllFuture'], create_function('$val', 'return $val[\'done\'] == 1;')));
+        
         $result['data']['inConfig'] = false;
         $result['data']['yesterdayDisp'] = false;
-        //$from = CakeTime::format('Y-m-d', time());
-        $from = CakeTime::format('Y-m-d', '-1 days');
-        $to = CakeTime::format('Y-m-d', '+6 days');
-        $dayConfig = $this->Task->User->getConfig($this->Auth->user('id'), 'day');
-        if ( in_array($from, $dayConfig) ){
+            
+        if ( in_array($beginDate, $dayConfig) ){
             $result['data']['inConfig'] = true;
-            //pr(CakeTime::wasYesterday($from));die;
         }
-        //pr($dayConfig);
-        $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to, $dayConfig);
-        foreach ( $result['data']['arrTaskOnDays'] as $key => $value ) {
-            $done = array_filter($value, create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;'));
-            $data_count[$key]['all'] = count($value);
-            $data_count[$key]['done'] = count($done);
+        
+        $arrTaskOnDays = array();
+        foreach($arrayDates as $date){
+            $arrTaskOnDays[$date] = array_filter($tasks, function ($task) use ($date) { return ($task['date'] == $date); } );
+            $done = array_filter($arrTaskOnDays[$date], create_function('$val', 'return $val[\'done\'] == 1;'));
+            $data_count[$date]['all'] = count($arrTaskOnDays[$date]);
+            $data_count[$date]['done'] = count($done); 
         }
+        
+        $result['data']['arrTaskOnDays'] = $arrTaskOnDays;
         $result['data']['arrTaskOnDaysCount'] = $data_count;
-        $result['data']['arrDaysRating'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $from, $to, $dayConfig);
-        $result['data']['arrAllOverdue'] = $this->Task->getAllOverdue($this->Auth->user('id'));
-        $result['data']['arrAllCompleted'] = $this->Task->getAllCompleted($this->Auth->user('id'));
-        if($result['data']['arrTaskOnDaysCount'][$from]['all'] && $result['data']['arrTaskOnDaysCount'][$from]['all'] > $result['data']['arrTaskOnDaysCount'][$from]['done'] ){
+        
+        $result['data']['arrDaysRating'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $beginDate, $endDate, $dayConfig);
+        if($result['data']['arrTaskOnDaysCount'][$beginDate]['all'] && $result['data']['arrTaskOnDaysCount'][$beginDate]['all'] > $result['data']['arrTaskOnDaysCount'][$beginDate]['done'] ){
             $result['data']['yesterdayDisp'] = true;
         } else {
             if ( !$result['data']['inConfig'] ){
-                unset($result['data']['arrTaskOnDaysCount'][$from]);
-                unset($result['data']['arrTaskOnDays'][$from]);
+                unset($result['data']['arrTaskOnDaysCount'][$beginDate]);
+                unset($result['data']['arrTaskOnDays'][$beginDate]);
                 
             }
         }
+        
         $this->set('result', $result);
         $this->set('_serialize', array(
             'result'
         ));
     }
 
-    public function getOverdue() {
-        $result = $this->_prepareResponse();
-        $result['success'] = true;
-        $result['data']['arrAllOverdue'] = $this->Task->getAllOverdue($this->Auth->user('id'));
-        $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
-    }
-
-    public function getCompleted() {
-        $result = $this->_prepareResponse();
-        $result['success'] = true;
-        $result['data']['arrAllCompleted'] = $this->Task->getAllCompleted($this->Auth->user('id'));
-        $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
-    }
-
+    
     public function getTasksByType() {
         $result = $this->_prepareResponse();
         if (! $this->_isSetRequestData('type')) {
@@ -88,27 +141,59 @@ class TasksController extends AppController {
         } else {
             $result['success'] = true;
             $result['type'] = $this->request->data['type'];
+            $resultTasks = array();
             switch ($this->request->data['type']) {
                 case 'completed' :
                     {
-                        $result['data'] = $this->Task->getAllCompleted($this->Auth->user('id'));
+                        $CompletedList = new CompletedList($this->Auth->user('id'));
+                        $data = $CompletedList->getItems();
+                        foreach($data as $item){
+                            $resultTasks[$item['date']][] = $item;
+                        }
+                        $result['data'] = $resultTasks;
                         break;
                     }
                 case 'expired' :
                     {
-                        $result['data'] = $this->Task->getAllOverdue($this->Auth->user('id'));
+                        $OverdueList = new OverdueList($this->Auth->user('id'));
+                        $data = $OverdueList->getItems();
+                        foreach($data as $item){
+                            $resultTasks[$item['date']][] = $item;
+                        }
+                        $result['data'] = $resultTasks;
                         break;
                     }
                 case 'future' :
                     {
-                        $from = CakeTime::format('Y-m-d', time());
-                        $to = CakeTime::format('Y-m-d', '+7 days');
-                        $result['data'] = $this->Task->getDays($this->Auth->user('id'), $from, $to);
+                        $beginDate = CakeTime::format('Y-m-d', time());
+                        $endDate = CakeTime::format('Y-m-d', '+7 days');
+                        $arrayDates = ManyDateList::arrayDates($beginDate, $endDate);
+                        $ManyDateList = new ManyDateList($this->Auth->user('id'), $arrayDates);
+                        $data = $ManyDateList->getItems();
+                        foreach($data as $item){
+                            $resultTasks[$item['date']][] = $item;
+                        }
+                        $result['data'] = $resultTasks;
                         break;
                     }
                 case 'deleted' :
                     {
-                        $result['data'] = $this->Task->getAllDeleted($this->Auth->user('id'));
+                        $DeletedList = new DeletedList($this->Auth->user('id'));
+                        $data = $DeletedList->getItems();
+                        foreach($data as $item){
+                            $resultTasks[$item['date']][] = $item;
+                        }
+                        $result['data'] = $resultTasks;
+                        break;
+                    }
+                case 'continued' :
+                    {
+                        $ContinuedList = new ContinuedList($this->Auth->user('id'));
+                        $data = $ContinuedList->getItems();
+                        foreach($data as $item){
+                            $resultTasks[$item['date']][] = $item;
+                        }
+                        $result['data'] = $resultTasks;
                         break;
                     }
                 default :
@@ -141,22 +226,7 @@ class TasksController extends AppController {
         $result['data'] = $data;
         $result['action'] = 'getTasksByType';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
-    }
-
-    public function agenda() {
-        $result = $this->_prepareResponse();
-        $result['success'] = true;
-        $from = CakeTime::format('Y-m-d', time());
-        $to = CakeTime::format('Y-m-d', '+7 days');
-        $dayConfig = $this->Task->User->getConfig($this->Auth->user('id'), 'day');
-        $result['data']['arrTaskOnDays'] = $this->Task->getDays($this->Auth->user('id'), $from, $to);
-        $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function setTitle() {
@@ -191,14 +261,13 @@ class TasksController extends AppController {
                         'type' => 'error', 
                         'message' => __d('tasks', 'Ошибка, Задача  не изменена')
                     );
+                    $result['errors'] = $this->Task->validationErrors;
                 }
             }
         }
         $result['action'] = 'setTitle';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function addNewTask() {
@@ -213,14 +282,19 @@ class TasksController extends AppController {
                 'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
-            if (! empty($this->request->data['date'])) {
-                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->saveTask();
+            
+            if (!empty($this->request->data['date']) && Validation::date($this->request->data['date'])) {
+                $task = $this->Task->createTask($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->saveTask();
             } else {
-                $task = $this->Task->create($this->Auth->user('id'), $this->request->data['title'], null, null, null, 0, 1)->saveTask();
+                $date = empty($this->request->data['date']) ? '' : ' #'.$this->request->data['date'];
+                $task = $this->Task->createTask($this->Auth->user('id'), $this->request->data['title'] . $date, null, null, null, 0, 1)->saveTask();
             }
             if ($task) {
                 $result['success'] = true;
-                $result['data'] = $task;
+                $result['data'] = $task['Task'];
+                if( isset($date) ){
+                    $result['data']['list'] = $this->request->data['date'];
+                }
                 $result['message'] = array(
                     'type' => 'success', 
                     'message' => __d('tasks', 'Задача успешно создана')
@@ -235,9 +309,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'create';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
     
     public function cloneTask() {
@@ -254,7 +326,7 @@ class TasksController extends AppController {
         } else {
             $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($task) {
-                $cloneTask = $this->Task->create($this->Auth->user('id'), $task['Task']['title'], $this->request->data['date'], $task['Task']['time'], null, $task['Task']['priority'], $task['Task']['future'], 1)->saveTask();
+                $cloneTask = $this->Task->createTask($this->Auth->user('id'), $task['Task']['title'], $this->request->data['date'], $task['Task']['time'], null, $task['Task']['priority'], $task['Task']['future'], 1)->saveTask();
                 if ($cloneTask) {
                     $result['success'] = true;
                     $result['data'] = $cloneTask;
@@ -278,14 +350,13 @@ class TasksController extends AppController {
         }
         $result['action'] = 'clone';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
     
     public function changeOrders() {
         $result = $this->_prepareResponse();
         $expectedData = array(
+            'list',
             'id', 
             'position'
         );
@@ -295,9 +366,29 @@ class TasksController extends AppController {
                 'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
-            if ($this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'))) {
-                if($this->Task->checkPositionWithTime($this->request->data['position'])){
-                    if ($this->Task->setMove()->setOrder($this->request->data['position'])->save()) {
+            $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
+            if ($task) {
+                switch($this->request->data['list']['name']){
+                    case 'date':
+                        if($task['Task']['future']){
+                            $List = new PlannedList($this->Auth->user('id'), 'planned');
+                        }else{
+                            $List = new DateList($this->Auth->user('id'), $task['Task']['date']);    
+                        }
+                        break;
+                    case 'tag':
+                        $options['conditions'] = array('Tag.name' => $this->request->data['list']['tag']);
+        	            $options['fields'] = array('id');
+        	            $options['contain'] = array();
+        	            $tag = $this->Task->Tag->find('first', $options);
+                        $List = new TagList($this->Auth->user('id'), $tag['Tag']['id'], 'Task');
+                        break;
+                    default:
+                        $List = null;                            
+                }
+                
+                if($List !== null){
+                    if ( $List->reOrder($task['Task']['id'], $this->request->data['position']) ) {
                         $result['success'] = true;
                         $result['message'] = array(
                             'type' => 'success', 
@@ -305,14 +396,14 @@ class TasksController extends AppController {
                         );
                     } else {
                         $result['message'] = array(
-                            'type' => 'success', 
+                            'type' => 'error', 
                             'message' => __d('tasks', 'Задача не перемещена')
                         );
                     }
                 } else {
                     $result['message'] = array(
-                            'type' => 'success', 
-                            'message' => __d('tasks', 'Ошибка, некорректная позиция')
+                            'type' => 'error', 
+                            'message' => __d('tasks', 'Ошибка, некорректный список')
                         );
                 }
             } else {
@@ -324,9 +415,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'changeOrders';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function setDone() {
@@ -371,9 +460,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'setDone';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function setDelete() {
@@ -389,7 +476,7 @@ class TasksController extends AppController {
             if ($originTask) {
                 if (!$originTask['Task']['deleted']) {
                     // set field deleted = 1
-                    $task = $this->Task->setDelete(1)->setOrder(0)->saveTask();
+                    $task = $this->Task->setDelete(1)->saveTask();
                     if ($task) {
                         $result['success'] = true;
                         $result['data'] = $task;
@@ -425,9 +512,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'delete';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
     
     public function deleteAll(){
@@ -458,9 +543,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'deleteAll';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
     
     public function dragOnDay() {
@@ -478,8 +561,7 @@ class TasksController extends AppController {
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                if ($this->Task->setOrder(1)->setDelete(0)->setDate($this->request->data['date'])->setTime($this->request->data['time'])->save()) {
-                    //if ($this->Task->dragOnDay($this->request->data['date'], $this->request->data['time'])->save()) {
+                if ($this->Task->setDelete(0)->setDate($this->request->data['date'])->save()) {
                     $result['success'] = true;
                     $result['message'] = array(
                         'type' => 'success', 
@@ -501,9 +583,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'dragOnDay';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function editTask() {
@@ -515,7 +595,8 @@ class TasksController extends AppController {
             'date', 
             'time', 
             'timeEnd', 
-            'done', 
+            'done',
+            'continued', 
             'comment'
         );
         if (! $this->_isSetRequestData($expectedData)) {
@@ -526,7 +607,15 @@ class TasksController extends AppController {
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                $task = $this->Task->setEdit($this->request->data['title'], $this->request->data['priority'], $this->request->data['comment'], $this->request->data['date'], $this->request->data['time'], $this->request->data['timeEnd'], $this->request->data['done'])->saveTask();
+                $task = $this->Task->setEdit($this->request->data['title'], 
+                                             $this->request->data['priority'], 
+                                             $this->request->data['continued'],
+                                             $this->request->data['comment'], 
+                                             $this->request->data['date'], 
+                                             $this->request->data['time'], 
+                                             $this->request->data['timeEnd'], 
+                                             $this->request->data['done']
+                                             )->saveTask();
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;
@@ -550,9 +639,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'edit';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function getTasksForDay() {
@@ -563,17 +650,25 @@ class TasksController extends AppController {
                 'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
-            $task = $this->Task->getTasksForDay($this->Auth->user('id'), CakeTime::format('Y-m-d', $this->request->data['date']));
-            $done = array_filter($task, create_function('$val', 'return $val[\'Task\'][\'done\'] == 1;'));
-            $result['data']['listCount']['all'] = count($task);
+            $result['data']['date'] = $this->request->data['date'];            
+            if( $this->request->data['date'] =='planned' ){
+                $PlannedList = new PlannedList($this->Auth->user('id'));
+                $tasks = $PlannedList->getItems();
+            }else{
+                $DateList = new DateList($this->Auth->user('id'), CakeTime::format('Y-m-d', $this->request->data['date']));
+                $tasks = $DateList->getItems();
+                $this->Task->setDayToConfig($this->Auth->user('id'), CakeTime::format('Y-m-d', $this->request->data['date']));
+                $result['data']['day'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $this->request->data['date']);
+                $result['data']['weekDayStyle'] = ($result['data']['date'] > CakeTime::format('Y-m-d', time())) ? 'future' : 'past';    
+            }
+            
+            $done = array_filter($tasks, create_function('$val', 'return $val[\'done\'] == 1;'));
+            $result['data']['listCount']['all'] = count($tasks);
             $result['data']['listCount']['done'] = count($done);
             $result['success'] = true;
-            $result['data']['list'] = $task;
-            $result['data']['date'] = $this->request->data['date'];
-            //$result['data']['weekDay'] = $this->Task->getWeekDay(CakeTime::format('l', $this->request->data['date']));
-            //$result['data']['nameDay'] = CakeTime::format('l', $this->request->data['date']);
-            $result['data']['day'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $this->request->data['date']);
-            $result['data']['weekDayStyle'] = ($result['data']['date'] > CakeTime::format('Y-m-d', time())) ? 'future' : 'past';
+            $result['data']['list'] = $tasks;
+            
+            
             $result['message'] = array(
                 'type' => 'success', 
                 'message' => __d('tasks', 'Задача успешно ...')
@@ -581,9 +676,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'addDay';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function deleteDay() {
@@ -609,9 +702,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'deleteDay';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
 
     public function checkStatus() {
@@ -641,9 +732,7 @@ class TasksController extends AppController {
         }
         $result['action'] = 'checkStatus';
         $this->set('result', $result);
-        $this->set('_serialize', array(
-            'result'
-        ));
+        $this->set('_serialize', 'result');
     }
     //----------------------------------------------------------------------
 }

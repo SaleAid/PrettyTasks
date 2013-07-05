@@ -8,6 +8,8 @@
        echo $this->html->css('jquery.timepicker-1.2.2', null, array('block' => 'toHead'));
        echo $this->Html->css('tasks.'. Configure::read('App.version'), null, array('block' => 'toHead'));
        echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom', null, array('block' => 'toHead'));
+       echo $this->Html->css('bootstrap-modal', null, array('block' => 'toHead'));
+       
     }
     
     if( Configure::read('App.Minify.js') ){
@@ -21,6 +23,8 @@
             'jquery.timepicker-1.2.2.min',
             'jquery.inline-confirmation.'.Configure::read('App.version'),
             'jquery-ui-i18n.min',
+            'bootstrap-modalmanager',
+            'bootstrap-modal'
        ), array('block' => 'toFooter'));
        echo $this->Html->script('main.' . Configure::read('App.version'), array('block' => 'toFooter')); 
        echo $this->Html->script('print.'.Configure::read('App.version'), array('block' => 'toFooter'));
@@ -29,13 +33,10 @@
     }
 ?>
 
-<?php $this->append ( 'toFooter' );?>
-    
-    <?php echo $this->element('js_global_config', array(), array('cache' => array('key' => 'js_global_config', 'config' => 'elements'))); ?> 
-    
-<?php $this->end ();?>
-  <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
+<div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
         <ul class="nav nav-tabs listDay">
+            <li class="hide"><a href="#lists" data-toggle="tab" date="lists"><?php echo __d('tasks', 'Lists'); ?></a></li>
+            <li class="hide"><a href="#list" data-toggle="tab" date="list"><?php echo __d('tasks', 'List'); ?></a></li>
             <li class="addDay">
             <div class="btn-group">
                 <button  id="addDay" rel="tooltip" title="<?php echo __d('tasks', 'Добавить новый день в список'); ?>" class="btn btn-block btn-large"><?php echo __d('tasks', 'Добавить день'); ?></button>
@@ -50,6 +51,7 @@
                             <li ><a href="#expired" data-toggle="tab"  date="expired" class="tab2"><?php echo __d('tasks', 'Просроченные'); ?></a></li>
                             <li ><a href="#completed" data-toggle="tab" date="completed"><?php echo __d('tasks', 'Завершенные'); ?></a></li>
                             <li ><a href="#future" data-toggle="tab" date="future" class="tab2"><?php echo __d('tasks', 'Будущие'); ?></a></li>
+                            <li ><a href="#continued" data-toggle="tab" date="continued" class="tab2"><?php echo __d('tasks', 'Длительные'); ?></a></li>
                             <li class="divider"></li>
                             <li ><a href="#deleted" data-toggle="tab" date="deleted" class="tab2"><?php echo __d('tasks', 'Удаленные'); ?></a></li>
                        </ul>
@@ -113,13 +115,13 @@
           <div class="listTask">
             <div class="margin-bottom10">
                 <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
-                <h3 class="label label-info"><?php echo __d('tasks', 'Задачи на будущее'); ?></h3>
+                <h3 class="head-list-info"><?php echo __d('tasks', 'Задачи на будущее'); ?></h3>
             </div>
             <div class="well form-inline">
                 <div class="input-append">
-                    <input type="text" size="16" class="input-xxlarge createTask" placeholder="<?php echo __d('tasks', '+Добавить задание…'); ?>"/><span class="add-on">?</span>
+                    <input type="text" size="16" class="input-xxlarge createTask" placeholder="<?php echo __d('tasks', '+Добавить задание…'); ?>"/>
+                    <button class="btn createTaskButton"><?php echo __d('tasks', 'Добавить'); ?></button>
                 </div>
-                <button class="btn createTaskButton"><?php echo __d('tasks', 'Добавить'); ?></button>    
             </div>
             <div class="filter">
                 <span><?php echo __d('tasks', 'Фильтр'); ?>:&nbsp; </span> 
@@ -133,20 +135,10 @@
                 <span class="completed badge badge-success"><?php echo $result['data']['arrAllFutureCount']['done']; ?></span>
             </div>
             <div class="clear"></div>
-            <ul class="sortable connectedSortable ui-helper-reset" date="planned">
+            <ul class="sortable connectedSortable ui-helper-reset filtered" date="planned" data-refresh="1">
                 <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])):?>
                     <?php foreach($result['data']['arrAllFuture'] as $item):?>
-                        <li id ="<?php echo $item['Task']['id']; ?>" class=" <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?> <?php if($item['Task']['priority']):?>important<?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
-                            <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
-                            <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
-                            <span class="move"><i class="icon-move"></i></span>
-                            <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                            <span class="editable"><?php echo h($item['Task']['title']); ?></span>
-                            <span class="commentTask"><?php echo h($item['Task']['comment']); ?></span>
-                            <span class="comment-task-icon"><i class="icon-file <?php if( empty($item['Task']['comment'] )): ?> hide <?php endif; ?>"></i></span>
-                            <span class="editTask"><i class="icon-pencil"></i></span>
-                            <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
-                        </li>
+                        <?php echo $this->Task->taskLi($item);?>
                     <?php endforeach;?>
                 <?php endif;?>   
             </ul>
@@ -161,7 +153,7 @@
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3 class="head-list-info"><?php echo __d('tasks', 'Просроченные задачи'); ?></h3>
                   </div>
-                    <ul class="sortable connectedSortable ui-helper-reset " date="expired">
+                    <ul class="sortable connectedSortable ui-helper-reset " date="expired" data-refresh="1">
                     </ul>
                     <?php echo $this->element('empty_lists', array('type' => 'overdue', 'hide' => true));?>
                    </div>
@@ -174,9 +166,22 @@
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3 class="head-list-info"><?php echo __d('tasks', 'Завершенные задачи'); ?></h3>
                   </div>
-                    <ul class=" ui-helper-reset " date="completed">
+                    <ul class=" ui-helper-reset " date="completed" data-refresh="1">
                     </ul>
                     <?php echo $this->element('empty_lists', array('type' => 'completed', 'hide' => true));?>
+                  </div>
+                </div>
+          </div>
+          <div class="tab-pane" id="continued">
+              <div class="row">
+                  <div class="listTask">
+                  <div class="margin-bottom10">
+                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
+                    <h3 class="head-list-info"><?php echo __d('tasks', 'Длительные задачи'); ?></h3>
+                  </div>
+                    <ul class="sortable connectedSortable ui-helper-reset " date="continued" data-refresh="1">
+                    </ul>
+                    <?php echo $this->element('empty_lists', array('type' => 'continued', 'hide' => true));?>
                   </div>
                 </div>
           </div>
@@ -193,7 +198,7 @@
                     
                     --></h3>
                   </div>
-                    <ul class="sortable connectedSortable ui-helper-reset " date="deleted">
+                    <ul class="sortable connectedSortable ui-helper-reset " date="deleted" data-refresh="1">
                     </ul>
                     <?php echo $this->element('empty_lists', array('type' => 'deleted', 'hide' => true));?>
                   </div>
@@ -206,9 +211,59 @@
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3 class="head-list-info"><?php echo __d('tasks', 'Будущие задачи'); ?></h3>
                   </div>
-                        <ul class="sortable connectedSortable ui-helper-reset " date="future">
+                        <ul class="sortable connectedSortable ui-helper-reset " date="future" data-refresh="1">
                         </ul>
                         <?php echo $this->element('empty_lists', array('type' => 'future', 'hide' => true));?>
+                    </div>
+                </div>
+          </div>
+          <div class="tab-pane" id="lists">
+              <div class="row">
+                  <div class="listTask">
+                  <div class="margin-bottom10">
+                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
+                    <h3 class="head-list-info"><span class="tag-name"><?php echo __d('tasks', 'Lists'); ?></span></h3>
+                  </div>
+                        <div class="clear"></div>
+                        <ul class="lists" date="lists">
+                        </ul>
+                        <?php //echo $this->element('empty_lists', array('type' => 'lists', 'hide' => true));?>
+                    </div>
+                </div>
+          </div>
+          <div class="tab-pane" id="list">
+              <div class="row">
+                  <div class="listTask">
+                  <div class="margin-bottom10">
+                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
+                    <h3 class="head-list-info"><span class="tag-name"><?php echo __d('tasks', 'Lists'); ?></span></h3>
+                  </div>
+                        <div class="well form-inline">
+                            <div class="input-append">
+                                <input type="text" size="16" class="input-xxlarge createTask" placeholder="<?php echo __d('tasks', '+Добавить задание…'); ?>"/>
+                                <button class="btn createTaskButton"><?php echo __d('tasks', 'Добавить'); ?></button>
+                            </div>
+                            
+                        </div>
+                        <div class="filter">
+                            <span><?php echo __d('tasks', 'Фильтр'); ?>:&nbsp; </span> 
+                            <a href=""  class="active" data="all"><?php echo __d('tasks', 'Все');?></a>
+                            <span class="all badge badge-info">0</span>,
+                            &nbsp;
+                            <a href=""  data="inProcess"><?php echo __d('tasks', 'В Процессе'); ?></a>
+                            <span class="inProcess  badge badge-warning">0</span>,
+                            &nbsp;
+                            <a href=""  data="completed"><?php echo __d('tasks', 'Выполненные'); ?></a>
+                            <span class="completed badge badge-success">0</span>
+                            
+                        </div>
+                        <div class="days">
+                            <a href="" data="commentTag"><?php echo __d('tasks', 'Комментарий'); ?></a>
+                        </div>
+                        <div class="clear"></div>
+                        <ul class="sortable connectedSortable ui-helper-reset filtered" date="list" data-refresh="1">
+                        </ul>
+                        <?php //echo $this->element('empty_lists', array('type' => 'lists', 'hide' => true));?>
                     </div>
                 </div>
           </div>
@@ -232,13 +287,13 @@
                     <div class="listTask">
                         <div class="margin-bottom10">
                             <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
-                            <h3 class="label label-info" ><?php echo $k; ?> - <span class="<?php echo $weelDayStyle?>"><?php echo $weekday[$this->Time->format('l', $k, true)]; ?></span><?php if($this->Time->isToday($k)):?> - <span id="clock"></span><?php endif;?></h3>
+                            <h3 class="head-list-info" ><?php echo $k; ?> - <span class="<?php echo $weelDayStyle?>"><?php echo $weekday[$this->Time->format('l', $k, true)]; ?></span><?php if($this->Time->isToday($k)):?> - <span id="clock"></span><?php endif;?></h3>
                         </div>
                         <div class="well form-inline">
                             <div class="input-append">
-                                <input type="text" size="16" class="input-xxlarge createTask" placeholder="<?php echo __d('tasks', '+Добавить задание…'); ?>"/><span class="add-on">?</span>
+                                <input type="text" size="16" class="input-xxlarge createTask" placeholder="<?php echo __d('tasks', '+Добавить задание…'); ?>"/>
+                                <button class="btn createTaskButton"><?php echo __d('tasks', 'Добавить'); ?></button>
                             </div>
-                            <button class="btn createTaskButton"><?php echo __d('tasks', 'Добавить'); ?></button>
                         </div>
                         <div class="filter">
                             <span><?php echo __d('tasks', 'Фильтр'); ?>:&nbsp; </span> 
@@ -259,19 +314,9 @@
                             </label>
                         </div>
                         <div class="clear"></div>
-                        <ul id="sortable<?php echo $k; ?>" class="sortable connectedSortable ui-helper-reset" date="<?php echo $k; ?>">
+                        <ul id="sortable-<?php echo $k; ?>" class="sortable connectedSortable ui-helper-reset filtered" date="<?php echo $k; ?>" data-refresh="0">
                             <?php foreach($v as $item):?>
-                                <li id ="<?php echo $item['Task']['id']; ?>" class=" <?php if($item['Task']['time']):?> setTime <?php endif;?> <?php if($item['Task']['done']):?> complete <?php endif; ?><?php if($item['Task']['priority']):?>important<?php endif; ?>" date="<?php echo $item['Task']['date'];?>">
-                                    <span class="time"><?php if($item['Task']['time']):?><?php echo $this->Time->format('H:i', $item['Task']['time'],true);?><?php endif; ?></span>
-                                    <span class="timeEnd"><?php if($item['Task']['timeend']):?><?php echo $this->Time->format('H:i', $item['Task']['timeend'],true);?><?php endif; ?></span>
-                                    <span class="move"><i class="icon-move"></i></span>
-                                    <input type="checkbox" class="done" value="1" <?php if($item['Task']['done']):?> checked <?php endif; ?>/>
-                                    <span class="editable"><?php echo h($item['Task']['title']); ?></span>
-                                    <span class="commentTask"><?php echo h($item['Task']['comment']); ?></span>
-                                    <span class="comment-task-icon"><i class="icon-file <?php if( empty($item['Task']['comment'] )): ?> hide <?php endif; ?>"></i></span>
-                                    <span class="editTask"><i class="icon-pencil"></i></span>
-                                    <span class="deleteTask"><i class=" icon-ban-circle"></i></span>
-                                </li>
+                                <?php echo $this->Task->taskLi($item);?>
                             <?php endforeach;?>
                         </ul>
                         <?php echo $this->element('empty_lists', array('type' => $type, 'hide' => $result['data']['arrTaskOnDaysCount'][$k]['all']));?>
@@ -285,91 +330,10 @@
     </div>  
 
 
-<!-- modal editTask -->
-<div id="editTask" class="modal hide  in">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">×</a>
-        <h3><?php echo __d('tasks', 'Редактирование задачи');?></h3>
-    </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="span6 form-horizontal">
-              <div class="control-group">
-                <label class="control-label" for="eTitle"><?php echo __d('tasks', 'Заглавие');?></label>
-                <div class="controls">
-                  <input type="text" class="span6" id="eTitle"/>
-                </div>
-              </div>
-              <div class="control-group form-inline">
-                <label class="control-label" for="eDate"><?php echo __d('tasks', 'Дата и время');?></label>
-                <div class="controls">
-                    <input type="text"  id="eDate"/>
-                    <label><?php echo __d('tasks', 'с');?></label>
-                    <input type="text"  id="eTime"/>
-                    <label><?php echo __d('tasks', 'по');?></label>
-                    <input type="text"  id="eTimeEnd"/>
-                </div>
-              </div>
-          <div class="row">
-          
-          <div class="span5">
-              <div class="control-group">
-                <label class="control-label" for="eComment"><?php echo __d('tasks', 'Комментарий');?></label>
-                <div class="controls">
-                  <textarea class="span4" id="eComment" rows="4"></textarea>
-                </div>
-              </div>
-            </div>  
-          <div class="priority span1 form-vertical">
-          <div class="control-group">
-            <label class="control-label"><?php echo __d('tasks', 'Приоритет');?></label>
-            <div class="controls">
-              <label class="radio">
-                <input type="radio" name="priority" id="optionsRadios1" value="1" />
-                <?php echo __d('tasks', 'Высокий');?>
-              </label>
-              <label class="radio">
-                <input type="radio" name="priority" id="optionsRadios2" value="0"/>
-                <?php echo __d('tasks', 'Обычный');?>
-              </label>
-            </div>
-          </div>
-        </div>
-        
-        </div>
-              <div class="control-group">
-                <div class="controls">
-                  <label class="checkbox">
-                    <input type="checkbox" id="eDone" value="option1"/>
-                    <?php echo __d('tasks', 'Выполнена');?>
-                  </label>
-                </div>
-              </div>
-        </div>
-    </div>
-</div>
-    <div class="modal-footer">
-        <a href="" class="btn" data-dismiss="modal"><?php echo __d('tasks', 'Закрыть');?></a>
-        <button id="eSave" class="btn btn-success"><?php echo __d('tasks', 'Сохранить');?></button>
-    </div>
-</div>
-<!-- End modal -->
+<?php echo $this->element('edit_task', array(), array('cache' => array('key' => 'edit_task', 'config' => 'elements'))); ?>
+<?php //echo $this->element('repeat_task', array(), array('cache' => array('key' => 'repeat_task', 'config' => 'elements'))); ?>
 
-<!-- modal commentDay -->
-<div id="commentDay" class="modal hide  in">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">×</a>
-        <h3><?php echo __d('tasks', 'Комментарий');?></h3>
-    </div>
-    <div class="modal-body">
-        <textarea  class="" id="eCommentDay" rows="9"></textarea>
-    </div>
-    <div class="modal-footer">
-        <a href="" class="btn" data-dismiss="modal"><?php echo __d('tasks', 'Закрыть');?></a>
-        <button id="eCommentDaySave" class="btn btn-success"><?php echo __d('tasks', 'Сохранить');?></button>
-    </div>
-</div>
-<!-- End modal -->
+<?php echo $this->element('comment_day', array(), array('cache' => array('key' => 'comment_day', 'config' => 'elements'))); ?>
 
 <!-- print_brand -->
 <?php echo $this->Html->image("brand.". Configure::read('App.version') .".png", array('class' => 'print_brand', 'width' => 156, 'height' => 30)); ?>
@@ -381,20 +345,19 @@
 <?php echo $this->element('connection_error', array(), array('cache' => array('key' => 'connection_error', 'config' => 'elements'))); ?>
 
 <!-- Templates -->
-
 <script type="text/template" id="day_tab_content_template">
     <div class="tab-pane" id="<%= date %>"> 
 	<div class="row">  
 		<div class="listTask"> 
 			<div class="margin-bottom10"> 
 				<?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?> 
-				<h3 class="label label-info"><%= date %><span class="weekday"></span></h3> 
+				<h3 class="head-list-info"><%= date %><span class="weekday"></span></h3> 
 			</div>
 			<div class="well form-inline"> 
 				<div class="input-append"> 
-					<input type="text" size="16" class="input-xxlarge createTask" placeholder="<?php echo __d('tasks', '+Добавить задание…'); ?>"/><span class="add-on">?</span>
+					<input type="text" size="16" class="input-xxlarge createTask" placeholder="<?php echo __d('tasks', '+Добавить задание…'); ?>"/>
+                    <button class="btn createTaskButton"><?php echo __d('tasks', 'Добавить'); ?></button>    
 				</div>
-				<button class="btn createTaskButton"><?php echo __d('tasks', 'Добавить'); ?></button>
 			</div>
 			<div class="filter"> 
 				<span><?php echo __d('tasks', 'Фильтр'); ?>:&nbsp; </span> 
@@ -420,7 +383,7 @@
 				</label>
 			</div>
 			<div class="clear"></div>
-			<ul class="sortable connectedSortable ui-helper-reset" date="<%= date %>"> 
+			<ul class="sortable connectedSortable ui-helper-reset filtered" date="<%= date %>" data-refresh="0"> 
 				<p class="loadContent" align=center>
                     <?php echo $this->Html->image("ajax-loader-content.". Configure::read('App.version') .".gif"); ?>
                 </p>
@@ -431,8 +394,15 @@
 </div>
 </script>
 
+<script type="text/template" id="ajax_loader_content">
+    <p class="loadContent" align=center>
+        <?php echo $this->Html->image("ajax-loader-content.". Configure::read('App.version') .".gif"); ?>
+    </p>
+</script>
+
+
 <script type="text/template" id="day_h3_label">
-    <h3 class="day label label-info margin-bottom10" rel="tooltip" title="<?php echo __d('tasks', 'Кликните для перехода<br/> на'); ?>&nbsp;<%= date %>">
+    <h3 class="day label label-info margin-bottom10" rel="tooltip" date="<%= date %>" title="<?php echo __d('tasks', 'Кликните для перехода на'); ?>&nbsp;<%= date %>">
 	   <span class="dayDate"><%= date %></span><span class="dash"> - </span><span class="<%= weekDayStyle %>"><%= weekDay %></span>
     </h3>
 </script>
@@ -443,4 +413,11 @@
     <% } else { %>
         <?php echo $this->element('empty_lists', array('type' => 'future', 'hide' => true));?>
     <% }  %>
+</script>
+
+<script type="text/template" id="task_tag">
+        <?php echo $this->Task->taskLiTag();?>
+</script>
+<script type="text/template" id="add_task">
+        <?php echo $this->Task->addTaskLi();?>
 </script>

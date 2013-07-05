@@ -33,7 +33,7 @@
         <?php endif;?>
 
       <div class="nav-collapse">
-        <ul class="nav">
+        <ul class="nav top">
           <?php if ($currentUser): ?>
           <li class="tasks <? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">
                 <?php echo $this->Html->link(
@@ -41,6 +41,14 @@
                                 array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time()))
                 );?>    
           </li>
+          <?php //if ($isBetaUser):?>
+          <li class="lists <? //if($this->params['action'] == "index" and strtolower($this->params['controller']) == "lists") echo 'active'; ?>">
+              <?php echo $this->Html->link(
+                    __d('pages', 'Lists'),
+                    array('controller' => 'tasks', 'action' => 'index', '#' => 'lists')
+                ); ?>  
+          </li>
+          <?php //endif;?>
          <!-- <?php //if ($isBetaUser):?>
           <li class="<? //if($this->params['action'] == "index" and strtolower($this->params['controller']) == "calendar") echo 'active'; ?>">
               <?php //echo $this->Html->link(
@@ -58,21 +66,21 @@
                 );?>
           </li>
           <?php endif;?>
-          <li class="<? if($this->params['action'] == "journal" and strtolower($this->params['controller']) == "days") echo 'active'; ?>">
-              <?php echo $this->Html->link(
-                    __d('days', 'Journal'),
-                    array('controller' => 'days', 'action' => 'journal')
-                );?>
-          </li>
-        <?php if ($isBetaUser):?>
+
+        <?php //if ($isBetaUser):?>
           <li class="<? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "notes") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __d('pages', 'Notes'),
                     array('controller' => 'notes', 'action' => 'index')
                 ); ?>  
           </li>
-          <?php endif;?>
-        
+          <?php //endif;?>
+         <li class="<? if($this->params['action'] == "journal" and strtolower($this->params['controller']) == "days") echo 'active'; ?>">
+              <?php echo $this->Html->link(
+                    __d('days', 'Journal'),
+                    array('controller' => 'days', 'action' => 'journal')
+                );?>
+          </li>
         </ul>
         <?php echo $this->element('current_user'); ?> 
          

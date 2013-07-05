@@ -1,4 +1,5 @@
 <?php
+App::uses('NoteObj', 'Lib');
 App::uses('AppController', 'Controller');
 /**
  * Notes Controller
@@ -7,134 +8,112 @@ App::uses('AppController', 'Controller');
  */
 class NotesController extends AppController {
 
+    public $helpers = array('Tag');
+    
     public $layout = 'notes';
     
     public function index() {
-          $notes = $this->Note->getNotes($this->Auth->user('id'));
-          $result['success'] = true;
-          $result['data'] = $notes;
-          $this->set('object', $result);
-          $this->set('_serialize', 'object');
+        $result = $notes = array();
+    	$count = isset($this->request->query['count']) ? $this->request->query['count'] : null;
+    	if ( $count > 50 ) $count = 50;
+    	$page = isset($this->request->query['page']) ? $this->request->query['page'] : null;
+    	$user_id = $this->Auth->user('id');
+    	$notes = $this->Note->getNotes($user_id, $count, $page);
+    	foreach ($notes as $note) {
+    	    $result[] = new NoteObj($note);
+        }    
+        
+    	
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');
     
     }
-    public function add(){
+    
+    public function create(){
         $result = $this->_prepareResponse();
-        $expectedData = array(
-            'note'
-        );
-        if (! $this->_isSetRequestData($expectedData)) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('notes', 'Ошибка при передаче данных')
+        if ( !$this->request->isPost() or !isset($this->request->data['title']) ) {
+            $result['error'] = array(
+                'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
-            $data = $this->Note->createNote($this->Auth->user('id'), $this->request->data['note'])->saveNote();
-            $result['data'] = $data['Note'];
-            $result['success'] = true;      
+            $note = $this->Note->create($this->Auth->user('id'), $this->request->data['title'])->save();
+            if ( $note ) {
+            	$result['data'] = new NoteObj($note);
+                $result['success'] = true;
+                $result['message'] = array(
+                    'type' => 'info', 
+                    'message' => __d('tasks', 'Заметка  успешно создана')
+                ); 
+        	} else {
+        	   $result['message'] = array(
+                    'type' => 'error', 
+                    'message' => __d('tasks', 'Заметка  не создана')
+                );
+        		$result['errors'] = $this->Note->validationErrors;
+        	}
         }
         $result['action'] = 'create'; 
-        $this->set('object', $result);
-        $this->set('_serialize', 'object');
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');
     }
     
-    public function edit($id = null) {
+    public function update(){
         $result = $this->_prepareResponse();
-        $expectedData = array(
-            'id',
-            'note',
-            'action'
-        );
-        if (! $this->_isSetRequestData($expectedData)) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('notes', 'Ошибка при передаче данных')
+        if ( !$this->request->isPost() or !isset($this->request->data['id']) or !isset($this->request->data['title']) ) {
+            $result['error'] = array(
+                'message' => __d('tasks', 'Ошибка при передаче данных')
             );
         } else {
             $originNote = $this->Note->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originNote) {
-                $saveData = array(
-                    'id' => $this->request->data['id'],
-                    'note' => $this->request->data['note'],
+		      $note = $this->Note->update($this->request->data['title'])->save();
+              if ( $note ) {
+	              $result['data'] = new NoteObj($note);
+                  $result['success'] = true; 
+	          } else {
+		         $result['message'] = array(
+                    'type' => 'error', 
+                    'message' => __d('tasks', 'Заметка  не обновлена')
                 );
-                $action = $this->request->data['action'];
-                $data = $this->Note->editNote($saveData, $action)->saveNote();
-                if( $data ){
-                    $result['data'] = $data['Note'];
-                    $result['success'] = true;    
-                }else{
-                    //$this->response->statusCode(500);
-                    $result['message'] = array(
-                        'type' => 'error', 
-                        'message' => __d('tasks', 'Заметка  не ....')
-                    );
-                    $result['errors'] = $this->Note->validationErrors;    
-                }
-            }      
+                 $result['errors'] = $this->Note->validationErrors;
+	          }
+            } else {
+                $result['errors'] = array(
+                    'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой заметки')
+                );
+            }
         }
-        $result['action'] = $this->params['data']['action']; 
-        $this->set('object', $result);
-        $this->set('_serialize', 'object');
-        
-        
-	}
+        $result['action'] = 'update'; 
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');
+    }
     
-    public function delete($id = null) {
-        if (!$this->request->is('post') && !$this->request->is('delete')) {
-			throw new MethodNotAllowedException();
-		}
+    public function delete() {
         $result = $this->_prepareResponse();
-		$originNote = $this->Note->isOwner($id, $this->Auth->user('id'));
-        if ($originNote) {
-            
+        if ( !$this->request->isPost() or !isset($this->request->data['id']) ) {
+            $result['error'] = array(
+                'message' => __d('tasks', 'Ошибка при передаче данных')
+            );
+        } else {
+            $note = $this->Note->isOwner($this->request->data['id'], $this->Auth->user('id'));
+            if ($note) {
+                    if ($this->Note->delete()) {
+                        $result['success'] = true; 
+                    } else {
+                        $result['error'] = array(
+                            'message' => __d('tasks', 'Ошибка, note  не изменена')
+                        );
+                    }             
+            } else {
+                $result['error'] = array(
+                    'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой note`s')
+                );
+            }
         }
-		if ($this->Note->delete()) {
-			//$result['success'] = true;  
-		}
-        //$result['action'] = $this->params['data']['action']; 
-        $this->set('object', $result);
-        $this->set('_serialize', 'object');
-	}
+        $result['action'] = 'delete';
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');    
+    }
 
-   // 
-//    public function beforeRender111() {
-//		if (!$this->RequestHandler->isAjax()) {
-//			return;
-//		}
-//		$controllerName = $this->request->params['controller'];
-//		$action = $this->request->params['action'];
-//		$singular = Inflector::singularize($controllerName);
-//		$modelName = Inflector::camelize($singular);
-//		switch ($action) {
-//			case 'index': 
-//				$param = $controllerName;				
-//				break;
-//			case 'add':
-//				$param = $singular;
-//				break;
-//			case 'edit':
-//				$param = $singular;
-//				break;
-//			case 'delete':
-//				return;
-//				break;
-//			case 'view':
-//				$object = $singular;
-//				break;
-//		}
-//		if (!isset($object) && isset($param)) {
-//			if (isset($this->viewVars[$param][0][$modelName])) {
-//				return array_map(function($row) use ($modelName) {
-//					return $row[$modelName];
-//				}, $this->viewVars[$param]);
-//			}
-//			elseif (isset($this->viewVars[$param][$modelName])) {
-//				return $this->viewVars[$param][$modelName];
-//			} else {
-//				return $this->viewVars[$param];
-//			}
-//		} elseif(isset($object)) {
-//			return $object;
-//		}
-//	}
-//
+
 }

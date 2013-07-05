@@ -14,7 +14,7 @@ class CaptchaComponent extends Component {
 	
     public $components = array('Session', 'RequestHandler');
 	
-	public $width  = 284;
+	public $width  = 160;
 
     /** Height of the image */
     public $height = 70;
@@ -204,6 +204,7 @@ class CaptchaComponent extends Component {
     
 	public function validateCaptcha($model = "cakecaptcha"){
 		$model = $this->controller->modelClass;
+        //debug($this->controller->data);die;
 		if(isset($this->controller->data[$model]['captcha']) && !empty($this->controller->data[$model]['captcha'])){
 			if($this->Session->check("cakecaptcha.".$this->session_var)){
 				if($this->Session->read("cakecaptcha.".$this->session_var) == $this->controller->data[$model]['captcha']){

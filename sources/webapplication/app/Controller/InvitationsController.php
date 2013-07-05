@@ -12,11 +12,8 @@ class InvitationsController extends AppController {
         'User'
     );
     public $components = array(
-        'Recaptcha.Recaptcha' => array(
-            'actions' => array(
-                'add'
-            )
-        )
+        'Captcha'
+        
     );
 
     /**
@@ -40,7 +37,8 @@ class InvitationsController extends AppController {
                 $this->Invitation->invalidate('emails', __d('invitations', 'Введите минимум один емейл'));
             }
             
-            if (! $this->Invitation->recaptcha or empty($emails) ) {
+            if (! $this->Captcha->validateCaptcha() || empty($emails) ) {
+            //if (! $this->Invitation->recaptcha or empty($emails) ) {
                 $this->Session->setFlash(__d('invitations', 'Ошибка при вводе данных, попробуйте ввести еще раз'), 'alert', array(
                     'class' => 'alert-error'
                 ));
@@ -56,18 +54,19 @@ class InvitationsController extends AppController {
                     ));
                 }
                 //Find emails of existing users
-                $this->User->contain();
-                $already_users_emails = $this->User->find('list', 
-                                                        array(
-                                                            'conditions' => array(
-                                                                'User.email' => $emails
-                                                            ), 
-                                                            'fields' => array(
-                                                                'id', 
-                                                                'email'
-                                                            )
-                                                        ));
-                $emails2send = array_diff($emails, $already_users_emails);
+                //$this->User->contain();
+//                $already_users_emails = $this->User->find('list', 
+//                                                        array(
+//                                                            'conditions' => array(
+//                                                                'User.email' => $emails
+//                                                            ), 
+//                                                            'fields' => array(
+//                                                                'id', 
+//                                                                'email'
+//                                                            )
+//                                                        ));
+                //$emails2send = array_diff($emails, $already_users_emails);
+                $emails2send = $emails;
                 //Send emails only non-registered users 
                 App::uses('CakeEmail', 'Network/Email');
                 foreach ( $emails2send as $address ) {

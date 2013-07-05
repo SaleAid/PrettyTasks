@@ -316,7 +316,7 @@ msgid "Сохранить"
 msgstr ""
 
 #: View/Tasks/index.ctp:433
-msgid "Кликните для перехода<br/> на"
+msgid "Кликните для перехода на"
 msgstr ""
 
 #: Model/Task.php:validation for field id;validation for field user_id;validation for field day_id

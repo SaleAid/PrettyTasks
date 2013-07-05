@@ -27,7 +27,9 @@ function getTaskFromPage(id){
         date:     $('#'+id).attr('date'),
         time:     $('#'+id).children('.time').text(),
         timeEnd:  $('#'+id).children('.timeEnd').text(),   
-        comment:  $('#'+id).children('.commentTask').text()   
+        comment:  $('#'+id).children('.commentTask').text(),
+        continued: +$('#'+id).data('continued'),
+        repeated: +$('#'+id).data('repeated')    
     };
     return data;
 }
@@ -87,13 +89,13 @@ function checkStatus(){
         data: {date: GLOBAL_CONFIG.date, hash:""},
         url: "/tasks/checkstatus.json",
         success: function (data) {
-            if(!data.result.success){
-                mesg(data.result.message.message, data.result.message.type);
+            if(!data.success){
+                mesg(data.message.message, data.message.type);
             }else{
-                switch(data.result.cause){
+                switch(data.cause){
                     case 'changeDay':
-                        mesg(data.result.message.message, data.result.message.type);
-                        setTimeout(reload,5000);
+                        mesg(data.message.message, data.message.type);
+                        setTimeout(reload, 5000);
                         break;
                }
                showErrorConnection(false);
@@ -103,7 +105,7 @@ function checkStatus(){
             if(xhr.status == '404' || xhr.status == 0){
                 showErrorConnection(true);
             }else{
-                console.log(xhr);
+                //console.log(xhr);
                 reload();
             }
        }
@@ -125,7 +127,7 @@ function checkLogin(){
                 if(xhr.status == '404' || xhr.status == 0){
                     showErrorConnection(true);
                 }else{
-                    console.log(xhr);
+                    //console.log(xhr);
                     //reload();
                 }
        }
@@ -150,7 +152,7 @@ function superAjax(url, data){
             type: 'POST',
             data: data,
             success: function(data, textStatus, jqXHR) {
-                responseHandler(data.result);
+                responseHandler(data);
                 countAJAX--;
                 displayLoadAjax(countAJAX); 
                 if (typeof _gaq != "undefined"){
@@ -188,13 +190,13 @@ function userEvent(action, data){
             taskDragOnDay(data.id, data.date, data.time);
         break;
         case 'changeOrders':
-            taskChangeOrders(data.id, data.position);
+            taskChangeOrders(data.list, data.id, data.position);
         break; 
         case 'edit':
-            taskEdit(data.id, data.title, data.priority, data.done, data.date, data.time, data.timeEnd, data.comment);
+            taskEdit(data.id, data.title, data.priority, data.continued, data.done, data.date, data.time, data.timeEnd, data.comment);
         break;
         case 'addDay':
-            taskAddDay(data.date);
+            taskAddDay(data.date, data.refresh);
         break;          
         case 'deleteDay':
             taskDeleteDay(data.date);
@@ -208,11 +210,26 @@ function userEvent(action, data){
         case 'setCommentDay':
             taskSetCommentDay(data.date, data.comment);
         break;
+        case 'getCommentTag':
+            taskGetCommentTag(data.tag);
+        break;
+        case 'setCommentTag':
+            taskSetCommentTag(data.tag, data.comment);
+        break;
         case 'getTasksByType':
             taskGetTasksByType(data.type);
         break;
         case 'deleteAll':
             taskDeleteAll(data.confirm);
+        break;
+        case 'getListByTag':
+            taskGetListByTag(data.tag);
+        break;
+        case 'getLists':
+            taskGetLists();
+        break;
+        case 'repeated':
+            taskRepeated(data.id, data.recur);
         break;
                     
     }
@@ -259,15 +276,200 @@ function responseHandler(data){
         case 'setCommentDay':
             onSetCommentDay(data);
         break;
+        case 'getCommentTag':
+            onGetCommentTag(data);
+        break;
+        case 'setCommentTag':
+            onSetCommentTag(data);
+        break;
         case 'getTasksByType':
             onGetTasksByType(data);
         break;
         case 'deleteAll':
             onDeleteAll(data);
         break;
+        case 'getListByTag':
+            onGetListByTag(data);
+        break;
+        case 'getLists':
+            onGetLists(data);
+        break;
+        case 'repeated':
+            onRepeated(data);
+        break;
     }
 
 }
+//---------------repeated-------------
+function taskRepeated(id, recur){
+    srvRepeated(id, recur);
+}
+
+function srvRepeated(id, recur){
+    superAjax('/tasks/repeated.json', {id: id, recur: recur});
+}
+
+function scrRepeated(data){
+    
+}
+
+function onRepeated(data){
+    if(data.success){
+        $('#repeatTask').modal('hide');
+        //scrEdit(data.data.Task.id, data.data.Task.title, data.data.Task.tags, data.data.Task.priority, data.data.Task.continued, data.data.Task.done, data.data.Task.date, data.data.Task.time, data.data.Task.timeend, data.data.Task.comment);
+    }else {
+        mesg(data.message.message, data.message.type);
+        //scrErrorEdit(data.errors);    
+    }
+}
+
+//---------------getLists-------------
+function taskGetLists(){
+    $('#lists').find('ul[date="lists"]').empty().append(_.template($("#ajax_loader_content").html()));
+    srvGetLists();
+}
+
+function srvGetLists(){
+    superAjax('/lists/getlists.json');
+}
+
+function scrGetLists(data){
+    $list = $('#lists');
+    $listUl = $list.find('ul[date="lists"]');
+    $listUl.empty();
+    if(!data){return;}
+    $.each( data, function(index, value) {
+            $listUl.append('<li><span class="tags-list label label-important" data-tag="'+value.name+'">&#x23;'+value.name+'<span class="close-tag">×</span></span><span"> x '+value.count+'</span></li>');
+    });
+}
+
+function onGetLists(data){
+    $('#lists .row').show();
+    if(!data.success){
+        $('#lists .row').hide();
+        mesg(data.message.message, data.message.type); 
+    }else{
+        $('#lists .row').find('ul[date="lists"]').hide('blind', 100, function(){
+            $(this).empty();
+            scrGetLists(data.data);
+            $(this).show('fade', 200);
+        });
+    }
+}
+
+//---------------getListByTag---------
+function taskGetListByTag(tag){
+    if(tag){
+        $('#list').find('ul[date="list"]').empty().append(_.template($("#ajax_loader_content").html()));
+        srvGetListByTag(tag);    
+    } else {
+        taskGetLists();
+    }
+    
+}
+
+function srvGetListByTag(tag){
+    superAjax('/lists/getTasksByTag.json',{tag: tag});
+}
+
+function scrGetListByTag(data){
+    $list = $('#list');
+    $list.find('.tag-name').text(data.tag);
+    $listUl = $list.find('ul[date="list"]');
+    $listUl.attr('data-tag', data.tag);
+    $listUl.data('tag', data.tag);
+    window.location.hash= 'list-'+data.tag;
+    var alltasks = 0;
+    var donetasks = 0;
+    if(!data.tasks){return;}
+    $.each( data.tasks, function(index, task) {
+            alltasks++;
+            if (+task.done){
+                donetasks++;
+            }
+            tmp_task = addTagToList(task);
+            $listUl.append(tmp_task);
+            initDelete($listUl.find("li[id='"+task.id+"'] .deleteTask"));
+            initEditAble($listUl.find("li[id='"+task.id+"'] .editable"));   
+    });
+    $listUl.siblings('.filter').find('span.all').text(alltasks);
+    $listUl.siblings('.filter').find('span.inProcess').text(alltasks - donetasks);
+    $listUl.siblings('.filter').find('span.completed').text(donetasks);
+    
+}
+
+function addTagToList(task){
+        liClass = '';
+        done = '';
+        time = '';
+        timeend = '';
+        comment_status ='';
+        date = '';
+        comment = task.comment;
+        repeated = 0;
+        continued = 0;
+        if(task.time != null){
+            time = task.time.slice(0,-3);
+            liClass += ' setTime'
+        }
+        if(task.timeend != null){
+            timeend = task.timeend.slice(0,-3);
+        }
+        if (+task.done){
+            liClass +=' complete';
+            done = 'checked';
+        }
+        if (+task.priority){
+            liClass +=' important';    
+        }
+        if (!task.comment || task.comment == null){
+            comment_status =' hide';
+            comment = '';    
+        }
+        if (task.date != null){
+            date = task.date;    
+        }
+        if (task.repeated){
+            repeated = 1;    
+        }
+        if(task.hasOwnProperty('continued')){
+            continued = task.continued;
+        }
+        
+        title = wrapTags(task.title, task.tags);
+        return _.template($("#task_tag").html(), {
+                                  id: task.id,
+                                  date: date, 
+                                  liClass: liClass,
+                                  time: time,
+                                  timeend: timeend,
+                                  checked: done,
+                                  title: title,
+                                  comment: comment,
+                                  comment_status: comment_status,
+                                  continued : +continued,
+                                  repeated : +repeated
+                                  
+        });
+}
+function onGetListByTag(data){
+    $('#list .row').show();
+    if(!data.success){
+        $('#list .row').hide();
+        window.location.hash= 'lists';
+        $('.lists').addClass('active');
+        userEvent('getLists');
+        activeTab('lists');
+    }else{
+        $('#list .row').find('ul[date="list"]').hide('blind', 100, function(){
+            $(this).empty();
+            scrGetListByTag(data.data);
+            $(this).show('fade', 200);
+        });
+    }
+}
+
+//---------------------------------
 
 //---------------deleteAll---------
 function taskDeleteAll(confirm){
@@ -314,7 +516,11 @@ function scrGetTasksByType(data){
         break;           
         case 'deleted':
             deletedTasks(data.data);
-        break;   
+        break;
+        case 'continued':
+            continuedTasks(data.data);
+        break;
+           
      }
 }
 function onGetTasksByType(data){
@@ -324,6 +530,76 @@ function onGetTasksByType(data){
         mesg(data.message.message, data.message.type);
     }
 }
+
+function addTaskNew(task){
+        liClass = '';
+        done = '';
+        time = '';
+        timeend = '';
+        comment_status ='';
+        date = '';
+        comment = task.comment;
+        if(task.time != null){
+            time = task.time.slice(0,-3);
+            liClass += ' setTime'
+        }
+        if(task.timeend != null){
+            timeend = task.timeend.slice(0,-3);
+        }
+        if (+task.done){
+            liClass +=' complete';
+            done = 'checked';
+        }
+        if (+task.priority){
+            liClass +=' important';    
+        }
+        if (!task.comment || task.comment == null){
+            comment_status =' hide';
+            comment = '';    
+        }
+        if (task.date != null){
+            date = task.date;    
+        }
+        title = wrapTags(task.title, task.tags);
+        return _.template($("#add_task").html(), {
+                                  id: task.id,
+                                  date: date, 
+                                  liClass: liClass,
+                                  time: time,
+                                  timeend: timeend,
+                                  checked: done,
+                                  title: title,
+                                  comment: comment,
+                                  comment_status: comment_status,
+                                  continued: 0,
+                                  repeated: 0
+                                  
+        });
+}
+
+function continuedTasks(data){
+    var $listUl = $('#continued ul[date="continued"]');
+    $listUl.empty();
+    $.each(data, function(index, value) {
+        if(+value.list.length){
+            day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
+            day = $(day_tmp);
+            day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
+            $listUl.append(day);   
+        }
+        $.each(value.list, function(index, task) {
+            $listUl.append( addTaskNew(task) );
+            initDelete($listUl.find("li[id='"+task.id+"'] .deleteTask"));
+            initEditAble($listUl.find("li[id='"+task.id+"'] .editable"));
+        });
+    });
+    if(!+$listUl.children('li').length){
+        $listUl.siblings('.emptyList').removeClass('hide');
+    }else{
+        $listUl.siblings('.emptyList').addClass('hide');
+    }
+}
+
 function futureTasks(data){
     var listUl = $('#future ul[date="future"]');
     listUl.empty();
@@ -332,16 +608,13 @@ function futureTasks(data){
             day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
             day = $(day_tmp);
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
-            initDayClick(day.children('span:first'));
             listUl.append(day);   
         }
         $.each(value.list,function(index, value) {
-            listUl.append( AddTask(value) );
-            initDelete(listUl.find("li[id='"+value.Task.id+"'] .deleteTask"));
-            //initEditAble("li[id='"+value.Task.id+"'] .editable");
-            initDone(listUl.find("li[id='"+value.Task.id+"'] .done"));
-            //initEditTask("li[id='"+value.Task.id+"'] .editTask");
-            listUl.find(" li[id='"+value.Task.id+"'] .editTask").addClass('hide');
+            listUl.append( addTaskNew(value) );
+            initDelete(listUl.find("li[id='"+value.id+"'] .deleteTask"));
+            initEditAble(listUl.find("li[id='"+value.id+"'] .editable"));
+            listUl.find(" li[id='"+value.id+"'] .editTask").addClass('hide');
         });
     });
     if(!+listUl.children('li').length){
@@ -363,16 +636,13 @@ function expiredTasks(data){
             day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
             day = $(day_tmp);
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
-            initDayClick(day.children('span:first'));
             listUl.append(day);   
         }
         $.each(value.list,function(index, value) {
-            listUl.append( AddTask(value) );
-            initDelete(listUl.find("li[id='"+value.Task.id+"'] .deleteTask"));
-            //initEditAble("li[id='"+value.Task.id+"'] .editable");
-            initDone(listUl.find("li[id='"+value.Task.id+"'] .done"));
-            //initEditTask("li[id='"+value.Task.id+"'] .editTask");
-            listUl.find(" li[id='"+value.Task.id+"'] .editTask").addClass('hide');
+            listUl.append( addTaskNew(value) );
+            initDelete(listUl.find("li[id='"+value.id+"'] .deleteTask"));
+            initEditAble(listUl.find("li[id='"+value.id+"'] .editable"));
+            listUl.find(" li[id='"+value.id+"'] .editTask").addClass('hide');
         });
     });
 }
@@ -387,22 +657,20 @@ function completedTasks(data){
     }
     $.each(data,function(index, value) {
         if(+value.list.length){
-            //day = $('<h3 class="day label label-info margin-bottom10" rel="tooltip" title="Кликните для перехода <br/> на '+index+'"><span class="dayDate">'+index+'</span> - <span class="'+value.weekDayStyle+'">'+value.weekDay+'</span></h3>');
             day_tmp = _.template($("#day_h3_label").html(), {date: index, weekDayStyle: value.weekDayStyle, weekDay: value.weekDay} );
             day = $(day_tmp);
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
-            initDayClick(day.children('span:first'));
             listUl.append(day);   
         }
         $.each(value.list,function(index, value) {
-            priority = +value.Task.priority ? 'important' : '';
-            time = value.Task.time ?  value.Task.time.slice(0,-3) : '';
-            timeend = value.Task.timeend ?  value.Task.timeend.slice(0,-3) : ''; 
+            priority = +value.priority ? 'important' : '';
+            time = value.time ?  value.time.slice(0,-3) : '';
+            timeend = value.timeend ?  value.timeend.slice(0,-3) : ''; 
             
             task = '<li class="'+priority+'"> '+
             '<span class="time">'+time+'</span> '+
             '<span class="timeEnd">'+timeend+'</span> '+
-            '<span class="title">'+convertToHtml(value.Task.title)+'</span> '+
+            '<span class="title">'+wrapTags(value.title, value.tags)+'</span> '+
             '</li> ';
             listUl.append( task );
             
@@ -430,38 +698,93 @@ function deletedTasks(data){
                 day.find('.dash').remove();    
             }
             day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
-            initDayClick(day.children('span:first'));
+            //initDayClick(day.children('span:first'));
             listUl.append(day);   
         }
         $.each(value.list,function(index, value) {
-            listUl.append( AddTask(value) );
-            initDelete(listUl.find("li[id='"+value.Task.id+"'] .deleteTask"));
+            listUl.append( addTaskNew(value) );
+            initDelete(listUl.find("li[id='"+value.id+"'] .deleteTask"));
             //initEditAble("li[id='"+value.Task.id+"'] .editable");
-            initDone(listUl.find("li[id='"+value.Task.id+"'] .done"));
-            //initEditTask("li[id='"+value.Task.id+"'] .editTask");
-            listUl.find(" li[id='"+value.Task.id+"'] .editTask").addClass('hide');
-            listUl.find(" li[id='"+value.Task.id+"'] .done").addClass('hide');
+            listUl.find(" li[id='"+value.id+"'] .editTask").addClass('hide');
+            listUl.find(" li[id='"+value.id+"'] .done").addClass('hide');
         });
     });
 }
 
 //----------------------------------
 
-function srcCountTasks(date){
+function srcCountTasks(date, drop){
+    var listTasks = [];
     if(date == ''){
-        date ='planned';
+        date = 'planned';
     }
-    var listTask = $("ul[date='"+date+"']");
-    var all = listTask.children('li').length;
-    var done = listTask.children('li.complete').length;
-    listTask.siblings('.filter').find('span.all').text(all);
-    listTask.siblings('.filter').find('span.inProcess').text(all - done);
-    listTask.siblings('.filter').find('span.completed').text(done);
-    if(!+all){
-        listTask.siblings('.emptyList').removeClass('hide');
+    if(drop){
+        listTasks.push($("ul[date='"+date+"']"));   
     }else{
-        listTask.siblings('.emptyList').addClass('hide');
+        listTasks = $("ul.filtered > li[date='"+date+"']").parent();    
     }
+    
+    $.each(listTasks, function(index, value) {
+        var all = $(value).children('li').length;
+        var done = $(value).children('li.complete').length;
+        $(value).siblings('.filter').find('span.all').text(all);
+        $(value).siblings('.filter').find('span.inProcess').text(all - done);
+        $(value).siblings('.filter').find('span.completed').text(done);
+        if(!+all){
+            $(value).siblings('.emptyList').removeClass('hide');
+        }else{
+            $(value).siblings('.emptyList').addClass('hide');
+        }
+    });
+}
+
+//---------------setCommnetTag-----
+function taskSetCommentTag(tag, comment){
+    srvSetCommentTag(tag, comment);    
+}
+
+function srvSetCommentTag(tag, comment){
+    superAjax('/lists/setCommentTag.json',{tag: tag, comment: comment});
+}
+
+function scrSetCommentTag(tag){
+	$('#commentDay').data('tag', null).attr('data-tag', null);
+	
+    $('#eCommentDay').text(null);
+    $('#commentDay').modal('hide');
+    
+}
+function onSetCommentTag(data){
+    
+    if(data.success){
+        scrSetCommentTag(data);
+    }else{
+        mesg(data.message.message, data.message.type);
+        scrErrorSetCommentDay(data.errors);
+    }
+}
+//---------------getCommnetTag-----
+function taskGetCommentTag(tag){
+    srvGetCommentTag(tag);    
+}
+
+function srvGetCommentTag(tag){
+    superAjax('/lists/getCommentTag.json',{tag: tag});
+}
+
+function scrGetCommentTag(data){
+	$('#commentDay').data('tag', data.tag).attr('data-tag', data.tag);
+	$('#eCommentDay').val(data.comment);
+    $('#commentDay').modal('show');
+    
+        
+}
+function onGetCommentTag(data){
+	if(!data.success){
+        mesg(data.message.message, data.message.type); 
+    }
+    
+    scrGetCommentTag(data.data);
 }
 
 //---------------setCommnetDay-----
@@ -591,15 +914,18 @@ function onDeleteDay(data){
 }
 
 //---------------addDay---------
-function taskAddDay(date){
+function taskAddDay(date, refresh){
 
-    if(scrAddDay(date)){
+    if(scrAddDay(date, refresh)){
         srvAddDay(date);    
     }
 }
 
-function scrAddDay(date){
+function scrAddDay(date, refresh){
     var flag = true;
+    if(refresh){
+        return true;
+    }
     $("#main ul:first li").each(function(){
         if($(this).children('a').attr('date') == date){
             flag = false;
@@ -658,7 +984,8 @@ function srvAddDay(date){
 function onAddDay(data){
     var list = $("ul[date='"+data.data.date+"']");
     var nameDay = $.datepicker.formatDate('DD', new Date (data.data.date));
-    list.children('.loadContent').remove();
+    list.empty();
+    list.siblings('.emptyList ').remove();
     var emptyList = _.template($("#empty_list_day_tasks").html(), {type: data.data.weekDayStyle});
     if($.isEmptyObject(data.data.list)){
         emptyList = $(emptyList).removeClass('hide');
@@ -675,13 +1002,11 @@ function onAddDay(data){
     }
     $.each(data.data.list,function(index, value) {
         list.append(AddTask(value));
-        initDelete( "li[id='"+value.Task.id+"'] .deleteTask");
-        initEditAble("li[id='"+value.Task.id+"'] .editable");
-        initDone("li[id='"+value.Task.id+"'] .done");
-        initEditTask("li[id='"+value.Task.id+"'] .editTask");
+        initDelete( "li[id='"+value.id+"'] .deleteTask");
+        initEditAble("li[id='"+value.id+"'] .editable");
     });
-    initCreateTask($("ul[date='"+data.data.date+"']").parent().find(".createTask"));
-    initCreateTaskButton($("ul[date='"+data.data.date+"']").parent().parent().find(".createTaskButton"));
+//    initCreateTask($("ul[date='"+data.data.date+"']").parent().find(".createTask"));
+//    initCreateTaskButton($("ul[date='"+data.data.date+"']").parent().parent().find(".createTaskButton"));
     initDrop($("li a[date='"+data.data.date+"']").parent());
     initSortable("ul[date='"+data.data.date+"'].sortable");
     initRatingDay(".ratingDay input[date='"+data.data.date+"']");
@@ -694,7 +1019,7 @@ function onAddDay(data){
 // --------------setDate--------
 
 function scrDate(id, date){
-    var task = $("li[id='"+id+"']");
+    var task = $("li[id='"+id+"'].currentTask");
     if(date){
         task.attr('date',date);    
     }else{
@@ -704,7 +1029,7 @@ function scrDate(id, date){
 
 //----------------setTime-------
 function scrTime(id, time, timeEnd){
-    var task = $("li[id='"+id+"']");
+    var task = $("li[id='"+id+"'].currentTask");
     if(time){
         task.find('.time').text(time);
         task.find('.timeEnd').text(timeEnd);    
@@ -716,7 +1041,7 @@ function scrTime(id, time, timeEnd){
 
 //----------------setPriority-------
 function scrPriority(id, priority){
-    var task = $("li[id='"+id+"']");
+    var task = $("li[id='"+id+"'].currentTask");
     if(+priority){
         task.addClass('impotant');
     }else{
@@ -738,17 +1063,16 @@ function scrCommentTask(id, comment){
 
 
 //----------------edit----------
-function taskEdit(id, title, priority, done, date, time, timeEnd, comment){
-    //scrEdit(id, title, priority, done, date, time, timeEnd, comment);
+function taskEdit(id, title, priority, continued, done, date, time, timeEnd, comment){
     if(+done && !date){
          date = GLOBAL_CONFIG.date;
     }
-    srvEdit(id, title, priority, done, date, time, timeEnd, comment);
+    srvEdit(id, title, priority, continued, done, date, time, timeEnd, comment);
 }
 function onEdit(data){
     if(data.success){
         $('#editTask').modal('hide');
-        scrEdit(data.data.Task.id, data.data.Task.title, data.data.Task.priority, data.data.Task.done, data.data.Task.date, data.data.Task.time, data.data.Task.timeend, data.data.Task.comment);
+        scrEdit(data.data.Task.id, data.data.Task.title, data.data.Task.tags, data.data.Task.priority, data.data.Task.continued, data.data.Task.done, data.data.Task.date, data.data.Task.time, data.data.Task.timeend, data.data.Task.comment);
     }else {
         mesg(data.message.message, data.message.type);
         scrErrorEdit(data.errors);    
@@ -777,30 +1101,35 @@ function scrErrorEdit(data){
     
 }
 
-function srvEdit(id, title, priority, done, date, time, timeEnd, comment){
-    superAjax('/tasks/editTask.json',{id: id, title: title, priority: priority, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment});
+function srvEdit(id, title, priority, continued, done, date, time, timeEnd, comment){
+    superAjax('/tasks/editTask.json',{id: id, title: title, priority: priority, continued: continued, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment});
 }
 
-function scrEdit(id, title, priority, done, date, time, timeEnd, comment){
+function scrEdit(id, title, tags, priority, continued, done, date, time, timeEnd, comment){
     var task = $("li[id='"+id+"'].currentTask");
+    task.data('continued', continued).attr('data-continued', continued);
     var currentTaskDate = task.attr('date');
     var currentTaskTime = task.find('.time').text();
     if(time == null){
         time = '';
     }
-    //console.log(time);
-    //console.log(currentTaskTime);
+    
+    scrDate(id,date);
+    scrSetDone(id,done);
+    scrSetTitle(id, title, tags, priority);
+    scrTime(id, time, timeEnd);
+    scrCommentTask(id, comment);
+    
     if (date == currentTaskDate && time == currentTaskTime){
         task.removeClass('currentTask');
     }else{
        scrDragWithTime(id, date, time); 
     }
     
-    scrDate(id,date);
-    scrSetDone(id,done);
-    scrSetTitle(id, title, priority);
-    scrTime(id, time, timeEnd);
-    scrCommentTask(id, comment);
+    if(+task.parent().data('refresh')){
+       _refreshDays(date);
+    }
+    
 }
 
 function toSeconds(t) {
@@ -808,6 +1137,12 @@ function toSeconds(t) {
     return bits[0]*3600 + bits[1]*60;
 }
 
+function _refreshDays(date){
+    if(date){
+        refreshDays.push(date);
+        refreshDays = _.uniq(refreshDays);    
+    }
+}
 
 function scrDragWithTime(id, date, time){
         var before = false;
@@ -816,6 +1151,18 @@ function scrDragWithTime(id, date, time){
         var taskRemote =  $("li[id='"+id+"']:not(.currentTask)");
         taskRemote.remove();
         task.removeClass('currentTask');
+        if(task.find('.tag-date').length > 0) {
+            var date_text = date;
+            task.attr('date', date);
+            if(!date){
+                date_text = GLOBAL_CONFIG.planned;
+                date ='planned';
+            }
+            task.find('.tag-date').text(date_text);
+            _refreshDays(date);
+            _refreshDays(currentTaskDate);
+            return;
+        }
         if(!date){
             var list = $("ul[date='planned']");
             time = null;
@@ -823,10 +1170,9 @@ function scrDragWithTime(id, date, time){
         }else{
             var list = $("ul[date='"+date+"']");    
         }
-        var timeList = list.find('li.setTime');
-        var newPositionID;
-        //var change = $.trim(task.find('.time').text())!= time;
-       // if(change){
+        if(list.length > 0) {
+            var timeList = list.find('li.setTime');
+            var newPositionID;
             if(time){
                 var listitems = list.children('li.setTime').get();
                 listitems.sort(function(a, b) {
@@ -854,11 +1200,7 @@ function scrDragWithTime(id, date, time){
                         
                 }else if(!newPositionID){
                     if(list.children().length){
-                        //if( !(currentTaskDate == date && !time)){
-                            $(this).prependTo(list);
-                        //}else{
-                        //    $(this).appendTo(list);
-                        //}
+                        $(this).prependTo(list);
                     }else{
                         $(this).appendTo(list);
                     }
@@ -875,33 +1217,36 @@ function scrDragWithTime(id, date, time){
                 if($(this).children('.editTask').hasClass('hide')){
                     $(this).children('.editTask').removeClass('hide');
                     initEditAble($(this).children('.editable'));
-                    initEditTask($(this).children('.editTask'));
                 }
                 if($(this).children('.done').hasClass('hide')){
                     $(this).children('.done').removeClass('hide');
                 }
+                
                 if(currentTaskDate != date){
-                    srcCountTasks(currentTaskDate);
-                    srcCountTasks(date);
-                }else{
-                    srcCountTasks(date);
+                    srcCountTasks(currentTaskDate, true);
                 }
-        });
-  //  }
+                srcCountTasks(date, true);
+            });    
+        } else {
+            task.remove();
+        }
+        //srcCountTasks(date, true);
+        
+        
 }
 
 //----------------changeOrder---
-function taskChangeOrders(id, position){
+function taskChangeOrders(list, id, position){
     scrChangeOrders(id, position);
-    srvChangeOrders(id, position);
+    srvChangeOrders(list, id, position);
 }
 function onChangeOrders(data){
     if(!data.success){
         mesg(data.message.message, data.message.type);    
     }
 }
-function srvChangeOrders(id, position){
-    superAjax('/tasks/changeOrders.json',{id: id, position: position});
+function srvChangeOrders(list, id, position){
+    superAjax('/tasks/changeOrders.json',{list:list, id: id, position: position});
 }
 function scrChangeOrders(id, position){
     $("li[id='"+id+"']").removeAttr('style');
@@ -943,9 +1288,20 @@ function srvDelete(id){
     superAjax('/tasks/setDelete.json',{id: id});
 }
 function scrDelete(id){
-    var date = $("li[id='"+id+"']").attr('date');
-    $("li[id='"+id+"']").remove();
-    srcCountTasks(date);
+    var $task = $("li[id='"+id+"'].currentTask");
+    var date = $task.attr('date');
+    if(!$task.attr('date')){
+            date = 'planned';
+        }
+    if(+$task.parent().data('refresh')){
+       _refreshDays(date);
+    }
+    if($task.find('.tag-date').length > 0) {
+        date = $task.parent().data('tag');
+    }
+    
+    $task.remove();
+    srcCountTasks(date, true);
 }
 
 //----------------setDone-------
@@ -993,12 +1349,16 @@ function taskSetTitle(id, title){
     srvSetTitle(id, title);
 }
 function onSetTitle(data){
-	scrSetTitle(data.data.Task.id, data.data.Task.title, data.data.Task.priority);
+    
+	scrSetTitle(data.data.Task.id, data.data.Task.title, data.data.Task.tags, data.data.Task.priority);
     if(data.data.Task.time && $("li[id='"+data.data.Task.id+"']").find('.time').text() != data.data.Task.time.slice(0,-3)){
-        $("ul[date='"+data.data.Task.date+"']").find("li[id='"+data.data.Task.id+"']").addClass('currentTask');
+        //$("ul[date='"+data.data.Task.date+"']").find("li[id='"+data.data.Task.id+"']").addClass('currentTask');
         scrDragWithTime(data.data.Task.id, data.data.Task.date, data.data.Task.time);
         $("li[id='"+data.data.Task.id+"']").find('.time').text(data.data.Task.time.slice(0,-3));
     }
+    $("li[id='"+data.data.Task.id+"'].currentTask").removeClass('currentTask');
+    $("li[id='"+data.data.Task.id+"'].need-remove").remove();
+    
     if(!data.success){
         mesg(data.message.message, data.message.type);    
     }
@@ -1006,15 +1366,44 @@ function onSetTitle(data){
 function srvSetTitle(id, title){
     superAjax('/tasks/setTitle.json',{id: id, title: title});
 }
-function scrSetTitle(id, title_text, priority){
-    var title = $("li[id='"+id+"']").find('.editable');
-    title.text(title_text);   
+function scrSetTitle(id, title_text, tags, priority){
+    var $task = $("li[id='"+id+"'].currentTask");
+    var title = $task.find('.editable');
+    date = $task.attr('date');
+    if(!$task.attr('date')){
+        date = 'planned';
+    }
+    if(+$task.parent().data('refresh')){
+       _refreshDays(date);
+    }
+    if($task.find('.tag-date').length > 0) {
+        if(_.indexOf(tags, $task.parent().data('tag')) == -1){
+            $task.addClass('need-remove');     
+        }
+    }
+    
+    title_text = wrapTags(title_text, tags);
+    title.html(title_text);   
     if(priority == 1){
         $("li[id='"+id+"']").addClass('important');
     }else{
         $("li[id='"+id+"']").removeClass('important');
     }
 }
+
+function wrapTags( title, tags ){
+    title = convertToHtml(title);
+    if(tags){
+        $.each(tags, function(index, value) {
+            if( value ){
+                value = convertToHtml(value);
+                title = title.split('#'+value).join('<span class="tags label label-important" data-tag="'+value+'">&#x23;'+value+'</span>');    
+            }
+        });
+    }
+    return title;
+}
+
 //----------------clone --------
 function taskClone(id, date){
     srvClone(id, date);
@@ -1051,29 +1440,31 @@ function srvCreate(title, date){
     superAjax('/tasks/addNewTask.json',{title: title, date: date });
 }
 function scrCreate(data){
-    date = data.data.Task.date;
-    if(data.data.Task.future){
+    date = data.data.date;
+    if(data.data.list){
+            $("ul[data-tag='"+data.data.list+"']").prepend(addTagToList(data.data));
+            _refreshDays('planned');
+            date = 'list';
+    } else if(data.data.future){
         date = 'planned';
-        data.data.Task.date = '';    
+        data.data.date = '';
         $("ul[date='"+date+"']").prepend(AddTask(data.data));
     } else {
         $("ul[date='"+date+"']").append(AddTask(data.data));    
     }
     
-    initDelete("li[id='"+data.data.Task.id+"'] .deleteTask");
-    initEditAble("li[id='"+data.data.Task.id+"'] .editable");
-    initDone("li[id='"+data.data.Task.id+"'] .done");
-    initEditTask("li[id='"+data.data.Task.id+"'] .editTask");
-    $("li[id='"+data.data.Task.id+"']").parent().siblings('.filter').children('a.active').trigger('click');
-    if(data.data.Task.time){
-        $("li[id='"+data.data.Task.id+"']").addClass('currentTask');
-        $("li[id='"+data.data.Task.id+"']").find('.time').text(null);
-        scrDragWithTime(data.data.Task.id, data.data.Task.date, data.data.Task.time);
-        $("li[id='"+data.data.Task.id+"']").find('.time').text(data.data.Task.time.slice(0,-3));
+    initDelete("li[id='"+data.data.id+"'] .deleteTask");
+    initEditAble("li[id='"+data.data.id+"'] .editable");
+    $("li[id='"+data.data.id+"']").parent().siblings('.filter').children('a.active').trigger('click');
+    if(data.data.time){
+        $("li[id='"+data.data.id+"']").addClass('currentTask');
+        $("li[id='"+data.data.id+"']").find('.time').text(null);
+        scrDragWithTime(data.data.id, data.data.date, data.data.time);
+        $("li[id='"+data.data.id+"']").find('.time').text(data.data.time.slice(0,-3));
     }
-    srcCountTasks(date); 	
+    srcCountTasks(date, true); 	
 }
-function AddTask(data){
+function AddTask(task){
     var important ='';
 	var setTime ='';
     var complete ='';
@@ -1081,65 +1472,92 @@ function AddTask(data){
     var time = '<span class="time"></span>';
     var timeEnd = '<span class="timeEnd"></span>';
     var comment = '';
-    if (+data.Task.priority){
+    if (+task.priority){
 		important = 'important';
 	}
-    if (+data.Task.done){
+    if (+task.done){
 		complete = ' complete';
         checked = ' checked';
 	}
-    if (data.Task.time){
-		setTime = '';
-        time = '<span class="time">'+data.Task.time.slice(0,-3)+'</span>';
-        if(data.Task.timeend){
-            timeEnd = '<span class="timeEnd">'+data.Task.timeend.slice(0,-3)+'</span>'; 
+    if (task.time){
+		setTime = ' setTime';
+        time = '<span class="time">'+task.time.slice(0,-3)+'</span>';
+        if(task.timeend){
+            timeEnd = '<span class="timeEnd">'+task.timeend.slice(0,-3)+'</span>'; 
         }
     }
-    if( ! data.Task.comment ){
+    if( ! task.comment ){
         comment = 'hide';
     }
-    taskHtml = '<li id ="'+data.Task.id+'" class="'+setTime+' '+complete+' '+important+'" date="'+data.Task.date+'"> \n'+ 
-                            time+'\n'+
-                            timeEnd+'\n'+
-                            '<span class="move"><i class="icon-move"></i></span> \n'+
-                            '<input type="checkbox" class="done" '+checked+'/> \n' +
-                            '<span class="editable ">'+convertToHtml(data.Task.title)+'</span> \n'+
-                            '<span class="commentTask">'+convertToHtml(data.Task.comment)+'</span> \n '+
-                            '<span class="comment-task-icon"><i class="icon-file '+comment+'"></i></span> \n'+
-                            '<span class="editTask"><i class="icon-pencil"></i></a></span> \n'+
-                            '<span class="deleteTask"><i class=" icon-ban-circle"></i></span> \n'+
+    var date = task.date;
+    if( task.date == null ){
+        date = '';
+    }
+    var title = wrapTags(task.title, task.tags);
+    taskHtml = '<li id ="'+task.id+'" class="'+setTime+' '+complete+' '+important+'" date="'+date+'">'+ 
+                            time+
+                            timeEnd+
+                            '<span class="move"><i class="icon-move"></i></span>'+
+                            '<input type="checkbox" class="done" '+checked+'/>'+
+                            '<span class="editable ">'+title+'</span>'+
+                            '<span class="commentTask">'+convertToHtml(task.comment)+'</span>'+
+                            '<span class="comment-task-icon"><i class="icon-file '+comment+'"></i></span>'+
+                            '<span class="editTask"><i class="icon-pencil"></i></a></span>'+
+                            '<span class="deleteTask"><i class=" icon-trash"></i></span> \n'+
                 '</li>';
     return taskHtml;
 }
 //-------------------------------------
 
 function initEditAble(element){
-         $(element).editable(function(value, settings) { 
-                    var id = $(this).parent().attr('id');   
-                    userEvent('setTitle', {id: id, title: value });
-                    return convertToHtml(value);
-             }
-             ,{
-                indicator : "<img src='img/indicator.gif'>",
-                placeholder : "",
-                //tooltip : "Щелкните чтоб отредактировать этот текст",
-                style  : "inherit",
-                data: function(value, settings) {
-                    var retval = convertToText(value);
-                    return retval;
-                }
+    
+         $(element).editable(function(value, settings) {
+                $(this).parent().addClass('currentTask');
+                var id = $(this).parent().attr('id');   
+                userEvent('setTitle', {id: id, title: value });
+                return convertToHtml(value);
+         }
+         ,{
+            indicator : "<img src='img/indicator.gif'>",
+            placeholder : "",
+            style  : "inherit",
+            data: function(value, settings) {
+                var retval = convertToText(value);
+                return retval;
+            },
+            event : "edit"
         });
+        $(element).on("click", function(e) {
+            if (e.target !== this) {
+               return; 
+            }
+            $(this).trigger("edit");
+        });       
+
 }
+
+function initTags(){
+    $(document).on('click', '.tags-list, .tags', function(e) {
+        var tag = $(this).attr('data-tag');
+        if(tag){
+            window.location.hash= '#list-'+tag;    
+        }
+        $(this).toggleClass('label-success', 'label-important');
+        return false;
+    });
+}
+
 function initDelete(element){
     $(element).inlineConfirmation({
               //reverse: true,
-              confirm: "<a href='#'><i class='icon-ok-sign'></i></a>",
-              cancel: "<a href='#'><i class='icon-remove-sign '></i></a>",
-              separator: " ",
+              confirm: "<i class='icon-trash icon-white t-del'></i>",
+              cancel: "",
+              separator: "",
               expiresIn: 3,
               bindsOnEvent: "click",
               confirmCallback: function(el) {
                  el.parent().fadeIn();
+                 el.parent().addClass('currentTask');
                  var id = el.parent().attr('id');
                  userEvent('delete', {id: id});
               },
@@ -1150,7 +1568,8 @@ function initDelete(element){
 }
 
 function initDone(element){
-    $(element).on("click", function(){
+    //$(element).on("click", function(){
+    $(document).on('click', element, function(e) {
         var id = $(this).parent().attr('id');
         var done = $(this).is(":checked")? 1 : 0;
         $(this).parent().addClass('currentTask');
@@ -1168,7 +1587,9 @@ function initRatingDay(element){
 }
 
 function initEditTask(element){
-     $(element).on("click", function(){
+     $(document).on("click", element, function(){
+     //$(element).on("click", function(){
+            $(this).parent().addClass('currentTask');
             var task = getTaskForEdit($(this).parent().attr('id'));
             var $priority = $('input:radio[name="priority"]');
             if(+task.priority){
@@ -1176,7 +1597,6 @@ function initEditTask(element){
             }else{
                 $priority.filter('[value="0"]').attr('checked', true);
             }
-            $(this).parent().addClass('currentTask');
             $('#editTask').attr('task_id', $(this).parent().attr('id'));
             $('#editTask').find('#eTitle').val(task.title);
             $('#editTask').find('#eComment').val(task.comment);
@@ -1184,6 +1604,11 @@ function initEditTask(element){
                 $('#editTask').find('#eDone').attr('checked','checked');
             }else {
                 $('#editTask').find('#eDone').removeAttr('checked');
+            }
+            if(task.continued){
+                $('#editTask').find('#eContinued').attr('checked','checked');
+            }else {
+                $('#editTask').find('#eContinued').removeAttr('checked');
             }
             $('#eTime').val(task.time);
             if(task.time){
@@ -1194,10 +1619,88 @@ function initEditTask(element){
             $('#eTimeEnd').val(task.timeEnd);
             $("#eDate").val(task.date);
             if (!task.date){
-                $( "#eDate" ).attr('placeholder', '---FUTURE---');
+                $('.continued-task').hide();
+                $('.repeated-task').hide();
+            } else {
+                $('.continued-task').show();
+                $('.repeated-task').show();
+            }
+            if (task.repeated){
+                $('#editTask').find('#eRepeat').attr('checked','checked');
+            }else {
+                $('#editTask').find('#eRepeat').removeAttr('checked');
             }
             $('#editTask').modal('show');
     });
+}
+
+function initRepeatTask(){
+     $('#eRepeat').on("click", function(){
+    	 $('#repeatTask').modal('show');
+     });
+     var $repeatedTask = $('#repeatTask');
+     var $until = $repeatedTask.find("input[name='until']");
+     $until.change(function() {
+    	 $(this).siblings("input[type='text']").focus();
+    	 $.each($until, function(index, value){
+    		 if(!$(value).is(':checked')) {
+    			$(value).siblings("input[type='text']").val('');
+		     }
+    	 });
+    	 
+     });
+     $repeatedTask.find('#date').datepicker({ 
+         dateFormat: 'yy-mm-dd',
+         showAnim: 'clip',
+     });
+     $('#freq').change(function() {
+	    $repeatedTask.find('.days-weekly').hide();
+        $("[class^=interval]").hide();
+        switch($(this).val()){
+            case 'dally':
+                $(".interval-d").show();
+            break;
+            case 'weekly':
+                $repeatedTask.find('.week input:checkbox').attr('checked', false);
+                //$repeatedTask.find('.week input:checkbox:first').attr('checked', true);
+                $repeatedTask.find('.days-weekly').show();
+                $(".interval-w").show();
+            break;
+            case 'monthly':
+                //$repeatedTask.find('.days-weekly').show();
+                $(".interval-m").show();
+            break;
+            case 'yearly':
+                $(".interval-y").show();
+            break;
+        }       
+     });
+     
+     //create repeated 
+     $("#saveRepeate").click(function(){
+            var id = $('#editTask').attr('task_id');
+            var recur = {};
+            var byDays = [];
+            recur.freq = $('#freq').val();
+            recur.interval = $('#interval').val();
+            recur.until = $("input[name=until]:checked").val();
+            if (recur.until == 'after'){
+                recur.count = $("input[name=until]:checked + #count").val();
+            }
+            if (recur.until == 'date'){
+                recur.date = $("input[name=until]:checked + #date").val();
+            }
+            if(recur.freq == 'weekly'){
+               $repeatedTask.find('.week input:checkbox:checked').each(function(){
+                    byDays.push($(this).val());
+                });
+                if(byDays.length > 0){
+                    recur.byDays = byDays;
+                } 
+            }
+            console.log(recur);
+            userEvent('repeated',{id: id, recur: recur});
+    }); 
 }
 
 function initCommentDay(element){
@@ -1208,8 +1711,18 @@ function initCommentDay(element){
     });
 }
 
+function initCommentTag(element){
+    $(document).on("click", element, function(){
+        var tag = $(this).parent().siblings('ul:first').data('tag');
+        userEvent('getCommentTag', {tag: tag});
+        return false;
+    });
+}
+
+
 function initCreateTask(element){
-    $(element).on('keypress', function(e){
+    $(document).on("keypress", element, function(e){
+    //$(element).on('keypress', function(e){
         var code = (e.keyCode ? e.keyCode : e.which);
         if(code == 13) {
             var title = $(this).val();
@@ -1217,6 +1730,10 @@ function initCreateTask(element){
             if(date == 'planned'){
                 date = '';
             }
+            if(date == 'list'){
+                date = $(this).parent().parent().siblings("ul").data('tag');
+            }
+            
             userEvent('create', {title: title, date: date });
             $(this).val(null);
             e.preventDefault();
@@ -1226,11 +1743,15 @@ function initCreateTask(element){
 }
 
 function initCreateTaskButton(element){
-    $(element).on('click', function(e){
+    $(document).on("click", element, function(e){
+    //$(element).on('click', function(e){
         var title = $(this).parent().find('.createTask').val();
-        var date = $(this).parent().siblings("ul").attr('date');
+        var date = $(this).parent().parent().siblings("ul").attr('date');
         if(date == 'planned'){
             date = '';
+        }
+        if(date == 'list'){
+                date = $(this).parent().parent().siblings("ul").data('tag');
         }
         userEvent('create', {title: title, date: date });
         $(this).parent().find('.createTask').val(null);
@@ -1250,7 +1771,7 @@ function initDrop(element){
                 var id = ui.draggable.attr('id');
                 var date = $(this).children( "a" ).attr( "date" )
                 var time = $.trim(ui.draggable.children('.time').text());
-                //if((date == ui.draggable.attr("date")) || (date == 'planned' && !ui.draggable.attr("date")) ){
+                
                 if((date == 'planned' && !ui.draggable.attr("date")) ){
                     mesg(GLOBAL_CONFIG.moveForbiddenMessage, 'success');
                     return false;   
@@ -1259,6 +1780,9 @@ function initDrop(element){
                     mesg(GLOBAL_CONFIG.moveCompletedForbiddenMessage, 'success');
                     return false;   
                 }
+                //if(ui.draggable.children('.tag-date').length > 0 ){
+//                   ui.draggable.children('.tag-date').remove(); 
+//                }
                 if(isACopy) {
                     userEvent('clone', {id: id, date: date});
                     //return false;
@@ -1267,7 +1791,7 @@ function initDrop(element){
                     userEvent('dragOnDay', {id: id, date: date, time:time});    
                 }
             } 
-    }).disableSelection();
+    });
 }
 
 function initSortable(element){
@@ -1291,14 +1815,15 @@ function initSortable(element){
                 
                 if( ui.item.parent().attr('date') == 'expired' || 
                 		ui.item.parent().attr('date') == 'future' ||
-                		ui.item.parent().attr('date') == 'deleted' 
-                		//|| ui.item.hasClass('setTime') 
+                		ui.item.parent().attr('date') == 'deleted' ||
+                        ui.item.parent().attr('date') == 'continued' 
+                		//|| ui.item.parent().data('tag') 
                     ){
                     mesg(GLOBAL_CONFIG.moveForbiddenMessage, 'success');
                     $(this).css("color","");
                     return false;  
                 }
-                if (ui.item.hasClass('setTime') ){
+                if (ui.item.hasClass('setTime') && !ui.item.parent().data('tag')){
                 	var listitems = ui.item.parent().children('li.setTime').get();
                 	var error = false;
                 	$.each(listitems, function(idx, itm) { 
@@ -1313,8 +1838,15 @@ function initSortable(element){
                 }
                 
                 var id = ui.item.attr('id');
-                var position = ui.item.index()+1;
-                userEvent('changeOrders', {id: id, position: position});
+                var position = ui.item.index() + 1;
+                var list = {name:'date'};
+                
+                if(ui.item.parent().data('tag')){
+                    list = {name: 'tag', tag: ui.item.parent().data('tag')};
+                    
+                }
+                
+                userEvent('changeOrders', {list:list, id: id, position: position});
             },
           stop: function(e, ui) {
                 isDragging = false;
@@ -1324,20 +1856,35 @@ function initSortable(element){
                 }
         },
         
-    }).disableSelection();
+    });
 }
 
 function initTab(element){
-     $(element).on('shown', function (e) {
-	var tab_id = $(this).attr('date');
-	setFiler(tab_id);
-	window.location.hash= 'day-'+e.target.hash.slice(1);
-    })
+    $(element).on('shown', function (e) {
+    	var tab_id = $(this).attr('date');
+        if(tab_id == 'list' || tab_id == 'lists'){
+            //window.location.hash= 'list';
+        }else{
+            var index = _.indexOf(refreshDays, tab_id);
+            if( index > -1){
+                delete refreshDays[index];
+                userEvent('addDay',{date: tab_id, refresh: true});
+            }
+            window.location.hash = 'day-'+tab_id;
+            if(tab_id == 'future'){
+                $('.nav.top li').removeClass('active');
+                $('.agenda').addClass('active');
+            }else{
+                $('.nav.top li').removeClass('active');
+                $('.tasks').addClass('active');    
+            }
+        }
+    	setFiler(tab_id);
+    });
 }
 
 function setFiler(tab_id){
     var filter = $.cookie('filter');
-    //filter ='completed';
     if(filter){
 	$('.tab-content').find('#'+tab_id)
 			 .find('.filter a[data="'+filter+'"]')
@@ -1351,6 +1898,8 @@ function initTabDelte(element){
         userEvent('deleteDay', {date:date});
     });
 }
+
+
 
 function initFilter(element){
     $(element).on('click', function() {
@@ -1400,25 +1949,31 @@ function initFilter(element){
     });
 }
 function initDayClick(element){
-    $(element).on('click', function() {
-        var date = $(this).text();
+    //$(element).on('click', function() {
+    $(document).on('click', element, function() {
+        var date = $(this).attr('date');
+        if(!date){
+            date ='planned';
+        }
         userEvent('addDay',{date: date});
     });
 }
 
 function InitClock() { 
-  var TimezoneOffset = GLOBAL_CONFIG.timezone; 
-  var localTime = new Date(); 
-  var ms = localTime.getTime() + (localTime.getTimezoneOffset() * 60000) + TimezoneOffset * 3600000; 
+  var TimezoneOffset = GLOBAL_CONFIG.timezone;
+  var localTime = new Date();
+  if(TimezoneOffset == ''){
+        TimezoneOffset = localTime.getTimezoneOffset() * -60;
+  } 
+  var ms = localTime.getTime() + (localTime.getTimezoneOffset() * 60000) + TimezoneOffset * 1000; 
   var time = new Date(ms);  
   var hour = time.getHours();  
   var minute = time.getMinutes(); 
   var second = time.getSeconds(); 
   var temp = "" + ((hour < 10) ? "0" : "") + hour; 
   temp += ((minute < 10) ? ":0" : ":") + minute; 
-  //temp += ((second < 10) ? ":0" : ":") + second; 
   document.getElementById('clock').innerHTML = temp; 
-  setTimeout("InitClock()",1000); 
+  setTimeout("InitClock()", 1000); 
 } 
 function initDeleteAll(element){
     $(element).on('click', function(){
@@ -1476,53 +2031,51 @@ var countAJAX = 0;
 var connError = false;
 var pressCtrl = false;
 var isDragging = false;
+var refreshDays = [];
 
 $(function(){
-     
-   // $(document).keydown(function (e) {
-//        if(e.ctrlKey && isDragging){
-//            pressCtrl = true;
-//            $('.move').addClass('cp');
-//        }
-//    });
-//    
-//    $(document).keyup(function (e) {
-//        if(pressCtrl){
-//            pressCtrl = false;
-//            $('.move').removeClass('cp');
-//        }
-//    });
-               
-               
-               
      $(window).hashchange( function(e){
         if(location.hash != "") { 
-            var hash = location.hash.slice(5);
-
-            var activeTab =  $('#main li.active a').attr('date');
-            if(hash == activeTab) {return;}
-            if(isDate(hash)){
-                hash = $.datepicker.formatDate('yy-mm-dd',$.datepicker.parseDate('yy-mm-dd', hash));
-                userEvent('addDay',{date: hash});
-            }else if(hash == "future" || hash == "expired" || hash == "completed" || hash == "deleted"){
-                userEvent('getTasksByType', {type: hash});
-                $('#main a[href="#'+hash+'"]').tab('show');
-            }else if(hash == "planned"){
-                //$('#main a[href="#'+hash+'"]').tab('show'); 
-                 userEvent('addDay',{date: hash});  
-            }else{
-                var today = $.datepicker.formatDate('yy-mm-dd',new Date());
-                location.hash = 'day-'+today;
-                $('#main a[href="#'+today+'"]').tab('show');
+            var pattern_list=/^#list(s$|-.+)/;
+            var list = pattern_list.test(location.hash);
+            if (list){
+                $('.nav.top li').removeClass('active');
+                if (location.hash == "#lists" ){
+                    $('.lists').addClass('active');
+                    userEvent('getLists');
+                    activeTab('lists');
+                }else{
+                    var tag = location.hash.slice(6);
+                    userEvent('getListByTag', {tag: tag});
+                    activeTab('list');    
+                }
+                
+            } else{
+                var hash = location.hash.slice(5);
+                var aTab =  $('#main li.active a').attr('date');
+                if(hash == aTab) {return;}
+                if(isDate(hash)){
+                    hash = $.datepicker.formatDate('yy-mm-dd',$.datepicker.parseDate('yy-mm-dd', hash));
+                    userEvent('addDay',{date: hash});
+                }else if( $.inArray(hash, ["expired", "completed", "deleted", "continued", "future"]) != -1 ){
+                    userEvent('getTasksByType', {type: hash});
+                    $('#main a[href="#'+hash+'"]').tab('show');
+                }else if(hash == "planned"){
+                     userEvent('addDay',{date: hash});
+                }else{
+                    var today = $.datepicker.formatDate('yy-mm-dd',new Date());
+                    location.hash = 'day-'+today;
+                    $('#main a[href="#'+today+'"]').tab('show');
+                }
+                if(hash == 'future'){
+                    $('.nav.top li').removeClass('active');
+                    $('.agenda').addClass('active');
+                }else{
+                    $('.nav.top li').removeClass('active');
+                    $('.tasks').addClass('active');
+                }    
             }
-            if(hash == 'future'){
-                $('.agenda').addClass('active');
-                $('.tasks').removeClass('active');
-            }else{
-                $('.agenda').removeClass('active');
-                $('.tasks').addClass('active');
-            }
-         }
+         } 
     });
     $(window).hashchange();
 
@@ -1535,7 +2088,7 @@ $(function(){
     $('.help').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
     $('#addDay').tooltip({placement:'bottom',delay: { show: 500, hide: 100 }});
     $('#completed h3').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
-    
+    initTags();
     initTab('#main a[data-toggle="tab"]');
     initCreateTask(".createTask");
     initCreateTaskButton(".createTaskButton");
@@ -1549,12 +2102,19 @@ $(function(){
     initTabDelte('li a[data-toggle="tab"] .close');
     initFilter('.filter a');
     initCommentDay('.days a[data="commentDay"]');
+    initCommentTag('.days a[data="commentTag"]');
     initDayClick('.day');
+    initDayClick('.tag-date');
+    
     initPrintClick('.print');
     InitClock();
     initDeleteAll('.delete_all');
     setFiler($('.listDay .active').children('a').attr('date'));
+    initRepeatTask();
 
+    
+    
+    
     $(".daysButton a").click(function(){
         var type = $(this).attr('date');
         userEvent('getTasksByType', {type: type});
@@ -1594,17 +2154,23 @@ $(function(){
             var title = $.trim($('#editTask').find('#eTitle').val());
             var priority = $.trim($('input:radio[name="priority"]:checked', '#editTask').val());
             var done = $.trim($('#editTask').find('#eDone').is(":checked")? 1: 0);
+            var continued = $.trim($('#editTask').find('#eContinued').is(":checked")? 1: 0);
             var date = $.trim($( "#eDate" ).val());
             var time = $.trim($('#eTime').val());
             var timeEnd = $.trim($('#eTimeEnd').val());
             var comment = $.trim($('#eComment').val());
-            userEvent('edit',{id: id,title: title, priority: priority, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment });
+            userEvent('edit',{id: id,title: title, priority: priority, continued: continued, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment });
     });
     
     $("#eCommentDaySave").click(function(){
             var date = $('#commentDay').attr('date');
+            var tag = $('#commentDay').data('tag');
             var comment = $('#eCommentDay').val();
-            userEvent('setCommentDay',{date: date, comment: comment });
+            if(tag){
+            	userEvent('setCommentTag',{tag: tag, comment: comment });
+            } else {
+            	userEvent('setCommentDay',{date: date, comment: comment });
+            }
     });
     
     //modal close 
@@ -1614,6 +2180,9 @@ $(function(){
     
     $('#commentDay').on('hidden', function () {
         scrErrorSetCommentDay();
+        $('#commentDay').removeAttr('date');
+        $('#commentDay').data('tag', null).attr('data-tag', null);
+    	
     });
     
     $('#commentDay textarea, #editTask input, #editTask textarea').change(function () {
@@ -1639,7 +2208,7 @@ $(function(){
             dp.hide();
         }
         e.preventDefault();
-    }).disableSelection();
+    });//.disableSelection();
     
     $('.addDay').click(function(){
         $(this).find('li').removeClass('active'); 

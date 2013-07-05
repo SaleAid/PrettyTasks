@@ -1,24 +1,14 @@
 <?php 
-   Configure::write('loginza.id', '14377');
-   Configure::write('loginza.skey', '21013aca17787a9d1b8cf4be7c7f5aeb');
-   Configure::write('loginza.token_url', 'http://learning-2012.org.ua/accounts/loginzalogin');
-   Configure::write('loginza.widget_url', 'http://loginza.ru/js/widget.js');
+   //AutoLogin key
    
-   Configure::write('loginza.provider', array('facebook' => 'http://www.facebook.com/',
-                                              'twitter' => 'http://twitter.com/',
-                                              'vkontakte' => 'http://vk.com/',
-                                              'google' => 'https://www.google.com/accounts/o8/ud',
-                                              'linkedin' => 'http://www.linkedin.com/'
-                                        )
-            );
-   
-   
-   Configure::write('Recaptcha.publicKey', '6Lff1M4SAAAAAFQKlC0j9iy4nhQnc82o-5jmGuIa');
-   Configure::write('Recaptcha.privateKey', '6Lff1M4SAAAAAFbUUEYXP9c92v4fXvxf3m3BcBM3');
-   Configure::write('Recaptcha.theme', 'white');
-   Configure::write('Recaptcha.tabindex', 2);
+   Configure::write('AutoLogin.hash.key', 'DYhG91a3b0qyJf6Isxfs2guVoUubWw2vniR2G0FgaC9mi');
+   Configure::write('AutoLogin.cookie.key', '762s852342393096574123125535496749683645');
+   Configure::write('AutoLogin.rmb.key', '176859309634235745535424967496845121');
    
    Configure::write('GoogleAnalytics.ID', 'UA-29304740-1');
+   
+   // default timezone
+   Configure::write('Config.timezone', 'UTC');
    
    Configure::write('Config.language', 'rus');
    Configure::write('Config.langURL', 'ru');
@@ -26,8 +16,10 @@
    Configure::write('Config.lang.available.ru', array('lang' => 'rus', 'name' => __d('users', 'Russian')));
    Configure::write('Config.lang.available.en', array('lang' => 'eng', 'name' => __d('users', 'English')));
    
-   define('FULL_BASE_URL', 'http://learning-2012.org.ua');
-   
+   //define('FULL_BASE_URL', 'http://learning-2012.org.ua');
+   if (isset($_SERVER['REQUEST_URI']))
+        $_SERVER['REQUEST_URI'] = str_replace('://', ':%2F%2F', $_SERVER['REQUEST_URI']);
+
    Configure::write('Site.name', 'Pretty Tasks');
    Configure::write('Site.url', 'http://'.@$_SERVER["HTTP_HOST"].'/');
    Configure::write('Site.title', 'Pretty Tasks');
@@ -77,8 +69,16 @@
    
    Configure::write('App.Minify.css', false);
    Configure::write('App.Minify.js', false);
+   
+   //
+   Configure::write('App.allowHTTPS', false);
+   Configure::write('App.maintenanceMode', false);
       
    Configure::write('Session.cookie', 'PrettyTasks');
+   
+   //repeated tasks
+   Configure::write('Repeated.MaxCount', 360);
+   
    
    //Cache
    //Cache::config('elements', array(

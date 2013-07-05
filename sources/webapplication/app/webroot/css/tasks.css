@@ -1,8 +1,4 @@
 
-.modal {
-    max-height: 90%;
-    overflow-y: auto;
-}
 #main{
     
 }
@@ -10,16 +6,17 @@
 .tab-content{
     float: right;
 }
-.listDay{
-   
-}
+
 .clear{clear: both;}
+
 .sortable { list-style-type: none; margin: 0; padding: 0;  }
+
 .label-info{
     padding: 6px 0;
 }
 
 .sortable li {
+    position: relative;
     width: 770px;
     background: none;
     height: 33px;
@@ -40,7 +37,7 @@
 .listTask h3 {
     padding-left: 10px;
 }  
-.listTask .label {
+.listTask .day {
     display: block;
 }
 #addDay{
@@ -48,7 +45,16 @@
     margin-right: 1px;
     margin-left: 1px;
     font-size: 15px;
-}  
+} 
+
+.tags{
+    margin-bottom: 2px;
+}
+
+
+.tags:hover{
+    cursor: pointer;
+}
 
 
 .s4{
@@ -77,6 +83,7 @@
 
 div.well{
     padding: 0px;
+    padding-left: 3px;
     background-color: inherit;
     border: none;
     box-shadow: none;
@@ -107,10 +114,15 @@ div.well{
 .ratingDay{
    display: inline-block;
    margin-right: 10px;
+   
+}
+.ratingDay input[type="checkbox"] {
+   margin-left: 0;
+   margin-right: 5px;
+   margin-top: 2px; 
 }
 .days a{
     vertical-align: top;
-    margin-right: 15px;
     text-decoration: none;
     border-bottom: 1px dashed;
 }
@@ -131,7 +143,7 @@ div.well{
 .print{
     display: inline-block;
     float: right;
-    margin: 4px 7px 4px 0;
+    margin: 7px 7px 4px 0;
 }
 .print:hover, .help:hover{
     cursor: pointer;
@@ -148,28 +160,38 @@ div.well{
 
 .editable{
     display: inline-block;
-    width: 590px;
+    width: 601px;
     text-align: left;
-    font-family: arial,sans-serif;
+    font-family: arial, sans-serif;
     /*font-weight: bold;*/
     font-size: 100%;
     overflow:hidden;
     height:  33px !important;
-    line-height: 33px;
+    line-height: 36px;
     border: 0 !important;  
-    margin: 0 !important;
+    /*margin: 0 !important;*/
+    margin-left: 5px;
     padding: 0 !important;
 }
 
 .editable:hover{cursor: text;}
 
-.editable form, .editable input {
-    height: 26px !important;
-    width: 586px !important;
-    border: 0 !important;  
-    margin: 0 0 0 1px !important;
-    padding: 0 !important;
+.editable form {
+    margin: 0;
+    padding: 0;
     color: blue;
+}
+.editable input{
+    margin-left: 0px;
+    margin-bottom: 2px!important;
+    height: 26px !important;
+    width: 600px !important;
+    border: none!important;
+    outline: none;
+    background-color: #FEFEF3;
+}
+.editable input:focus{
+    outline: none;
 }
 
 .complete {
@@ -234,42 +256,7 @@ div.well{
     margin-left: 5px;
     width: 50px;
 }
-.errorEdit{
-    border-color: #B94A48!important;
-    background-color: #fff8f8 !important;
-}
-.errorEdit:focus {
-  border-color: #953b39!important;
-  -webkit-box-shadow: 0 0 6px #d59392!important;
-     -moz-box-shadow: 0 0 6px #d59392!important;
-          box-shadow: 0 0 6px #d59392!important;
-}
-.errorTooltip{
-    position: fixed;
-}
-.errorTooltip .tooltip-inner{
-    background-color: red;
-    
-}
-.tooltip.right .tooltip-arrow{ border-right-color: red;}
 
-/*jGrowl theme 
-div.jGrowl div.success {
-    background-color: #008040;
-    color: yellow;
-}
-div.jGrowl div.info {
-    background-color: #804040;
-    color: yellow;
-}
-div.jGrowl div.error {
-    background-color: red;
-    color: yellow;
-}
-div.jGrowl.custom {
-	right: 0px;
-	top: 25px;
-}*/
 .day{
     margin-top: 4px;
 }
@@ -299,8 +286,8 @@ div.jGrowl.custom {
 }
 .inline-confirmation-block{
     margin-left: 5px;
-    vertical-align: top !important;
 }
+
 /*modal window*/
 #editTask{
     width: 600px;
@@ -361,19 +348,7 @@ div.jGrowl.custom {
     margin-top: 2px;
 }
 
-.head-list-info{
-    background-color:#d9edf7;
-    color:#3a87ad;
-    font-weight: normal;
-    font-size: 16px;
-    padding:0px 35px 0px 14px;
-    margin-bottom:18px;
-    text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
-    border:1px solid #bce8f1;
-    -webkit-border-radius:4px;
-    -moz-border-radius:4px;
-    border-radius:4px;
-}
+
 .daysButton .active a{
     background-color: white;
     background-image: none;
@@ -386,4 +361,88 @@ div.jGrowl.custom {
 .drop .btn-group{
     display: inline;
 }
+.tag-date{
+    position: absolute;
+    right: 100px;
+    top: 8px;
+}
 
+.tag-date:hover, .tags-list:hover{
+    cursor: pointer;
+    color: #C0EEF1;
+}
+.lists li{
+    list-style: none;
+    float: left;
+    margin-right: 5px;
+}
+
+.tags-list{
+    margin-bottom: 2px;
+}
+.tags-list:hover .close-tag{
+    opacity: 0.2;
+    filter: alpha(opacity=0.2);
+}
+.close-tag{
+    margin-right: -2px;
+    margin-left: 5px;
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+    text-shadow: 0 1px 0 #ffffff;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.tags-list:hover .close-tag:hover{
+    opacity: 0.5;
+    filter: alpha(opacity=0.5);
+}
+
+.done-continued{
+    margin-left: 100px;
+}
+#eComment, #eCommentDay{
+    resize: none;
+    resize: vertical; 
+}
+
+.form-repeat{
+    margin-left: 30px;
+}
+
+.form-repeat td{
+    vertical-align: baseline;
+}
+.form-repeat td.label-td{
+    text-align: right;
+}
+
+.form-repeat input {
+    margin-bottom: 0;
+}
+.form-repeat .week label{
+    display: inline-block;
+}
+.form-repeat .week input {
+    margin-bottom: 5px;
+}
+
+.listTask .icon-pencil, .icon-move, .icon-file, .icon-trash{
+    opacity: 0.2;
+}
+.listTask .icon-pencil:hover, .icon-move:hover, .icon-file:hover, .icon-trash:hover{
+    opacity: 1;
+}
+.t-del{
+    opacity: 1;
+    margin-top: -1px;
+    padding-left: 1px;
+    margin-left: -1px;
+    background-color: #b94a48;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.ui-datepicker, .ui-timepicker-container{ z-index: 9999 !important;}

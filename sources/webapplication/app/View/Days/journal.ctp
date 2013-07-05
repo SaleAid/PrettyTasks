@@ -5,7 +5,7 @@
        echo $this->Html->css('main.' . Configure::read('App.version'), null, array('block' => 'toHead')); 
        echo $this->Html->css('journal.'.Configure::read('App.version'), null, array('block' => 'toHead'));
        echo $this->Html->css('print.' . Configure::read('App.version'), null, array('block' => 'toHead'));
-       
+       echo $this->Html->css('jquery.jgrowl.'.Configure::read('App.version'), null, array('block' => 'toHead'));
     }
      if( Configure::read('App.Minify.js') ){
         echo $this->Html->script('min/journal.' . Configure::read('App.version'), array('block' => 'toFooter'));
@@ -13,6 +13,7 @@
        echo $this->Html->script('main.'.Configure::read('App.version'), array('block' => 'toFooter'));
        echo $this->Html->script('journal.'.Configure::read('App.version'), array('block' => 'toFooter'));
        echo $this->Html->script('print.' . Configure::read('App.version'), array('block' => 'toFooter'));
+       echo $this->Html->script('jquery.jgrowl.min.' . Configure::read('App.version'), array('block' => 'toFooter'));
        
     }
 ?>
@@ -34,7 +35,7 @@
                         )); 
                     ?>
                     <?php if($day['Day']['rating']): ?>&nbsp;&nbsp;
-                        <?php echo $this->Html->image("gday.". Configure::read('App.version') .".png", array('class' => 'g-day', 'width' => 16, 'height' => 16)); ?>
+                        <?php echo $this->Html->image("gday.". Configure::read('App.version') .".png", array('title' => __d('users', 'Good day'), 'class' => 'g-day', 'width' => 20, 'height' => 20)); ?>
                     <?php endif; ?>
                 </span>
                 <p><?php echo h($day['Day']['comment']); ?></p>

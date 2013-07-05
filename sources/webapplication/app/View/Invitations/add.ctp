@@ -37,7 +37,8 @@ echo $this->Form->input('emails',
     <?php echo __d('invitations', 'Пожалуйста, подтвердите, что вы человек'); ?>
 </p>
            
-<?php echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => Configure::read('Recaptcha.theme'))));?>
+<?php //echo $this->Recaptcha->display(array('recaptchaOptions' => array('theme' => Configure::read('Recaptcha.theme'))));?>
+<?php echo $this->Captcha->input(); ?>
 </fieldset>
 <br />
 <?php

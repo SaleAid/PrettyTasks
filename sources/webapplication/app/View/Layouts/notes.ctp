@@ -14,6 +14,7 @@ echo $this->Html->docType('html5');
 <?php
 echo $this->Html->meta('icon');
 echo $this->Html->css('bootstrap.min');
+
 echo $this->Html->css($this->Loginza->getCssUrl());  
 echo $this->fetch('toHead');
 echo $scripts_for_layout;
@@ -61,7 +62,7 @@ if(Configure::read('Config.language') =='eng'){
 
 <?php echo $this->Html->script('http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');?>
 
-<?php echo $this->Html->script('http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js');?>
+<?php //echo $this->Html->script('http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js');?>
 
 <?php echo $this->Html->script('bootstrap.min');?>
 
@@ -80,7 +81,8 @@ if(Configure::read('Config.language') =='eng'){
 ?>
 <?php 
     if(!empty($currentUser)){
-        echo $this->element('box', array(), array('cache' => array('key' => 'box', 'config' => 'elements')));    
+        echo $this->element('box', array(), array('cache' => array('key' => 'box', 'config' => 'elements')));
+        echo $this->element('js_global_config', array(), array('cache' => array('key' => 'js_global_config', 'config' => 'elements')));     
     }
 ?>
 <?php echo $this->element('noscript', array(), array('cache' => array('key' => 'noscript', 'config' => 'elements'))); ?> 

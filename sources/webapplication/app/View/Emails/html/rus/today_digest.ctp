@@ -3,8 +3,11 @@
 <p>Доброе утро, <?php echo $user['User']['full_name']; ?>!</p>
 
 <p>На сегодня у вас <?php echo __dn('mail', 'запланирована', 'запланировано', $data['tasks']['today']['count']); ?> <?php echo $data['tasks']['today']['count']; ?> <?php echo __dn('mail', 'задач', '', $data['tasks']['today']['count']); ?>
-<?php if($data['tasks']['today']['count_priority']): ?>, из них 
-<?php echo $data['tasks']['today']['count_priority'] ?> <?php echo __dn('mail', 'важная', 'важные', $data['tasks']['today']['count_priority']); ?><?php endif; ?>.</p> 
+<?php if( $data['tasks']['today']['count_priority'] ): ?>
+    , из них 
+    <?php echo $data['tasks']['today']['count_priority'] ?> <?php echo __dn('mail', 'важная', 'важные', $data['tasks']['today']['count_priority']); ?>
+<?php endif; ?>
+.</p> 
 
 <ul>
     <?php foreach($data['tasks']['today']['list'] as $task): ?>

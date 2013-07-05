@@ -3,7 +3,7 @@ Hello, <?php echo $full_name; ?>! <br />
 Your activation code: 
 
 <p>
-    <a href="<?php echo Router::url(array('controller' => strtolower($controllerName), 'action' => 'activate', $activate_token), true); ?>"><?php echo Router::url(array('controller' => strtolower($controllerName), 'action' => 'activate', $activate_token), true); ?></a>
+    <a href="<?php echo Router::url(array('controller' => 'accounts', 'action' => 'activate', $activate_token), true); ?>"><?php echo Router::url(array('controller' => 'accounts', 'action' => 'activate', $activate_token), true); ?></a>
 </p>
 
 <p>
