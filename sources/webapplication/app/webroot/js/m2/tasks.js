@@ -20,12 +20,12 @@ $.ajax({
   beforeSend: function ( xhr ) {
 
   }
-}).done(function ( data ) {
+}).done(function ( response ) {
   if( console && console.log ) {
-	  console.log(data);
-    $.each(data.result.data.list, function(index, value) {
-    	//console.log(value);
-		createListItem(value.Task);
+	  console.log(response);
+    $.each(response.data.list, function(index, value) {
+    	console.log(value);
+		createListItem(value);
 	});
   }
 });
@@ -38,10 +38,10 @@ $.ajax({
   beforeSend: function ( xhr ) {
 
   }
-}).done(function ( data ) {
+}).done(function ( response ) {
   if( console && console.log ) {
-	console.log(data);
-	createListItem(data.result.data.Task);
+	console.log(response);
+	createListItem(response.data);
 	$("#addnew").focus();
 	$("#addnew").trigger('change');
   }
