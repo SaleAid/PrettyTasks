@@ -85,6 +85,9 @@ class TasksController extends AppController {
         $endDate = CakeTime::format('Y-m-d', '+6 days');
         
         $dayConfig = $this->Task->User->Setting->getValue('days', $this->Auth->user('id'));
+        if(!is_array($dayConfig)){
+            $dayConfig = array();
+        }
         $arrayDates = ManyDateList::arrayDates($beginDate, $endDate, $dayConfig);
         $ManyDateList = new ManyDateList($this->Auth->user('id'), $arrayDates);
         $tasks = $ManyDateList->getItems();

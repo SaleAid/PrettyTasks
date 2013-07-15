@@ -33,6 +33,9 @@ class ManyDateList extends MainList {
      */
     public static function arrayDates($beginDate, $endDate, $arrayDates = array()) {
         $dates = array();
+        if(!is_array($arrayDates)){
+            $arrayDates = array();
+        }
         $currentDate = $beginDate;
         while ( $currentDate <= $endDate ) {
             $dates[] = $currentDate;
