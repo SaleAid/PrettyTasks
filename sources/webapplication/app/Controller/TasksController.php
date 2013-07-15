@@ -84,7 +84,7 @@ class TasksController extends AppController {
         $beginDate = CakeTime::format('Y-m-d', '-1 days');
         $endDate = CakeTime::format('Y-m-d', '+6 days');
         
-        $dayConfig = $this->Task->User->getConfig($this->Auth->user('id'), 'day');
+        $dayConfig = $this->Task->User->Setting->getValue('days', $this->Auth->user('id'));
         $arrayDates = ManyDateList::arrayDates($beginDate, $endDate, $dayConfig);
         $ManyDateList = new ManyDateList($this->Auth->user('id'), $arrayDates);
         $tasks = $ManyDateList->getItems();
@@ -271,6 +271,7 @@ class TasksController extends AppController {
     }
 
     public function addNewTask() {
+        $task = array();
         $result = $this->_prepareResponse();
         $expectedData = array(
             'date', 
@@ -283,11 +284,14 @@ class TasksController extends AppController {
             );
         } else {
             
+            
             if (!empty($this->request->data['date']) && Validation::date($this->request->data['date'])) {
                 $task = $this->Task->createTask($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->saveTask();
             } else {
-                $date = empty($this->request->data['date']) ? '' : ' #'.$this->request->data['date'];
-                $task = $this->Task->createTask($this->Auth->user('id'), $this->request->data['title'] . $date, null, null, null, 0, 1)->saveTask();
+                if ($this->Task->saveAll($this->request->data, array('fieldList' => 'title', 'validate' => 'only'))) {
+                    $date = empty($this->request->data['date']) ? '' : ' #'.$this->request->data['date'];
+                    $task = $this->Task->createTask($this->Auth->user('id'), $this->request->data['title'] . $date, null, null, null, 0, 1)->saveTask();
+                }    
             }
             if ($task) {
                 $result['success'] = true;

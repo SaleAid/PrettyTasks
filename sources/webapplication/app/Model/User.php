@@ -16,7 +16,7 @@ App::uses('AppModel', 'Model');
 class User extends AppModel {
     public $name = 'User';
     public $hasMany = array(
-            'Account'
+            'Account', 'Setting'
     );
     
     /**
@@ -134,50 +134,6 @@ class User extends AppModel {
         ));
     }
 
-    /**
-     *
-     * @param unknown_type $id            
-     * @param unknown_type $field            
-     * @return array multitype: Ambigous
-     */
-    public function getConfig($id, $field = null) {
-        $result = array();
-        $this->contain();
-        $config = $this->find('first', array(
-                'conditions' => array(
-                        'User.id' => $id
-                ),
-                'fields' => array(
-                        'User.config'
-                )
-        ));
-        if (isset($config['User']['config']) and ! empty($config['User']['config'])) {
-            $result = unserialize($config['User']['config']);
-        }
-        if ($field) {
-            if (isset($result[$field])) {
-                return (array) $result[$field];
-            } else {
-                return array();
-            }
-        }
-        return $result;
-    }
-    
-    // TODO Move this functionality in approprite place
-    /**
-     * 
-     * @param unknown_type $id
-     * @param unknown_type $config
-     * @param unknown_type $field
-     * @return boolean
-     */
-    public function setConfig($id, $config, $field = null) {
-        $this->id = $id;
-        $this->saveField('config', serialize($config));
-        return true;
-    }
-    
     /**
      * 
      * @param unknown_type $id
