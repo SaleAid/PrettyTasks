@@ -1,13 +1,20 @@
 <?php
+/**
+ * Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ *
+ * @copyright Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ * @author Vladyslav Kruglyk <krugvs@gmail.com>
+ * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
+ */
 App::uses('AppModel', 'Model');
+
 /**
  * Note Model
- *
- * @property 
  */
 class Note extends AppModel {
-     
-    public $actsAs = array('Taggable');
+    public $actsAs = array(
+            'Taggable'
+    );
     
     /**
      * Validation domain
@@ -15,68 +22,96 @@ class Note extends AppModel {
      * @var string
      */
     public $validationDomain = 'notes';
-
+    
     /**
      * Validation rules
      *
      * @var array
      */
     public $validate = array(
-        'id' => array(
-			'maxLength' => array(
-                'rule'    => array('maxLength', 36),
-                'message' => 'Wrong ID',
+            'id' => array(
+                    'maxLength' => array(
+                            'rule' => array(
+                                    'maxLength',
+                                    36
+                            ),
+                            'message' => 'Wrong ID'
+                    ),
+                    'isUnique' => array(
+                            'rule' => 'isUnique',
+                            'message' => 'ID уже существует'
+                    )
             ),
-            'isUnique' => array(
-                'rule' => 'isUnique', 
-                'message' => 'ID уже существует'
-            )
-        ), 
-        'user_id' => array(
-			'maxLength' => array(
-                'rule'    => array('maxLength', 36),
-                'message' => 'Wrong ID',
-            )
-        ), 
-		'date' => array(
-			'date' => array(
-				'rule' => array('date'),
-			)
-		),
-        'title' => array(
-            'maxLength' => array(
-                'rule'    => array('maxLength', 64000),
-                'message' => 'Максимальная длина комментария не больше %d символов'
+            'user_id' => array(
+                    'maxLength' => array(
+                            'rule' => array(
+                                    'maxLength',
+                                    36
+                            ),
+                            'message' => 'Wrong ID'
+                    )
             ),
-            'notempty' => array(
-                'rule' => array(
-                    'notempty'
-                ),
-                'message' => 'Поле должно быть заполнено' 
+            'date' => array(
+                    'date' => array(
+                            'rule' => array(
+                                    'date'
+                            )
+                    )
+            ),
+            'title' => array(
+                    'maxLength' => array(
+                            'rule' => array(
+                                    'maxLength',
+                                    64000
+                            ),
+                            'message' => 'Максимальная длина комментария не больше %d символов'
+                    ),
+                    'notempty' => array(
+                            'rule' => array(
+                                    'notempty'
+                            ),
+                            'message' => 'Поле должно быть заполнено'
+                    )
             )
-        )  
     );
-
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'User' => array(
-			'className' => 'User',
-			'foreignKey' => 'user_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-	
-
+    
+    /**
+     * belongsTo associations
+     *
+     * @var array
+     */
+    public $belongsTo = array(
+            'User' => array(
+                    'className' => 'User',
+                    'foreignKey' => 'user_id',
+                    'conditions' => '',
+                    'fields' => '',
+                    'order' => ''
+            )
+    );
+    
+    /**
+     *
+     * @var unknown_type
+     */
     private $_originData = array();
     
-    private $_fields = array('id', 'title', 'modified');
+    /**
+     *
+     * @var unknown_type
+     */
+    private $_fields = array(
+            'id',
+            'title',
+            'modified'
+    );
     
+    /**
+     * 
+     * @param unknown_type $id
+     * @param unknown_type $user_id
+     * @return unknown|boolean
+     */
     public function isOwner($id, $user_id) {
         $this->contain();
         $result = $this->findByIdAndUser_id($id, $user_id);
@@ -88,62 +123,84 @@ class Note extends AppModel {
         return false;
     }
     
-    public function getNotes( $user_id, $count = 50, $page = 1 ){
+    /**
+     * 
+     * @param unknown_type $user_id
+     * @param unknown_type $count
+     * @param unknown_type $page
+     * @return Ambigous <multitype:, NULL, mixed>
+     */
+    public function getNotes($user_id, $count = 50, $page = 1) {
         $this->contain('Tag');
-	    $conditions = array(
-                        'Note.user_id' => $user_id, 
-                    );
-	    $order =  array(
-                    'Note.modified' => 'DESC'
-                );
-        return $this->find('all', 
-                        array(
-                            'order' => $order, 
-                            'conditions' => $conditions, 
-                            //'fields' => $this->_fields,
-			                'limit' => $count,
-                            'page' => $page
-                        ));
+        $conditions = array(
+                'Note.user_id' => $user_id
+        );
+        $order = array(
+                'Note.modified' => 'DESC'
+        );
+        return $this->find('all', array(
+                'order' => $order,
+                'conditions' => $conditions,
+                // 'fields' => $this->_fields,
+                'limit' => $count,
+                'page' => $page
+        ));
     }
     
-   public function search( $user_id, $query, $count = 50, $page = 1 ){
+    /**
+     * 
+     * @param unknown_type $user_id
+     * @param unknown_type $query
+     * @param unknown_type $count
+     * @param unknown_type $page
+     * @return Ambigous <multitype:, NULL, mixed>
+     */
+    public function search($user_id, $query, $count = 50, $page = 1) {
         $this->contain('Tag');
-	    $conditions = array(
-                        'Note.title LIKE' => '%'.$query.'%', 
-                        'Note.user_id' => $user_id
-                    );
-	    $order =  array(
-                    'Note.modified' => 'ASC'
-                );
-        return $this->find('all', 
-                        array(
-                            'order' => $order, 
-                            'conditions' => $conditions, 
-                            //'fields' => $this->_fields,
-			                'limit' => $count,
-                            'page' => $page
-                        ));
+        $conditions = array(
+                'Note.title LIKE' => '%' . $query . '%',
+                'Note.user_id' => $user_id
+        );
+        $order = array(
+                'Note.modified' => 'ASC'
+        );
+        return $this->find('all', array(
+                'order' => $order,
+                'conditions' => $conditions,
+                // 'fields' => $this->_fields,
+                'limit' => $count,
+                'page' => $page
+        ));
     }
     
-    public function update($title){
+    /**
+     * 
+     * @param unknown_type $title
+     * @return Note
+     */
+    public function update($title) {
         $this->data[$this->alias]['title'] = $title;
-        return $this;   
+        return $this;
     }
     
-    public function create($user_id, $title){
+    /**
+     * (non-PHPdoc)
+     * @see Model::create()
+     */
+    public function create($user_id, $title) {
         $this->data[$this->alias]['user_id'] = $user_id;
         $this->data[$this->alias]['title'] = $title;
         return $this;
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see Model::beforeSave()
+     */
     public function beforeSave() {
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
-        if(isset($this->data[$this->alias]['title'])){
+        if (isset($this->data[$this->alias]['title'])) {
             $this->_checkTags('title');
         }
     }
-    
-    
-
-
 }

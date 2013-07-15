@@ -1,4 +1,11 @@
 <?php
+/**
+ * Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ *
+ * @copyright Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ * @author Vladyslav Kruglyk <krugvs@gmail.com>
+ * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
+ */
 App::uses('AppModel', 'Model');
 
 /**
@@ -135,11 +142,11 @@ class Goal extends AppModel {
     }
 
     /**
-     * 
-     * @param unknown_type $state
-     * @param unknown_type $query
-     * @param unknown_type $results
-     * @return multitype:|unknown
+     *
+     * @param unknown_type $state            
+     * @param unknown_type $query            
+     * @param unknown_type $results            
+     * @return multitype: unknown
      */
     protected function _findExpired($state, $query, $results = array()) {
         if ($state == 'before') {
@@ -155,13 +162,13 @@ class Goal extends AppModel {
         }
         return $results;
     }
-    
+
     /**
-     * 
-     * @param unknown_type $state
-     * @param unknown_type $query
-     * @param unknown_type $results
-     * @return multitype:|unknown
+     *
+     * @param unknown_type $state            
+     * @param unknown_type $query            
+     * @param unknown_type $results            
+     * @return multitype: unknown
      */
     protected function _findClosed($state, $query, $results = array()) {
         if ($state == 'before') {
@@ -198,13 +205,13 @@ class Goal extends AppModel {
         }
         return $results;
     }
-    
+
     /**
-     * 
-     * @param unknown_type $state
-     * @param unknown_type $query
-     * @param unknown_type $results
-     * @return multitype:|unknown
+     *
+     * @param unknown_type $state            
+     * @param unknown_type $query            
+     * @param unknown_type $results            
+     * @return multitype: unknown
      */
     protected function _findFuture($state, $query, $results = array()) {
         if ($state == 'before') {
@@ -221,13 +228,13 @@ class Goal extends AppModel {
         }
         return $results;
     }
-    
+
     /**
-     * 
-     * @param unknown_type $state
-     * @param unknown_type $query
-     * @param unknown_type $results
-     * @return multitype:|unknown
+     *
+     * @param unknown_type $state            
+     * @param unknown_type $query            
+     * @param unknown_type $results            
+     * @return multitype: unknown
      */
     protected function _findPlanned($state, $query, $results = array()) {
         if ($state == 'before') {
@@ -243,13 +250,13 @@ class Goal extends AppModel {
         }
         return $results;
     }
-    
+
     /**
-     * 
-     * @param unknown_type $state
-     * @param unknown_type $query
-     * @param unknown_type $results
-     * @return multitype:|unknown
+     *
+     * @param unknown_type $state            
+     * @param unknown_type $query            
+     * @param unknown_type $results            
+     * @return multitype: unknown
      */
     protected function _findDeleted($state, $query, $results = array()) {
         if ($state == 'before') {

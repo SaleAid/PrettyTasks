@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ *
+ * @copyright Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ * @author Vladyslav Kruglyk <krugvs@gmail.com>
+ * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
+ */
 App::uses('AppModel', 'Model');
 
 /**
@@ -15,7 +21,14 @@ class Ordered extends AppModel {
  */
 	public $useTable = 'ordered';
     
-    
+    /**
+     * 
+     * @param unknown_type $modelAlias
+     * @param unknown_type $list
+     * @param unknown_type $listId
+     * @param unknown_type $userId
+     * @return number
+     */
     protected function _lastPosition($modelAlias, $list, $listId, $userId) {
 		$options = array(
                 'conditions' => array(
@@ -32,7 +45,15 @@ class Ordered extends AppModel {
         return (!empty($last)) ? $last[$this->alias]['order'] : 0;
 	}
     
-    
+    /**
+     * 
+     * @param unknown_type $modelAlias
+     * @param unknown_type $list
+     * @param unknown_type $listId
+     * @param unknown_type $foreignKey
+     * @param unknown_type $userId
+     * @param unknown_type $toFirst
+     */
     public function add($modelAlias, $list, $listId, $foreignKey, $userId, $toFirst = false){
         $order = 1; 
         if( !$toFirst ){
@@ -114,6 +135,10 @@ class Ordered extends AppModel {
 		);
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see Model::beforeDelete()
+     */
     public function beforeDelete(){
         $this->__decrementPositionsOnLowerItems(
                                         $this->data[$this->alias]['order'], 

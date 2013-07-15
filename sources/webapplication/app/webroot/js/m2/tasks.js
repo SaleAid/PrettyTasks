@@ -5,6 +5,7 @@ $(document).ready(function() {
 var mobile = (function() {
 	var _private = {
 		today : null,
+		defaultList: 'planned',
 		initEvents : function() {
 
 			$.mobile.page.prototype.options.addBackBtn = true;
@@ -48,6 +49,12 @@ var mobile = (function() {
 			$(document).on("vmouseup", "#taskslist li", function() {
 				event.preventDefault();
 				return false;
+			});
+			
+			$(document).on('click', "a[class|='menu']", function(event){
+				var name = event.target.className.split(' ')[0];
+				name = name.replace('menu-', '');
+				mobile.showList(name);
 			});
 
 			$("#right-panel-tasks").on("panelclose", function(event, ui) {
@@ -212,6 +219,30 @@ var mobile = (function() {
 				// "checked", false ).checkboxradio( "refresh" );
 				//$("#checkbox-" + id + ":parent label").parent().parent().removeClass('complete');
 			}
+		},
+		showList: function(name){
+			console.log('showList: ' + name);
+			if (name === undefined) {
+				name = _private.defaultList;
+			}
+			$.ajax({
+				url : "/ru/tasks/getTasksByType.json",
+				type : "POST",
+				data : {
+					type : name
+				},
+				beforeSend : function(xhr) {
+
+				}
+			}).done(function(response) {
+				if (console && console.log) {
+					console.log(response);
+					$.each(response.data.list, function(index, value) {
+						console.log(value);
+						mobile.createListItem(value);
+					});
+				}
+			});
 		}
 	};
 
