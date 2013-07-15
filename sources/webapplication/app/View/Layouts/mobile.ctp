@@ -42,11 +42,11 @@
 	<div data-role="panel" id="left-panel-tasks" data-position="left" data-display="overlay" data-theme="e">
 		<ul  data-role="listview"  data-divider-theme="e" data-count-theme="e">
 			<li data-role="list-divider">Lists</li>
-			<li><a href="#">Planned</a></li>
-			<li><a href="#">Overdue</a></li>
-			<li><a href="#">Completed</a></li>
-			<li><a href="#">Future</a></li>
-			<li><a href="#">Deleted</a></li>
+			<li><a href="#" class="menu-planned">Planned</a></li>
+			<li><a href="#" class="menu-overdue">Overdue</a></li>
+			<li><a href="#" class="menu-completed">Completed</a></li>
+			<li><a href="#" class="menu-future">Future</a></li>
+			<li><a href="#" class="menu-deleted">Deleted</a></li>
 			<li data-role="list-divider">Days</li>
 			<li><a href="#">New day</a></li>
 			<li><a href="#">Today</a></li>
@@ -91,19 +91,17 @@
 		</form>
 		
 		<ul id="taskslist" data-role="controlgroup">
-		
+		<!-- 
 			<li>
 				<label>
 					<input type="checkbox" name="checkbox-0 ">Check me<img src="/img/tools.png" style="float:right"/>
 				</label>
 			</li>
-		
-
-			
+		 -->
 		</ul>
 		
 
-</form>
+
 
 
 <!-- Place your content above-->	

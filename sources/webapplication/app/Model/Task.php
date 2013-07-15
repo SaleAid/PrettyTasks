@@ -1,4 +1,11 @@
 <?php
+/**
+ * Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ *
+ * @copyright Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ * @author Vladyslav Kruglyk <krugvs@gmail.com>
+ * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
+ */
 App::uses('TaskEventListener', 'Event');
 App::uses('AppModel', 'Model');
 /**
@@ -171,17 +178,37 @@ class Task extends AppModel {
         ),
     );
     
-    
+    /**
+     * 
+     * @var unknown_type
+     */
     private $_originData = array();
     
+    /**
+     * 
+     * @var unknown_type
+     */
     public $_taskFields = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'future', 'deleted', 'done' ,'datedone', 'continued', 'repeatid', 'comment');
     
+    /**
+     * 
+     * @var unknown_type
+     */
     private $_taskFieldsSave = array('id', 'title', 'date', 'time', 'timeend', 'priority', 'future', 'deleted', 'done' ,'datedone', 'continued', 'repeatid', 'comment', 'tags');
     
+    /**
+     * 
+     * @return unknown_type
+     */
     public function getFields(){
         return $this->_taskFields;
     }
     
+    /**
+     * 
+     * @param unknown_type $data
+     * @return boolean
+     */
     public function comparisonTime($data) {
         if ($data['timeend'] > $this->data[$this->alias]['time']) {
             return true;
@@ -190,6 +217,11 @@ class Task extends AppModel {
     }
     
     //------------------------------
+    /**
+     * 
+     * @param unknown_type $task_id
+     * @return unknown|boolean
+     */
     public function get($task_id) {
         $this->contain('Tag.name');
         $result = $this->find('first', 
@@ -208,6 +240,12 @@ class Task extends AppModel {
         return false;
     }
     
+    /**
+     * 
+     * @param unknown_type $task_id
+     * @param unknown_type $user_id
+     * @return unknown|boolean
+     */
     public function isOwner($task_id, $user_id) {
         $this->contain(array('Tag.name', 'Tag.id'));
         $task = $this->findByIdAndUser_id($task_id, $user_id);
@@ -219,11 +257,21 @@ class Task extends AppModel {
         return false;
     }
     
+    /**
+     * 
+     * @param unknown_type $id
+     * @param unknown_type $table
+     * @param unknown_type $ds
+     */
     public function __construct($id = false, $table = null, $ds = null) {
          parent::__construct($id, $table, $ds);
          $this->getEventManager()->attach(new TaskEventListener());
     }
-
+    
+    /**
+     * (non-PHPdoc)
+     * @see Model::afterSave()
+     */
     public function afterSave($created){
         //$this->getEventManager()->attach(new TaskEventListener());
         //
@@ -246,6 +294,17 @@ class Task extends AppModel {
         
     }
     
+    /**
+     * 
+     * @param unknown_type $user_id
+     * @param unknown_type $title
+     * @param unknown_type $date
+     * @param unknown_type $time
+     * @param unknown_type $priority
+     * @param unknown_type $future
+     * @param unknown_type $clone
+     * @return Task
+     */
     public function createTask($user_id, $title, $date = null, $time = null, $priority = null, $future = null, $clone = null) {
         $this->data = $this->_prepareTask($user_id, $title, $date, $time, $priority, $future);
         
@@ -254,7 +313,17 @@ class Task extends AppModel {
         }
         return $this;
     }
-
+    
+    /**
+     * 
+     * @param unknown_type $user_id
+     * @param unknown_type $title
+     * @param unknown_type $date
+     * @param unknown_type $time
+     * @param unknown_type $priority
+     * @param unknown_type $future
+     * @return Ambigous <string, number>
+     */
     private function _prepareTask($user_id, $title, $date = null, $time = null, $priority = null, $future = null) {
         $data[$this->alias]['user_id'] = $user_id;
         $data[$this->alias]['title'] = $title;
@@ -288,7 +357,11 @@ class Task extends AppModel {
         }
         return $data;
     }
-
+    
+    /**
+     * 
+     * @return boolean
+     */
     private function _isTitleChanged() {
         if ( !isset($this->_originData[$this->alias]['title']) || $this->_originData[$this->alias]['title'] != $this->data[$this->alias]['title'] ) {
             return true;
@@ -296,13 +369,21 @@ class Task extends AppModel {
         return false;
     }
 
+    /**
+     * 
+     * @return boolean
+     */
     private function _isDraggedOnDay() {
         if ($this->_originData[$this->alias]['date'] != $this->data[$this->alias]['date'] && isset($this->data[$this->alias]['id'])) {
             return true;
         }
         return false;
     }
-
+    
+    /**
+     * 
+     * @return boolean
+     */
     private function _isDeleted() {
         if( isset($this->data[$this->alias]['deleted']) && $this->data[$this->alias]['deleted'] ){
             return true;
@@ -310,6 +391,10 @@ class Task extends AppModel {
         return false;
     }
     
+    /**
+     * 
+     * @return boolean
+     */
     private function _isTimeChanged() {
         if(!empty($this->data[$this->alias]['time']) && CakeTime::format('H:i', $this->_originData[$this->alias]['time']) != CakeTime::format('H:i', $this->data[$this->alias]['time'])){
             return true;
@@ -317,6 +402,10 @@ class Task extends AppModel {
         return false;
     }
     
+    /**
+     * 
+     * @return boolean
+     */
     private function _isRecovered(){
         if( isset($this->data[$this->alias]['deleted']) && !$this->data[$this->alias]['deleted'] && $this->_originData[$this->alias]['deleted']){
             return true;
@@ -324,6 +413,10 @@ class Task extends AppModel {
         return false;
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see Model::beforeSave()
+     */
     public function beforeSave() {
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
         //check and add tags
@@ -333,7 +426,19 @@ class Task extends AppModel {
         
         return true;
     }
-
+    
+    /**
+     * 
+     * @param unknown_type $title
+     * @param unknown_type $priority
+     * @param unknown_type $continued
+     * @param unknown_type $comment
+     * @param unknown_type $date
+     * @param unknown_type $time
+     * @param unknown_type $timeEnd
+     * @param unknown_type $done
+     * @return Task
+     */
     public function setEdit($title, $priority, $continued=0, $comment=null, $date=null, $time=null, $timeEnd=null, $done=null){
         $this->setDate($date)
              ->setTime($time, $timeEnd)
@@ -344,6 +449,12 @@ class Task extends AppModel {
         return $this;
     }
     
+    /**
+     * 
+     * @param unknown_type $time
+     * @param unknown_type $timeEnd
+     * @return Task
+     */
     public function setTime($time, $timeEnd=null){
         if ($this->data[$this->alias]['future']){
             $time = null;
@@ -356,6 +467,11 @@ class Task extends AppModel {
         return $this;
     }
     
+    /**
+     * 
+     * @param unknown_type $date
+     * @return Task
+     */
     public function setDate($date) {
         if ( !$date ) {
             $this->setFuture(1);
@@ -366,16 +482,33 @@ class Task extends AppModel {
         return $this;
     }
 
-    
+    /**
+     * 
+     * @param unknown_type $future
+     * @return Task
+     */
     public function setFuture($future) {
         $this->data[$this->alias]['future'] = $future;
         return $this;
     }
+    
+    /**
+     * 
+     * @param unknown_type $continued
+     * @return Task
+     */
     public function setContinued($continued) {
         $this->data[$this->alias]['continued'] = $continued;
         return $this;
     }
     
+    /**
+     * 
+     * @param unknown_type $title
+     * @param unknown_type $priority
+     * @param unknown_type $checkTime
+     * @return Task
+     */
     public function setTitle($title, $priority = null, $checkTime = true) {
         $this->data[$this->alias]['title'] = $title;
         if($priority != null){
@@ -398,11 +531,21 @@ class Task extends AppModel {
         return $this;
     }
     
+    /**
+     * 
+     * @param unknown_type $comment
+     * @return Task
+     */
     public function setCommnet($comment) {
         $this->data[$this->alias]['comment'] = $comment;
         return $this;
     }
-
+    
+    /**
+     * 
+     * @param unknown_type $done
+     * @return Task
+     */
     public function setDone($done) {
         $this->data[$this->alias]['done'] = $done;
         $this->data[$this->alias]['datedone'] = null;
@@ -411,12 +554,22 @@ class Task extends AppModel {
         }
         return $this;
     }
-
+    
+    /**
+     * 
+     * @param unknown_type $delete
+     * @return Task
+     */
     public function setDelete($delete) {
         $this->data[$this->alias]['deleted'] = $delete;
         return $this;
     }
     
+    /**
+     * 
+     * @param unknown_type $user_id
+     * @param unknown_type $date
+     */
     public function setDayToConfig($user_id, $date) {
         $config = $this->User->getConfig($user_id);
         if ( !array_key_exists('day', $config) or !in_array($date, $config['day']) ) {
@@ -445,6 +598,11 @@ class Task extends AppModel {
     }
 
     //TODO Maybe this function move to another model, for example to Day?
+    /**
+     * 
+     * @param unknown_type $index
+     * @return Ambigous <Ambigous <translated, void>, Ambigous <translated, void, string, mixed, string, unknown>>|boolean
+     */
     public function getWeekDay($index){
         $weekday = array(
                         'Sunday' => __d('tasks', 'Sunday'),
@@ -460,6 +618,11 @@ class Task extends AppModel {
         }                        
         return false; 
     }
+    
+    /**
+     * 
+     * @return Ambigous <mixed, boolean, multitype:>|boolean
+     */
     public function saveTask(){
             $save = $this->save();
             if (is_array($save)){
@@ -476,6 +639,12 @@ class Task extends AppModel {
             }
     }
     
+    /**
+     * 
+     * @param unknown_type $recur
+     * @param unknown_type $task_id
+     * @return boolean
+     */
     public function repeated($recur, $task_id = null){
         return true;
         $taskDate = $this->data[$this->alias]['date'];
@@ -509,6 +678,12 @@ class Task extends AppModel {
         return true;
     }
     
+    /**
+     * 
+     * @param unknown_type $recur
+     * @param unknown_type $beginDate
+     * @return boolean|multitype:
+     */
     protected function _repeatedDays($recur, $beginDate){
         /*
             recur:RRULE:FREQ=DAILY;INTERVAL=2

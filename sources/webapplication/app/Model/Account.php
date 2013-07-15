@@ -1,16 +1,24 @@
 <?php
+/**
+ * Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ *
+ * @copyright Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ * @author Vladyslav Kruglyk <krugvs@gmail.com>
+ * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
+ */
 App::uses('CakeEmail', 'Network/Email');
 App::uses('AppModel', 'Model');
+
 /**
- * User Model
+ * Account Model.
+ * Stores account of customers to login into system in various ways.
  *
+ * @package app.Model
  */
 class Account extends AppModel {
-    
     public $name = 'Account';
-    
     public $belongsTo = 'User';
-
+    
     /**
      * Validation domain
      *
@@ -24,35 +32,41 @@ class Account extends AppModel {
      * @var array
      */
     public $validate = array(
-        'id' => array(
-			'maxLength' => array(
-                'rule'    => array('maxLength', 36),
-                'message' => 'Wrong ID',
+            'id' => array(
+                    'maxLength' => array(
+                            'rule' => array(
+                                    'maxLength',
+                                    36
+                            ),
+                            'message' => 'Wrong ID'
+                    ),
+                    'uuid'
             ),
-        	'uuid'
-        ), 
-        'provider' => array(
-             'notEmpty' => array(
-                'rule' => array(
-                    'notEmpty'
-                ), 
-                'message' => 'Поле должно быть заполнено'
-             ),
-        ),
-        'full_name' => array(
-             'notEmpty' => array(
-                'rule' => array(
-                    'notEmpty'
-                ), 
-                'message' => 'Поле должно быть заполнено'
-             ),
-        ),
-        'user_id' => array(
-			'maxLength' => array(
-                'rule'    => array('maxLength', 36),
-                'message' => 'Wrong ID',
-            )
-        ),
+            'provider' => array(
+                    'notEmpty' => array(
+                            'rule' => array(
+                                    'notEmpty'
+                            ),
+                            'message' => 'Поле должно быть заполнено'
+                    )
+            ),
+            'full_name' => array(
+                    'notEmpty' => array(
+                            'rule' => array(
+                                    'notEmpty'
+                            ),
+                            'message' => 'Поле должно быть заполнено'
+                    )
+            ),
+            'user_id' => array(
+                    'maxLength' => array(
+                            'rule' => array(
+                                    'maxLength',
+                                    36
+                            ),
+                            'message' => 'Wrong ID'
+                    )
+            ),
         /*'login' => array(
             'notEmpty' => array(
                 'rule' => array(
@@ -76,102 +90,119 @@ class Account extends AppModel {
             )
         ), */
         'password' => array(
-            'notEmpty' => array(
-                'rule' => array(
-                    'notEmpty'
-                ), 
-                'message' => 'Поле должно быть заполнено'
+                    'notEmpty' => array(
+                            'rule' => array(
+                                    'notEmpty'
+                            ),
+                            'message' => 'Поле должно быть заполнено'
+                    ),
+                    'minLength' => array(
+                            'rule' => array(
+                                    'minLength',
+                                    6
+                            ),
+                            'message' => 'Минимальная длина пароля - %d символа'
+                    ),
+                    'matchPasswords' => array(
+                            'rule' => 'matchPasswords',
+                            'message' => 'Пароли не совпадает'
+                    )
             ),
-            'minLength' => array(
-                'rule'     => array('minLength', 6),
-                'message'  => 'Минимальная длина пароля - %d символа'
-            ), 
-            'matchPasswords' => array(
-                'rule' => 'matchPasswords', 
-                'message' => 'Пароли не совпадает'
-            )
-        ), 
-        'password_confirm' => array(
-            'notEmpty' => array(
-                'rule' => array(
-                    'notEmpty'
-                ), 
-                'message' => 'Поле должно быть заполнено'
-            )
-        ), 
-        'old_password' => array(
-            'notEmpty' => array(
-                'rule' => array(
-                    'notEmpty'
-                ), 
-                'message' => 'Поле должно быть заполнено'
-            ), 
-            'matchOldPasswords' => array(
-                'rule' => 'matchOldPasswords', 
-                'message' => 'Неверный текущий пароль'
-            )
-        ),
-        'email' => array(
-             'Email' => array(
-                'rule' => array(
-                    'email'
-                ), 
-                'message' => 'Пожалуйста, введите Ваш адрес электронной почты'
+            'password_confirm' => array(
+                    'notEmpty' => array(
+                            'rule' => array(
+                                    'notEmpty'
+                            ),
+                            'message' => 'Поле должно быть заполнено'
+                    )
             ),
-            'isUniqueLocal' => array(
-                'rule' => array(
-                    'emailLocal'
-                ), 
-                'message' => 'Этот адрес уже используется. Пожалуйста, введите другой адрес электронной почты'
+            'old_password' => array(
+                    'notEmpty' => array(
+                            'rule' => array(
+                                    'notEmpty'
+                            ),
+                            'message' => 'Поле должно быть заполнено'
+                    ),
+                    'matchOldPasswords' => array(
+                            'rule' => 'matchOldPasswords',
+                            'message' => 'Неверный текущий пароль'
+                    )
+            ),
+            'email' => array(
+                    'Email' => array(
+                            'rule' => array(
+                                    'email'
+                            ),
+                            'message' => 'Пожалуйста, введите Ваш адрес электронной почты'
+                    ),
+                    'isUniqueLocal' => array(
+                            'rule' => array(
+                                    'emailLocal'
+                            ),
+                            'message' => 'Этот адрес уже используется. Пожалуйста, введите другой адрес электронной почты'
+                    )
+            ),
+            'agreed' => array(
+                    'comparison' => array(
+                            'on' => 'create',
+                            'rule' => array(
+                                    'comparison',
+                                    'equal to',
+                                    1
+                            ),
+                            'message' => 'Вы должны быть согласны с правилами использования сервиса'
+                    )
+            ),
+            'created' => array(
+                    'datetime' => array(
+                            'rule' => array(
+                                    'datetime'
+                            )
+                    ),
+                    'notempty' => array(
+                            'rule' => array(
+                                    'notempty'
+                            )
+                    )
+            ),
+            'modified' => array(
+                    'datetime' => array(
+                            'rule' => array(
+                                    'datetime'
+                            )
+                    ),
+                    'notempty' => array(
+                            'rule' => array(
+                                    'notempty'
+                            )
+                    )
             )
-            
-        ),
-        'agreed' => array(
-            'comparison' => array(
-                'on' => 'create',
-                'rule' => array('comparison', 'equal to', 1),
-                'message' => 'Вы должны быть согласны с правилами использования сервиса'
-            )
-        ),
-        'created' => array(
-            'datetime' => array(
-                'rule' => array(
-                    'datetime'
-                )
-            ), 
-            'notempty' => array(
-                'rule' => array(
-                    'notempty'
-                )
-            )
-        ), 
-        'modified' => array(
-            'datetime' => array(
-                'rule' => array(
-                    'datetime'
-                )
-            ), 
-            'notempty' => array(
-                'rule' => array(
-                    'notempty'
-                )
-            )
-        ),  
-        
     );
 
-   public function emailLocal($check) {
+    /**
+     *
+     * @param unknown_type $check            
+     * @return boolean
+     */
+    public function emailLocal($check) {
         $conditions['Account.email'] = $check['email'];
         $conditions['Account.provider'] = 'local';
         
         $existingEmail = $this->find('first', array(
-            'conditions' =>$conditions,
-            'fields' => array('id'),
-            'recursive' => -1
+                'conditions' => $conditions,
+                'fields' => array(
+                        'id'
+                ),
+                'recursive' => - 1
         ));
         return empty($existingEmail) ? true : false;
     }
-   
+
+    /**
+     *
+     * @param unknown_type $data            
+     * @return boolean
+     */
     public function matchPasswords($data) {
         if ($data['password'] == $this->data[$this->alias]['password_confirm']) {
             return true;
@@ -180,20 +211,34 @@ class Account extends AppModel {
         return false;
     }
 
+    /**
+     *
+     * @param unknown_type $data            
+     * @return boolean
+     */
     public function matchOldPasswords($data) {
         $password = $this->field('password', array(
-            $this->alias . '.id' => $this->data[$this->alias]['id']
+                $this->alias . '.id' => $this->data[$this->alias]['id']
         ));
         if ($password === Security::hash($data['old_password'], null, true)) {
             return true;
         }
         return false;
     }
-    
+
+    /**
+     *
+     * @return string
+     */
     public function generateToken() {
         return Security::hash(mt_rand() . Configure::read('Security.salt') . time() . mt_rand());
     }
-    
+
+    /**
+     *
+     * @param unknown_type $data            
+     * @return boolean
+     */
     public function register($data) {
         $this->set($data);
         if ($this->validates()) {
@@ -207,11 +252,16 @@ class Account extends AppModel {
         }
         return false;
     }
-    
-    public function sendActivationAccount($id){
+
+    /**
+     *
+     * @param unknown_type $id            
+     * @return boolean multitype:
+     */
+    public function sendActivationAccount($id) {
         $this->id = $id;
-        if (!$this->exists()) {
-	        return false;
+        if (! $this->exists()) {
+            return false;
         }
         $this->read();
         $email = new CakeEmail();
@@ -219,13 +269,19 @@ class Account extends AppModel {
         $email->emailFormat(Configure::read('Email.global.format'));
         $email->from(Configure::read('Email.global.from'));
         $email->to($this->data[$this->alias]['email']);
-        $email->subject( __d('mail', Configure::read('Email.user.activateAccount.subject'), Configure::read('Site.name')));
-        $email->viewVars(array( 'activate_token' => $this->data[$this->alias]['activate_token'], 
-                                'full_name' => $this->data[$this->alias]['full_name'])
-                        );
+        $email->subject(__d('mail', Configure::read('Email.user.activateAccount.subject'), Configure::read('Site.name')));
+        $email->viewVars(array(
+                'activate_token' => $this->data[$this->alias]['activate_token'],
+                'full_name' => $this->data[$this->alias]['full_name']
+        ));
         return $email->send();
     }
-    
+
+    /**
+     *
+     * @param unknown_type $id            
+     * @return multitype:
+     */
     public function sendPasswordResend($id) {
         $this->id = $id;
         $this->read();
@@ -235,27 +291,35 @@ class Account extends AppModel {
         $email->from(Configure::read('Email.global.from'));
         $email->to($this->data[$this->alias]['email']);
         $email->subject(__d('mail', Configure::read('Email.user.passwordResend.subject'), Configure::read('Site.name')));
-        $email->viewVars(
-                        array(
-                            'password_token' => $this->data[$this->alias]['password_token'], 
-                            'fullname' => $this->data[$this->alias]['full_name'], 
-                            //'login' => $this->data[$this->alias]['login']
-                        ));
+        $email->viewVars(array(
+                'password_token' => $this->data[$this->alias]['password_token'],
+                'fullname' => $this->data[$this->alias]['full_name']
+        )); // 'login' => $this->data[$this->alias]['login']
         return $email->send();
     }
-    
-    public function activate($token){
+
+    /**
+     *
+     * @param unknown_type $token            
+     * @return Ambigous <mixed, boolean, multitype:>|boolean
+     */
+    public function activate($token) {
         $this->contain();
         $user = $this->findByActivate_token($token);
-        if($user){
-	        $user[$this->alias]['activate_token'] = null;
-            return $this->save($user, true, array('activate_token'));
-    	}
+        if ($user) {
+            $user[$this->alias]['activate_token'] = null;
+            return $this->save($user, true, array(
+                    'activate_token'
+            ));
+        }
         return false;
     }
-    
-    
-    
+
+    /**
+     *
+     * @param unknown_type $email            
+     * @return Ambigous <boolean, multitype:, multitype:>|boolean
+     */
     public function reactivate($email) {
         $account = $this->findByEmailAndActiveAndProvider($email, 0, 'local');
         if ($account) {
@@ -265,16 +329,28 @@ class Account extends AppModel {
         }
         return false;
     }
-    
+
+    /**
+     *
+     * @param unknown_type $email            
+     * @return boolean
+     */
     public function checkEmail($email) {
         $this->contain();
-        $account = $this->findByEmailAndProvider($email, 'local', array('id'));
+        $account = $this->findByEmailAndProvider($email, 'local', array(
+                'id'
+        ));
         if ($account) {
             return $account[$this->alias]['id'];
         }
         return false;
     }
-    
+
+    /**
+     *
+     * @param unknown_type $id            
+     * @return boolean
+     */
     public function password_resend($id) {
         $this->id = $id;
         if (! $this->exists()) {
@@ -286,42 +362,60 @@ class Account extends AppModel {
         }
         return false;
     }
-    
+
+    /**
+     *
+     * @param unknown_type $token            
+     * @return boolean
+     */
     public function checkPasswordToken($token) {
         $result = $this->find('first', array(
-            'conditions' => array(
-                $this->alias . '.password_token' => $token
-            ), 
-            'fields' => array(
-                $this->alias . '.id'
-            )
+                'conditions' => array(
+                        $this->alias . '.password_token' => $token
+                ),
+                'fields' => array(
+                        $this->alias . '.id'
+                )
         ));
-        if($result){
-            return $result[$this->alias]['id'];    
+        if ($result) {
+            return $result[$this->alias]['id'];
         }
         return false;
     }
-    
+
+    /**
+     *
+     * @param unknown_type $id            
+     * @param unknown_type $password            
+     * @param unknown_type $password_confirm            
+     * @param unknown_type $old_password            
+     * @param unknown_type $reset            
+     * @return boolean
+     */
     public function password_change($id, $password, $password_confirm, $old_password = null, $reset = null) {
         $this->set(array(
-                'id'                => $id,
-                'password'          => $password,
-                'password_confirm'  => $password_confirm
+                'id' => $id,
+                'password' => $password,
+                'password_confirm' => $password_confirm
         ));
-        $fieds = array('id', 'password', 'password_confirm');
-        if(!$reset){
+        $fieds = array(
+                'id',
+                'password',
+                'password_confirm'
+        );
+        if (! $reset) {
             $this->set('old_password', $old_password);
             array_push($fieds, 'old_password');
         }
-        if ($this->validates(array('fieldList' => $fieds))) {
+        if ($this->validates(array(
+                'fieldList' => $fieds
+        ))) {
             $this->saveField('password', AuthComponent::password($password));
             $this->saveField('password_token', null);
             return true;
         }
         return false;
     }
-
-
 }
 
 
