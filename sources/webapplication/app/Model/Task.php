@@ -247,7 +247,7 @@ class Task extends AppModel {
      * @return unknown|boolean
      */
     public function isOwner($task_id, $user_id) {
-        $this->contain('Tag.name');
+        $this->contain(array('Tag.name', 'Tag.id'));
         $task = $this->findByIdAndUser_id($task_id, $user_id);
         if ($task) {
             $this->_originData = $task;
@@ -571,14 +571,13 @@ class Task extends AppModel {
      * @param unknown_type $date
      */
     public function setDayToConfig($user_id, $date) {
-        $config = $this->User->getConfig($user_id);
-        if ( !array_key_exists('day', $config) or !in_array($date, $config['day']) ) {
-            $config['day'][] = $date;
-            $this->User->setConfig($user_id, $config);
+        $days = $this->User->Setting->getValue('days', $user_id);
+        if (is_array($days) and !in_array($date, $days) ) {
+            $days[] = $date;
+            $this->User->Setting->setValue('days', $days, $user_id);
         }
     }
 
-    //TODO Need to comment each function
     /**
      * 
      * Enter description here ...
@@ -586,14 +585,12 @@ class Task extends AppModel {
      * @param unknown_type $date
      */
     public function deleteDayFromConfig($user_id, $date) {
-        $config = $this->User->getConfig($user_id);
-        if(array_key_exists('day', $config)){
-            $key = array_search($date, $config['day']);
-            if($key !== false){
-                unset($config['day'][$key]);
-                return $this->User->setConfig($user_id, $config);
-            }    
-        }
+        $days = $this->User->Setting->getValue('days', $user_id);
+        $key = array_search($date, $days);
+        if($key !== false){
+            unset($days[$key]);
+            return  $this->User->Setting->setValue('days', $days, $user_id);
+        }    
         return true;
     }
 
