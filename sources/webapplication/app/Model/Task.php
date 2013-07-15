@@ -209,7 +209,7 @@ class Task extends AppModel {
     }
     
     public function isOwner($task_id, $user_id) {
-        $this->contain('Tag.name');
+        $this->contain(array('Tag.name', 'Tag.id'));
         $task = $this->findByIdAndUser_id($task_id, $user_id);
         if ($task) {
             $this->_originData = $task;
