@@ -312,6 +312,12 @@ div.well{
 .editTask, .deleteTask{
     padding: 5px;   
     cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: moz-none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .move {
     padding: 5px;   
@@ -371,21 +377,33 @@ div.well{
     cursor: pointer;
     color: #C0EEF1;
 }
-.lists li{
+.tags-list:hover{
+    color: rgb(232, 239, 243);
+    background-color: rgb(120, 144, 160);
+}
+.lists-ul{
+    margin-top: 15px;
+}
+.lists-ul li{
     list-style: none;
     float: left;
     margin-right: 5px;
 }
 
 .tags-list{
+    position: relative;
     margin-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 16px;
+    font-size: 12px;
+    margin-right: 10px;
 }
 .tags-list:hover .close-tag{
-    opacity: 0.2;
-    filter: alpha(opacity=0.2);
+    opacity: 0.5;
+    filter: alpha(opacity=0.5);
 }
 .close-tag{
-    margin-right: -2px;
+    margin-right: 2px;
     margin-left: 5px;
     float: right;
     font-size: 18px;
@@ -395,9 +413,27 @@ div.well{
     opacity: 0;
     filter: alpha(opacity=0);
 }
+.badge-close{
+    font-size: 15px;
+    position: absolute;
+    top: -8px;
+    left: -10px;
+    background-color: #b94a48;
+    padding: 0px 3px;
+    
+}
 .tags-list:hover .close-tag:hover{
-    opacity: 0.5;
-    filter: alpha(opacity=0.5);
+    opacity: 0.8;
+    filter: alpha(opacity=0.8);
+}
+
+.badge-tag{
+    background-color: #f89406;
+    position: absolute;
+    right: -9px;
+    top: -10px;
+    padding-left: 6px;
+    padding-right: 7px;
 }
 
 .done-continued{

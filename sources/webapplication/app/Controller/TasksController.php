@@ -12,6 +12,9 @@ App::uses('ContinuedList', 'Model');
 App::uses('TagList', 'Model');
 App::uses('TaskEventListener', 'Event');
 
+App::uses('TasksListObj', 'Lib');
+App::uses('MessageObj', 'Lib');
+
 /**
  * Tasks Controller
  *
@@ -96,7 +99,7 @@ class TasksController extends AppController {
         $PlannedList = new PlannedList($this->Auth->user('id'));
         $result['data']['arrAllFuture'] = $PlannedList->getItems();
         $result['data']['arrAllFutureCount']['all'] = count($result['data']['arrAllFuture']);
-        $result['data']['arrAllFutureCount']['done'] = count(array_filter($result['data']['arrAllFuture'], create_function('$val', 'return $val[\'done\'] == 1;')));
+        $result['data']['arrAllFutureCount']['done'] = count(array_filter($result['data']['arrAllFuture'], create_function('$val', 'return $val->done == 1;')));
         
         $result['data']['inConfig'] = false;
         $result['data']['yesterdayDisp'] = false;
@@ -107,8 +110,8 @@ class TasksController extends AppController {
         
         $arrTaskOnDays = array();
         foreach($arrayDates as $date){
-            $arrTaskOnDays[$date] = array_filter($tasks, function ($task) use ($date) { return ($task['date'] == $date); } );
-            $done = array_filter($arrTaskOnDays[$date], create_function('$val', 'return $val[\'done\'] == 1;'));
+            $arrTaskOnDays[$date] = array_filter($tasks, function ($task) use ($date) { return ($task->date == $date); } );
+            $done = array_filter($arrTaskOnDays[$date], create_function('$val', 'return $val->done == 1;'));
             $data_count[$date]['all'] = count($arrTaskOnDays[$date]);
             $data_count[$date]['done'] = count($done); 
         }
@@ -137,33 +140,21 @@ class TasksController extends AppController {
     public function getTasksByType() {
         $result = $this->_prepareResponse();
         if (! $this->_isSetRequestData('type')) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $result['success'] = true;
-            $result['type'] = $this->request->data['type'];
             $resultTasks = array();
             switch ($this->request->data['type']) {
                 case 'completed' :
                     {
                         $CompletedList = new CompletedList($this->Auth->user('id'));
-                        $data = $CompletedList->getItems();
-                        foreach($data as $item){
-                            $resultTasks[$item['date']][] = $item;
-                        }
-                        $result['data'] = $resultTasks;
+                        $result['data'] = new TasksListObj('defined', 'completed', $CompletedList->getItems());
                         break;
                     }
                 case 'expired' :
                     {
                         $OverdueList = new OverdueList($this->Auth->user('id'));
-                        $data = $OverdueList->getItems();
-                        foreach($data as $item){
-                            $resultTasks[$item['date']][] = $item;
-                        }
-                        $result['data'] = $resultTasks;
+                        $result['data'] = new TasksListObj('defined', 'expired', $OverdueList->getItems());
                         break;
                     }
                 case 'future' :
@@ -172,61 +163,31 @@ class TasksController extends AppController {
                         $endDate = CakeTime::format('Y-m-d', '+7 days');
                         $arrayDates = ManyDateList::arrayDates($beginDate, $endDate);
                         $ManyDateList = new ManyDateList($this->Auth->user('id'), $arrayDates);
-                        $data = $ManyDateList->getItems();
-                        foreach($data as $item){
-                            $resultTasks[$item['date']][] = $item;
-                        }
-                        $result['data'] = $resultTasks;
+                        $result['data'] = new TasksListObj('defined', 'future', $ManyDateList->getItems());
                         break;
                     }
                 case 'deleted' :
                     {
                         $DeletedList = new DeletedList($this->Auth->user('id'));
-                        $data = $DeletedList->getItems();
-                        foreach($data as $item){
-                            $resultTasks[$item['date']][] = $item;
-                        }
-                        $result['data'] = $resultTasks;
+                        $result['data'] = new TasksListObj('defined', 'deleted', $DeletedList->getItems());
                         break;
                     }
                 case 'continued' :
                     {
                         $ContinuedList = new ContinuedList($this->Auth->user('id'));
-                        $data = $ContinuedList->getItems();
-                        foreach($data as $item){
-                            $resultTasks[$item['date']][] = $item;
-                        }
-                        $result['data'] = $resultTasks;
+                        $result['data'] = new TasksListObj('defined', 'continued', $ContinuedList->getItems());
                         break;
                     }
                 default :
                     {
                         $result['success'] = false;
-                        $result['message'] = array(
-                            'type' => 'error', 
-                            'message' => __d('tasks', 'Ошибка, некорректный тип')
-                        );
-                    }
-            }
-            $data = array();
-            if (isset($result['data'])) {
-                foreach ( $result['data'] as $key => $value ) {
-                    if ($key or $result['type'] == 'deleted') {
-                        $weekDay = $this->Task->getWeekDay(CakeTime::format('l', $key));
-                        $data[$key]['weekDay'] = $weekDay? $weekDay : __d('tasks', 'Планируемые');
+                        $result['message'] = $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка, некорректный тип')); 
                         
-                        if (CakeTime::isToday($key)) {
-                            $data[$key]['weekDayStyle'] = '';
-                        } else {
-                            $data[$key]['weekDayStyle'] = ($key > CakeTime::format('Y-m-d', time())) ? 'future' : 'past';
-                        }
-                        $data[$key]['list'] = $value;
                     }
-                }
             }
+            
         }
-        unset($result['data']);
-        $result['data'] = $data;
+        
         $result['action'] = 'getTasksByType';
         $this->set('result', $result);
         $this->set('_serialize', 'result');

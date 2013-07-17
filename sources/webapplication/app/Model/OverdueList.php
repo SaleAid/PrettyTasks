@@ -8,6 +8,7 @@
  */
 App::uses('MainList', 'Model');
 App::uses('Task', 'Model');
+App::uses('TaskObj', 'Lib');
 
 /**
  * 
@@ -45,7 +46,7 @@ class OverdueList extends MainList {
                         )
                 )
         ));
-        $data = $this->_model->find('all', array(
+        $tasks = $this->_model->find('all', array(
                 'order' => array(
                         $this->_model->alias . '.date' => 'DESC',
                         'Ordered.order' => 'ASC'
@@ -67,8 +68,9 @@ class OverdueList extends MainList {
         ));
         
         $data = array_map(function ($task) {
-            return $task['Task'];
-        }, $data);
+            return new TaskObj($task['Task']);
+        }, $tasks);
+        
         return $data;
     }
 }

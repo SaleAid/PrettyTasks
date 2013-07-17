@@ -31,7 +31,6 @@ class TaskEventListener implements CakeEventListener {
   
   public function eventAfterCreateTask($event){
     $task = $event->subject->data[$event->subject->alias];
-    //pr($task);
     if($task['future']){
         $PlannedList = new PlannedList($task['user_id'], 'planned');
         $PlannedList->addToList($task['id'], true);    

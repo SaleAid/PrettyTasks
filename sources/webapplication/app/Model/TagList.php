@@ -37,8 +37,8 @@ class TagList extends MainList{
             return $result[$this->_ordered->alias]['id'];
          }
          return false;
-    }
-
+   }
+    
    public function getItems($count = 50, $page = 1){
         $this->_model->bindModel(array('hasOne' => array(
 			'Ordered' => array(
@@ -73,4 +73,5 @@ class TagList extends MainList{
         ); 
         return $data;
     }
+    
 }

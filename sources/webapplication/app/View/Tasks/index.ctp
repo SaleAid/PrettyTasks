@@ -224,8 +224,14 @@
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3 class="head-list-info"><span class="tag-name"><?php echo __d('tasks', 'Lists'); ?></span></h3>
                   </div>
+                  <div class="well form-inline">
+                  <div class="input-append">
+                        <input type="text" size="16" class="input-xxlarge createList" placeholder="<?php echo __d('tasks', '+Добавить список…'); ?>"/>
+                        <button class="btn createListButton"><?php echo __d('tasks', 'Добавить'); ?></button>
+                    </div>
+                 </div>
                         <div class="clear"></div>
-                        <ul class="lists" date="lists">
+                        <ul class="lists-ul" date="lists">
                         </ul>
                         <?php //echo $this->element('empty_lists', array('type' => 'lists', 'hide' => true));?>
                     </div>

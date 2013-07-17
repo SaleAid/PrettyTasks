@@ -58,11 +58,11 @@ class Tag extends AppModel {
  * @return boolean
  */
 	public function add($tag) {
-                if (!empty($tag)) {
-                        $tag = $this->multibyteKey($tag);
-                        return $this->save(array('name' => $tag));
-                }
+        if (!empty($tag)) {
+            $tag = $this->multibyteKey($tag);
+            return $this->save(array('name' => $tag));
         }
+    }
         
 	public function multibyteKey($string = null) {
 		$str = mb_strtolower($string);

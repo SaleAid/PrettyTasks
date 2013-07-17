@@ -212,7 +212,7 @@ jQuery(function( $ ) {
             if (id != "undefined"){
                 AppNotes.userEvent('update', {id: id, title: title });
             }else {
-                AppNotes.userEvent('create', {title: title, id: Utils.uuid() });    
+                AppNotes.userEvent('create', {title: title});    
             }
             
         },

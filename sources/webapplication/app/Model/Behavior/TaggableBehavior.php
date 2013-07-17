@@ -99,6 +99,7 @@ class TaggableBehavior extends ModelBehavior {
         $model->$tagAlias->bindModel(array('belongsTo' => array(
 			$userTagAlias => array(
 				'className' => $userTagClass))), $resetBinding);
+                
         $model->getEventManager()->attach(new TagEventListener());
 	}
 
@@ -265,7 +266,8 @@ class TaggableBehavior extends ModelBehavior {
                     }
 
 					//To update occurrence
-					if ($this->settings[$model->alias]['cacheOccurrence']) {
+					/*
+                    if ($this->settings[$model->alias]['cacheOccurrence']) {
 						$newTagIds = $tagModel->{$taggedAlias}->find('all', array(
 							'contain' => array(),
 							'conditions' => array(
@@ -282,6 +284,7 @@ class TaggableBehavior extends ModelBehavior {
                         $tagIds = array_unique($tagIds);
 						$this->cacheOccurrence($model, $tagIds, $user_id);
 					}
+                    */
 				}
 			}
 			return true;
@@ -331,7 +334,8 @@ class TaggableBehavior extends ModelBehavior {
 					'conditions' => array(
 						'Tagged.tag_id' => $tagId,
 						'Tagged.model' => $model->name,
-                        'Tagged.user_id' => $userId)));
+                        'Tagged.user_id' => $userId),
+                ));
 			}
 
 			$data['occurrence'] = $taggedModel->find('count', array(
@@ -384,7 +388,8 @@ class TaggableBehavior extends ModelBehavior {
     
     public function tagArray(Model $model, $data = null) {
 		if (!empty($data)) {
-			return Set::extract($data, '{n}.name');
+			//return Set::extract($data, '{n}.name');
+            return Set::combine($data, '{n}.id', '{n}.name');
         }
 		return '';
 	}
@@ -403,6 +408,12 @@ class TaggableBehavior extends ModelBehavior {
 			$this->deleteTagged($model, $user_id);
 		}
 	}
+    
+    public function afterDelete(Model $model){
+        $userId = $model->data[$model->name]['user_id'];
+        $tagIds = array_keys($model->data[$model->name]['tags']);
+        $this->cacheOccurrence($model, $tagIds, $userId);
+    }
 
 
 /**
