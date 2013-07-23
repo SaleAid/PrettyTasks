@@ -11,8 +11,8 @@
 				<?php /*
 				<li><?php echo $this->Html->link(__d('pages', 'Help'), array('controller' => 'pages', 'action' => 'help'));?></li>
 				*/ ?>
-				<li><?php echo $this->Html->link(__d('pages', 'Login'), array('controller' => 'users', 'action' => 'login'));?></li>
-				<li><?php echo $this->Html->link(__d('pages', 'Register'), array('controller' => 'users', 'action' => 'register'));?></li>
+				<li><?php echo $this->Html->link(__d('pages', 'Login'), array('controller' => 'accounts', 'action' => 'login'));?></li>
+				<li><?php echo $this->Html->link(__d('pages', 'Register'), array('controller' => 'accounts', 'action' => 'register'));?></li>
 			</ul>
 		</div> 
 

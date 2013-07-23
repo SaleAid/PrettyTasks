@@ -181,7 +181,7 @@ class TasksController extends AppController {
                 default :
                     {
                         $result['success'] = false;
-                        $result['message'] = $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка, некорректный тип')); 
+                        $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка, некорректный тип')); 
                         
                     }
             }
@@ -200,10 +200,7 @@ class TasksController extends AppController {
             'title'
         );
         if (! $this->_isSetRequestData($expectedData)) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
@@ -215,17 +212,13 @@ class TasksController extends AppController {
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;
-                    $result['message'] = array(
-                        'type' => 'success', 
-                        'message' => __d('tasks', 'Задача  успешно изменена')
-                    );
+                    $result['message'] = new MessageObj('success', __d('tasks', 'Задача успешно изменена'));
                 } else {
                     $result['data'] = $originTask;
-                    $result['message'] = array(
-                        'type' => 'error', 
-                        'message' => __d('tasks', 'Ошибка, Задача  не изменена')
-                    );
-                    $result['errors'] = $this->Task->validationErrors;
+                    $result['message'] = new MessageObj('error', 
+                                                        __d('tasks', 'Ошибка, Задача  не изменена'),
+                                                        $this->Task->validationErrors
+                                                        );
                 }
             }
         }
@@ -242,10 +235,7 @@ class TasksController extends AppController {
             'title'
         );
         if (! $this->_isSetRequestData($expectedData)) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             
             
@@ -263,17 +253,13 @@ class TasksController extends AppController {
                 if( isset($date) ){
                     $result['data']['list'] = $this->request->data['date'];
                 }
-                $result['message'] = array(
-                    'type' => 'success', 
-                    'message' => __d('tasks', 'Задача успешно создана')
-                );
-            } else {
-                $result['message'] = array(
-                    'type' => 'error', 
-                    'message' => __d('tasks', 'Задача  не создана')
-                );
-                $result['errors'] = $this->Task->validationErrors;
-            }
+                $result['message'] = new MessageObj('success', __d('tasks', 'Задача успешно создана'));
+             } else {
+                $result['message'] = new MessageObj('error', 
+                                                    __d('tasks', 'Задача  не создана'),
+                                                    $this->Task->validationErrors
+                                                    );
+             }
         }
         $result['action'] = 'create';
         $this->set('result', $result);
@@ -287,10 +273,7 @@ class TasksController extends AppController {
             'id'
         );
         if (! $this->_isSetRequestData($expectedData)) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($task) {
@@ -298,22 +281,15 @@ class TasksController extends AppController {
                 if ($cloneTask) {
                     $result['success'] = true;
                     $result['data'] = $cloneTask;
-                    $result['message'] = array(
-                        'type' => 'success', 
-                        'message' => __d('tasks', 'Задача успешно склонирована')
-                    );
+                    $result['message'] = new MessageObj('success', __d('tasks', 'Задача успешно склонирована'));
                 } else {
-                    $result['message'] = array(
-                        'type' => 'error', 
-                        'message' => __d('tasks', 'Задача  не склонирована')
-                    );
-                    $result['errors'] = $this->Task->validationErrors;
+                    $result['message'] = new MessageObj('error', 
+                                                        __d('tasks', 'Задача  не склонирована'),
+                                                        $this->Task->validationErrors
+                                                        );
                 }
             } else{
-                $result['message'] = array(
-                        'type' => 'error', 
-                        'message' => __d('tasks', 'Задача не существует')
-                );
+                $result['message'] = new MessageObj('error', __d('tasks', 'Задача не существует'));
             }
         }
         $result['action'] = 'clone';
@@ -329,10 +305,7 @@ class TasksController extends AppController {
             'position'
         );
         if (! $this->_isSetRequestData($expectedData)) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($task) {
@@ -358,27 +331,15 @@ class TasksController extends AppController {
                 if($List !== null){
                     if ( $List->reOrder($task['Task']['id'], $this->request->data['position']) ) {
                         $result['success'] = true;
-                        $result['message'] = array(
-                            'type' => 'success', 
-                            'message' => __d('tasks', 'Задача успешно перемещена')
-                        );
+                        $result['message'] = new MessageObj('success', __d('tasks', 'Задача успешно перемещена'));
                     } else {
-                        $result['message'] = array(
-                            'type' => 'error', 
-                            'message' => __d('tasks', 'Задача не перемещена')
-                        );
+                        $result['message'] = new MessageObj('error', __d('tasks', 'Задача не перемещена'));
                     }
                 } else {
-                    $result['message'] = array(
-                            'type' => 'error', 
-                            'message' => __d('tasks', 'Ошибка, некорректный список')
-                        );
+                    $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка, некорректный список'));
                 }
             } else {
-                $result['message'] = array(
-                    'type' => 'error', 
-                    'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи')
-                );
+                $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи'));
             }
         }
         $result['action'] = 'changeOrders';
@@ -393,11 +354,7 @@ class TasksController extends AppController {
             'done'
         );
         if (! $this->_isSetRequestData($expectedData)) {
-            $result['message'] = array(
-                'errors' => __d('tasks', 'Wrong request data'), 
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
@@ -406,23 +363,16 @@ class TasksController extends AppController {
                     $result['success'] = true;
                     $result['data'] = $task;
                     if ($task['Task']['done']) {
-                        $result['message'] = array(
-                            'type' => 'success', 
-                            'message' => __d('tasks', 'Задача успешно выполнена')
-                        );
+                        $result['message'] = new MessageObj('success', __d('tasks', 'Задача успешно выполнена'));
                     } else {
-                        $result['message'] = array(
-                            'type' => 'success', 
-                            'message' => __d('tasks', 'Задача открыта')
-                        );
+                        $result['message'] = new MessageObj('success', __d('tasks', 'Задача открыта'));
                     }
                 } else {
                     $result['data'] = $originTask;
-                    $result['message'] = array(
-                        'type' => 'error', 
-                        'message' => __d('tasks', 'Ошибка, Задача  не изменена')
-                    );
-                    $result['errors'] = $this->Task->validationErrors;
+                    $result['message'] = new MessageObj('error',
+                                                        __d('tasks', 'Ошибка, Задача  не изменена'),
+                                                        $this->Task->validationErrors
+                                                        );
                 }
             }
         }
@@ -434,11 +384,7 @@ class TasksController extends AppController {
     public function setDelete() {
         $result = $this->_prepareResponse();
         if (! $this->_isSetRequestData('id')) {
-            $result['message'] = array(
-                'errors' => __d('tasks', 'Wrong request data'), 
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
@@ -448,32 +394,21 @@ class TasksController extends AppController {
                     if ($task) {
                         $result['success'] = true;
                         $result['data'] = $task;
-                        $result['message'] = array(
-                                'type' => 'success', 
-                                'message' => __d('tasks', 'Задача успешно перемещена в список удаленных задач')
-                         );
+                        $result['message'] = new MessageObj('success', __d('tasks', 'Задача успешно перемещена в список удаленных задач'));
                     } else {
                         $result['data'] = $originTask;
-                        $result['message'] = array(
-                            'type' => 'error', 
-                            'message' => __d('tasks', 'Ошибка, Задача  не изменена')
-                        );
-                        $result['errors'] = $this->Task->validationErrors;
-                    }
+                        $result['message'] = new MessageObj('error', 
+                                                            __d('tasks', 'Ошибка, Задача  не изменена'),
+                                                            $this->Task->validationErrors
+                                                            );
+                   }
                 }else{
                     //delete task forever
                     if ($this->Task->delete()) {
                         $result['success'] = true;
-                        //$result['data'] = $task;
-                        $result['message'] = array(
-                            'type' => 'success', 
-                            'message' => __d('tasks', 'Задача успешно удалена')
-                        );
+                        $result['message'] = new MessageObj('success', __d('tasks', 'Задача успешно удалена'));
                     } else {
-                        $result['message'] = array(
-                            'type' => 'error', 
-                            'message' => __d('tasks', 'Ошибка, Задача  не изменена')
-                        );
+                        $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка, Задача  не изменена'));
                     }
                 }
             }
@@ -486,10 +421,7 @@ class TasksController extends AppController {
     public function deleteAll(){
         $result = $this->_prepareResponse();
         if (! $this->_isSetRequestData('confirm')) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             if($this->Task->deleteAll(array('Task.user_id' => $this->Auth->user('id'),
                                             'Task.deleted' => 1
@@ -497,16 +429,9 @@ class TasksController extends AppController {
                                      false))
             {
                 $result['success'] = true;
-                $result['message'] = array(
-                        'type' => 'success', 
-                        'message' => __d('tasks', 'Задачи успешно удалены')
-                    );
+                $result['message'] = new MessageObj('success', __d('tasks', 'Задачи успешно удалены'));
             } else {
-                $result['message'] = array(
-                    'type' => 'success', 
-                    'message' => __d('tasks', 'Задачи не удалены')
-                );
-                //$result['errors'] = $this->Task->validationErrors;
+                $result['message'] = new MessageObj('error', __d('tasks', 'Задачи не удалены'));
             }
         }
         $result['action'] = 'deleteAll';
@@ -522,31 +447,22 @@ class TasksController extends AppController {
             'time'
         );
         if (! $this->_isSetRequestData($expectedData)) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
                 if ($this->Task->setDelete(0)->setDate($this->request->data['date'])->save()) {
                     $result['success'] = true;
-                    $result['message'] = array(
-                        'type' => 'success', 
-                        'message' => __d('tasks', 'Задача успешно перемещена (moveTo)')
-                    );
+                    $result['message'] = new MessageObj('success', __d('tasks', 'Задача успешно перемещена (moveTo)'));
                 } else {
-                    $result['message'] = array(
-                        'type' => 'success', 
-                        'message' => __d('tasks', 'Задача  не перемещена (moveTo)')
+                    $result['message'] = new MessageObj(
+                                            'error', 
+                                            __d('tasks', 'Задача  не перемещена (moveTo)'),
+                                            $this->Task->validationErrors
                     );
-                    $result['errors'] = $this->Task->validationErrors;
                 }
             } else {
-                $result['message'] = array(
-                    'type' => 'error', 
-                    'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи')
-                );
+                $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи'));
             }
         }
         $result['action'] = 'dragOnDay';
@@ -568,10 +484,7 @@ class TasksController extends AppController {
             'comment'
         );
         if (! $this->_isSetRequestData($expectedData)) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
@@ -587,22 +500,16 @@ class TasksController extends AppController {
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;
-                    $result['message'] = array(
-                        'type' => 'success', 
-                        'message' => __d('tasks', 'Задача успешно отредактировано')
-                    );
+                    $result['message'] = new MessageObj('success', __d('tasks', 'Задача успешно отредактировано'));
                 } else {
-                    $result['errors'] = $this->Task->validationErrors;
-                    $result['message'] = array(
-                        'type' => 'error', 
-                        'message' => __d('tasks', 'Задача не отредактировано')
+                    $result['message'] =  new MessageObj(
+                                            'error', 
+                                            __d('tasks', 'Задача не отредактировано'),
+                                            $this->Task->validationErrors
                     );
                 }
             } else {
-                $result['message'] = array(
-                    'type' => 'error', 
-                    'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи')
-                );
+                $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи'));
             }
         }
         $result['action'] = 'edit';
@@ -613,10 +520,7 @@ class TasksController extends AppController {
     public function getTasksForDay() {
         $result = $this->_prepareResponse();
         if (! $this->_isSetRequestData('date')) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $result['data']['date'] = $this->request->data['date'];            
             if( $this->request->data['date'] =='planned' ){
@@ -636,11 +540,6 @@ class TasksController extends AppController {
             $result['success'] = true;
             $result['data']['list'] = $tasks;
             
-            
-            $result['message'] = array(
-                'type' => 'success', 
-                'message' => __d('tasks', 'Задача успешно ...')
-            );
         }
         $result['action'] = 'addDay';
         $this->set('result', $result);
@@ -650,22 +549,13 @@ class TasksController extends AppController {
     public function deleteDay() {
         $result = $this->_prepareResponse();
         if (! $this->_isSetRequestData('date')) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             if ($this->Task->deleteDayFromConfig($this->Auth->user('id'), $this->request->data['date'])) {
                 $result['success'] = true;
-                $result['message'] = array(
-                    'type' => 'success', 
-                    'message' => __d('tasks', 'День успешно удален из списка')
-                );
+                $result['message'] = new MessageObj('success', __d('tasks', 'День успешно удален из списка'));
             } else {
-                $result['message'] = array(
-                    'type' => 'error', 
-                    'message' => __d('tasks', 'Ошибка при  ...')
-                );
+                $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при удалении')); 
             }
         }
         $result['action'] = 'deleteDay';
@@ -680,10 +570,7 @@ class TasksController extends AppController {
             'hash'
         );
         if (! $this->_isSetRequestData($expectedData)) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $result['success'] = $this->Auth->loggedIn();
             if ($result['success']) {
@@ -691,10 +578,7 @@ class TasksController extends AppController {
                 if (Validation::date($this->request->data['date']) and ! CakeTime::isToday($this->request->data['date'])) {
                     $result['operation'] = 'refresh';
                     $result['cause'] = 'changeDay';
-                    $result['message'] = array(
-                        'type' => 'success', 
-                        'message' => __d('tasks', 'Переход на новый день. Перезагрузка страницы произойдет через 5 секунд')
-                    );
+                    $result['message'] = new MessageObj('success', __d('tasks', 'Переход на новый день. Перезагрузка страницы произойдет через 5 секунд')); 
                 }
             }
         }

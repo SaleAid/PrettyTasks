@@ -10,6 +10,7 @@ echo $this->Html->docType('html5');
 <meta name="description" content="<?php echo $description_for_layout; ?>" />
 <meta name="keywords" content="<?php echo $keywords_for_layout; ?>" />
 <meta name="author" content=""/>
+<meta name="csrf-token" content="<?php echo $csrfToken; ?>"/>
    
 <?php
 echo $this->Html->meta('icon');

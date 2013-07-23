@@ -16,7 +16,6 @@
     }
       jQuery(function($){
         $.cookie('timezoneOffset', get_timezone_infos());
-        //console.log( get_timezone_infos());
       });
   ", array('block' => 'toFooter'));
 ?>
@@ -36,7 +35,8 @@
             'separator' => ' ',
             'options' => array( 1 => __d('accounts', 'Я новый пользователь'), 0 => __d('accounts', 'Я имею аккаунт (связать аккаунты)'))
         )); ?>
-            <label class="checkbox">
+        <br />
+            <label class="checkbox1">
                 <?php echo $this->Form->input('agreed', array('label'=> __d('accounts', 'Я согласен с ') . $this->Html->link(__d('accounts', 'условиями использования'), array('controller' => 'pages', 'action' => 'terms-and-conditions'), array('target' => '_blank')), 'type' => 'checkbox', 'format' => array('before', 'label', 'between', 'error', 'after'))); ?>
            </label>
         

@@ -85,6 +85,7 @@ class AccountsController extends AppController {
     
     private function _redirectAfterLogin(){
         //$cookie = $this->AutoLogin1->read();
+        $this->Session->write('csrf_token', base64_encode( mt_rand() . time() . mt_rand() . 'key' ));
         $user = $this->Auth->user();
         $autoLogin = true;
         
@@ -352,7 +353,7 @@ class AccountsController extends AppController {
                     }
             }
         }
-        pr($this->data)	;die;
+        //pr($this->data)	;die;
         $this->Session->setFlash(__d('accounts', 'An unknown error'), 'alert', array(
             'class' => 'alert-error'
         ));

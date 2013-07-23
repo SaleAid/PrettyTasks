@@ -315,7 +315,7 @@ function onCreateList(data){
     if(data.success){
         scrCreateList(data);
     }else{
-    	mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.errors), data.message.type);   
+    	mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.message.errors), data.message.type);   
     }
 }
 function srvCreateList(tag){
@@ -1185,7 +1185,7 @@ function onEdit(data){
         scrEdit(data.data.Task.id, data.data.Task.title, data.data.Task.tags, data.data.Task.priority, data.data.Task.continued, data.data.Task.done, data.data.Task.date, data.data.Task.time, data.data.Task.timeend, data.data.Task.comment);
     }else {
         mesg(data.message.message, data.message.type);
-        scrErrorEdit(data.errors);    
+        scrErrorEdit(data.message.errors);    
     }
     
 }
@@ -1372,7 +1372,7 @@ function taskDragOnDay(id, date, time){
 }
 function onDragOnDay(data){
     if(!data.success){
-        mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.errors), data.message.type);    
+        mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.message.errors), data.message.type);    
     }
 }
 function srvDragOnDay(id, date, time){
@@ -1524,7 +1524,7 @@ function onClone(data){
     if(data.success){
         scrCreate(data);
     }else{
-        mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.errors), data.message.type);   
+        mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.message.errors), data.message.type);   
     }
 }
 function srvClone(id, date){
@@ -1545,7 +1545,7 @@ function onCreate(data){
     if(data.success){
         scrCreate(data);
     }else{
-    	mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.errors), data.message.type);   
+    	mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.message.errors), data.message.type);   
     }
 }
 function srvCreate(title, date){

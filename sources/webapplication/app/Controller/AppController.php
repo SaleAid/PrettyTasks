@@ -136,6 +136,13 @@ class AppController extends Controller {
         $timeOffset = $dateTimeZoneUser->getOffset($dateTimeServer);
         return $timeOffset;
     }
+    
+    private function _getCsrfToken(){
+        if($this->Session->check('csrf_token')){
+            return $this->Session->read('csrf_token');
+        }
+        return;
+    }
 
     public function beforeFilter() {
         $this->_setLanguage();
@@ -154,6 +161,7 @@ class AppController extends Controller {
         $this->set('timezone', $this->__userTimeZone());
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
+        $this->set('csrfToken', $this->_getCsrfToken());
         
         if ($this->Auth->loggedIn() && $this->Session->check('auth-new-accounts') && ! ($this->request->params['controller'] == 'accounts' && $this->request->params['action'] == 'confirmSocialLinks')) {
             $this->redirect(array(

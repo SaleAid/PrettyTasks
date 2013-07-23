@@ -15,6 +15,7 @@ class ListsController extends AppController {
     
     public function add(){
         $result = $this->_prepareResponse();
+        $result['errors'] = array();
         $expectedData = array(
             'tag'
         );

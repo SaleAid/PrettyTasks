@@ -14,24 +14,28 @@
                 <?php echo $this->Form->input('email', array('label' => array('text' => __d('accounts', 'Логин или Емейл'), 'class' => 'control-label'),'class' => 'input-xlarge', 'placeholder' => __d('users', 'Логин или Емейл'), 'type' => 'text')); ?>
         
                 <?php echo $this->Form->input('password' ,array( 'label' => array('text' => __d('accounts', 'Пароль'), 'class' => 'control-label'), 'class' => 'input-xlarge', 'placeholder' => __d('users', 'Пароль'))); ?>
-                
-                 <div class="form-inline">
+                <div class="control-group">
+                    <div class="controls">
+                        <label class="checkbox">
+                            <?php echo $this->Form->input('auto_login', array('label' => false, 'type'=>'checkbox', 'div' => false)); ?>
+                             <?php echo  __d('accounts', 'Оставаться в системе'); ?>
+                         </label>
+                     </div>
+                  </div>     
+                 <div class="form-inline form-login">
                  <div class="control-group">
                     <div class="controls">
-                      <?php echo $this->Form->submit(__d('accounts', 'Войти'), array('class' => 'btn btn-primary', 'div' => false)); ?>
-                      <label class="checkbox">
-                        <?php echo $this->Form->input('auto_login', array('label' => false, 'type'=>'checkbox', 'div' => false)); ?>
-                         <?php echo  __d('accounts', 'Оставаться в системе'); ?>
-                      </label>
                       
+                      
+                      <?php echo $this->Form->submit(__d('accounts', 'Войти'), array('class' => 'btn btn-primary', 'div' => false)); ?>
                     </div>
                   </div>
                 </div>
                 
                 <div class="reg-link">
-                    <?php echo $this->Html->link(__d('accounts', 'Забыли пароль?') , array('controller' => 'accounts', 'action' => 'password_resend')); ?>
-                    &nbsp;&bull;&nbsp;
                     <?php echo $this->Html->link(__d('accounts', 'Регистрация'), array('controller' => 'accounts', 'action' => 'register')); ?>
+                    &nbsp;&bull;&nbsp;
+                    <?php echo $this->Html->link(__d('accounts', 'Забыли пароль?') , array('controller' => 'accounts', 'action' => 'password_resend')); ?>
                 </div>
                 
                 <?php echo $this->Form->end(); ?>
