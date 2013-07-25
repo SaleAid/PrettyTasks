@@ -42,7 +42,7 @@ class DaysController extends AppController {
             );
         } else {
             $result['success'] = true;
-            $result['data'] = $this->Day->getComment($this->Auth->user('id'), $this->request->data['date']); 
+            $result['data'] = $this->Day->getDay($this->Auth->user('id'), $this->request->data['date']); 
             $result['message'] = array(
                 'type' => 'success', 
                 'message' => __d('days', 'Готово')

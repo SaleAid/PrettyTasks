@@ -12,6 +12,7 @@ App::uses('ContinuedList', 'Model');
 App::uses('TagList', 'Model');
 App::uses('TaskEventListener', 'Event');
 
+App::uses('TaskObj', 'Lib');
 App::uses('TasksListObj', 'Lib');
 App::uses('MessageObj', 'Lib');
 
@@ -119,7 +120,7 @@ class TasksController extends AppController {
         $result['data']['arrTaskOnDays'] = $arrTaskOnDays;
         $result['data']['arrTaskOnDaysCount'] = $data_count;
         
-        $result['data']['arrDaysRating'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $beginDate, $endDate, $dayConfig);
+        $result['data']['arrDaysRating'] = $this->Task->Day->getDays($this->Auth->user('id'), $beginDate, $endDate, $dayConfig);
         if($result['data']['arrTaskOnDaysCount'][$beginDate]['all'] && $result['data']['arrTaskOnDaysCount'][$beginDate]['all'] > $result['data']['arrTaskOnDaysCount'][$beginDate]['done'] ){
             $result['data']['yesterdayDisp'] = true;
         } else {
@@ -522,24 +523,18 @@ class TasksController extends AppController {
         if (! $this->_isSetRequestData('date')) {
             $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
-            $result['data']['date'] = $this->request->data['date'];            
-            if( $this->request->data['date'] =='planned' ){
+            if( $this->request->data['date'] == 'planned' ){
                 $PlannedList = new PlannedList($this->Auth->user('id'));
-                $tasks = $PlannedList->getItems();
+                $result['data'] = new TasksListObj('defined', 'planned', $PlannedList->getItems());
             }else{
-                $DateList = new DateList($this->Auth->user('id'), CakeTime::format('Y-m-d', $this->request->data['date']));
-                $tasks = $DateList->getItems();
-                $this->Task->setDayToConfig($this->Auth->user('id'), CakeTime::format('Y-m-d', $this->request->data['date']));
-                $result['data']['day'] = $this->Task->Day->getDaysRating($this->Auth->user('id'), $this->request->data['date']);
-                $result['data']['weekDayStyle'] = ($result['data']['date'] > CakeTime::format('Y-m-d', time())) ? 'future' : 'past';    
+                $date = CakeTime::format('Y-m-d', $this->request->data['date']);
+                $DateList = new DateList($this->Auth->user('id'), $date);
+                $result['data'] = new TasksListObj('DateList', $date, $DateList->getItems());
+                $result['data']->day = $this->Task->Day->getDay($this->Auth->user('id'), $date);
+                
+                $this->Task->setDayToConfig($this->Auth->user('id'), $date);
             }
-            
-            $done = array_filter($tasks, create_function('$val', 'return $val[\'done\'] == 1;'));
-            $result['data']['listCount']['all'] = count($tasks);
-            $result['data']['listCount']['done'] = count($done);
             $result['success'] = true;
-            $result['data']['list'] = $tasks;
-            
         }
         $result['action'] = 'addDay';
         $this->set('result', $result);

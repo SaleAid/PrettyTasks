@@ -1092,37 +1092,60 @@ function srvAddDay(date){
 }
 
 function onAddDay(data){
-    var list = $("ul[date='"+data.data.date+"']");
-    var nameDay = $.datepicker.formatDate('DD', new Date (data.data.date));
+    var list = $("ul[date='" + data.data.name + "']");
+    var weekday = $.datepicker.formatDate('DD', new Date (data.data.name));
+    var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
+    var weekDayStyle;
+    var cAll = cDone = 0;
+    
+    if(data.data.name == 'planned'){
+       weekDayStyle = 'future'; 
+       weekday = '';
+    } else if(today == data.data.name){
+        weekDayStyle = ''; 
+    } else if(today > data.data.name){
+        weekDayStyle = 'past';
+    } else {
+        weekDayStyle = 'future';
+    }
+    
     list.empty();
     list.siblings('.emptyList ').remove();
-    var emptyList = _.template($("#empty_list_day_tasks").html(), {type: data.data.weekDayStyle});
+    var emptyList = _.template($("#empty_list_day_tasks").html(), {type: weekDayStyle});
     if($.isEmptyObject(data.data.list)){
         emptyList = $(emptyList).removeClass('hide');
     }
     list.after(emptyList);
-    list.siblings('.filter').find('span.all').text(data.data.listCount.all);
-    list.siblings('.filter').find('span.inProcess').text(data.data.listCount.all - data.data.listCount.done);
-    list.siblings('.filter').find('span.completed').text(data.data.listCount.done);
-    list.parent().find('.weekday').text(" - "+nameDay);
-    list.parent().find('.weekday').addClass(data.data.weekDayStyle);
-    initPrintClick(list.parent().find('.print'));
-    if(!$.isEmptyObject(data.data.day) && +data.data.day[data.data.date][0].Day.rating){
-        $(".ratingDay input[date='"+data.data.date+"']").attr('checked','checked');
+    
+    if(!$.isEmptyObject(data.data.day) && +data.data.day.rating){
+        $(".ratingDay input[date='"+data.data.name+"']").attr('checked','checked');
     }
-    $.each(data.data.list,function(index, value) {
-        list.append(AddTask(value));
-        initDelete( "li[id='"+value.id+"'] .deleteTask");
-        initEditAble("li[id='"+value.id+"'] .editable");
+     
+    $.each(data.data.list, function(index, task) {
+        cAll++;
+        if(+task.done){
+            cDone++;
+        }
+        list.append(AddTask(task));
+        initDelete( "li[id='"+task.id+"'] .deleteTask");
+        initEditAble("li[id='"+task.id+"'] .editable");
     });
-//    initCreateTask($("ul[date='"+data.data.date+"']").parent().find(".createTask"));
-//    initCreateTaskButton($("ul[date='"+data.data.date+"']").parent().parent().find(".createTaskButton"));
-    initDrop($("li a[date='"+data.data.date+"']").parent());
-    initSortable("ul[date='"+data.data.date+"'].sortable");
-    initRatingDay(".ratingDay input[date='"+data.data.date+"']");
-    initTabDelte("li a[date='"+data.data.date+"'] .close");
+
+    initDrop($("li a[date='"+data.data.name+"']").parent());
+    initSortable("ul[date='"+data.data.name+"'].sortable");
+    initRatingDay(".ratingDay input[date='"+data.data.name+"']");
+    initTabDelte("li a[date='"+data.data.name+"'] .close");
     initFilter(list.siblings('.filter').children('a'));
-    initCommentDay($("ul[date='"+data.data.date+"']").siblings('.days').children('a[data="commentDay"]'));
+    initCommentDay($("ul[date='"+data.data.name+"']").siblings('.days').children('a[data="commentDay"]'));
+    
+    //count 
+    list.siblings('.filter').find('span.all').text(cAll);
+    list.siblings('.filter').find('span.inProcess').text(cAll - cDone);
+    list.siblings('.filter').find('span.completed').text(cDone);
+    list.parent().find('.weekday').text(" - " + weekday);
+    list.parent().find('.weekday').addClass(weekDayStyle);
+    initPrintClick(list.parent().find('.print'));
+    setFiler(data.data.name);
 
 }
 
@@ -2019,11 +2042,12 @@ function initTab(element){
 
 function setFiler(tab_id){
     var filter = $.cookie('filter');
-    if(filter){
+    if(!filter){
+        filter = 'inProcess';
+    }
 	$('.tab-content').find('#'+tab_id)
 			 .find('.filter a[data="'+filter+'"]')
 			 .trigger('click');
-    }
 }
 
 function initTabDelte(element){
@@ -2043,7 +2067,7 @@ function initFilter(element){
         listTasks.children('li').removeClass('hide');
         listTasks.find(".emptyList").addClass('hide');
         $(this).siblings('a').removeClass('active');
-        $.cookie('filter', type, { expires: 7 });
+        $.cookie('filter', type, { expires: 7, path: '/' });
         switch(type){
             case 'all':
                 $(this).addClass('active');

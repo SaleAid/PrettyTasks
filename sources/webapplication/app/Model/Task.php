@@ -572,7 +572,8 @@ class Task extends AppModel {
      */
     public function setDayToConfig($user_id, $date) {
         $days = $this->User->Setting->getValue('days', $user_id);
-        if (is_array($days) and !in_array($date, $days) ) {
+        
+        if (empty($days) or !in_array($date, $days) ) {
             $days[] = $date;
             $this->User->Setting->setValue('days', $days, $user_id);
         }
@@ -585,7 +586,7 @@ class Task extends AppModel {
      * @param unknown_type $date
      */
     public function deleteDayFromConfig($user_id, $date) {
-        $days = $this->User->Setting->getValue('days', $user_id);
+        $days = (array)$this->User->Setting->getValue('days', $user_id);
         $key = array_search($date, $days);
         if($key !== false){
             unset($days[$key]);

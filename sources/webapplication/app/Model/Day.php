@@ -7,6 +7,7 @@
  * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
  */
 App::uses('AppModel', 'Model');
+App::uses('DayObj', 'Lib');
 
 /**
  * Day Model
@@ -107,20 +108,13 @@ class Day extends AppModel {
 	 * @param string $date        	
 	 * @return array boolean=false
 	 */
-	public function isDayFound($user_id, $date) {
+	public function getIdDay($user_id, $date) {
 		$this->contain();
-		$day = $this->findByUser_idAndDate($user_id, $date, $this->_dayFields);
+		$day = $this->findByUser_idAndDate($user_id, $date, array('id'));
 		if ($day) {
-			$this->set($day);
-			return $day;
-		} else {
-			$this->set(array(
-					'user_id' => $user_id,
-					'date' => $date,
-					'rating' => 0
-			));
-		}
-		return false;
+			return $day['Day']['id'];
+		} 
+        return false;
 	}
 
 	/**
@@ -134,11 +128,8 @@ class Day extends AppModel {
 	 * @param array $arrDays        	
 	 * @return Ambigous <multitype:, unknown>
 	 */
-	public function getDaysRating($user_id, $from, $to = null, $arrDays = null) { // TODO:
-	                                                                              // Remane
-	                                                                              // to
-	                                                                              // getDays
-		$days = array();
+	public function getDays($user_id, $from, $to = null, $arrDays = null) { 
+	    $days = array();
 		$data = array();
 		do {
 			$days[] = $from;
@@ -157,11 +148,12 @@ class Day extends AppModel {
 				),
 				'fields' => $this->_dayFields
 		));
-		foreach ( $result as $item ) {
-			$data[$item['Day']['date']][] = $item;
-		}
-		return $data;
-	}
+        
+        $data = array_map(function ($day) {
+            return new DayObj($day['Day']);
+        }, $result);
+        return $data;
+    }
 
 	/**
 	 * Set rating.
@@ -173,9 +165,15 @@ class Day extends AppModel {
 	 * @return Day
 	 */
 	public function setRating($user_id, $date, $rating = null) {
-		$this->isDayFound($user_id, $date); // TODO remove this
+		$id = $this->getIdDay($user_id, $date);
+        if($id){
+            $this->id = $id;
+        } else {
+            $this->data[$this->alias]['date'] = $date;
+            $this->data[$this->alias]['user_id'] = $user_id;
+		} 
 		$this->data[$this->alias]['rating'] = $rating;
-		return $this;
+        return $this;
 	}
 
 	/**
@@ -188,9 +186,15 @@ class Day extends AppModel {
 	 * @return Day
 	 */
 	public function setComment($user_id, $date, $comment = null) {
-		$this->isDayFound($user_id, $date); // TODO remove this
-		$this->data[$this->alias]['comment'] = $comment;
-		return $this;
+		$id = $this->getIdDay($user_id, $date);
+        if($id){
+            $this->id = $id;
+        } else {
+            $this->data[$this->alias]['date'] = $date;
+            $this->data[$this->alias]['user_id'] = $user_id;
+		}
+        $this->data[$this->alias]['comment'] = $comment;
+        return $this;
 	}
 
 	/**
@@ -200,18 +204,20 @@ class Day extends AppModel {
 	 * @param string $date        	
 	 * @return unknown multitype:string
 	 */
-	public function getComment($user_id, $date) { // TODO Rename to get day
+	public function getDay($user_id, $date) { 
 		$this->contain();
 		$day = $this->findByUser_idAndDate($user_id, $date, $this->_dayFields);
-		if (isset($day[$this->alias]['comment'])) {
-			return $day[$this->alias];
+		if (!empty($day)) {
+			return new DayObj($day[$this->alias]); 
 		}
 		
-		return array(
-				'date' => $date,
-				'comment' => '',
-				'rating' => 0
-		);
+		return new DayObj(array(
+            				'date' => $date,
+            				'comment' => '',
+            				'rating' => 0,
+                            'id' => null
+		                  )
+        );
 	}
 
 	/**
@@ -222,16 +228,16 @@ class Day extends AppModel {
 	 *        	default = 10
 	 * @return Ambigous <multitype:, NULL, mixed>
 	 */
-	public function getComments($user_id, $count = 10, $toDate = null, $fromDate = null) { // Rewrite syntax, add $to & $from
-		if (!$toDate){
-			$toDate = date("Y-m-d");
+	public function getComments($user_id, $count = 10, $to = null, $from = null) { 
+		if (!$to){
+			$to = date("Y-m-d");
 		}
 		$this->contain();
 		$result = $this->find('all', array(
 				'conditions' => array(
 						'Day.user_id' => $user_id,
 						'Day.comment !=' => '',
-						'Day.date <=' => $toDate
+						'Day.date <=' => $to
 				),
 				'fields' => $this->_dayFields,
 				'order' => array(

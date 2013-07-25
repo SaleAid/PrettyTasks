@@ -7,23 +7,9 @@
 @navbarLinkBackgroundActive rgba(0, 55, 72, 0.15)
 */ 
 
-@media (max-width: 979px) {
-  #wrapper-content {
-    padding: 0px 5px 276px 5px !important;
-    }
-    .navbar-fixed-top {
-        margin-bottom: 2px;
-    }
-    .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner {
-        padding: 0px;
-        margin-right: -10px;
-    }
-    
-    footer {
-         padding-left: 20px;
-    }
 
-}
+
+
 
 /*twitter.fix*/
 .navbar .nav > li > a{
@@ -221,3 +207,50 @@ footer .right{ text-align:right; }
     min-width: 80px;
 }
 
+@media (max-width: 767px) {
+  
+  .container, #wrapper, .navbar-fixed-bottom .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container, .span12 {
+        width: auto;
+    }
+    .container, .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+        width: auto;
+    }
+    .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner{
+        margin-right: 0px;
+    }
+    #wrapper-all{
+        min-width: 0px;
+    }
+    #wrapper-content{
+        padding: 0px 0px 200px 0px !important;
+    }
+    footer .container{
+        height: auto;
+    }
+    footer .right{
+        text-align: center;
+    }
+  
+  
+  #wrapper-content {
+    padding: 0px 5px 276px 5px !important;
+    }
+    .navbar-fixed-top {
+        margin-bottom: 2px;
+    }
+        
+    footer {
+         padding-left: 20px;
+    }
+    .box{
+        width: 96%;
+        height: auto;
+    }
+    .box_container {
+        height: auto;
+        width: auto;
+    }
+    .start > img {
+        display: none;
+    }
+}

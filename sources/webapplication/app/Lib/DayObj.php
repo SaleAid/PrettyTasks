@@ -6,15 +6,15 @@ class DayObj {
     public $date = null;
     public $rating = null;
     public $comment = null;
-    public $created = null;
-    public $modified = null;
+    //public $created = null;
+    //public $modified = null;
 
     public  function __construct( array $day ){
-        $this->id = $day['Day']['id'];
-        $this->date = $day['Day']['date'];
-        $this->rating = $day['Day']['rating'];
-        $this->comment = $day['Day']['comment'];
-        $this->created = $day['Day']['created'];
-        $this->modified = $day['Day']['modified'];
+        $this->id = $day['id'];
+        $this->date = $day['date'];
+        $this->rating = $day['rating'];
+        $this->comment = $day['comment'];
+        //$this->created = $day['created'];
+        //$this->modified = $day['modified'];
     }
 } 

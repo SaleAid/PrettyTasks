@@ -8,7 +8,7 @@
  */
 App::uses('MainList', 'Model');
 App::uses('Task', 'Model');
-
+App::uses('TaskObj', 'Lib');
 /**
  *
  * @author vlad

@@ -275,4 +275,11 @@ class AppController extends Controller {
          */
         $this->Captcha->getCaptcha();
     }
+    
+    public function checkCsrfToken($token){
+        if( !empty($token) and $this->_getCsrfToken() == $token){
+            return true;
+        }
+        return false;
+    }
 }
