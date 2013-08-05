@@ -34,7 +34,7 @@
             <p> It's time to act! </p>
             <p>Get rid of any fears, you an do everything!</p>
             <p>Believe your intuition and click</p> 
-             <?php echo $this->Html->link(__('Fire!'),array('controller' => 'accounts', 'action' => 'login'),array('class'=> 'btn btn-large btn-block btn btn-success fire')); ?>
+             <?php echo $this->Html->link(__('Fire!'),array('controller' => 'accounts', 'action' => 'register'),array('class'=> 'btn btn-large btn-block btn btn-success fire')); ?>
         </div>
 	</div>
 </div>

@@ -55,4 +55,13 @@ CakePlugin::load(
 //    'AppVK' => array('routes' => true)
 //));
 
+// maintenance server 
+
+if (Configure::read('App.maintenanceMode')){
+    header('HTTP/1.1 503 Service Temporarily Unavailable');
+    header('Status: 503 Service Temporarily Unavailable');
+    header('Retry-After: 60');
+    echo file_get_contents(WWW_ROOT . 'maintenence.html');
+    exit();
+}
   

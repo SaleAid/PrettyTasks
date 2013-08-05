@@ -5,11 +5,11 @@
             <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
             <h3>
             <% if (typeof(view) != "undefined") { %>
-                <?php echo __d('notes', 'View');?>
+                <?php echo __d('notes', 'Просмотр заметки');?>
             <%} else if (typeof(id) != "undefined") { %>
-                <?php echo __d('notes', 'Edit');?>
+                <?php echo __d('notes', 'Редактирование заметки');?>
             <% } else { %>
-                <?php echo __d('notes', 'Create');?>
+                <?php echo __d('notes', 'Создать заметку');?>
             <% } %>
             </h3>
         </div>

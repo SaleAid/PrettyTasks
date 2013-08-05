@@ -44,7 +44,7 @@
           <?php //if ($isBetaUser):?>
           <li class="lists <? //if($this->params['action'] == "index" and strtolower($this->params['controller']) == "lists") echo 'active'; ?>">
               <?php echo $this->Html->link(
-                    __d('pages', 'Lists'),
+                    __d('pages', 'Списки'),
                     array('controller' => 'tasks', 'action' => 'index', '#' => 'lists')
                 ); ?>  
           </li>
@@ -70,7 +70,7 @@
         <?php //if ($isBetaUser):?>
           <li class="<? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "notes") echo 'active'; ?>">
               <?php echo $this->Html->link(
-                    __d('pages', 'Notes'),
+                    __d('pages', 'Заметки'),
                     array('controller' => 'notes', 'action' => 'index')
                 ); ?>  
           </li>

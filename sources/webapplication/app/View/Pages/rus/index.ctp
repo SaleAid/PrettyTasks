@@ -42,7 +42,7 @@
                
             </p>
              <?php //echo $this->Html->link(__('Пли!'),array('controller' => 'users', 'action' => 'login'),array('class'=> 'btn btn-success btn-large go')); ?>
-             <?php echo $this->Html->link(__('Пли!'),array('controller' => 'accounts', 'action' => 'login'),array('class'=> 'btn btn-large btn-block btn btn-success fire')); ?>
+             <?php echo $this->Html->link(__('Пли!'),array('controller' => 'accounts', 'action' => 'register'),array('class'=> 'btn btn-large btn-block btn btn-success fire')); ?>
         </div>
 	</div>
 </div>

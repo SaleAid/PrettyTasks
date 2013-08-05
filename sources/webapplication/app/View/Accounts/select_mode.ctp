@@ -15,7 +15,7 @@
         return offset;
     }
       jQuery(function($){
-        $.cookie('timezoneOffset', get_timezone_infos());
+        $.cookie('timezoneOffset', get_timezone_infos(), { path: '/' });
       });
   ", array('block' => 'toFooter'));
 ?>
@@ -23,24 +23,32 @@
 <div class="login"> 
 <?php echo $this->Session->flash(); ?>
     <fieldset>
-            <legend><?php echo __d('accounts', 'Такой пользователь не найден в системе, что нужно сделать?'); ?></legend>
+            <legend><?php echo __d('accounts', 'Регистрация нового аккаунта'); ?></legend>
         <?php echo $this->Form->create('Account', array()); ?>
         <?php echo $this->Form->input('newAccount', array(
             'legend' => false,
             'type'=>'radio',
             'value' => 1,
             'before' => '',
-            'after' => '',
+            'after' => '<div class ="alert alert-info emptyList ">
+                Эта опция для пользователей, которые имеют аккаунт на сервисе и хотят получить к нему доступ еще одним способом. Необходимо будет войти под существующим аккаунтом. 
+            </div>',
             'between' => '',
-            'separator' => ' ',
+            'separator' => '<div class ="alert alert-info emptyList ">
+                                Эта опция для пользователей, которые впервые пользуются сервисом. Или для существующих пользователей, которые хотят завести новый аккаунт не связанный с существующим. 
+                            </div>',
             'options' => array( 1 => __d('accounts', 'Я новый пользователь'), 0 => __d('accounts', 'Я имею аккаунт (связать аккаунты)'))
         )); ?>
+        
         <br />
-            <label class="checkbox1">
-                <?php echo $this->Form->input('agreed', array('label'=> __d('accounts', 'Я согласен с ') . $this->Html->link(__d('accounts', 'условиями использования'), array('controller' => 'pages', 'action' => 'terms-and-conditions'), array('target' => '_blank')), 'type' => 'checkbox', 'format' => array('before', 'label', 'between', 'error', 'after'))); ?>
+            <label class="checkbox1 hide">
+                <?php echo $this->Form->input('agreed', array('label'=> __d('accounts', 'Я согласен с ') . $this->Html->link(__d('accounts', 'условиями использования'), array('controller' => 'pages', 'action' => 'terms-and-conditions'), array('target' => '_blank')), 'type' => 'checkbox', 'checked' => true, 'format' => array('before', 'label', 'between', 'error', 'after'))); ?>
            </label>
         
-        <?php echo $this->Form->submit(__d('accounts', 'Вперед'), array('class' => 'btn btn-primary pull-right', 'div' => false)); ?>
+        <div class="terms-and-conditions">
+            Нажимая на кнопку "Далее", вы принимаете <?php echo $this->Html->link(__d('accounts', 'условия использования'), array('controller' => 'pages', 'action' => 'terms-and-conditions'), array('target' => '_blank')); ?>
+        </div>
+        <?php echo $this->Form->submit(__d('accounts', 'Далее'), array('class' => 'btn btn-primary pull-right', 'div' => false)); ?>
         <?php echo $this->Html->link('Отмена', array('controller' => 'accounts', 'action' => 'cancel'), array('class' => 'social-login-cancel')); ?>
         <?php echo $this->Form->end(); ?>
     </fieldset>

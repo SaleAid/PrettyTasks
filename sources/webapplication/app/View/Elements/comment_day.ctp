@@ -1,7 +1,7 @@
 <div id="commentDay" class="modal hide fade" tabindex="-1" data-focus-on="input:first">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
-        <h3><?php echo __d('tasks', 'Комментарий');?></h3>
+        <h3><?php echo __d('tasks', 'Добавить комментарий');?></h3>
     </div>
     <div class="modal-body">
         <textarea  class="" id="eCommentDay" rows="9" data-tabindex="1"></textarea>

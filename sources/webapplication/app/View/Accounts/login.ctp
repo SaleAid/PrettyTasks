@@ -1,4 +1,25 @@
-<?php //echo $this->Html->script($this->Loginza->getJs(), array('block' => 'toFooter')); ?>
+<?php echo $this->Html->script('jquery.cookie', array('block' => 'toFooter'));?>
+<?php $this->Html->scriptBlock("
+     function get_timezone_infos() {
+        var now = new Date();
+        var jan1 = new Date(now.getFullYear(), 0, 1, 0, 0, 0, 0);
+        var temp = jan1.toGMTString();
+        var jan2 = new Date(temp.substring(0, temp.lastIndexOf(' ') - 1));
+        var offset = (jan1 - jan2) / (1000);
+    
+        var june1 = new Date(now.getFullYear(), 6, 1, 0, 0, 0, 0);
+        temp = june1.toGMTString();
+        var june2 = new Date(temp.substring(0, temp.lastIndexOf(' ') - 1));
+        var dst = offset != ((june1 - june2) / (1000));
+    
+        return offset;
+    }
+      jQuery(function($){
+        $.cookie('timezoneOffset', get_timezone_infos(), { path: '/' });
+      });
+  ", array('block' => 'toFooter'));
+?>
+
 <div class="login"> 
 <?php echo $this->Session->flash(); ?>
            <?php echo $this->Form->create('Account',array('class' => 'form-horizontal',
@@ -44,11 +65,11 @@
     <div class="social-bnts">
         <span class="social-or">ИЛИ</span>
         <ul>
-        	<li><?php echo $this->Form->postLink($this->Loginza->logo('facebook'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'facebook'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
         	<li><?php echo $this->Form->postLink($this->Loginza->logo('google'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'google'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
-        	<li><?php echo $this->Form->postLink($this->Loginza->logo('twitter'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'twitter'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
+        	<li><?php echo $this->Form->postLink($this->Loginza->logo('facebook'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'facebook'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
         	<li><?php echo $this->Form->postLink($this->Loginza->logo('linkedin'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'linkedin'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
-            <li><?php echo $this->Form->postLink($this->Loginza->logo('vkontakte'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'vkontakte'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
+            <li><?php echo $this->Form->postLink($this->Loginza->logo('twitter'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'twitter'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
+        	<li><?php echo $this->Form->postLink($this->Loginza->logo('vkontakte'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'vkontakte'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
         </ul>
     </div>
 </div>

@@ -57,9 +57,6 @@ class AccountsController extends AppController {
                 $user['full_name'] = $this->Auth->user('full_name');
                 $this->Auth->login($user);
                 if (! $this->Auth->user('is_blocked')) {
-                    //if($this->Session->check('auth-new-accounts')){
-                    //    $this->redirect(array('action' => 'confirmSocialLinks'));
-                    //}
                     $this->_redirectAfterLogin();
                 }
                 $this->Session->setFlash(__d('users', 'Ваш аккаунт заблокирован'), 'alert', array(
@@ -84,10 +81,17 @@ class AccountsController extends AppController {
     }
     
     private function _redirectAfterLogin(){
-        //$cookie = $this->AutoLogin1->read();
         $this->Session->write('csrf_token', base64_encode( mt_rand() . time() . mt_rand() . 'key' ));
         $user = $this->Auth->user();
         $autoLogin = true;
+        if(empty($user['timezone_offset'])){
+            if (isset($_COOKIE["timezoneOffset"])){
+                $user['timezone_offset'] = intval($_COOKIE['timezoneOffset']);
+                unset($_COOKIE['timezoneOffset']);    
+                $this->Auth->login($user);
+            }
+        }
+        //pr($this->Auth->user());die;
         
         if (!empty($user) && $autoLogin) {
 			$this->AutoLogin->write($user, $this->request->header('User-Agent'));
@@ -229,8 +233,8 @@ class AccountsController extends AppController {
     
     
     public function cancel(){
-        if($this->Session->check('tmp-auth-new-account')){
-            $this->Session->delete('tmp-auth-new-account');
+        if($this->Session->check('auth-new-accounts')){
+            $this->Session->delete('auth-new-accounts');
         }
         $this->redirect(array(
             'action' => 'login'

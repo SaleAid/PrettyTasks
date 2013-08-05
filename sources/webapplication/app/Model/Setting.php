@@ -116,6 +116,8 @@ class Setting extends AppModel {
         
         if(!empty($result)){
             $data['id'] = $result['Setting']['id'];
+        } else {
+            $this->create();
         }
         
         if($this->save($data)){

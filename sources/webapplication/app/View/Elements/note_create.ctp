@@ -10,6 +10,6 @@ if( strtolower($this->params['controller']) != "notes" ) {
 ?>
 
 <a class="btn-note btn btn-info btn-small" href="#" rel="tooltip" title="<?php echo __d('tasks', 'Добавить заметку'); ?>">
-    <i class="icon-leaf"></i>
+    <i class="icon-edit"></i>
 </a>
 

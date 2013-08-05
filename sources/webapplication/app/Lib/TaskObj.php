@@ -23,16 +23,16 @@ class TaskObj {
         $this->id = $task['id'];
         $this->title = $task['title'];
         $this->date = $task['date'];
-        $this->time = $task['time'];
-        $this->timeend = $task['timeend'];
-        $this->priority = $task['priority'];
-        $this->repeatid = $task['repeatid'];
-        $this->continued = $task['continued'];
-        $this->future = $task['future'];
-        $this->deleted = $task['deleted'];
-        $this->done = $task['done'];
-        $this->datedone = $task['datedone'];
-        $this->comment = $task['comment'];
-        $this->tags = is_array($task['tags']) ? $task['tags']: array();
+        $this->time = isset($task['time']) ? $task['time'] : null;
+        $this->timeend = isset($task['timeend']) ? $task['timeend'] : null;
+        $this->priority = isset($task['priority']) ? (int)$task['priority'] : 0;
+        $this->repeatid = isset($task['repeatid']) ? (int)$task['repeatid'] : null;
+        $this->continued = isset($task['continued']) ? (int)$task['continued'] : 0;
+        $this->future = isset($task['future']) ? (int)$task['future'] : 0;
+        $this->deleted = isset($task['deleted']) ? (int)$task['deleted'] : 0;
+        $this->done = isset($task['done']) ? (int)$task['done'] : 0;
+        $this->datedone = isset($task['datedone']) ? $task['datedone'] : null;
+        $this->comment = isset($task['comment']) ? $task['comment'] : null;
+        $this->tags = (isset($task['tags']) && is_array($task['tags'])) ? $task['tags'] : array();
     }
 } 

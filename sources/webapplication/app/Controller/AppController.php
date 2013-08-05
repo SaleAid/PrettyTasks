@@ -113,7 +113,7 @@ class AppController extends Controller {
         date_default_timezone_set(Configure::read('Config.timezone'));
     }
 
-    private function __userTimeZone() {
+    protected function _userTimeZone() {
         $timezone = $this->Auth->user('timezone');
         
         if (! $timezone) {
@@ -158,7 +158,7 @@ class AppController extends Controller {
         $this->set('isAuth', $this->Auth->loggedIn());
         $this->set('currentUser', $this->Auth->user());
         $this->set('timezoneOffset', $this->__userTimeZoneOffset());
-        $this->set('timezone', $this->__userTimeZone());
+        $this->set('timezone', $this->_userTimeZone());
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
         $this->set('csrfToken', $this->_getCsrfToken());

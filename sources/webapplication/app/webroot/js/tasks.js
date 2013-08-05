@@ -95,7 +95,9 @@ function checkStatus(){
                 switch(data.cause){
                     case 'changeDay':
                         mesg(data.message.message, data.message.type);
-                        setTimeout(reload, 5000);
+                        var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
+                        setTimeout(userEvent('addDay',{date: today, refresh: true}), 5000);
+                        window.location.hash = 'day-'+today;
                         break;
                }
                showErrorConnection(false);
@@ -1205,7 +1207,7 @@ function taskEdit(id, title, priority, continued, done, date, time, timeEnd, com
 function onEdit(data){
     if(data.success){
         $('#editTask').modal('hide');
-        scrEdit(data.data.Task.id, data.data.Task.title, data.data.Task.tags, data.data.Task.priority, data.data.Task.continued, data.data.Task.done, data.data.Task.date, data.data.Task.time, data.data.Task.timeend, data.data.Task.comment);
+        scrEdit(data.data.id, data.data.title, data.data.tags, data.data.priority, data.data.continued, data.data.done, data.data.date, data.data.time, data.data.timeend, data.data.comment);
     }else {
         mesg(data.message.message, data.message.type);
         scrErrorEdit(data.message.errors);    
@@ -1443,9 +1445,8 @@ function taskSetDone(id, done){
     srvSetDone(id, done);
 }
 function onSetDone(data){
-    var task = data.data.Task;
-	//scrSetDone(data.data.Task.id, data.data.Task.done);
-    if(!data.success){
+    var task = data.data;
+	if(!data.success){
         mesg(data.message.message, data.message.type);
         return;   
     }
@@ -1485,14 +1486,14 @@ function taskSetTitle(id, title){
 }
 function onSetTitle(data){
     
-	scrSetTitle(data.data.Task.id, data.data.Task.title, data.data.Task.tags, data.data.Task.priority);
-    if(data.data.Task.time && $("li[id='"+data.data.Task.id+"']").find('.time').text() != data.data.Task.time.slice(0,-3)){
+	scrSetTitle(data.data.id, data.data.title, data.data.tags, data.data.priority);
+    if(data.data.time && $("li[id='"+data.data.id+"']").find('.time').text() != data.data.time.slice(0,-3)){
         //$("ul[date='"+data.data.Task.date+"']").find("li[id='"+data.data.Task.id+"']").addClass('currentTask');
-        scrDragWithTime(data.data.Task.id, data.data.Task.date, data.data.Task.time);
-        $("li[id='"+data.data.Task.id+"']").find('.time').text(data.data.Task.time.slice(0,-3));
+        scrDragWithTime(data.data.id, data.data.date, data.data.time);
+        $("li[id='"+data.data.id+"']").find('.time').text(data.data.time.slice(0,-3));
     }
-    $("li[id='"+data.data.Task.id+"'].currentTask").removeClass('currentTask');
-    $("li[id='"+data.data.Task.id+"'].need-remove").remove();
+    $("li[id='"+data.data.id+"'].currentTask").removeClass('currentTask');
+    $("li[id='"+data.data.id+"'].need-remove").remove();
     
     if(!data.success){
         mesg(data.message.message, data.message.type);    
@@ -1658,18 +1659,29 @@ function initEditAble(element){
             placeholder : "",
             style  : "inherit",
             data: function(value, settings) {
+                
                 var retval = convertToText(value);
                 return retval;
             },
-            event : "edit"
-        });
+            event : "edit",
+            onblur: function(){
+                $(this).siblings('.tag-date').show();
+                return 'cancel';
+            }
+        })
         $(element).on("click", function(e) {
+            $(this).siblings('.tag-date').hide();
             if (e.target !== this) {
                return; 
             }
             $(this).trigger("edit");
-        });       
-
+        });
+        
+        $(element+ ':input:first').on("blur", function(e) {
+            $('.tag-date').show();
+            
+        });
+       
 }
 
 function initTags(){
@@ -2270,7 +2282,7 @@ $(function(){
     InitClock();
     initDeleteAll('.delete_all');
     setFiler($('.listDay .active').children('a').attr('date'));
-    initRepeatTask();
+    //initRepeatTask();
 
     
     

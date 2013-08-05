@@ -81,7 +81,6 @@ class TasksController extends AppController {
     
     
     public function index() {
-        
         $this->response->disableCache();
         $result = $this->_prepareResponse();
         
@@ -205,7 +204,7 @@ class TasksController extends AppController {
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                if (!$originTask['Task']['future']) {
+                if (!$originTask->future) {
                     $task = $this->Task->setTitle($this->request->data['title'])->saveTask();
                 }else {
                     $task = $this->Task->setTitle($this->request->data['title'], null, false)->saveTask();
@@ -229,7 +228,7 @@ class TasksController extends AppController {
     }
 
     public function addNewTask() {
-        $task = array();
+        //$task = array();
         $result = $this->_prepareResponse();
         $expectedData = array(
             'date', 
@@ -250,9 +249,9 @@ class TasksController extends AppController {
             }
             if ($task) {
                 $result['success'] = true;
-                $result['data'] = $task['Task'];
+                $result['data'] = $task;
                 if( isset($date) ){
-                    $result['data']['list'] = $this->request->data['date'];
+                    $result['data']->list = $this->request->data['date'];
                 }
                 $result['message'] = new MessageObj('success', __d('tasks', 'Задача успешно создана'));
              } else {
@@ -278,7 +277,7 @@ class TasksController extends AppController {
         } else {
             $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($task) {
-                $cloneTask = $this->Task->createTask($this->Auth->user('id'), $task['Task']['title'], $this->request->data['date'], $task['Task']['time'], null, $task['Task']['priority'], $task['Task']['future'], 1)->saveTask();
+                $cloneTask = $this->Task->createTask($this->Auth->user('id'), $task->title, $this->request->data['date'], $task->time, null, $task->priority, $task->future, 1)->saveTask();
                 if ($cloneTask) {
                     $result['success'] = true;
                     $result['data'] = $cloneTask;
@@ -312,10 +311,10 @@ class TasksController extends AppController {
             if ($task) {
                 switch($this->request->data['list']['name']){
                     case 'date':
-                        if($task['Task']['future']){
+                        if($task->future){
                             $List = new PlannedList($this->Auth->user('id'), 'planned');
                         }else{
-                            $List = new DateList($this->Auth->user('id'), $task['Task']['date']);    
+                            $List = new DateList($this->Auth->user('id'), $task->date);    
                         }
                         break;
                     case 'tag':
@@ -330,7 +329,7 @@ class TasksController extends AppController {
                 }
                 
                 if($List !== null){
-                    if ( $List->reOrder($task['Task']['id'], $this->request->data['position']) ) {
+                    if ( $List->reOrder($task->id, $this->request->data['position']) ) {
                         $result['success'] = true;
                         $result['message'] = new MessageObj('success', __d('tasks', 'Задача успешно перемещена'));
                     } else {
@@ -363,7 +362,7 @@ class TasksController extends AppController {
                 if ($task) {
                     $result['success'] = true;
                     $result['data'] = $task;
-                    if ($task['Task']['done']) {
+                    if ($task->done) {
                         $result['message'] = new MessageObj('success', __d('tasks', 'Задача успешно выполнена'));
                     } else {
                         $result['message'] = new MessageObj('success', __d('tasks', 'Задача открыта'));
@@ -389,7 +388,7 @@ class TasksController extends AppController {
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originTask) {
-                if (!$originTask['Task']['deleted']) {
+                if (!$originTask->deleted) {
                     // set field deleted = 1
                     $task = $this->Task->setDelete(1)->saveTask();
                     if ($task) {
@@ -570,13 +569,14 @@ class TasksController extends AppController {
             $result['success'] = $this->Auth->loggedIn();
             if ($result['success']) {
                 //$result['operation'] = 'none';
-                if (Validation::date($this->request->data['date']) and ! CakeTime::isToday($this->request->data['date'])) {
+                if (Validation::date($this->request->data['date']) and !CakeTime::isToday($this->request->data['date'], $this->_userTimeZone())) {
                     $result['operation'] = 'refresh';
                     $result['cause'] = 'changeDay';
                     $result['message'] = new MessageObj('success', __d('tasks', 'Переход на новый день. Перезагрузка страницы произойдет через 5 секунд')); 
                 }
             }
         }
+        
         $result['action'] = 'checkStatus';
         $this->set('result', $result);
         $this->set('_serialize', 'result');

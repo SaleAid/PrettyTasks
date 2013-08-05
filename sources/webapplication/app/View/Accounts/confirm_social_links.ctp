@@ -2,8 +2,8 @@
 <div class="login">
 <?php echo $this->Session->flash(); ?>
    <fieldset>
-        <legend><?php echo __d('accounts', 'Bla bla bla');?></legend>
-        <table class="table table-condensed socia-table" >
+        <legend><?php echo __d('accounts', 'Связать аккаунты');?></legend>
+        <table class="table table-striped socia-table" >
         <?php foreach($newAccounts as $key => $account):?>
             <tr id="<?php echo $key; ?>">
                 <td style="width: 90px;">

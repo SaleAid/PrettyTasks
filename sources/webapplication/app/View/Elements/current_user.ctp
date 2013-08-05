@@ -19,7 +19,7 @@
           </a >
           <ul class="dropdown-menu pull-right user-menu">
                 <li><?php echo $this->Html->link($this->Html->tag('i', '', array('class' => 'icon-edit')) . '&nbsp;&nbsp;' . __d('accounts', 'Учётная запись'), array('controller' => 'users', 'action' => 'profile'), array('escape' => false));?></li>
-                <li><?php echo $this->Html->link($this->Html->tag('i', '', array('class' => 'icon-pencil')) . '&nbsp;&nbsp;' . __d('accounts', 'Изменить пароль'), array('controller' => 'users', 'action' => 'password_change'), array('escape' => false));?></li>
+                <li><?php echo $this->Html->link($this->Html->tag('i', '', array('class' => 'icon-pencil')) . '&nbsp;&nbsp;' . __d('accounts', 'Изменить пароль'), array('controller' => 'accounts', 'action' => 'password_change'), array('escape' => false));?></li>
                 <li><?php echo $this->Html->link($this->Html->tag('i', '', array('class' => 'icon-magnet')) . '&nbsp;&nbsp;' . __d('accounts', 'Связанные аккаунты'), array('controller' => 'users', 'action' => 'accounts'), array('escape' => false));?></li>
                 <li><?php echo $this->Html->link($this->Html->tag('i', '', array('class' => 'icon-plane')) . '&nbsp;&nbsp;' . __d('accounts', 'Пригласить друзей'), array('controller' => 'invitations', 'action' => 'add') ,array('escape' => false));?></li>
                 <li class="dropdown-submenu">

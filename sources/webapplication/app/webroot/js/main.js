@@ -53,5 +53,6 @@ $().ready(function(){
     });
     
     $('.btn-note').tooltip({placement:'bottom',delay: { show: 500, hide: 100 }});
+
            
 });

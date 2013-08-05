@@ -222,7 +222,7 @@
                   <div class="listTask">
                   <div class="margin-bottom10">
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
-                    <h3 class="head-list-info"><span class="tag-name"><?php echo __d('tasks', 'Lists'); ?></span></h3>
+                    <h3 class="head-list-info"><span class="tag-name"><?php echo __d('tasks', 'Списки'); ?></span></h3>
                   </div>
                   <div class="well form-inline">
                   <div class="input-append">

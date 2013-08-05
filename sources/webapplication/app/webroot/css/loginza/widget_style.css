@@ -53,6 +53,7 @@
 .livejournal {background-position:0 -425px}
 .odnoklassniki {background-position:0 -450px}
 .linkedin {background-position:0 -475px}
+.prettytasks {background-repeat:no-repeat;background-image:url('/img/pr_icon.png');display:inline-block;width:16px;height:16px;}
 
 .providers_set {text-align:center;}
 .providers_set .providers_sprite {margin: 7px 0px;}

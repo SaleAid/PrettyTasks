@@ -78,7 +78,10 @@
                </div>
                </div>
                <?php echo $this->Form->submit(__d('accounts', 'Регистрация'), array('class' => 'btn btn-info pull-right'));?>
-           </div>
+                
        </fieldset>
     <?php echo $this->Form->end();?>
+    <p>
+        <?php echo __d('accounts', 'Уже регистрировались? Тогда'); ?>  <?php echo $this->Html->link(_('войдите'), array('controller' => 'accounts', 'action' => 'login'));?>            
+    </p> 
 </div>

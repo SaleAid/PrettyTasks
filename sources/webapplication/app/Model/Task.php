@@ -8,6 +8,8 @@
  */
 App::uses('TaskEventListener', 'Event');
 App::uses('AppModel', 'Model');
+App::uses('TaskObj', 'Lib');
+App::uses('CakeTime', 'Utility');
 /**
  * Task Model
  *
@@ -198,6 +200,11 @@ class Task extends AppModel {
     
     /**
      * 
+     * @var unknown_type
+     */
+    public $updateTask = false;
+    /**
+     * 
      * @return unknown_type
      */
     public function getFields(){
@@ -250,9 +257,9 @@ class Task extends AppModel {
         $this->contain(array('Tag.name', 'Tag.id'));
         $task = $this->findByIdAndUser_id($task_id, $user_id);
         if ($task) {
-            $this->_originData = $task;
+            $this->_originData = $task; 
             $this->set($task);
-            return $task;
+            return new TaskObj($task['Task']);
         }
         return false;
     }
@@ -283,7 +290,7 @@ class Task extends AppModel {
                 $this->getEventManager()->dispatch(new CakeEvent('Model.Task.afterSetDeleted', $this));    
             }
             //if day changed
-            if ($this->_isDraggedOnDay()){
+            if ($this->_isDraggedOnDay() || $this->updateTask){
                 $this->getEventManager()->dispatch(new CakeEvent('Model.Task.afterMoveToDate', $this, array('originTask' => $this->_originData[$this->alias])));
             }
             //if only time changed and not null
@@ -305,9 +312,8 @@ class Task extends AppModel {
      * @param unknown_type $clone
      * @return Task
      */
-    public function createTask($user_id, $title, $date = null, $time = null, $priority = null, $future = null, $clone = null) {
-        $this->data = $this->_prepareTask($user_id, $title, $date, $time, $priority, $future);
-        
+    public function createTask($user_id, $title, $date = null, $time = null, $timeend = null, $priority = null, $future = null, $clone = null) {
+        $this->data = $this->_prepareTask($user_id, $title, $date, $time, $timeend, $priority, $future);
         if($clone){
             unset($this->id);
         }
@@ -324,7 +330,7 @@ class Task extends AppModel {
      * @param unknown_type $future
      * @return Ambigous <string, number>
      */
-    private function _prepareTask($user_id, $title, $date = null, $time = null, $priority = null, $future = null) {
+    private function _prepareTask($user_id, $title, $date = null, $time = null, $timeend = null, $priority = null, $future = null) {
         $data[$this->alias]['user_id'] = $user_id;
         $data[$this->alias]['title'] = $title;
         $data[$this->alias]['date'] = $date;
@@ -420,7 +426,7 @@ class Task extends AppModel {
     public function beforeSave() {
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
         //check and add tags
-        if( $this->_isTitleChanged() || $this->_isRecovered() ){
+        if( $this->_isTitleChanged() || $this->_isRecovered() || $this->updateTask ){
             $this->_checkTags('title');
         }
         
@@ -629,8 +635,8 @@ class Task extends AppModel {
                         unset($save[$this->alias][$key]);
                     }
                 }
-                unset($save['Tag']);
-                return $save;
+                //unset($save['Tag']);
+                return new TaskObj($save['Task']);
             }
             else{
                 return false;

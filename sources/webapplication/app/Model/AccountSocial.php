@@ -109,7 +109,10 @@ class AccountSocial extends Account {
                 {
                     $result = $this->_findAccount(array(
                             'provider' => $provider,
-                            'email' => $info['email']
+                            'or' => array( 
+                                'email' => $info['email'],
+                                'uid' => $uid
+                            )
                     ));
                     break;
                 }

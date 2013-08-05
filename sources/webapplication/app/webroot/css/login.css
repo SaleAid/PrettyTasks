@@ -98,6 +98,9 @@ body {
 .captcha-input{
     margin-top: 20px;
 }
+.terms-and-conditions{
+    float: left;
+}
 
 @media (min-width: 591px) and (max-width: 767px) { 
     .container, #wrapper, .navbar-fixed-bottom .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container, .span12 {
