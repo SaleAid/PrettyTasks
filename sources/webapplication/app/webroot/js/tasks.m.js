@@ -108,7 +108,7 @@ function AddTask(data){
 	}
 	//TODO Add time to task
     var taskHTML = '<input type="checkbox" data-id="'+data.Task.id+'" name="checkbox-'+data.Task.id+'" id="checkbox-'+data.Task.id+'" class="custom" />'+
-    '<label for="checkbox-'+data.Task.id+'"'+className+'>'+data.Task.title+'</label>'; //TODO check title
+    '<label for="checkbox-'+data.Task.id+'"'+className+'>'+data.Task.title+'</label>'; //TODO use template
     var Container = $("#incomplete-"+data.Task.date);
     Container.append(taskHTML);
     Container.trigger('create');

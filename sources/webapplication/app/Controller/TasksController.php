@@ -178,6 +178,12 @@ class TasksController extends AppController {
                         $result['data'] = new TasksListObj('defined', 'continued', $ContinuedList->getItems());
                         break;
                     }
+                case 'planned' :
+                	{
+                        $PlannedList = new PlannedList($this->Auth->user('id'));
+                        $result['data'] = new TasksListObj('defined', 'planned', $PlannedList->getItems());
+                		break;
+                	}
                 default :
                     {
                         $result['success'] = false;

@@ -42,20 +42,16 @@
 	<div data-role="panel" id="left-panel-tasks" data-position="left" data-display="overlay" data-theme="e">
 		<ul  data-role="listview"  data-divider-theme="e" data-count-theme="e">
 			<li data-role="list-divider">Lists</li>
-			<li><a href="#" class="menu-planned">Planned</a></li>
-			<li><a href="#" class="menu-overdue">Overdue</a></li>
-			<li><a href="#" class="menu-completed">Completed</a></li>
-			<li><a href="#" class="menu-future">Future</a></li>
-			<li><a href="#" class="menu-deleted">Deleted</a></li>
+			<li><a href="#" class="menu-list-future">Agenda</a></li>
+			<li><a href="#" class="menu-list-planned">Planned</a></li>
+			<li><a href="#" class="menu-list-expired">Overdue</a></li>
+			<li><a href="#" class="menu-list-completed">Completed</a></li>
+			<li><a href="#" class="menu-list-deleted">Deleted</a></li>
 			<li data-role="list-divider">Days</li>
-			<li><a href="#">New day</a></li>
-			<li><a href="#">Today</a></li>
-			<li><a href="#">Tomorrow</a></li>
-			<li><a href="#">Day 3</a></li>
-			<li><a href="#">Day 4</a></li>
-			<li><a href="#">Day 5</a></li>
-			<li><a href="#">Day 6</a></li>
-			<li><a href="#">Day 7</a></li>
+			<!--<li><a href="#">New day</a></li>  -->
+			<li><a href="#" class="menu-day-today">Today</a></li>
+			<li><a href="#" class="menu-day-tomorrow">Tomorrow</a></li>
+
 		</ul>
 		
 	</div><!-- /left panel -->
@@ -77,7 +73,6 @@
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#" class="ui-btn-active" data-transition="flip">Tasks</a></li>
-				<li><a href="#left-panel" data-transition="flip">Agenda</a></li>
 				<li><a href="#page-lists" data-transition="flip">Lists</a></li>
 				<li><a href="#page-notes" data-transition="flip">Notes</a></li>
 			</ul>
@@ -130,7 +125,6 @@
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#page-tasks" data-transition="flip">Tasks</a></li>
-				<li><a href="#" data-transition="flip">Agenda</a></li>
 				<li><a href="#page-lists" data-transition="flip">Lists</a></li>
 				<li><a href="#page-notes" class="ui-btn-active" data-transition="flip">Notes</a></li>
 			</ul>
@@ -178,7 +172,6 @@
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#page-tasks" data-transition="flip">Tasks</a></li>
-				<li><a href="#" data-transition="flip">Agenda</a></li>
 				<li><a href="#page-lists" class="ui-btn-active" data-transition="flip">Lists</a></li>
 				<li><a href="#page-notes" data-transition="flip" >Notes</a></li>
 			</ul>
@@ -223,7 +216,6 @@
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#page-tasks" data-transition="flip">Tasks</a></li>
-				<li><a href="#" data-transition="flip">Agenda</a></li>
 				<li><a href="#page-lists" class="ui-btn-active" data-transition="flip">Lists</a></li>
 				<li><a href="#page-notes" data-transition="flip" >Notes</a></li>
 			</ul>

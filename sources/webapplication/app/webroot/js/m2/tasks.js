@@ -51,10 +51,11 @@ var mobile = (function() {
 				return false;
 			});
 			
-			$(document).on('click', "a[class|='menu']", function(event){
+			$(document).on('click', "a[class|='menu-list']", function(event){
 				var name = event.target.className.split(' ')[0];
-				name = name.replace('menu-', '');
+				name = name.replace('menu-list-', '');
 				mobile.showList(name);
+				$("#left-panel-tasks").panel("close");
 			});
 
 			$("#right-panel-tasks").on("panelclose", function(event, ui) {
@@ -156,7 +157,7 @@ var mobile = (function() {
 
 		},
 		createListItem : function(Task) {
-			$('#taskslist li .ui-last-child ').removeClass('ui-first-child');
+			$('#taskslist li .ui-first-child ').removeClass('ui-first-child');
 			$('#taskslist li .ui-last-child ').removeClass('ui-last-child');
 			var checked = Task.done == 1;
 			var checkedStr = checked ? 'checked="checked"' : '';
@@ -220,6 +221,9 @@ var mobile = (function() {
 				//$("#checkbox-" + id + ":parent label").parent().parent().removeClass('complete');
 			}
 		},
+		clearList: function(){
+			$("#taskslist .ui-controlgroup-controls").children().remove();
+		},
 		showList: function(name){
 			console.log('showList: ' + name);
 			if (name === undefined) {
@@ -237,6 +241,7 @@ var mobile = (function() {
 			}).done(function(response) {
 				if (console && console.log) {
 					console.log(response);
+					mobile.clearList();
 					$.each(response.data.list, function(index, value) {
 						console.log(value);
 						mobile.createListItem(value);
