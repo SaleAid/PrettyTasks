@@ -71,6 +71,7 @@ class AccountsController extends AppController {
             $this->redirect($this->Auth->logout());
         } else {
             if ($this->request->is('post')) {
+                $this->log('Wrong login', LOG_ERROR);//TODO add login to log data
                 $this->Session->setFlash($message, 'alert', array(
                     'class' => 'alert-error'
                 ));
