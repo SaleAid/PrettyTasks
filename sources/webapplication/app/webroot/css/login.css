@@ -101,6 +101,10 @@ body {
 .terms-and-conditions{
     float: left;
 }
+.account-error{
+    margin-left: 180px;
+    margin-bottom: 10px!important;
+}
 
 @media (min-width: 591px) and (max-width: 767px) { 
     .container, #wrapper, .navbar-fixed-bottom .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container, .span12 {

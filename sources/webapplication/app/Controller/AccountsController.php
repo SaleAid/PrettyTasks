@@ -412,7 +412,8 @@ class AccountsController extends AppController {
     }
     
     public function password_change() {
-         $this->layout = 'profile';
+        
+        $this->layout = 'profile';
         if ($this->request->is('post') || $this->request->is('put')) {
             $expectedData = array(
                 'password', 

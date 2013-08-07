@@ -54,6 +54,7 @@ div.well{
 .title-note{
     height: 75px;
     overflow: hidden;
+    padding-left: 5px;
 }
 .note textarea {
     height: 50px;
@@ -99,26 +100,30 @@ div.well{
 .note-box:hover .modified{
     color: #F5BE00;    
 }
+
 .buttons {
     list-style: none;
     position: absolute;
     bottom: 4px;
     right: 3px;
 }
-.buttons li{
+.buttons li, .buttons-top li{
     margin-left: 5px;
     float: left;
 }
-.buttons li a{
-    margin-left: 5px;
-    float: left;
+.buttons li a, .buttons-top li a{
     opacity: 0.3;
 }
-.buttons li a:hover{
+.buttons li a:hover, .buttons-top li a:hover{
     opacity: 1;
 }
 
-
+.buttons-top {
+    list-style: none;
+    margin-top: 2px;
+    margin-right: 10px;
+    float: right;
+}
 .note-remove:hover .icon-remove-sign{
     background-image: url("../img/glyphicons-halflings-white.png");
 }

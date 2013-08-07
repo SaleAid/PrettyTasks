@@ -48,7 +48,7 @@
 				
 				<div class="row copyright">
 					<div class="span8 right">
-						&copy; 2012 Pretty Tasks - <a href="<?php echo Configure::read('Site.url')?>"><?php echo Configure::read('Site.url')?></a> 
+						&copy; 2012-<?php echo date('Y'); ?> Pretty Tasks - <a href="<?php echo Configure::read('Site.url')?>"><?php echo Configure::read('Site.url')?></a> 
 					</div> 
 				</div>
 			</div> 

@@ -39,7 +39,7 @@ class CaptchaHelper extends AppHelper{
         $out .= $this->Html->image($this->Html->url(array('controller' => $controller, 'action' => 'captcha'), true), array('id' => 'cakecaptcha'));
 		$out .= "<br/>";
 		
-        $out .= 'Not readable?</a>';
+        $out .= __d('captcha','Немогу прочитать').'</a>';
 		$out .= "</label>";
 		$out .= $this->Form->input('cakecaptcha', array('id ' => 'captcha-form',
                                                         'name' => 'data['.$model.'][captcha]',
@@ -48,7 +48,7 @@ class CaptchaHelper extends AppHelper{
                                                         'class' => 'input-xlarge captcha-input'
         ));
 	   if($this->captchaerror) {
-    	    $out .= "<span class='help-inline'>".$this->captchaerror."</span>";
+    	    $out .= "<span class='help-inline' style='margin-left: 18px;'>".$this->captchaerror."</span>";
        }
        $out .= "</div>";
        return $out;

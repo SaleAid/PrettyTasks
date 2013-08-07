@@ -122,7 +122,17 @@ jQuery(function( $ ) {
 		  var id;
           var title = '';
           $(document.body).append(AppNotes.noteEditTemplate({title: title, id: id}));
-          $('#edit-note').modal();
+          //$('#edit-note').modal();
+          $('#edit-note').modal({
+                backdrop: true,
+                keyboard: true
+            }).css({
+                width: '70%',
+                'margin-left': function () {
+                    return -($(this).width() / 2);
+                },
+                //height: '70%'
+            });
           $('#edit-note').on('hidden', function () {
               $(this).remove();
           });  

@@ -166,7 +166,16 @@ jQuery(function( $ ) {
           var id = $(this).parents('li.note-box').data('id');
           var title = $.trim($(this).parents('li.note-box:data(id)').children('.note').text());
           list.append(AppNotes.noteEditTemplate({title: title, id: id}));
-          $('#edit-note').modal();
+          //$('#edit-note').modal();
+          $('#edit-note').modal({
+                backdrop: true,
+                keyboard: true
+            }).css({
+                width: '70%',
+                'margin-left': function () {
+                    return -($(this).width() / 2);
+                }
+            });
           $('#edit-note').on('shown', function () {
               $(this).find('#text-note').focus();
           });
@@ -181,7 +190,17 @@ jQuery(function( $ ) {
           var id = $(this).parents('li.note-box').data('id');
           var title = $.trim($(this).parents('li.note-box:data(id)').children('.note').text());
           list.append(AppNotes.noteEditTemplate({title: title, id: id, view: true}));
-          $('#edit-note').modal();
+          //$('#edit-note').modal();
+          $('#edit-note').modal({
+                backdrop: true,
+                keyboard: true
+            }).css({
+                width: '70%',
+                'margin-left': function () {
+                    return -($(this).width() / 2);
+                },
+                //height: '70%'
+            });
           $('#edit-note').on('hidden', function () {
               $(this).remove();
               AppNotes.$new_note.focus();

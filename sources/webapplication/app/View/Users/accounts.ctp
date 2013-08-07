@@ -63,7 +63,7 @@
                </div>
         </legend>
         <?php if (!empty($accounts)) :?>    
-            <table class="table table-striped" >
+            <table class="table table-striped">
                 <tr>
                     <th><?php echo __d('users', 'Провайдер');?></th>
                     <th><?php echo __d('users', 'Имя');?></th>
@@ -81,7 +81,7 @@
                                 <?php if (!$item['Account']['master']): ?>
                                     <?php echo $this->Form->postLink(__d('users', 'Удалить'), array('controller' => 'accounts', 'action' => 'delete', $item['Account']['id']), array('class' => 'btn btn-mini'), __d('users', 'Вы уверены, что хотите удалить этот аккаунт?')); ?>
                                 <?php else: ?>
-                                    <?php echo $this->Form->postLink(__d('users', 'Удалить'), array('controller' => 'accounts', 'action' => 'delete', $item['Account']['id']), array('class' => 'btn btn-mini disabled'), __d('users', 'Вы уверены, что хотите удалить этот аккаунт?')); ?>
+                                    <?php //echo $this->Form->postLink(__d('users', 'Удалить'), array('controller' => 'accounts', 'action' => 'delete', $item['Account']['id']), array('class' => 'btn btn-mini disabled'), __d('users', 'Вы уверены, что хотите удалить этот аккаунт?')); ?>
                                 <?php endif; ?>
                             </td>
                    </tr>

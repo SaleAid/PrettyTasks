@@ -96,8 +96,9 @@ function checkStatus(){
                     case 'changeDay':
                         mesg(data.message.message, data.message.type);
                         var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
-                        setTimeout(userEvent('addDay',{date: today, refresh: true}), 5000);
+                        //setTimeout(userEvent('addDay',{date: today, refresh: true}), 5000);
                         window.location.hash = 'day-'+today;
+                        setTimeout(reload(), 5000);
                         break;
                }
                showErrorConnection(false);
@@ -1023,6 +1024,7 @@ function onDeleteDay(data){
     if(!data.success){
         mesg(data.message.message, data.message.type); 
     }
+    $('#wrapper-content').css('min-height', $('.listDay').height() + 30 )
 }
 
 //---------------addDay---------
@@ -1148,6 +1150,7 @@ function onAddDay(data){
     list.parent().find('.weekday').addClass(weekDayStyle);
     initPrintClick(list.parent().find('.print'));
     setFiler(data.data.name);
+    $('#wrapper-content').css('min-height', $('.listDay').height() + 30 )
 
 }
 
@@ -2395,6 +2398,9 @@ $(function(){
             return GLOBAL_CONFIG.onbeforeunloadMessage;
         }
     };
+    
+    console.log($('.listDay').height());
+    $('#wrapper-content').css('min-height', $('.listDay').height() + 30 )
     
     // side bar
     //var $window = $(window)

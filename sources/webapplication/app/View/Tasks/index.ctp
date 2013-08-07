@@ -8,7 +8,8 @@
        echo $this->html->css('jquery.timepicker-1.2.2', null, array('block' => 'toHead'));
        echo $this->Html->css('tasks.'. Configure::read('App.version'), null, array('block' => 'toHead'));
        echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom', null, array('block' => 'toHead'));
-       echo $this->Html->css('bootstrap-modal', null, array('block' => 'toHead'));
+       echo $this->Html->css('jquery.mCustomScrollbar', null, array('block' => 'toHead'));
+       //echo $this->Html->css('bootstrap-modal', null, array('block' => 'toHead'));
        
     }
     
@@ -23,8 +24,9 @@
             'jquery.timepicker-1.2.2.min',
             'jquery.inline-confirmation.'.Configure::read('App.version'),
             'jquery-ui-i18n.min',
-            'bootstrap-modalmanager',
-            'bootstrap-modal'
+            'jquery.mCustomScrollbar.concat.min'
+            //'bootstrap-modalmanager',
+            //'bootstrap-modal'
        ), array('block' => 'toFooter'));
        echo $this->Html->script('main.' . Configure::read('App.version'), array('block' => 'toFooter')); 
        echo $this->Html->script('print.'.Configure::read('App.version'), array('block' => 'toFooter'));
@@ -34,7 +36,7 @@
 ?>
 
 <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
-        <ul class="nav nav-tabs listDay">
+        <ul class="nav nav-tabs listDay affix1" >
             <li class="hide"><a href="#lists" data-toggle="tab" date="lists"><?php echo __d('tasks', 'Lists'); ?></a></li>
             <li class="hide"><a href="#list" data-toggle="tab" date="list"><?php echo __d('tasks', 'List'); ?></a></li>
             <li class="addDay">

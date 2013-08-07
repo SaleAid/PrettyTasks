@@ -12,10 +12,10 @@
                 <td>
                     <?php echo $account['full_name'];?> 
                 </td>
-                <td style="width: 182px;">
+                <td style="text-align: right;">
                     <div class="control-btns">
-                        <button class="btn btn-success allow" type="button">Разрешить</button>
-                        <button class="btn btn-danger deny" type="button">Запретить</button>
+                        <button class="btn btn-success allow" type="button"><?php echo __d('accounts', 'Разрешить'); ?></button>
+                        <button class="btn btn-danger deny" type="button"><?php echo __d('accounts', 'Запретить'); ?></button>
                     </div>
                 </td>
            </tr> 
@@ -23,14 +23,10 @@
         </table>
         <legend></legend>
         <?php echo $this->Form->create(false); ?>
-        <?php echo $this->Form->submit('Разрешить всех', array('div' => false, 'name' => 'allowAll', 'class' => 'btn btn-success deny-all' )); ?>
-        <?php echo $this->Form->submit('Запретить всех', array('div' => false, 'name' => 'denyAll', 'class' => 'btn btn-danger deny-all')); ?>
-        <?php echo $this->Form->submit('Пропустить', array('div' => false, 'name' => 'denyAll', 'class' => 'btn btn-info skip pull-right' )); ?>
+        <?php echo $this->Form->submit(__d('accounts','Разрешить всех'), array('div' => false, 'name' => 'allowAll', 'class' => 'btn btn-success deny-all' )); ?>
+        <?php echo $this->Form->submit(__d('accounts','Запретить всех'), array('div' => false, 'name' => 'denyAll', 'class' => 'btn btn-danger deny-all')); ?>
+        <?php echo $this->Form->submit(__d('accounts','Пропустить'), array('div' => false, 'name' => 'denyAll', 'class' => 'btn btn-info skip pull-right' )); ?>
 
-        
         <?php echo $this->Form->end(); ?>
     </fieldset>
-    
-        
-     
 </div>

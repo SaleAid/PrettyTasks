@@ -150,11 +150,11 @@ class AutoLoginComponent extends Component {
 
 		// Set the data to identify with
 		$result = $this->_getUserByememberKey($cookie['rmb_key'], $cookie['account']);
-        if(!$result){
+        if(!$result['Account'] or !$result['User']){
             $this->delete();
 			return;
         }
-        
+        //pr($result);die;
         $user = $result['User'];
         $user['account_id'] = $result['Account'][0]['id'];
         $user['provider'] = $result['Account'][0]['provider'];

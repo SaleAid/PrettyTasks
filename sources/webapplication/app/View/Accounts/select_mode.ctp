@@ -30,13 +30,13 @@
             'type'=>'radio',
             'value' => 1,
             'before' => '',
-            'after' => '<div class ="alert alert-info emptyList ">
-                Эта опция для пользователей, которые имеют аккаунт на сервисе и хотят получить к нему доступ еще одним способом. Необходимо будет войти под существующим аккаунтом. 
-            </div>',
+            'after' => '<div class ="alert alert-info emptyList ">'
+                . __d('accounts', 'Эта опция для пользователей, которые имеют аккаунт на сервисе и хотят получить к нему доступ еще одним способом. Необходимо будет войти под существующим аккаунтом.') . 
+            '</div>',
             'between' => '',
-            'separator' => '<div class ="alert alert-info emptyList ">
-                                Эта опция для пользователей, которые впервые пользуются сервисом. Или для существующих пользователей, которые хотят завести новый аккаунт не связанный с существующим. 
-                            </div>',
+            'separator' => '<div class ="alert alert-info emptyList ">'
+                               . __d('accounts', 'Эта опция для пользователей, которые впервые пользуются сервисом. Или для существующих пользователей, которые хотят завести новый аккаунт не связанный с существующим.').
+                            '</div>',
             'options' => array( 1 => __d('accounts', 'Я новый пользователь'), 0 => __d('accounts', 'Я имею аккаунт (связать аккаунты)'))
         )); ?>
         
@@ -46,10 +46,10 @@
            </label>
         
         <div class="terms-and-conditions">
-            Нажимая на кнопку "Далее", вы принимаете <?php echo $this->Html->link(__d('accounts', 'условия использования'), array('controller' => 'pages', 'action' => 'terms-and-conditions'), array('target' => '_blank')); ?>
+            <?php echo __d('accounts', 'Нажимая на кнопку "Далее", вы принимаете'); ?> <?php echo $this->Html->link(__d('accounts', 'условия использования'), array('controller' => 'pages', 'action' => 'terms-and-conditions'), array('target' => '_blank')); ?>
         </div>
         <?php echo $this->Form->submit(__d('accounts', 'Далее'), array('class' => 'btn btn-primary pull-right', 'div' => false)); ?>
-        <?php echo $this->Html->link('Отмена', array('controller' => 'accounts', 'action' => 'cancel'), array('class' => 'social-login-cancel')); ?>
+        <?php echo $this->Html->link(__d('accounts', 'Отмена'), array('controller' => 'accounts', 'action' => 'cancel'), array('class' => 'social-login-cancel')); ?>
         <?php echo $this->Form->end(); ?>
     </fieldset>
 </div>

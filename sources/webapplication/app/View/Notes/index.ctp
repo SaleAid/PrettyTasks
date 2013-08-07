@@ -37,7 +37,7 @@
                             <div class="note">
                                 <div class="title-note"><?php echo $this->Tag->wrap($note->title, $note->tags); ?> </div>
                             </div>
-                            <div class="modified"><?php echo $this->Time->niceShort($note->modified, $timezone); ?></div>
+                            <div class="modified"><?php echo $this->Time->format('Y-m-d H:i:s', $note->modified, false, $timezone); ?></div>
                             <ul class="buttons">
                                 <li><a class="note-view" href="#"><i class="icon-zoom-in "></i></a></li>
                                 <li><a class="note-edit" href="#"><i class="icon-edit"></i></a></li>

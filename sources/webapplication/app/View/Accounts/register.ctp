@@ -7,7 +7,7 @@
                 'label' => array('class' => 'control-label'),
                 'between' => '<div class="controls">',
                 'after' => '</div>',
-                'error' => array('attributes' => array('wrap' => 'span', 'class' => 'help-inline')),
+                'error' => array('attributes' => array('wrap' => 'span', 'class' => 'account-error help-inline ')),
             )));?>
 	<fieldset>
 		<legend><?php echo __d('accounts', 'Регистрация аккаунта'); ?></legend>
@@ -23,9 +23,7 @@
            
            <?php echo $this->Captcha->input(); ?>
            
-                      
            <div class="grp-btn-reg">
-               
                <div class="box-loginza-registr pull-right">
                     <span><?php echo __d('accounts', 'ИЛИ'); ?></span>
                     <div class="box-icons-widget">

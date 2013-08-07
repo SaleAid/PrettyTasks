@@ -212,13 +212,15 @@ class CaptchaComponent extends Component {
 					$this->controller->set('captchaerror', false);	
 					return true;
 				} else {
-					$this->controller->set('captchaerror', __d('captcha', 'Wrong Captcha Entered'));	
-					return false;
+					//$this->controller->set('captchaerror', __d('captcha', 'Wrong Captcha Entered'));	
+					$this->controller->set('captchaerror', __d('captcha', 'Проверочный текст введен неверно. '));
+                    return false;
 				}				
 			}
 		} else {
-			$this->controller->set('captchaerror',__d('captcha', 'You Must Enter captcha Code'));	
-			return false;
+			//$this->controller->set('captchaerror',__d('captcha', 'You Must Enter captcha Code'));	
+			$this->controller->set('captchaerror', __d('captcha', 'Проверочный текст введен неверно. '));
+            return false;
 		}			
 	}	 
     
@@ -227,8 +229,9 @@ class CaptchaComponent extends Component {
 	//debug($this->controller->params['url']['data'][$model]);
 		if(isset($this->controller->params['url']['data'][$model]['captcha']) ){
 			if(empty($this->controller->params['url']['data'][$model]['captcha'])){ 
-				$this->controller->set('captchaerror','You Must Enter Captcha Code');	
-				return false;
+				//$this->controller->set('captchaerror','You Must Enter Captcha Code');	
+				$this->controller->set('captchaerror', __d('captcha', 'Проверочный текст введен неверно. '));
+                return false;
 			}
 			if($this->Session->check("cakecaptcha.".$this->session_var)){
 				if($this->Session->read("cakecaptcha.".$this->session_var)==$this->controller->params['url']['data'][$model]['captcha']){
@@ -239,8 +242,9 @@ class CaptchaComponent extends Component {
 				else{
 					$this->Session->setFlash("Wrong captcha");
 					//debug($this->controller);
-					$this->controller->set('captchaerror','Wrong Captcha Entered');	
-					return false;
+					//$this->controller->set('captchaerror','Wrong Captcha Entered');	
+					$this->controller->set('captchaerror', __d('captcha', 'Проверочный текст введен неверно. '));
+                    return false;
 				}
 			}
 		}
@@ -423,7 +427,7 @@ class CaptchaComponent extends Component {
      * Reduce the image to the final size
      */
     protected function ReduceImage() {
-        // Reduzco el tama�o de la imagen
+        // Reduzco el tama�o de la imagen
         $imResampled = imagecreatetruecolor($this->width, $this->height);
         imagecopyresampled($imResampled, $this->im,
             0, 0, 0, 0,

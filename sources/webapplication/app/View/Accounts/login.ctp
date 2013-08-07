@@ -39,7 +39,7 @@
                     <div class="controls">
                         <label class="checkbox">
                             <?php echo $this->Form->input('auto_login', array('label' => false, 'type'=>'checkbox', 'div' => false)); ?>
-                             <?php echo  __d('accounts', 'Оставаться в системе'); ?>
+                             <?php echo __d('accounts', 'Оставаться в системе'); ?>
                          </label>
                      </div>
                   </div>     
@@ -63,7 +63,7 @@
             </fieldset>
     
     <div class="social-bnts">
-        <span class="social-or">ИЛИ</span>
+        <span class="social-or"><?php echo __d('accounts', 'ИЛИ'); ?></span>
         <ul>
         	<li><?php echo $this->Form->postLink($this->Loginza->logo('google'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'google'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
         	<li><?php echo $this->Form->postLink($this->Loginza->logo('facebook'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'facebook'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
@@ -73,11 +73,3 @@
         </ul>
     </div>
 </div>
-
-           
-            
-                            
-            
-        
-        
-

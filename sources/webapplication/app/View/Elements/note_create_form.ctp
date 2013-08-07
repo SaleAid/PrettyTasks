@@ -2,7 +2,16 @@
 <script id="modal-edit-note" type="text/template">
     <div id="edit-note" class="modal hide fade <% if (typeof(view) != "undefined") { %> view-note <% } %>" data-id="<%= id %>">
         <div class="modal-header">
+            
             <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+            <ul class="buttons-top">
+                <% if (typeof(view) != "undefined") { %>
+                    <li><a class="note-edit" href="#"><i class="icon-edit"></i></a></li>
+                    <li><a class="note-remove" href="#"><i class="icon-trash"></i></a></li>
+                <%} else if (typeof(id) != "undefined") { %>
+                    <li><a class="note-remove" href="#"><i class="icon-trash"></i></a></li>
+                <% } %>
+            </ul>
             <h3>
             <% if (typeof(view) != "undefined") { %>
                 <?php echo __d('notes', 'Просмотр заметки');?>
