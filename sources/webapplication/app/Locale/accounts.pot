@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-10-03 19:42+0300\n"
+"POT-Creation-Date: 2013-08-09 16:35+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,130 +14,345 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/AccountsController.php:44
+#: Controller/AccountsController.php:45
+msgid "Ваш емейл или пароль не совпадают"
+msgstr ""
+
+#: Controller/AccountsController.php:50
+msgid "Ваш логин или пароль не совпадают"
+msgstr ""
+
+#: Controller/AccountsController.php:115;397;425;461;497;554
+msgid "Ошибка при передаче данных"
+msgstr ""
+
+#: Controller/AccountsController.php:133
+msgid "Добавлен"
+msgstr ""
+
+#: Controller/AccountsController.php:135
+msgid "Отклонен"
+msgstr ""
+
+#: Controller/AccountsController.php:144
+msgid "Ошибка отсутствует такой аккаунт"
+msgstr ""
+
+#: Controller/AccountsController.php:268
 msgid "Этот аккаунт уже связан"
 msgstr ""
 
-#: Controller/AccountsController.php:48
+#: Controller/AccountsController.php:272
 msgid "Этот аккаунт уже связан с другим пользователем"
 msgstr ""
 
-#: Controller/AccountsController.php:66
+#: Controller/AccountsController.php:287
 msgid "Этот аккаунт успешно прикреплен"
 msgstr ""
 
-#: Controller/AccountsController.php:70
-msgid "Ошибка связывания аккаунта"
-msgstr ""
-
-#: Controller/AccountsController.php:78
-msgid "Ошибка"
-msgstr ""
-
-#: Controller/AccountsController.php:101
-msgid "Your account not active"
-msgstr ""
-
-#: Controller/AccountsController.php:129
+#: Controller/AccountsController.php:362
 msgid "An unknown error"
 msgstr ""
 
-#: Controller/AccountsController.php:144;180;227
-msgid "Код активации аккаунта был выслан Вам на почту"
-msgstr ""
-
-#: Controller/AccountsController.php:149
-msgid "Возникли проблемы при отправке кода активации аккаунта"
-msgstr ""
-
-#: Controller/AccountsController.php:169
-msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз"
-msgstr ""
-
-#: Controller/AccountsController.php:185;233
-msgid "Вы успешно прошли регистрацию. Возникли проблемы при отправке кода активации аккаунта"
-msgstr ""
-
-#: Controller/AccountsController.php:190
-msgid "Error create account"
-msgstr ""
-
-#: Controller/AccountsController.php:239
-msgid "Error create user account"
-msgstr ""
-
-#: Controller/AccountsController.php:246
-msgid "Регистрация не удалась. Заполните поля полностью"
-msgstr ""
-
-#: Controller/AccountsController.php:292
-msgid "Ваша учетная запись была активирована"
-msgstr ""
-
-#: Controller/AccountsController.php:298
+#: Controller/AccountsController.php:387
 msgid "Invalid key"
 msgstr ""
 
-#: Controller/AccountsController.php:316
+#: Controller/AccountsController.php:402
+#: View/Accounts/register_success.ctp:3
+msgid "Код активации аккаунта был выслан Вам на почту"
+msgstr ""
+
+#: Controller/AccountsController.php:432;502
+msgid "Ваш пароль успешно изменен"
+msgstr ""
+
+#: Controller/AccountsController.php:439;511
+msgid "Ваш пароль не может быть сохранен. Пожалуйста, попробуйте еще раз"
+msgstr ""
+
+#: Controller/AccountsController.php:450;472
+msgid "На Вашу почту была отправлена инструкция по сбросу пароля"
+msgstr ""
+
+#: Controller/AccountsController.php:466
+msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз"
+msgstr ""
+
+#: Controller/AccountsController.php:480
+msgid "В нашей базе нет пользователя с такой почтой"
+msgstr ""
+
+#: Controller/AccountsController.php:574
+msgid "Регистрация не удалась. Заполните поля полностью"
+msgstr ""
+
+#: Controller/AccountsController.php:595
 msgid "Invalid Account"
 msgstr ""
 
-#: Controller/AccountsController.php:320
+#: Controller/AccountsController.php:598
+msgid "Нельзя удалить основной аккаунт"
+msgstr ""
+
+#: Controller/AccountsController.php:606
 msgid "Account deleted"
 msgstr ""
 
-#: Controller/AccountsController.php:328
+#: Controller/AccountsController.php:617
 msgid "Account was not deleted"
 msgstr ""
 
-#: Model/Account.php:104
-msgid "Ваш основной аккаунт заблокирован"
+#: View/Accounts/confirm_social_links.ctp:5
+msgid "Связать аккаунты"
 msgstr ""
 
-#: Model/Account.php:109
-msgid "Ваш основной аккаунт деактивирован"
+#: View/Accounts/confirm_social_links.ctp:17
+msgid "Разрешить"
 msgstr ""
 
-#: View/Accounts/confirm_email.ctp:14
-msgid "Введите Ваш e-mail"
+#: View/Accounts/confirm_social_links.ctp:18
+msgid "Запретить"
 msgstr ""
 
-#: View/Accounts/confirm_email.ctp:18
-#: View/Accounts/confirm_user_data.ctp:26
-#: View/Accounts/reactivate.ctp:21
-msgid "Далее"
+#: View/Accounts/confirm_social_links.ctp:26
+msgid "Разрешить всех"
 msgstr ""
 
-#: View/Accounts/confirm_user_data.ctp:13
-msgid "Регистрация аккаунта"
+#: View/Accounts/confirm_social_links.ctp:27
+msgid "Запретить всех"
 msgstr ""
 
-#: View/Accounts/confirm_user_data.ctp:14
-msgid "Логин"
+#: View/Accounts/confirm_social_links.ctp:28
+msgid "Пропустить"
 msgstr ""
 
-#: View/Accounts/confirm_user_data.ctp:16
-#: View/Accounts/reactivate.ctp:15
-msgid "Имя"
+#: View/Accounts/login.ctp:34
+msgid "Вход"
 msgstr ""
 
-#: View/Accounts/confirm_user_data.ctp:22
-msgid "Я согласен с"
+#: View/Accounts/login.ctp:35
+msgid "Логин или Емейл"
 msgstr ""
 
-#: View/Accounts/confirm_user_data.ctp:22
-msgid "условиями использования"
+#: View/Accounts/login.ctp:37
+#: View/Accounts/register.ctp:20
+msgid "Пароль"
+msgstr ""
+
+#: View/Accounts/login.ctp:42
+msgid "Оставаться в системе"
+msgstr ""
+
+#: View/Accounts/login.ctp:51
+msgid "Войти"
+msgstr ""
+
+#: View/Accounts/login.ctp:57
+#: View/Accounts/register.ctp:78
+msgid "Регистрация"
+msgstr ""
+
+#: View/Accounts/login.ctp:59
+#: View/Accounts/password_change.ctp:26
+#: View/Accounts/password_resend.ctp:4
+msgid "Забыли пароль?"
+msgstr ""
+
+#: View/Accounts/login.ctp:66
+#: View/Accounts/register.ctp:28
+msgid "ИЛИ"
+msgstr ""
+
+#: View/Accounts/password_change.ctp:15
+msgid "Изменение пароля"
+msgstr ""
+
+#: View/Accounts/password_change.ctp:17
+msgid "Пожалуйста, введите свой старый пароль из соображений безопасности, а затем новый пароль дважды"
+msgstr ""
+
+#: View/Accounts/password_change.ctp:21
+msgid "Текущий пароль"
+msgstr ""
+
+#: View/Accounts/password_change.ctp:30
+#: View/Accounts/password_reset.ctp:19
+msgid "Новый пароль"
+msgstr ""
+
+#: View/Accounts/password_change.ctp:37
+#: View/Accounts/password_reset.ctp:24
+#: View/Accounts/register.ctp:22
+msgid "Повторите пароль"
+msgstr ""
+
+#: View/Accounts/password_change.ctp:42
+msgid "Сохранить изменения"
+msgstr ""
+
+#: View/Accounts/password_resend.ctp:6
+msgid "Для сброса пароля введите свой адрес электронной почты"
+msgstr ""
+
+#: View/Accounts/password_resend.ctp:21
+#: View/Accounts/register.ctp:16
+msgid "Email"
+msgstr ""
+
+#: View/Accounts/password_resend.ctp:28
+msgid "Отправить запрос"
+msgstr ""
+
+#: View/Accounts/password_reset.ctp:14
+msgid "Выберите новый пароль"
+msgstr ""
+
+#: View/Accounts/password_reset.ctp:30
+msgid "Отправить"
 msgstr ""
 
 #: View/Accounts/reactivate.ctp:14
 msgid "Повторная активация"
 msgstr ""
 
-#: Model/Account.php:validation for field user_id
+#: View/Accounts/reactivate.ctp:15
+#: View/Accounts/register.ctp:14
+msgid "Имя"
+msgstr ""
+
+#: View/Accounts/reactivate.ctp:21
+#: View/Accounts/select_mode.ctp:51
+msgid "Далее"
+msgstr ""
+
+#: View/Accounts/register.ctp:13
+msgid "Регистрация аккаунта"
+msgstr ""
+
+#: View/Accounts/register.ctp:14
+msgid "Введите ваше имя"
+msgstr ""
+
+#: View/Accounts/register.ctp:16
+msgid "Укажите адрес электронной почты"
+msgstr ""
+
+#: View/Accounts/register.ctp:20
+msgid "6 знаков или больше! Будьте хитрее"
+msgstr ""
+
+#: View/Accounts/register.ctp:83
+msgid "Уже регистрировались? Тогда"
+msgstr ""
+
+#: View/Accounts/select_mode.ctp:26
+msgid "Регистрация нового аккаунта"
+msgstr ""
+
+#: View/Accounts/select_mode.ctp:34
+msgid "Эта опция для пользователей, которые имеют аккаунт на сервисе и хотят получить к нему доступ еще одним способом. Необходимо будет войти под существующим аккаунтом."
+msgstr ""
+
+#: View/Accounts/select_mode.ctp:38
+msgid "Эта опция для пользователей, которые впервые пользуются сервисом. Или для существующих пользователей, которые хотят завести новый аккаунт не связанный с существующим."
+msgstr ""
+
+#: View/Accounts/select_mode.ctp:40
+msgid "Я новый пользователь"
+msgstr ""
+
+#: View/Accounts/select_mode.ctp:40
+msgid "Я имею аккаунт (связать аккаунты)"
+msgstr ""
+
+#: View/Accounts/select_mode.ctp:45
+msgid "Я согласен с "
+msgstr ""
+
+#: View/Accounts/select_mode.ctp:45
+msgid "условиями использования"
+msgstr ""
+
+#: View/Accounts/select_mode.ctp:49
+msgid "Нажимая на кнопку \"Далее\", вы принимаете"
+msgstr ""
+
+#: View/Accounts/select_mode.ctp:49
+msgid "условия использования"
+msgstr ""
+
+#: View/Accounts/select_mode.ctp:52
+msgid "Отмена"
+msgstr ""
+
+#: View/Elements/current_user.ctp:21
+msgid "Учётная запись"
+msgstr ""
+
+#: View/Elements/current_user.ctp:23
+msgid "Изменить пароль"
+msgstr ""
+
+#: View/Elements/current_user.ctp:25
+msgid "Связанные аккаунты"
+msgstr ""
+
+#: View/Elements/current_user.ctp:26
+msgid "Пригласить друзей"
+msgstr ""
+
+#: View/Elements/current_user.ctp:37
+#: View/Elements/user_menu.ctp:26
+msgid "Выход"
+msgstr ""
+
+#: Model/Account.php:validation for field id;validation for field user_id
+#: Model/AccountSocial.php:validation for field id;validation for field user_id
 msgid "Wrong ID"
+msgstr ""
+
+#: Model/Account.php:validation for field id
+#: Model/AccountSocial.php:validation for field id
+msgid "u"
+msgstr ""
+
+#: Model/Account.php:validation for field provider;validation for field full_name;validation for field password;validation for field password_confirm;validation for field old_password
+#: Model/AccountSocial.php:validation for field provider
+msgid "Поле должно быть заполнено"
+msgstr ""
+
+#: Model/Account.php:validation for field password
+msgid "Минимальная длина пароля - %d символа"
+msgstr ""
+
+#: Model/Account.php:validation for field password
+msgid "Пароли не совпадает"
+msgstr ""
+
+#: Model/Account.php:validation for field old_password
+msgid "Неверный текущий пароль"
+msgstr ""
+
+#: Model/Account.php:validation for field email
+msgid "Пожалуйста, введите Ваш адрес электронной почты"
+msgstr ""
+
+#: Model/Account.php:validation for field email
+msgid "Этот адрес уже используется. Пожалуйста, введите другой адрес электронной почты"
 msgstr ""
 
 #: Model/Account.php:validation for field agreed
 msgid "Вы должны быть согласны с правилами использования сервиса"
+msgstr ""
+
+#: Model/Account.php:validation for field created;validation for field modified
+#: Model/AccountSocial.php:validation for field created;validation for field modified
+msgid "datetime"
+msgstr ""
+
+#: Model/Account.php:validation for field created;validation for field modified
+#: Model/AccountSocial.php:validation for field created;validation for field modified
+msgid "notempty"
 msgstr ""
 

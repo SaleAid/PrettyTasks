@@ -45,6 +45,16 @@ var mobile = (function() {
 				console.log('tap');
 				_private.changeCheckbox2(event, ui);
 			});
+			
+			$(document).on('click', '*', function(event, ui) {
+				console.log('click');
+				console.log(event);
+			});
+			
+			$(document).on('tap', '*', function(event, ui) {
+				console.log('tap');
+				console.log(event);
+			});
 
 			$(document).on("vmouseup", "#taskslist li", function() {
 				event.preventDefault();

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-10-03 19:42+0300\n"
+"POT-Creation-Date: 2013-08-09 16:35+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -38,11 +38,46 @@ msgstr ""
 msgid "The Faq could not be deleted. Please, try again."
 msgstr ""
 
-#: View/Accounts/reactivation.ctp:6
-msgid "Re-activation"
+#: Controller/GoalsController.php:29;63;91
+msgid "Invalid goal"
 msgstr ""
 
-#: View/Accounts/reactivation.ctp:20
+#: Controller/GoalsController.php:44;67
+msgid "The goal has been saved"
+msgstr ""
+
+#: Controller/GoalsController.php:47;70
+msgid "The goal could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/GoalsController.php:95
+msgid "Goal deleted"
+msgstr ""
+
+#: Controller/GoalsController.php:98
+msgid "Goal was not deleted"
+msgstr ""
+
+#: View/Days/add.ctp:4
+msgid "Add Day"
+msgstr ""
+
+#: View/Days/add.ctp:12
+#: View/Days/admin_add.ctp:12
+#: View/Days/admin_edit.ctp:13
+#: View/Days/edit.ctp:13
+#: View/Faqs/add.ctp:15
+#: View/Faqs/admin_add.ctp:16
+#: View/Faqs/admin_edit.ctp:18
+#: View/Faqs/edit.ctp:16
+#: View/Feedbacks/admin_add.ctp:17
+#: View/Feedbacks/admin_edit.ctp:18
+#: View/Feedbacks/edit.ctp:18
+#: View/Goals/add.ctp:15
+#: View/Goals/edit.ctp:16
+msgid "Submit"
+msgstr ""
+
 #: View/Days/add.ctp:15
 #: View/Days/admin_add.ctp:15
 #: View/Days/admin_edit.ctp:16
@@ -65,26 +100,12 @@ msgstr ""
 #: View/Feedbacks/edit.ctp:21
 #: View/Feedbacks/index.ctp:17;67
 #: View/Feedbacks/view.ctp:67
+#: View/Goals/add.ctp:18
+#: View/Goals/edit.ctp:19
+#: View/Goals/index.ctp:15;54
+#: View/Goals/view.ctp:57
 #: View/Invitations/index.ctp:9;44
 msgid "Actions"
-msgstr ""
-
-#: View/Days/add.ctp:4
-msgid "Add Day"
-msgstr ""
-
-#: View/Days/add.ctp:12
-#: View/Days/admin_add.ctp:12
-#: View/Days/admin_edit.ctp:13
-#: View/Days/edit.ctp:13
-#: View/Faqs/add.ctp:15
-#: View/Faqs/admin_add.ctp:16
-#: View/Faqs/admin_edit.ctp:18
-#: View/Faqs/edit.ctp:16
-#: View/Feedbacks/admin_add.ctp:17
-#: View/Feedbacks/admin_edit.ctp:18
-#: View/Feedbacks/edit.ctp:18
-msgid "Submit"
 msgstr ""
 
 #: View/Days/add.ctp:18
@@ -104,6 +125,10 @@ msgstr ""
 #: View/Days/edit.ctp:21
 #: View/Days/index.ctp:49
 #: View/Days/view.ctp:38
+#: View/Goals/add.ctp:22
+#: View/Goals/edit.ctp:24
+#: View/Goals/index.ctp:57
+#: View/Goals/view.ctp:63
 #: View/Invitations/index.ctp:47
 msgid "List Users"
 msgstr ""
@@ -116,6 +141,10 @@ msgstr ""
 #: View/Days/edit.ctp:22
 #: View/Days/index.ctp:50
 #: View/Days/view.ctp:39
+#: View/Goals/add.ctp:23
+#: View/Goals/edit.ctp:25
+#: View/Goals/index.ctp:58
+#: View/Goals/view.ctp:64
 #: View/Invitations/index.ctp:48
 msgid "New User"
 msgstr ""
@@ -139,6 +168,8 @@ msgstr ""
 #: View/Feedbacks/admin_index.ctp:47
 #: View/Feedbacks/edit.ctp:24
 #: View/Feedbacks/index.ctp:47
+#: View/Goals/edit.ctp:22
+#: View/Goals/index.ctp:34
 #: View/Invitations/index.ctp:23
 msgid "Delete"
 msgstr ""
@@ -160,6 +191,9 @@ msgstr ""
 #: View/Feedbacks/edit.ctp:24
 #: View/Feedbacks/index.ctp:47
 #: View/Feedbacks/view.ctp:70
+#: View/Goals/edit.ctp:22
+#: View/Goals/index.ctp:34
+#: View/Goals/view.ctp:60
 #: View/Invitations/index.ctp:23
 msgid "Are you sure you want to delete # %s?"
 msgstr ""
@@ -174,6 +208,7 @@ msgstr ""
 #: View/Faqs/admin_index.ctp:27
 #: View/Feedbacks/admin_index.ctp:45
 #: View/Feedbacks/index.ctp:45
+#: View/Goals/index.ctp:32
 #: View/Invitations/index.ctp:21
 msgid "View"
 msgstr ""
@@ -183,12 +218,14 @@ msgstr ""
 #: View/Faqs/admin_index.ctp:28
 #: View/Feedbacks/admin_index.ctp:46
 #: View/Feedbacks/index.ctp:46
+#: View/Goals/index.ctp:33
 #: View/Invitations/index.ctp:22
 msgid "Edit"
 msgstr ""
 
 #: View/Days/admin_index.ctp:33
 #: View/Days/index.ctp:33
+#: View/Goals/index.ctp:42
 #: View/Invitations/index.ctp:31
 msgid "Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}"
 msgstr ""
@@ -198,6 +235,7 @@ msgstr ""
 #: View/Faqs/admin_index.ctp:42
 #: View/Feedbacks/admin_index.ctp:60
 #: View/Feedbacks/index.ctp:60
+#: View/Goals/index.ctp:47
 #: View/Invitations/index.ctp:37
 msgid "previous"
 msgstr ""
@@ -207,6 +245,7 @@ msgstr ""
 #: View/Faqs/admin_index.ctp:45
 #: View/Feedbacks/admin_index.ctp:63
 #: View/Feedbacks/index.ctp:63
+#: View/Goals/index.ctp:49
 #: View/Invitations/index.ctp:39
 msgid "next"
 msgstr ""
@@ -229,6 +268,7 @@ msgstr ""
 #: View/Faqs/view.ctp:4
 #: View/Feedbacks/admin_view.ctp:4
 #: View/Feedbacks/view.ctp:4
+#: View/Goals/view.ctp:4
 msgid "Id"
 msgstr ""
 
@@ -248,11 +288,13 @@ msgstr ""
 #: View/Feedbacks/edit.ctp:27
 #: View/Feedbacks/index.ctp:71
 #: View/Feedbacks/view.ctp:44;74
+#: View/Goals/view.ctp:39
 msgid "User"
 msgstr ""
 
 #: View/Days/admin_view.ctp:14
 #: View/Days/view.ctp:14
+#: View/Goals/view.ctp:14
 msgid "Comment"
 msgstr ""
 
@@ -421,6 +463,7 @@ msgstr ""
 #: View/Faqs/view.ctp:44
 #: View/Feedbacks/admin_view.ctp:54
 #: View/Feedbacks/view.ctp:54
+#: View/Goals/view.ctp:44
 msgid "Created"
 msgstr ""
 
@@ -428,6 +471,7 @@ msgstr ""
 #: View/Faqs/view.ctp:49
 #: View/Feedbacks/admin_view.ctp:59
 #: View/Feedbacks/view.ctp:59
+#: View/Goals/view.ctp:49
 msgid "Modified"
 msgstr ""
 
@@ -516,6 +560,58 @@ msgstr ""
 msgid "Processed"
 msgstr ""
 
+#: View/Goals/add.ctp:4
+msgid "Add Goal"
+msgstr ""
+
+#: View/Goals/add.ctp:21
+#: View/Goals/edit.ctp:23
+#: View/Goals/view.ctp:61
+msgid "List Goals"
+msgstr ""
+
+#: View/Goals/edit.ctp:4
+#: View/Goals/view.ctp:59
+msgid "Edit Goal"
+msgstr ""
+
+#: View/Goals/index.ctp:2
+msgid "Goals"
+msgstr ""
+
+#: View/Goals/index.ctp:56
+#: View/Goals/view.ctp:62
+msgid "New Goal"
+msgstr ""
+
+#: View/Goals/view.ctp:2
+msgid "Goal"
+msgstr ""
+
+#: View/Goals/view.ctp:9
+msgid "Title"
+msgstr ""
+
+#: View/Goals/view.ctp:19
+msgid "Fromdate"
+msgstr ""
+
+#: View/Goals/view.ctp:24
+msgid "Todate"
+msgstr ""
+
+#: View/Goals/view.ctp:29
+msgid "Datedone"
+msgstr ""
+
+#: View/Goals/view.ctp:34
+msgid "Done"
+msgstr ""
+
+#: View/Goals/view.ctp:60
+msgid "Delete Goal"
+msgstr ""
+
 #: View/Invitations/index.ctp:2
 msgid "Invitations"
 msgstr ""
@@ -553,5 +649,32 @@ msgstr ""
 
 #: View/Tasks/mobile/index.ctp:36;80;125;182;207
 msgid "Go to full version"
+msgstr ""
+
+#: Model/Goal.php:validation for field title
+#: Model/Setting.php:validation for field key
+#: Plugin/OAuth/Model/AccessToken.php:validation for field oauth_token;validation for field client_id;validation for field user_id
+#: Plugin/OAuth/Model/AuthCode.php:validation for field code;validation for field client_id;validation for field user_id;validation for field redirect_uri
+#: Plugin/OAuth/Model/Client.php:validation for field client_id;validation for field redirect_uri
+#: Plugin/OAuth/Model/RefreshToken.php:validation for field refresh_token;validation for field client_id;validation for field user_id
+msgid "notempty"
+msgstr ""
+
+#: Model/Goal.php:validation for field user_id
+#: Model/Setting.php:validation for field id;validation for field user_id
+msgid "uuid"
+msgstr ""
+
+#: Plugin/OAuth/Model/AccessToken.php:validation for field oauth_token
+#: Plugin/OAuth/Model/AuthCode.php:validation for field code
+#: Plugin/OAuth/Model/Client.php:validation for field client_id
+#: Plugin/OAuth/Model/RefreshToken.php:validation for field refresh_token
+msgid "isUnique"
+msgstr ""
+
+#: Plugin/OAuth/Model/AccessToken.php:validation for field expires
+#: Plugin/OAuth/Model/AuthCode.php:validation for field expires
+#: Plugin/OAuth/Model/RefreshToken.php:validation for field expires
+msgid "numeric"
 msgstr ""
 

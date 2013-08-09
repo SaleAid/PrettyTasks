@@ -14,7 +14,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Console/Command/MigrationToV2Shell.php:8
-msgid "Migration to v2.\n [1]Local user \n [2]tasks\n [Q]uit\nWould you like to do?"
+#: Controller/ListsController.php:59
+msgid "Ошибка, Список  уже создан"
+msgstr ""
+
+#: Controller/ListsController.php:154
+msgid "Ошибка, Задача  не изменена"
+msgstr ""
+
+#: Model/UserTag.php:validation for field comment
+msgid "Максимальная длина комментария не больше %d символов"
 msgstr ""
 

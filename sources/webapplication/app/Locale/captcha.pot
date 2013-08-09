@@ -14,7 +14,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Console/Command/MigrationToV2Shell.php:8
-msgid "Migration to v2.\n [1]Local user \n [2]tasks\n [Q]uit\nWould you like to do?"
+#: Controller/Component/CaptchaComponent.php:216;222;233;246
+msgid "Проверочный текст введен неверно. "
+msgstr ""
+
+#: View/Helper/CaptchaHelper.php:42
+msgid "Немогу прочитать"
 msgstr ""
 
