@@ -282,4 +282,11 @@ class AppController extends Controller {
         }
         return false;
     }
+    
+    public function isSetCsrfToken(){
+        if( $this->request->header('X-CSRFToken') ){
+            return $this->checkCsrfToken($this->request->header('X-CSRFToken'));
+        }
+        return false;
+    }
 }

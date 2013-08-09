@@ -76,6 +76,17 @@ jQuery(function( $ ) {
             }
         },
         
+        initAjax: function(){
+            $.ajaxSetup({ 
+                beforeSend: function(xhr, settings) {  
+                    var csrfToken = $("meta[name='csrf-token']").attr('content');
+                    if (csrfToken) { 
+                        xhr.setRequestHeader("X-CSRFToken", csrfToken ); 
+                    } 
+                } 
+            }); 
+        },
+        
         superAjax: function( url, data, responseHandler ){
              var that = this;
              var result = null;
@@ -91,7 +102,7 @@ jQuery(function( $ ) {
                         that.displayLoadAjax( countAJAX ); 
                         
                         if (typeof _gaq != "undefined"){
-                            _gaq.push(["_trackEvent", "Tasks", url]);
+                            _gaq.push(["_trackEvent", "Notes", url]);
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
@@ -110,6 +121,7 @@ jQuery(function( $ ) {
 		init: function() {
 			this.cacheElements();
 			this.bindEvents();
+            Utils.initAjax();
 		},
 		cacheElements: function() {
 			this.noteEditTemplate = _.template($("#modal-edit-note").html());
@@ -168,8 +180,8 @@ jQuery(function( $ ) {
                 Utils.mesgShow(data.message.message, data.message.type);
                 $('#edit-note').modal('hide');
             }else{
-                Utils.mesgShow(data.message.message+'<hr/>'+ Utils.toListValidationErrorAll(data.errors), data.message.type);
-                this.showTooltipError(data.errors);      
+                Utils.mesgShow(data.message.message+'<hr/>'+ Utils.toListValidationErrorAll(data.message.errors), data.message.type);
+                //this.showTooltipError(data.message.errors);      
             }
         },
         
@@ -180,7 +192,7 @@ jQuery(function( $ ) {
         getUpdateElement: function (name){
             var element = '';
             switch(name){
-                case 'note':
+                case 'title':
                     element = $('#text-note');
                 break;
             }
@@ -195,15 +207,18 @@ jQuery(function( $ ) {
                            .off('tooltip');
             if(data !== undefined){
                 $.each(data, function(index, value) {
-                    that.getUpdateElement( index )
-                                .addClass('errorEdit')
-                                .attr('rel', 'tooltip')
-                                .attr('data-original-title', Utils.arrErrorToList(value))
-                                .tooltip({placement:'right',
-                                          delay: { show: 500, hide: 100 },
-                                          //trigger: 'focus',
-                                          template: '<div class="tooltip errorTooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
-                                          });
+                    if(that.getUpdateElement( index )){
+                        that.getUpdateElement( index )
+                            .addClass('errorEdit')
+                            .attr('rel', 'tooltip')
+                            .attr('data-original-title', Utils.arrErrorToList(value))
+                            .tooltip({placement:'right',
+                                      delay: { show: 500, hide: 100 },
+                                      //trigger: 'focus',
+                                      template: '<div class="tooltip errorTooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+                            }); 
+                    }
+                   
                 });
             }
             

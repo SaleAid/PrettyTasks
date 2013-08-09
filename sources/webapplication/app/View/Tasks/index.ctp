@@ -8,7 +8,7 @@
        echo $this->html->css('jquery.timepicker-1.2.2', null, array('block' => 'toHead'));
        echo $this->Html->css('tasks.'. Configure::read('App.version'), null, array('block' => 'toHead'));
        echo $this->Html->css('ui-lightness/jquery-ui-1.8.18.custom', null, array('block' => 'toHead'));
-       echo $this->Html->css('jquery.mCustomScrollbar', null, array('block' => 'toHead'));
+       //echo $this->Html->css('jquery.mCustomScrollbar', null, array('block' => 'toHead'));
        //echo $this->Html->css('bootstrap-modal', null, array('block' => 'toHead'));
        
     }
@@ -24,7 +24,7 @@
             'jquery.timepicker-1.2.2.min',
             'jquery.inline-confirmation.'.Configure::read('App.version'),
             'jquery-ui-i18n.min',
-            'jquery.mCustomScrollbar.concat.min'
+            //'jquery.mCustomScrollbar.concat.min'
             //'bootstrap-modalmanager',
             //'bootstrap-modal'
        ), array('block' => 'toFooter'));

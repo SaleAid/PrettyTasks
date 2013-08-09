@@ -1,6 +1,7 @@
 <?php
 App::uses('NoteObj', 'Lib');
 App::uses('AppController', 'Controller');
+App::uses('MessageObj', 'Lib');
 /**
  * Notes Controller
  *
@@ -11,6 +12,13 @@ class NotesController extends AppController {
     public $helpers = array('Tag');
     
     public $layout = 'notes';
+    
+    protected function _isSetRequestData($data, $model = null) {
+        if(!$this->isSetCsrfToken()){
+            return false;
+        }
+        return parent::_isSetRequestData($data, $model);
+    }
     
     public function index() {
         $result = $notes = array();
@@ -31,26 +39,17 @@ class NotesController extends AppController {
     
     public function create(){
         $result = $this->_prepareResponse();
-        if ( !$this->request->isPost() or !isset($this->request->data['title']) ) {
-            $result['error'] = array(
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+        if ( ! $this->_isSetRequestData('title') ) {
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $note = $this->Note->create($this->Auth->user('id'), $this->request->data['title'])->save();
             if ( $note ) {
             	$result['data'] = new NoteObj($note);
                 $result['success'] = true;
-                $result['message'] = array(
-                    'type' => 'info', 
-                    'message' => __d('tasks', 'Заметка  успешно создана')
-                ); 
-        	} else {
-        	   $result['message'] = array(
-                    'type' => 'error', 
-                    'message' => __d('tasks', 'Заметка  не создана')
-                );
-        		$result['errors'] = $this->Note->validationErrors;
-        	}
+                $result['message'] = new MessageObj('info', __d('tasks', 'Заметка успешно создана'));
+            } else {
+                $result['message'] = new MessageObj('error', __d('tasks', 'Заметка успешно создана'), $this->Note->validationErrors);
+            }
         }
         $result['action'] = 'create'; 
         $this->set('result', $result);
@@ -59,10 +58,8 @@ class NotesController extends AppController {
     
     public function update(){
         $result = $this->_prepareResponse();
-        if ( !$this->request->isPost() or !isset($this->request->data['id']) or !isset($this->request->data['title']) ) {
-            $result['error'] = array(
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+        if ( ! $this->_isSetRequestData(array('id', 'title')) ) {
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $originNote = $this->Note->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originNote) {
@@ -71,16 +68,10 @@ class NotesController extends AppController {
 	              $result['data'] = new NoteObj($note);
                   $result['success'] = true; 
 	          } else {
-		         $result['message'] = array(
-                    'type' => 'error', 
-                    'message' => __d('tasks', 'Заметка  не обновлена')
-                );
-                 $result['errors'] = $this->Note->validationErrors;
-	          }
+	             $result['message'] = new MessageObj('error', __d('notes', 'Заметка не обновлена'), $this->Note->validationErrors);
+		      }
             } else {
-                $result['errors'] = array(
-                    'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой заметки')
-                );
+                $result['message'] = new MessageObj('error', __d('notes', 'Ошибка, Вы не можете делать изменения в этой заметке'));
             }
         }
         $result['action'] = 'update'; 
@@ -90,24 +81,18 @@ class NotesController extends AppController {
     
     public function delete() {
         $result = $this->_prepareResponse();
-        if ( !$this->request->isPost() or !isset($this->request->data['id']) ) {
-            $result['error'] = array(
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+        if ( ! $this->_isSetRequestData('id') ) {
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $note = $this->Note->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($note) {
                     if ($this->Note->delete()) {
                         $result['success'] = true; 
                     } else {
-                        $result['error'] = array(
-                            'message' => __d('tasks', 'Ошибка, note  не изменена')
-                        );
+                        $result['message'] = new MessageObj('error', __d('notes', 'Ошибка, заметка не удалена'));
                     }             
             } else {
-                $result['error'] = array(
-                    'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой note`s')
-                );
+                $result['message'] = new MessageObj('error', __d('notes', 'Ошибка, Вы не можете делать изменения в этой заметке'));
             }
         }
         $result['action'] = 'delete';

@@ -32,6 +32,13 @@ class TasksController extends AppController {
     
     public $layout = 'tasks';
     
+    protected function _isSetRequestData($data, $model = null) {
+        if(!$this->isSetCsrfToken()){
+            return false;
+        }
+        return parent::_isSetRequestData($data, $model);
+    }
+    
     public function repeated(){
         return;
         $result = $this->_prepareResponse();

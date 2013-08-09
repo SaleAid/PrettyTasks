@@ -145,6 +145,16 @@ function displayLoadAjax(count){
     }
 }
 
+function initAjax(){
+    $.ajaxSetup({ 
+        beforeSend: function(xhr, settings) {  
+            var csrfToken = $("meta[name='csrf-token']").attr('content');
+            if (csrfToken) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken ); 
+            } 
+        } 
+    }); 
+}
 //-------------------------------------
 function superAjax(url, data){
      var result = null;
@@ -1024,7 +1034,8 @@ function onDeleteDay(data){
     if(!data.success){
         mesg(data.message.message, data.message.type); 
     }
-    $('#wrapper-content').css('min-height', $('.listDay').height() + 30 )
+    $('#wrapper-content').css('min-height', $('.listDay').height() + 30 );
+    changeHeightListDays();
 }
 
 //---------------addDay---------
@@ -1083,6 +1094,7 @@ function scrAddDay(date, refresh){
     }
     initTab('#main ul.nav-tabs a[date="'+date+'"]');
     activeTab(date);
+    
     return true;
 }
 function activeTab(date){
@@ -1150,7 +1162,8 @@ function onAddDay(data){
     list.parent().find('.weekday').addClass(weekDayStyle);
     initPrintClick(list.parent().find('.print'));
     setFiler(data.data.name);
-    $('#wrapper-content').css('min-height', $('.listDay').height() + 30 )
+    $('#wrapper-content').css('min-height', $('.listDay').height() + 30 );
+    changeHeightListDays();
 
 }
 
@@ -2198,6 +2211,13 @@ function convertToText(str){
     //Dencode Entities
     return $("<div/>").html(str).text();
 }
+function changeHeightListDays(){
+    if($(this).height()-50 < $('.listDay').height()){
+        $('.listDay').removeClass('affix1');
+    } else {
+        $('.listDay').addClass('affix1');
+    }
+}
 //-----------------------------------------------------------------------
 var dropped = false;
 var countAJAX = 0;
@@ -2257,6 +2277,7 @@ $(function(){
         $.extend($.datepicker.regional[GLOBAL_CONFIG.dp_regional])
      );
 //
+    initAjax();
     setTimeout(checkStatus, +GLOBAL_CONFIG.intervalCheckStatus);
     $('.help').tooltip({placement:'left',delay: { show: 500, hide: 100 }});
     $('#addDay').tooltip({placement:'bottom',delay: { show: 500, hide: 100 }});
@@ -2399,8 +2420,12 @@ $(function(){
         }
     };
     
-    console.log($('.listDay').height());
-    $('#wrapper-content').css('min-height', $('.listDay').height() + 30 )
+    //console.log($('.listDay').height());
+    $('#wrapper-content').css('min-height', $('.listDay').height() + 30 );
+    
+    $(window).on("resize load", function () {
+        changeHeightListDays();
+    });
     
     // side bar
     //var $window = $(window)

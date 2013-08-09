@@ -22,6 +22,8 @@
             <li class="<? if($this->params['action'] == "add" and $this->params['controller'] == "feedbacks") echo 'active'; ?>">
             <?php echo $this->Html->link(__d('users', 'Обратная связь'). $this->Html->tag('i', '', array('class' => 'icon-chevron-right pull-right')), array('controller' => 'feedbacks', 'action' => 'add'), array('escape' => false)); ?>
       </li>
+      <li class="nav-header"></li>
+      <li><?php echo $this->Html->link(__d('accounts', 'Выход'), array('controller' => 'accounts', 'action' => 'logout'));?></li>
     </ul>
   </div>
 </div>
