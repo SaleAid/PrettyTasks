@@ -143,8 +143,12 @@ jQuery(function( $ ) {
                 'margin-left': function () {
                     return -($(this).width() / 2);
                 },
-                //height: '70%'
             });
+          var heightNoteText = $(window).height()/2;
+          if(heightNoteText > 200){
+            $('#edit-note').find('.text-note').css('height', heightNoteText);
+          }
+          
           $('#edit-note').on('hidden', function () {
               $(this).remove();
           });  

@@ -159,8 +159,11 @@ jQuery(function( $ ) {
             this.blurIntput();
             $('.create-new-note').on('click', this.show );
             list.on( 'click', '.note-edit', this.show );
+            list.on( 'click', '.note-edit-form', this.showViaForm );
             list.on( 'click', '.note-view', this.view );
             this.inlineConfirmation('.note-remove');
+            //this.deleteViaForm('.note-remove-form');
+            list.on( 'click', '.note-remove-form', this.deleteViaForm );
             list.on( 'click', '#save-note', this.update );
             list.on( 'click', '.tags', this.clickTags );
             
@@ -187,6 +190,12 @@ jQuery(function( $ ) {
                     return -($(this).width() / 2);
                 }
             });
+          var heightNoteText = $(window).height()/2;
+          if(heightNoteText < 200){
+            heightNoteText = 200;
+          }
+          $('#edit-note').find('.text-note').css('height', heightNoteText);
+          
           $('#edit-note').on('shown', function () {
               $(this).find('#text-note').focus();
           });
@@ -196,6 +205,40 @@ jQuery(function( $ ) {
           });
             
         },
+        
+        showViaForm: function(){
+            
+            var list = AppNotes.$noteList;
+            var modal = $(this).parents('#edit-note');
+            var id = modal.data('id');
+            var title = $.trim(modal.find('.text-note').text());
+            $('#edit-note').modal('hide');
+            $('#edit-note').remove();
+            list.append(AppNotes.noteEditTemplate({title: title, id: id}));
+            $('#edit-note').modal({
+                backdrop: true,
+                keyboard: true
+            }).css({
+                width: '70%',
+                'margin-left': function () {
+                    return -($(this).width() / 2);
+                }
+            });
+          var heightNoteText = $(window).height()/2;
+          if(heightNoteText < 200){
+            heightNoteText = 200;
+          }
+          $('#edit-note').find('.text-note').css('height', heightNoteText);
+          
+          $('#edit-note').on('shown', function () {
+              $(this).find('#text-note').focus();
+          });
+          $('#edit-note').on('hidden', function () {
+              $(this).remove();
+              AppNotes.$new_note.focus();
+          });
+        },
+        
         view: function() {
 		  var list = AppNotes.$noteList;
           var id = $(this).parents('li.note-box').data('id');
@@ -210,8 +253,13 @@ jQuery(function( $ ) {
                 'margin-left': function () {
                     return -($(this).width() / 2);
                 },
-                //height: '70%'
-            });
+                
+          });
+          var heightNoteText = $(window).height()/2;
+          if(heightNoteText < 200){
+            heightNoteText = 200;
+          }
+          $('#edit-note').find('.text-note').css('height', heightNoteText); 
           $('#edit-note').on('hidden', function () {
               $(this).remove();
               AppNotes.$new_note.focus();
@@ -272,6 +320,14 @@ jQuery(function( $ ) {
               },
            });
            
+        },
+        deleteViaForm: function(){
+            console.log('el');
+           var modal = $(this).parents('#edit-note');
+           var id = modal.data('id');
+           AppNotes.userEvent('delete', {id: id });
+           $('#edit-note').modal('hide');
+           $('#edit-note').remove();
         },
         
         clickTags: function(){

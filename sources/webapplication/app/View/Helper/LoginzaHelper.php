@@ -27,7 +27,7 @@ class LoginzaHelper extends AppHelper {
             return '';
         }
         if ($provider == 'local') {
-            return '<span >&nbsp;PrettyTasks&nbsp;</span>';
+           return "<span class=\"prettytasks_logo\">&nbsp;</span>";
         }
         return "<span class=\"providers_sprite {$provider}\">&nbsp;</span>";
     }

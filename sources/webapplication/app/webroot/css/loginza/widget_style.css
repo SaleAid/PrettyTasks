@@ -54,7 +54,7 @@
 .odnoklassniki {background-position:0 -450px}
 .linkedin {background-position:0 -475px}
 .prettytasks {background-repeat:no-repeat;background-image:url('/img/pr_icon.png');display:inline-block;width:16px;height:16px;}
-
+.prettytasks_logo {background-repeat:no-repeat;background-image:url('/img/pr_logo.png');display:inline-block;width:90px;height:25px;}
 .providers_set {text-align:center;}
 .providers_set .providers_sprite {margin: 7px 0px;}
 .provider {float: center; margin: 4px; display: inline-block;}

@@ -6,10 +6,10 @@
             <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
             <ul class="buttons-top">
                 <% if (typeof(view) != "undefined") { %>
-                    <li><a class="note-edit" href="#"><i class="icon-edit"></i></a></li>
-                    <li><a class="note-remove" href="#"><i class="icon-trash"></i></a></li>
+                    <li><a class="note-edit-form" href="#"><i class="icon-edit"></i></a></li>
+                    <li><a class="note-remove-form" href="#"><i class="icon-trash"></i></a></li>
                 <%} else if (typeof(id) != "undefined") { %>
-                    <li><a class="note-remove" href="#"><i class="icon-trash"></i></a></li>
+                    <li><a class="note-remove-form" href="#"><i class="icon-trash"></i></a></li>
                 <% } %>
             </ul>
             <h3>
@@ -23,7 +23,7 @@
             </h3>
         </div>
         <div class="modal-body">
-            <textarea  <% if (typeof(view) != "undefined") { %> readonly <% } %> class="text-note" id="text-note" rows="9" tabindex ="1"><%= title %></textarea>
+            <textarea  <% if (typeof(view) != "undefined") { %>  <% } %> class="text-note" id="text-note" rows="3" tabindex ="1"><%= title %></textarea>
         </div>
         <div class="modal-footer">
             <a href="#" class="btn" data-dismiss="modal" aria-hidden="true" tabindex ="3"><?php echo __d('tasks', 'Закрыть');?></a>
