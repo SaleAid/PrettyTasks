@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-08-09 16:35+0000\n"
-"PO-Revision-Date: 2013-08-09 20:05+0300\n"
+"POT-Creation-Date: 2013-08-12 20:20+0000\n"
+"PO-Revision-Date: 2013-08-13 00:20+0300\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "Language: \n"
@@ -79,7 +79,7 @@ msgstr "Sign up"
 
 #: View/Days/journal.ctp:38
 msgid "Good day"
-msgstr ""
+msgstr "Good day"
 
 #: View/Elements/current_user.ctp:28
 msgid "Language"

@@ -4,48 +4,74 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-09-20 10:23+0300\n"
-"PO-Revision-Date: 2012-09-20 10:47+0200\n"
-"Last-Translator: Alexandr <afrankovskiy@gmail.com>\n"
+"POT-Creation-Date: 2013-08-12 20:21+0000\n"
+"PO-Revision-Date: 2013-08-12 23:35+0300\n"
+"Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.5.3\n"
 
-#: Controller/DaysController.php:21;43;69
+#: Controller/DaysController.php:21;41;65
 msgid "Ошибка при передачи данных"
 msgstr "Error while data transfer"
 
-#: Controller/DaysController.php:28;77
+#: Controller/DaysController.php:28;73
 msgid "Изменение успешно сохранено"
 msgstr "Info has been successfully changed."
 
-#: Controller/DaysController.php:50
+#: Controller/DaysController.php:48
 msgid "Готово"
 msgstr "Done!"
 
-#: Controller/DaysController.php:83
+#: Controller/DaysController.php:79
 msgid "Ошибка при сохранении комментария"
 msgstr "Error while saving a comment"
 
-#: View/Days/journal.ctp:22
+#: Plugin/ApiV1/Controller/DaysController.php:15;35;55;84
+msgid "Ошибка при передаче данных"
+msgstr "Error while data transfer"
+
+#: Plugin/ApiV1/Controller/DaysController.php:43
+msgid "Ошибка, Вы не можете читать эту заметку"
+msgstr "Error, You cannot read this note"
+
+#: Plugin/ApiV1/Controller/DaysController.php:73
+msgid "Ошибка, Вы не можете делать изменения в этой заметки"
+msgstr "Error, You cannot change this note"
+
+#: Plugin/ApiV1/Controller/DaysController.php:95
+msgid "errors, the wrong tag"
+msgstr "errors, the wrong tag"
+
+#: View/Days/journal.ctp:23
 msgid "Журнал"
 msgstr "Journal"
 
-#: View/Elements/main_menu_logged.ctp:55
+#: View/Elements/main_menu_logged.ctp:80
 msgid "Journal"
 msgstr "Journal"
 
-#: Model/Day.php:validation for field user_id
+#: Model/Day.php:validation
+#: for field user_id
 msgid "Wrong ID"
 msgstr "Wrong ID"
 
-#: Model/Day.php:validation for field date
+#: Model/Day.php:validation
+#: for field date
 msgid "date"
 msgstr "date"
 
-#: Model/Day.php:validation for field comment
+#: Model/Day.php:validation
+#: for field comment
 msgid "Максимальная длина комментария не больше %d символов"
 msgstr "Max length of comment %d symbols"
+
+#: Model/Day.php:validation
+#: for field rating
+msgid "boolean"
+msgstr "boolean"
+

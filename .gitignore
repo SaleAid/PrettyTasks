@@ -8,6 +8,7 @@
 .settings/
 
 *.mo
+*.*~
 
 sources/webapplication/app/Config/database.php
 sources/webapplication/app/Config/core.php

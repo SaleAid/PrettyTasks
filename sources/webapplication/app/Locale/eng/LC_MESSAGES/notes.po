@@ -1,10 +1,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-09 16:35+0000\n"
-"PO-Revision-Date: 2013-08-09 20:04+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2013-08-12 20:21+0000\n"
+"PO-Revision-Date: 2013-08-13 00:12+0300\n"
+"Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,52 +15,52 @@ msgstr ""
 
 #: Controller/NotesController.php:71
 msgid "Заметка не обновлена"
-msgstr ""
+msgstr "Note has not been updated"
 
 #: Controller/NotesController.php:74;95
 msgid "Ошибка, Вы не можете делать изменения в этой заметке"
-msgstr ""
+msgstr "Error, you cannot change this note"
 
 #: Controller/NotesController.php:92
 msgid "Ошибка, заметка не удалена"
-msgstr ""
+msgstr "Error, note has not been deleted"
 
 #: Plugin/ApiV1/Controller/NotesController.php:15;35;55;80;105;126
 #: Plugin/ApiV1/Controller/UsersController.php:14
 msgid "Ошибка при передаче данных"
-msgstr ""
+msgstr "Error while data transfer"
 
 #: Plugin/ApiV1/Controller/NotesController.php:43
 msgid "Ошибка, Вы не можете читать эту заметку"
-msgstr ""
+msgstr "You cannot read this note"
 
 #: Plugin/ApiV1/Controller/NotesController.php:69
 msgid "Ошибка, Вы не можете делать изменения в этой заметки"
-msgstr ""
+msgstr "You cannot change this note"
 
 #: Plugin/ApiV1/Controller/NotesController.php:89
 msgid "Ошибка, note  не изменена"
-msgstr ""
+msgstr "Error, note has not been changed"
 
 #: Plugin/ApiV1/Controller/NotesController.php:94
 msgid "Ошибка, Вы не можете делать изменения в этой note`s"
-msgstr ""
+msgstr "Error, You cannot change this note"
 
 #: Plugin/ApiV1/Controller/NotesController.php:133
 msgid "errors, the wrong tag"
-msgstr ""
+msgstr "Error, wrong tag"
 
 #: View/Elements/note_create_form.ctp:17
 msgid "Просмотр заметки"
-msgstr ""
+msgstr "View note"
 
 #: View/Elements/note_create_form.ctp:19
 msgid "Редактирование заметки"
-msgstr ""
+msgstr "Edit note"
 
 #: View/Elements/note_create_form.ctp:21
 msgid "Создать заметку"
-msgstr ""
+msgstr "Create note"
 
 #: View/Notes/index.ctp:26
 msgid "Заметки"
@@ -67,28 +68,34 @@ msgstr "Notes"
 
 #: View/Notes/index.ctp:29
 msgid "+Add note…"
-msgstr ""
+msgstr "+Add note…"
 
 #: View/Notes/index.ctp:30
 msgid "Добавить"
-msgstr ""
+msgstr "Add"
 
-#: Model/Note.php:validation for field id;validation user_id
+#: Model/Note.php:validation
+#: for field id;validation user_id
 msgid "Wrong ID"
-msgstr ""
+msgstr "Wrong ID"
 
-#: Model/Note.php:validation for field id
+#: Model/Note.php:validation
+#: for field id
 msgid "ID уже существует"
-msgstr ""
+msgstr "ID already exists"
 
-#: Model/Note.php:validation for field date
+#: Model/Note.php:validation
+#: for field date
 msgid "date"
-msgstr ""
+msgstr "date"
 
-#: Model/Note.php:validation for field title
+#: Model/Note.php:validation
+#: for field title
 msgid "Максимальная длина комментария не больше %d символов"
-msgstr ""
+msgstr "Max comment length is %d symbols"
 
-#: Model/Note.php:validation for field title
+#: Model/Note.php:validation
+#: for field title
 msgid "Поле должно быть заполнено"
-msgstr ""
+msgstr "This field should be filled"
+
