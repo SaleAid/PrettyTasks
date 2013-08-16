@@ -19,6 +19,6 @@ msgid "Проверочный текст введен неверно. "
 msgstr ""
 
 #: View/Helper/CaptchaHelper.php:42
-msgid "Немогу прочитать"
+msgid "Не могу прочитать"
 msgstr ""
 

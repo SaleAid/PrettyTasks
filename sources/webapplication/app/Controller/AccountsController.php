@@ -5,7 +5,7 @@ class AccountsController extends AppController {
     
     public $name = 'Accounts';
     
-    public $uses = array('Account', 'AccountSocial');
+    public $uses = array('Account', 'AccountSocial', 'Task');
     
     public $components = array(
         'RequestHandler', 
@@ -201,6 +201,7 @@ class AccountsController extends AppController {
                     );
                     $this->Account->User->create();
                     $user = $this->Account->User->save($data);
+                    $this->Task->createTasksForNewUser($user['User']['id'], Configure::read('Config.language'));
                     $newAccount = end($newAccounts);
                     array_pop($newAccounts);
                     if($user){

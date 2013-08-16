@@ -303,6 +303,20 @@ class Task extends AppModel {
     
     /**
      * 
+     * @return boolean
+     */
+    public function createTasksForNewUser($user_id, $lang){
+        $date = date("Y-m-d");
+        $tasks = Configure::read('NewUser.Tasks.'.$lang);
+        if($tasks){
+            foreach($tasks as $task){
+                $this->create();
+                $this->createTask($user_id, $task, $date)->save();
+            }
+        }
+    }
+    /**
+     * 
      * @param unknown_type $user_id
      * @param unknown_type $title
      * @param unknown_type $date
@@ -622,6 +636,8 @@ class Task extends AppModel {
         }                        
         return false; 
     }
+    
+    
     
     /**
      * 

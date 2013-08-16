@@ -35,7 +35,7 @@ config('appconfig');
 
 config('opauth_config');
 
-//config('user_config');
+config('user_config');
 
 //CakePlugin::load('Recaptcha');
 

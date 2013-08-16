@@ -39,7 +39,7 @@ class CaptchaHelper extends AppHelper{
         $out .= $this->Html->image($this->Html->url(array('controller' => $controller, 'action' => 'captcha'), true), array('id' => 'cakecaptcha'));
 		$out .= "<br/>";
 		
-        $out .= __d('captcha','Немогу прочитать').'</a>';
+        $out .= __d('captcha','Не могу прочитать').'</a>';
 		$out .= "</label>";
 		$out .= $this->Form->input('cakecaptcha', array('id ' => 'captcha-form',
                                                         'name' => 'data['.$model.'][captcha]',
