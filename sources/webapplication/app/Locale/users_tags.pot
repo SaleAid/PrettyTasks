@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-08-12 20:21+0000\n"
+"POT-Creation-Date: 2013-08-16 14:40+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/ListsController.php:59
-msgid "Ошибка, Список  уже создан"
+#: Controller/ListsController.php:60
+msgid "Ошибка, Список уже создан"
 msgstr ""
 
-#: Controller/ListsController.php:154
-msgid "Ошибка, Задача  не изменена"
+#: Controller/ListsController.php:147
+msgid "Ошибка при сохранении комментария"
 msgstr ""
 
 #: Model/UserTag.php:validation for field comment

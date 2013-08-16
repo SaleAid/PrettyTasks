@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-08-12 20:21+0000\n"
+"POT-Creation-Date: 2013-08-16 14:40+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,16 +14,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/NotesController.php:71
+#: Controller/NotesController.php:61
+msgid "Ошибка при передаче номера страницы"
+msgstr ""
+
+#: Controller/NotesController.php:102
 msgid "Заметка не обновлена"
 msgstr ""
 
-#: Controller/NotesController.php:74;95
+#: Controller/NotesController.php:105;126
 msgid "Ошибка, Вы не можете делать изменения в этой заметке"
 msgstr ""
 
-#: Controller/NotesController.php:92
+#: Controller/NotesController.php:123
 msgid "Ошибка, заметка не удалена"
+msgstr ""
+
+#: Controller/NotesController.php:143
+msgid "Готово"
 msgstr ""
 
 #: Plugin/ApiV1/Controller/NotesController.php:15;35;55;80;105;126
@@ -61,6 +69,14 @@ msgstr ""
 
 #: View/Elements/note_create_form.ctp:21
 msgid "Создать заметку"
+msgstr ""
+
+#: View/Elements/note_create_form.ctp:31
+msgid "Создан"
+msgstr ""
+
+#: View/Elements/note_create_form.ctp:32
+msgid "Изменен"
 msgstr ""
 
 #: View/Notes/index.ctp:26

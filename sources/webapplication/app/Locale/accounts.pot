@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-08-12 20:21+0000\n"
+"POT-Creation-Date: 2013-08-16 14:40+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Ваш логин или пароль не совпадают"
 msgstr ""
 
-#: Controller/AccountsController.php:115;397;425;461;497;554
+#: Controller/AccountsController.php:115;396;424;460;496;553
 msgid "Ошибка при передаче данных"
 msgstr ""
 
@@ -50,56 +50,56 @@ msgstr ""
 msgid "Этот аккаунт успешно прикреплен"
 msgstr ""
 
-#: Controller/AccountsController.php:362
+#: Controller/AccountsController.php:361
 msgid "An unknown error"
 msgstr ""
 
-#: Controller/AccountsController.php:387
+#: Controller/AccountsController.php:386
 msgid "Invalid key"
 msgstr ""
 
-#: Controller/AccountsController.php:402
+#: Controller/AccountsController.php:401
 #: View/Accounts/register_success.ctp:3
 msgid "Код активации аккаунта был выслан Вам на почту"
 msgstr ""
 
-#: Controller/AccountsController.php:432;502
+#: Controller/AccountsController.php:431;501
 msgid "Ваш пароль успешно изменен"
 msgstr ""
 
-#: Controller/AccountsController.php:439;511
+#: Controller/AccountsController.php:438;510
 msgid "Ваш пароль не может быть сохранен. Пожалуйста, попробуйте еще раз"
 msgstr ""
 
-#: Controller/AccountsController.php:450;472
+#: Controller/AccountsController.php:449;471
 msgid "На Вашу почту была отправлена инструкция по сбросу пароля"
 msgstr ""
 
-#: Controller/AccountsController.php:466
+#: Controller/AccountsController.php:465
 msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз"
 msgstr ""
 
-#: Controller/AccountsController.php:480
+#: Controller/AccountsController.php:479
 msgid "В нашей базе нет пользователя с такой почтой"
 msgstr ""
 
-#: Controller/AccountsController.php:574
+#: Controller/AccountsController.php:573
 msgid "Регистрация не удалась. Заполните поля полностью"
 msgstr ""
 
-#: Controller/AccountsController.php:595
+#: Controller/AccountsController.php:594
 msgid "Invalid Account"
 msgstr ""
 
-#: Controller/AccountsController.php:598
+#: Controller/AccountsController.php:597
 msgid "Нельзя удалить основной аккаунт"
 msgstr ""
 
-#: Controller/AccountsController.php:606
+#: Controller/AccountsController.php:605
 msgid "Account deleted"
 msgstr ""
 
-#: Controller/AccountsController.php:617
+#: Controller/AccountsController.php:616
 msgid "Account was not deleted"
 msgstr ""
 
@@ -244,6 +244,10 @@ msgstr ""
 
 #: View/Accounts/register.ctp:83
 msgid "Уже регистрировались? Тогда"
+msgstr ""
+
+#: View/Accounts/register.ctp:83
+msgid "войдите"
 msgstr ""
 
 #: View/Accounts/select_mode.ctp:26

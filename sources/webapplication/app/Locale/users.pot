@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-08-12 20:20+0000\n"
+"POT-Creation-Date: 2013-08-16 14:40+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -40,6 +40,10 @@ msgstr ""
 
 #: Model/Account.php:210
 msgid "Пароли не совпадает"
+msgstr ""
+
+#: Plugin/AppVK/Controller/AppVKController.php:68
+msgid "У вас еще нет аккаунта"
 msgstr ""
 
 #: Plugin/OAuth/Controller/OAuthController.php:108

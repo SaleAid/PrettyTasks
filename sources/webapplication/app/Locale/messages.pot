@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-08-12 20:21+0000\n"
+"POT-Creation-Date: 2013-08-16 14:40+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -62,7 +62,11 @@ msgstr ""
 msgid "Вы еще не создавали списки. Создайте списки, и группируйте задачи по тематике."
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:48
+#: View/Elements/empty_lists.ctp:43
+msgid "Здесь нет ни одной заметки!"
+msgstr ""
+
+#: View/Elements/empty_lists.ctp:51
 msgid "О-о-о!*"
 msgstr ""
 
