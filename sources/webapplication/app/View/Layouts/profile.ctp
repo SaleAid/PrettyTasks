@@ -11,6 +11,9 @@
 <meta name="description" content="<?php echo $description_for_layout; ?>" />
 <meta name="keywords" content="<?php echo $keywords_for_layout; ?>" />
 <meta name="author" content=""/>
+<?php if(isset($csrfToken)): ?>
+    <meta name="csrf-token" content="<?php echo $csrfToken; ?>"/>
+<?php endif; ?>   
 <?php
     echo $this->Html->meta('icon');
 ?>

@@ -82,7 +82,7 @@ class AccountsController extends AppController {
     }
     
     private function _redirectAfterLogin(){
-        $this->Session->write('csrf_token', base64_encode( mt_rand() . time() . mt_rand() . 'key' ));
+        //$this->Session->write('csrf_token', base64_encode( mt_rand() . time() . mt_rand() . 'key' ));
         $user = $this->Auth->user();
         $autoLogin = true;
         if(empty($user['timezone_offset'])){
@@ -308,9 +308,8 @@ class AccountsController extends AppController {
         
         if(isset($this->data['validated']) && $this->data['validated']){
             $auth = $this->data['auth'];
-            
             $result = $this->AccountSocial->check($auth);
-            
+            //pr($auth);die;
             if ($this->Auth->loggedIn() && $this->Session->check('link-new-accounts')) {
                 return $this->_linked($result);
             }

@@ -137,6 +137,12 @@ class AppController extends Controller {
         return $timeOffset;
     }
     
+    protected function generateCsrfToken(){
+        $this->Session->delete('csrf_token');
+        $this->Session->write('csrf_token', base64_encode( mt_rand() . time() . mt_rand() . 'key' ));
+        return $this->_getCsrfToken();
+    }
+    
     private function _getCsrfToken(){
         if($this->Session->check('csrf_token')){
             return $this->Session->read('csrf_token');
@@ -161,7 +167,11 @@ class AppController extends Controller {
         $this->set('timezone', $this->_userTimeZone());
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
-        $this->set('csrfToken', $this->_getCsrfToken());
+        //$this->set('csrfToken', $this->_getCsrfToken());
+        if(! $this->request->is('ajax') ){
+            $this->set('csrfToken', $this->generateCsrfToken());
+        }
+        
         
         if ($this->Auth->loggedIn() && $this->Session->check('auth-new-accounts') && ! ($this->request->params['controller'] == 'accounts' && $this->request->params['action'] == 'confirmSocialLinks')) {
             $this->redirect(array(

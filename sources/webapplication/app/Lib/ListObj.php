@@ -15,12 +15,14 @@ class ListObj {
     public $type = null;
     public $name = null;
     public $list = array();
+    public $hide = false;
     
     public $_explicitType = null;
 
-    public function __construct($type, $name, array $list) {
+    public function __construct($type, $name, array $list, $hide = false) {
         $this->list = $list;
         $this->type = $type;
         $this->name = $name;
+        $this->hide = (bool)$hide;
     }
 } 

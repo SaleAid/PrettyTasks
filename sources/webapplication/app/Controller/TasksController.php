@@ -88,6 +88,7 @@ class TasksController extends AppController {
     
     
     public function index() {
+        //$this->set('csrfToken', $this->generateCsrfToken());
         $this->response->disableCache();
         $result = $this->_prepareResponse();
         
@@ -255,6 +256,7 @@ class TasksController extends AppController {
             if (!empty($this->request->data['date']) && Validation::date($this->request->data['date'])) {
                 $task = $this->Task->createTask($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->saveTask();
             } else {
+                $task = null;
                 if ($this->Task->saveAll($this->request->data, array('fieldList' => 'title', 'validate' => 'only'))) {
                     $date = empty($this->request->data['date']) ? '' : ' #'.$this->request->data['date'];
                     $task = $this->Task->createTask($this->Auth->user('id'), $this->request->data['title'] . $date, null, null, null, 0, 1)->saveTask();

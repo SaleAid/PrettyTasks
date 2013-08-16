@@ -1,3 +1,10 @@
+Date.prototype.toLocaleFormat = function(format) {
+	var f = {y : this.getYear() + 1900,m : this.getMonth() + 1,d : this.getDate(),H : this.getHours(),M : this.getMinutes(),S : this.getSeconds()}
+	for(k in f)
+		format = format.replace('%' + k, f[k] < 10 ? "0" + f[k] : f[k]);
+    return format;
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 /*global jQuery, underscore */
 jQuery(function( $ ) {
@@ -132,9 +139,22 @@ jQuery(function( $ ) {
         convertToText: function( str ){
             //Dencode Entities
             return $("<div/>").html(str).text();
-        }
+        },
         
-	};
+        usetDateTime: function(dateTime, format){
+          var TimezoneOffset = GLOBAL_CONFIG.timezone;
+          var localTime = new Date();
+          if(TimezoneOffset == ''){
+                TimezoneOffset = localTime.getTimezoneOffset() * -60;
+          }
+          var a = dateTime.split(" ");
+          var d = a[0].split("-");
+          var t = a[1].split(":");
+          var date = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
+          var d1 = new Date(date.getTime() + (1000*TimezoneOffset)); 
+          return d1.toLocaleFormat(format);
+        }
+    };
 
 	var AppNotes = {
 		init: function() {
@@ -142,6 +162,9 @@ jQuery(function( $ ) {
 			this.bindEvents();
             AppNotes.$new_note.focus();
             Utils.initAjax();
+            this.currentPage = 1;
+            this.stopPagination = false;
+            
 		},
 		cacheElements: function() {
 			this.noteTemplate = _.template($("#note-template").html());
@@ -155,7 +178,7 @@ jQuery(function( $ ) {
 			var list = this.$noteList;
 			$('.add-note').on('click', this.create );
             $('.new-note').on('keyup', this.create );
-            $('.btn-note').on('click', this.show );
+            $('.btn-note').on('click', this.showNewForm );
             this.blurIntput();
             $('.create-new-note').on('click', this.show );
             list.on( 'click', '.note-edit', this.show );
@@ -166,7 +189,7 @@ jQuery(function( $ ) {
             list.on( 'click', '.note-remove-form', this.deleteViaForm );
             list.on( 'click', '#save-note', this.update );
             list.on( 'click', '.tags', this.clickTags );
-            
+            $('.btn-see-more').on('click', this.getNotes );
         },
 		blurIntput: function(){
 		  AppNotes.$new_note.blur(function(){
@@ -175,46 +198,7 @@ jQuery(function( $ ) {
     		  }
 		  });
     	},
-        show: function() {
-		  var list = AppNotes.$noteList;
-          var id = $(this).parents('li.note-box').data('id');
-          var title = $.trim($(this).parents('li.note-box:data(id)').children('.note').text());
-          list.append(AppNotes.noteEditTemplate({title: title, id: id}));
-          //$('#edit-note').modal();
-          $('#edit-note').modal({
-                backdrop: true,
-                keyboard: true
-            }).css({
-                width: '70%',
-                'margin-left': function () {
-                    return -($(this).width() / 2);
-                }
-            });
-          var heightNoteText = $(window).height()/2;
-          if(heightNoteText < 200){
-            heightNoteText = 200;
-          }
-          $('#edit-note').find('.text-note').css('height', heightNoteText);
-          
-          $('#edit-note').on('shown', function () {
-              $(this).find('#text-note').focus();
-          });
-          $('#edit-note').on('hidden', function () {
-              $(this).remove();
-              AppNotes.$new_note.focus();
-          });
-            
-        },
-        
-        showViaForm: function(){
-            
-            var list = AppNotes.$noteList;
-            var modal = $(this).parents('#edit-note');
-            var id = modal.data('id');
-            var title = $.trim(modal.find('.text-note').text());
-            $('#edit-note').modal('hide');
-            $('#edit-note').remove();
-            list.append(AppNotes.noteEditTemplate({title: title, id: id}));
+        modalForm: function(){
             $('#edit-note').modal({
                 backdrop: true,
                 keyboard: true
@@ -236,36 +220,37 @@ jQuery(function( $ ) {
           $('#edit-note').on('hidden', function () {
               $(this).remove();
               AppNotes.$new_note.focus();
-          });
+          });    
+        },
+        
+        getNotes: function(){
+            AppNotes.currentPage++;
+            AppNotes.userEvent('getNotes', {page: AppNotes.currentPage});
+        },
+        
+        showNewForm: function() {
+		  AppNotes.$noteList.append(AppNotes.noteEditTemplate({title: '', id: undefined}));
+          AppNotes.modalForm();   
+        },
+                
+        show: function() {
+		  var id = $(this).parents('li.note-box').data('id');
+          AppNotes.userEvent('getNote', {id: id}); 
+        },
+        
+        showViaForm: function(){
+            var modal = $(this).parents('#edit-note');
+            var id = modal.data('id');
+            $('#edit-note').modal('hide');
+            $('#edit-note').remove();
+            AppNotes.userEvent('getNote', {id: id });
         },
         
         view: function() {
-		  var list = AppNotes.$noteList;
-          var id = $(this).parents('li.note-box').data('id');
-          var title = $.trim($(this).parents('li.note-box:data(id)').children('.note').text());
-          list.append(AppNotes.noteEditTemplate({title: title, id: id, view: true}));
-          //$('#edit-note').modal();
-          $('#edit-note').modal({
-                backdrop: true,
-                keyboard: true
-            }).css({
-                width: '70%',
-                'margin-left': function () {
-                    return -($(this).width() / 2);
-                },
-                
-          });
-          var heightNoteText = $(window).height()/2;
-          if(heightNoteText < 200){
-            heightNoteText = 200;
-          }
-          $('#edit-note').find('.text-note').css('height', heightNoteText); 
-          $('#edit-note').on('hidden', function () {
-              $(this).remove();
-              AppNotes.$new_note.focus();
-          });
-            
+		  var id = $(this).parents('li.note-box').data('id');
+          AppNotes.userEvent('getNote', {id: id, view: true }); 
         },
+        
         create: function(e) {
 		    var $input = AppNotes.$new_note,
 				val = $.trim( $input.val() );
@@ -322,7 +307,6 @@ jQuery(function( $ ) {
            
         },
         deleteViaForm: function(){
-            console.log('el');
            var modal = $(this).parents('#edit-note');
            var id = modal.data('id');
            AppNotes.userEvent('delete', {id: id });
@@ -351,6 +335,12 @@ jQuery(function( $ ) {
                 case 'delete':
                     this.noteDelete(data.id);
                 break;
+                case 'getNote':
+                    this.noteGet(data.id, data.view);
+                break;
+                case 'getNotes':
+                    this.notesGet(data.page, data.count);
+                break;
             }
         },
         
@@ -365,7 +355,65 @@ jQuery(function( $ ) {
                 case 'delete':
                     AppNotes.onDelete(data);
                 break;
+                case 'getNote':
+                    AppNotes.onGetNote(data);
+                break;
+                case 'getNoteView':
+                    AppNotes.onGetNote(data, true);
+                break;
+                case 'getNotes':
+                    AppNotes.onGetNotes(data);
+                break;
             }
+        },
+        
+        //get notes
+        notesGet: function(page, count){
+            this.srvGetNotes(page, count);
+        },
+        onGetNotes: function( data ){
+            if( data.success ){
+                if(data.data.hide){
+                    $('.btn-see-more').hide();
+                }
+                this.renderGetNotes( data.data.list );
+            }else{
+                Utils.mesgShow(data.message.message+'<hr/>'+ Utils.toListValidationErrorAll(data.message.errors), data.message.type);
+            }
+        },
+        srvGetNotes: function( page, count ){
+            Utils.superAjax('/notes/getNotes.json', {page: page, count: count }, AppNotes.responseHandler);
+        },
+        renderGetNotes: function( data ){
+              var delay = 0;
+              $.each( data, function(index, note) {
+                  AppNotes.$noteList.append(AppNotes.noteTemplate({ id: note.id, title: Utils.wrapTags(note.title, note.tags), modified: Utils.usetDateTime(note.modified, '%y-%m-%d %H:%M') }))
+                  ;
+                  AppNotes.$noteList.find('li[data-id='+note.id+']').hide();
+                  AppNotes.$noteList.find('li[data-id='+note.id+']').delay(delay).slideDown(600);
+                  //delay += 500;  
+                  AppNotes.inlineConfirmation('li[data-id='+note.id+'] .note-remove')  
+              });
+        },
+
+        //get note
+        noteGet: function(id, view){
+            this.srvGetNote(id, view);
+        },
+        onGetNote: function( data, view ){
+            if( data.success ){
+                this.renderGetNote( data.data, view );
+            }else{
+                Utils.mesgShow(data.message.message+'<hr/>'+ Utils.toListValidationErrorAll(data.message.errors), data.message.type);
+            }
+        },
+        srvGetNote: function( id, view ){
+            Utils.superAjax('/notes/getNote.json', {id: id, view: view }, AppNotes.responseHandler);
+        },
+        renderGetNote: function( data, view ){
+              var list = AppNotes.$noteList;
+              list.append(AppNotes.noteEditTemplate({title: data.title, id: data.id, created: Utils.usetDateTime(data.created, '%y-%m-%d %H:%M:%S'), modified: Utils.usetDateTime(data.modified, '%y-%m-%d %H:%M:%S'), view: view}));
+              AppNotes.modalForm(); 
         },
         
         // create 
@@ -387,9 +435,14 @@ jQuery(function( $ ) {
             Utils.superAjax('/notes/create.json', {title: title }, AppNotes.responseHandler);
         },
         renderCreate: function( data ){
-            this.$noteList.prepend(this.noteTemplate({ id: data.id, title: Utils.wrapTags(data.title, data.tags), modified: data.modified }))
-                          .slideDown('slow');
+            this.$noteList.prepend(this.noteTemplate({ id: data.id, title: Utils.wrapTags(data.title, data.tags), modified: Utils.usetDateTime(data.modified, '%y-%m-%d %H:%M') }))
+                          ;
+            AppNotes.$noteList.find('li[data-id='+data.id+']').hide();
+            AppNotes.$noteList.find('li[data-id='+data.id+']').slideDown(600);
             this.inlineConfirmation('li[data-id='+data.id+'] .note-remove');
+            if(AppNotes.$noteList.length > 0){
+                 $('.emptyList').addClass('hide');
+            }
         },
         //delete
         noteDelete: function( id ){
@@ -408,8 +461,10 @@ jQuery(function( $ ) {
             
             $("li[data-id='"+id+"']").hide( "drop", { direction: "left" }, "slow", function(){
                 $(this).remove();
-            } ); 
-            
+                if(AppNotes.$noteList.children('li').length < 1){
+                     $('.emptyList').removeClass('hide');
+                }
+            });
         },
         //update
         noteUpdate: function( id, title ){
@@ -433,6 +488,7 @@ jQuery(function( $ ) {
                 list.prepend(this);
                 $(this).show();
                 $(this).find('.title-note').html( Utils.wrapTags(data.title, data.tags) );
+                $(this).find('.modified').html( Utils.usetDateTime(data.modified, '%y-%m-%d %H:%M') );
             } ); 
         },
         getUpdateElement: function (name){

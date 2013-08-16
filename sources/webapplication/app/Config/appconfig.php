@@ -79,6 +79,11 @@
    //repeated tasks
    Configure::write('Repeated.MaxCount', 360);
    
+   //limits queries
+   Configure::write('Tasks.Lists.Expired.limit', 10);
+   Configure::write('Tasks.Lists.Planned.limit', 10);
+   
+   Configure::write('Notes.Lists.limit', 20);
    
    //Cache
    //Cache::config('elements', array(

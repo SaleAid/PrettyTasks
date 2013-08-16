@@ -337,6 +337,7 @@ function srvCreateList(tag){
 function scrCreateList(data){
     if(!data.data.tag){return;}
     $list = $('#lists');
+    $list.find('.emptyList').addClass('hide');
     $listUl = $list.find('ul[date="lists"]');
     $listUl.append('<li><span class="tags-list label label-info" data-tag="'+data.data.tag+'">&#x23;'+data.data.tag+'</span></li>');
 }
@@ -380,7 +381,10 @@ function scrGetLists(data){
     $list = $('#lists');
     $listUl = $list.find('ul[date="lists"]');
     $listUl.empty();
-    if(!data){return;}
+    if($.isEmptyObject(data)){
+        $list.find('.emptyList').removeClass('hide');
+        return;
+    }
     $.each( data, function(index, value) {
             $listUl.append('<li><span class="tags-list label label-info" data-tag="'+value.name+'">&#x23;'+value.name+'</span></li>');
     });
@@ -424,7 +428,10 @@ function scrGetListByTag(data){
     window.location.hash= 'list-'+data.tag;
     var alltasks = 0;
     var donetasks = 0;
-    if(!data.tasks){return;}
+    if($.isEmptyObject(data.tasks)){
+        $list.find('.emptyList ').removeClass('hide');
+        return;
+    }
     $.each( data.tasks, function(index, task) {
             alltasks++;
             if (+task.done){

@@ -26,6 +26,12 @@
             <textarea  <% if (typeof(view) != "undefined") { %>  <% } %> class="text-note" id="text-note" rows="3" tabindex ="1"><%= title %></textarea>
         </div>
         <div class="modal-footer">
+            <% if (typeof(created) != "undefined") { %>  
+                <div class="create-modified">
+                    <span class="muted"><?php echo __d('notes', 'Создан'); ?>: <%= created %>   </span>
+                    <span class="muted"><?php echo __d('notes', 'Изменен'); ?>: <%= modified %></span>
+                </div>
+            <% } %>
             <a href="#" class="btn" data-dismiss="modal" aria-hidden="true" tabindex ="3"><?php echo __d('tasks', 'Закрыть');?></a>
             <% if (typeof(view) == "undefined") { %>  
                 <button id="save-note" class="btn btn-success" tabindex ="2"><?php echo __d('tasks', 'Сохранить');?></button>

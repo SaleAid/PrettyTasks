@@ -2,6 +2,7 @@
 App::uses('NoteObj', 'Lib');
 App::uses('AppController', 'Controller');
 App::uses('MessageObj', 'Lib');
+App::uses('NotesListObj', 'Lib');
 /**
  * Notes Controller
  *
@@ -21,17 +22,46 @@ class NotesController extends AppController {
     }
     
     public function index() {
+        $this->response->disableCache();
+        //$this->set('csrfToken', $this->generateCsrfToken());
         $result = $notes = array();
-    	$count = isset($this->request->query['count']) ? $this->request->query['count'] : null;
-    	if ( $count > 50 ) $count = 50;
-    	$page = isset($this->request->query['page']) ? $this->request->query['page'] : null;
     	$user_id = $this->Auth->user('id');
-    	$notes = $this->Note->getNotes($user_id, $count, $page);
+    	$notes = $this->Note->getNotes($user_id, Configure::read('Notes.Lists.limit'), 1);
     	foreach ($notes as $note) {
     	    $result[] = new NoteObj($note);
         }    
-        
-    	
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');
+    
+    }
+    
+    public function getNotes() {
+        $result = $this->_prepareResponse();
+        if ( ! $this->_isSetRequestData('page') ) {
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
+        } else {
+            $notesObj = $notes = array();
+       	    $count = !isset($this->request->data['count']) ? Configure::read('Notes.Lists.limit') : (int)$this->request->data['count'];
+        	if ( $count > Configure::read('Notes.Lists.limit') ) 
+                $count = Configure::read('Notes.Lists.limit');
+            
+            $page = !empty($this->request->data['page']) ? (int)$this->request->data['page'] : 0;
+        	if($page > 1){
+        	    $notes = $this->Note->getNotes($this->Auth->user('id'), $count, $page);
+            	foreach ($notes as $note) {
+            	    $notesObj[] = new NoteObj($note);
+                }
+                $result['success'] = true;
+                $hide = false;
+                if(count($notesObj) < $count){
+                    $hide = true;
+                }
+                $result['data'] = new NotesListObj('NotesList', 'notes', $notesObj, $hide);   
+        	}else{
+        	   $result['message'] = new MessageObj('error', __d('notes', 'Ошибка при передаче номера страницы'));
+        	}
+        }   
+         $result['action'] = 'getNotes'; 
         $this->set('result', $result);
         $this->set('_serialize', 'result');
     
@@ -42,8 +72,9 @@ class NotesController extends AppController {
         if ( ! $this->_isSetRequestData('title') ) {
             $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
-            $note = $this->Note->create($this->Auth->user('id'), $this->request->data['title'])->save();
+            $note = $this->Note->createNote($this->Auth->user('id'), $this->request->data['title'])->save();
             if ( $note ) {
+                $note['Note']['title'] = mb_substr($note['Note']['title'], 0, 140);
             	$result['data'] = new NoteObj($note);
                 $result['success'] = true;
                 $result['message'] = new MessageObj('info', __d('tasks', 'Заметка успешно создана'));
@@ -98,6 +129,26 @@ class NotesController extends AppController {
         $result['action'] = 'delete';
         $this->set('result', $result);
         $this->set('_serialize', 'result');    
+    }
+    
+    public function getNote(){
+        $result = $this->_prepareResponse();
+        if (!$this->_isSetRequestData('id')) {
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
+        } else {
+            $note = $this->Note->getNote($this->request->data['id'], $this->Auth->user('id')); 
+            if($note){
+                $result['data'] = new NoteObj($note);
+                $result['success'] = true;
+                $result['message'] = new MessageObj('success', __d('notes', 'Готово'));
+            }
+        }
+        $result['action'] = 'getNote';
+        if(isset($this->request->data['view']) && $this->request->data['view']){
+            $result['action'] = 'getNoteView';
+        }
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');
     }
 
 

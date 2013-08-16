@@ -1,7 +1,7 @@
 <?php
 App::uses('TagList', 'Model');
 App::uses('AppController', 'Controller');
-
+App::uses('MessageObj', 'Lib');
 /**
  * Notes Controller
  *
@@ -10,6 +10,13 @@ App::uses('AppController', 'Controller');
 class ListsController extends AppController {
 
     public $uses = array('Tagged', 'Task', 'UserTag');
+    
+    protected function _isSetRequestData($data, $model = null) {
+        if(!$this->isSetCsrfToken()){
+            return false;
+        }
+        return parent::_isSetRequestData($data, $model);
+    }
     
     public function index() {}
     
@@ -20,10 +27,7 @@ class ListsController extends AppController {
             'tag'
         );
         if (! $this->_isSetRequestData($expectedData) ) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             
         	$options['conditions'] = array('Tag.name' => $this->UserTag->Tag->multibyteKey($this->request->data['tag']));
@@ -35,11 +39,10 @@ class ListsController extends AppController {
         		$tag = $this->UserTag->Tag->add($this->request->data['tag']);
             }
             if(!$tag){
-                $result['message'] = array(
-                        'type' => 'error', 
-                        'message' => __d('tags', 'Ошибка, Список  не создан')
-                );
-                $result['errors'] = $this->UserTag->Tag->validationErrors;
+                $result['message'] = new MessageObj('error', 
+                                                    __d('tags', 'Ошибка, Список не создан'),
+                                                    $this->UserTag->Tag->validationErrors
+                                                    );
             }else{
                 $options['conditions'] = array(
                     'UserTag.tag_id' => $tag['Tag']['id'],
@@ -54,10 +57,7 @@ class ListsController extends AppController {
                     $result['success'] = true;
                     $result['data'] = array('tag' => $tag['Tag']['name']);
                 } else {
-                    $result['message'] = array(
-                        'type' => 'error', 
-                        'message' => __d('users_tags', 'Ошибка, Список  уже создан')
-                    );
+                    $result['message'] = new MessageObj('error', __d('users_tags', 'Ошибка, Список уже создан'));
                 }
             }
         }
@@ -102,10 +102,7 @@ class ListsController extends AppController {
             'tag'
         );
         if (! $this->_isSetRequestData($expectedData) or empty($this->request->data['tag'])) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
         	$options['conditions'] = array('Tag.name' => $this->request->data['tag']);
         	$options['fields'] = array('id');
@@ -130,10 +127,7 @@ class ListsController extends AppController {
             'tag', 'comment'
         );
         if (! $this->_isSetRequestData($expectedData) or empty($this->request->data['tag'])) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
         	$options['conditions'] = array('Tag.name' => $this->request->data['tag']);
         	$options['fields'] = array('id', 'name');
@@ -149,11 +143,10 @@ class ListsController extends AppController {
                 $result['data']['comment'] = $comment;
                 $result['success'] = true;
             } else {
-                $result['message'] = array(
-                        'type' => 'error', 
-                        'message' => __d('users_tags', 'Ошибка, Задача  не изменена')
-                );
-                $result['errors'] = $this->UserTag->validationErrors;
+                $result['message'] = new MessageObj('error', 
+                                                    __d('users_tags', 'Ошибка при сохранении комментария'),
+                                                    $this->UserTag->validationErrors
+                                                    );
             }
 	    	$result['action'] = 'setCommentTag';
 	        $this->set('result', $result);
@@ -168,10 +161,7 @@ class ListsController extends AppController {
         );
         $tag = $this->UserTag->Tag->multibyteKey($this->request->data['tag']);
         if (! $this->_isSetRequestData($expectedData) or !strlen($tag)) {
-            $result['message'] = array(
-                'type' => 'error', 
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $result = $this->UserTag->Tag->find('first', 
                         array(

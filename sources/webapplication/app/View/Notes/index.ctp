@@ -29,6 +29,7 @@
                     <textarea class="new-note" id="new-note" rows="5" placeholder="<?php echo __d('notes', '+Add note…'); ?>"></textarea>
                     <button id="add-note" class="btn add-note"><?php echo __d('notes', 'Добавить'); ?></button>    
                 </div>
+                <?php echo $this->element('empty_lists', array('type' => 'notes', 'hide' => count($result)));?>
               </div>
               <div class="clear"></div>
                <ul id="notes" class="notes">
@@ -37,7 +38,7 @@
                             <div class="note">
                                 <div class="title-note"><?php echo $this->Tag->wrap($note->title, $note->tags); ?> </div>
                             </div>
-                            <div class="modified"><?php echo $this->Time->format('Y-m-d H:i:s', $note->modified, false, $timezone); ?></div>
+                            <div class="modified"><?php echo $this->Time->format('Y-m-d H:i', $note->modified, false, $timezone); ?></div>
                             <ul class="buttons">
                                 <li><a class="note-view" href="#"><i class="icon-zoom-in "></i></a></li>
                                 <li><a class="note-edit" href="#"><i class="icon-edit"></i></a></li>
@@ -46,6 +47,14 @@
                         </li>
                    <?php endforeach;?>
                 </ul>
+                
+                <div class="clear">
+                </div>
+                <?php if($result): ?>
+                <div class=" see-more ">
+                    <button class="btn btn-large btn-block btn-see-more">See more...</button>
+                </div>
+                <?php endif; ?>
     </div>
 </div>
 <!-- tmp -->

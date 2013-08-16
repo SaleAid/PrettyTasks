@@ -218,7 +218,8 @@ class Account extends AppModel {
      */
     public function matchOldPasswords($data) {
         $password = $this->field('password', array(
-                $this->alias . '.id' => $this->data[$this->alias]['id']
+                $this->alias . '.id' => $this->data[$this->alias]['id'],
+                
         ));
         if ($password === Security::hash($data['old_password'], null, true)) {
             return true;

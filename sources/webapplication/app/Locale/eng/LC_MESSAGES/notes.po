@@ -2,10 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2013-08-12 20:21+0000\n"
-"PO-Revision-Date: 2013-08-13 00:12+0300\n"
+"PO-Revision-Date: 2013-08-13 08:45+0200\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -74,28 +73,22 @@ msgstr "+Add note…"
 msgid "Добавить"
 msgstr "Add"
 
-#: Model/Note.php:validation
-#: for field id;validation user_id
+#: Model/Note.php:validation for field id;validation user_id
 msgid "Wrong ID"
 msgstr "Wrong ID"
 
-#: Model/Note.php:validation
-#: for field id
+#: Model/Note.php:validation for field id
 msgid "ID уже существует"
 msgstr "ID already exists"
 
-#: Model/Note.php:validation
-#: for field date
+#: Model/Note.php:validation for field date
 msgid "date"
 msgstr "date"
 
-#: Model/Note.php:validation
-#: for field title
+#: Model/Note.php:validation for field title
 msgid "Максимальная длина комментария не больше %d символов"
 msgstr "Max comment length is %d symbols"
 
-#: Model/Note.php:validation
-#: for field title
+#: Model/Note.php:validation for field title
 msgid "Поле должно быть заполнено"
 msgstr "This field should be filled"
-

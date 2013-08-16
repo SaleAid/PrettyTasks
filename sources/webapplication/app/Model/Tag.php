@@ -60,8 +60,8 @@ class Tag extends AppModel {
 	public function add($tag) {
         if (!empty($tag)) {
             $tag = $this->multibyteKey($tag);
-            return $this->save(array('name' => $tag));
         }
+        return $this->save(array('name' => $tag));
     }
         
 	public function multibyteKey($string = null) {

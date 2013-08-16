@@ -162,3 +162,17 @@ div.well{
     left: 30%;
     width: 70%;
 }
+.create-modified{
+    float: left;
+}
+.create-modified span{
+    display: block;
+}
+.see-more{
+    padding: 19px;
+
+}
+
+.btn-see-more{
+    background-image:none;
+}

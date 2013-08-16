@@ -39,7 +39,10 @@
         case 'lists':
             $message = __d('messages', 'Вы еще не создавали списки. Создайте списки, и группируйте задачи по тематике.');
             break;
-        
+        case 'notes':
+            $message = __d('messages', 'Здесь нет ни одной заметки!');
+            break;
+            
         default:
             return; 
     }

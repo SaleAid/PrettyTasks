@@ -102,8 +102,13 @@ class Note extends AppModel {
      */
     private $_fields = array(
             'id',
-            'title',
+            'title_excerpt',
+            'created',
             'modified'
+    );
+    
+    public $virtualFields = array(
+        'title_excerpt' => 'LEFT(Note.title,140)'
     );
     
     /**
@@ -130,7 +135,7 @@ class Note extends AppModel {
      * @param unknown_type $page
      * @return Ambigous <multitype:, NULL, mixed>
      */
-    public function getNotes($user_id, $count = 50, $page = 1) {
+    public function getNotes($user_id, $count, $page) {
         $this->contain('Tag');
         $conditions = array(
                 'Note.user_id' => $user_id
@@ -141,9 +146,27 @@ class Note extends AppModel {
         return $this->find('all', array(
                 'order' => $order,
                 'conditions' => $conditions,
-                // 'fields' => $this->_fields,
+                'fields' => $this->_fields,
                 'limit' => $count,
                 'page' => $page
+        ));
+    }
+    
+    /**
+     * 
+     * @param unknown_type $user_id
+     * @param unknown_type $count
+     * @param unknown_type $page
+     * @return Ambigous <multitype:, NULL, mixed>
+     */
+    public function getNote($id, $user_id) {
+        $this->contain('Tag');
+        $conditions = array(
+                'Note.user_id' => $user_id,
+                'Note.id' => $id
+        );
+        return $this->find('first', array(
+                'conditions' => $conditions,
         ));
     }
     
@@ -155,7 +178,7 @@ class Note extends AppModel {
      * @param unknown_type $page
      * @return Ambigous <multitype:, NULL, mixed>
      */
-    public function search($user_id, $query, $count = 50, $page = 1) {
+    public function search($user_id, $query, $count, $page) {
         $this->contain('Tag');
         $conditions = array(
                 'Note.title LIKE' => '%' . $query . '%',
@@ -187,7 +210,7 @@ class Note extends AppModel {
      * (non-PHPdoc)
      * @see Model::create()
      */
-    public function create($user_id, $title) {
+    public function createNote($user_id, $title) {
         $this->data[$this->alias]['user_id'] = $user_id;
         $this->data[$this->alias]['title'] = $title;
         return $this;

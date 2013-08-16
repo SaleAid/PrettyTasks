@@ -10,15 +10,13 @@ echo $this->Html->docType('html5');
 <meta name="description" content="<?php echo $description_for_layout; ?>" />
 <meta name="keywords" content="<?php echo $keywords_for_layout; ?>" />
 <meta name="author" content=""/>
-<?php if(isset($csrfToken)): ?>
-    <meta name="csrf-token" content="<?php echo $csrfToken; ?>"/>
-<?php endif; ?>   
+   
 <?php
-echo $this->Html->meta('icon');
-echo $this->Html->css('bootstrap.min');
-echo $this->Html->css($this->Loginza->getCssUrl());  
-echo $this->fetch('toHead');
-echo $scripts_for_layout;
+    echo $this->Html->meta('icon');
+    echo $this->Html->css('bootstrap.min');
+    echo $this->Html->css($this->Loginza->getCssUrl());  
+    echo $this->fetch('toHead');
+    echo $scripts_for_layout;
 ?>      
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -31,7 +29,7 @@ echo $scripts_for_layout;
 <div id="wrapper-all">
 
     <?php
-    echo $this->element('main_menu_logged');
+    //echo $this->element('main_menu_logged');
     ?> 
     
     <div id="wrapper-content">
@@ -50,12 +48,12 @@ echo $scripts_for_layout;
 </div>
 
 <?php
-if(Configure::read('Config.language') =='eng'){
-    echo $this->element('footer_eng');
-}else{
-    echo $this->element('footer');    
-}
-?>
+//if(Configure::read('Config.language') =='eng'){
+//    echo $this->element('footer_eng');
+//}else{
+//    echo $this->element('footer');    
+//}
+//?>
 
 <?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');?>
 
@@ -63,7 +61,7 @@ if(Configure::read('Config.language') =='eng'){
 
 <?php echo $this->Html->script('http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');?>
 
-<?php //echo $this->Html->script('http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js');?>
+<?php echo $this->Html->script('http://vk.com/js/api/xd_connection.js?2');?>
 
 <?php echo $this->Html->script('bootstrap.min');?>
 

@@ -80,6 +80,6 @@
        </fieldset>
     <?php echo $this->Form->end();?>
     <p>
-        <?php echo __d('accounts', 'Уже регистрировались? Тогда'); ?>  <?php echo $this->Html->link(_('войдите'), array('controller' => 'accounts', 'action' => 'login'));?>            
+        <?php echo __d('accounts', 'Уже регистрировались? Тогда'); ?>  <?php echo $this->Html->link(__d('accounts', 'войдите'), array('controller' => 'accounts', 'action' => 'login'));?>            
     </p> 
 </div>
