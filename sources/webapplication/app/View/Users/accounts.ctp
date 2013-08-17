@@ -75,7 +75,9 @@
                    <tr <?php if ($item['Account']['master']): ?> class="info" <?php endif; ?>>   
                         <td><?php echo $this->Loginza->logo($item['Account']['provider']); ?>&nbsp;</td>
                         <td><?php echo h($item['Account']['full_name']); ?>&nbsp;</td>
-                        <td><?php echo $this->Time->niceShort($item['Account']['created'], $timezone); ?>&nbsp;</td>
+                        <td><?php //echo $this->Time->niceShort($item['Account']['created'], $timezone); ?>
+                            <?php echo $this->Time->format('Y-m-d H:i', $item['Account']['created'], false, $timezone); ?>
+                        &nbsp;</td>
                          
                             <td class="actions">
                                 <?php if (!$item['Account']['master']): ?>
