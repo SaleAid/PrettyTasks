@@ -445,6 +445,7 @@ function scrGetListByTag(data){
     $listUl.siblings('.filter').find('span.all').text(alltasks);
     $listUl.siblings('.filter').find('span.inProcess').text(alltasks - donetasks);
     $listUl.siblings('.filter').find('span.completed').text(donetasks);
+    setFiler('list');
     
 }
 
