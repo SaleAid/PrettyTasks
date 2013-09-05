@@ -2176,7 +2176,7 @@ function initDeleteAll(element){
 }
 
 function reload(){
-    location.reload();
+    location.reload(true);
 }
 
 function showErrorConnection(status){

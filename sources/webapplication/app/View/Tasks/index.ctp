@@ -62,7 +62,7 @@
             </li>
           <?php if ( $result['data']['inConfig'] or $result['data']['yesterdayDisp']  ): ?>
           <li class="drop">
-            <a href="#<?php echo $this->Time->format('Y-m-d', '-1 days', true); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', '-1 days', true); ?>">
+            <a href="#<?php echo $this->Time->format('Y-m-d', '-1 days', true, $timezone) ; ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', '-1 days', true, $timezone); ?>">
                  <?php echo __d('tasks', 'Yesterday'); ?>
                  <span class="close">×</span>
             </a>
