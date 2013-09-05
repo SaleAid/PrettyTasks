@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-08-12 20:21+0000\n"
-"PO-Revision-Date: 2013-08-13 00:02+0300\n"
+"POT-Creation-Date: 2013-09-05 20:52+0000\n"
+"PO-Revision-Date: 2013-09-06 00:02+0300\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "Language: \n"
@@ -62,7 +62,11 @@ msgstr "Log in using local account to change password."
 msgid "Вы еще не создавали списки. Создайте списки, и группируйте задачи по тематике."
 msgstr "You have not lists yet. Create the lists and sort tasks by themes."
 
-#: View/Elements/empty_lists.ctp:48
+#: View/Elements/empty_lists.ctp:43
+msgid "Здесь нет ни одной заметки!"
+msgstr "There is no note here!"
+
+#: View/Elements/empty_lists.ctp:51
 msgid "О-о-о!*"
 msgstr "Oh-oh-oh!*"
 

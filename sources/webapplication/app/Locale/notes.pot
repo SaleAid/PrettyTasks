@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-08-16 14:40+0000\n"
+"POT-Creation-Date: 2013-09-05 20:52+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -84,11 +84,15 @@ msgid "Заметки"
 msgstr ""
 
 #: View/Notes/index.ctp:29
-msgid "+Add note…"
+msgid "+Добавить заметку"
 msgstr ""
 
 #: View/Notes/index.ctp:30
 msgid "Добавить"
+msgstr ""
+
+#: View/Notes/index.ctp:55
+msgid "Далее..."
 msgstr ""
 
 #: Model/Note.php:validation for field id;validation for field user_id

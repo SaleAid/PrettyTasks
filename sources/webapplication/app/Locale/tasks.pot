@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-08-16 14:40+0000\n"
+"POT-Creation-Date: 2013-09-05 20:52+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -156,49 +156,49 @@ msgstr ""
 msgid "Переход на новый день. Перезагрузка страницы произойдет через 5 секунд"
 msgstr ""
 
-#: Model/Task.php:612
+#: Model/Task.php:626
 #: Plugin/ApiV1/Model/Task.php:869
 #: Plugin/AppVK/View/Tasks/index.ctp:74
 #: View/Tasks/index.ctp:83
 msgid "Sunday"
 msgstr ""
 
-#: Model/Task.php:613
+#: Model/Task.php:627
 #: Plugin/ApiV1/Model/Task.php:870
 #: Plugin/AppVK/View/Tasks/index.ctp:75
 #: View/Tasks/index.ctp:84
 msgid "Monday"
 msgstr ""
 
-#: Model/Task.php:614
+#: Model/Task.php:628
 #: Plugin/ApiV1/Model/Task.php:871
 #: Plugin/AppVK/View/Tasks/index.ctp:76
 #: View/Tasks/index.ctp:85
 msgid "Tuesday"
 msgstr ""
 
-#: Model/Task.php:615
+#: Model/Task.php:629
 #: Plugin/ApiV1/Model/Task.php:872
 #: Plugin/AppVK/View/Tasks/index.ctp:77
 #: View/Tasks/index.ctp:86
 msgid "Wednesday"
 msgstr ""
 
-#: Model/Task.php:616
+#: Model/Task.php:630
 #: Plugin/ApiV1/Model/Task.php:873
 #: Plugin/AppVK/View/Tasks/index.ctp:78
 #: View/Tasks/index.ctp:87
 msgid "Thursday"
 msgstr ""
 
-#: Model/Task.php:617
+#: Model/Task.php:631
 #: Plugin/ApiV1/Model/Task.php:874
 #: Plugin/AppVK/View/Tasks/index.ctp:79
 #: View/Tasks/index.ctp:88
 msgid "Friday"
 msgstr ""
 
-#: Model/Task.php:618
+#: Model/Task.php:632
 #: Plugin/ApiV1/Model/Task.php:875
 #: Plugin/AppVK/View/Tasks/index.ctp:80
 #: View/Tasks/index.ctp:89

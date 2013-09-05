@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-08-16 14:40+0000\n"
+"POT-Creation-Date: 2013-09-05 20:51+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -153,11 +153,11 @@ msgstr ""
 msgid "Действия"
 msgstr ""
 
-#: View/Users/accounts.ctp:82
+#: View/Users/accounts.ctp:84
 msgid "Удалить"
 msgstr ""
 
-#: View/Users/accounts.ctp:82
+#: View/Users/accounts.ctp:84
 msgid "Вы уверены, что хотите удалить этот аккаунт?"
 msgstr ""
 

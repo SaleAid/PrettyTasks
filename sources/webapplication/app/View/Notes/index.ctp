@@ -26,7 +26,7 @@
                 <h3 class="head-list-info"><?php echo __d('notes', 'Заметки'); ?></h3>
               </div>
                 <div class="well form-inline">
-                    <textarea class="new-note" id="new-note" rows="5" placeholder="<?php echo __d('notes', '+Add note…'); ?>"></textarea>
+                    <textarea class="new-note" id="new-note" rows="5" placeholder="<?php echo __d('notes', '+Добавить заметку'); ?>"></textarea>
                     <button id="add-note" class="btn add-note"><?php echo __d('notes', 'Добавить'); ?></button>    
                 </div>
                 <?php echo $this->element('empty_lists', array('type' => 'notes', 'hide' => count($result)));?>
@@ -52,7 +52,7 @@
                 </div>
                 <?php if(count($result) == Configure::read('Notes.Lists.limit')): ?>
                 <div class=" see-more ">
-                    <button class="btn btn-large btn-block btn-see-more">See more...</button>
+                    <button class="btn btn-large btn-block btn-see-more"><?php echo __d('notes', 'Далее...'); ?></button>
                 </div>
                 <?php endif; ?>
     </div>
