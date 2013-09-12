@@ -1,4 +1,7 @@
 <?php
+/**
+ * 
+ */
 App::uses('AppController', 'Controller');
 class MobilesController extends AppController {
     
@@ -8,7 +11,7 @@ class MobilesController extends AppController {
     
     public function index(){
         $this->layout = 'mobile';
-        
+
     }
     
 }
