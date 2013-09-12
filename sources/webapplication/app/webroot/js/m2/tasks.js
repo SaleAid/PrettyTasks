@@ -6,10 +6,12 @@ var mobile = (function() {
 	var _private = {
 		today : null,
 		defaultList: 'planned',
+		currDate:null,
 		initEvents : function() {
 
 			$.mobile.page.prototype.options.addBackBtn = true;
 			$.mobile.page.prototype.options.backBtnText = "previous";
+			
 
 			$("#addnew").bind('keypress', function(e) {
 				var code = (e.keyCode ? e.keyCode : e.which);
@@ -20,7 +22,7 @@ var mobile = (function() {
 					// userEvent('create', {title: title, date: date });
 					$(this).val(null);
 
-					mobile.add2Server(title);
+					mobile.add2Server(title, _private.currDate);
 					return false;
 				}
 
@@ -43,7 +45,7 @@ var mobile = (function() {
 
 			$(document).on('click', '.ui-icon-checkbox-on, .ui-icon-checkbox-off', function(event, ui) {
 				console.log('tap');
-				_private.changeCheckbox2(event, ui);
+				_private.changeCheckbox1(event, ui);//todo2
 			});
 			
 			$(document).on('click', '*', function(event, ui) {
@@ -67,6 +69,21 @@ var mobile = (function() {
 				mobile.showList(name);
 				$("#left-panel-tasks").panel("close");
 			});
+			
+			$(document).on('click', "a[class|='menu-day']", function(event){
+				var name = event.target.className.split(' ')[0];
+				date = name.replace('menu-day-', '');
+				if (date=='today'){
+					date = _private.today;
+				}
+				if (date=='tomorrow'){
+					//TODO
+					//date = _private.today;
+				}
+				_private.currDate = date;
+				mobile.listForDate(date);
+				$("#left-panel-tasks").panel("close");
+			});
 
 			$("#right-panel-tasks").on("panelclose", function(event, ui) {
 				// $("#taskslist input[type='checkbox']:checked" ).prop(
@@ -75,12 +92,31 @@ var mobile = (function() {
 
 			$("#right-panel-tasks").on("panelopen", function(event, ui) {
 				console.log('open');
-				prepareActionBarButtons();
+				//prepareActionBarButtons();
 				// $("#taskslist input[type='checkbox']:checked" ).prop(
 				// "checked", false ).checkboxradio( "refresh" );
 			});
 
 			$("body").removeClass('hidden');
+			
+		    $.ajaxSetup({ 
+		        beforeSend: function(xhr, settings) {  
+		            var csrfToken = $("meta[name='csrf-token']").attr('content');
+		            if (csrfToken) { 
+		                xhr.setRequestHeader("X-CSRFToken", csrfToken ); 
+		            } 
+		        } 
+		    }); 
+		    
+		    $(document).on({
+		    	 ajaxStart: function() { 
+		    		 $.mobile.loading( 'show', {html: "<span><center><img src='//code.jquery.com/mobile/1.3.2/images/ajax-loader.gif' /></center><h1>Loading...</h1></span>"});
+		    	 },
+		    	 ajaxStop: function() {
+
+		    	 } 
+		    	});
+
 		},
 		initVariables : function() {
 			var today = new Date();
@@ -94,6 +130,7 @@ var mobile = (function() {
 				mm = '0' + mm;
 			}
 			_private.today = yyyy + "-" + mm + "-" + dd;
+			_private.currDate = _private.today; 
 		},
 		changeCheckbox1 : function(event, ui) {
 			console.log('taphold');
@@ -146,24 +183,30 @@ var mobile = (function() {
 			if (date === undefined) {
 				date = _private.today;
 			}
+			mobile.clearList();
+			$('#addnew').attr('placeholder', 'Type to add new task for ' + date);
 			$.ajax({
 				url : "/ru/tasks/getTasksForDay.json",
 				type : "POST",
 				data : {
 					date : date
-				},
-				beforeSend : function(xhr) {
-
 				}
 			}).done(function(response) {
 				if (console && console.log) {
 					console.log(response);
-					$.each(response.data.list, function(index, value) {
-						console.log(value);
-						mobile.createListItem(value);
-					});
+					if (response.data.list.length>0){
+						$.each(response.data.list, function(index, value) {
+							//console.log(value);
+							mobile.createListItem(value);
+						});
+					}else{
+						mobile.createPageMessage('No tasks for this day');
+					}
+					$.mobile.loading('hide');
+					
 				}
 			});
+			
 
 		},
 		createListItem : function(Task) {
@@ -180,6 +223,16 @@ var mobile = (function() {
 			$("#left-panel").panel("open");
 
 		},
+		createPageMessage : function(message) {
+			$('#taskslist li .ui-first-child ').removeClass('ui-first-child');
+			$('#taskslist li .ui-last-child ').removeClass('ui-last-child');
+			var newItem = $('<li id="li-message">	<label>	' + message + '</label></li>');
+			newItem.appendTo('#taskslist .ui-controlgroup-controls');
+			$('#taskslist').trigger("create");
+			$("#taskslist li:first-child").find('label').addClass('ui-first-child');
+			$("#taskslist li:last-child").find('label').addClass('ui-last-child');
+
+		},
 		add2Server : function(title, date) {
 			if (date === undefined) {
 				date = _private.today;
@@ -190,16 +243,15 @@ var mobile = (function() {
 				data : {
 					title : title,
 					date : date
-				},
-				beforeSend : function(xhr) {
-
 				}
 			}).done(function(response) {
 				if (console && console.log) {
 					console.log(response);
+					$('#li-message').remove();
 					mobile.createListItem(response.data);
 					$("#addnew").focus();
 					$("#addnew").trigger('change');
+					mobile.showMessage('Task has been added');
 				}
 			});
 		},
@@ -210,9 +262,6 @@ var mobile = (function() {
 				data : {
 					id : id,
 					done : done
-				},
-				beforeSend : function(xhr) {
-
 				}
 			}).done(function(data) {
 				if (console && console.log) {
@@ -222,13 +271,9 @@ var mobile = (function() {
 		},
 		scrSetDone : function(id, done) {
 			if (+done) {
-				//$("#taskslist input[type='checkbox'].pt-marked" ).prop(
-				//"checked", true ).checkboxradio( "refresh" );
-				//$("#checkbox-" + id + ":parent label").parent().parent().addClass('complete');
+				mobile.showMessage('Task has been closed');
 			} else {
-				// $("#taskslist input[type='checkbox'].pt-marked" ).prop(
-				// "checked", false ).checkboxradio( "refresh" );
-				//$("#checkbox-" + id + ":parent label").parent().parent().removeClass('complete');
+				mobile.showMessage('Task has been opened');
 			}
 		},
 		clearList: function(){
@@ -239,30 +284,33 @@ var mobile = (function() {
 			if (name === undefined) {
 				name = _private.defaultList;
 			}
+			mobile.clearList();
 			$.ajax({
 				url : "/ru/tasks/getTasksByType.json",
 				type : "POST",
 				data : {
 					type : name
-				},
-				beforeSend : function(xhr) {
-
 				}
 			}).done(function(response) {
 				if (console && console.log) {
-					console.log(response);
-					mobile.clearList();
+					//console.log(response);
+					
 					$.each(response.data.list, function(index, value) {
-						console.log(value);
+						//console.log(value);
 						mobile.createListItem(value);
 					});
+					$.mobile.loading('hide');
 				}
 			});
+		},
+		showMessage: function(message){
+			$.mobile.showPageLoadingMsg( $.mobile.pageLoadErrorMessageTheme, message, true );
+			setTimeout( $.mobile.hidePageLoadingMsg, 1000 );
 		}
 	};
 
 }());
-
+//
 // Need to rewrite
 /*
  * $(document).ready( function() {

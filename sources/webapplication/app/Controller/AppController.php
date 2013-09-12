@@ -91,7 +91,8 @@ class AppController extends Controller {
      * @return boolean
      */
     public function isMobileVersion() {
-        return (isset($this->request->params['device']) and ($this->request->params['device'] == 'm')) || $this->RequestHandler->isMobile();
+        //return (isset($this->request->params['device']) and ($this->request->params['device'] == 'm')) || $this->RequestHandler->isMobile();
+        return $this->RequestHandler->isMobile();
         // TODO add smarty auto detection
         // $this->layout = 'default';
     }
@@ -153,9 +154,9 @@ class AppController extends Controller {
     public function beforeFilter() {
         $this->_setLanguage();
         $this->__setTimeZone();
-        if ($this->isMobileVersion()) {
-            $this->_prepareMobileVersion();
-        }
+        //if ($this->isMobileVersion()) {
+        //    $this->_prepareMobileVersion();
+        //}
         
         $this->Seo->title = Configure::read('Site.title');
         $this->Seo->description = Configure::read('Site.description');
