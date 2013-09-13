@@ -66,14 +66,7 @@
     font-size: 15px;
 } 
 
-.tags{
-    margin-bottom: 2px;
-}
 
-
-.tags:hover{
-    cursor: pointer;
-}
 
 
 .s4{
@@ -503,3 +496,38 @@ div.well{
     border-radius: 3px;
 }
 .ui-datepicker, .ui-timepicker-container{ z-index: 9999 !important;}
+
+.lists-archive{
+    position: relative;
+    margin: 15px 0;
+    padding: 39px 19px 14px;
+    background-color: white;
+    border: 1px solid #DDD;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.lists-title{
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: whiteSmoke;
+    border: 1px solid #DDD;
+    
+    -webkit-border-radius: 4px 0 4px 0;
+    -moz-border-radius: 4px 0 4px 0;
+    border-radius: 4px 0 4px 0;
+}
+.dthl{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; /* Webkit */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE 10  */
+
+    /* Currently not supported in Opera but will be soon */
+    -o-user-select: none;
+    user-select: none;  
+}

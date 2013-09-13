@@ -36,7 +36,7 @@
 ?>
 
 <div id="main" class="tabbable tabs-left" style="margin-bottom: 9px;">
-        <ul class="nav nav-tabs listDay affix1" >
+        <ul class="nav nav-tabs listDay affix1 dthl" >
             <li class="hide"><a href="#lists" data-toggle="tab" date="lists"><?php echo __d('tasks', 'Lists'); ?></a></li>
             <li class="hide"><a href="#list" data-toggle="tab" date="list"><?php echo __d('tasks', 'List'); ?></a></li>
             <li class="addDay">
@@ -111,7 +111,7 @@
             <?php endif;?>
           <?php endforeach; ?>
         </ul>
-        <div class="tab-content" >
+        <div class="tab-content " >
           <div class="tab-pane" id="planned">
           <div class="row">
           <div class="listTask">
@@ -137,7 +137,7 @@
                 <span class="completed badge badge-success"><?php echo $result['data']['arrAllFutureCount']['done']; ?></span>
             </div>
             <div class="clear"></div>
-            <ul class="sortable connectedSortable ui-helper-reset filtered" date="planned" data-refresh="1">
+            <ul class="sortable connectedSortable ui-helper-reset filtered dthl" date="planned" data-refresh="1">
                 <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])):?>
                     <?php foreach($result['data']['arrAllFuture'] as $item):?>
                         <?php echo $this->Task->taskLi($item);?>
@@ -155,7 +155,7 @@
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3 class="head-list-info"><?php echo __d('tasks', 'Просроченные задачи'); ?></h3>
                   </div>
-                    <ul class="sortable connectedSortable ui-helper-reset " date="expired" data-refresh="1">
+                    <ul class="sortable connectedSortable ui-helper-reset dthl" date="expired" data-refresh="1">
                     </ul>
                     <?php echo $this->element('empty_lists', array('type' => 'overdue', 'hide' => true));?>
                    </div>
@@ -181,7 +181,7 @@
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3 class="head-list-info"><?php echo __d('tasks', 'Длительные задачи'); ?></h3>
                   </div>
-                    <ul class="sortable connectedSortable ui-helper-reset " date="continued" data-refresh="1">
+                    <ul class="sortable connectedSortable ui-helper-reset dthl" date="continued" data-refresh="1">
                     </ul>
                     <?php echo $this->element('empty_lists', array('type' => 'continued', 'hide' => true));?>
                   </div>
@@ -200,7 +200,7 @@
                     
                     --></h3>
                   </div>
-                    <ul class="sortable connectedSortable ui-helper-reset " date="deleted" data-refresh="1">
+                    <ul class="sortable connectedSortable ui-helper-reset dthl" date="deleted" data-refresh="1">
                     </ul>
                     <?php echo $this->element('empty_lists', array('type' => 'deleted', 'hide' => true));?>
                   </div>
@@ -213,7 +213,7 @@
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
                     <h3 class="head-list-info"><?php echo __d('tasks', 'Будущие задачи'); ?></h3>
                   </div>
-                        <ul class="sortable connectedSortable ui-helper-reset " date="future" data-refresh="1">
+                        <ul class="sortable connectedSortable ui-helper-reset dthl" date="future" data-refresh="1">
                         </ul>
                         <?php echo $this->element('empty_lists', array('type' => 'future', 'hide' => true));?>
                     </div>
@@ -236,6 +236,12 @@
                         <ul class="lists-ul" date="lists">
                         </ul>
                         <div class="clear"></div>
+                        <div class="lists-archive">
+                            <span class="lists-title">
+                                <?php echo __d('tasks', 'Архив'); ?>
+                            </span>
+                            <ul></ul>
+                        </div>
                         <?php echo $this->element('empty_lists', array('type' => 'lists', 'hide' => true));?>
                     </div>
                 </div>
@@ -270,7 +276,7 @@
                             <a href="" data="commentTag"><?php echo __d('tasks', 'Комментарий'); ?></a>
                         </div>
                         <div class="clear"></div>
-                        <ul class="sortable connectedSortable ui-helper-reset filtered" date="list" data-refresh="1">
+                        <ul class="sortable connectedSortable ui-helper-reset filtered dthl" date="list" data-refresh="1">
                         </ul>
                         <?php echo $this->element('empty_lists', array('type' => 'future', 'hide' => true));?>
                     </div>
@@ -323,7 +329,7 @@
                             </label>
                         </div>
                         <div class="clear"></div>
-                        <ul id="sortable-<?php echo $k; ?>" class="sortable connectedSortable ui-helper-reset filtered" date="<?php echo $k; ?>" data-refresh="0">
+                        <ul id="sortable-<?php echo $k; ?>" class="sortable connectedSortable ui-helper-reset filtered dthl" date="<?php echo $k; ?>" data-refresh="0">
                             <?php foreach($v as $item):?>
                                 <?php echo $this->Task->taskLi($item);?>
                             <?php endforeach;?>
@@ -392,7 +398,7 @@
 				</label>
 			</div>
 			<div class="clear"></div>
-			<ul class="sortable connectedSortable ui-helper-reset filtered" date="<%= date %>" data-refresh="0"> 
+			<ul class="sortable connectedSortable ui-helper-reset filtered dthl" date="<%= date %>" data-refresh="0"> 
 				<p class="loadContent" align=center>
                     <?php echo $this->Html->image("ajax-loader-content.". Configure::read('App.version') .".gif"); ?>
                 </p>
