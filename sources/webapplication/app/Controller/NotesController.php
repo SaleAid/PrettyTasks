@@ -46,7 +46,7 @@ class NotesController extends AppController {
                 $count = Configure::read('Notes.Lists.limit');
             
             $page = !empty($this->request->data['page']) ? (int)$this->request->data['page'] : 0;
-        	if($page > 1){
+        	if($page > -1){
         	    $notes = $this->Note->getNotes($this->Auth->user('id'), $count, $page);
             	foreach ($notes as $note) {
             	    $notesObj[] = new NoteObj($note);
@@ -61,7 +61,7 @@ class NotesController extends AppController {
         	   $result['message'] = new MessageObj('error', __d('notes', 'Ошибка при передаче номера страницы'));
         	}
         }   
-         $result['action'] = 'getNotes'; 
+        $result['action'] = 'getNotes'; 
         $this->set('result', $result);
         $this->set('_serialize', 'result');
     
