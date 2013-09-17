@@ -154,7 +154,7 @@ class AppController extends Controller {
         $this->_setLanguage();
         $this->__setTimeZone();
         if ($this->isMobileVersion()) {
-            $this->_prepareMobileVersion();
+            //$this->_prepareMobileVersion();
         }
         
         $this->Seo->title = Configure::read('Site.title');

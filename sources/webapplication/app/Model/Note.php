@@ -220,7 +220,7 @@ class Note extends AppModel {
      * (non-PHPdoc)
      * @see Model::beforeSave()
      */
-    public function beforeSave() {
+    public function beforeSave($options = array()) {
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
         if (isset($this->data[$this->alias]['title'])) {
             $this->_checkTags('title');

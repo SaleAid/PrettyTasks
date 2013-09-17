@@ -71,7 +71,11 @@ class AccountsController extends AppController {
             $this->redirect($this->Auth->logout());
         } else {
             if ($this->request->is('post')) {
-                $this->log('Wrong login', LOG_ERROR);//TODO add login to log data
+                $this->log('Wrong login', LOG_ERROR);
+                //add login to log data
+                $accout = $this->request->data['Account'];
+                unset($accout['password']);
+                $this->log($accout, LOG_ERROR);
                 $this->Session->setFlash($message, 'alert', array(
                     'class' => 'alert-error'
                 ));
@@ -201,7 +205,7 @@ class AccountsController extends AppController {
                     );
                     $this->Account->User->create();
                     $user = $this->Account->User->save($data);
-                    $this->Task->createTasksForNewUser($user['User']['id'], Configure::read('Config.language'));
+                    //$this->Task->createTasksForNewUser($user['User']['id'], Configure::read('Config.language'));
                     $newAccount = end($newAccounts);
                     array_pop($newAccounts);
                     if($user){

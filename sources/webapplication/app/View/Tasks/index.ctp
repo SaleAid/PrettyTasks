@@ -157,6 +157,9 @@
                   </div>
                     <ul class="sortable connectedSortable ui-helper-reset dthl" date="expired" data-refresh="1">
                     </ul>
+                    <div class="see-more">
+                        <button class="btn btn-large btn-block btn-see-more"><?php echo __d('notes', 'Далее...'); ?></button>
+                    </div>
                     <?php echo $this->element('empty_lists', array('type' => 'overdue', 'hide' => true));?>
                    </div>
               </div>
@@ -170,6 +173,9 @@
                   </div>
                     <ul class=" ui-helper-reset " date="completed" data-refresh="1">
                     </ul>
+                    <div class="see-more">
+                        <button class="btn btn-large btn-block btn-see-more"><?php echo __d('notes', 'Далее...'); ?></button>
+                    </div>
                     <?php echo $this->element('empty_lists', array('type' => 'completed', 'hide' => true));?>
                   </div>
                 </div>
@@ -183,6 +189,9 @@
                   </div>
                     <ul class="sortable connectedSortable ui-helper-reset dthl" date="continued" data-refresh="1">
                     </ul>
+                    <div class="see-more">
+                        <button class="btn btn-large btn-block btn-see-more"><?php echo __d('notes', 'Далее...'); ?></button>
+                    </div>
                     <?php echo $this->element('empty_lists', array('type' => 'continued', 'hide' => true));?>
                   </div>
                 </div>
@@ -202,6 +211,9 @@
                   </div>
                     <ul class="sortable connectedSortable ui-helper-reset dthl" date="deleted" data-refresh="1">
                     </ul>
+                    <div class="see-more">
+                        <button class="btn btn-large btn-block btn-see-more"><?php echo __d('notes', 'Далее...'); ?></button>
+                    </div>
                     <?php echo $this->element('empty_lists', array('type' => 'deleted', 'hide' => true));?>
                   </div>
                 </div>
@@ -215,6 +227,9 @@
                   </div>
                         <ul class="sortable connectedSortable ui-helper-reset dthl" date="future" data-refresh="1">
                         </ul>
+                        <div class="see-more">
+                            <button class="btn btn-large btn-block btn-see-more"><?php echo __d('notes', 'Далее...'); ?></button>
+                        </div>
                         <?php echo $this->element('empty_lists', array('type' => 'future', 'hide' => true));?>
                     </div>
                 </div>
@@ -236,12 +251,18 @@
                         <ul class="lists-ul" date="lists">
                         </ul>
                         <div class="clear"></div>
-                        <div class="lists-archive">
-                            <span class="lists-title">
-                                <?php echo __d('tasks', 'Архив'); ?>
-                            </span>
-                            <ul></ul>
-                        </div>
+                            <button type="button" class="btn btn-link pull-right" data-toggle="collapse" data-target="#archive">
+                              <?php echo __d('tasks', 'Архив'); ?>
+                            </button>
+                            <div id="archive" class="collapse out clear">
+                                <div class="lists-archive">
+                                    <span class="lists-title">
+                                        <?php echo __d('tasks', 'Архив'); ?>
+                                    </span>
+                                    <ul class="lists-archive-ul" date="lists-archive"></ul>
+                                </div>
+                            </div>
+                        
                         <?php echo $this->element('empty_lists', array('type' => 'lists', 'hide' => true));?>
                     </div>
                 </div>
@@ -274,6 +295,9 @@
                         </div>
                         <div class="days">
                             <a href="" data="commentTag"><?php echo __d('tasks', 'Комментарий'); ?></a>
+                            <label class="checkbox to-archive" >
+                                <input type="checkbox" date="" /> <?php echo __d('tasks', 'Архив'); ?>
+                            </label>
                         </div>
                         <div class="clear"></div>
                         <ul class="sortable connectedSortable ui-helper-reset filtered dthl" date="list" data-refresh="1">
@@ -325,7 +349,7 @@
                         <div class="days">
                             <a href="" data="commentDay"><?php echo __d('tasks', 'Комментарий'); ?></a>
                             <label class="checkbox ratingDay" >
-                                <input type="checkbox" <?php if( isset($result['data']['arrDaysRating'][$k]) and $result['data']['arrDaysRating'][$k][0]['Day']['rating']):?> checked <?php endif; ?> date="<?php echo $k; ?>"/> <?php echo __d('tasks', 'Удачный день'); ?>
+                                <input type="checkbox" <?php if( isset($result['data']['arrDaysRating'][$k]) and $result['data']['arrDaysRating'][$k]->rating):?> checked <?php endif; ?> date="<?php echo $k; ?>"/> <?php echo __d('tasks', 'Удачный день'); ?>
                             </label>
                         </div>
                         <div class="clear"></div>
@@ -418,7 +442,7 @@
 
 <script type="text/template" id="day_h3_label">
     <h3 class="day label label-info margin-bottom10" rel="tooltip" date="<%= date %>" title="<?php echo __d('tasks', 'Кликните для перехода на'); ?>&nbsp;<%= date %>">
-	   <span class="dayDate"><%= date %></span><span class="dash"> - </span><span class="<%= weekDayStyle %>"><%= weekDay %></span>
+	   <span class="dayDate"><%= title %></span><span class="dash"> - </span><span class="<%= weekDayStyle %>"><%= weekDay %></span>
     </h3>
 </script>
 

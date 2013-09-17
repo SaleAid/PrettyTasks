@@ -19,10 +19,12 @@ class ListObj {
     
     public $_explicitType = null;
 
-    public function __construct($type, $name, array $list, $hide = false) {
+    public function __construct($type, $name, array $list, $count = 50) {
         $this->list = $list;
         $this->type = $type;
         $this->name = $name;
-        $this->hide = (bool)$hide;
+        if(count($list) < $count){
+            $this->hide = true;
+        }
     }
 } 

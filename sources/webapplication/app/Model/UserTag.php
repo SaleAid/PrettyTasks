@@ -92,5 +92,25 @@ class UserTag extends AppModel {
    		$saveData['comment'] = $comment;
    		return $this->save($saveData);
    }
+   
+      /**
+	 * Set archive
+	 * 
+	 * @param string $user_id
+	 * @param string $tag_id
+     * @param string $status 0 | 1   
+	 * @return  
+	 */
+   public function setArchive($user_id, $tag_id, $status = 0){
+   		$this->contain();
+        $result = $this->findByUserIdAndTag_id($user_id, $tag_id);
+        if ($result) {
+            $this->set($result);
+        }
+   		$saveData['user_id'] = $user_id; 
+   		$saveData['tag_id'] = $tag_id;
+   		$saveData['archive'] = (bool)$status;
+   		return $this->save($saveData);
+   }
 
 }

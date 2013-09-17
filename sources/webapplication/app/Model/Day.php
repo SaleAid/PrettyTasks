@@ -149,9 +149,11 @@ class Day extends AppModel {
 				'fields' => $this->_dayFields
 		));
         
-        $data = array_map(function ($day) {
-            return new DayObj($day['Day']);
-        }, $result);
+        $data = array_reduce($result, function ($tmp, $day ) {
+            $tmp[$day['Day']['date']] = new DayObj($day['Day']);
+            return $tmp;
+        }, array());
+        
         return $data;
     }
 

@@ -208,7 +208,7 @@ jQuery(function( $ ) {
                     return -($(this).width() / 2);
                 }
             });
-          var heightNoteText = $(window).height()/2;
+          var heightNoteText = $(window).height()/2 - 25;
           if(heightNoteText < 200){
             heightNoteText = 200;
           }

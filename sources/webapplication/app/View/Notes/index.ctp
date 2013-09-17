@@ -51,7 +51,7 @@
                 <div class="clear">
                 </div>
                 <?php if(count($result) == Configure::read('Notes.Lists.limit')): ?>
-                <div class=" see-more ">
+                <div class="see-more">
                     <button class="btn btn-large btn-block btn-see-more"><?php echo __d('notes', 'Далее...'); ?></button>
                 </div>
                 <?php endif; ?>

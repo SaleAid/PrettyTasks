@@ -16,13 +16,15 @@ App::uses('TaskObj', 'Lib');
  */
 class OverdueList extends MainList {
     
+    private $_date;
     /**
      * 
      * @param unknown_type $userId
      */
-    public function __construct($userId) {
+    public function __construct($userId, $date) {
         parent::__construct($userId, 'overdue');
         $this->_model = ClassRegistry::init('Task');
+        $this->_date = $date;
     }
 
     /**
@@ -55,7 +57,8 @@ class OverdueList extends MainList {
                         $this->_model->alias . '.user_id' => $this->_userId,
                         $this->_model->alias . '.done' => 0,
                         $this->_model->alias . '.deleted' => 0,
-                        $this->_model->alias . '.date <' => date('Y-m-d')
+                        //$this->_model->alias . '.date <' => date('Y-m-d')
+                        $this->_model->alias . '.date <' => $this->_date
                 )
                 ,
                 'contain' => array(

@@ -128,7 +128,8 @@ div.well{
    margin-right: 10px;
    
 }
-.ratingDay input[type="checkbox"] {
+.ratingDay input[type="checkbox"],
+.to-archive input[type="checkbox"] {
    margin-left: 0;
    margin-right: 5px;
    margin-top: 2px; 
@@ -402,6 +403,7 @@ div.well{
     list-style: none;
     float: left;
     margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 .tags-list{
@@ -530,4 +532,35 @@ div.well{
     /* Currently not supported in Opera but will be soon */
     -o-user-select: none;
     user-select: none;  
+}
+.see-more{
+    padding: 20px 0;
+
+}
+
+.btn-see-more{
+    background-image:none;
+}
+.to-archive{
+    display: inline-block;
+    margin-right: 10px;
+}
+.label-tag {
+    background-color: #5bc0de;
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 85%;
+    font-weight: bold;
+    line-height: 1;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+.lists-archive-ul li {
+list-style: none;
+float: left;
+margin-right: 5px;
+margin-bottom: 5px;
 }

@@ -23,7 +23,6 @@ class NotesController extends AppController {
     
     public function index() {
         $this->response->disableCache();
-        //$this->set('csrfToken', $this->generateCsrfToken());
         $result = $notes = array();
     	$user_id = $this->Auth->user('id');
     	$notes = $this->Note->getNotes($user_id, Configure::read('Notes.Lists.limit'), 1);
@@ -52,11 +51,7 @@ class NotesController extends AppController {
             	    $notesObj[] = new NoteObj($note);
                 }
                 $result['success'] = true;
-                $hide = false;
-                if(count($notesObj) < $count){
-                    $hide = true;
-                }
-                $result['data'] = new NotesListObj('NotesList', 'notes', $notesObj, $hide);   
+                $result['data'] = new NotesListObj('NotesList', 'notes', $notesObj, $count);   
         	}else{
         	   $result['message'] = new MessageObj('error', __d('notes', 'Ошибка при передаче номера страницы'));
         	}
