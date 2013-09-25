@@ -2166,14 +2166,18 @@ function initTab(element){
                 delete refreshDays[index];
                 userEvent('addDay',{date: tab_id, refresh: true});
             }
-            window.location.hash = 'day-'+tab_id;
+            
             if(tab_id == 'future'){
+                numPages['future'] = 1;
                 $('.nav.top li').removeClass('active');
                 $('.agenda').addClass('active');
+                $('.daysButton').find('li').removeClass('active');
+                $('.daysButton').find('li').find('a[date="future"]').parent().addClass('active');
             }else{
                 $('.nav.top li').removeClass('active');
                 $('.tasks').addClass('active');    
             }
+            window.location.hash = 'day-'+tab_id;
         }
     	setFiler(tab_id);
     });
@@ -2289,7 +2293,7 @@ function initSeeMore(element){
             if(!numPages[type]){
                 numPages[type] = 2;
             }
-            console.log(numPages[type]);
+            //console.log(numPages[type]);
             userEvent('getTasksByType', {type: type});
         }
     });
