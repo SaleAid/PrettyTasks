@@ -406,13 +406,15 @@ div.jGrowl.custom {
 }
 .tags{
     color:  #ADADAD;
-    margin-bottom: 2px;
     border-bottom: 1px dashed #ADADAD;
     font-size: 12px;
     font-style: italic;
+    font-weight: normal;
+    vertical-align: top!important;
 }
-
 
 .tags:hover{
     cursor: pointer;
+    color: #0088cc;
+    border-bottom: 1px dashed #0088cc;
 }
