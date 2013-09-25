@@ -248,6 +248,7 @@ class AccountsController extends AppController {
     }
     
     public function logout() {
+        $this->Session->destroy();
         $this->AutoLogin->delete();
         $this->redirect($this->Auth->logout());
     }

@@ -139,8 +139,10 @@ class AppController extends Controller {
     }
     
     protected function generateCsrfToken(){
-        $this->Session->delete('csrf_token');
-        $this->Session->write('csrf_token', base64_encode( mt_rand() . time() . mt_rand() . 'key' ));
+        //$this->Session->delete('csrf_token');
+        if(!$this->Session->check('csrf_token')){
+            $this->Session->write('csrf_token', base64_encode( mt_rand() . time() . mt_rand() . 'key' ));    
+        }
         return $this->_getCsrfToken();
     }
     
