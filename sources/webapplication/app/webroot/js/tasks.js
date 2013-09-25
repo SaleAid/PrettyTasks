@@ -2162,13 +2162,7 @@ function initTab(element){
             //window.location.hash= 'list';
         }else{
             var index = _.indexOf(refreshDays, tab_id);
-            if( index > -1){
-                delete refreshDays[index];
-                userEvent('addDay',{date: tab_id, refresh: true});
-            }
-            
             if(tab_id == 'future'){
-                numPages['future'] = 1;
                 $('.nav.top li').removeClass('active');
                 $('.agenda').addClass('active');
                 $('.daysButton').find('li').removeClass('active');
@@ -2177,6 +2171,12 @@ function initTab(element){
                 $('.nav.top li').removeClass('active');
                 $('.tasks').addClass('active');    
             }
+            
+            if( index > -1){
+                delete refreshDays[index];
+                userEvent('addDay',{date: tab_id, refresh: true});
+            }
+            
             window.location.hash = 'day-'+tab_id;
         }
     	setFiler(tab_id);
@@ -2381,6 +2381,7 @@ $(function(){
                     hash = $.datepicker.formatDate('yy-mm-dd',$.datepicker.parseDate('yy-mm-dd', hash));
                     userEvent('addDay',{date: hash});
                 }else if( $.inArray(hash, ["expired", "completed", "deleted", "continued", "future"]) != -1 ){
+                    numPages['future'] = 1;
                     userEvent('getTasksByType', {type: hash});
                     $('#main a[href="#'+hash+'"]').tab('show');
                 }else if(hash == "planned"){
