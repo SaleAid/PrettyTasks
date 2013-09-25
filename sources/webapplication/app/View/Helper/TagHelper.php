@@ -7,7 +7,7 @@ class TagHelper extends AppHelper {
             foreach( $tags as $tag ){
                 if (!empty($tag)){
                     $tag = h($tag);
-                    $title = str_replace('#'.$tag, '<span class="tags label label-important" data-tag="'.$tag.'">&#x23;'.$tag.'</span>', $title);
+                    $title = str_replace('#'.$tag, '<span class="tags" data-tag="'.$tag.'">&#x23;'.$tag.'</span>', $title);
                 }
             }
         }

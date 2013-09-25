@@ -51,7 +51,7 @@ class ManyDateList extends MainList {
      *
      * @return unknown multitype:
      */
-    public function getItems() {
+    public function getItems($count = 50, $page = 1) {
         $this->_model->bindModel(array(
                 'hasOne' => array(
                         'Ordered' => array(
@@ -76,7 +76,9 @@ class ManyDateList extends MainList {
                         'Ordered',
                         'Tag'
                 ),
-                'fields' => $this->_model->getFields()
+                'fields' => $this->_model->getFields(),
+                'limit' => $count,
+                'page' => $page
         ));
         $data = array_map(function ($task) {
             return new TaskObj($task['Task']);

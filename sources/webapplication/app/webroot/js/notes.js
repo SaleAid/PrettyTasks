@@ -129,7 +129,7 @@ jQuery(function( $ ) {
                 $.each(tags, function(index, value) {
                     if( value ){
                         value = that.convertToHtml(value);
-                        title = title.split('#'+value).join('<span class="tags label label-important" data-tag="'+value+'">&#x23;'+value+'</span>');    
+                        title = title.split('#'+value).join('<span class="tags" data-tag="'+value+'">&#x23;'+value+'</span>');    
                     }
                 });
             }
@@ -208,7 +208,7 @@ jQuery(function( $ ) {
                     return -($(this).width() / 2);
                 }
             });
-          var heightNoteText = $(window).height()/2;
+          var heightNoteText = $(window).height()/2 - 25;
           if(heightNoteText < 200){
             heightNoteText = 200;
           }

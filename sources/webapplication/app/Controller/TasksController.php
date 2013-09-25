@@ -92,8 +92,9 @@ class TasksController extends AppController {
         $this->response->disableCache();
         $result = $this->_prepareResponse();
         
-        $beginDate = CakeTime::format('Y-m-d', '-1 days');
-        $endDate = CakeTime::format('Y-m-d', '+6 days');
+        //$beginDate = CakeTime::format('Y-m-d', '-1 days');
+        $beginDate = CakeTime::format('Y-m-d', '-1 days', false, $this->_userTimeZone());
+        $endDate = CakeTime::format('Y-m-d', '+6 days', false, $this->_userTimeZone());
         
         $dayConfig = $this->Task->User->Setting->getValue('days', $this->Auth->user('id'));
         if(!is_array($dayConfig)){
@@ -137,7 +138,6 @@ class TasksController extends AppController {
                 
             }
         }
-        
         $this->set('result', $result);
         $this->set('_serialize', array(
             'result'
@@ -147,49 +147,58 @@ class TasksController extends AppController {
     
     public function getTasksByType() {
         $result = $this->_prepareResponse();
-        if (! $this->_isSetRequestData('type')) {
+        if (! $this->_isSetRequestData(array('type'))) {
             $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
+            $page = isset($this->request->data['page']) ? $this->request->data['page'] : 1;
+            if (!is_numeric($page) || intval($page) < 1) {
+                 $page = 1;
+            }
+            $count = Configure::read("Tasks.Lists." .ucfirst($this->request->data['type']) .".limit");
+            if($count < 1){
+                $count = Configure::read("Tasks.Lists.Default.limit");
+            }
             $result['success'] = true;
             $resultTasks = array();
             switch ($this->request->data['type']) {
                 case 'completed' :
                     {
                         $CompletedList = new CompletedList($this->Auth->user('id'));
-                        $result['data'] = new TasksListObj('defined', 'completed', $CompletedList->getItems());
+                        $result['data'] = new TasksListObj('defined', 'completed', $CompletedList->getItems($count, $page), $count);
                         break;
                     }
                 case 'expired' :
                     {
-                        $OverdueList = new OverdueList($this->Auth->user('id'));
-                        $result['data'] = new TasksListObj('defined', 'expired', $OverdueList->getItems());
+                        $date = CakeTime::format('Y-m-d', time(), false, $this->_userTimeZone());
+                        $OverdueList = new OverdueList($this->Auth->user('id'), $date);
+                        $result['data'] = new TasksListObj('defined', 'expired', $OverdueList->getItems($count, $page), $count);
                         break;
                     }
                 case 'future' :
                     {
-                        $beginDate = CakeTime::format('Y-m-d', time());
-                        $endDate = CakeTime::format('Y-m-d', '+7 days');
+                        $beginDate = CakeTime::format('Y-m-d', time(), false, $this->_userTimeZone());
+                        $endDate = CakeTime::format('Y-m-d', '+7 days', false, $this->_userTimeZone());
                         $arrayDates = ManyDateList::arrayDates($beginDate, $endDate);
                         $ManyDateList = new ManyDateList($this->Auth->user('id'), $arrayDates);
-                        $result['data'] = new TasksListObj('defined', 'future', $ManyDateList->getItems());
+                        $result['data'] = new TasksListObj('defined', 'future', $ManyDateList->getItems($count, $page), $count);
                         break;
                     }
                 case 'deleted' :
                     {
                         $DeletedList = new DeletedList($this->Auth->user('id'));
-                        $result['data'] = new TasksListObj('defined', 'deleted', $DeletedList->getItems());
+                        $result['data'] = new TasksListObj('defined', 'deleted', $DeletedList->getItems($count, $page), $count);
                         break;
                     }
                 case 'continued' :
                     {
                         $ContinuedList = new ContinuedList($this->Auth->user('id'));
-                        $result['data'] = new TasksListObj('defined', 'continued', $ContinuedList->getItems());
+                        $result['data'] = new TasksListObj('defined', 'continued', $ContinuedList->getItems($count, $page), $count);
                         break;
                     }
                 case 'planned' :
                 	{
                         $PlannedList = new PlannedList($this->Auth->user('id'));
-                        $result['data'] = new TasksListObj('defined', 'planned', $PlannedList->getItems());
+                        $result['data'] = new TasksListObj('defined', 'planned', $PlannedList->getItems($count, $page), $count);
                 		break;
                 	}
                 default :
@@ -257,7 +266,9 @@ class TasksController extends AppController {
                 $task = $this->Task->createTask($this->Auth->user('id'), $this->request->data['title'], $this->request->data['date'])->saveTask();
             } else {
                 $task = null;
-                if ($this->Task->saveAll($this->request->data, array('fieldList' => 'title', 'validate' => 'only'))) {
+                $this->Task->set($this->request->data);
+                if ($this->Task->validates(array('fieldList' => array('title')))) {
+                //if ($this->Task->saveAll($this->request->data, array('fieldList' => 'title', 'validate' => 'only'))) {
                     $date = empty($this->request->data['date']) ? '' : ' #'.$this->request->data['date'];
                     $task = $this->Task->createTask($this->Auth->user('id'), $this->request->data['title'] . $date, null, null, null, 0, 1)->saveTask();
                 }    

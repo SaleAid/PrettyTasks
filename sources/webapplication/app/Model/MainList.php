@@ -7,6 +7,7 @@
  * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
  */
 App::uses('Ordered', 'Model');
+App::uses('CakeTime', 'Utility');
 
 /**
  * TODO Description

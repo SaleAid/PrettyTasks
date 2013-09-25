@@ -437,7 +437,7 @@ class Task extends AppModel {
      * (non-PHPdoc)
      * @see Model::beforeSave()
      */
-    public function beforeSave() {
+    public function beforeSave($options = array()) {
         $this->data[$this->alias]['modified'] = date("Y-m-d H:i:s");
         //check and add tags
         if( $this->_isTitleChanged() || $this->_isRecovered() || $this->updateTask ){

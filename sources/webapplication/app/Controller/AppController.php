@@ -154,9 +154,11 @@ class AppController extends Controller {
     public function beforeFilter() {
         $this->_setLanguage();
         $this->__setTimeZone();
+
         //if ($this->isMobileVersion()) {
         //    $this->_prepareMobileVersion();
         //}
+
         
         $this->Seo->title = Configure::read('Site.title');
         $this->Seo->description = Configure::read('Site.description');

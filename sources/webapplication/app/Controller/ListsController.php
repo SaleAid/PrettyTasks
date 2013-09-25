@@ -75,13 +75,14 @@ class ListsController extends AppController {
                                     )
                                 ),
                                 'conditions' => array('UserTag.user_id =' => $this->Auth->user('id')),
-                                )
+                            )
                           );
         
         $data = array_map( 
             function($item) { 
                 return array(
                             'name' => $item['Tag']['name'],
+                            'archive' => (int)$item['UserTag']['archive']
                             //'count' => $item['UserTag']['task_occurrence']
                         ); 
             }, 
@@ -154,6 +155,38 @@ class ListsController extends AppController {
         }
     }
     
+    public function setArchive(){
+    	$result = $this->_prepareResponse();
+        $expectedData = array(
+            'tag', 'status'
+        );
+        if (! $this->_isSetRequestData($expectedData) or empty($this->request->data['tag'])) {
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
+        } else {
+        	$options['conditions'] = array('Tag.name' => $this->request->data['tag']);
+        	$options['fields'] = array('id', 'name');
+        	$options['contain'] = array();
+        	$tag = $this->UserTag->Tag->find('first', $options);
+        	if( !isset($tag['Tag']['id']) ){
+        		$this->UserTag->Tag->create();
+        		$tag = $this->UserTag->Tag->add($this->request->data['tag']);
+        	}
+	    	$data = $this->UserTag->setArchive($this->Auth->user('id'), $tag['Tag']['id'], $this->request->data['status']);
+            if($data){
+                $result['data']['tag'] = $tag['Tag']['name'];
+                $result['success'] = true;
+            } else {
+                $result['message'] = new MessageObj('error', 
+                                                    __d('users_tags', 'Ошибка при сохранении статуса'),
+                                                    $this->UserTag->validationErrors
+                                                    );
+            }
+	    	$result['action'] = 'setArchive';
+	        $this->set('result', $result);
+	        $this->set('_serialize', 'result');
+        }
+    }
+    
     public function getTasksByTag(){
         $result = $this->_prepareResponse();
         $expectedData = array(
@@ -163,23 +196,24 @@ class ListsController extends AppController {
         if (! $this->_isSetRequestData($expectedData) or !strlen($tag)) {
             $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
-            $result = $this->UserTag->Tag->find('first', 
-                        array(
-                            'contain' => array(),
-                            'conditions' => array(
-                                 'Tag.name' => $tag,
-                             ),
-                            'fields' => array('id')
-                        )
-                    );
+            $data = $this->UserTag->find('first', 
+                array(
+                    'contain' => array('Tag'),
+                    'conditions' => array(
+                         'Tag.name' => $tag,
+                     ),
+                    'fields' => array('Tag.id', 'UserTag.archive')
+                )
+            );
             $tasks = array();
-            if($result){
-                $TagList = new TagList($this->Auth->user('id'), $result['Tag']['id'], 'Task');
+            if($data){
+                $TagList = new TagList($this->Auth->user('id'), $data['Tag']['id'], 'Task');
                 $tasks = $TagList->getItems();    
             }
             $result['data']['tasks'] = $tasks;
             $result['success'] = true;
             $result['data']['tag'] = $tag;
+            $result['data']['archive'] = isset($data['UserTag']['archive']) ? (int)$data['UserTag']['archive'] : 0;
         }
         $result['action'] = 'getListByTag';
         $this->set('result', $result);

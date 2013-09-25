@@ -66,14 +66,7 @@
     font-size: 15px;
 } 
 
-.tags{
-    margin-bottom: 2px;
-}
 
-
-.tags:hover{
-    cursor: pointer;
-}
 
 
 .s4{
@@ -135,7 +128,8 @@ div.well{
    margin-right: 10px;
    
 }
-.ratingDay input[type="checkbox"] {
+.ratingDay input[type="checkbox"],
+.to-archive input[type="checkbox"] {
    margin-left: 0;
    margin-right: 5px;
    margin-top: 2px; 
@@ -409,6 +403,7 @@ div.well{
     list-style: none;
     float: left;
     margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 .tags-list{
@@ -503,3 +498,69 @@ div.well{
     border-radius: 3px;
 }
 .ui-datepicker, .ui-timepicker-container{ z-index: 9999 !important;}
+
+.lists-archive{
+    position: relative;
+    margin: 15px 0;
+    padding: 39px 19px 14px;
+    background-color: white;
+    border: 1px solid #DDD;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.lists-title{
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: whiteSmoke;
+    border: 1px solid #DDD;
+    
+    -webkit-border-radius: 4px 0 4px 0;
+    -moz-border-radius: 4px 0 4px 0;
+    border-radius: 4px 0 4px 0;
+}
+.dthl{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; /* Webkit */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE 10  */
+
+    /* Currently not supported in Opera but will be soon */
+    -o-user-select: none;
+    user-select: none;  
+}
+.see-more{
+    padding: 20px 0;
+
+}
+
+.btn-see-more{
+    background-image:none;
+}
+.to-archive{
+    display: inline-block;
+    margin-right: 10px;
+}
+.label-tag {
+    background-color: #5bc0de;
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 85%;
+    font-weight: bold;
+    line-height: 1;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+.lists-archive-ul li {
+list-style: none;
+float: left;
+margin-right: 5px;
+margin-bottom: 5px;
+}

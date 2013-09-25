@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-09-05 20:52+0000\n"
+"POT-Creation-Date: 2013-09-24 15:51+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,15 +14,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/ListsController.php:30;105;130;164
-#: Controller/NotesController.php:41;73;93;116;137
-#: Controller/TasksController.php:52;151;217;252;291;323;372;402;439;465;502;538;561;582
+#: Controller/ListsController.php:30;106;131;164;197
+#: Controller/NotesController.php:40;68;88;111;132
+#: Controller/TasksController.php:52;151;226;261;302;334;383;413;450;476;513;549;572;593
 #: Plugin/ApiV1/Controller/TasksController.php:70;80;128;177;230
 #: Plugin/AppVK/Controller/TasksController.php:89;174;216;255;298;345;388;441;479;527;566;597;629
 msgid "Ошибка при передаче данных"
 msgstr ""
 
-#: Controller/NotesController.php:80;82
+#: Controller/NotesController.php:75;77
 msgid "Заметка успешно создана"
 msgstr ""
 
@@ -31,127 +31,127 @@ msgstr ""
 msgid "Задача  успешно изменена"
 msgstr ""
 
-#: Controller/TasksController.php:80;357;480;527
+#: Controller/TasksController.php:80;368;491;538
 #: Plugin/ApiV1/Controller/TasksController.php:166;218;244
 #: Plugin/AppVK/Controller/TasksController.php:324;501;550
 msgid "Ошибка, Вы не можете делать изменения в этой задачи"
 msgstr ""
 
-#: Controller/TasksController.php:198
+#: Controller/TasksController.php:207
 #: Plugin/ApiV1/Controller/TasksController.php:61
 #: Plugin/AppVK/Controller/TasksController.php:122
 msgid "Ошибка, некорректный тип"
 msgstr ""
 
-#: Controller/TasksController.php:229
+#: Controller/TasksController.php:238
 msgid "Задача успешно изменена"
 msgstr ""
 
-#: Controller/TasksController.php:233;388;416;426
+#: Controller/TasksController.php:242;399;427;437
 #: Plugin/ApiV1/Controller/TasksController.php:239
 #: Plugin/AppVK/Controller/TasksController.php:195;369;407;423
 msgid "Ошибка, Задача  не изменена"
 msgstr ""
 
-#: Controller/TasksController.php:271
+#: Controller/TasksController.php:282
 #: Plugin/AppVK/Controller/TasksController.php:229
 msgid "Задача успешно создана"
 msgstr ""
 
-#: Controller/TasksController.php:274
+#: Controller/TasksController.php:285
 #: Plugin/AppVK/Controller/TasksController.php:234
 msgid "Задача  не создана"
 msgstr ""
 
-#: Controller/TasksController.php:299
+#: Controller/TasksController.php:310
 #: Plugin/AppVK/Controller/TasksController.php:266
 msgid "Задача успешно склонирована"
 msgstr ""
 
-#: Controller/TasksController.php:302
+#: Controller/TasksController.php:313
 #: Plugin/AppVK/Controller/TasksController.php:271
 msgid "Задача  не склонирована"
 msgstr ""
 
-#: Controller/TasksController.php:307
+#: Controller/TasksController.php:318
 #: Plugin/AppVK/Controller/TasksController.php:278
 msgid "Задача не существует"
 msgstr ""
 
-#: Controller/TasksController.php:349
+#: Controller/TasksController.php:360
 #: Plugin/AppVK/Controller/TasksController.php:307
 msgid "Задача успешно перемещена"
 msgstr ""
 
-#: Controller/TasksController.php:351
+#: Controller/TasksController.php:362
 #: Plugin/AppVK/Controller/TasksController.php:312
 msgid "Задача не перемещена"
 msgstr ""
 
-#: Controller/TasksController.php:354
+#: Controller/TasksController.php:365
 msgid "Ошибка, некорректный список"
 msgstr ""
 
-#: Controller/TasksController.php:381
+#: Controller/TasksController.php:392
 #: Plugin/AppVK/Controller/TasksController.php:357
 msgid "Задача успешно выполнена"
 msgstr ""
 
-#: Controller/TasksController.php:383
+#: Controller/TasksController.php:394
 #: Plugin/AppVK/Controller/TasksController.php:362
 msgid "Задача открыта"
 msgstr ""
 
-#: Controller/TasksController.php:412
+#: Controller/TasksController.php:423
 #: Plugin/AppVK/Controller/TasksController.php:401
 msgid "Задача успешно перемещена в список удаленных задач"
 msgstr ""
 
-#: Controller/TasksController.php:424
+#: Controller/TasksController.php:435
 #: Plugin/AppVK/Controller/TasksController.php:418
 msgid "Задача успешно удалена"
 msgstr ""
 
-#: Controller/TasksController.php:447
+#: Controller/TasksController.php:458
 #: Plugin/AppVK/Controller/TasksController.php:452
 msgid "Задачи успешно удалены"
 msgstr ""
 
-#: Controller/TasksController.php:449
+#: Controller/TasksController.php:460
 #: Plugin/AppVK/Controller/TasksController.php:457
 msgid "Задачи не удалены"
 msgstr ""
 
-#: Controller/TasksController.php:471
+#: Controller/TasksController.php:482
 #: Plugin/AppVK/Controller/TasksController.php:489
 msgid "Задача успешно перемещена (moveTo)"
 msgstr ""
 
-#: Controller/TasksController.php:475
+#: Controller/TasksController.php:486
 #: Plugin/AppVK/Controller/TasksController.php:494
 msgid "Задача  не перемещена (moveTo)"
 msgstr ""
 
-#: Controller/TasksController.php:518
+#: Controller/TasksController.php:529
 #: Plugin/AppVK/Controller/TasksController.php:538
 msgid "Задача успешно отредактировано"
 msgstr ""
 
-#: Controller/TasksController.php:522
+#: Controller/TasksController.php:533
 #: Plugin/AppVK/Controller/TasksController.php:544
 msgid "Задача не отредактировано"
 msgstr ""
 
-#: Controller/TasksController.php:565
+#: Controller/TasksController.php:576
 #: Plugin/AppVK/Controller/TasksController.php:604
 msgid "День успешно удален из списка"
 msgstr ""
 
-#: Controller/TasksController.php:567
+#: Controller/TasksController.php:578
 msgid "Ошибка при удалении"
 msgstr ""
 
-#: Controller/TasksController.php:590
+#: Controller/TasksController.php:601
 #: Plugin/AppVK/Controller/TasksController.php:640
 msgid "Переход на новый день. Перезагрузка страницы произойдет через 5 секунд"
 msgstr ""
@@ -301,32 +301,32 @@ msgid "Задачи на будущее"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:115;234;391
-#: View/Tasks/index.ctp:124;252;303;367
+#: View/Tasks/index.ctp:124;279;333;397
 msgid "+Добавить задание…"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:116;235;392
-#: View/Tasks/index.ctp:125;232;253;304;368
+#: View/Tasks/index.ctp:125;247;280;334;398
 msgid "Добавить"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:120;240;396
-#: View/Tasks/index.ctp:129;258;308;372
+#: View/Tasks/index.ctp:129;285;338;402
 msgid "Фильтр"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:121;241;397
-#: View/Tasks/index.ctp:130;259;309;373
+#: View/Tasks/index.ctp:130;286;339;403
 msgid "Все"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:124;244;402
-#: View/Tasks/index.ctp:133;262;312;378
+#: View/Tasks/index.ctp:133;289;342;408
 msgid "В Процессе"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:127;247;407
-#: View/Tasks/index.ctp:136;265;315;383
+#: View/Tasks/index.ctp:136;292;345;413
 msgid "Выполненные"
 msgstr ""
 
@@ -336,44 +336,44 @@ msgid "Просроченные задачи"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:170
-#: View/Tasks/index.ctp:169
+#: View/Tasks/index.ctp:172
 msgid "Завершенные задачи"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:184
-#: View/Tasks/index.ctp:196
+#: View/Tasks/index.ctp:205
 msgid "Удалить все"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:186
-#: View/Tasks/index.ctp:198
+#: View/Tasks/index.ctp:207
 msgid "Удаленные задачи"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:187
-#: View/Tasks/index.ctp:199
+#: View/Tasks/index.ctp:208
 msgid "Удалить окончательно"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:187
 #: View/Elements/js_global_config.ctp:13
-#: View/Tasks/index.ctp:199
+#: View/Tasks/index.ctp:208
 msgid "Are you sure you want to delete all tasks?"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:202
-#: View/Tasks/index.ctp:214
+#: View/Tasks/index.ctp:226
 msgid "Будущие задачи"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:252;313;358;413
 #: View/Elements/edit_task.ctp:30
-#: View/Tasks/index.ctp:270;320;389
+#: View/Tasks/index.ctp:297;350;419
 msgid "Комментарий"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:254;415
-#: View/Tasks/index.ctp:322;391
+#: View/Tasks/index.ctp:352;421
 msgid "Удачный день"
 msgstr ""
 
@@ -439,7 +439,7 @@ msgid "Сохранить"
 msgstr ""
 
 #: Plugin/AppVK/View/Tasks/index.ctp:431
-#: View/Tasks/index.ctp:414
+#: View/Tasks/index.ctp:444
 msgid "Кликните для перехода на"
 msgstr ""
 
@@ -583,7 +583,7 @@ msgstr ""
 msgid "Максимальное кол-во повторений"
 msgstr ""
 
-#: View/Tasks/index.ctp:40;248
+#: View/Tasks/index.ctp:40;275
 msgid "Lists"
 msgstr ""
 
@@ -595,16 +595,20 @@ msgstr ""
 msgid "Длительные"
 msgstr ""
 
-#: View/Tasks/index.ctp:182
+#: View/Tasks/index.ctp:188
 msgid "Длительные задачи"
 msgstr ""
 
-#: View/Tasks/index.ctp:227
+#: View/Tasks/index.ctp:242
 msgid "Списки"
 msgstr ""
 
-#: View/Tasks/index.ctp:231
+#: View/Tasks/index.ctp:246
 msgid "+Добавить список…"
+msgstr ""
+
+#: View/Tasks/index.ctp:255;260;299
+msgid "Архив"
 msgstr ""
 
 #: Model/Task.php:validation for field id;validation for field user_id;validation for field repeatid;validation for field day_id

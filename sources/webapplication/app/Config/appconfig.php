@@ -80,7 +80,12 @@
    Configure::write('Repeated.MaxCount', 360);
    
    //limits queries
+   Configure::write('Tasks.Lists.Default.limit', 15);
    Configure::write('Tasks.Lists.Expired.limit', 10);
+   Configure::write('Tasks.Lists.Continued.limit', 10);
+   Configure::write('Tasks.Lists.Deleted.limit', 10);
+   Configure::write('Tasks.Lists.Future.limit', 10);
+   Configure::write('Tasks.Lists.Completed.limit', 10);
    Configure::write('Tasks.Lists.Planned.limit', 10);
    
    Configure::write('Notes.Lists.limit', 20);

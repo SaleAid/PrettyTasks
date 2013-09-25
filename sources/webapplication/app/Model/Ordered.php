@@ -139,7 +139,7 @@ class Ordered extends AppModel {
      * (non-PHPdoc)
      * @see Model::beforeDelete()
      */
-    public function beforeDelete(){
+    public function beforeDelete($cascade = true){
         $this->__decrementPositionsOnLowerItems(
                                         $this->data[$this->alias]['order'], 
                                         $this->data[$this->alias]['model'],

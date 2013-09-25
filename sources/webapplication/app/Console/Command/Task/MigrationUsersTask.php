@@ -10,9 +10,8 @@ class MigrationUsersTask extends Shell {
     protected function moveUsersToAccounts(){
         $this->User->contain();
         $users = $this->User->find('all');
-        //pr($users);
         foreach($users as $user){
-           $account = array(
+             $account = array(
                             'master' => 1,
                             'provider' => 'local',
                             'login' => $user['User']['username'],

@@ -223,6 +223,9 @@ function userEvent(action, data){
         case 'setCommentDay':
             taskSetCommentDay(data.date, data.comment);
         break;
+        case 'setTagArchive':
+            taskTagArchive(data.tag, data.status);
+        break;
         case 'getCommentTag':
             taskGetCommentTag(data.tag);
         break;
@@ -286,6 +289,9 @@ function responseHandler(data){
         case 'setRatingDay':
             onRatingDay(data);
         break;
+        case 'setTagArchive':
+            onTagArchive(data);
+        break;
         case 'getCommentDay':
             onGetCommentDay(data);
         break;
@@ -339,7 +345,7 @@ function scrCreateList(data){
     $list = $('#lists');
     $list.find('.emptyList').addClass('hide');
     $listUl = $list.find('ul[date="lists"]');
-    $listUl.append('<li><span class="tags-list label label-info" data-tag="'+data.data.tag+'">&#x23;'+data.data.tag+'</span></li>');
+    $listUl.append('<li><span class="tags-list label-tag" data-tag="'+data.data.tag+'">&#x23;'+data.data.tag+'</span></li>');
 }
 
 //-------------------------------------
@@ -380,13 +386,19 @@ function srvGetLists(){
 function scrGetLists(data){
     $list = $('#lists');
     $listUl = $list.find('ul[date="lists"]');
+    $listArchUl = $list.find('ul[date="lists-archive"]');
     $listUl.empty();
+    $listArchUl.empty();
     if($.isEmptyObject(data)){
         $list.find('.emptyList').removeClass('hide');
         return;
     }
     $.each( data, function(index, value) {
-            $listUl.append('<li><span class="tags-list label label-info" data-tag="'+value.name+'">&#x23;'+value.name+'</span></li>');
+        if(!value.archive){
+            $listUl.append('<li><span class="tags-list label-tag" data-tag="'+value.name+'">&#x23;'+value.name+'</span></li>');    
+        }else{
+            $listArchUl.append('<li><span class="tags-list label-tag" data-tag="'+value.name+'">&#x23;'+value.name+'</span></li>');    
+        }
     });
 }
 
@@ -428,6 +440,13 @@ function scrGetListByTag(data){
     window.location.hash= 'list-'+data.tag;
     var alltasks = 0;
     var donetasks = 0;
+    var $archive = $('#list').find('.to-archive input');
+    $archive.attr('date', data.tag);
+    if(data.archive){
+       $archive.attr('checked', true); 
+    }else{
+        $archive.removeAttr('checked'); 
+    }
     if($.isEmptyObject(data.tasks)){
         $list.find('.emptyList ').removeClass('hide');
         return;
@@ -551,7 +570,11 @@ function taskGetTasksByType(type){
 }
 
 function srvGetTasksByType(type){
-    superAjax('/tasks/getTasksByType.json',{type: type});
+    var page = numPages[type];
+    if(!numPages[type]){
+        page = 1;
+    }
+    superAjax('/tasks/getTasksByType.json',{type: type, page: page});
 }
 
 function scrGetTasksByType(data){
@@ -559,19 +582,19 @@ function scrGetTasksByType(data){
      var list = data.data.list;
      switch(type){
         case 'future':
-            futureTasks(list);
+            futureTasks(list, data.data.hide);
         break;
         case 'expired':
-            expiredTasks(list);
+            expiredTasks(list, data.data.hide);
         break;
         case 'completed':
-            completedTasks(list);
+            completedTasks(list, data.data.hide);
         break;           
         case 'deleted':
-            deletedTasks(list);
+            deletedTasks(list, data.data.hide);
         break;
         case 'continued':
-            continuedTasks(list);
+            continuedTasks(list, data.data.hide);
         break;
      }
 }
@@ -630,12 +653,19 @@ function addTaskNew(task){
         });
 }
 
-function continuedTasks(data){
+function continuedTasks(data, hide){
     var listUl = $('#continued ul[date="continued"]');
     var prevDate = 0;
     var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
     var weekDayStyle;
-    listUl.empty();
+    if(+numPages['continued'] <= 1){
+        listUl.empty();
+        listUl.siblings('.see-more').show();    
+    }
+    if(hide){
+        listUl.siblings('.see-more').hide();
+    }
+    numPages['continued']++;
     $.each(data, function(index, task) {
         if(today == task.date){
             weekDayStyle = ''; 
@@ -644,10 +674,12 @@ function continuedTasks(data){
         } else {
             weekDayStyle = 'future';
         }
-        if( prevDate == 0 || task.date > prevDate ){
+        //if( prevDate == 0 || task.date > prevDate ){
+        if( !listUl.children("li[date="+task.date+"]:last").length ){
             day_tmp = _.template(
                     $("#day_h3_label").html(), {
                         date: task.date, 
+                        title: task.date, 
                         weekDayStyle: weekDayStyle, 
                         weekDay: $.datepicker.formatDate('DD', new Date (task.date))
                     } 
@@ -670,12 +702,19 @@ function continuedTasks(data){
     }
 }
 
-function futureTasks(data){
+function futureTasks(data, hide){
     var listUl = $('#future ul[date="future"]');
     var prevDate = 0;
     var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
     var weekDayStyle;
-    listUl.empty();
+    if(+numPages['future'] <= 1){
+        listUl.empty();
+        listUl.siblings('.see-more').show();    
+    }
+    if(hide){
+        listUl.siblings('.see-more').hide();
+    }
+    numPages['future']++;
     $.each(data,function(index, task) {
         if(today == task.date){
             weekDayStyle = ''; 
@@ -685,10 +724,12 @@ function futureTasks(data){
             weekDayStyle = 'future';
         }
         
-        if( prevDate == 0 || task.date > prevDate ){
+        //if( prevDate == 0 || task.date > prevDate ){
+        if( !listUl.children("li[date="+task.date+"]:last").length ){
             day_tmp = _.template(
                     $("#day_h3_label").html(), {
-                        date: task.date, 
+                        date: task.date,
+                        title: task.date, 
                         weekDayStyle: weekDayStyle, 
                         weekDay: $.datepicker.formatDate('DD', new Date (task.date))
                     } 
@@ -710,20 +751,31 @@ function futureTasks(data){
         listUl.siblings('.emptyList').addClass('hide');
     }
 }
-function expiredTasks(data){
+function expiredTasks(data, hide){
     var listUl = $('#expired ul[date="expired"]');
     var prevDate = 0;
-    listUl.empty();
+    if(+numPages['expired'] <= 1){
+        listUl.empty();
+        listUl.siblings('.see-more').show();    
+    }
+    if(hide){
+        listUl.siblings('.see-more').hide();
+    }
+    numPages['expired']++;
+     
+    
     if($.isEmptyObject(data)){
         listUl.siblings('.emptyList').removeClass('hide');
     }else{
         listUl.siblings('.emptyList').addClass('hide');
     }
     $.each(data, function(index, task) {
-        if( prevDate == 0 || task.date < prevDate ){
+        //if( prevDate == 0 || task.date < prevDate ){
+        if( !listUl.children("li[date="+task.date+"]:last").length ){
             day_tmp = _.template(
                     $("#day_h3_label").html(), {
-                        date: task.date, 
+                        date: task.date,
+                        title: task.date, 
                         weekDayStyle: 'past', 
                         weekDay: $.datepicker.formatDate('DD', new Date (task.date))
                     } 
@@ -741,12 +793,20 @@ function expiredTasks(data){
         
     });
 }
-function completedTasks(data){
+function completedTasks(data, hide){
     var listUl = $('#completed ul[date="completed"]');
     var task, priority, time, timeend, weekDayStyle;
     var prevDate = 0;
     var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
-    listUl.empty();
+    if(+numPages['completed'] <= 1){
+        listUl.empty();
+        listUl.siblings('.see-more').show();    
+    }
+    if(hide){
+        listUl.siblings('.see-more').hide();
+    }
+    numPages['completed']++;
+    
     if($.isEmptyObject(data)){
         listUl.siblings('.emptyList').removeClass('hide');
     }else{
@@ -761,10 +821,12 @@ function completedTasks(data){
             weekDayStyle = 'future';
         }
         
-        if( prevDate == 0 || task.date < prevDate ){
+        //if( prevDate == 0 || task.date < prevDate ){
+        if( !listUl.children("li[date="+task.date+"]:last").length ){
             day_tmp = _.template(
                     $("#day_h3_label").html(), {
-                        date: task.date, 
+                        date: task.date,
+                        title: task.date, 
                         weekDayStyle: weekDayStyle, 
                         weekDay: $.datepicker.formatDate('DD', new Date (task.date))
                     } 
@@ -779,7 +841,7 @@ function completedTasks(data){
         time = task.time ? task.time.slice(0,-3) : '';
         timeend = task.timeend ? task.timeend.slice(0,-3) : ''; 
         
-        taskHtml = '<li class="'+priority+'"> '+
+        taskHtml = '<li date="'+task.date+'" class="'+priority+'"> '+
         '<span class="time">'+time+'</span> '+
         '<span class="timeEnd">'+timeend+'</span> '+
         '<span class="title">'+wrapTags(task.title, task.tags)+'</span> '+
@@ -788,14 +850,24 @@ function completedTasks(data){
     });
 }
 
-function deletedTasks(data){
+function deletedTasks(data, hide){
     var listUl = $('#deleted ul[date="deleted"]');
     var task, priority, time, timeend;
     var prevDate = 0;
     var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
     var weekDayStyle;
+    var date;
     
-    listUl.empty();
+    if(+numPages['deleted'] <= 1){
+        listUl.empty();
+        listUl.siblings('.see-more').show();    
+    }
+    numPages['deleted']++;
+    if(hide){
+        listUl.siblings('.see-more').hide();
+        numPages['deleted'] = 1;
+    }
+    
     if($.isEmptyObject(data)){
         listUl.siblings('.emptyList').removeClass('hide');
         $('.delete_all').attr('disabled', 'disabled');
@@ -817,10 +889,16 @@ function deletedTasks(data){
             weekDayStyle = 'future';
         }
         
-        if( prevDate == 0 || task.date < prevDate || (task.date == GLOBAL_CONFIG.planned && prevDate != GLOBAL_CONFIG.planned) ){
+        //if( prevDate == 0 || task.date < prevDate || (task.date == GLOBAL_CONFIG.planned && prevDate != GLOBAL_CONFIG.planned) ){
+        if( !listUl.children("li[date="+task.date+"]:last").length ){
+            date = task.date;
+            if(task.date == GLOBAL_CONFIG.planned){
+                date = 'planned';
+            }
             day_tmp = _.template(
                     $("#day_h3_label").html(), {
-                        date: task.date, 
+                        date: date,
+                        title: task.date,
                         weekDayStyle: weekDayStyle, 
                         weekDay: weekday
                     } 
@@ -1019,6 +1097,28 @@ function onRatingDay(data){
     }
 }
 
+//---------------setTagArchive------
+function taskTagArchive(tag, status){
+    scrTagArchive(tag, status);
+    srvTagArchive(tag, status);    
+}
+function scrTagArchive(tag, status){
+    var $archive = $('#list').find('.to-archive input');
+    if(+status){
+        $archive.attr('checked', true);
+    }else{
+        $archive.removeAttr('checked');
+    }
+}
+function srvTagArchive(tag, status){
+    superAjax('/lists/setArchive.json',{tag: tag, status: status});
+}
+
+function onTagArchive(data){
+    if(!data.success){
+        mesg(data.message.message, data.message.type);
+    }
+}
 
 //---------------deleteDay------
 function taskDeleteDay(date){
@@ -1560,7 +1660,7 @@ function wrapTags( title, tags ){
         $.each(tags, function(index, value) {
             if( value ){
                 value = convertToHtml(value);
-                title = title.split('#'+value).join('<span class="tags label label-important" data-tag="'+value+'">&#x23;'+value+'</span>');    
+                title = title.split('#'+value).join('<span class="tags" data-tag="'+value+'">&#x23;'+value+'</span>');    
             }
         });
     }
@@ -1710,7 +1810,7 @@ function initTags(){
         if(tag){
             window.location.hash= '#list-'+tag;    
         }
-        $(this).toggleClass('label-success', 'label-important');
+        //$(this).toggleClass('label-success', 'label-important');
         return false;
     });
 }
@@ -1751,6 +1851,13 @@ function initRatingDay(element){
         var date = $(this).attr('date');
         var rating = $(this).is(":checked")? 1 : 0;
         userEvent('setRatingDay', {date: date, rating: rating});
+    });
+}
+function initTagArchive(element){
+    $(element).on("click", function(){
+       var tag = $(this).attr('date');
+        var status = $(this).is(":checked")? 1 : 0;
+        userEvent('setTagArchive', {tag: tag, status: status});
     });
 }
 
@@ -2175,6 +2282,19 @@ function initDeleteAll(element){
     });
 }
 
+function initSeeMore(element){
+    $(document).on('click', element, function() {
+        var type = $(this).parent().siblings('ul[date]').attr('date');
+        if(type){
+            if(!numPages[type]){
+                numPages[type] = 2;
+            }
+            console.log(numPages[type]);
+            userEvent('getTasksByType', {type: type});
+        }
+    });
+}
+
 function reload(){
     location.reload(true);
 }
@@ -2229,6 +2349,7 @@ var connError = false;
 var pressCtrl = false;
 var isDragging = false;
 var refreshDays = [];
+var numPages = {};
 
 $(function(){
     initAjax();
@@ -2296,7 +2417,8 @@ $(function(){
     initEditAble(".editable");
     initDelete(".deleteTask");
     initDone(".done");
-    initRatingDay(".ratingDay input"); 
+    initRatingDay(".ratingDay input");
+    initTagArchive(".to-archive input"); 
     initEditTask(".editTask");   
     initDrop("ul:first li.drop");
     initSortable(".sortable");
@@ -2311,6 +2433,7 @@ $(function(){
     InitClock();
     initDeleteAll('.delete_all');
     setFiler($('.listDay .active').children('a').attr('date'));
+    initSeeMore('.btn-see-more');
     //initRepeatTask();
 
     
@@ -2318,9 +2441,11 @@ $(function(){
     
     $(".daysButton a").click(function(){
         var type = $(this).attr('date');
+        numPages[type] = 1;
         userEvent('getTasksByType', {type: type});
         $(this).parent().parent().find('li').removeClass('active'); 
     });
+    
     // edit task, modal window      
     $('#eTime').timepicker({
                     timeFormat: 'HH:mm',

@@ -23,7 +23,7 @@
             </h3>
         </div>
         <div class="modal-body">
-            <textarea  <% if (typeof(view) != "undefined") { %>  <% } %> class="text-note" id="text-note" rows="3" tabindex ="1"><%= title %></textarea>
+            <textarea  <% if (typeof(view) != "undefined") { %> readonly  <% } %> class="text-note" id="text-note" rows="3" tabindex ="1"><%= title %></textarea>
         </div>
         <div class="modal-footer">
             <% if (typeof(created) != "undefined") { %>  
