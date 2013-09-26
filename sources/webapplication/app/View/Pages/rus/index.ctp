@@ -37,13 +37,8 @@
         <div class="box_container">  
             <p> Пора действовать!</p>
             <p> Отбрось страхи, ты все сможешь!</p>
-            <p> 
-                Доверься интуиции и жми
-               
-            </p>
-             <?php //echo $this->Html->link(__('Пли!'),array('controller' => 'users', 'action' => 'login'),array('class'=> 'btn btn-success btn-large go')); ?>
-             <?php echo $this->Html->link(__('Пли!'),array('controller' => 'accounts', 'action' => 'register'),array('class'=> 'btn btn-large btn-block btn btn-success fire')); ?>
         </div>
 	</div>
 </div>
+<?php echo $this->Html->link('Начни пользоваться уже сейчас. Совершенно бесплатно!', array('controller' => 'accounts', 'action' => 'register'),array('class'=> 'btn btn-large btn-block btn btn-success fire')); ?>
             

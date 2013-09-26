@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-08-12 20:21+0000\n"
-"PO-Revision-Date: 2013-08-12 23:23+0300\n"
+"POT-Creation-Date: 2013-09-24 15:51+0000\n"
+"PO-Revision-Date: 2013-09-26 23:21+0300\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "Language: \n"
@@ -22,84 +22,84 @@ msgstr "Your pair of email and password is not correct"
 msgid "Ваш логин или пароль не совпадают"
 msgstr "Your pair of login and password is not correct"
 
-#: Controller/AccountsController.php:115;397;425;461;497;554
+#: Controller/AccountsController.php:119;401;429;465;501;558
 msgid "Ошибка при передаче данных"
 msgstr "Error while sending data"
 
-#: Controller/AccountsController.php:133
+#: Controller/AccountsController.php:137
 msgid "Добавлен"
 msgstr "Added"
 
-#: Controller/AccountsController.php:135
+#: Controller/AccountsController.php:139
 msgid "Отклонен"
 msgstr "Reject"
 
-#: Controller/AccountsController.php:144
+#: Controller/AccountsController.php:148
 msgid "Ошибка отсутствует такой аккаунт"
 msgstr "Error. Account is missing"
 
-#: Controller/AccountsController.php:268
+#: Controller/AccountsController.php:273
 msgid "Этот аккаунт уже связан"
 msgstr "This account is already linked"
 
-#: Controller/AccountsController.php:272
+#: Controller/AccountsController.php:277
 msgid "Этот аккаунт уже связан с другим пользователем"
 msgstr "This account is already linked to another user"
 
-#: Controller/AccountsController.php:287
+#: Controller/AccountsController.php:292
 msgid "Этот аккаунт успешно прикреплен"
 msgstr "This account is successfully linked"
 
-#: Controller/AccountsController.php:362
+#: Controller/AccountsController.php:366
 msgid "An unknown error"
 msgstr "An unknown error"
 
-#: Controller/AccountsController.php:387
+#: Controller/AccountsController.php:391
 msgid "Invalid key"
 msgstr "Invalid key"
 
-#: Controller/AccountsController.php:402
+#: Controller/AccountsController.php:406
 #: View/Accounts/register_success.ctp:3
 msgid "Код активации аккаунта был выслан Вам на почту"
 msgstr "Account activation code has been sent to your email"
 
-#: Controller/AccountsController.php:432;502
+#: Controller/AccountsController.php:436;506
 msgid "Ваш пароль успешно изменен"
 msgstr "Your password has  been sucessfully changed"
 
-#: Controller/AccountsController.php:439;511
+#: Controller/AccountsController.php:443;515
 msgid "Ваш пароль не может быть сохранен. Пожалуйста, попробуйте еще раз"
 msgstr "Your password cannot be saved. Please try again"
 
-#: Controller/AccountsController.php:450;472
+#: Controller/AccountsController.php:454;476
 msgid "На Вашу почту была отправлена инструкция по сбросу пароля"
 msgstr "The instruction on password reset has been successfully sent to your email address"
 
-#: Controller/AccountsController.php:466
+#: Controller/AccountsController.php:470
 msgid "Возникла ошибка при заполнении. Пожалуйста, попробуйте еще раз"
 msgstr "An error occured while filling. Please, try again"
 
-#: Controller/AccountsController.php:480
+#: Controller/AccountsController.php:484
 msgid "В нашей базе нет пользователя с такой почтой"
 msgstr "There is no user with such email"
 
-#: Controller/AccountsController.php:574
+#: Controller/AccountsController.php:578
 msgid "Регистрация не удалась. Заполните поля полностью"
 msgstr "Registration was not successful. Please, fill in the fields thoroughly"
 
-#: Controller/AccountsController.php:595
+#: Controller/AccountsController.php:599
 msgid "Invalid Account"
 msgstr "Invalid Account"
 
-#: Controller/AccountsController.php:598
+#: Controller/AccountsController.php:602
 msgid "Нельзя удалить основной аккаунт"
 msgstr "Cannot delete main account"
 
-#: Controller/AccountsController.php:606
+#: Controller/AccountsController.php:610
 msgid "Account deleted"
 msgstr "Account deleted"
 
-#: Controller/AccountsController.php:617
+#: Controller/AccountsController.php:621
 msgid "Account was not deleted"
 msgstr "Account was not deleted"
 
@@ -245,6 +245,10 @@ msgstr "More than 6 symbols. Be smart!"
 #: View/Accounts/register.ctp:83
 msgid "Уже регистрировались? Тогда"
 msgstr "Already registered?"
+
+#: View/Accounts/register.ctp:83
+msgid "войдите"
+msgstr "Sign in"
 
 #: View/Accounts/select_mode.ctp:26
 msgid "Регистрация нового аккаунта"

@@ -82,4 +82,14 @@
     <p>
         <?php echo __d('accounts', 'Уже регистрировались? Тогда'); ?>  <?php echo $this->Html->link(__d('accounts', 'войдите'), array('controller' => 'accounts', 'action' => 'login'));?>            
     </p> 
+        <div class="social-bnts">
+        <span class="social-or"><?php echo __d('accounts', 'ИЛИ'); ?></span>
+        <ul>
+        	<li><?php echo $this->Form->postLink($this->Loginza->logo('google'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'google'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
+        	<li><?php echo $this->Form->postLink($this->Loginza->logo('facebook'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'facebook'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
+        	<li><?php echo $this->Form->postLink($this->Loginza->logo('linkedin'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'linkedin'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
+            <li><?php echo $this->Form->postLink($this->Loginza->logo('twitter'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'twitter'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
+        	<li><?php echo $this->Form->postLink($this->Loginza->logo('vkontakte'), array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index', 'vkontakte'), array('class' => 'btn social-bnt', 'escape' => false)); ?></li>
+        </ul>
+    </div>
 </div>
