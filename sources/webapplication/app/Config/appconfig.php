@@ -65,7 +65,8 @@
    
    //app version 
    //Configure::write('App.version', '1.0.5');
-   Configure::write('App.version', trim(array_pop(file(dirname(__FILE__) . DS . 'appVERSION.txt'))));
+   $v =  trim(file_get_contents(dirname(__FILE__) . DS . 'appVERSION.txt'));
+   Configure::write('App.version', $v);
    
    Configure::write('App.Minify.css', false);
    Configure::write('App.Minify.js', false);
