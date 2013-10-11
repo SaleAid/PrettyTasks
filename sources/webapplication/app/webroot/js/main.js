@@ -54,19 +54,23 @@ $().ready(function(){
     
     $('.btn-note').tooltip({placement:'bottom',delay: { show: 500, hide: 100 }});
 
-           
+    console.log(__d('tasks', 'Некорректная дата'));
 });
 
 
 function __d(domain, key){
-        return (app.translationsTables[GLOBAL_CONFIG.currentLang][domain]===undefined ||
-                        app.translationsTables[app.translationsTables.currentLang][domain]===null ||
-                        app.translationsTables[app.translationsTables.currentLang][domain][key]===undefined ||
-                        app.translationsTables[app.translationsTables.currentLang][domain][key]===null
-                        )?key:app.translationsTables[app.translationsTables.currentLang][domain][key];
-        //return app.translationsTables[app.translationsTables.currentLang][domain][key];
+		console.log(translations);
+        return (translations[GLOBAL_CONFIG.locale][domain] 			=== undefined ||
+        		 translations[GLOBAL_CONFIG.locale][domain] 		=== null ||
+        		 translations[GLOBAL_CONFIG.locale][domain][key] 	=== undefined ||
+        		 translations[GLOBAL_CONFIG.locale][domain][key]	=== null
+                        )
+                        ?
+                        key:
+                        translations[GLOBAL_CONFIG.locale][domain][key];
 };
 
 var __ =function(key){
         return __d('default', key);
 };
+
