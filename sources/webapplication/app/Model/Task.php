@@ -279,7 +279,7 @@ class Task extends AppModel {
      * (non-PHPdoc)
      * @see Model::afterSave()
      */
-    public function afterSave($created){
+    public function afterSave($created, $options = array()){
         //$this->getEventManager()->attach(new TaskEventListener());
         //
         if( $created ){
