@@ -56,3 +56,17 @@ $().ready(function(){
 
            
 });
+
+
+function __d(domain, key){
+        return (app.translationsTables[GLOBAL_CONFIG.currentLang][domain]===undefined ||
+                        app.translationsTables[app.translationsTables.currentLang][domain]===null ||
+                        app.translationsTables[app.translationsTables.currentLang][domain][key]===undefined ||
+                        app.translationsTables[app.translationsTables.currentLang][domain][key]===null
+                        )?key:app.translationsTables[app.translationsTables.currentLang][domain][key];
+        //return app.translationsTables[app.translationsTables.currentLang][domain][key];
+};
+
+var __ =function(key){
+        return __d('default', key);
+};
