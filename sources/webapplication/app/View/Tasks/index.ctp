@@ -30,6 +30,7 @@
        ), array('block' => 'toFooter'));
        echo $this->Html->script('main.' . Configure::read('App.version'), array('block' => 'toFooter')); 
        echo $this->Html->script('print.'.Configure::read('App.version'), array('block' => 'toFooter'));
+       echo $this->Html->script('templates.'.Configure::read('App.version'), array('block' => 'toFooter'));
        echo $this->Html->script('tasks.' . Configure::read('App.version'), array('block' => 'toFooter'));
        
     }
@@ -68,13 +69,13 @@
             </a>
           </li>
           <?php endif;?>
-            <li class="active drop">
-                <a href="#<?php echo $this->Time->format('Y-m-d', time(), true, $timezone); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', time(), true, $timezone); ?>">
+            <li class="drop">
+                <a href="#<?php echo $this->Time->format('Y-m-d', time(), false, $timezone); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', time(), false, $timezone); ?>">
                 <?php echo __d('tasks', 'Today'); ?>
             </a>
           </li>
          <li class="drop">
-            <a href="#<?php echo $this->Time->format('Y-m-d', '+1 days', true, $timezone); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', '+1 days', true, $timezone); ?>">
+            <a href="#<?php echo $this->Time->format('Y-m-d', '+1 days', false, $timezone); ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', '+1 days', false, $timezone); ?>">
                  <?php echo __d('tasks', 'Tomorrow'); ?>
             </a>
           </li>
@@ -89,23 +90,23 @@
                         'Saturday' => __d('tasks', 'Saturday')
                         );
           for($i = 2; $i <= 6; $i++):?>
-            <li class="drop"> <a href="#<?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true, $timezone); ?>"
+            <li class="drop"> <a href="#<?php echo $this->Time->format('Y-m-d', '+'.$i.' days', false, $timezone); ?>"
                              data-toggle="tab"
-                              date = "<?php echo $this->Time->format('Y-m-d', '+'.$i.' days', true, $timezone); ?>">
-                      <?php echo $weekday[$this->Time->format('l', '+'.$i.' days', true, $timezone)]; ?>
+                              date = "<?php echo $this->Time->format('Y-m-d', '+'.$i.' days', false, $timezone); ?>">
+                      <?php echo $weekday[$this->Time->format('l', '+'.$i.' days', false, $timezone)]; ?>
                  </a>
             </li>
           <?php endfor; ?>
           
-          <?php foreach($result['data']['arrTaskOnDays'] as $k => $v):?>
-          <?php if($k > $this->Time->format('Y-m-d', '+6 days', true, $timezone) or 
-                    $k < $this->Time->format('Y-m-d', '-1 days', true, $timezone) and !$this->Time->wasYesterday($k, $timezone) 
+          <?php foreach($result['data']['arrDates'] as $k => $day):?>
+          <?php if($day > $this->Time->format('Y-m-d', '+6 days', false, $timezone) or 
+                    $day < $this->Time->format('Y-m-d', '-1 days', false, $timezone) and !$this->Time->wasYesterday($day, $timezone) 
                     //or ($this->Time->wasYesterday($k) and !$result['data']['yesterdayDisp'] and $result['data']['inConfig'])
                     ):?>
-            <li class="drop userDay"> <a href="#<?php echo $k;?>"
+            <li class="drop userDay"> <a href="#<?php echo $day;?>"
                              data-toggle="tab"
-                              date = "<?php echo $k; ?>">
-                      <?php echo __d('tasks', $k); ?> <span class="close">×</span>
+                              date = "<?php echo $day; ?>">
+                      <?php echo __d('tasks', $day); ?> <span class="close">×</span>
                  </a>
             </li>
             <?php endif;?>
@@ -306,65 +307,6 @@
                     </div>
                 </div>
           </div>
-          <?php 
-            foreach($result['data']['arrTaskOnDays'] as $k => $v):
-                $weelDayStyle = '';
-                $type = 'today';
-                if($k > $this->Time->format('Y-m-d', time(), true, $timezone)){
-                    $weelDayStyle = 'future';
-                    $type = 'future';
-                }elseif($k < $this->Time->format('Y-m-d', time(), true, $timezone)){
-                    $weelDayStyle = 'past';
-                    $type = 'past';
-                }
-                //if(($this->Time->wasYesterday($k) and !$result['data']['yesterdayDisp'] and !$result['data']['inConfig'])){
-//                    continue;
-//                }
-          ?>
-            <div class="tab-pane <?php if($this->Time->isToday($k, $timezone)):?>active<?php endif;?>" id="<?php echo $k; ?>" >
-                <div class="row">
-                    <div class="listTask">
-                        <div class="margin-bottom10">
-                            <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
-                            <h3 class="head-list-info" ><?php echo $k; ?> - <span class="<?php echo $weelDayStyle?>"><?php echo $weekday[$this->Time->format('l', $k, true, $timezone)]; ?></span><?php if($this->Time->isToday($k, $timezone)):?> - <span id="clock"></span><?php endif;?></h3>
-                        </div>
-                        <div class="well form-inline">
-                            <div class="input-append">
-                                <input type="text" size="16" class="input-xxlarge createTask" placeholder="<?php echo __d('tasks', '+Добавить задание…'); ?>"/>
-                                <button class="btn createTaskButton"><?php echo __d('tasks', 'Добавить'); ?></button>
-                            </div>
-                        </div>
-                        <div class="filter">
-                            <span><?php echo __d('tasks', 'Фильтр'); ?>:&nbsp; </span> 
-                            <a href=""  class="active" data="all"><?php echo __d('tasks', 'Все');?></a>
-                            <span class="all badge badge-info"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all']; ?></span>,
-                            &nbsp;
-                            <a href=""  data="inProcess"><?php echo __d('tasks', 'В Процессе'); ?></a>
-                            <span class="inProcess  badge badge-warning"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['all'] - $result['data']['arrTaskOnDaysCount'][$k]['done']; ?></span>,
-                            &nbsp;
-                            <a href=""  data="completed"><?php echo __d('tasks', 'Выполненные'); ?></a>
-                            <span class="completed badge badge-success"><?php echo $result['data']['arrTaskOnDaysCount'][$k]['done']; ?></span>
-                            
-                        </div>
-                        <div class="days">
-                            <a href="" data="commentDay"><?php echo __d('tasks', 'Комментарий'); ?></a>
-                            <label class="checkbox ratingDay" >
-                                <input type="checkbox" <?php if( isset($result['data']['arrDaysRating'][$k]) and $result['data']['arrDaysRating'][$k]->rating):?> checked <?php endif; ?> date="<?php echo $k; ?>"/> <?php echo __d('tasks', 'Удачный день'); ?>
-                            </label>
-                        </div>
-                        <div class="clear"></div>
-                        <ul id="sortable-<?php echo $k; ?>" class="sortable connectedSortable ui-helper-reset filtered dthl" date="<?php echo $k; ?>" data-refresh="0">
-                            <?php foreach($v as $item):?>
-                                <?php echo $this->Task->taskLi($item);?>
-                            <?php endforeach;?>
-                        </ul>
-                        <?php echo $this->element('empty_lists', array('type' => $type, 'hide' => $result['data']['arrTaskOnDaysCount'][$k]['all']));?>
-                    </div>
-                   
-                </div>
-            </div>
-          <?php endforeach; ?>
-          
     </div> <!-- /tabbable -->
     </div>  
 
