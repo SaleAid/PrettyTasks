@@ -1,0 +1,3 @@
+var translations = (translations === null || translations === undefined)?{}:translation;
+translations.rus = (translations.rus === null || translations.rus === undefined)?{}:translations.rus;
+translations.rus.mail = {"\u0437\u0430\u0434\u0430\u0447":["\u0437\u0430\u0434\u0430\u0447a","\u0437\u0430\u0434\u0430\u0447\u0438","\u0437\u0430\u0434\u0430\u0447"],"\u0437\u0430\u0434\u0430\u0447\u0443":["\u0437\u0430\u0434\u0430\u0447\u0443","\u0437\u0430\u0434\u0430\u0447\u0438","\u0437\u0430\u0434\u0430\u0447"],"\u0432\u0430\u0436\u043d\u0430\u044f":["\u0432\u0430\u0436\u043d\u0430\u044f","\u0432\u0430\u0436\u043d\u044b\u0435","\u0432\u0430\u0436\u043d\u044bx"]};

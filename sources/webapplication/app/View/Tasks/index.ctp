@@ -32,6 +32,7 @@
        echo $this->Html->script('print.'.Configure::read('App.version'), array('block' => 'toFooter'));
        echo $this->Html->script('templates.'.Configure::read('App.version'), array('block' => 'toFooter'));
        echo $this->Html->script('tasks.' . Configure::read('App.version'), array('block' => 'toFooter'));
+       echo $this->Html->script('pos/eng/tasks.' . Configure::read('App.version'), array('block' => 'toFooter'));
        
     }
 ?>
