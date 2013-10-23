@@ -74,14 +74,7 @@
 
 		<!-- Place your content above-->
 	</div>
-	<!-- /content -->
-	<div data-role="footer" data-position="fixed" data-theme="c">
-        <?php echo $this->Html->link(
-                            __('Go to full version'),
-                            array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time())),
-                            array('rel' => 'external')
-        );?>
-	</div><!-- /footer -->
+
 </div>
 <!-- /page -->
 
@@ -118,10 +111,7 @@
 	</div>
 	<!-- /content -->
 
-	<div data-role="footer" data-position="fixed" data-theme="e">
-		<h6>PrettyTasks 2012-2013 &copy;</h6>
-	</div>
-	<!-- /footer -->
+
 </div>
 <!-- /page -->
 
