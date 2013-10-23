@@ -33,17 +33,7 @@
 	<div data-role="panel" id="right-panel-tasks" data-position="right"
 		data-display="overlay" data-theme="e">
 
-		<ul data-divider-theme="e" data-count-theme="e" id="tasks-actions">
-			<h3>Actions</h3>
-			<li><a href="#" data-role="button" data-icon="check"
-				data-iconpos="right" id="action-done">Complete</a></li>
-			<li><a href="#" data-role="button" data-icon="forward"
-				data-iconpos="right">Postpone</a></li>
-			<li><a href="#" data-role="button" data-icon="edit"
-				data-iconpos="right" id="action-edit">Edit</a></li>
-			<li><a href="#" data-role="button" data-icon="delete"
-				data-iconpos="right" id="action-delete">Delete</a></li>
-		</ul>
+		<ul data-role="listview" data-divider-theme="e" data-count-theme="e" id="tags-list"></ul>
 
 	</div>
 	<!-- /right panel (actions) -->
@@ -84,14 +74,7 @@
 
 		<!-- Place your content above-->
 	</div>
-	<!-- /content -->
-	<div data-role="footer" data-position="fixed" data-theme="c">
-        <?php echo $this->Html->link(
-                            __('Go to full version'),
-                            array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time())),
-                            array('rel' => 'external')
-        );?>
-	</div><!-- /footer -->
+
 </div>
 <!-- /page -->
 
@@ -102,18 +85,6 @@
 	<!-- left panel  -->
 	<div data-role="panel" id="left-panel-notes" data-position="left"
 		data-display="push" data-theme="e">
-
-		<h3>Left Panel: Overlay</h3>
-		<p>
-			This panel is positioned on the left with the overlay display mode.
-			The panel markup is <em>after</em> the header, content and footer in
-			the source order.
-		</p>
-		<p>To close, click off the panel, swipe left or right, hit the Esc
-			key, or use the button below:</p>
-		<a href="#demo-links" data-rel="close" data-role="button"
-			data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
-
 	</div>
 	<!-- /left panel -->
 
@@ -140,10 +111,7 @@
 	</div>
 	<!-- /content -->
 
-	<div data-role="footer" data-position="fixed" data-theme="e">
-		<h6>PrettyTasks 2012-2013 &copy;</h6>
-	</div>
-	<!-- /footer -->
+
 </div>
 <!-- /page -->
 
