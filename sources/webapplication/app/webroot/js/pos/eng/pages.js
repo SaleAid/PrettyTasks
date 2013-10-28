@@ -1,3 +1,3 @@
-var translations = (translations === null || translations === undefined)?{}:translation;
+var translations = (translations === null || translations === undefined)?{}:translations;
 translations.eng = (translations.eng === null || translations.eng === undefined)?{}:translations.eng;
 translations.eng.pages = {"Pages":"","Home":"","Contacts":"","Login":"Log in","Register":"Sign up","Misc":"","About":"","How it works":"","Terms and Conditions":"","Privacy Policy":"","To bloggers":"","Welcome":"","Follow us":"","On twitter":"","On facebook":"","Social Media":"","Contact":"","Tasks":"","\u0421\u043f\u0438\u0441\u043a\u0438":"Lists","Agenda":"","\u0417\u0430\u043c\u0435\u0442\u043a\u0438":"Notes","Share on Twitter":"","Share on":"","Twitter":"","Share on Facebook":"","Facebook":"","Share on \u0412\u041a\u043e\u043d\u0442\u0430\u043a\u0442\u0435":"Share on VKontakte","\u0412\u041a\u043e\u043d\u0442\u0430\u043a\u0442\u0435":"VKontakte","Share on Google+":"","Google+":""};

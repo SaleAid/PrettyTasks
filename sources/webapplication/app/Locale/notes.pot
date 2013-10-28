@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-09-24 15:51+0000\n"
+"POT-Creation-Date: 2013-10-28 19:54+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -79,20 +79,20 @@ msgstr ""
 msgid "Изменен"
 msgstr ""
 
-#: View/Notes/index.ctp:26
+#: View/Notes/index.ctp:30
 msgid "Заметки"
 msgstr ""
 
-#: View/Notes/index.ctp:29
+#: View/Notes/index.ctp:33
 msgid "+Добавить заметку"
 msgstr ""
 
-#: View/Notes/index.ctp:30
+#: View/Notes/index.ctp:34
 msgid "Добавить"
 msgstr ""
 
-#: View/Notes/index.ctp:55
-#: View/Tasks/index.ctp:161;177;193;215;231
+#: View/Notes/index.ctp:59
+#: View/Tasks/index.ctp:130;146;162;182;198
 msgid "Далее..."
 msgstr ""
 

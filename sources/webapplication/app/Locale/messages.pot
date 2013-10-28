@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-09-24 15:51+0000\n"
+"POT-Creation-Date: 2013-10-28 19:54+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -70,7 +70,7 @@ msgstr ""
 msgid "О-о-о!*"
 msgstr ""
 
-#: View/Elements/js_global_config.ctp:10
+#: View/Elements/js_global_config.ctp:11
 msgid "В данный момент сайт сохраняет данные на сервере, уход со страницы прервет этот процесс, что приведет к потере данных. Подождите несколько секунд, после чего вы можете спокойно закрыть страницу."
 msgstr ""
 

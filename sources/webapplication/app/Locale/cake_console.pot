@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-09-24 15:51+0000\n"
+"POT-Creation-Date: 2013-10-28 19:54+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,7 +14,127 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
+#: Console/Command/JsI18nShell.php:21
+msgid "I18n Shell generates .pot files(s) with js translations."
+msgstr ""
+
 #: Console/Command/MigrationToV2Shell.php:8
 msgid "Migration to v2.\n [1]Local user \n [2]tasks\n [Q]uit\nWould you like to do?"
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:125
+msgid "Current paths: %s\nWhat is the path you would like to extract?\n[Q]uit [D]one"
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:132;209
+msgid "Extract Aborted"
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:138
+msgid "<warning>No directories selected.</warning> Please choose a directory."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:143;215
+msgid "The directory path you supplied was not found. Please try again."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:177
+msgid "Would you like to extract the messages from the CakePHP core?"
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:205
+msgid "What is the path you would like to output?\n[Q]uit"
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:225
+msgid "Would you like to merge all domain and category strings into the default.pot file?"
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:235
+msgid "The output directory %s was not found or writable."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:281
+msgid "Extracting..."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:283
+msgid "Paths:"
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:287
+msgid "Output Directory: "
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:297
+msgid "Done."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:307
+msgid "CakePHP Language String Extraction:"
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:308
+msgid "Directory where your application is located."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:309
+msgid "Comma separated list of paths."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:311
+msgid "Merge all domain and category strings into the default.po file."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:314
+msgid "Full path to output directory."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:315
+msgid "Comma separated list of files."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:319
+msgid "Ignores all files in plugins if this command is run inside from the same app directory."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:322
+msgid "Extracts tokens only from the plugin specified and puts the result in the plugin's Locale directory."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:327
+msgid "Ignores validation messages in the $validate property. If this flag is not set and the command is run from the same app directory, all messages in model validation rules will be extracted as tokens."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:332
+msgid "If set to a value, the localization domain to be used for model validation messages."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:335
+msgid "Comma separated list of directories to exclude. Any path containing a path segment with the provided values will be skipped. E.g. test,vendors"
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:341
+msgid "Always overwrite existing .pot files."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:344
+msgid "Extract messages from the CakePHP core libs."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:357
+msgid "Processing %s..."
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:630
+msgid "Error: %s already exists in this location. Overwrite? [Y]es, [N]o, [A]ll"
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:637
+msgid "What would you like to name this file?"
+msgstr ""
+
+#: Console/Command/Task/ExtractTask.php:734
+msgid "Invalid marker content in %s:%s\n* %s("
 msgstr ""
 
