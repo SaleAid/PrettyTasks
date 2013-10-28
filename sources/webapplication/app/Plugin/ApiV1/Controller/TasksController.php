@@ -3,6 +3,18 @@
 App::uses('CakeTime', 'Utility');
 App::uses('ApiV1AppController', 'ApiV1.Controller');
 App::uses('TaskObj', 'Lib');
+App::uses('TasksListObj', 'Lib');
+App::uses('MessageObj', 'Lib');
+App::uses('DateList', 'Model');
+App::uses('ManyDateList', 'Model');
+App::uses('PlannedList', 'Model');
+App::uses('OverdueList', 'Model');
+App::uses('CompletedList', 'Model');
+App::uses('DeletedList', 'Model');
+App::uses('ContinuedList', 'Model');
+App::uses('TagList', 'Model');
+App::uses('Task', 'Model');
+App::uses('TaskEventListener', 'Event');
 App::uses('Validation', 'Utility');
 
 /**
@@ -12,7 +24,8 @@ App::uses('Validation', 'Utility');
  */
 class TasksController extends ApiV1AppController {
 	
-	
+	public $uses = array('Task');
+    
     public function lists(){
         if ( !$this->request->is('get') ) {
             throw new ForbiddenException();
@@ -22,53 +35,75 @@ class TasksController extends ApiV1AppController {
             //type of requested list. Values: day, expired, future, deleted, completed.
             $type = $this->request->query['type'];
             $date = isset($this->request->query['date']) ? $this->request->query['date'] : null;
-            $count = isset($this->request->query['count']) ? $this->request->query['count'] : 0;
-            if ( $count > 100 ) $count = 100;
-            $page = isset($this->request->query['page']) ? $this->request->query['page'] : 0;
+            $page = isset($this->request->query['page']) ? $this->request->data['page'] : 1;
+            if (!is_numeric($page) || intval($page) < 1) {
+                 $page = 1;
+            }
+            $count = Configure::read("Tasks.Lists." .ucfirst($this->request->query['type']) .".limit");
+            if($count < 1){
+                $count = Configure::read("Tasks.Lists.Default.limit");
+            }
             $user_id = $this->OAuth->user('id');
-        	
-            switch ( $type ) {
+        	switch ( $type ) {
                 case 'completed' :
                     {
-                        $tasks = $this->Task->getCompleted($user_id, $count, $page);
+                        $CompletedList = new CompletedList($user_id);
+                        $result['data'] = new TasksListObj('defined', 'completed', $CompletedList->getItems($count, $page), $count);
                         break;
                     }
                 case 'expired' :
                     {
-                        $tasks = $this->Task->getExpired($user_id, $count, $page);
+                        $date = CakeTime::format('Y-m-d', time(), false, $this->_userTimeZone());
+                        $OverdueList = new OverdueList($user_id, $date);
+                        $result['data'] = new TasksListObj('defined', 'expired', $OverdueList->getItems($count, $page), $count);
                         break;
                     }
                 case 'future' :
                     {
-                        $tasks = $this->Task->getFuture($user_id, $count, $page);
+                        $beginDate = CakeTime::format('Y-m-d', time(), false, $this->_userTimeZone());
+                        $endDate = CakeTime::format('Y-m-d', '+7 days', false, $this->_userTimeZone());
+                        $arrayDates = ManyDateList::arrayDates($beginDate, $endDate);
+                        $ManyDateList = new ManyDateList($user_id, $arrayDates);
+                        $result['data'] = new TasksListObj('defined', 'future', $ManyDateList->getItems($count, $page), $count);
                         break;
                     }
                 case 'deleted' :
                     {
-                        $tasks = $this->Task->getDeleted($user_id, $count, $page);
+                        $DeletedList = new DeletedList($user_id);
+                        $result['data'] = new TasksListObj('defined', 'deleted', $DeletedList->getItems($count, $page), $count);
                         break;
                     }
+                case 'continued' :
+                    {
+                        $ContinuedList = new ContinuedList($user_id);
+                        $result['data'] = new TasksListObj('defined', 'continued', $ContinuedList->getItems($count, $page), $count);
+                        break;
+                    }
+                case 'planned' :
+                	{
+                        $PlannedList = new PlannedList($user_id);
+                        $result['data'] = new TasksListObj('defined', 'planned', $PlannedList->getItems($count, $page), $count);
+                		break;
+                	}
                 case 'day' :
                     {
                         if ( Validation::date($date) ) {
-                            $tasks = $this->Task->getForDate($user_id, $date, $count, $page);    
+                            //$tasks = $this->Task->getForDate($user_id, $date, $count, $page);
+                            //$date = CakeTime::format($date, '%Y-%m-%d');
+                            $DateList = new DateList($user_id, $date);
+                            $result['data'] = new TasksListObj('DateList', $date, $DateList->getItems());
+                            $result['data']->day = $this->Task->Day->getDay($user_id, $date);    
                         }
                         break;
                     }
                 default :
                     {
-                        $result['errors'][] = array(
-                            'message' => __d('tasks', 'Ошибка, некорректный тип')
-                        );
+                        $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка, некорректный тип')); 
                     }
             }
-            foreach ($tasks as $task) {
-        		$result[] = $this->taskObj($task);
-        	}
         } else {
-            $result['errors'][] = array(
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных')); 
+            
         }
         $this->set('result', $result);
         $this->set('_serialize', 'result');
@@ -124,9 +159,7 @@ class TasksController extends ApiV1AppController {
     
     public function update(){
         if ( !$this->request->isPost() or !isset($this->request->data['id']) ) {
-            $result['errors'][] = array(
-                'message' => __d('tasks', 'Ошибка при передаче данных')
-            );
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $originTask = $this->Task->isOwner($this->request->data['id'], $this->OAuth->user('id'));
             if ($originTask) {
@@ -143,28 +176,24 @@ class TasksController extends ApiV1AppController {
                 );
                 $saveData = $this->saveData( $listFields );
                 if( isset($saveData['time']) and ( !isset($saveData['date']) or empty($saveData['date'])) ) {
-                    $result['errors'][] = array(
-		                'message' => __d('tasks', 'errors, date field required')
-		            );
+                    $result['message'] = new MessageObj('error', __d('tasks', 'errors, date field required'));
                 }
             	if( isset($saveData['timeEnd']) and ( !isset($saveData['time']) or empty($saveData['time'])) ) {
-                    $result['errors'][] = array(
-		                'message' => __d('tasks', 'errors, time field required')
-		            );
+                    $result['message'] = new MessageObj('error', __d('tasks', 'errors, time field required'));
                 }
                 if ( !isset($result) ) {
                 	$task = $this->Task->update($saveData);
-                	if ( $task ) {
-                    	$result = $this->taskObj($task);
+                    if ( $task ) {
+                    	$result['data'] = $task;
                 	} else {
-                		$result['errors'][] = $this->Task->validationerrorss;
-                	}
+                		$result['message'] = new MessageObj('error', 
+                                                __d('tasks', 'Ошибка, Задача  не изменена'),
+                                                $this->Task->validationErrors
+                                                );
+        	       }
                 }
-                
             } else {
-                $result['errors'][] = array(
-                    'message' => __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи')
-                );
+                $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка, Вы не можете делать изменения в этой задачи'));
             }
         }
         $this->set('result', $result);

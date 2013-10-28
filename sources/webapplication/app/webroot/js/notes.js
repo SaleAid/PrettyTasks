@@ -167,8 +167,8 @@ jQuery(function( $ ) {
             
 		},
 		cacheElements: function() {
-			this.noteTemplate = _.template($("#note-template").html());
-            this.noteEditTemplate = _.template($("#modal-edit-note").html());
+			this.noteTemplate = _.template(templates.notes.preview);
+            this.noteEditTemplate = _.template(templates.notes.modal_edit_note);
 			this.$newNote = $('#new-note');
             this.$new_note = $('#new-note');
 			this.$noteList = $('#notes');

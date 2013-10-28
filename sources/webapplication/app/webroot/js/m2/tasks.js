@@ -112,7 +112,7 @@ var mobile = (function() {
 		    
 		    $(document).on({
 		    	 ajaxStart: function() { 
-		    		 $.mobile.loading( 'show', {html: "<span><center><img src='//code.jquery.com/mobile/1.3.2/images/ajax-loader.gif' /></center><h1>Loading...</h1></span>"});
+		    		 $.mobile.loading( 'show', {html: "<span><center><img src='img/ajax-loader-content.gif' /></center><h1>Loading...</h1></span>"});
 		    	 },
 		    	 ajaxStop: function() {
 

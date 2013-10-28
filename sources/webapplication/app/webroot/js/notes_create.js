@@ -124,7 +124,7 @@ jQuery(function( $ ) {
             Utils.initAjax();
 		},
 		cacheElements: function() {
-			this.noteEditTemplate = _.template($("#modal-edit-note").html());
+			this.noteEditTemplate = _.template(templates.notes.modal_edit_note);
 		},
 		bindEvents: function() {
 			$('.btn-note').on('click', this.show );

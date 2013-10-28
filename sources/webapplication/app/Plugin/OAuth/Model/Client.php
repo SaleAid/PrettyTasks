@@ -153,7 +153,7 @@ class Client extends OAuthAppModel {
 		return true;
 	}
 	
-	public function afterSave($created) {
+	public function afterSave($created, $options = array()) {
 		if ($this->addClientSecret) {
 			$this->data['Client']['client_secret'] = $this->addClientSecret;
 		}

@@ -55,7 +55,7 @@ if(Configure::read('Config.language') =='eng'){
 }
 
 ?> 
-<?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');?>
+<?php echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');?>
 
 <?php echo $this->Html->script('bootstrap.min');?>
 
@@ -63,7 +63,7 @@ if(Configure::read('Config.language') =='eng'){
 
 <?php 
     if(!empty($currentUser)){
-        echo $this->Html->script('http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');
+        echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');
         echo $this->Html->script('jquery.jgrowl.min');
         echo $this->element('box', array(), array('cache' => array('key' => 'box', 'config' => 'elements')));
         echo $this->element('js_global_config', array(), array('cache' => array('key' => 'js_global_config', 'config' => 'elements')));     

@@ -53,7 +53,7 @@ class OAuthController extends OAuthAppController {
  *  
  */
 	public function authorize () {
-        //$this->addC();
+       // $this->addC();
 		if (!$this->Auth->loggedIn()) {
 			$this->redirect(array('action' => 'login', '?' => $this->request->query));
 		}
@@ -61,7 +61,7 @@ class OAuthController extends OAuthAppController {
 		if ($this->request->is('post')) {
 			$this->validateRequest();
 
-			$userId = $this->Auth->user('id');
+			$userId = $this->Auth->user('user_id');
 
 			if ($this->Session->check('OAuth.logout')) {
 				$this->Auth->logout();
@@ -106,9 +106,9 @@ class OAuthController extends OAuthAppController {
         if ($this->request->is('post')) {
             	$this->validateRequest();
 			$message = __d('users', 'Ваш емейл или пароль не совпадают');
-			if( isset($this->data['User']['email']) && !Validation::email($this->data['User']['email']) ){
-			      $this->request->data['User']['username'] = $this->data['User']['email'];
-			      $this->Auth->authenticate['Form'] = array('fields' => array('username' => 'username'));
+			if( isset($this->data['Account']['email']) && !Validation::email($this->data['Account']['email']) ){
+			      $this->request->data['Account']['login'] = $this->data['Account']['email'];
+			      $this->Auth->authenticate['Form'] = array('fields' => array('username' => 'login'));
 			      //$this->AutoLogin->username = 'username';  
 			      $message = __d('users', 'Ваш логин или пароль не совпадают');
 			}
@@ -224,9 +224,9 @@ class OAuthController extends OAuthAppController {
         $this->layout = false;
     }
     
-    //public function addC(){
-//        $client = $this->OAuth->Client->add('http://localhost');
-//        debug($client);die;
-//    }
+    public function addC(){
+        //$client = $this->OAuth->Client->add('http://localhost');
+       //print_r($client);die;
+    }
 
 }

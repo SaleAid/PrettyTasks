@@ -74,6 +74,7 @@ class DateList extends MainList {
      */
     protected function getPositionItemWithTime($time) {
         $items = $this->getItemsWithTime();
+        //pr($items);
         if (! $items) {
             return false;
         }
@@ -107,7 +108,8 @@ class DateList extends MainList {
         ));
         $data = $this->_model->find('all', array(
                 'order' => array(
-                        $this->_model->alias . '.time' => 'ASC'
+                        $this->_model->alias . '.time' => 'ASC',
+                        'Ordered.order' => 'ASC'
                 ),
                 'conditions' => array(
                         'Ordered.user_id' => $this->_userId,

@@ -86,13 +86,11 @@ class TasksController extends AppController {
         $this->set('_serialize', 'result');
     }
     
-    
     public function index() {
-        //$this->set('csrfToken', $this->generateCsrfToken());
         $this->response->disableCache();
         $result = $this->_prepareResponse();
         
-        //$beginDate = CakeTime::format('Y-m-d', '-1 days');
+        $yesterday = $this->Task->User->Setting->getValue('hideYesterday', $this->Auth->user('id'), false);
         $beginDate = CakeTime::format('Y-m-d', '-1 days', false, $this->_userTimeZone());
         $endDate = CakeTime::format('Y-m-d', '+6 days', false, $this->_userTimeZone());
         
@@ -101,14 +99,6 @@ class TasksController extends AppController {
             $dayConfig = array();
         }
         $arrayDates = ManyDateList::arrayDates($beginDate, $endDate, $dayConfig);
-        $ManyDateList = new ManyDateList($this->Auth->user('id'), $arrayDates);
-        $tasks = $ManyDateList->getItems();
-        
-        $result['success'] = true;
-        $PlannedList = new PlannedList($this->Auth->user('id'));
-        $result['data']['arrAllFuture'] = $PlannedList->getItems();
-        $result['data']['arrAllFutureCount']['all'] = count($result['data']['arrAllFuture']);
-        $result['data']['arrAllFutureCount']['done'] = count(array_filter($result['data']['arrAllFuture'], create_function('$val', 'return $val->done == 1;')));
         
         $result['data']['inConfig'] = false;
         $result['data']['yesterdayDisp'] = false;
@@ -116,35 +106,24 @@ class TasksController extends AppController {
         if ( in_array($beginDate, $dayConfig) ){
             $result['data']['inConfig'] = true;
         }
-        
-        $arrTaskOnDays = array();
-        foreach($arrayDates as $date){
-            $arrTaskOnDays[$date] = array_filter($tasks, function ($task) use ($date) { return ($task->date == $date); } );
-            $done = array_filter($arrTaskOnDays[$date], create_function('$val', 'return $val->done == 1;'));
-            $data_count[$date]['all'] = count($arrTaskOnDays[$date]);
-            $data_count[$date]['done'] = count($done); 
-        }
-        
-        $result['data']['arrTaskOnDays'] = $arrTaskOnDays;
-        $result['data']['arrTaskOnDaysCount'] = $data_count;
-        
-        $result['data']['arrDaysRating'] = $this->Task->Day->getDays($this->Auth->user('id'), $beginDate, $endDate, $dayConfig);
-        if($result['data']['arrTaskOnDaysCount'][$beginDate]['all'] && $result['data']['arrTaskOnDaysCount'][$beginDate]['all'] > $result['data']['arrTaskOnDaysCount'][$beginDate]['done'] ){
+        $countYesterday = $this->Task->find('count', array(
+            'conditions' => array(
+                'Task.done' => 0,
+                'Task.deleted' => 0,
+                'Task.date' => $beginDate,
+                'Task.user_id' => $this->Auth->user('id'))
+        ));
+        if($countYesterday && $beginDate != $yesterday){
             $result['data']['yesterdayDisp'] = true;
-        } else {
-            if ( !$result['data']['inConfig'] ){
-                unset($result['data']['arrTaskOnDaysCount'][$beginDate]);
-                unset($result['data']['arrTaskOnDays'][$beginDate]);
-                
-            }
         }
+        $result['data']['arrDates'] = $arrayDates;
+        $result['success'] = true;
         $this->set('result', $result);
         $this->set('_serialize', array(
             'result'
         ));
     }
 
-    
     public function getTasksByType() {
         $result = $this->_prepareResponse();
         if (! $this->_isSetRequestData(array('type'))) {
@@ -557,7 +536,10 @@ class TasksController extends AppController {
                 $result['data'] = new TasksListObj('DateList', $date, $DateList->getItems());
                 $result['data']->day = $this->Task->Day->getDay($this->Auth->user('id'), $date);
                 
-                $this->Task->setDayToConfig($this->Auth->user('id'), $date);
+                $beginDate = CakeTime::format('Y-m-d', '-1 days', false, $this->_userTimeZone());
+                $endDate = CakeTime::format('Y-m-d', '+6 days', false, $this->_userTimeZone());
+                if($date > $endDate || $date < $beginDate)
+                    $this->Task->setDayToConfig($this->Auth->user('id'), $date);
             }
             $result['success'] = true;
         }
@@ -571,6 +553,9 @@ class TasksController extends AppController {
         if (! $this->_isSetRequestData('date')) {
             $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
+            if(CakeTime::wasYesterday($this->request->data['date'], $this->_userTimeZone())){
+                $this->Task->User->Setting->setValue('hideYesterday', CakeTime::format($this->request->data['date'], '%Y-%m-%d', false, $this->_userTimeZone()), $this->Auth->user('id'), false);
+            }
             if ($this->Task->deleteDayFromConfig($this->Auth->user('id'), $this->request->data['date'])) {
                 $result['success'] = true;
                 $result['message'] = new MessageObj('success', __d('tasks', 'День успешно удален из списка'));
@@ -595,7 +580,7 @@ class TasksController extends AppController {
             $result['success'] = $this->Auth->loggedIn();
             if ($result['success']) {
                 //$result['operation'] = 'none';
-                if (Validation::date($this->request->data['date']) and !CakeTime::isToday($this->request->data['date'], $this->_userTimeZone())) {
+                if (Validation::date($this->request->data['date']) and $this->request->data['date'] != CakeTime::format(time(), '%Y-%m-%d', false, $this->_userTimeZone())) {
                     $result['operation'] = 'refresh';
                     $result['cause'] = 'changeDay';
                     $result['message'] = new MessageObj('success', __d('tasks', 'Переход на новый день. Перезагрузка страницы произойдет через 5 секунд')); 

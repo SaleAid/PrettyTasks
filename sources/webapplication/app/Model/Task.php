@@ -509,6 +509,8 @@ class Task extends AppModel {
      */
     public function setFuture($future) {
         $this->data[$this->alias]['future'] = $future;
+        if($future)
+            $this->data[$this->alias]['time'] = $this->data[$this->alias]['timeend'] = null;
         return $this;
     }
     
@@ -795,6 +797,33 @@ class Task extends AppModel {
         sort($days);
         $days = array_slice($days, 0, Configure::read('Repeated.MaxCount')); 
         return $days;
+    }
+    
+    public function update( $data ){
+    	
+    	if ( isset($data['title']) ) {
+            $this->setTitle($data['title'], null);
+	    }
+        if ( isset($data['priority']) ) {
+            if($data['priority'] != null){
+                $this->data[$this->alias]['priority'] = (int)$data['priority'];
+            }
+	    }
+        //check future ...
+        if( isset($data['date']) ){
+            $this->setDate($data['date']);
+        }
+        
+        //check  delete ...
+        if( isset($data['deleted'])){
+            $this->setDelete($data['deleted']);
+         }
+        
+        //check  done
+        if( isset($data['done']) ){
+            $this->setDone($data['done']);
+        }
+        return $this->saveTask();
     }
     
 }

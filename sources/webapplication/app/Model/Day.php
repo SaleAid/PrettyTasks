@@ -209,6 +209,7 @@ class Day extends AppModel {
 	public function getDay($user_id, $date) { 
 		$this->contain();
 		$day = $this->findByUser_idAndDate($user_id, $date, $this->_dayFields);
+        //pr($day);
 		if (!empty($day)) {
 			return new DayObj($day[$this->alias]); 
 		}

@@ -69,7 +69,7 @@ class Setting extends AppModel {
      * @param unknown_type $userId            
      * @return array multitype: Ambigous
      */
-    public function getValue($key, $userId) {
+    public function getValue($key, $userId, $unserialize = true) {
         $this->contain();
         $result = $this->find('first', array(
                 'conditions' => array(
@@ -83,7 +83,9 @@ class Setting extends AppModel {
         ));
         
         if (!empty($result)) {
-            return unserialize($result['Setting']['value']);
+            if($unserialize)
+                return unserialize($result['Setting']['value']);
+            return $result['Setting']['value'];
         }
         
         return false;
@@ -96,10 +98,10 @@ class Setting extends AppModel {
      * @param unknown_type $userId
      * @return boolean
      */
-    public function setValue($key, $value, $userId) {
+    public function setValue($key, $value, $userId, $serialize = true) {
         $data = array(
             'key' => $key,
-            'value' => serialize($value),
+            'value' => $serialize ? serialize($value) : $value,
             'user_id' => $userId
         );
         

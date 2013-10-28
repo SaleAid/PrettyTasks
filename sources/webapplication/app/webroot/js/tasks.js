@@ -82,6 +82,15 @@ function mesg (message, type){
 					}
      });
 }
+function changeDay(){
+    setTimeout(function(){
+            if(!+countAJAX){
+                reload();
+            }else{
+                setTimeout("changeDay()", 5000);
+            }
+        }, 5000);
+}
 
 function checkStatus(){
     $.ajax({
@@ -95,10 +104,9 @@ function checkStatus(){
                 switch(data.cause){
                     case 'changeDay':
                         mesg(data.message.message, data.message.type);
-                        var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
-                        //setTimeout(userEvent('Day',{date: today, refresh: true}), 5000);
+                        var today = $.datepicker.formatDate('yy-mm-dd', dateTZ());
                         window.location.hash = 'day-'+today;
-                        setTimeout(reload(), 5000);
+                        changeDay();
                         break;
                }
                showErrorConnection(false);
@@ -173,6 +181,7 @@ function superAjax(url, data){
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
+                countAJAX--;
                 if(xhr.status == '404' || xhr.status == 0){
                     showErrorConnection(true);
                 }else{
@@ -209,7 +218,7 @@ function userEvent(action, data){
             taskEdit(data.id, data.title, data.priority, data.continued, data.done, data.date, data.time, data.timeEnd, data.comment);
         break;
         case 'addDay':
-            taskAddDay(data.date, data.refresh);
+            taskAddDay(data.date, data.action);
         break;          
         case 'deleteDay':
             taskDeleteDay(data.date);
@@ -375,7 +384,7 @@ function onRepeated(data){
 
 //---------------getLists-------------
 function taskGetLists(){
-    $('#lists').find('ul[date="lists"]').empty().append(_.template($("#ajax_loader_content").html()));
+    $('#lists').find('ul[date="lists"]').empty().append(_.template(templates.ajax_loader_content));
     srvGetLists();
 }
 
@@ -419,7 +428,7 @@ function onGetLists(data){
 //---------------getListByTag---------
 function taskGetListByTag(tag){
     if(tag){
-        $('#list').find('ul[date="list"]').empty().append(_.template($("#ajax_loader_content").html()));
+        $('#list').find('ul[date="list"]').empty().append(_.template(templates.ajax_loader_content));
         srvGetListByTag(tag);    
     } else {
         taskGetLists();
@@ -507,7 +516,7 @@ function addTagToList(task){
         }
         
         title = wrapTags(task.title, task.tags);
-        return _.template($("#task_tag").html(), {
+        return _.template(templates.task_tag, {
                                   id: task.id,
                                   date: date, 
                                   liClass: liClass,
@@ -637,7 +646,7 @@ function addTaskNew(task){
             date = task.date;    
         }
         title = wrapTags(task.title, task.tags);
-        return _.template($("#add_task").html(), {
+        return _.template(templates.add_task, {
                                   id: task.id,
                                   date: date, 
                                   liClass: liClass,
@@ -677,7 +686,7 @@ function continuedTasks(data, hide){
         //if( prevDate == 0 || task.date > prevDate ){
         if( !listUl.children("li[date="+task.date+"]:last").length ){
             day_tmp = _.template(
-                    $("#day_h3_label").html(), {
+                    templates.day_h3_label, {
                         date: task.date, 
                         title: task.date, 
                         weekDayStyle: weekDayStyle, 
@@ -727,7 +736,7 @@ function futureTasks(data, hide){
         //if( prevDate == 0 || task.date > prevDate ){
         if( !listUl.children("li[date="+task.date+"]:last").length ){
             day_tmp = _.template(
-                    $("#day_h3_label").html(), {
+                    templates.day_h3_label, {
                         date: task.date,
                         title: task.date, 
                         weekDayStyle: weekDayStyle, 
@@ -773,7 +782,7 @@ function expiredTasks(data, hide){
         //if( prevDate == 0 || task.date < prevDate ){
         if( !listUl.children("li[date="+task.date+"]:last").length ){
             day_tmp = _.template(
-                    $("#day_h3_label").html(), {
+                    templates.day_h3_label, {
                         date: task.date,
                         title: task.date, 
                         weekDayStyle: 'past', 
@@ -824,7 +833,7 @@ function completedTasks(data, hide){
         //if( prevDate == 0 || task.date < prevDate ){
         if( !listUl.children("li[date="+task.date+"]:last").length ){
             day_tmp = _.template(
-                    $("#day_h3_label").html(), {
+                    templates.day_h3_label, {
                         date: task.date,
                         title: task.date, 
                         weekDayStyle: weekDayStyle, 
@@ -857,7 +866,6 @@ function deletedTasks(data, hide){
     var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
     var weekDayStyle;
     var date;
-    
     if(+numPages['deleted'] <= 1){
         listUl.empty();
         listUl.siblings('.see-more').show();    
@@ -896,7 +904,7 @@ function deletedTasks(data, hide){
                 date = 'planned';
             }
             day_tmp = _.template(
-                    $("#day_h3_label").html(), {
+                    templates.day_h3_label, {
                         date: date,
                         title: task.date,
                         weekDayStyle: weekDayStyle, 
@@ -932,9 +940,11 @@ function srcCountTasks(date, drop){
     }else{
         listTasks = $("ul.filtered > li[date='"+date+"']").parent();    
     }
+    //console.log(listTasks);
     $.each(listTasks, function(index, value) {
         var all = $(value).children('li').length;
         var done = $(value).children('li.complete').length;
+        console.log(done);
         $(value).siblings('.filter').find('span.all').text(all);
         $(value).siblings('.filter').find('span.inProcess').text(all - done);
         $(value).siblings('.filter').find('span.completed').text(done);
@@ -1146,16 +1156,16 @@ function onDeleteDay(data){
 }
 
 //---------------addDay---------
-function taskAddDay(date, refresh){
+function taskAddDay(date, action){
 
-    if(scrAddDay(date, refresh)){
+    if(scrAddDay(date, action)){
         srvAddDay(date);    
     }
 }
 
-function scrAddDay(date, refresh){
+function scrAddDay(date, action){
     var flag = true;
-    if(refresh){
+    if(action == 1){
         return true;
     }
     $("#main ul:first li").each(function(){
@@ -1163,12 +1173,16 @@ function scrAddDay(date, refresh){
             flag = false;
         }
     });
-    if(!flag){
+    if(!flag && !(action == -1) ){
         activeTab(date);
         return false;    
     }
-    var newTabContent = _.template($("#day_tab_content_template").html(), {date: date} );            
-    $('.tab-content').append(newTabContent); 
+    var newTabContent = _.template(templates.day_tab_content, {date: date} );            
+    $('.tab-content').append(newTabContent);
+    if(action == -1){
+        activeTab(date);
+        return true;
+    }
     var today = new Date();
     var yesterday = new Date();
     yesterday.setDate(today.getDate()-1);
@@ -1199,9 +1213,8 @@ function scrAddDay(date, refresh){
             $(newDay).insertAfter( $("#main ul.nav-tabs li:not('.userDay'):last") );   
         }    
     }
-    initTab('#main ul.nav-tabs a[date="'+date+'"]');
+    //initTab('#main ul.nav-tabs a[date="'+date+'"]');
     activeTab(date);
-    
     return true;
 }
 function activeTab(date){
@@ -1217,7 +1230,8 @@ function srvAddDay(date){
 function onAddDay(data){
     var list = $("ul[date='" + data.data.name + "']");
     var weekday = $.datepicker.formatDate('DD', new Date (data.data.name));
-    var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
+    //var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
+    var today = $.datepicker.formatDate('yy-mm-dd', dateTZ());
     var weekDayStyle;
     var cAll = cDone = 0;
     
@@ -1234,7 +1248,7 @@ function onAddDay(data){
     
     list.empty();
     list.siblings('.emptyList ').remove();
-    var emptyList = _.template($("#empty_list_day_tasks").html(), {type: weekDayStyle});
+    var emptyList = _.template(templates.empty_list_day_tasks, {type: weekDayStyle});
     if($.isEmptyObject(data.data.list)){
         emptyList = $(emptyList).removeClass('hide');
     }
@@ -1265,7 +1279,8 @@ function onAddDay(data){
     list.siblings('.filter').find('span.all').text(cAll);
     list.siblings('.filter').find('span.inProcess').text(cAll - cDone);
     list.siblings('.filter').find('span.completed').text(cDone);
-    list.parent().find('.weekday').text(" - " + weekday);
+    if(weekday)
+        list.parent().find('.weekday').text(" - " + weekday);
     list.parent().find('.weekday').addClass(weekDayStyle);
     initPrintClick(list.parent().find('.print'));
     setFiler(data.data.name);
@@ -1409,6 +1424,9 @@ function scrDragWithTime(id, date, time){
         var taskRemote =  $("li[id='"+id+"']:not(.currentTask)");
         taskRemote.remove();
         task.removeClass('currentTask');
+        if(currentTaskDate==''){
+            currentTaskDate = 'planned';
+        }
         if(task.find('.tag-date').length > 0) {
             var date_text = date;
             task.attr('date', date);
@@ -1428,6 +1446,7 @@ function scrDragWithTime(id, date, time){
         }else{
             var list = $("ul[date='"+date+"']");    
         }
+        
         if(list.length > 0) {
             var timeList = list.find('li.setTime');
             var newPositionID;
@@ -1448,7 +1467,7 @@ function scrDragWithTime(id, date, time){
                     before = true;
                 }
            }
-           task.hide('show', function() {
+           task.hide('slow', function() {
                 if(newPositionID != id && newPositionID){
                     if(before){
                         $(this).insertBefore( list.children('#'+newPositionID)).show();
@@ -1479,18 +1498,18 @@ function scrDragWithTime(id, date, time){
                 if($(this).children('.done').hasClass('hide')){
                     $(this).children('.done').removeClass('hide');
                 }
-                
                 if(currentTaskDate != date){
                     srcCountTasks(currentTaskDate, true);
                 }
                 srcCountTasks(date, true);
             });    
         } else {
-            task.remove();
+            //task.remove();
+            task.hide('show', function() {
+                $(this).remove();
+                srcCountTasks(currentTaskDate, true);
+            });
         }
-        //srcCountTasks(date, true);
-        
-        
 }
 
 //----------------changeOrder---
@@ -1735,6 +1754,7 @@ function AddTask(task){
     var time = '<span class="time"></span>';
     var timeEnd = '<span class="timeEnd"></span>';
     var comment = '';
+    var comment_status = '';
     if (+task.priority){
 		important = 'important';
 	}
@@ -1997,7 +2017,6 @@ function initCommentTag(element){
 
 function initCreateTask(element){
     $(document).on("keypress", element, function(e){
-    //$(element).on('keypress', function(e){
         var code = (e.keyCode ? e.keyCode : e.which);
         if(code == 13) {
             var title = $(this).val();
@@ -2019,7 +2038,6 @@ function initCreateTask(element){
 
 function initCreateTaskButton(element){
     $(document).on("click", element, function(e){
-    //$(element).on('click', function(e){
         var title = $(this).parent().find('.createTask').val();
         var date = $(this).parent().parent().siblings("ul").attr('date');
         if(date == 'planned'){
@@ -2157,11 +2175,12 @@ function initSortable(element){
 
 function initTab(element){
     $(element).on('shown', function (e) {
-    	var tab_id = $(this).attr('date');
+        var tab_id = $(this).attr('date');
         if(tab_id == 'list' || tab_id == 'lists'){
             //window.location.hash= 'list';
         }else{
             var index = _.indexOf(refreshDays, tab_id);
+            var createDay = _.indexOf(createDays, tab_id);
             if(tab_id == 'future'){
                 $('.nav.top li').removeClass('active');
                 $('.agenda').addClass('active');
@@ -2172,9 +2191,13 @@ function initTab(element){
                 $('.tasks').addClass('active');    
             }
             
-            if( index > -1){
+            if( createDay > -1){
+                delete createDays[createDay];
+                userEvent('addDay',{date: tab_id, action: -1});
+                
+            } else if( index > -1){
                 delete refreshDays[index];
-                userEvent('addDay',{date: tab_id, refresh: true});
+                userEvent('addDay',{date: tab_id, action: 1});
             }
             
             window.location.hash = 'day-'+tab_id;
@@ -2220,11 +2243,7 @@ function initFilter(element){
                 $(this).addClass('active');
                 if(allTasks && !listTasks.children('li:not(.complete)').length){
                     if( !listTasks.find(".filterProgress").length ){
-                        $(".ex_filterProgress").clone()
-                                               .removeClass('ex_filterProgress')
-                                               .removeClass('hide')
-                                               .addClass('filterProgress')
-                                               .appendTo(listTasks);
+                        listTasks.append(_.template(templates.empty_list_filterProgress));
                     }else{
                        listTasks.find(".filterProgress").removeClass('hide'); 
                     }
@@ -2235,11 +2254,7 @@ function initFilter(element){
                 $(this).addClass('active');
                 if(allTasks && !listTasks.children('li.complete').length){
                     if( !listTasks.find(".filterCompleted").length ){
-                        $(".ex_filterCompleted").clone()
-                                               .removeClass('ex_filterCompleted')
-                                               .removeClass('hide')
-                                               .addClass('filterCompleted')
-                                               .appendTo(listTasks);
+                        listTasks.append(_.template(templates.empty_list_filterCompleted));
                     }else{
                        listTasks.find(".filterCompleted").removeClass('hide'); 
                     }
@@ -2250,7 +2265,6 @@ function initFilter(element){
     });
 }
 function initDayClick(element){
-    //$(element).on('click', function() {
     $(document).on('click', element, function() {
         var date = $(this).attr('date');
         if(!date){
@@ -2258,6 +2272,16 @@ function initDayClick(element){
         }
         userEvent('addDay',{date: date});
     });
+}
+
+function dateTZ(){
+  var TimezoneOffset = GLOBAL_CONFIG.timezone;
+  var localTime = new Date();
+  if(TimezoneOffset == ''){
+        TimezoneOffset = localTime.getTimezoneOffset() * -60;
+  } 
+  var ms = localTime.getTime() + (localTime.getTimezoneOffset() * 60000) + TimezoneOffset * 1000; 
+  return new Date(ms);  
 }
 
 function InitClock() { 
@@ -2273,7 +2297,15 @@ function InitClock() {
   var second = time.getSeconds(); 
   var temp = "" + ((hour < 10) ? "0" : "") + hour; 
   temp += ((minute < 10) ? ":0" : ":") + minute; 
-  document.getElementById('clock').innerHTML = temp; 
+  
+  var $clock = $('div.tab-pane#'+GLOBAL_CONFIG.date).find('#clock');
+//  console.log($.datepicker.formatDate('yy-mm-dd', time));
+  if($clock.length > 0){
+    $clock.empty().append(temp);
+  }else{
+    $('div.tab-pane#'+GLOBAL_CONFIG.date).find('.head-list-info').append(' - <span id="clock">1'+temp+'</span>');
+  }
+  //document.getElementById('clock').innerHTML = temp; 
   setTimeout("InitClock()", 1000); 
 } 
 function initDeleteAll(element){
@@ -2299,7 +2331,9 @@ function initSeeMore(element){
     });
 }
 
-function reload(){
+function reload(r){
+    if(r)
+        countAJAX = 0;
     location.reload(true);
 }
 
@@ -2346,6 +2380,13 @@ function changeHeightListDays(){
         $('.listDay').addClass('affix1');
     }
 }
+function initListDays(){
+    var days = [];
+    $('.listDay').find('li.drop').children('a').each(function(){
+       days.push($(this).attr('date'));
+    });
+    createDays = days;
+}
 //-----------------------------------------------------------------------
 var dropped = false;
 var countAJAX = 0;
@@ -2353,10 +2394,12 @@ var connError = false;
 var pressCtrl = false;
 var isDragging = false;
 var refreshDays = [];
+var createDays = [];
 var numPages = {};
 
 $(function(){
     initAjax();
+    initListDays();
      $(window).hashchange( function(e){
         if(location.hash != "") { 
             var pattern_list=/^#list(s$|-.+)/;
@@ -2379,17 +2422,30 @@ $(function(){
                 if(hash == aTab) {return;}
                 if(isDate(hash)){
                     hash = $.datepicker.formatDate('yy-mm-dd',$.datepicker.parseDate('yy-mm-dd', hash));
-                    userEvent('addDay',{date: hash});
+                    var createDay = _.indexOf(createDays, hash);
+                    if( createDay > -1){
+                        delete createDays[createDay];
+                        userEvent('addDay',{date: hash, action: -1});
+                    }else{
+                        userEvent('addDay',{date: hash, action: 0});    
+                    }
                 }else if( $.inArray(hash, ["expired", "completed", "deleted", "continued", "future"]) != -1 ){
                     numPages['future'] = 1;
                     userEvent('getTasksByType', {type: hash});
                     $('#main a[href="#'+hash+'"]').tab('show');
                 }else if(hash == "planned"){
-                     userEvent('addDay',{date: hash});
+                     var createDay = _.indexOf(createDays, hash);
+                     if( createDay > -1){
+                        delete createDays[createDay];
+                        userEvent('addDay',{date: hash, action: -1});   
+                     }else{
+                        userEvent('addDay',{date: hash, action: 0});    
+                    }
                 }else{
                     var today = $.datepicker.formatDate('yy-mm-dd',new Date());
                     location.hash = 'day-'+today;
-                    $('#main a[href="#'+today+'"]').tab('show');
+                    //userEvent('addDay',{date: today, action: -1});
+                    //$('#main a[href="#'+today+'"]').tab('show');
                 }
                 if(hash == 'future'){
                     $('.nav.top li').removeClass('active');
@@ -2399,7 +2455,12 @@ $(function(){
                     $('.tasks').addClass('active');
                 }    
             }
-         } 
+         }else{
+            var today = $.datepicker.formatDate('yy-mm-dd',dateTZ());
+            location.hash = 'day-'+today;
+            userEvent('addDay',{date: today, action: -1});
+        }
+          
     });
     $(window).hashchange();
 
@@ -2440,9 +2501,8 @@ $(function(){
     setFiler($('.listDay .active').children('a').attr('date'));
     initSeeMore('.btn-see-more');
     //initRepeatTask();
-
     
-    
+   
     
     $(".daysButton a").click(function(){
         var type = $(this).attr('date');

@@ -40,7 +40,7 @@ class JsI18nTask extends Shell {
                 }
             }
             
-            $content = "var translations = (translations === null || translations === undefined)?{}:translation;\n";
+            $content = "var translations = (translations === null || translations === undefined)?{}:translations;\n";
             $content .= "translations.{$locale} = (translations.{$locale} === null || translations.{$locale} === undefined)?{}:translations.{$locale};\n";
             $content .= "translations.{$locale}.{$domain} = " . json_encode($translations) . ";";
             if (! $jsFile) {

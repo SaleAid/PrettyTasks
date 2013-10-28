@@ -74,7 +74,7 @@ class NotesController extends AppController {
                 $result['success'] = true;
                 $result['message'] = new MessageObj('info', __d('tasks', 'Заметка успешно создана'));
             } else {
-                $result['message'] = new MessageObj('error', __d('tasks', 'Заметка успешно создана'), $this->Note->validationErrors);
+                $result['message'] = new MessageObj('error', __d('tasks', 'Заметка не создана'), $this->Note->validationErrors);
             }
         }
         $result['action'] = 'create'; 

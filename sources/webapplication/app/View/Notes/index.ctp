@@ -14,7 +14,11 @@
             'jquery.jgrowl.min',
             'jquery.inline-confirmation.'.Configure::read('App.version'),
        ), array('block' => 'toFooter'));
-       echo $this->Html->script('main.' . Configure::read('App.version'), array('block' => 'toFooter')); 
+       echo $this->Html->script('pos/'.Configure::read('Config.language').'/notes', array('block' => 'toFooter'));
+       //echo $this->Html->script('pos/'.Configure::read('Config.language').'/messages', array('block' => 'toFooter'));
+       echo $this->Html->script('main.' . Configure::read('App.version'), array('block' => 'toFooter'));
+       echo $this->Html->script('templates/note_preview.'.Configure::read('App.version'), array('block' => 'toFooter'));
+       echo $this->Html->script('templates/note_create_form.'.Configure::read('App.version'), array('block' => 'toFooter'));
        echo $this->Html->script('notes.' . Configure::read('App.version'), array('block' => 'toFooter'));
     }
 ?>
@@ -57,22 +61,4 @@
                 <?php endif; ?>
     </div>
 </div>
-<!-- tmp -->
-<script type="text/template" id="note-template" />
-  <li class="note-box" data-id="<%= id %>">
-    <div class="note">
-        <div class="title-note" ><%= title %></div>
-    </div>
-    <div class="modified"><%= modified %></div>
-    <ul class="buttons">
-        <li><a class="note-view" href="#"><i class="icon-zoom-in "></i></a></li>
-        <li><a class="note-edit" href="#"><i class="icon-edit"></i></a></li>
-        <li><a class="note-remove" href="#"><i class="icon-trash"></i></a></li>
-    </ul>
-  </li>
-</script>
-
-<?php echo $this->element('note_create_form', array(), array('cache' => array('key' => 'note_create_form', 'config' => 'elements'))); ?>
-
-
  

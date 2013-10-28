@@ -59,7 +59,7 @@ if(Configure::read('Config.language') =='eng'){
 }else{
     echo $this->element('footer');    
 }
-echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
+echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
 echo $this->Html->script('bootstrap.min');
 echo $this->fetch('toFooter');
 echo $this->element('js_lang', array(), array('cache' => array('key' => 'js_lang', 'config' => 'elements')));

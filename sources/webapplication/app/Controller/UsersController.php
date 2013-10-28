@@ -2,7 +2,9 @@
 App::uses('AppController', 'Controller');
 App::uses('Validation', 'Utility');
 class UsersController extends AppController {
-    public $name = 'Users';
+   public $name = 'Users';
+    
+   public $uses = array('Task', 'User');
 
    public $components = array(
         'RequestHandler', 
@@ -13,7 +15,7 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('checkVK');
+        $this->Auth->allow('checkVK', 'check');
         if ($this->Auth->loggedIn() and in_array($this->params['action'], array(
             'login', 
             'register', 
@@ -35,6 +37,28 @@ class UsersController extends AppController {
     public function checkLogin() {
         $this->autoRender = false;
         return $this->Auth->loggedIn();
+    }
+    
+    public function check() {
+        $result['status'] = 0;
+        if($this->Auth->loggedIn()){
+            $result['status'] = 1;
+            $result['data']['full_name'] = $this->Auth->user('full_name');
+            $result['data']['token'] = $this->generateCsrfToken();
+            $result['data']['timezone'] = $this->Auth->user('timezone');
+            $result['data']['language_url'] = $this->Auth->user('language');
+            if(!empty($this->request->data['date'])){
+                $result['data']['count'] = $this->Task->find('count', array(
+                    'conditions' => array(
+                        'Task.done' => 0,
+                        'Task.deleted' => 0,
+                        'Task.date' => $this->request->data['date'],
+                        'Task.user_id' => $this->Auth->user('id'))
+                )); 
+            }
+        }                
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');
     }
 
     public function index() {

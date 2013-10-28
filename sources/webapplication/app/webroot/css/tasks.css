@@ -173,7 +173,7 @@ div.well{
 
 .editable{
     display: inline-block;
-    width: 601px;
+    width: 600px;
     text-align: left;
     font-family: arial, sans-serif;
     /*font-weight: bold;*/
@@ -535,6 +535,7 @@ div.well{
 }
 .see-more{
     padding: 20px 0;
+    display: none;
 
 }
 

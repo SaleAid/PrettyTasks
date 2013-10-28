@@ -54,16 +54,17 @@ $().ready(function(){
     
     $('.btn-note').tooltip({placement:'bottom',delay: { show: 500, hide: 100 }});
 
-    console.log(__d('tasks', 'Некорректная дата'));
+    //console.log(__d('tasks', 'Некорректная дата'));
 });
 
 
 function __d(domain, key){
-		console.log(translations);
+		//console.log(translations);
         return (translations[GLOBAL_CONFIG.locale][domain] 			=== undefined ||
         		 translations[GLOBAL_CONFIG.locale][domain] 		=== null ||
         		 translations[GLOBAL_CONFIG.locale][domain][key] 	=== undefined ||
-        		 translations[GLOBAL_CONFIG.locale][domain][key]	=== null
+        		 translations[GLOBAL_CONFIG.locale][domain][key]	=== null ||
+                 translations[GLOBAL_CONFIG.locale][domain][key]	=== ''
                         )
                         ?
                         key:

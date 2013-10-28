@@ -28,11 +28,14 @@
             //'bootstrap-modalmanager',
             //'bootstrap-modal'
        ), array('block' => 'toFooter'));
+       echo $this->Html->script('pos/'.Configure::read('Config.language').'/tasks', array('block' => 'toFooter'));
+       echo $this->Html->script('pos/'.Configure::read('Config.language').'/messages', array('block' => 'toFooter'));
+       echo $this->Html->script('main.' . Configure::read('App.version'), array('block' => 'toFooter'));
+       echo $this->Html->script('templates.'.Configure::read('App.version'), array('block' => 'toFooter'));
        echo $this->Html->script('main.' . Configure::read('App.version'), array('block' => 'toFooter')); 
        echo $this->Html->script('print.'.Configure::read('App.version'), array('block' => 'toFooter'));
-       echo $this->Html->script('templates.'.Configure::read('App.version'), array('block' => 'toFooter'));
        echo $this->Html->script('tasks.' . Configure::read('App.version'), array('block' => 'toFooter'));
-       echo $this->Html->script('pos/eng/tasks.' . Configure::read('App.version'), array('block' => 'toFooter'));
+       //echo $this->Html->script('pos/'.Configure::read('Config.language').'/tasks.' . Configure::read('App.version'), array('block' => 'toFooter'));
        
     }
 ?>
@@ -64,7 +67,7 @@
             </li>
           <?php if ( $result['data']['inConfig'] or $result['data']['yesterdayDisp']  ): ?>
           <li class="drop">
-            <a href="#<?php echo $this->Time->format('Y-m-d', '-1 days', true, $timezone) ; ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', '-1 days', true, $timezone); ?>">
+            <a href="#<?php echo $this->Time->format('Y-m-d', '-1 days', false, $timezone) ; ?>" data-toggle="tab" date = "<?php echo $this->Time->format('Y-m-d', '-1 days', true, $timezone); ?>">
                  <?php echo __d('tasks', 'Yesterday'); ?>
                  <span class="close">×</span>
             </a>
@@ -113,43 +116,7 @@
             <?php endif;?>
           <?php endforeach; ?>
         </ul>
-        <div class="tab-content " >
-          <div class="tab-pane" id="planned">
-          <div class="row">
-          <div class="listTask">
-            <div class="margin-bottom10">
-                <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
-                <h3 class="head-list-info"><?php echo __d('tasks', 'Задачи на будущее'); ?></h3>
-            </div>
-            <div class="well form-inline">
-                <div class="input-append">
-                    <input type="text" size="16" class="input-xxlarge createTask" placeholder="<?php echo __d('tasks', '+Добавить задание…'); ?>"/>
-                    <button class="btn createTaskButton"><?php echo __d('tasks', 'Добавить'); ?></button>
-                </div>
-            </div>
-            <div class="filter">
-                <span><?php echo __d('tasks', 'Фильтр'); ?>:&nbsp; </span> 
-                <a href="" class="active" data="all"><?php echo __d('tasks', 'Все'); ?></a>
-                <span class="all badge badge-info "><?php echo $result['data']['arrAllFutureCount']['all']; ?></span>,
-                &nbsp;
-                <a href=""  data="inProcess"><?php echo __d('tasks', 'В Процессе'); ?></a>
-                <span class="inProcess badge badge-warning"><?php echo $result['data']['arrAllFutureCount']['all'] - $result['data']['arrAllFutureCount']['done']; ?></span>,
-                &nbsp;
-                <a href="" data="completed"><?php echo __d('tasks', 'Выполненные'); ?></a>
-                <span class="completed badge badge-success"><?php echo $result['data']['arrAllFutureCount']['done']; ?></span>
-            </div>
-            <div class="clear"></div>
-            <ul class="sortable connectedSortable ui-helper-reset filtered dthl" date="planned" data-refresh="1">
-                <?php if(isset($result['data']['arrAllFuture']) && !empty($result['data']['arrAllFuture'])):?>
-                    <?php foreach($result['data']['arrAllFuture'] as $item):?>
-                        <?php echo $this->Task->taskLi($item);?>
-                    <?php endforeach;?>
-                <?php endif;?>   
-            </ul>
-            <?php echo $this->element('empty_lists', array('type' => 'planned', 'hide' => $result['data']['arrAllFutureCount']['all']));?>           
-          </div>
-          </div>
-            </div>
+        <div class="tab-content">
           <div class="tab-pane" id="expired">
               <div class="row">
                   <div class="listTask">
@@ -207,9 +174,7 @@
                     <button class="btn btn-small btn-danger pull-right delete_all" type="button"><?php echo __d('tasks', 'Удалить все');?></button>
                     <h3 class="head-list-info">
                         <?php echo __d('tasks', 'Удаленные задачи'); ?>&nbsp;
-                        <!--(<?php echo $this->Form->postLink(__d('tasks', 'Удалить окончательно'), array('action' => 'deleteAllDetetedTasks'),  array('class' => 'delete-all'), __d( 'tasks', 'Are you sure you want to delete all tasks?')); ?>)
-                    
-                    --></h3>
+                    </h3>
                   </div>
                     <ul class="sortable connectedSortable ui-helper-reset dthl" date="deleted" data-refresh="1">
                     </ul>
@@ -320,86 +285,4 @@
 <!-- print_brand -->
 <?php echo $this->Html->image("brand.". Configure::read('App.version') .".png", array('class' => 'print_brand', 'width' => 156, 'height' => 30)); ?>
 
-<!-- empty list messages  -->
-<?php echo $this->element('empty_lists', array('type' => 'filterProgress', 'hide' => true));?>
-<?php echo $this->element('empty_lists', array('type' => 'filterCompleted', 'hide' => true));?>
-
 <?php echo $this->element('connection_error', array(), array('cache' => array('key' => 'connection_error', 'config' => 'elements'))); ?>
-
-<!-- Templates -->
-<script type="text/template" id="day_tab_content_template">
-    <div class="tab-pane" id="<%= date %>"> 
-	<div class="row">  
-		<div class="listTask"> 
-			<div class="margin-bottom10"> 
-				<?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?> 
-				<h3 class="head-list-info"><%= date %><span class="weekday"></span></h3> 
-			</div>
-			<div class="well form-inline"> 
-				<div class="input-append"> 
-					<input type="text" size="16" class="input-xxlarge createTask" placeholder="<?php echo __d('tasks', '+Добавить задание…'); ?>"/>
-                    <button class="btn createTaskButton"><?php echo __d('tasks', 'Добавить'); ?></button>    
-				</div>
-			</div>
-			<div class="filter"> 
-				<span><?php echo __d('tasks', 'Фильтр'); ?>:&nbsp; </span> 
-                <a href=""  class="active" data="all"><?php echo __d('tasks', 'Все');?></a>
-				<span class="all badge badge-info"> 
-					0
-				</span>,
-				&nbsp; 
-				<a href=""  data="inProcess"><?php echo __d('tasks', 'В Процессе'); ?></a>
-				<span class="inProcess badge badge-warning"> 
-					0
-				</span>,
-				&nbsp; 
-				<a href=""  data="completed"><?php echo __d('tasks', 'Выполненные'); ?></a>
-				<span class="completed badge badge-success"> 
-					0
-				</span>
-			</div>
-			<div class="days"> 
-				<a href="" data="commentDay"><?php echo __d('tasks', 'Комментарий'); ?></a>
-				<label class="checkbox ratingDay"> 
-					<input type="checkbox" date="<%= date %>"/> <?php echo __d('tasks', 'Удачный день'); ?> 
-				</label>
-			</div>
-			<div class="clear"></div>
-			<ul class="sortable connectedSortable ui-helper-reset filtered dthl" date="<%= date %>" data-refresh="0"> 
-				<p class="loadContent" align=center>
-                    <?php echo $this->Html->image("ajax-loader-content.". Configure::read('App.version') .".gif"); ?>
-                </p>
-			</ul>
-            
-		</div>
-	</div>
-</div>
-</script>
-
-<script type="text/template" id="ajax_loader_content">
-    <p class="loadContent" align=center>
-        <?php echo $this->Html->image("ajax-loader-content.". Configure::read('App.version') .".gif"); ?>
-    </p>
-</script>
-
-
-<script type="text/template" id="day_h3_label">
-    <h3 class="day label label-info margin-bottom10" rel="tooltip" date="<%= date %>" title="<?php echo __d('tasks', 'Кликните для перехода на'); ?>&nbsp;<%= date %>">
-	   <span class="dayDate"><%= title %></span><span class="dash"> - </span><span class="<%= weekDayStyle %>"><%= weekDay %></span>
-    </h3>
-</script>
-
-<script type="text/template" id="empty_list_day_tasks">
-    <% if ( type == "past") { %>
-        <?php echo $this->element('empty_lists', array('type' => 'past', 'hide' => true));?>
-    <% } else { %>
-        <?php echo $this->element('empty_lists', array('type' => 'future', 'hide' => true));?>
-    <% }  %>
-</script>
-
-<script type="text/template" id="task_tag">
-        <?php echo $this->Task->taskLiTag();?>
-</script>
-<script type="text/template" id="add_task">
-        <?php echo $this->Task->addTaskLi();?>
-</script>

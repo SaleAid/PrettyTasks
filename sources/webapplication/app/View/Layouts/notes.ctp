@@ -59,20 +59,6 @@ if(Configure::read('Config.language') =='eng'){
 }
 ?>
 
-<?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');?>
-
-<?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js');?>
-
-<?php echo $this->Html->script('http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');?>
-
-<?php //echo $this->Html->script('http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js');?>
-
-<?php echo $this->Html->script('bootstrap.min');?>
-
-<?php echo $this->Html->script('jquery.ui.touch-punch.min');?>
-
-<?php echo $this->fetch('toFooter');?>
-
 <?php echo $this->element('js_lang', array(), array('cache' => array('key' => 'js_lang', 'config' => 'elements'))); ?> 
 
 <?php echo $this->element('ga', array(), array(
@@ -82,12 +68,28 @@ if(Configure::read('Config.language') =='eng'){
     )
 ));
 ?>
+
 <?php 
     if(!empty($currentUser)){
         echo $this->element('box', array(), array('cache' => array('key' => 'box', 'config' => 'elements')));
         echo $this->element('js_global_config', array(), array('cache' => array('key' => 'js_global_config', 'config' => 'elements')));     
     }
 ?>
+
+<?php echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');?>
+
+<?php echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js');?>
+
+<?php echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');?>
+
+<?php //echo $this->Html->script('http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js');?>
+
+<?php echo $this->Html->script('bootstrap.min');?>
+
+<?php echo $this->Html->script('jquery.ui.touch-punch.min');?>
+
+<?php echo $this->fetch('toFooter');?>
+
 <?php echo $this->element('noscript', array(), array('cache' => array('key' => 'noscript', 'config' => 'elements'))); ?> 
  </body>
 </html>

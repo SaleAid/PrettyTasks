@@ -78,8 +78,8 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
  * @var array 
  */
 	protected $_authDefaults = array(
-	    'userModel' => 'User',
-	    'fields' => array('username' => 'username', 'password' => 'password')
+	    'userModel' => 'Account',
+	    'fields' => array('username' => 'email', 'password' => 'password')
 	    );
 
 /**
@@ -201,7 +201,7 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
 		}
 
 		try {
-			$this->isAuthorized();
+		  	$this->isAuthorized();
 			$this->user(null, $this->AccessToken->id);
 		} catch (OAuth2AuthenticateException $e) {
 			$e->sendHttpResponse();
@@ -295,11 +295,12 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
  * @return mixed array of user fields if $field is blank, string value if $field is set and $fields is avaliable, false on failure 
  */
 	public function user($field = null, $token = null) {
-		if (!$this->_user) {
+	   	if (!$this->_user) {
 			$this->AccessToken->bindModel(array(
 			    'belongsTo' => array(
 				'User' => array(
-				    'className' => $this->authenticate['userModel'],
+				    //'className' => $this->authenticate['userModel'],
+                    'className' => 'User',
 				    'foreignKey' => 'user_id'
 				    )
 				)
@@ -309,10 +310,10 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
 				'conditions' => array('oauth_token' => self::hash($token)),
 				'recursive' => 1
 			));
-			if (!$data) {
+            if (!$data) {
 				return false;
 			}
-			$this->_user = $data['User'];
+            $this->_user = $data['User'];
 		}
 		if (empty($field)) {
 			return $this->_user;
@@ -563,8 +564,8 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
 			),
 		    'recursive' => -1
 		));
-		if ($user) {
-			return array('user_id' => $user['User'][$this->User->primaryKey]);
+        if ($user) {
+			return array('user_id' => $user['Account']['user_id']);
 		}
 		return false;
 	}

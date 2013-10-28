@@ -20,7 +20,7 @@
                                               'class' => 'brand',
                                               'width' => 156, 
                                               'height' => 30, 
-                                              'url' => array('controller' => 'tasks', 'action' => 'index','#' => 'day-'.$this->Time->format('Y-m-d', time())))
+                                              'url' => array('controller' => 'tasks', 'action' => 'index','#' => 'day-'.$this->Time->format('Y-m-d', time(), false, $timezone)))
             );?>
         <?php else: ?>
         <?php echo $this->Html->image("brand.". Configure::read('App.version') .".png", 
@@ -38,7 +38,7 @@
           <li class="tasks <? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">
                 <?php echo $this->Html->link(
                                 __d('pages', 'Tasks'),
-                                array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time()))
+                                array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time(), false, $timezone))
                 );?>    
           </li>
           <?php //if ($isBetaUser):?>
