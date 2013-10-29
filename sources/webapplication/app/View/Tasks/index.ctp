@@ -127,7 +127,7 @@
                     <ul class="sortable connectedSortable ui-helper-reset dthl" date="expired" data-refresh="1">
                     </ul>
                     <div class="see-more">
-                        <button class="btn btn-large btn-block btn-see-more"><?php echo __d('notes', 'Далее...'); ?></button>
+                        <button class="btn btn-large btn-block btn-see-more"><?php echo __d('tasks', 'Далее...'); ?></button>
                     </div>
                     <?php echo $this->element('empty_lists', array('type' => 'overdue', 'hide' => true));?>
                    </div>
@@ -143,7 +143,7 @@
                     <ul class=" ui-helper-reset " date="completed" data-refresh="1">
                     </ul>
                     <div class="see-more">
-                        <button class="btn btn-large btn-block btn-see-more"><?php echo __d('notes', 'Далее...'); ?></button>
+                        <button class="btn btn-large btn-block btn-see-more"><?php echo __d('tasks', 'Далее...'); ?></button>
                     </div>
                     <?php echo $this->element('empty_lists', array('type' => 'completed', 'hide' => true));?>
                   </div>
@@ -159,7 +159,7 @@
                     <ul class="sortable connectedSortable ui-helper-reset dthl" date="continued" data-refresh="1">
                     </ul>
                     <div class="see-more">
-                        <button class="btn btn-large btn-block btn-see-more"><?php echo __d('notes', 'Далее...'); ?></button>
+                        <button class="btn btn-large btn-block btn-see-more"><?php echo __d('tasks', 'Далее...'); ?></button>
                     </div>
                     <?php echo $this->element('empty_lists', array('type' => 'continued', 'hide' => true));?>
                   </div>
@@ -179,7 +179,7 @@
                     <ul class="sortable connectedSortable ui-helper-reset dthl" date="deleted" data-refresh="1">
                     </ul>
                     <div class="see-more">
-                        <button class="btn btn-large btn-block btn-see-more"><?php echo __d('notes', 'Далее...'); ?></button>
+                        <button class="btn btn-large btn-block btn-see-more"><?php echo __d('tasks', 'Далее...'); ?></button>
                     </div>
                     <?php echo $this->element('empty_lists', array('type' => 'deleted', 'hide' => true));?>
                   </div>
@@ -195,7 +195,7 @@
                         <ul class="sortable connectedSortable ui-helper-reset dthl" date="future" data-refresh="1">
                         </ul>
                         <div class="see-more">
-                            <button class="btn btn-large btn-block btn-see-more"><?php echo __d('notes', 'Далее...'); ?></button>
+                            <button class="btn btn-large btn-block btn-see-more"><?php echo __d('tasks', 'Далее...'); ?></button>
                         </div>
                         <?php echo $this->element('empty_lists', array('type' => 'future', 'hide' => true));?>
                     </div>
