@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-10-28 19:54+0000\n"
+"POT-Creation-Date: 2013-10-29 13:50+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -20,14 +20,6 @@ msgstr ""
 #: Plugin/ApiV1/Controller/TasksController.php:105;115;162;206;259
 #: Plugin/AppVK/Controller/TasksController.php:89;174;216;255;298;345;388;441;479;527;566;597;629
 msgid "Ошибка при передаче данных"
-msgstr ""
-
-#: Controller/NotesController.php:75
-msgid "Заметка успешно создана"
-msgstr ""
-
-#: Controller/NotesController.php:77
-msgid "Заметка не создана"
 msgstr ""
 
 #: Controller/TasksController.php:67
@@ -425,7 +417,6 @@ msgstr ""
 #: Plugin/AppVK/View/Tasks/index.ctp:348;364
 #: View/Elements/comment_day.ctp:10
 #: View/Elements/edit_task.ctp:76
-#: View/Elements/note_create_form.ctp:35
 #: View/Elements/repeat_task.ctp:93
 msgid "Закрыть"
 msgstr ""
@@ -433,7 +424,6 @@ msgstr ""
 #: Plugin/AppVK/View/Tasks/index.ctp:349;365
 #: View/Elements/comment_day.ctp:11
 #: View/Elements/edit_task.ctp:77
-#: View/Elements/note_create_form.ctp:37
 #: View/Elements/repeat_task.ctp:94
 msgid "Сохранить"
 msgstr ""
@@ -456,10 +446,6 @@ msgstr ""
 
 #: View/Elements/js_global_config.ctp:13
 msgid "Перемещение выполненых задач запрещено"
-msgstr ""
-
-#: View/Elements/note_create.ctp:8
-msgid "Добавить заметку"
 msgstr ""
 
 #: View/Elements/repeat_task.ctp:5
@@ -594,6 +580,10 @@ msgstr ""
 msgid "Длительные"
 msgstr ""
 
+#: View/Tasks/index.ctp:130;146;162;182;198
+msgid "Далее..."
+msgstr ""
+
 #: View/Tasks/index.ctp:157
 msgid "Длительные задачи"
 msgstr ""
@@ -612,6 +602,10 @@ msgstr ""
 
 #: Model/Task.php:validation for field id;validation for field user_id;validation for field repeatid;validation for field day_id
 msgid "Wrong ID"
+msgstr ""
+
+#: Model/Task.php:validation for field id;validation for field user_id
+msgid "u"
 msgstr ""
 
 #: Model/Task.php:validation for field title

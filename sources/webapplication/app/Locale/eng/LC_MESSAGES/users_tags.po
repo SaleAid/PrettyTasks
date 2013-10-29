@@ -4,25 +4,31 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-08-12 20:21+0000\n"
-"PO-Revision-Date: 2013-08-13 00:33+0300\n"
+"POT-Creation-Date: 2013-10-29 13:47+0200\n"
+"PO-Revision-Date: 2013-10-29 13:48+0200\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Poedit 1.5.5\n"
 
-#: Controller/ListsController.php:59
-msgid "Ошибка, Список  уже создан"
+#: Controller/ListsController.php:43
+msgid "Ошибка, Список не создан"
+msgstr "Error, list is not created"
+
+#: Controller/ListsController.php:60
+msgid "Ошибка, Список уже создан"
 msgstr "Error, List is already created"
 
-#: Controller/ListsController.php:154
-msgid "Ошибка, Задача  не изменена"
-msgstr "Error, task has not been changed"
+#: Controller/ListsController.php:148
+msgid "Ошибка при сохранении комментария"
+msgstr "Error while saving comment"
 
-#: Model/UserTag.php:validation
-#: for field comment
+#: Controller/ListsController.php:180
+msgid "Ошибка при сохранении статуса"
+msgstr "Error saving status"
+
+#: Model/UserTag.php:validation for field comment
 msgid "Максимальная длина комментария не больше %d символов"
 msgstr "Max comment length is no more %d symbols"
-

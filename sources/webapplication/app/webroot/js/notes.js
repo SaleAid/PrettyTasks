@@ -294,7 +294,8 @@ jQuery(function( $ ) {
               confirm: "<a href='#'><i class='icon-trash icon-white n-del'></i></a>",
               cancel: "",
               separator: "",
-              expiresIn: 3,
+              expiresIn: 300,
+              hideOriginalAction: false,
               bindsOnEvent: "click",
               confirmCallback: function(el) {
                  var id = $(el).parents('li.note-box').data('id');

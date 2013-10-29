@@ -32,9 +32,9 @@ templates.notes.modal_edit_note = '\
                     <span class="muted">'+ __d('notes', 'Изменен')+': <%= modified %></span>\
                 </div>\
             <% } %>\
-            <a href="#" class="btn" data-dismiss="modal" aria-hidden="true" tabindex ="3">'+ __d('notes', 'Закрыть')+'</a>\
+            <a href="#" class="btn" data-dismiss="modal" aria-hidden="true" tabindex ="3">'+ __d('notes', 'Закрыть') +'</a>\
             <% if (typeof(view) == "undefined") { %>\
-                <button id="save-note" class="btn btn-success" tabindex ="2">'+ __d('notes', 'Сохранить')+'</button>\
+                <button id="save-note" class="btn btn-success" tabindex ="2">'+ __d('notes', 'Сохранить') +'</button>\
             <% } %>\
         </div>\
     </div>\

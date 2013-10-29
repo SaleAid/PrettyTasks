@@ -176,3 +176,8 @@ div.well{
 .btn-see-more{
     background-image:none;
 }
+.inline-confirmation-block{
+    position: absolute;
+    top: 0px;
+    right: -1px;
+}

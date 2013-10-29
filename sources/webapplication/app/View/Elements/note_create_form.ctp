@@ -32,9 +32,9 @@
                     <span class="muted"><?php echo __d('notes', 'Изменен'); ?>: <%= modified %></span>
                 </div>
             <% } %>
-            <a href="#" class="btn" data-dismiss="modal" aria-hidden="true" tabindex ="3"><?php echo __d('tasks', 'Закрыть');?></a>
+            <a href="#" class="btn" data-dismiss="modal" aria-hidden="true" tabindex ="3"><?php echo __d('notes', 'Закрыть');?></a>
             <% if (typeof(view) == "undefined") { %>  
-                <button id="save-note" class="btn btn-success" tabindex ="2"><?php echo __d('tasks', 'Сохранить');?></button>
+                <button id="save-note" class="btn btn-success" tabindex ="2"><?php echo __d('notes', 'Сохранить');?></button>
             <% } %>
             
         </div>

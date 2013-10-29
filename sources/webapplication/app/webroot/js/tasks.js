@@ -1842,6 +1842,7 @@ function initDelete(element){
               cancel: "",
               separator: "",
               expiresIn: 3,
+              hideOriginalAction: false,
               bindsOnEvent: "click",
               confirmCallback: function(el) {
                  el.parent().fadeIn();

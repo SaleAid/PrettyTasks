@@ -4,7 +4,7 @@ App::uses('Validation', 'Utility');
 class UsersController extends AppController {
    public $name = 'Users';
     
-   public $uses = array('Task', 'User');
+   public $uses = array('Task', 'User', 'Account');
 
    public $components = array(
         'RequestHandler', 
@@ -75,22 +75,22 @@ class UsersController extends AppController {
                 'language'
                  
             );
-            if (!$this->_isSetRequestData($expectedData, $this->modelClass)) {
+            if (!$this->_isSetRequestData($expectedData, 'User')) {
                 $this->Session->setFlash(__d('users', 'Ошибка при передаче данных'), 'alert', array(
                         'class' => 'alert-error'
                     ));
             } else {
 
-                $data[$this->modelClass]['timezone'] = $this->request->data[$this->modelClass]['timezone'];
-                $data[$this->modelClass]['language'] = $this->request->data[$this->modelClass]['language'];
+                $data['User']['timezone'] = $this->request->data['User']['timezone'];
+                $data['User']['language'] = $this->request->data['User']['language'];
                 if ($this->User->save($data)) {
                    $this->_refreshAuth();
                    $this->Session->setFlash(__d('users', 'Профиль был сохранен'), 'alert', array(
                         'class' => 'alert-success'
                    ));
                    $params = $this->request->params;
-                   if(!empty($data[$this->modelClass]['language'])){
-                        $params['lang'] = $this->L10n->map($data[$this->modelClass]['language']);
+                   if(!empty($data['User']['language'])){
+                        $params['lang'] = $this->L10n->map($data['User']['language']);
                         $this->redirect($params);
                    }
                    $params['lang'] = false;
@@ -166,9 +166,9 @@ class UsersController extends AppController {
     protected function _refreshAuth(){
          $this->User->contain();
          $user = $this->User->read(false, $this->Auth->user('id'));
-         $user = $user[$this->modelClass];
+         $user = $user['User'];
          //pr($this->Auth->user());die;
-         $user['account_id'] = $this->Auth->user('id');
+         $user['account_id'] = $this->Auth->user('account_id');
          $user['provider'] = $this->Auth->user('provider');
          $user['full_name'] = $this->Auth->user('full_name');
          $this->Session->write('Auth.User', $user);

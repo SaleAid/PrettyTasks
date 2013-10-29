@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-10-28 19:54+0000\n"
+"POT-Creation-Date: 2013-10-29 13:50+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -314,6 +314,11 @@ msgstr ""
 #: Model/Account.php:validation for field id;validation for field user_id
 #: Model/AccountSocial.php:validation for field id;validation for field user_id
 msgid "Wrong ID"
+msgstr ""
+
+#: Model/Account.php:validation for field id
+#: Model/AccountSocial.php:validation for field id
+msgid "u"
 msgstr ""
 
 #: Model/Account.php:validation for field provider;validation for field full_name;validation for field password;validation for field password_confirm;validation for field old_password

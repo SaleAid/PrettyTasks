@@ -301,6 +301,9 @@ div.well{
 }
 .inline-confirmation-block{
     margin-left: 5px;
+    position: relative;
+    top: 0px;
+    right: 25px;
 }
 
 /*modal window*/

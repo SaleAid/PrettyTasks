@@ -5,7 +5,7 @@ if( strtolower($this->params['controller']) != "notes" ) {
     echo $this->Html->script('notes_create.' . Configure::read('App.version'), array('block' => 'toFooter'));
 }
 ?>
-<a class="btn-note btn btn-info btn-small" href="#" rel="tooltip" title="<?php echo __d('tasks', 'Добавить заметку'); ?>">
+<a class="btn-note btn btn-info btn-small" href="#" rel="tooltip" title="<?php echo __d('notes', 'Добавить заметку'); ?>">
     <i class="icon-edit"></i>
 </a>
 

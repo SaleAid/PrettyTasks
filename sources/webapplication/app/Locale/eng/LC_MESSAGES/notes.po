@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-10-28 19:54+0000\n"
-"PO-Revision-Date: 2013-10-29 09:25+0200\n"
+"POT-Creation-Date: 2013-10-29 13:50+0200\n"
+"PO-Revision-Date: 2013-10-29 13:52+0200\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,6 +15,14 @@ msgstr ""
 #: Controller/NotesController.php:56
 msgid "Ошибка при передаче номера страницы"
 msgstr "Error while sending page number"
+
+#: Controller/NotesController.php:75
+msgid "Заметка успешно создана"
+msgstr "Note created successfully"
+
+#: Controller/NotesController.php:77
+msgid "Заметка не создана"
+msgstr "Note has not been created"
 
 #: Controller/NotesController.php:97
 msgid "Заметка не обновлена"
@@ -57,6 +65,10 @@ msgstr "Error, You cannot change this note"
 msgid "errors, the wrong tag"
 msgstr "Error, wrong tag"
 
+#: View/Elements/note_create.ctp:8
+msgid "Добавить заметку"
+msgstr "Add a note"
+
 #: View/Elements/note_create_form.ctp:17
 msgid "Просмотр заметки"
 msgstr "View note"
@@ -77,6 +89,14 @@ msgstr "Created"
 msgid "Изменен"
 msgstr "Changed"
 
+#: View/Elements/note_create_form.ctp:35
+msgid "Закрыть"
+msgstr "Close"
+
+#: View/Elements/note_create_form.ctp:37
+msgid "Сохранить"
+msgstr "Save"
+
 #: View/Notes/index.ctp:30
 msgid "Заметки"
 msgstr "Notes"
@@ -89,7 +109,7 @@ msgstr "+Add note"
 msgid "Добавить"
 msgstr "Add"
 
-#: View/Notes/index.ctp:59 View/Tasks/index.ctp:130;146;162;182;198
+#: View/Notes/index.ctp:59
 msgid "Далее..."
 msgstr "Load more..."
 

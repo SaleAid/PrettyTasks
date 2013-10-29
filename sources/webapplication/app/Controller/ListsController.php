@@ -40,7 +40,7 @@ class ListsController extends AppController {
             }
             if(!$tag){
                 $result['message'] = new MessageObj('error', 
-                                                    __d('tags', 'Ошибка, Список не создан'),
+                                                    __d('users_tags', 'Ошибка, Список не создан'),
                                                     $this->UserTag->Tag->validationErrors
                                                     );
             }else{
