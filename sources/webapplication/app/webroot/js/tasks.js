@@ -458,8 +458,12 @@ function scrGetListByTag(data){
     }
     if($.isEmptyObject(data.tasks)){
         $list.find('.emptyList ').removeClass('hide');
+        $listUl.siblings('.filter').find('span.all').text(0);
+        $listUl.siblings('.filter').find('span.inProcess').text(0);
+        $listUl.siblings('.filter').find('span.completed').text(0);
         return;
     }
+    $list.find('.emptyList ').addClass('hide');
     $.each( data.tasks, function(index, task) {
             alltasks++;
             if (+task.done){
@@ -2300,11 +2304,10 @@ function InitClock() {
   temp += ((minute < 10) ? ":0" : ":") + minute; 
   
   var $clock = $('div.tab-pane#'+GLOBAL_CONFIG.date).find('#clock');
-//  console.log($.datepicker.formatDate('yy-mm-dd', time));
   if($clock.length > 0){
     $clock.empty().append(temp);
   }else{
-    $('div.tab-pane#'+GLOBAL_CONFIG.date).find('.head-list-info').append(' - <span id="clock">1'+temp+'</span>');
+    $('div.tab-pane#'+GLOBAL_CONFIG.date).find('.head-list-info').append(' - <span id="clock">'+temp+'</span>');
   }
   //document.getElementById('clock').innerHTML = temp; 
   setTimeout("InitClock()", 1000); 
@@ -2432,6 +2435,10 @@ $(function(){
                     }
                 }else if( $.inArray(hash, ["expired", "completed", "deleted", "continued", "future"]) != -1 ){
                     numPages['future'] = 1;
+                    numPages['expired'] = 1;
+                    numPages['continued'] = 1;
+                    numPages['deleted'] = 1;
+                    numPages['completed'] = 1;
                     userEvent('getTasksByType', {type: hash});
                     $('#main a[href="#'+hash+'"]').tab('show');
                 }else if(hash == "planned"){
@@ -2484,7 +2491,7 @@ $(function(){
     initEditAble(".editable");
     initDelete(".deleteTask");
     initDone(".done");
-    initRatingDay(".ratingDay input");
+    //initRatingDay(".ratingDay input");
     initTagArchive(".to-archive input"); 
     initEditTask(".editTask");   
     initDrop("ul:first li.drop");
