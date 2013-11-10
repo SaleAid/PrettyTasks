@@ -2498,7 +2498,7 @@ $(function(){
     initSortable(".sortable");
     initTabDelte('li a[data-toggle="tab"] .close');
     initFilter('.filter a');
-    initCommentDay('.days a[data="commentDay"]');
+    //initCommentDay('.days a[data="commentDay"]');
     initCommentTag('.days a[data="commentTag"]');
     initDayClick('.day');
     initDayClick('.tag-date');

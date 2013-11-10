@@ -2,8 +2,8 @@
     var GLOBAL_CONFIG = {
         dp_regional: '<?php if (Configure::read('Config.langURL') == 'ru') {echo Configure::read('Config.langURL');} ?>',
         date: '<?php echo $this->Time->format('Y-m-d', time(), false, $timezone);?>',
-        intervalCheckStatus: 10000,
-        intervalCheckStatusError: 30000,
+        intervalCheckStatus: 120000,
+        intervalCheckStatusError: 60000,
         timezone: '<?php echo $timezoneOffset; ?>', 
         lang: '<?php echo Configure::read('Config.langURL'); ?>',
         locale: '<?php echo Configure::read('Config.language'); ?>',
