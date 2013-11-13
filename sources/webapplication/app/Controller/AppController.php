@@ -119,7 +119,10 @@ class AppController extends Controller {
         
         if (! $timezone) {
             $timezone_offset = $this->Auth->user('timezone_offset');
-            return timezone_name_from_abbr("", $timezone_offset, 0);
+            $timezone = timezone_name_from_abbr("", $timezone_offset, 0);
+            if(!$timezone){
+                $timezone = Configure::read('Config.timezone');
+            }
         }
         return $timezone;
     }
