@@ -46,12 +46,14 @@ templates.day_tab_content = '\
     					0\
     				</span>\
     			</div>\
+                <% if(date != "planned") { %>\
                 <div class="days">\
                 <a href="" data="commentDay">'+ __d('tasks', 'Комментарий')+'</a>\
                     <label class="checkbox ratingDay">\
                         <input type="checkbox" date="<%= date %>"/> '+ __d('tasks', 'Удачный день')+'\
                     </label>\
     			</div>\
+                <% } %>\
     			<div class="clear"></div>\
     			<ul class="sortable connectedSortable ui-helper-reset filtered dthl" date="<%= date %>" data-refresh="0">\
                 '+templates.ajax_loader_content+'\
