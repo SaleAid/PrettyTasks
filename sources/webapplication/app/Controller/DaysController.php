@@ -1,4 +1,5 @@
 <?php
+App::uses('CakeTime', 'Utility');
 App::uses('AppController', 'Controller');
 /**
  * Days Controller
@@ -88,7 +89,7 @@ class DaysController extends AppController {
     public function journal(){
         $result = $this->_prepareResponse();
         $result['success'] = true;
-        $result['data'] = $this->Day->getComments($this->Auth->user('id'));
+        $result['data'] = $this->Day->getComments($this->Auth->user('id'), CakeTime::format('Y-m-d', time(), false, $this->_userTimeZone()));
         $this->set('result', $result);
         $this->set('_serialize', 'result');
         //debug($result);

@@ -231,10 +231,10 @@ class Day extends AppModel {
 	 *        	default = 10
 	 * @return Ambigous <multitype:, NULL, mixed>
 	 */
-	public function getComments($user_id, $count = 10, $to = null, $from = null) { 
+	public function getComments($user_id, $to = null, $from = null, $count = 10) { 
 		if (!$to){
 			$to = date("Y-m-d");
-		}
+        }
 		$this->contain();
 		$result = $this->find('all', array(
 				'conditions' => array(

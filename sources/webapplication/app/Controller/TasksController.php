@@ -3,6 +3,7 @@ App::uses('CakeTime', 'Utility');
 App::uses('AppController', 'Controller');
 App::uses('Validation', 'Utility');
 App::uses('DateList', 'Model');
+App::uses('UncompletedManyDateList', 'Model');
 App::uses('ManyDateList', 'Model');
 App::uses('PlannedList', 'Model');
 App::uses('OverdueList', 'Model');
@@ -158,7 +159,7 @@ class TasksController extends AppController {
                         $beginDate = CakeTime::format('Y-m-d', time(), false, $this->_userTimeZone());
                         $endDate = CakeTime::format('Y-m-d', '+7 days', false, $this->_userTimeZone());
                         $arrayDates = ManyDateList::arrayDates($beginDate, $endDate);
-                        $ManyDateList = new ManyDateList($this->Auth->user('id'), $arrayDates);
+                        $ManyDateList = new UncompletedManyDateList($this->Auth->user('id'), $arrayDates);
                         $result['data'] = new TasksListObj('defined', 'future', $ManyDateList->getItems($count, $page), $count);
                         break;
                     }

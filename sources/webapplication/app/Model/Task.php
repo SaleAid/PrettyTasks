@@ -330,6 +330,7 @@ class Task extends AppModel {
         $this->data = $this->_prepareTask($user_id, $title, $date, $time, $timeend, $priority, $future);
         if($clone){
             unset($this->id);
+            $this->updateTask = true;
         }
         return $this;
     }
