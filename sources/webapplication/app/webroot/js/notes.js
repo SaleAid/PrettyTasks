@@ -254,7 +254,7 @@ jQuery(function( $ ) {
         create: function(e) {
 		    var $input = AppNotes.$new_note,
 				val = $.trim( $input.val() );
-            if(e.ctrlKey || e.type == 'click'){
+            if((e.ctrlKey && e.keyCode == 13) || e.type == 'click'){
                 if (!val ){
                     $input.addClass('errorEdit');
                     $input.focus();
