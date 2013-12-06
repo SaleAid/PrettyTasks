@@ -1,6 +1,21 @@
 <?php
+/**
+ * Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ *
+ * @copyright Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ * @author Vladyslav Kruglyk <krugvs@gmail.com>
+ * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
+ */
 App::uses('AppController', 'Controller');
 App::uses('Validation', 'Utility');
+/**
+ * Accounts Controller
+ *
+ *
+ * @property Account $Account
+ * @property AccountSocial $AccountSocial
+ * @property Task $Task
+ */
 class AccountsController extends AppController {
     
     public $name = 'Accounts';
@@ -609,7 +624,7 @@ class AccountsController extends AppController {
         if ($this->Account->delete()) {
         //if ($this->Account->save(array('user_id' => null, 'active' => 0, 'agreed' => 0))) {
             $this->Session->setFlash(__d('accounts', 'Account deleted'), 'alert', array(
-                        'class' => 'alert-error'
+                        'class' => 'alert-success'
                     ));
             if($id == $this->Auth->user('account_id')){
                 $this->logout();

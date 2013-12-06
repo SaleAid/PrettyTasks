@@ -85,7 +85,7 @@ class Tag extends AppModel {
  */
 	public function edit($tagId = null, $postData = null) {
 		$tag = $this->find('first', array(
-			'contain' => array(),
+			//'contain' => array(),//todo remove it
 			'conditions' => array(
 				$this->alias . '.' . $this->primaryKey => $tagId)));
 

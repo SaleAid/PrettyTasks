@@ -1,4 +1,11 @@
 <?php
+/**
+ * Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ *
+ * @copyright Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ * @author Vladyslav Kruglyk <krugvs@gmail.com>
+ * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
+ */
 App::uses('NoteObj', 'Lib');
 App::uses('AppController', 'Controller');
 App::uses('MessageObj', 'Lib');
@@ -6,7 +13,7 @@ App::uses('NotesListObj', 'Lib');
 /**
  * Notes Controller
  *
- * @property 
+ * @property Note $Note
  */
 class NotesController extends AppController {
 

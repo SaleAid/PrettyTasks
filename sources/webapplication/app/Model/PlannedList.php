@@ -11,7 +11,7 @@ App::uses('Task', 'Model');
 App::uses('TaskObj', 'Lib');
 /**
  *
- * @author vlad
+ * @property Task $_model
  *        
  */
 class PlannedList extends MainList {

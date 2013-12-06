@@ -1,10 +1,24 @@
 <?php
+/**
+ * Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ *
+ * @copyright Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ * @author Vladyslav Kruglyk <krugvs@gmail.com>
+ * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
+ */
 App::uses('AppController', 'Controller');
 App::uses('Validation', 'Utility');
+/**
+ * Users Controller
+ *
+ * @property Task $Task
+ * @property User $User
+ * @property Account $Account
+ */
 class UsersController extends AppController {
    public $name = 'Users';
     
-   public $uses = array('Task', 'User', 'Account');
+   public $uses = array('User', 'Task', 'Account');
 
    public $components = array(
         'RequestHandler', 
@@ -145,7 +159,8 @@ class UsersController extends AppController {
             'conditions' => array(
                 'User.id' => $this->Auth->user('id'), 
                 //'Account.active' => 1
-            )
+            ),
+            'contain' => 'User'
         );
         $accounts = $this->paginate('Account');
         $this->set('accounts', $accounts);

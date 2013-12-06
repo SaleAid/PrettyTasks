@@ -33,6 +33,7 @@ class Page extends AppModel {
      * @return Ambigous <multitype:, NULL, mixed>
      */
     public function view($url, $lang) {
+        $this->recursive = -1;
         return $this->find('first', array(
                 'conditions' => array(
                         'Page.url' => $url,
