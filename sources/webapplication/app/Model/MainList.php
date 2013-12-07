@@ -12,9 +12,7 @@ App::uses('CakeTime', 'Utility');
 /**
  * TODO Description
  * 
- * @author Vladyslav Kruglyk <krugvs@gmail.com>
- * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
- *
+ * @property Ordered $_ordered
  */
 class MainList{
     

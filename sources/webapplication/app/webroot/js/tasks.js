@@ -101,6 +101,9 @@ function checkStatus(){
             if(!data.success){
                 mesg(data.message.message, data.message.type);
             }else{
+                if (typeof _gaq != "undefined"){
+                    _gaq.push(["_trackEvent", "Checks", "/tasks/checkstatus.json"]);
+                }
                 switch(data.cause){
                     case 'changeDay':
                         mesg(data.message.message, data.message.type);

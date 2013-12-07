@@ -11,6 +11,9 @@ App::uses('Model', 'Model');
 /**
  */
 class AppModel extends Model {
+
+    //Don't delete this default property value
+    public $recursive = -1;
     
     /**
      *

@@ -76,7 +76,7 @@ class Note extends ApiV1AppModel {
     private $_fields = array('id', 'title', 'modified');
     
     public function isOwner($id, $user_id) {
-        $this->contain();
+        $this->recursive = -1;
         $result = $this->findByIdAndUser_id($id, $user_id);
         if ($result) {
             $this->_originData = $result;
@@ -87,7 +87,7 @@ class Note extends ApiV1AppModel {
     }
     
     public function getNotes( $user_id, $count = 50, $page = 1 ){
-        $this->contain();
+        $this->recursive = -1;
 	    $conditions = array(
                         'Note.user_id' => $user_id, 
                     );
@@ -105,7 +105,7 @@ class Note extends ApiV1AppModel {
     }
     
     public function search( $user_id, $query, $count = 50, $page = 1 ){
-        $this->contain();
+        $this->recursive = -1;
 	    $conditions = array(
                         'Note.title LIKE' => '%'.$query.'%', 
                         'Note.user_id' => $user_id
