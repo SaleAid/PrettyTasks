@@ -104,7 +104,7 @@ templates.add_task = '\
         <span class="commentTask"><%= comment %></span>\
         <span class="comment-task-icon"><i class="icon-file <%= comment_status %>"></i></span>\
         <span class="editTask"><i class="icon-pencil"></i></span>\
-        <span class="deleteTask"><i class=" icon-trash"></i></span>\
+        <span class="delete-wr"><span class="deleteTask"><i class=" icon-trash"></i></span></span>\
     </li>\
     ';
 templates.empty_list_filterProgress = '\

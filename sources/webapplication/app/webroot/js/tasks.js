@@ -948,7 +948,7 @@ function srcCountTasks(date, drop){
     $.each(listTasks, function(index, value) {
         var all = $(value).children('li').length;
         var done = $(value).children('li.complete').length;
-        console.log(done);
+//        console.log(done);
         $(value).siblings('.filter').find('span.all').text(all);
         $(value).siblings('.filter').find('span.inProcess').text(all - done);
         $(value).siblings('.filter').find('span.completed').text(done);
@@ -1267,7 +1267,8 @@ function onAddDay(data){
         if(+task.done){
             cDone++;
         }
-        list.append(AddTask(task));
+        //list.append(AddTask(task));
+        list.append(addTaskNew(task));
         initDelete( "li[id='"+task.id+"'] .deleteTask");
         initEditAble("li[id='"+task.id+"'] .editable");
     });
@@ -1481,9 +1482,11 @@ function scrDragWithTime(id, date, time){
                         
                 }else if(!newPositionID){
                     if(list.children().length){
-                        $(this).prependTo(list);
-                    }else{
+                        //$(this).prependTo(list);
                         $(this).appendTo(list);
+                    }else{
+                        $(this).prependTo(list);
+                        //$(this).appendTo(list);
                     }
                 }                    
                 if(time){
@@ -1734,9 +1737,11 @@ function scrCreate(data){
     } else if(data.data.future){
         date = 'planned';
         data.data.date = '';
-        $("ul[date='"+date+"']").prepend(AddTask(data.data));
+        //$("ul[date='"+date+"']").prepend(AddTask(data.data));
+        $("ul[date='"+date+"']").prepend(addTaskNew(data.data));
     } else {
-        $("ul[date='"+date+"']").append(AddTask(data.data));    
+        //$("ul[date='"+date+"']").append(AddTask(data.data));
+        $("ul[date='"+date+"']").append(addTaskNew(data.data));    
     }
     
     initDelete("li[id='"+data.data.id+"'] .deleteTask");
@@ -1849,9 +1854,9 @@ function initDelete(element){
               hideOriginalAction: false,
               bindsOnEvent: "click",
               confirmCallback: function(el) {
-                 el.parent().fadeIn();
-                 el.parent().addClass('currentTask');
-                 var id = el.parent().attr('id');
+                 el.parent().parent().fadeIn();
+                 el.parent().parent().addClass('currentTask');
+                 var id = el.parent().parent().attr('id');
                  userEvent('delete', {id: id});
               },
               cancelCallback: function(el) {

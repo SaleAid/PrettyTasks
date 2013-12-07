@@ -168,7 +168,7 @@ div.well{
 
 .sortable li span { 
     vertical-align: middle;
-    margin-right: 2px; 
+    /*margin-right: 2px;*/ 
 }
 
 .editable{
@@ -299,11 +299,14 @@ div.well{
     color: red !important;
     font-weight: bold !important;
 }
-.inline-confirmation-block{
-    margin-left: 5px;
+.delete-wr{
     position: relative;
+    
+}
+.inline-confirmation-block{
+    position: absolute;
     top: 0px;
-    right: 25px;
+    right: 5px;
 }
 
 /*modal window*/
