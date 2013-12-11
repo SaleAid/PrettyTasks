@@ -4,8 +4,8 @@
 
 	<!-- left panel  -->
 	<div data-role="panel" id="left-panel-tasks" data-position="left"
-		data-display="overlay" data-theme="e">
-		<ul data-role="listview" data-divider-theme="e" data-count-theme="e">
+		data-display="overlay" >
+		<ul data-role="listview"  >
 			<li data-role="list-divider">Lists</li>
 			<li><a href="#" class="menu-list-future">Agenda</a></li>
 			<li><a href="#" class="menu-list-planned">Planned</a></li>
@@ -31,17 +31,17 @@
 
 	<!-- right panel (actions) -->
 	<div data-role="panel" id="right-panel-tasks" data-position="right"
-		data-display="overlay" data-theme="e">
+		data-display="overlay" >
 
-		<ul data-role="listview" data-divider-theme="e" data-count-theme="e" id="tags-list"></ul>
+		<ul data-role="listview"   id="tags-list"></ul>
 
 	</div>
 	<!-- /right panel (actions) -->
 
-	<div data-role="header" data-position="fixed" data-theme="e">
+	<div data-role="header" data-position="fixed" >
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#" class="ui-btn-active" data-transition="flip">Tasks</a></li>
+				<li><a href="#" data-transition="flip">Tasks</a></li>
 				<li><a href="#page-notes" data-transition="flip">Notes</a></li>
 			</ul>
 		</div>
@@ -84,16 +84,15 @@
 
 	<!-- left panel  -->
 	<div data-role="panel" id="left-panel-notes" data-position="left"
-		data-display="push" data-theme="e">
+		data-display="push" >
 	</div>
 	<!-- /left panel -->
 
-	<div data-role="header" data-position="fixed" data-theme="e">
+	<div data-role="header" data-position="fixed" >
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#page-tasks" data-transition="flip">Tasks</a></li>
-				<li><a href="#page-notes" class="ui-btn-active"
-					data-transition="flip">Notes</a></li>
+				<li><a href="#page-notes" data-transition="flip">Notes</a></li>
 			</ul>
 		</div>
 		<!-- /navbar -->

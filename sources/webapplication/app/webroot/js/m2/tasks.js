@@ -38,29 +38,38 @@ var mobile = (function() {
 				}
 			});
 
-			$(document).on("taphold", "#taskslist li ", function(event, ui) {
+			$(document).on("taphold", "#taskslist .ui-checkbox ", function(event, ui) {
+				console.log('taphold');
+				mobile.showMessage('taphold');
+				return;
+				_private.changeCheckbox1(event, ui);
+			});
+			
+			$(document).on("tap", "#taskslist input ", function(event, ui) {
+				console.log('tap');
+				mobile.showMessage('tap');
+				return;
 				_private.changeCheckbox1(event, ui);
 			});
 
-			$(document).on('click', '.ui-icon-checkbox-on, .ui-icon-checkbox-off', function(event, ui) {
-				//console.log('tap');
+			$(document).on('click', '#taskslist input', function(event, ui) {
+				console.log('click');
+				mobile.showMessage('click');
+				return;
 				_private.changeCheckbox1(event, ui);//todo2
 			});
 			
-			$(document).on('click', '*', function(event, ui) {
-				//console.log('click');
-				//console.log(event);
+			$(document).on('vclick', '#taskslist input ', function(event, ui) {
+				console.log('vclick');
+				mobile.showMessage('vclick');
+				return;
+				_private.changeCheckbox1(event, ui);//todo2
 			});
 			
-			$(document).on('tap', '*', function(event, ui) {
-				//console.log('tap');
-				//console.log(event);
-			});
-
-			$(document).on("vmouseup", "#taskslist li", function() {
-				event.preventDefault();
-				return false;
-			});
+//			$(document).on("vmouseup", "#taskslist li", function() {
+//				event.preventDefault();
+//				return false;
+//			});
 			
 			$(document).on('click', "a[class|='menu-list']", function(event){
 				var name = event.target.className.split(' ')[0];
@@ -115,7 +124,7 @@ var mobile = (function() {
 		    
 		    $(document).on({
 		    	 ajaxStart: function() { 
-		    		 $.mobile.loading( 'show', {html: "<span><center><img src='img/ajax-loader-content.gif' /></center><h1>Loading...</h1></span>"});
+		    		$.mobile.loading( 'show', {html: "<span><center><img src='img/ajax-loader-content.gif' /></center><h1>Loading...</h1></span>"});
 		    	 },
 		    	 ajaxStop: function() {
 
@@ -282,7 +291,7 @@ var mobile = (function() {
 			}
 			var newItem = $('<li><label '+className+'>	<input type="checkbox" name="checkbox-' + Task.id + '" data-id="' + Task.id + '" ' + checkedStr + '>'
 					+ $('<div/>').html(Task.title).text() + '</label></li>');
-			newItem.appendTo('#taskslist .ui-controlgroup-controls');
+			newItem.appendTo('#taskslist ');//.ui-controlgroup-controls
 
 
 		},
@@ -297,7 +306,7 @@ var mobile = (function() {
 			$('#taskslist li .ui-first-child ').removeClass('ui-first-child');
 			$('#taskslist li .ui-last-child ').removeClass('ui-last-child');
 			var newItem = $('<li id="li-message">	<label>	' + message + '</label></li>');
-			newItem.appendTo('#taskslist .ui-controlgroup-controls');
+			newItem.appendTo('#taskslist ');
 			$('#taskslist').trigger("create");
 			$("#taskslist li:first-child").find('label').addClass('ui-first-child');
 			$("#taskslist li:last-child").find('label').addClass('ui-last-child');
@@ -347,7 +356,7 @@ var mobile = (function() {
 		},
 		srvSetDone : function(id, done) {
 			$.ajax({
-				url : "/ru/tasks/setDone.json",
+				url : "/en/tasks/setDone.json",
 				type : "POST",
 				data : {
 					id : id,
@@ -361,13 +370,13 @@ var mobile = (function() {
 		},
 		scrSetDone : function(id, done) {
 			if (+done) {
-				mobile.showMessage('Task has been closed');
+				//mobile.showMessage('Task has been closed');
 			} else {
-				mobile.showMessage('Task has been opened');
+				//mobile.showMessage('Task has been opened');
 			}
 		},
 		clearTaskList: function(){
-			$("#taskslist .ui-controlgroup-controls").children().remove();
+			$("#taskslist").children().remove();
 		},
 		showList: function(name){
 			if (name === undefined) {
@@ -389,8 +398,15 @@ var mobile = (function() {
 			});
 		},
 		showMessage: function(message){
-			$.mobile.showPageLoadingMsg( $.mobile.pageLoadErrorMessageTheme, message, true );
-			setTimeout( $.mobile.hidePageLoadingMsg, 1000 );
+			var $this = $( this ),
+			  theme = "a";
+			  $.mobile.loading( 'show', {
+				  text: message,
+				  textVisible: true,
+				  theme: theme,
+				  textonly: true
+			  });
+			  setTimeout('$.mobile.loading( "hide" )', 1000 );
 		}
 	};
 
