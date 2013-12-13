@@ -38,29 +38,18 @@ var mobile = (function() {
 				}
 			});
 
-			$(document).on("taphold", "#taskslist li ", function(event, ui) {
+			$(document).on("change", "#taskslist li input[type='checkbox'] ",function(event, ui) {
 				_private.changeCheckbox1(event, ui);
 			});
-
-			$(document).on('click', '.ui-icon-checkbox-on, .ui-icon-checkbox-off', function(event, ui) {
-				//console.log('tap');
-				_private.changeCheckbox1(event, ui);//todo2
+			
+			$(document).on("tap", "#noteslist li ",function(event, ui) {
+				_private.loadListItem(event);
 			});
 			
-			$(document).on('click', '*', function(event, ui) {
-				//console.log('click');
-				//console.log(event);
-			});
-			
-			$(document).on('tap', '*', function(event, ui) {
-				//console.log('tap');
-				//console.log(event);
-			});
-
-			$(document).on("vmouseup", "#taskslist li", function() {
-				event.preventDefault();
-				return false;
-			});
+//			$(document).on("vmouseup", "#taskslist li", function() {
+//				event.preventDefault();
+//				return false;
+//			});
 			
 			$(document).on('click', "a[class|='menu-list']", function(event){
 				var name = event.target.className.split(' ')[0];
@@ -115,7 +104,7 @@ var mobile = (function() {
 		    
 		    $(document).on({
 		    	 ajaxStart: function() { 
-		    		 $.mobile.loading( 'show', {html: "<span><center><img src='img/ajax-loader-content.gif' /></center><h1>Loading...</h1></span>"});
+		    		$.mobile.loading( 'show', {html: "<span><center><img src='img/ajax-loader-content.gif' /></center><h1>Loading...</h1></span>"});
 		    	 },
 		    	 ajaxStop: function() {
 
@@ -150,9 +139,7 @@ var mobile = (function() {
 			$( "#left-panel-tasks" ).panel( "option", "positionFixed", true );
 		},
 		changeCheckbox1 : function(event, ui) {
-			$("#taskslist li input[type='checkbox'] ").removeClass('pt-marked');
-			var checkbox = ($(event.target).parent().parent().parent()).find("input[type='checkbox']");
-			$(checkbox).addClass('pt-marked');
+			var checkbox = ($(event.target).parent().parent()).find("input[type='checkbox']");
 			var done = $(checkbox).is(":checked") ? 1 : 0;
 			var id = $(checkbox).attr('data-id');
 			mobile.srvSetDone(id, done);
@@ -172,6 +159,28 @@ var mobile = (function() {
 			event.preventDefault();
 			return false;
 		},
+		loadListItem: function(event){
+			var id  = ($(event.target)).attr('id').replace('note-', '');;
+			console.log(id);
+			
+			$.ajax({
+				url : "/en/notes/getNote.json",
+				type : "POST",
+				data : {
+					id 		: id,
+					view	: true
+				}
+			}).done(function(response) {
+				if (response.success){
+					($(event.target)).html($('<div/>').text(response.data.title).html());
+					($(event.target)).attr('style', 'white-space:normal; height: auto;');
+					_private.refreshNotesList();
+				}else{
+					mobile.createPageMessage('Cannot load note');
+				}
+				$.mobile.loading('hide');
+			});
+		},
 		refreshTasksList: function(){
 			$('#taskslist li .ui-first-child ').removeClass('ui-first-child');
 			$('#taskslist li .ui-last-child ').removeClass('ui-last-child');
@@ -187,7 +196,6 @@ var mobile = (function() {
 			$("#noteslist li:first-child").addClass('ui-first-child');
 			$("#noteslist li:last-child").addClass('ui-last-child');
 		}
-
 	};
 
 	return {
@@ -215,7 +223,6 @@ var mobile = (function() {
 					//mobile.createPageMessage('No tasks are on this list');
 				}
 				$.mobile.loading('hide');
-				
 			});
 		},
 		listForTag : function(name) {
@@ -262,11 +269,7 @@ var mobile = (function() {
 					mobile.createPageMessage('No tasks for this day');
 				}
 				$.mobile.loading('hide');
-					
-				
 			});
-			
-
 		},
 		createTagListItem : function(Tag) {
 			var newItem = $('<li><a href="#" data-id="' + Tag.name + '" class="tag-list-' + Tag.name + '">'+ $('<div/>').html(Tag.name).text() +'</a></li>');
@@ -282,22 +285,19 @@ var mobile = (function() {
 			}
 			var newItem = $('<li><label '+className+'>	<input type="checkbox" name="checkbox-' + Task.id + '" data-id="' + Task.id + '" ' + checkedStr + '>'
 					+ $('<div/>').html(Task.title).text() + '</label></li>');
-			newItem.appendTo('#taskslist .ui-controlgroup-controls');
+			newItem.appendTo('#taskslist div.ui-controlgroup-controls');//.ui-controlgroup-controls
 
 
 		},
 		createNoteListItem: function(Note){
-
-			var newItem = $('<li class="ui-li ui-li-static ui-btn-up-c">' + $('<div/>').text(Note.title).html() + '</li>');
+			var newItem = $('<li class="ui-li ui-li-static ui-btn-up-c" id="note-' + Note.id + '">' + $('<div/>').text(Note.title).html() + '</li>');
 			newItem.appendTo('#noteslist');
-
-
 		},
 		createPageMessage : function(message) {
 			$('#taskslist li .ui-first-child ').removeClass('ui-first-child');
 			$('#taskslist li .ui-last-child ').removeClass('ui-last-child');
 			var newItem = $('<li id="li-message">	<label>	' + message + '</label></li>');
-			newItem.appendTo('#taskslist .ui-controlgroup-controls');
+			newItem.appendTo('#taskslist ');
 			$('#taskslist').trigger("create");
 			$("#taskslist li:first-child").find('label').addClass('ui-first-child');
 			$("#taskslist li:last-child").find('label').addClass('ui-last-child');
@@ -347,7 +347,7 @@ var mobile = (function() {
 		},
 		srvSetDone : function(id, done) {
 			$.ajax({
-				url : "/ru/tasks/setDone.json",
+				url : "/en/tasks/setDone.json",
 				type : "POST",
 				data : {
 					id : id,
@@ -367,7 +367,7 @@ var mobile = (function() {
 			}
 		},
 		clearTaskList: function(){
-			$("#taskslist .ui-controlgroup-controls").children().remove();
+			$("#taskslist div.ui-controlgroup-controls ").children().remove();
 		},
 		showList: function(name){
 			if (name === undefined) {
@@ -389,8 +389,15 @@ var mobile = (function() {
 			});
 		},
 		showMessage: function(message){
-			$.mobile.showPageLoadingMsg( $.mobile.pageLoadErrorMessageTheme, message, true );
-			setTimeout( $.mobile.hidePageLoadingMsg, 1000 );
+			var $this = $( this ),
+			  theme = "a";
+			  $.mobile.loading( 'show', {
+				  text: message,
+				  textVisible: true,
+				  theme: theme,
+				  textonly: true
+			  });
+			  setTimeout('$.mobile.loading( "hide" )', 1000 );
 		}
 	};
 
