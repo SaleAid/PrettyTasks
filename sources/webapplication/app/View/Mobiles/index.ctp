@@ -55,7 +55,7 @@
 			<input type="text" name="addnew" id="addnew" value=""
 				placeholder="Type to add new task for today" autocomplete="off" />
 		</form>
-
+		
 		<ul id="taskslist" data-role="controlgroup">
 		<?php /*?>
 			<!-- 
@@ -106,7 +106,7 @@
 				placeholder="Type to add new note">
 		</form>
 	<?php */?>
-		<ul data-role="listview" data-inset="true" id="noteslist"></ul>
+		<ul data-role="listview" data-inset="true"  id="noteslist"></ul>
 	</div>
 	<!-- /content -->
 

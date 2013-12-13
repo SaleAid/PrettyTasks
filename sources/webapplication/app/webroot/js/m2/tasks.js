@@ -38,32 +38,12 @@ var mobile = (function() {
 				}
 			});
 
-			$(document).on("taphold", "#taskslist .ui-checkbox ", function(event, ui) {
-				console.log('taphold');
-				mobile.showMessage('taphold');
-				return;
+			$(document).on("change", "#taskslist li input[type='checkbox'] ",function(event, ui) {
 				_private.changeCheckbox1(event, ui);
 			});
 			
-			$(document).on("tap", "#taskslist input ", function(event, ui) {
-				console.log('tap');
-				mobile.showMessage('tap');
-				return;
-				_private.changeCheckbox1(event, ui);
-			});
-
-			$(document).on('click', '#taskslist input', function(event, ui) {
-				console.log('click');
-				mobile.showMessage('click');
-				return;
-				_private.changeCheckbox1(event, ui);//todo2
-			});
-			
-			$(document).on('vclick', '#taskslist input ', function(event, ui) {
-				console.log('vclick');
-				mobile.showMessage('vclick');
-				return;
-				_private.changeCheckbox1(event, ui);//todo2
+			$(document).on("tap", "#noteslist li ",function(event, ui) {
+				_private.loadListItem(event);
 			});
 			
 //			$(document).on("vmouseup", "#taskslist li", function() {
@@ -159,9 +139,7 @@ var mobile = (function() {
 			$( "#left-panel-tasks" ).panel( "option", "positionFixed", true );
 		},
 		changeCheckbox1 : function(event, ui) {
-			$("#taskslist li input[type='checkbox'] ").removeClass('pt-marked');
-			var checkbox = ($(event.target).parent().parent().parent()).find("input[type='checkbox']");
-			$(checkbox).addClass('pt-marked');
+			var checkbox = ($(event.target).parent().parent()).find("input[type='checkbox']");
 			var done = $(checkbox).is(":checked") ? 1 : 0;
 			var id = $(checkbox).attr('data-id');
 			mobile.srvSetDone(id, done);
@@ -181,6 +159,28 @@ var mobile = (function() {
 			event.preventDefault();
 			return false;
 		},
+		loadListItem: function(event){
+			var id  = ($(event.target)).attr('id').replace('note-', '');;
+			console.log(id);
+			
+			$.ajax({
+				url : "/en/notes/getNote.json",
+				type : "POST",
+				data : {
+					id 		: id,
+					view	: true
+				}
+			}).done(function(response) {
+				if (response.success){
+					($(event.target)).html($('<div/>').text(response.data.title).html());
+					($(event.target)).attr('style', 'white-space:normal; height: auto;');
+					_private.refreshNotesList();
+				}else{
+					mobile.createPageMessage('Cannot load note');
+				}
+				$.mobile.loading('hide');
+			});
+		},
 		refreshTasksList: function(){
 			$('#taskslist li .ui-first-child ').removeClass('ui-first-child');
 			$('#taskslist li .ui-last-child ').removeClass('ui-last-child');
@@ -196,7 +196,6 @@ var mobile = (function() {
 			$("#noteslist li:first-child").addClass('ui-first-child');
 			$("#noteslist li:last-child").addClass('ui-last-child');
 		}
-
 	};
 
 	return {
@@ -224,7 +223,6 @@ var mobile = (function() {
 					//mobile.createPageMessage('No tasks are on this list');
 				}
 				$.mobile.loading('hide');
-				
 			});
 		},
 		listForTag : function(name) {
@@ -271,11 +269,7 @@ var mobile = (function() {
 					mobile.createPageMessage('No tasks for this day');
 				}
 				$.mobile.loading('hide');
-					
-				
 			});
-			
-
 		},
 		createTagListItem : function(Tag) {
 			var newItem = $('<li><a href="#" data-id="' + Tag.name + '" class="tag-list-' + Tag.name + '">'+ $('<div/>').html(Tag.name).text() +'</a></li>');
@@ -291,16 +285,13 @@ var mobile = (function() {
 			}
 			var newItem = $('<li><label '+className+'>	<input type="checkbox" name="checkbox-' + Task.id + '" data-id="' + Task.id + '" ' + checkedStr + '>'
 					+ $('<div/>').html(Task.title).text() + '</label></li>');
-			newItem.appendTo('#taskslist ');//.ui-controlgroup-controls
+			newItem.appendTo('#taskslist div.ui-controlgroup-controls');//.ui-controlgroup-controls
 
 
 		},
 		createNoteListItem: function(Note){
-
-			var newItem = $('<li class="ui-li ui-li-static ui-btn-up-c">' + $('<div/>').text(Note.title).html() + '</li>');
+			var newItem = $('<li class="ui-li ui-li-static ui-btn-up-c" id="note-' + Note.id + '">' + $('<div/>').text(Note.title).html() + '</li>');
 			newItem.appendTo('#noteslist');
-
-
 		},
 		createPageMessage : function(message) {
 			$('#taskslist li .ui-first-child ').removeClass('ui-first-child');
@@ -370,13 +361,13 @@ var mobile = (function() {
 		},
 		scrSetDone : function(id, done) {
 			if (+done) {
-				//mobile.showMessage('Task has been closed');
+				mobile.showMessage('Task has been closed');
 			} else {
-				//mobile.showMessage('Task has been opened');
+				mobile.showMessage('Task has been opened');
 			}
 		},
 		clearTaskList: function(){
-			$("#taskslist").children().remove();
+			$("#taskslist div.ui-controlgroup-controls ").children().remove();
 		},
 		showList: function(name){
 			if (name === undefined) {
