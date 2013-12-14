@@ -172,7 +172,7 @@ var mobile = (function() {
 				}
 			}).done(function(response) {
 				if (response.success){
-					($(event.target)).html($('<div/>').text(response.data.title).html());
+					($(event.target)).html(nl2br($('<div/>').text(response.data.title).html()));
 					($(event.target)).attr('style', 'white-space:normal; height: auto;');
 					_private.refreshNotesList();
 				}else{
@@ -220,7 +220,7 @@ var mobile = (function() {
 					});
 					$( "#tags-list" ).listview( "refresh" );
 				}else{
-					//mobile.createPageMessage('No tasks are on this list');
+					mobile.createPageMessage('No tasks are on this list');
 				}
 				$.mobile.loading('hide');
 			});
@@ -297,7 +297,7 @@ var mobile = (function() {
 			$('#taskslist li .ui-first-child ').removeClass('ui-first-child');
 			$('#taskslist li .ui-last-child ').removeClass('ui-last-child');
 			var newItem = $('<li id="li-message">	<label>	' + message + '</label></li>');
-			newItem.appendTo('#taskslist ');
+			newItem.appendTo('#taskslist div.ui-controlgroup-controls ');
 			$('#taskslist').trigger("create");
 			$("#taskslist li:first-child").find('label').addClass('ui-first-child');
 			$("#taskslist li:last-child").find('label').addClass('ui-last-child');
@@ -402,3 +402,8 @@ var mobile = (function() {
 	};
 
 }());
+
+function nl2br (str, is_xhtml) {
+	  var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>'; // Adjust comment to avoid issue on phpjs.org display
+	  return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+	}

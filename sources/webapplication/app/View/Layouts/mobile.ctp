@@ -14,7 +14,7 @@
 <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="//code.jquery.com/mobile/1.4.0-rc.1/jquery.mobile-1.4.0-rc.1.min.js"></script>
     
-    <link rel="stylesheet" 	href="/css/custom_m2.css" />
+    <link rel="stylesheet" 	href="/css/custom_m2.<?php echo  Configure::read('App.version')?>.css" />
     <?php if(isset($csrfToken)): ?>
 <meta name="csrf-token" content="<?php echo $csrfToken; ?>"/>
     <?php endif; ?> 
@@ -23,6 +23,6 @@
 <body>
 <?php echo $content_for_layout;?>
 
-<?php echo $this->Html->script('m2/tasks'); ?> 
+<?php echo $this->Html->script('m2/tasks.'. Configure::read('App.version')); ?> 
 </body>
 </html>
