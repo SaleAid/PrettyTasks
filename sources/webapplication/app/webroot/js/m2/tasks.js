@@ -10,6 +10,8 @@ var mobile = (function() {
 		tasksAreLoaded: false,
 		notesAreLoaded: false,
 		tagsAreLoaded: false,
+		currentList:'',
+		currentPage:1,
 		initEvents : function() {
 
 			$.mobile.page.prototype.options.addBackBtn = true;
@@ -56,6 +58,14 @@ var mobile = (function() {
 				name = name.replace('menu-list-', '');
 				mobile.showList(name);
 				$("#left-panel-tasks").panel("close");
+				
+			});
+			
+			$(document).on('click', "a[id='loadMore']", function(event){
+				var name = _private.currentList;
+				_private.currentPage++;
+				var page = _private.currentPage;
+				mobile.showList(name, page);
 			});
 			
 			$(document).on('click', "a[class|='tag-list']", function(event){
@@ -104,7 +114,7 @@ var mobile = (function() {
 		    
 		    $(document).on({
 		    	 ajaxStart: function() { 
-		    		$.mobile.loading( 'show', {html: "<span><center><img src='img/ajax-loader-content.gif' /></center><h1>Loading...</h1></span>"});
+		    		$.mobile.loading( 'show', {html: "<span><center><img src='img/ajax-loader.gif' /></center><h1>Loading...</h1></span>"});
 		    	 },
 		    	 ajaxStop: function() {
 
@@ -143,7 +153,6 @@ var mobile = (function() {
 			var done = $(checkbox).is(":checked") ? 1 : 0;
 			var id = $(checkbox).attr('data-id');
 			mobile.srvSetDone(id, done);
-			mobile.scrSetDone(id, done);
 			event.preventDefault();
 			return false;
 		},
@@ -289,6 +298,16 @@ var mobile = (function() {
 
 
 		},
+		createLinkLoadMore: function(){
+			mobile.removeLinkLoadMore();
+			var newItem = $('<div style="text-align:center; padding-top: 20px;" id="loadMoreDiv"><a href="#" id="loadMore">Load more...</a></div>');
+			newItem.insertAfter('#taskslist div.ui-controlgroup-controls');
+		},
+		removeLinkLoadMore: function(){
+			if ($('#loadMoreDiv')){
+				$('#loadMoreDiv').remove();
+			}
+		},
 		createNoteListItem: function(Note){
 			var newItem = $('<li class="ui-li ui-li-static ui-btn-up-c" id="note-' + Note.id + '">' + $('<div/>').text(Note.title).html() + '</li>');
 			newItem.appendTo('#noteslist');
@@ -353,10 +372,8 @@ var mobile = (function() {
 					id : id,
 					done : done
 				}
-			}).done(function(data) {
-				if (console && console.log) {
-					console.log(data);
-				}
+			}).done(function(response) {
+				mobile.scrSetDone(response.data.id, response.data.done);
 			});
 		},
 		scrSetDone : function(id, done) {
@@ -369,22 +386,37 @@ var mobile = (function() {
 		clearTaskList: function(){
 			$("#taskslist div.ui-controlgroup-controls ").children().remove();
 		},
-		showList: function(name){
+		showList: function(name, page){
 			if (name === undefined) {
 				name = _private.defaultList;
 			}
-			mobile.clearTaskList();
+			if (page === undefined) {
+				page = 1;
+			}
+			_private.currentList =  name;
+			_private.currentPage = page;
+			if (page==1){
+				mobile.clearTaskList();
+			}
 			$.ajax({
 				url : "/en/tasks/getTasksByType.json",
 				type : "POST",
 				data : {
-					type : name
+					type : name,
+					page : page 
 				}
 			}).done(function(response) {
 					$.each(response.data.list, function(index, Task) {
 						mobile.createTaskListItem(Task);
 					});
 					_private.refreshTasksList();
+					if (page==1){
+						mobile.createLinkLoadMore();
+					}
+					if (response.data.list.length <10){
+						mobile.removeLinkLoadMore();
+					}
+					
 					$.mobile.loading('hide');
 			});
 		},
