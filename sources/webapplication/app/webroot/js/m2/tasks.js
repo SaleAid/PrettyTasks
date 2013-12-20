@@ -114,7 +114,7 @@ var mobile = (function() {
 		    
 		    $(document).on({
 		    	 ajaxStart: function() { 
-		    		$.mobile.loading( 'show', {html: "<span><center><img src='img/ajax-loader.gif' /></center><h1>Loading...</h1></span>"});
+		    		$.mobile.loading( 'show', {html: "<span><center><img src='img/ajax-loader-m.gif' /></center><h1>Loading...</h1></span>"});
 		    	 },
 		    	 ajaxStop: function() {
 
