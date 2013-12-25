@@ -157,7 +157,8 @@ class AccountSocial extends Account {
         return $this->find('first', array(
                 'conditions' => array(
                         $data
-                )
+                ),
+                'contain' => 'User'
         ));
     }
 

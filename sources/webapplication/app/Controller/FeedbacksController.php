@@ -45,6 +45,26 @@ class FeedbacksController extends AppController {
                     $this->Session->setFlash(__d('feedbacks', 'Ваше сообщение было сохранено', true), 'alert', array(
                                 'class' => 'alert-success'
                             ));
+                    
+                    $userInfo = $this->User->find('all', array(
+                        'conditions' => array('User.id' => $this->Auth->user('id')),
+                        'contain' => array('Account' => array('uid', 'master', 'provider', 'full_name', 'email')),
+                        'fields' => array('id')
+                    ));
+                    App::uses('CakeEmail', 'Network/Email');
+                    $email = new CakeEmail();
+                    $str = $email->template('feedbackToSupport', 'default')
+                        ->emailFormat(Configure::read('Email.global.format'))
+                        ->from(array('feedback@prettytasks.com' => 'Feedback prettytasks'))
+                        ->to(Configure::read('App.support.mail'))
+                        ->subject('[support] [' .$feed['Feedback']['category'] .'] ' . $feed['Feedback']['subject'])
+                        ->viewVars(array(
+                            'userInfo' => $userInfo,
+                            'feedback' => $feed['Feedback'],
+                            'userAuth' => $this->Auth->user()
+                            ))
+                        ->send();    
+                    
                     $this->redirect(array(
                         'action' => 'add'
                     ));

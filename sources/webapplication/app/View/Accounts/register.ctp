@@ -33,7 +33,7 @@
                                      array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index',
                                          'google'
                                      ),
-                                     array('escape' => false)
+                                     array('escape' => false, 'tabindex' => -1)
                                  );
                         ?>
                         <?php
@@ -42,7 +42,7 @@
                                      array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index',
                                          'facebook'
                                      ),
-                                     array('escape' => false)
+                                     array('escape' => false, 'tabindex' => -1)
                                  );
                         ?>
                         <?php
@@ -51,7 +51,7 @@
                                      array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index',
                                          'linkedin'
                                      ),
-                                     array('escape' => false)
+                                     array('escape' => false, 'tabindex' => -1)
                                  );
                         ?>
                         <?php
@@ -60,7 +60,7 @@
                                      array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index',
                                          'twitter'
                                      ),
-                                     array('escape' => false)
+                                     array('escape' => false, 'tabindex' => -1)
                                  );
                         ?>
                         <?php
@@ -69,7 +69,7 @@
                                      array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index',
                                          'vkontakte'
                                      ),
-                                     array('escape' => false)
+                                     array('escape' => false, 'tabindex' => -1)
                                  );
                         ?>
                     </div>

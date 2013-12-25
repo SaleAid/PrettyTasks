@@ -153,13 +153,21 @@ div.well{
 .delete-all {
     font-size: 14px;
 }
+.reload{
+    display: inline-block;
+    float: right;
+    margin: 6px 5px 4px 0;
+    width: 19px;
+    height: 19px;
+}
 .print{
     display: inline-block;
     float: right;
     margin: 7px 7px 4px 0;
 }
-.print:hover, .help:hover{
+.print:hover, .help:hover, .reload:hover{
     cursor: pointer;
+    opacity: 0.6;
 }
 .help{
     margin: 0px 3px 0 0;

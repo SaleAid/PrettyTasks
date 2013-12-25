@@ -15,6 +15,7 @@ templates.day_tab_content = '\
     		<div class="listTask">\
             <div class="margin-bottom10">\
             <img src="/img/print.'+GLOBAL_CONFIG.version+'.png" alt="Print" class="print" width = "16" height = "16">\
+            <img src="/img/reload.'+GLOBAL_CONFIG.version+'.png" alt="Reload" class="reload" width = "19" height = "19">\
             <h3 class="head-list-info">\
             <% if(date == "planned") { %>\
                 '+ __d('tasks', 'Планируемые')+'\
@@ -85,12 +86,12 @@ templates.task_tag = '\
         <% if(date){%>\
             <%= date %>\
         <% } else { %>\
-            Planned\
+            '+ __d('tasks', 'Планируемые')+'\
         <% } %>\
         </span><span class="commentTask"><%= comment %></span>\
         <span class="comment-task-icon"><i class="icon-file <%= comment_status %>"></i></span>\
         <span class="editTask"><i class="icon-pencil"></i></span>\
-        <span class="deleteTask"><i class=" icon-trash"></i></span>\
+        <span class="delete-wr"><span class="deleteTask"><i class=" icon-trash"></i></span></span>\
     </li>\
     ';
     

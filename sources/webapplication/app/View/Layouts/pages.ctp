@@ -61,6 +61,8 @@ if(Configure::read('Config.language') =='eng'){
 
 <?php echo $this->Html->script('jquery.ui.touch-punch.min');?>
 
+<?php echo $this->Html->script('main.' . Configure::read('App.version'));?>
+
 <?php 
     if(!empty($currentUser)){
         echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');
@@ -84,7 +86,7 @@ if(Configure::read('Config.language') =='eng'){
 
 <?php echo $this->element('noscript', array(), array('cache' => array('key' => 'noscript', 'config' => 'elements'))); ?> 
 
-<?php echo $this->Html->script('main.' . Configure::read('App.version'));?>
+
 
  </body>
 </html>

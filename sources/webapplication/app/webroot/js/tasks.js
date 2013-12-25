@@ -600,6 +600,9 @@ function scrGetTasksByType(data){
         case 'future':
             futureTasks(list, data.data.hide);
         break;
+        case 'agenda':
+            agendaTasks(list, data.data.hide);
+        break;
         case 'expired':
             expiredTasks(list, data.data.hide);
         break;
@@ -709,6 +712,56 @@ function continuedTasks(data, hide){
         listUl.append( addTaskNew(task) );
         initDelete(listUl.find("li[id='"+task.id+"'] .deleteTask"));
         //initEditAble(listUl.find("li[id='"+task.id+"'] .editable"));
+        
+    });
+    if(!+listUl.children('li').length){
+        listUl.siblings('.emptyList').removeClass('hide');
+    }else{
+        listUl.siblings('.emptyList').addClass('hide');
+    }
+}
+
+function agendaTasks(data, hide){
+    var listUl = $('#agenda ul[date="agenda"]');
+    var prevDate = 0;
+    var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
+    var weekDayStyle;
+    if(+numPages['agenda'] <= 1){
+        listUl.empty();
+        listUl.siblings('.see-more').show();    
+    }
+    if(hide){
+        listUl.siblings('.see-more').hide();
+    }
+    numPages['agenda']++;
+    $.each(data, function(index, task) {
+        if(today == task.date){
+            weekDayStyle = ''; 
+        } else if(today > task.date){
+            weekDayStyle = 'past';
+        } else {
+            weekDayStyle = 'future';
+        }
+        
+        //if( prevDate == 0 || task.date > prevDate ){
+        if( !listUl.children("li[date="+task.date+"]:last").length ){
+            day_tmp = _.template(
+                    templates.day_h3_label, {
+                        date: task.date,
+                        title: task.date, 
+                        weekDayStyle: weekDayStyle, 
+                        weekDay: $.datepicker.formatDate('DD', new Date (task.date))
+                    } 
+            );
+            day = $(day_tmp);
+            day.tooltip({placement:'left',delay: { show: 500, hide: 100 }});
+            listUl.append(day);
+        }
+        prevDate = task.date
+        listUl.append( addTaskNew(task) );
+        initDelete(listUl.find("li[id='"+task.id+"'] .deleteTask"));
+        initEditAble(listUl.find("li[id='"+task.id+"'] .editable"));
+        listUl.find(" li[id='"+task.id+"'] .editTask").addClass('hide');
         
     });
     if(!+listUl.children('li').length){
@@ -1166,6 +1219,7 @@ function onDeleteDay(data){
 function taskAddDay(date, action){
 
     if(scrAddDay(date, action)){
+        $("ul[date='" + date + "']").empty().append(_.template(templates.ajax_loader_content));
         srvAddDay(date);    
     }
 }
@@ -1186,6 +1240,7 @@ function scrAddDay(date, action){
     }
     var newTabContent = _.template(templates.day_tab_content, {date: date} );            
     $('.tab-content').append(newTabContent);
+    
     if(action == -1){
         activeTab(date);
         return true;
@@ -1228,15 +1283,26 @@ function activeTab(date){
     $('div.active').removeClass('active').removeClass('in');
     $('.listDay li.active').removeClass('active');
     $('#main ul.nav-tabs a[date="'+date+'"]').tab('show');
+    
 }
 
 function srvAddDay(date){
     superAjax('/tasks/getTasksForDay.json',{date: date});
 }
 
+function dateUTC(date) {
+
+    d = new Date(date);
+    utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+
+    return new Date(utc);
+
+}
+
 function onAddDay(data){
     var list = $("ul[date='" + data.data.name + "']");
-    var weekday = $.datepicker.formatDate('DD', new Date (data.data.name));
+    //var weekday = $.datepicker.formatDate('DD', new Date (data.data.name));
+    var weekday = $.datepicker.formatDate('DD', dateUTC(data.data.name));
     //var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
     var today = $.datepicker.formatDate('yy-mm-dd', dateTZ());
     var weekDayStyle;
@@ -1254,6 +1320,7 @@ function onAddDay(data){
     }
     
     list.empty();
+    
     list.siblings('.emptyList ').remove();
     var emptyList = _.template(templates.empty_list_day_tasks, {type: weekDayStyle});
     if($.isEmptyObject(data.data.list)){
@@ -2142,6 +2209,7 @@ function initSortable(element){
                 
                 if( ui.item.parent().attr('date') == 'expired' || 
                 		ui.item.parent().attr('date') == 'future' ||
+                        ui.item.parent().attr('date') == 'agenda' ||
                 		ui.item.parent().attr('date') == 'deleted' ||
                         ui.item.parent().attr('date') == 'continued' 
                 		//|| ui.item.parent().data('tag') 
@@ -2194,11 +2262,11 @@ function initTab(element){
         }else{
             var index = _.indexOf(refreshDays, tab_id);
             var createDay = _.indexOf(createDays, tab_id);
-            if(tab_id == 'future'){
+            if(tab_id == 'agenda'){
                 $('.nav.top li').removeClass('active');
                 $('.agenda').addClass('active');
                 $('.daysButton').find('li').removeClass('active');
-                $('.daysButton').find('li').find('a[date="future"]').parent().addClass('active');
+                $('.daysButton').find('li').find('a[date="agenda"]').parent().addClass('active');
             }else{
                 $('.nav.top li').removeClass('active');
                 $('.tasks').addClass('active');    
@@ -2286,6 +2354,7 @@ function initDayClick(element){
         userEvent('addDay',{date: date});
     });
 }
+
 
 function dateTZ(){
   var TimezoneOffset = GLOBAL_CONFIG.timezone;
@@ -2392,12 +2461,36 @@ function changeHeightListDays(){
         $('.listDay').addClass('affix1');
     }
 }
-function initListDays(){
+function getListDays(){
     var days = [];
     $('.listDay').find('li.drop').children('a').each(function(){
        days.push($(this).attr('date'));
     });
-    createDays = days;
+    return days;
+}
+function initReloadClick(element){
+    $(document).on('click', element, function() {
+        refreshDays = [];
+        ref = getListDays();
+        refreshDays = _.difference(ref, createDays);
+        var tab_content = $(this).parents('.tab-pane.active');
+        var date = tab_content.attr('id');
+        if(date == 'list'){
+           var tag = tab_content.find('ul[date="list"]').data('tag');
+           if(tag){
+                userEvent('getListByTag', {tag: tag}); 
+           }
+        }else if(date == 'lists'){
+            userEvent('getLists');
+        }else{
+            var index = _.indexOf(refreshDays, date);
+            if( index > -1){
+                delete refreshDays[index];
+                userEvent('addDay',{date: date, action: 1});
+            }
+        }
+        
+    });
 }
 //-----------------------------------------------------------------------
 var dropped = false;
@@ -2411,13 +2504,15 @@ var numPages = {};
 
 $(function(){
     initAjax();
-    initListDays();
+    createDays = getListDays();
      $(window).hashchange( function(e){
         if(location.hash != "") { 
             var pattern_list=/^#list(s$|-.+)/;
             var list = pattern_list.test(location.hash);
             if (list){
                 $('.nav.top li').removeClass('active');
+                $('.nav.top li.lists').addClass('active');
+                
                 if (location.hash == "#lists" ){
                     $('.lists').addClass('active');
                     userEvent('getLists');
@@ -2441,8 +2536,9 @@ $(function(){
                     }else{
                         userEvent('addDay',{date: hash, action: 0});    
                     }
-                }else if( $.inArray(hash, ["expired", "completed", "deleted", "continued", "future"]) != -1 ){
+                }else if( $.inArray(hash, ["expired", "completed", "deleted", "continued", "future", "agenda"]) != -1 ){
                     numPages['future'] = 1;
+                    numPages['agenda'] = 1;
                     numPages['expired'] = 1;
                     numPages['continued'] = 1;
                     numPages['deleted'] = 1;
@@ -2463,7 +2559,7 @@ $(function(){
                     //userEvent('addDay',{date: today, action: -1});
                     //$('#main a[href="#'+today+'"]').tab('show');
                 }
-                if(hash == 'future'){
+                if(hash == 'agenda'){
                     $('.nav.top li').removeClass('active');
                     $('.agenda').addClass('active');
                 }else{
@@ -2512,6 +2608,7 @@ $(function(){
     initDayClick('.tag-date');
     
     initPrintClick('.print');
+    initReloadClick('.reload');
     InitClock();
     initDeleteAll('.delete_all');
     setFiler($('.listDay .active').children('a').attr('date'));

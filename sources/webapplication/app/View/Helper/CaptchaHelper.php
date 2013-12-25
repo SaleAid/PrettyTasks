@@ -32,9 +32,9 @@ class CaptchaHelper extends AppHelper{
 		$out = '<div class="control-group required '.$error.' captcha">';
         $out .= '<label class="control-label">';
         
-        $out .= '<a href="#" onclick="document.getElementById(\'cakecaptcha\').src=\'' 
+        $out .= '<a href="#"  tabindex="-1" onclick="document.getElementById(\'cakecaptcha\').src=\'' 
              . $this->Html->url(array('controller' => $controller, 'action' => 'captcha')) 
-             . '?\'+Math.random(); document.getElementById(\'captcha-form\').focus();" id="change-image"> ';
+             . '?\'+Math.random(); document.getElementById(\'captcha-form\').focus(); return false;" id="change-image"> ';
              
         $out .= $this->Html->image($this->Html->url(array('controller' => $controller, 'action' => 'captcha'), true), array('id' => 'cakecaptcha'));
 		$out .= "<br/>";

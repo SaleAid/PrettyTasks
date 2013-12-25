@@ -57,6 +57,7 @@
                         <ul class="dropdown-menu daysButton s5">
                             <li ><a href="#expired" data-toggle="tab"  date="expired" class="tab2"><?php echo __d('tasks', 'Просроченные'); ?></a></li>
                             <li ><a href="#completed" data-toggle="tab" date="completed"><?php echo __d('tasks', 'Завершенные'); ?></a></li>
+                            <li ><a href="#agenda" data-toggle="tab" date="agenda" class="tab2"><?php echo __d('tasks', 'Еженедельник'); ?></a></li>
                             <li ><a href="#future" data-toggle="tab" date="future" class="tab2"><?php echo __d('tasks', 'Будущие'); ?></a></li>
                             <li ><a href="#continued" data-toggle="tab" date="continued" class="tab2"><?php echo __d('tasks', 'Длительные'); ?></a></li>
                             <li class="divider"></li>
@@ -201,11 +202,28 @@
                     </div>
                 </div>
           </div>
+          <div class="tab-pane" id="agenda">
+              <div class="row">
+                  <div class="listTask">
+                  <div class="margin-bottom10">
+                    <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
+                    <h3 class="head-list-info"><?php echo __d('tasks', 'Еженедельник'); ?></h3>
+                  </div>
+                        <ul class="sortable connectedSortable ui-helper-reset dthl" date="agenda" data-refresh="1">
+                        </ul>
+                        <div class="see-more">
+                            <button class="btn btn-large btn-block btn-see-more"><?php echo __d('tasks', 'Далее...'); ?></button>
+                        </div>
+                        <?php echo $this->element('empty_lists', array('type' => 'future', 'hide' => true));?>
+                    </div>
+                </div>
+          </div>
           <div class="tab-pane" id="lists">
               <div class="row">
                   <div class="listTask">
                   <div class="margin-bottom10">
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
+                    <?php echo $this->Html->image("reload.". Configure::read('App.version') .".png", array("alt" => "Reload", 'class' => 'reload', 'width' => 19, 'height' => 19)); ?>
                     <h3 class="head-list-info"><span class="tag-name"><?php echo __d('tasks', 'Списки'); ?></span></h3>
                   </div>
                   <div class="well form-inline">
@@ -239,6 +257,7 @@
                   <div class="listTask">
                   <div class="margin-bottom10">
                     <?php echo $this->Html->image("print.". Configure::read('App.version') .".png", array("alt" => "Print", 'class' => 'print', 'width' => 16, 'height' => 16)); ?>
+                    <?php echo $this->Html->image("reload.". Configure::read('App.version') .".png", array("alt" => "Reload", 'class' => 'reload', 'width' => 19, 'height' => 19)); ?>
                     <h3 class="head-list-info"><span class="tag-name"><?php echo __d('tasks', 'Lists'); ?></span></h3>
                   </div>
                         <div class="well form-inline">
