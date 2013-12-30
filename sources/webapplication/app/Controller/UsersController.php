@@ -124,33 +124,36 @@ class UsersController extends AppController {
         }
         $this->set('listLang', $listLang);
         
-        
-        App::uses('CakeTime', 'Utility');
-        //pr(CakeTime::listTimezones());
-        //TODO: Rewrite it
-        $list = DateTimeZone::listAbbreviations();
-        $idents = DateTimeZone::listIdentifiers();
-        $data = $offset = $added = array();
-        foreach ( $list as $abbr => $info ) {
-            foreach ( $info as $zone ) {
-                if (! empty($zone['timezone_id']) and ! in_array($zone['timezone_id'], $added) and in_array($zone['timezone_id'], $idents)) {
-                    $z = new DateTimeZone($zone['timezone_id']);
-                    $c = new DateTime(null, $z);
-                    $zone['time'] = $c->format('H:i ');
-                    $data[] = $zone;
-                    $offset[] = $z->getOffset($c);
-                    $added[] = $zone['timezone_id'];
+        $options = Cache::read('TimeZoneList');
+        if (!$options){
+            App::uses('CakeTime', 'Utility');
+            //pr(CakeTime::listTimezones());
+            //TODO: Rewrite it
+            $list = DateTimeZone::listAbbreviations();
+            $idents = DateTimeZone::listIdentifiers();
+            $data = $offset = $added = array();
+            foreach ( $list as $abbr => $info ) {
+                foreach ( $info as $zone ) {
+                    if (! empty($zone['timezone_id']) and ! in_array($zone['timezone_id'], $added) and in_array($zone['timezone_id'], $idents)) {
+                        $z = new DateTimeZone($zone['timezone_id']);
+                        $c = new DateTime(null, $z);
+                        $zone['time'] = $c->format('H:i ');
+                        $data[] = $zone;
+                        $offset[] = $z->getOffset($c);
+                        $added[] = $zone['timezone_id'];
+                    }
                 }
             }
+            //debug($offset);
+            //debug($data);
+            array_multisort($offset, SORT_ASC, $data);
+            $options = array();
+            foreach ( $data as $key => $row ) {
+                $options[$row['timezone_id']] = $row['time'] . ' - ' . formatOffset($row['offset']) . ' ' . $row['timezone_id'];
+            }
+            //debug($options);
+            Cache::write('TimeZoneList', $options);
         }
-        //debug($offset);
-        //debug($data);
-        array_multisort($offset, SORT_ASC, $data);
-        $options = array();
-        foreach ( $data as $key => $row ) {
-            $options[$row['timezone_id']] = $row['time'] . ' - ' . formatOffset($row['offset']) . ' ' . $row['timezone_id'];
-        }
-        //debug($options);
         $this->set('list', $options);
     }
     
