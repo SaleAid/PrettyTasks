@@ -2,11 +2,7 @@
 
 Configure::write('Dispatcher.filters', array(
         'AssetDispatcher',
-                'CacheDispatcher'
-                ));
-
-Cache::config('default', array(
-    'engine' => 'File'
+        'CacheDispatcher'
 ));
 
 App::uses('CakeLog', 'Log');
@@ -31,10 +27,9 @@ CakeLog::config('error', array(
     'file' => 'error'
 ));
 
+config('caches');
 config('appconfig');
-
 config('opauth_config');
-
 config('user_config');
 
 //CakePlugin::load('Recaptcha');
