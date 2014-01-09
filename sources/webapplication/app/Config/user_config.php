@@ -48,5 +48,3 @@
     Configure::write('NewUser.Tasks.eng.11', 'Выберите завтра и добавьте задачи на завтра #обучение #prettytasks');
     Configure::write('NewUser.Tasks.eng.12', 'Отметьте все выполненые задачи #обучение #prettytasks');
          
-
-?>
