@@ -31,6 +31,13 @@ class PagesController extends AppController {
         $this->Seo->keywords = Configure::read('SEO.Pages.keywords.'.Configure::read('Config.langURL'));
         $this->viewPath = $this->viewPath . DS . Configure::read('Config.language');
     }
+    public function inew() {
+        $this->layout = 'start';
+        $this->Seo->title = $this->Seo->title . ' :: ' . Configure::read('SEO.Pages.title.'.Configure::read('Config.langURL'));
+        $this->Seo->description = Configure::read('SEO.Pages.description.'.Configure::read('Config.langURL'));
+        $this->Seo->keywords = Configure::read('SEO.Pages.keywords.'.Configure::read('Config.langURL'));
+        $this->viewPath = $this->viewPath . DS . Configure::read('Config.language');
+    }    
 
     public function view() {
         $pass = $this->request->pass;
