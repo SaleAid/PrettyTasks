@@ -200,6 +200,59 @@ class TasksController extends ApiV1AppController {
         $this->set('_serialize', 'result');
     }
     
+    public function updateAllDone(){
+        if ( !$this->request->isPost() ) {
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
+        } else {
+            $result = $data = $done = $notDone = array();
+            $data = $this->request->input('json_decode');
+            
+            $user_id = $this->OAuth->user('id');
+            //$done = array_filter($data, function ($task) { return ($task->done == 1); } );
+            //$notDone = array_filter($data, function ($task) { return ($task->done == 0); } );
+            if(isset($data->tasks) and is_array($data->tasks)){
+                foreach($data->tasks as $task){
+                    if(empty($task->done) or empty($task->id)){
+                        continue;
+                    }
+                    if($task->done == 1)
+                       $done[] = $task->id;
+                    if($task->done == 0)
+                       $notDone[] = $task->id;
+                }
+                if(!empty($done)){
+                    $this->Task->updateAll(
+                        array('Task.done' => 1),
+                        array(
+                            'Task.id' => $done,
+                            'Task.user_id' => $user_id,
+                        )
+                    );    
+                }
+                if(!empty($notDone)){
+                    $this->Task->updateAll(
+                        array('Task.done' => 0),
+                        array(
+                            'Task.id' => $notDone,
+                            'Task.user_id' => $user_id,
+                        )
+                    );
+                }
+            }
+            if(isset($data->date)){
+                $date = trim($data->date);
+                if ( Validation::date($date) ) {
+                    $DateList = new DateList($user_id, $date);
+                    $result['data'] = new TasksListObj('DateList', $date, $DateList->getItems());
+                    $result['data']->day = $this->Task->Day->getDay($user_id, $date);    
+                }
+            }
+                
+        }
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');
+    }
+    
     public function move(){
        if ( !$this->request->isPost() or !isset($this->request->data['id']) ) {
             $result['errors'][] = array(
