@@ -212,12 +212,12 @@ class TasksController extends ApiV1AppController {
             //$notDone = array_filter($data, function ($task) { return ($task->done == 0); } );
             if(isset($data->tasks) and is_array($data->tasks)){
                 foreach($data->tasks as $task){
-                    if(empty($task->done) or empty($task->id)){
+                    if (!isset($task->done) or empty($task->id)){
                         continue;
                     }
-                    if($task->done == 1)
+                    if((int)$task->done == 1)
                        $done[] = $task->id;
-                    if($task->done == 0)
+                    if((int)$task->done == 0)
                        $notDone[] = $task->id;
                 }
                 if(!empty($done)){
