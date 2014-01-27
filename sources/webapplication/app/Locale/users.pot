@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-10-29 13:50+0200\n"
+"POT-Creation-Date: 2014-01-27 13:00+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -22,19 +22,19 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-#: Controller/AccountsController.php:62
+#: Controller/AccountsController.php:77
 msgid "Ваш аккаунт заблокирован"
 msgstr ""
 
-#: Controller/UsersController.php:79
+#: Controller/UsersController.php:93
 msgid "Ошибка при передаче данных"
 msgstr ""
 
-#: Controller/UsersController.php:88
+#: Controller/UsersController.php:102
 msgid "Профиль был сохранен"
 msgstr ""
 
-#: Controller/UsersController.php:99
+#: Controller/UsersController.php:113
 msgid "Профиль не может быть сохранен. Пожалуйста, попробуйте еще раз"
 msgstr ""
 

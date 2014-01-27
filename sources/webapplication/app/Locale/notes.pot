@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-10-29 13:50+0200\n"
+"POT-Creation-Date: 2014-01-27 13:01+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,31 +14,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/NotesController.php:56
+#: Controller/NotesController.php:63
 msgid "Ошибка при передаче номера страницы"
 msgstr ""
 
-#: Controller/NotesController.php:75
+#: Controller/NotesController.php:82
 msgid "Заметка успешно создана"
 msgstr ""
 
-#: Controller/NotesController.php:77
+#: Controller/NotesController.php:84
 msgid "Заметка не создана"
 msgstr ""
 
-#: Controller/NotesController.php:97
+#: Controller/NotesController.php:104
 msgid "Заметка не обновлена"
 msgstr ""
 
-#: Controller/NotesController.php:100;121
+#: Controller/NotesController.php:107;128
 msgid "Ошибка, Вы не можете делать изменения в этой заметке"
 msgstr ""
 
-#: Controller/NotesController.php:118
+#: Controller/NotesController.php:125
 msgid "Ошибка, заметка не удалена"
 msgstr ""
 
-#: Controller/NotesController.php:138
+#: Controller/NotesController.php:145
 msgid "Готово"
 msgstr ""
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-10-29 13:50+0200\n"
+"POT-Creation-Date: 2014-01-27 13:01+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -18,55 +18,59 @@ msgstr ""
 msgid "Упс, похоже вывалился интернет, попробуйте воспользоваться сервисом позже или подождите пока он появится. Мы же проверим соединение еще раз через 1 минуту."
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:4;22
+#: View/Elements/empty_lists.ctp:4
+msgid "В этом списке нет ни одной задачи."
+msgstr ""
+
+#: View/Elements/empty_lists.ctp:7;25
 msgid "Здесь нет ни одной задачи! Ты крутой! Стремись почаще видеть эту надпись. Чем чаще ты ее видешь, тем успешнее ты. Она магическая. Заходи к нам. Это принесет тебе счастье."
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:7
+#: View/Elements/empty_lists.ctp:10
 msgid "Здесь нет ни одной задачи! Запланируй здесь то, что не знаешь когда сделать. Поехать в Италию? Сходить в кино? Придет час, и ты это сделаешь. Воспользуйся замечательной функцией переноса задач. Все для тебя! Дерзай!"
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:10
+#: View/Elements/empty_lists.ctp:13
 msgid "У вас нет еще ни одной выполненой задачи! Быстрее к планированию, и выполнению. Улучши свою жизнь сейчас! Не оставляй на завтра то, что можно сделать сегодня! Ну а если не успел - воспользуйся замечательной функцией переноса задач. Все для тебя! Дерзай!"
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:13
+#: View/Elements/empty_lists.ctp:16
 msgid "Нам жаль, что у вас не было планов в эти дни. Планируй на будущее и иди к успеху с нами!"
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:16;19
+#: View/Elements/empty_lists.ctp:19;22
 msgid "Здесь нет ни одной задачи! Запланируй себе задачи и иди к успеху с нами!"
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:25
+#: View/Elements/empty_lists.ctp:28
 msgid "Здесь нет ни одной задачи! Поторопись! Сделай свои дела и отдыхай. Забудь обо всем и сосредоточься на предыдущей вкладке. Выполни все свои задачи. Это принесет тебе счастье."
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:28
+#: View/Elements/empty_lists.ctp:31
 msgid "У вас нет прикрепленных аккаунтов. Воспользуйтесь кнопками социальных сетей, чтобы иметь возможность входить, используя аккаунт социальной сети."
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:31
+#: View/Elements/empty_lists.ctp:34
 msgid " В этом списке будет отображаться удаленные задачи. Это очень удобно видеть, какие задачи были запланированы, но по тем или иным причинам были удалены. Для окончательно удаления воспользуйтесь кнопкой \"Удалить все\"."
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:34
+#: View/Elements/empty_lists.ctp:37
 msgid "Сейчас ваш журнал пуст. Добавляйте комментарии к дням, и вы будете писать историю своей жизни."
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:37
+#: View/Elements/empty_lists.ctp:40
 msgid "Для изменения пароля необходимо войти через локальный аккаунт."
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:40
+#: View/Elements/empty_lists.ctp:43
 msgid "Вы еще не создавали списки. Создайте списки, и группируйте задачи по тематике."
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:43
+#: View/Elements/empty_lists.ctp:46
 msgid "Здесь нет ни одной заметки!"
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:51
+#: View/Elements/empty_lists.ctp:54
 msgid "О-о-о!*"
 msgstr ""
 
@@ -78,17 +82,13 @@ msgstr ""
 msgid "В вашем браузере отключен JavaScript. Пожалуйста, включите его в настройках, чтобы пользоваться сервисом"
 msgstr ""
 
-#: View/Errors/error400.ctp:11
-#: View/Errors/missing_action.ctp:11
-#: View/Errors/missing_controller.ctp:11
-#: View/Errors/missing_view.ctp:11
+#: View/Errors/error400.ctp:12
+#: View/Errors/error500.ctp:12
 msgid "— Не то чтобы совсем не попал,— сказал Пух,— но только не попал в шарик!"
 msgstr ""
 
-#: View/Errors/error400.ctp:12
-#: View/Errors/missing_action.ctp:12
-#: View/Errors/missing_controller.ctp:12
-#: View/Errors/missing_view.ctp:12
+#: View/Errors/error400.ctp:13
+#: View/Errors/error500.ctp:13
 msgid "Начать с начала"
 msgstr ""
 

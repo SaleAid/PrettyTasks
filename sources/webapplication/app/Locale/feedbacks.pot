@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-10-29 13:50+0200\n"
+"POT-Creation-Date: 2014-01-27 13:01+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,15 +14,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/FeedbacksController.php:18
+#: Controller/FeedbacksController.php:33
 msgid "Ошибка при передачи данных"
 msgstr ""
 
-#: Controller/FeedbacksController.php:30
+#: Controller/FeedbacksController.php:45
 msgid "Ваше сообщение было сохранено"
 msgstr ""
 
-#: Controller/FeedbacksController.php:37
+#: Controller/FeedbacksController.php:72
 msgid "Ваше сообщение не удалось сохранить. Попробуйте снова."
 msgstr ""
 
