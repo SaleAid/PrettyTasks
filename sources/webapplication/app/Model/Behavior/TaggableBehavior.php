@@ -152,7 +152,7 @@ class TaggableBehavior extends ModelBehavior {
 				$existingTags = $tagModel->find('all', array(
 					'contain' => array(),
 					'conditions' => array(
-						$tagAlias . '.name' => Set::extract($tags, '{n}.name')
+						$tagAlias . '.name' => Hash::extract($tags, '{n}.name')
                     ),
 					'fields' => array(
 						$tagAlias . '.name',
@@ -232,7 +232,7 @@ class TaggableBehavior extends ModelBehavior {
 						$taggedAlias . '.model' => $model->name);
 
 					if (!empty($tagged)) {
-						$alreadyTagged = Set::extract($tagged, "{n}.{$taggedAlias}.tag_id");
+						$alreadyTagged = Hash::extract($tagged, "{n}.{$taggedAlias}.tag_id");
 						$existingTagIds = array_diff($existingTagIds, $alreadyTagged);
 						$deleteAll['NOT'] = array($taggedAlias . '.tag_id' => $alreadyTagged);
 					}
@@ -248,7 +248,7 @@ class TaggableBehavior extends ModelBehavior {
                             ),
 							'fields' => 'Tagged.tag_id'));
 
-						$oldTagIds = Set::extract($oldTagIds, '/Tagged/tag_id');
+						$oldTagIds = Hash::extract($oldTagIds, '/Tagged/tag_id');
 						$tagModel->{$taggedAlias}->deleteAll($deleteAll, false, true);
 					}
                     
@@ -277,7 +277,7 @@ class TaggableBehavior extends ModelBehavior {
 							'fields' => 'Tagged.tag_id'));
 
 						if (!empty($newTagIds)) {
-							$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
+							$newTagIds = Hash::extract($newTagIds, '{n}.Tagged.tag_id');
 						}
                         
 						$tagIds = array_merge($oldTagIds, $newTagIds);
@@ -381,15 +381,15 @@ class TaggableBehavior extends ModelBehavior {
  */
 	public function tagArrayToString(Model $model, $data = null) {
 		if ($data) {
-			return join($this->settings[$model->alias]['separator'].' ', Set::extract($data, '{n}.name'));
+			return join($this->settings[$model->alias]['separator'].' ', Hash::extract($data, '{n}.name'));
 		}
 		return '';
 	}
     
     public function tagArray(Model $model, $data = null) {
 		if (!empty($data)) {
-			//return Set::extract($data, '{n}.name');
-            return Set::combine($data, '{n}.id', '{n}.name');
+			//return Hash::extract($data, '{n}.name');
+            return Hash::combine($data, '{n}.id', '{n}.name');
         }
 		return '';
 	}
@@ -441,7 +441,7 @@ class TaggableBehavior extends ModelBehavior {
             true
 		);
         if(!empty($tagIds)){
-            $tagIds = Set::extract($tagIds, '{n}.Tagged.tag_id');
+            $tagIds = Hash::extract($tagIds, '{n}.Tagged.tag_id');
             $this->cacheOccurrence($model, $tagIds, $userId);
         }
  
