@@ -52,7 +52,7 @@ class FeedbacksController extends AppController {
                         'fields' => array('id')
                     ));
                     App::uses('CakeEmail', 'Network/Email');
-                    $email = new CakeEmail();
+                    $email = new CakeEmail('feedback');
                     $str = $email->template('feedbackToSupport', 'default')
                         ->emailFormat(Configure::read('Email.global.format'))
                         ->from(array('feedback@prettytasks.com' => 'Feedback prettytasks'))

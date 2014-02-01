@@ -265,7 +265,7 @@ class Account extends AppModel {
             return false;
         }
         $this->read();
-        $email = new CakeEmail();
+        $email = new CakeEmail('account');
         $email->template(Configure::read('Config.language') . DS . 'activate_account', 'default');
         $email->emailFormat(Configure::read('Email.global.format'));
         $email->from(Configure::read('Email.global.from'));
@@ -286,7 +286,7 @@ class Account extends AppModel {
     public function sendPasswordResend($id) {
         $this->id = $id;
         $this->read();
-        $email = new CakeEmail();
+        $email = new CakeEmail('account');
         $email->template(Configure::read('Config.language') . DS . 'password_resend', 'default');
         $email->emailFormat(Configure::read('Email.global.format'));
         $email->from(Configure::read('Email.global.from'));

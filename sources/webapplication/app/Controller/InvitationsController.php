@@ -70,7 +70,7 @@ class InvitationsController extends AppController {
                 //Send emails only non-registered users 
                 App::uses('CakeEmail', 'Network/Email');
                 foreach ( $emails2send as $address ) {
-                    $email = new CakeEmail();
+                    $email = new CakeEmail('invitation');
                     $email->template(Configure::read('Config.language') . DS . 'users_invitation', 'default');
                     $email->emailFormat(Configure::read('Email.global.format'));
                     $email->from(Configure::read('Email.global.from'));

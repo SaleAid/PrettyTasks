@@ -66,12 +66,10 @@ templates.day_tab_content = '\
 templates.empty_list_day_tasks = '\
     <% if ( type == "past") { %>\
         <div class ="alert alert-info emptyList hide ex_past">\
-            <strong>' + __d('messages', 'О-о-о!*') + '</strong>\
             ' + __d('messages', 'Нам жаль, что у вас не было планов в эти дни. Планируй на будущее и иди к успеху с нами!') + '\
         </div>\
     <% } else { %>\
         <div class ="alert alert-info emptyList hide ex_future">\
-             <strong>' + __d('messages', 'О-о-о!*') + '</strong>\
             ' + __d('messages', 'Здесь нет ни одной задачи! Запланируй себе задачи и иди к успеху с нами!') + '\
         </div>\
     <% } %>';
@@ -110,13 +108,11 @@ templates.add_task = '\
     ';
 templates.empty_list_filterProgress = '\
     <div class ="alert alert-info emptyList filterProgress">\
-        <strong>' + __d('messages', 'О-о-о!*') + '</strong>\
         ' + __d('messages', 'Здесь нет ни одной задачи! Ты крутой! Стремись почаще видеть эту надпись. Чем чаще ты ее видешь, тем успешнее ты. Она магическая. Заходи к нам. Это принесет тебе счастье.') + '\
     </div>\
     ';
 templates.empty_list_filterCompleted = '\
     <div class ="alert alert-info emptyList filterCompleted">\
-    <strong>' + __d('messages', 'О-о-о!*') + '</strong>\
     ' + __d('messages', 'Здесь нет ни одной задачи! Поторопись! Сделай свои дела и отдыхай. Забудь обо всем и сосредоточься на предыдущей вкладке. Выполни все свои задачи. Это принесет тебе счастье.') + '\
     </div>\
     ';  

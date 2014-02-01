@@ -75,9 +75,7 @@ msgid ""
 "Для окончательно удаления воспользуйтесь кнопкой \"Удалить все\"."
 msgstr ""
 
-#: View/Elements/empty_lists.ctp:39
-msgid "О-о-о!*"
-msgstr ""
+
 
 #: View/Elements/js_global_config.ctp:10
 msgid ""

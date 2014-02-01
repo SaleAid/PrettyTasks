@@ -51,5 +51,5 @@
     }
 ?>
 <div class ="alert alert-info emptyList <?php if($hide){echo 'hide';}?> ex_<?php echo $type; ?>">
-    <strong><?php echo __d('messages', 'О-о-о!*'); ?></strong> <?php echo $message; ?>
+    <?php echo $message; ?>
 </div>  
