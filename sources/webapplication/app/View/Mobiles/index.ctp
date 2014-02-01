@@ -6,6 +6,7 @@
 	<div data-role="panel" id="left-panel-tasks" data-position="left"
 		data-display="overlay" >
 		<ul data-role="listview"  >
+		    <li><a href="<?php echo $this->Html->url(array('controller' => 'mobiles', 'action' => 'go2desktop'));?>" class="menu-list-future" target="_top">Goto desktop version</a></li>
 			<li data-role="list-divider">Lists</li>
 			<li><a href="#" class="menu-list-future">Agenda</a></li>
 			<li><a href="#" class="menu-list-planned">Planned</a></li>
