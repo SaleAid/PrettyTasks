@@ -1,6 +1,7 @@
 <?php
 
 App::uses('CakeEmail', 'Network/Email');
+App::uses('CakeTime', 'Utility');
 App::uses('ErrorHandler', 'Error');
 
 class AppErrorHandler extends ErrorHandler {
@@ -51,10 +52,10 @@ class AppErrorHandler extends ErrorHandler {
  * @return boolean
  */
 	protected static function _sendMailException(Exception $exception, $config) {
-		if (empty($config['sendMail'])) {
+		if (empty($config['sendMail']) || (CakeSession::check('Exception.send.time') && CakeTime::wasWithinLast("15 minutes", CakeSession::read('Exception.send.time'))) ) {
 			return false;
 		}
-
+		CakeSession::write('Exception.send.time', time());
 		$Email = new CakeEmail('error');
 		$Email->from(Configure::read('Email.global.from'))
 		    ->to(Configure::read('App.support.mail'))
@@ -74,9 +75,10 @@ class AppErrorHandler extends ErrorHandler {
  * @return boolean
  */
 	protected static function _sendMailError($message, $config) {
-		if (empty($config['sendMail'])) {
+		if (empty($config['sendMail']) || (CakeSession::check('Error.send.time') && CakeTime::wasWithinLast("15 minutes", CakeSession::read('Error.send.time'))) ) {
 			return false;
 		}
+		CakeSession::write('Error.send.time', time());
 
 		$Email = new CakeEmail('error');
 		$Email->from(Configure::read('Email.global.from'))
