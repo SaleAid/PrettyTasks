@@ -48,10 +48,6 @@ var mobile = (function() {
 				_private.loadListItem(event);
 			});
 			
-//			$(document).on("vmouseup", "#taskslist li", function() {
-//				event.preventDefault();
-//				return false;
-//			});
 			
 			$(document).on('click', "a[class|='menu-list']", function(event){
 				var name = event.target.className.split(' ')[0];
@@ -234,7 +230,8 @@ var mobile = (function() {
 				$.mobile.loading('hide');
 			});
 		},
-		listForTag : function(name) {
+		listForTag : function(name, page) {
+			this.showInput(true);
 			mobile.clearTaskList();
 			$('#addnew').attr('placeholder', 'Type to add new task for ' + name + ' list');
 			$.ajax({
@@ -260,6 +257,7 @@ var mobile = (function() {
 			if (date === undefined) {
 				date = _private.today;
 			}
+			this.showInput(true);
 			mobile.clearTaskList();
 			$('#addnew').attr('placeholder', 'Type to add new task for ' + date);
 			$.ajax({
@@ -385,6 +383,7 @@ var mobile = (function() {
 		},
 		clearTaskList: function(){
 			$("#taskslist div.ui-controlgroup-controls ").children().remove();
+			this.removeLinkLoadMore();
 		},
 		showList: function(name, page){
 			if (name === undefined) {
@@ -395,6 +394,7 @@ var mobile = (function() {
 			}
 			_private.currentList =  name;
 			_private.currentPage = page;
+			this.showInput(false);
 			if (page==1){
 				mobile.clearTaskList();
 			}
@@ -430,6 +430,16 @@ var mobile = (function() {
 				  textonly: true
 			  });
 			  setTimeout('$.mobile.loading( "hide" )', 1000 );
+		},
+		showInput: function(show){
+			if (show === undefined) {
+				show = true;
+			}
+			if(show){
+				$('#addTaskForm').show( 500 );	
+			}else{
+				$('#addTaskForm').hide("slow");	
+			}
 		}
 	};
 

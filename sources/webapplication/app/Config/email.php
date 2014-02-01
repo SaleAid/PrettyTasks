@@ -83,5 +83,26 @@ class EmailConfig {
     				'info@prettytasks.com' => 'PrettyTasks Online Organizer'
     		)
     );
+    
+    /**
+     * This config is used for error email
+     *
+     * @var array
+     */
+    public $error = array(
+    		'transport' => 'Smtp',
+    		'host' => 'smtp.mandrillapp.com',
+    		'port' => 587,
+    		'username' => 'prettytasks@gmail.com',
+    		'password' => 'PG8cWfu51HWrQeLn6UJZ5Q',
+    		'charset' => 'utf-8',
+    		'headerCharset' => 'utf-8',
+    		'from' => array(
+    				'info@prettytasks.com' => 'PrettyTasks Online Organizer'
+    		),
+    		'replyTo' => array(
+    				'info@prettytasks.com' => 'PrettyTasks Online Organizer'
+    		)
+    );
 
 }
