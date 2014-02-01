@@ -3,6 +3,17 @@
 App::uses('Controller', 'Controller');
 App::uses('Sanitize', 'Utility');
 
+/**
+ *
+ * @property CookieComponent           $Cookie
+ * @property RequestHandlerComponent   $RequestHandler
+ * @property SeoComponent              $Seo
+ * @property CaptchaComponent          $Captcha
+ * @property AutoLoginComponent        $AutoLogin
+ * @property SessionComponent          $Session
+ * @property AuthComponent             $Auth
+ *          
+ */
 class AppController extends Controller {
     public $helpers = array(
             'Text',
@@ -43,11 +54,13 @@ class AppController extends Controller {
             ),
             'RequestHandler',
             'Seo',
-            'Captcha'
+            'Captcha',
+            'Cookie'
     );
     public $L10n = null;
 
     /**
+     *
      *
      *
      *
@@ -63,6 +76,7 @@ class AppController extends Controller {
      *
      *
      *
+     *
      * Checking user have pro account
      *
      * @access public
@@ -73,6 +87,7 @@ class AppController extends Controller {
     }
 
     /**
+     *
      *
      *
      *
@@ -91,10 +106,8 @@ class AppController extends Controller {
      * @return boolean
      */
     public function isMobileVersion() {
-        //return (isset($this->request->params['device']) and ($this->request->params['device'] == 'm')) || $this->RequestHandler->isMobile();
-        return $this->RequestHandler->isMobile();
-        // TODO add smarty auto detection
-        // $this->layout = 'default';
+        $isMobile=($this->RequestHandler->isMobile() && (!$this->Cookie->read('desktop')));
+        return $isMobile;
     }
 
     /**
@@ -102,11 +115,12 @@ class AppController extends Controller {
      * To add logic for switching to mobile and normal version
      */
     protected function _prepareMobileVersion() {
-        $mobileViewFile = 'View' . DS . $this->name . '/mobile/' . Inflector::underscore($this->request->params['action']) . '.ctp';
-        if (file_exists(APP . DS . $mobileViewFile)) {
-            $this->layout = 'mobile';
-            $mobileView = $this->name . '/mobile';
-            $this->viewPath = $mobileView;
+        if (! (strtolower($this->params->controller) == 'mobiles')) {
+            $this->redirect(array(
+                    'controller' => 'mobiles',
+                    'action' => 'index'
+            ));
+        } else {
         }
     }
 
@@ -120,7 +134,7 @@ class AppController extends Controller {
         if (! $timezone) {
             $timezone_offset = $this->Auth->user('timezone_offset');
             $timezone = timezone_name_from_abbr("", $timezone_offset, 0);
-            if(!$timezone){
+            if (! $timezone) {
                 $timezone = Configure::read('Config.timezone');
             }
         }
@@ -140,30 +154,30 @@ class AppController extends Controller {
         $timeOffset = $dateTimeZoneUser->getOffset($dateTimeServer);
         return $timeOffset;
     }
-    
-    protected function generateCsrfToken(){
-        //$this->Session->delete('csrf_token');
-        if(!$this->Session->check('csrf_token')){
-            $this->Session->write('csrf_token', base64_encode( mt_rand() . time() . mt_rand() . 'key' ));    
+
+    protected function generateCsrfToken() {
+        // $this->Session->delete('csrf_token');
+        if (! $this->Session->check('csrf_token')) {
+            $this->Session->write('csrf_token', base64_encode(mt_rand() . time() . mt_rand() . 'key'));
         }
         return $this->_getCsrfToken();
     }
-    
-    private function _getCsrfToken(){
-        if($this->Session->check('csrf_token')){
+
+    private function _getCsrfToken() {
+        if ($this->Session->check('csrf_token')) {
             return $this->Session->read('csrf_token');
         }
         return;
     }
 
     public function beforeFilter() {
+        $this->Cookie->name = 'PT';
         $this->_setLanguage();
         $this->__setTimeZone();
-
-        //if ($this->isMobileVersion()) {
-        //    $this->_prepareMobileVersion();
-        //}
-
+        
+        if (! $this->request->is('ajax') && $this->isMobileVersion()) {
+            $this->_prepareMobileVersion();
+        }
         
         $this->Seo->title = Configure::read('Site.title');
         $this->Seo->description = Configure::read('Site.description');
@@ -175,11 +189,10 @@ class AppController extends Controller {
         $this->set('timezone', $this->_userTimeZone());
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
-        //$this->set('csrfToken', $this->_getCsrfToken());
-        if(! $this->request->is('ajax') ){
+        // $this->set('csrfToken', $this->_getCsrfToken());
+        if (! $this->request->is('ajax')) {
             $this->set('csrfToken', $this->generateCsrfToken());
         }
-        
         
         if ($this->Auth->loggedIn() && $this->Session->check('auth-new-accounts') && ! ($this->request->params['controller'] == 'accounts' && $this->request->params['action'] == 'confirmSocialLinks')) {
             $this->redirect(array(
@@ -293,16 +306,16 @@ class AppController extends Controller {
          */
         $this->Captcha->getCaptcha();
     }
-    
-    public function checkCsrfToken($token){
-        if( !empty($token) and $this->_getCsrfToken() == $token){
+
+    public function checkCsrfToken($token) {
+        if (! empty($token) and $this->_getCsrfToken() == $token) {
             return true;
         }
         return false;
     }
-    
-    public function isSetCsrfToken(){
-        if( $this->request->header('X-CSRFToken') ){
+
+    public function isSetCsrfToken() {
+        if ($this->request->header('X-CSRFToken')) {
             return $this->checkCsrfToken($this->request->header('X-CSRFToken'));
         }
         return false;
