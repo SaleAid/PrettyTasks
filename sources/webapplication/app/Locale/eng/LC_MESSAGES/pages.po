@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-08-12 20:21+0000\n"
-"PO-Revision-Date: 2013-08-13 00:12+0300\n"
+"POT-Creation-Date: 2014-02-01 20:05+0000\n"
+"PO-Revision-Date: 2014-02-01 22:15+0300\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "Language: \n"
@@ -42,59 +42,64 @@ msgstr "Log in"
 msgid "Register"
 msgstr "Sign up"
 
-#: View/Elements/footer.ctp:20
-#: View/Elements/footer_eng.ctp:19
-msgid "Misc"
+#: View/Elements/footer.ctp:16
+#: View/Elements/footer_eng.ctp:16
+msgid "Mobile version"
 msgstr ""
 
-#: View/Elements/footer.ctp:22
-#: View/Elements/footer_eng.ctp:21
-#: View/Elements/main_menu.ctp:45
-msgid "About"
+#: View/Elements/footer.ctp:21
+#: View/Elements/footer_eng.ctp:20
+msgid "Misc"
 msgstr ""
 
 #: View/Elements/footer.ctp:23
 #: View/Elements/footer_eng.ctp:22
-msgid "How it works"
+#: View/Elements/main_menu.ctp:45
+msgid "About"
 msgstr ""
 
 #: View/Elements/footer.ctp:24
-#: View/Elements/footer_eng.ctp:24
-msgid "Terms and Conditions"
+#: View/Elements/footer_eng.ctp:23
+msgid "How it works"
 msgstr ""
 
 #: View/Elements/footer.ctp:25
-#: View/Elements/footer_eng.ctp:23
+#: View/Elements/footer_eng.ctp:25
+msgid "Terms and Conditions"
+msgstr ""
+
+#: View/Elements/footer.ctp:26
+#: View/Elements/footer_eng.ctp:24
 msgid "Privacy Policy"
 msgstr ""
 
-#: View/Elements/footer.ctp:29
-#: View/Elements/footer_eng.ctp:29
+#: View/Elements/footer.ctp:30
+#: View/Elements/footer_eng.ctp:30
 msgid "To bloggers"
 msgstr ""
 
-#: View/Elements/footer.ctp:31
-#: View/Elements/footer_eng.ctp:31
+#: View/Elements/footer.ctp:32
+#: View/Elements/footer_eng.ctp:32
 msgid "Welcome"
 msgstr ""
 
-#: View/Elements/footer.ctp:33
-#: View/Elements/footer_eng.ctp:34
+#: View/Elements/footer.ctp:34
+#: View/Elements/footer_eng.ctp:35
 msgid "Follow us"
-msgstr ""
-
-#: View/Elements/footer.ctp:35
-#: View/Elements/footer_eng.ctp:36
-msgid "On twitter"
 msgstr ""
 
 #: View/Elements/footer.ctp:36
 #: View/Elements/footer_eng.ctp:37
+msgid "On twitter"
+msgstr ""
+
+#: View/Elements/footer.ctp:37
+#: View/Elements/footer_eng.ctp:38
 msgid "On facebook"
 msgstr ""
 
-#: View/Elements/footer.ctp:53
-#: View/Elements/footer_eng.ctp:43
+#: View/Elements/footer.ctp:54
+#: View/Elements/footer_eng.ctp:44
 msgid "Social Media"
 msgstr ""
 

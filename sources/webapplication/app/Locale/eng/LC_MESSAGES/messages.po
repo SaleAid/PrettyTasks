@@ -4,10 +4,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-02-01 21:10+0200\n"
-"PO-Revision-Date: 2014-02-01 21:11+0200\n"
+"POT-Creation-Date: 2014-02-01 20:05+0000\n"
+"PO-Revision-Date: 2014-02-01 22:13+0300\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,108 +16,55 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 
 #: View/Elements/connection_error.ctp:6
-msgid ""
-"Произошла ошибка! Возможно пропал интернет или произошла ошибка на сервере. "
-"Попробуйте воспользоваться сервисом позже. Мы же проверим соединение еще раз "
-"через 1 минуту."
-msgstr ""
-"An error occured! Internet connection may be broken or something is wrong on "
-"a server. Wait a little or try to use the service later. We will check a "
-"connection in a minute."
+msgid "Произошла ошибка! Возможно пропал интернет или произошла ошибка на сервере. Попробуйте воспользоваться сервисом позже. Мы же проверим соединение еще раз через 1 минуту."
+msgstr "An error occured! Internet connection may be broken or something is wrong on a server. Wait a little or try to use the service later. We will check a connection in a minute."
 
 #: View/Elements/empty_lists.ctp:4
 msgid "В этом списке нет ни одной задачи."
 msgstr "There is no task here!"
 
 #: View/Elements/empty_lists.ctp:7;25
-msgid ""
-"Здесь нет ни одной задачи! Ты крутой! Стремись почаще видеть эту надпись. "
-"Чем чаще ты ее видешь, тем успешнее ты. Она магическая. Заходи к нам. Это "
-"принесет тебе счастье."
-msgstr ""
-"Not a task here! You're awesome! Do your best to see this notice more often. "
-"More often you see it, more successful you are. This notice is magical! "
-"Visit us and this will bring you happiness."
+msgid "Здесь нет ни одной задачи! Ты крутой! Стремись почаще видеть эту надпись. Чем чаще ты ее видешь, тем успешнее ты. Она магическая. Заходи к нам. Это принесет тебе счастье."
+msgstr "Not a task here! You're awesome! Do your best to see this notice more often. More often you see it, more successful you are. This notice is magical! Visit us and this will bring you happiness."
 
 #: View/Elements/empty_lists.ctp:10
-msgid ""
-"Здесь нет ни одной задачи! Запланируй здесь то, что не знаешь когда сделать. "
-"Поехать в Италию? Сходить в кино? Придет час, и ты это сделаешь. "
-"Воспользуйся замечательной функцией переноса задач. Все для тебя! Дерзай!"
-msgstr ""
-"Not a task here! Plan here something you don't know when to do. Visit Italy? "
-"Go to the cinema? Time comes and you'll do it. Use our remarkable function "
-"of tasks transfer. Everything is ready for you! Just use it!"
+msgid "Здесь нет ни одной задачи! Запланируй здесь то, что не знаешь когда сделать. Поехать в Италию? Сходить в кино? Придет час, и ты это сделаешь. Воспользуйся замечательной функцией переноса задач. Все для тебя! Дерзай!"
+msgstr "Not a task here! Plan here something you don't know when to do. Visit Italy? Go to the cinema? Time comes and you'll do it. Use our remarkable function of tasks transfer. Everything is ready for you! Just use it!"
 
 #: View/Elements/empty_lists.ctp:13
-msgid ""
-"У вас нет еще ни одной выполненой задачи! Быстрее к планированию, и "
-"выполнению. Улучши свою жизнь сейчас! Не оставляй на завтра то, что можно "
-"сделать сегодня! Ну а если не успел - воспользуйся замечательной функцией "
-"переноса задач. Все для тебя! Дерзай!"
-msgstr ""
-"You haven't got any completed task yet. Rush to planning and completing! "
-"Make your life better now! Don't leave for tomorrow what you can do today. "
-"But if you're late - use our remarkable transfer function to move tasks. "
-"Everything is ready for you. Just use it!"
+msgid "У вас нет еще ни одной выполненой задачи! Быстрее к планированию, и выполнению. Улучши свою жизнь сейчас! Не оставляй на завтра то, что можно сделать сегодня! Ну а если не успел - воспользуйся замечательной функцией переноса задач. Все для тебя! Дерзай!"
+msgstr "You haven't got any completed task yet. Rush to planning and completing! Make your life better now! Don't leave for tomorrow what you can do today. But if you're late - use our remarkable transfer function to move tasks. Everything is ready for you. Just use it!"
 
 #: View/Elements/empty_lists.ctp:16
-msgid ""
-"Нам жаль, что у вас не было планов в эти дни. Планируй на будущее и иди к "
-"успеху с нами!"
-msgstr ""
-"We're sorry you had no plans for these days. Plan your future and rush to "
-"the success with us!"
+msgid "Нам жаль, что у вас не было планов в эти дни. Планируй на будущее и иди к успеху с нами!"
+msgstr "We're sorry you had no plans for these days. Plan your future and rush to the success with us!"
 
 #: View/Elements/empty_lists.ctp:19;22
-msgid ""
-"Здесь нет ни одной задачи! Запланируй себе задачи и иди к успеху с нами!"
+msgid "Здесь нет ни одной задачи! Запланируй себе задачи и иди к успеху с нами!"
 msgstr "There is no task here! Plan your day and rush to the success with us!"
 
 #: View/Elements/empty_lists.ctp:28
-msgid ""
-"Здесь нет ни одной задачи! Поторопись! Сделай свои дела и отдыхай. Забудь "
-"обо всем и сосредоточься на предыдущей вкладке. Выполни все свои задачи. Это "
-"принесет тебе счастье."
-msgstr ""
-"There is no task here! Rush to completing your tasks and have a good rest. "
-"Forget about everything and focus on a previous tab. Complete all your "
-"tasks. This will bring you happiness."
+msgid "Здесь нет ни одной задачи! Поторопись! Сделай свои дела и отдыхай. Забудь обо всем и сосредоточься на предыдущей вкладке. Выполни все свои задачи. Это принесет тебе счастье."
+msgstr "There is no task here! Rush to completing your tasks and have a good rest. Forget about everything and focus on a previous tab. Complete all your tasks. This will bring you happiness."
 
 #: View/Elements/empty_lists.ctp:31
-msgid ""
-"У вас нет прикрепленных аккаунтов. Воспользуйтесь кнопками социальных сетей, "
-"чтобы иметь возможность входить, используя аккаунт социальной сети."
-msgstr ""
-"You have no linked profiles. Use social network buttons to enter our service "
-"with your social network accounts."
+msgid "У вас нет прикрепленных аккаунтов. Воспользуйтесь кнопками социальных сетей, чтобы иметь возможность входить, используя аккаунт социальной сети."
+msgstr "You have no linked profiles. Use social network buttons to enter our service with your social network accounts."
 
 #: View/Elements/empty_lists.ctp:34
-msgid ""
-" В этом списке будет отображаться удаленные задачи. Это очень удобно видеть, "
-"какие задачи были запланированы, но по тем или иным причинам были удалены. "
-"Для окончательно удаления воспользуйтесь кнопкой \"Удалить все\"."
-msgstr ""
-"Deleted tasks will be represented in this list. It is very convenient to see "
-"which tasks were planned but deleted because of certain reason. To delete "
-"them totally you can use the button \"Delete all\""
+msgid " В этом списке будет отображаться удаленные задачи. Это очень удобно видеть, какие задачи были запланированы, но по тем или иным причинам были удалены. Для окончательно удаления воспользуйтесь кнопкой \"Удалить все\"."
+msgstr "Deleted tasks will be represented in this list. It is very convenient to see which tasks were planned but deleted because of certain reason. To delete them totally you can use the button \"Delete all\""
 
 #: View/Elements/empty_lists.ctp:37
-msgid ""
-"Сейчас ваш журнал пуст. Добавляйте комментарии к дням, и вы будете писать "
-"историю своей жизни."
-msgstr ""
-"Your journal is empty now. Add comments to days and you will write history "
-"of your life."
+msgid "Сейчас ваш журнал пуст. Добавляйте комментарии к дням, и вы будете писать историю своей жизни."
+msgstr "Your journal is empty now. Add comments to days and you will write history of your life."
 
 #: View/Elements/empty_lists.ctp:40
 msgid "Для изменения пароля необходимо войти через локальный аккаунт."
 msgstr "Log in using local account to change password."
 
 #: View/Elements/empty_lists.ctp:43
-msgid ""
-"Вы еще не создавали списки. Создайте списки, и группируйте задачи по "
-"тематике."
+msgid "Вы еще не создавали списки. Создайте списки, и группируйте задачи по тематике."
 msgstr "You have not lists yet. Create the lists and sort tasks by themes."
 
 #: View/Elements/empty_lists.ctp:46
@@ -124,30 +72,20 @@ msgid "Здесь нет ни одной заметки!"
 msgstr "There is no note here!"
 
 #: View/Elements/js_global_config.ctp:11
-msgid ""
-"В данный момент сайт сохраняет данные на сервере, уход со страницы прервет "
-"этот процесс, что приведет к потере данных. Подождите несколько секунд, "
-"после чего вы можете спокойно закрыть страницу."
-msgstr ""
-"At the moment, our site stores data on a server, and if you leave the page, "
-"this action may abort the process and cause data loss. Wait a few seconds, "
-"please. Afterwards, the page can be closed."
+msgid "В данный момент сайт сохраняет данные на сервере, уход со страницы прервет этот процесс, что приведет к потере данных. Подождите несколько секунд, после чего вы можете спокойно закрыть страницу."
+msgstr "At the moment, our site stores data on a server, and if you leave the page, this action may abort the process and cause data loss. Wait a few seconds, please. Afterwards, the page can be closed."
 
 #: View/Elements/noscript.ctp:6
-msgid ""
-"В вашем браузере отключен JavaScript. Пожалуйста, включите его в настройках, "
-"чтобы пользоваться сервисом"
-msgstr ""
-"JavaScript is disabled in your browser. Please, enable it in your settings "
-"to use our service comfortably."
+msgid "В вашем браузере отключен JavaScript. Пожалуйста, включите его в настройках, чтобы пользоваться сервисом"
+msgstr "JavaScript is disabled in your browser. Please, enable it in your settings to use our service comfortably."
 
-#: View/Errors/error400.ctp:12 View/Errors/error500.ctp:12
-msgid ""
-"— Не то чтобы совсем не попал,— сказал Пух,— но только не попал в шарик!"
-msgstr ""
-"- Not that you failed to hit at all, - Pooh said, - just didn't hit a ball!"
+#: View/Errors/error400.ctp:12
+#: View/Errors/error500.ctp:12
+msgid "— Не то чтобы совсем не попал,— сказал Пух,— но только не попал в шарик!"
+msgstr "- Not that you failed to hit at all, - Pooh said, - just didn't hit a ball!"
 
-#: View/Errors/error400.ctp:13 View/Errors/error500.ctp:13
+#: View/Errors/error400.ctp:13
+#: View/Errors/error500.ctp:13
 msgid "Начать с начала"
 msgstr "Start all over"
 
