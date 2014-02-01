@@ -11,7 +11,7 @@
 
 <ul>
     <?php foreach($data['tasks']['today']['list'] as $task): ?>
-    <li style="<?php if($task['Task']['priority']) :?> font-weight: bold; <?php endif;?>"><?php echo $task['Task']['title'];?></li>
+    <li style="<?php if($task->priority) :?> font-weight: bold; <?php endif;?>"><?php echo $task->title;?></li>
     <?php endforeach; ?>
 </ul>
 
@@ -27,7 +27,7 @@
         <p>Задачи:</p>
         <ul>
             <?php foreach($data['tasks']['yesterday']['not_done_list'] as $task): ?>
-            <li><?php echo $task['Task']['title'];?></li>
+            <li><?php echo $task->title;?></li>
             <?php endforeach; ?>
         </ul>    
         вы найдете в списке 
