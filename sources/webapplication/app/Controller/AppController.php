@@ -175,7 +175,7 @@ class AppController extends Controller {
         $this->_setLanguage();
         $this->__setTimeZone();
         
-        if (! $this->request->is('ajax') && $this->isMobileVersion()) {
+        if (! $this->request->is('ajax') && $this->isMobileVersion() && $this->Auth->loggedIn()) {
             $this->_prepareMobileVersion();
         }
         
