@@ -303,6 +303,8 @@ class TaggableBehavior extends ModelBehavior {
 	public function cacheOccurrence(Model $model, $tagIds, $userId) {
 		if (is_string($tagIds) || is_int($tagIds)) {
 			$tagIds = array($tagIds);
+		}elseif(empty($tagIds)){
+			$tagIds = array();
 		}
         foreach ($tagIds as $tagId) {
 			$fieldName = Inflector::underscore($model->name) . '_occurrence';
@@ -411,7 +413,11 @@ class TaggableBehavior extends ModelBehavior {
     
     public function afterDelete(Model $model){
         $userId = $model->data[$model->name]['user_id'];
-        $tagIds = array_keys($model->data[$model->name]['tags']);
+        $tagIds = array();
+        if(is_array($model->data[$model->name]['tags'])){
+        	$tagIds = array_keys($model->data[$model->name]['tags']);	
+        }
+        
         $this->cacheOccurrence($model, $tagIds, $userId);
     }
 
