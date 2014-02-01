@@ -13,6 +13,7 @@
             				*/ ?>
 							<li><?php echo $this->Html->link(__d('pages', 'Login'), array('controller' => 'accounts', 'action' => 'login'));?></li>
 							<li><?php echo $this->Html->link(__d('pages', 'Register'), array('controller' => 'accounts', 'action' => 'register'));?></li>
+							<li><?php echo $this->Html->link(__d('pages', 'Mobile version'), array('controller' => 'mobiles', 'action' => 'go2mobile'));?></li>
 						</ul>
 					</div> 
 					<div class="span3">

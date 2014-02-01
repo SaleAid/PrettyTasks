@@ -13,7 +13,6 @@ App::uses('DeletedList', 'Model');
 App::uses('ContinuedList', 'Model');
 App::uses('TagList', 'Model');
 App::uses('TaskEventListener', 'Event');
-
 App::uses('TaskObj', 'Lib');
 App::uses('TasksListObj', 'Lib');
 App::uses('MessageObj', 'Lib');
