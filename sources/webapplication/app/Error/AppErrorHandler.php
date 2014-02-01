@@ -55,7 +55,7 @@ class AppErrorHandler extends ErrorHandler {
 			return false;
 		}
 
-		$Email = new CakeEmail('default');
+		$Email = new CakeEmail('error');
 		$Email->from(Configure::read('Email.global.from'))
 		    ->to(Configure::read('App.support.mail'))
 		    ->subject(sprintf("[%s] %s",
@@ -78,7 +78,7 @@ class AppErrorHandler extends ErrorHandler {
 			return false;
 		}
 
-		$Email = new CakeEmail('default');
+		$Email = new CakeEmail('error');
 		$Email->from(Configure::read('Email.global.from'))
 		    ->to(Configure::read('App.support.mail'))
 		    ->subject("[Error]")
