@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-02-01 21:10+0200\n"
+"POT-Creation-Date: 2014-02-01 20:05+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -16,138 +16,138 @@ msgstr ""
 
 #: Controller/ListsController.php:30;106;131;164;197
 #: Controller/NotesController.php:47;75;95;118;139
-#: Controller/TasksController.php:54;133;215;250;291;323;372;402;439;465;502;538;564;588
+#: Controller/TasksController.php:53;131;213;248;289;321;370;400;437;463;500;536;562;586
 #: Plugin/ApiV1/Controller/TasksController.php:105;115;162;205;259;312
 #: Plugin/AppVK/Controller/TasksController.php:89;174;216;255;298;345;388;441;479;527;566;597;629
 msgid "Ошибка при передаче данных"
 msgstr ""
 
-#: Controller/TasksController.php:69
+#: Controller/TasksController.php:68
 #: Plugin/AppVK/Controller/TasksController.php:189
 msgid "Задача  успешно изменена"
 msgstr ""
 
-#: Controller/TasksController.php:82;357;480;527
+#: Controller/TasksController.php:81;355;478;525
 #: Plugin/ApiV1/Controller/TasksController.php:196;300;326
 #: Plugin/AppVK/Controller/TasksController.php:324;501;550
 msgid "Ошибка, Вы не можете делать изменения в этой задачи"
 msgstr ""
 
-#: Controller/TasksController.php:196
+#: Controller/TasksController.php:194
 #: Plugin/ApiV1/Controller/TasksController.php:101
 #: Plugin/AppVK/Controller/TasksController.php:122
 msgid "Ошибка, некорректный тип"
 msgstr ""
 
-#: Controller/TasksController.php:227
+#: Controller/TasksController.php:225
 msgid "Задача успешно изменена"
 msgstr ""
 
-#: Controller/TasksController.php:231;388;416;426
+#: Controller/TasksController.php:229;386;414;424
 #: Plugin/ApiV1/Controller/TasksController.php:190;321
 #: Plugin/AppVK/Controller/TasksController.php:195;369;407;423
 msgid "Ошибка, Задача  не изменена"
 msgstr ""
 
-#: Controller/TasksController.php:271
+#: Controller/TasksController.php:269
 #: Plugin/AppVK/Controller/TasksController.php:229
 msgid "Задача успешно создана"
 msgstr ""
 
-#: Controller/TasksController.php:274
+#: Controller/TasksController.php:272
 #: Plugin/AppVK/Controller/TasksController.php:234
 msgid "Задача  не создана"
 msgstr ""
 
-#: Controller/TasksController.php:299
+#: Controller/TasksController.php:297
 #: Plugin/AppVK/Controller/TasksController.php:266
 msgid "Задача успешно склонирована"
 msgstr ""
 
-#: Controller/TasksController.php:302
+#: Controller/TasksController.php:300
 #: Plugin/AppVK/Controller/TasksController.php:271
 msgid "Задача  не склонирована"
 msgstr ""
 
-#: Controller/TasksController.php:307
+#: Controller/TasksController.php:305
 #: Plugin/AppVK/Controller/TasksController.php:278
 msgid "Задача не существует"
 msgstr ""
 
-#: Controller/TasksController.php:349
+#: Controller/TasksController.php:347
 #: Plugin/AppVK/Controller/TasksController.php:307
 msgid "Задача успешно перемещена"
 msgstr ""
 
-#: Controller/TasksController.php:351
+#: Controller/TasksController.php:349
 #: Plugin/AppVK/Controller/TasksController.php:312
 msgid "Задача не перемещена"
 msgstr ""
 
-#: Controller/TasksController.php:354
+#: Controller/TasksController.php:352
 msgid "Ошибка, некорректный список"
 msgstr ""
 
-#: Controller/TasksController.php:381
+#: Controller/TasksController.php:379
 #: Plugin/AppVK/Controller/TasksController.php:357
 msgid "Задача успешно выполнена"
 msgstr ""
 
-#: Controller/TasksController.php:383
+#: Controller/TasksController.php:381
 #: Plugin/AppVK/Controller/TasksController.php:362
 msgid "Задача открыта"
 msgstr ""
 
-#: Controller/TasksController.php:412
+#: Controller/TasksController.php:410
 #: Plugin/AppVK/Controller/TasksController.php:401
 msgid "Задача успешно перемещена в список удаленных задач"
 msgstr ""
 
-#: Controller/TasksController.php:424
+#: Controller/TasksController.php:422
 #: Plugin/AppVK/Controller/TasksController.php:418
 msgid "Задача успешно удалена"
 msgstr ""
 
-#: Controller/TasksController.php:447
+#: Controller/TasksController.php:445
 #: Plugin/AppVK/Controller/TasksController.php:452
 msgid "Задачи успешно удалены"
 msgstr ""
 
-#: Controller/TasksController.php:449
+#: Controller/TasksController.php:447
 #: Plugin/AppVK/Controller/TasksController.php:457
 msgid "Задачи не удалены"
 msgstr ""
 
-#: Controller/TasksController.php:471
+#: Controller/TasksController.php:469
 #: Plugin/AppVK/Controller/TasksController.php:489
 msgid "Задача успешно перемещена (moveTo)"
 msgstr ""
 
-#: Controller/TasksController.php:475
+#: Controller/TasksController.php:473
 #: Plugin/AppVK/Controller/TasksController.php:494
 msgid "Задача  не перемещена (moveTo)"
 msgstr ""
 
-#: Controller/TasksController.php:518
+#: Controller/TasksController.php:516
 #: Plugin/AppVK/Controller/TasksController.php:538
 msgid "Задача успешно отредактировано"
 msgstr ""
 
-#: Controller/TasksController.php:522
+#: Controller/TasksController.php:520
 #: Plugin/AppVK/Controller/TasksController.php:544
 msgid "Задача не отредактировано"
 msgstr ""
 
-#: Controller/TasksController.php:571
+#: Controller/TasksController.php:569
 #: Plugin/AppVK/Controller/TasksController.php:604
 msgid "День успешно удален из списка"
 msgstr ""
 
-#: Controller/TasksController.php:573
+#: Controller/TasksController.php:571
 msgid "Ошибка при удалении"
 msgstr ""
 
-#: Controller/TasksController.php:596
+#: Controller/TasksController.php:594
 #: Plugin/AppVK/Controller/TasksController.php:640
 msgid "Переход на новый день. Перезагрузка страницы произойдет через 5 секунд"
 msgstr ""
