@@ -51,7 +51,7 @@
 
 	<div data-role="content">
 		<!-- Place your content below-->
-		<form onsubmit="return false;">
+		<form onsubmit="return false;" id="addTaskForm">
 			<input type="text" name="addnew" id="addnew" value=""
 				placeholder="Type to add new task for today" autocomplete="off" />
 		</form>
