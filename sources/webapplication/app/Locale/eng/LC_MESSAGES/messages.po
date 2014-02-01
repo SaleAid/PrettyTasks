@@ -4,24 +4,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-01-27 13:01+0200\n"
-"PO-Revision-Date: 2014-01-27 13:03+0200\n"
+"POT-Creation-Date: 2014-02-01 21:10+0200\n"
+"PO-Revision-Date: 2014-02-01 21:11+0200\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.3\n"
 
 #: View/Elements/connection_error.ctp:6
 msgid ""
-"Упс, похоже вывалился интернет, попробуйте воспользоваться сервисом позже "
-"или подождите пока он появится. Мы же проверим соединение еще раз через 1 "
-"минуту."
+"Произошла ошибка! Возможно пропал интернет или произошла ошибка на сервере. "
+"Попробуйте воспользоваться сервисом позже. Мы же проверим соединение еще раз "
+"через 1 минуту."
 msgstr ""
-"Ooops, your Internet connection seems to be lost. Try our service later or "
-"wait until your connection is up. We will check your connection in a minute."
+"An error occured! Internet connection may be broken or something is wrong on "
+"a server. Wait a little or try to use the service later. We will check a "
+"connection in a minute."
 
 #: View/Elements/empty_lists.ctp:4
 msgid "В этом списке нет ни одной задачи."
@@ -122,10 +123,6 @@ msgstr "You have not lists yet. Create the lists and sort tasks by themes."
 msgid "Здесь нет ни одной заметки!"
 msgstr "There is no note here!"
 
-#: View/Elements/empty_lists.ctp:54
-msgid "О-о-о!*"
-msgstr "Oh-oh-oh!*"
-
 #: View/Elements/js_global_config.ctp:11
 msgid ""
 "В данный момент сайт сохраняет данные на сервере, уход со страницы прервет "
@@ -153,3 +150,6 @@ msgstr ""
 #: View/Errors/error400.ctp:13 View/Errors/error500.ctp:13
 msgid "Начать с начала"
 msgstr "Start all over"
+
+#~ msgid "О-о-о!*"
+#~ msgstr "Oh-oh-oh!*"

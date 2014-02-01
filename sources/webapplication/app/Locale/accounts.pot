@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-01-27 13:01+0200\n"
+"POT-Creation-Date: 2014-02-01 21:10+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -103,6 +103,12 @@ msgstr ""
 msgid "Account was not deleted"
 msgstr ""
 
+#: Plugin/OAuth/View/OAuth/login.ctp:36
+#: View/Accounts/login.ctp:66
+#: View/Accounts/register.ctp:28;86
+msgid "ИЛИ"
+msgstr ""
+
 #: View/Accounts/confirm_social_links.ctp:5
 msgid "Связать аккаунты"
 msgstr ""
@@ -157,11 +163,6 @@ msgstr ""
 #: View/Accounts/password_change.ctp:26
 #: View/Accounts/password_resend.ctp:4
 msgid "Забыли пароль?"
-msgstr ""
-
-#: View/Accounts/login.ctp:66
-#: View/Accounts/register.ctp:28;86
-msgid "ИЛИ"
 msgstr ""
 
 #: View/Accounts/password_change.ctp:15

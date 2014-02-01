@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-01-27 13:01+0200\n"
+"POT-Creation-Date: 2014-02-01 21:10+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: View/Elements/connection_error.ctp:6
-msgid "Упс, похоже вывалился интернет, попробуйте воспользоваться сервисом позже или подождите пока он появится. Мы же проверим соединение еще раз через 1 минуту."
+msgid "Произошла ошибка! Возможно пропал интернет или произошла ошибка на сервере. Попробуйте воспользоваться сервисом позже. Мы же проверим соединение еще раз через 1 минуту."
 msgstr ""
 
 #: View/Elements/empty_lists.ctp:4
@@ -68,10 +68,6 @@ msgstr ""
 
 #: View/Elements/empty_lists.ctp:46
 msgid "Здесь нет ни одной заметки!"
-msgstr ""
-
-#: View/Elements/empty_lists.ctp:54
-msgid "О-о-о!*"
 msgstr ""
 
 #: View/Elements/js_global_config.ctp:11
