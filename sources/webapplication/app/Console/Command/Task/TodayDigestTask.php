@@ -65,7 +65,9 @@ class TodayDigestTask extends Shell {
                     }
                     
                     //debug($data);
+                    
                     $this->_todayDigest($user, $data);
+
                 }
             }
         }
@@ -88,14 +90,16 @@ class TodayDigestTask extends Shell {
         $email = new CakeEmail('account');
         $email->template(Configure::read('Config.language') . DS . 'today_digest', 'default');
         $email->emailFormat(Configure::read('Email.global.format'));
-        $email->to('krugvs@gmail.com');
+        
         $email->subject(__d('mail', Configure::read('Email.user.todayDigest.subject')));
         $email->viewVars(array(
                 'user' => $user,
                 'data' => $data
         ));
-        $email->send();
-        $this->out(print_r($user, true));
+        for($i=0;$i<1;$i++){
+            $email->to("krugvs+{$i}@gmail.com");
+            $email->send();
+        }
     }
 
     public function _getDays($user_id, $from, $to, $arrDays = null) {
