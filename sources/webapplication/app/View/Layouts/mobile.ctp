@@ -24,5 +24,12 @@
 <?php echo $content_for_layout;?>
 
 <?php echo $this->Html->script('m2/tasks.'. Configure::read('App.version')); ?> 
+<?php echo $this->element('ga', array(), array(
+    'cache' => array(
+        'key' => 'ga', 
+        'config' => 'elements'
+    )
+));
+?>
 </body>
 </html>

@@ -177,9 +177,13 @@ var mobile = (function() {
 				}
 			}).done(function(response) {
 				if (response.success){
+					
 					($(event.target)).html(nl2br($('<div/>').text(response.data.title).html()));
 					($(event.target)).attr('style', 'white-space:normal; height: auto;');
 					_private.refreshNotesList();
+	                if (typeof _gaq != "undefined"){
+	                    _gaq.push(["_trackEvent", "Mobile", 'getNote']);
+	                }
 				}else{
 					mobile.createPageMessage('Cannot load note');
 				}
@@ -228,6 +232,9 @@ var mobile = (function() {
 					mobile.createPageMessage('No tasks are on this list');
 				}
 				$.mobile.loading('hide');
+                if (typeof _gaq != "undefined"){
+                    _gaq.push(["_trackEvent", "Mobile", 'getlists']);
+                }
 			});
 		},
 		listForTag : function(name, page) {
@@ -250,7 +257,9 @@ var mobile = (function() {
 					mobile.createPageMessage('No tasks for this day');
 				}
 				$.mobile.loading('hide');
-				
+                if (typeof _gaq != "undefined"){
+                    _gaq.push(["_trackEvent", "Mobile", 'getTasksByTag']);
+                }
 			});
 		},
 		listForDate : function(date) {
@@ -276,6 +285,9 @@ var mobile = (function() {
 					mobile.createPageMessage('No tasks for this day');
 				}
 				$.mobile.loading('hide');
+                if (typeof _gaq != "undefined"){
+                    _gaq.push(["_trackEvent", "Mobile", 'getTasksForDay']);
+                }
 			});
 		},
 		createTagListItem : function(Tag) {
@@ -339,7 +351,9 @@ var mobile = (function() {
 						//mobile.createPageMessage('No tasks for this day');
 					}
 					$.mobile.loading('hide');
-					
+	                if (typeof _gaq != "undefined"){
+	                    _gaq.push(["_trackEvent", "Mobile", 'getNotes']);
+	                }
 				});
 		},
 		add2Server : function(title, date) {
@@ -360,6 +374,9 @@ var mobile = (function() {
 				$("#addnew").focus();
 				$("#addnew").trigger('change');
 				mobile.showMessage('Task has been added');
+                if (typeof _gaq != "undefined"){
+                    _gaq.push(["_trackEvent", "Mobile", 'addNewTask']);
+                }
 			});
 		},
 		srvSetDone : function(id, done) {
@@ -372,6 +389,9 @@ var mobile = (function() {
 				}
 			}).done(function(response) {
 				mobile.scrSetDone(response.data.id, response.data.done);
+                if (typeof _gaq != "undefined"){
+                    _gaq.push(["_trackEvent", "Mobile", 'setDone']);
+                }
 			});
 		},
 		scrSetDone : function(id, done) {
@@ -418,6 +438,9 @@ var mobile = (function() {
 					}
 					
 					$.mobile.loading('hide');
+	                if (typeof _gaq != "undefined"){
+	                    _gaq.push(["_trackEvent", "Mobile", 'getTasksByType']);
+	                }
 			});
 		},
 		showMessage: function(message){
