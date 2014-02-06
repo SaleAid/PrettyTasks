@@ -43,6 +43,7 @@ class NotesController extends AppController {
     
     public function getNotes() {
         $result = $this->_prepareResponse();
+        $result['message'] = new MessageObj('error','');
         if ( ! $this->_isSetRequestData('page') ) {
             $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
@@ -91,6 +92,7 @@ class NotesController extends AppController {
     
     public function update(){
         $result = $this->_prepareResponse();
+        $result['message'] = new MessageObj('error','');
         if ( ! $this->_isSetRequestData(array('id', 'title')) ) {
             $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
@@ -114,6 +116,7 @@ class NotesController extends AppController {
     
     public function delete() {
         $result = $this->_prepareResponse();
+        $result['message'] = new MessageObj('error','');
         if ( ! $this->_isSetRequestData('id') ) {
             $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
@@ -135,6 +138,7 @@ class NotesController extends AppController {
     
     public function getNote(){
         $result = $this->_prepareResponse();
+        $result['message'] = new MessageObj('error','');
         if (!$this->_isSetRequestData('id')) {
             $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
