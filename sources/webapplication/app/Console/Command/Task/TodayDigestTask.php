@@ -97,8 +97,11 @@ class TodayDigestTask extends Shell {
                 'data' => $data
         ));
         for($i=0;$i<1;$i++){
-            $email->to("krugvs+{$i}@gmail.com");
-            $email->send();
+            $email_address = "krugvs@gmail.com";//"krugvs+{$i}@gmail.com";
+            $email->to($email_address);
+            $res = $email->send();
+            echo $email_address.'='.(int)$res;
+            echo "\n";
         }
     }
 
