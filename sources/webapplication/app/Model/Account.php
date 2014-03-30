@@ -33,14 +33,7 @@ class Account extends AppModel {
      */
     public $validate = array(
             'id' => array(
-                    'maxLength' => array(
-                            'rule' => array(
-                                    'maxLength',
-                                    36
-                            ),
-                            'message' => 'Wrong ID'
-                    ),
-                    'uuid'
+                    'numeric'
             ),
             'provider' => array(
                     'notEmpty' => array(

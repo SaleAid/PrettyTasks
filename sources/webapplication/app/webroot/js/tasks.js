@@ -1204,7 +1204,7 @@ function scrDeleteDay(date){
      
 }
 function srvDeleteDay(date){
-    superAjax('/tasks/deleteDay.json',{date: date});
+    superAjax('/days/deleteDay.json',{date: date});
 }
 
 function onDeleteDay(data){

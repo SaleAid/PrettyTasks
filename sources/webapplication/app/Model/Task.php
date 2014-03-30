@@ -118,8 +118,7 @@ class Task extends AppModel {
             'maxLength' => array(
                 'rule'    => array('maxLength', 36),
                 'message' => 'Wrong ID',
-            ),
-        	//'uuid'
+            )
         ),
         'transfer' => array(
             'numeric' => array(
@@ -580,35 +579,9 @@ class Task extends AppModel {
         return $this;
     }
     
-    /**
-     * 
-     * @param unknown_type $user_id
-     * @param unknown_type $date
-     */
-    public function setDayToConfig($user_id, $date) {
-        $days = $this->User->Setting->getValue('days', $user_id);
-        
-        if (empty($days) or !in_array($date, $days) ) {
-            $days[] = $date;
-            $this->User->Setting->setValue('days', $days, $user_id);
-        }
-    }
 
-    /**
-     * 
-     * Enter description here ...
-     * @param unknown_type $user_id
-     * @param unknown_type $date
-     */
-    public function deleteDayFromConfig($user_id, $date) {
-        $days = (array)$this->User->Setting->getValue('days', $user_id);
-        $key = array_search($date, $days);
-        if($key !== false){
-            unset($days[$key]);
-            return  $this->User->Setting->setValue('days', $days, $user_id);
-        }    
-        return true;
-    }
+
+
 
     //TODO Maybe this function move to another model, for example to Day?
     /**
