@@ -39,18 +39,10 @@ class Task extends AppModel {
      */
     public $validate = array(
         'id' => array(
-			'maxLength' => array(
-                'rule'    => array('maxLength', 36),
-                'message' => 'Wrong ID',
-            ),
-        	'uuid'
+        	'numeric'
         ), 
         'user_id' => array(
-			'maxLength' => array(
-                'rule'    => array('maxLength', 36),
-                'message' => 'Wrong ID',
-            ),
-        	'uuid'
+        	'numeric'
         ), 
         'title' => array(
             'notempty' => array(
@@ -654,8 +646,7 @@ class Task extends AppModel {
                         unset($save[$this->alias][$key]);
                     }
                 }
-                //unset($save['Tag']);
-                return new TaskObj($save['Task']);
+                return new TaskObj($save[$this->alias]);
             }
             else{
                 return false;

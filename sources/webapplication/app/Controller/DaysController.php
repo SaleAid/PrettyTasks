@@ -23,7 +23,7 @@ class DaysController extends AppController {
             );
         } else {
             $result['success'] = true;
-            $result['data'] = $this->Day->setRating($this->Auth->user('id'), $this->request->data['date'],  $this->request->data['rating'])->save(); 
+            $result['data'] = $this->Day->setRating($this->Auth->user('id'), $this->request->data['date'],  $this->request->data['rating'])->saveDay(); 
             $result['message'] = array(
                 'type' => 'success', 
                 'message' => __d('days', 'Изменение успешно сохранено')
@@ -66,7 +66,7 @@ class DaysController extends AppController {
                 'message' =>__d('days', 'Ошибка при передачи данных')
             );
         } else {
-            if($day = $this->Day->setComment($this->Auth->user('id'), $this->request->data['date'],  $this->request->data['comment'])->save()){
+            if($day = $this->Day->setComment($this->Auth->user('id'), $this->request->data['date'],  $this->request->data['comment'])->saveDay()){
                 $result['success'] = true;
                 $result['data'] = $day; 
                 $result['message'] = array(
