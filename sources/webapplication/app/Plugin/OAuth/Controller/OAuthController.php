@@ -34,7 +34,7 @@ class OAuthController extends OAuthAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		//$this->OAuth->authenticate = array('fields' => array('username' => 'email'));
-		$this->Auth->allow( $this->OAuth->allowedActions);
+		$this->Auth->allow($this->OAuth->allowedActions);
         
         $this->Security->blackHoleCallback = 'blackHole';
 	}
@@ -227,6 +227,58 @@ class OAuthController extends OAuthAppController {
     public function addC(){
         //$client = $this->OAuth->Client->add('http://localhost');
        //print_r($client);die;
+    }
+    
+    public function googlelogin(){
+        CakeLog::debug(__LINE__ . print_r($this->request, true));
+    	$result = $data = array();
+    	if ( !$this->request->isPost() ) {
+    		$result["error"] = 1;//WRONG_REQUEST
+    	} else {
+    	    CakeLog::debug(__LINE__ . print_r($this->request, true));
+    		$data = $this->request->input('json_decode');
+    		CakeLog::debug(__LINE__ . print_r($data, true));
+    		$gToken = (isset($data->token)&&!empty($data->token))?$data->token:null;
+    		$gId = (isset($data->id)&&!empty($data->id))?$data->id:null;
+    		$gEmail = (isset($data->email)&&!empty($data->email))?$data->email:null;
+    		CakeLog::debug(__LINE__ . print_r($gToken, true));
+    		
+    		
+    		if ($gToken){
+    			$response = file_get_contents("https://www.googleapis.com/plus/v1/people/me?alt=json&access_token={$gToken}");
+    			CakeLog::debug(__LINE__ . print_r($response, true));
+    			$response = json_decode($response);
+    			CakeLog::debug(__LINE__ . print_r($response, true));
+    			if ($response){
+    				//check data
+    			    CakeLog::debug(__LINE__ . print_r($response, true));
+    			    if (($response->id!='')&&($gId==$response->id)&&($response->emails[0]->value==$gEmail)){
+    			        CakeLog::debug(__LINE__ . print_r('Everything ok!', true));
+    			        //TODO Login or register user here
+    			        //TODO Return good credentials for user
+    			        $result["access_token"] = "057f1dcc76ff446ebee977153eafec5d6c047d90";
+    			        $result["expires_in"] = 3600;
+    			        $result["token_type"] = "bearer";
+    			        $result["scope"] = null;
+    			        $result["refresh_token"] = "057f1dcc76ff446ebee977153eafec5d6c047d90";
+    			    }else{
+    			        CakeLog::debug(__LINE__ . print_r($response->id, true).'=?'.$gId.' '.$response->emails[0]->value.'=?'.$gEmail);
+    			        $result["error"] = 4;//WRONG_GOOGLE_USER
+    			    }
+    				
+
+    			}else{
+    				$result["error"] = 3;//WRONG_GOOGLE_RESPONSE
+    			}
+    
+    		}
+    		else{
+    			$result["error"] = 2;//WRONG_INPUT_DATA
+    		}
+    	}
+    	$this->set('result', $result);
+    	$this->set('_serialize', 'result');
+    
     }
 
 }

@@ -228,13 +228,13 @@ class TasksController extends ApiV1AppController {
                         $saveData = array('Task' => array(
                                 'title' => $task->title,
                                 'done' => (int) $task->done,
-                                'date' => $data->date?$data->date:date('Y-m-d'),
+                                'date' => ($data->date && !((int)$task->future))?$data->date:null,
                                 'user_id' => $user_id,
-                                'priority' => 0,
+                                'priority' => (int)$task->priority,
                                 'comment' => null,
                                 'time'=> null,
                                 'timeend' => null,
-                                'future' => 0,
+                                'future' => (int)$task->future,
                         ));
                         $this->Task->create();
                         $res = $this->Task->save($saveData);
@@ -384,6 +384,8 @@ class TasksController extends ApiV1AppController {
         
         return $taskObj;
     }
+    
+
     
     
     
