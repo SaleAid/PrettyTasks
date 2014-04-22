@@ -8,6 +8,8 @@ App::uses('AppController', 'Controller');
  */
 class DaysController extends AppController {
 
+     public $components = array('Paginator');
+
     public $layout = 'tasks';
     
     public function setRating(){
@@ -89,9 +91,29 @@ class DaysController extends AppController {
     public function journal(){
         $result = $this->_prepareResponse();
         $result['success'] = true;
-        $result['data'] = $this->Day->getComments($this->Auth->user('id'), CakeTime::format('Y-m-d', time(), false, $this->_userTimeZone()));
+        $options = array('conditions' => array(
+                                'Day.user_id' => $this->Auth->user('id'), 
+                                'Day.date <=' => CakeTime::format('Y-m-d', time(), false, $this->_userTimeZone()),
+                                'Day.comment !=' => ''
+
+                            ),
+                            'fields' => array('date', 'comment', 'rating' ),
+                            'order' => array(
+                                'Day.date' => 'DESC'
+                            ),
+                            'limit' => Configure::read('Days.journal.pagination.limit')
+                        );
+        $this->Paginator->settings = array(
+                'Day' => $options
+        );
+        
+        try {
+            $result['data'] =  $this->Paginator->paginate('Day');
+        } catch (NotFoundException $e) {
+            $this->redirect(array('action' => 'journal'));
+
+        }
         $this->set('result', $result);
         $this->set('_serialize', 'result');
-        //debug($result);
     }
 }
