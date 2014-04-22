@@ -71,13 +71,7 @@ if(Configure::read('Config.language') =='eng'){
 
 <?php echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');?>
 
-<?php //echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js');?>
-
 <?php echo $this->Html->script('bootstrap.min');?>
-
-<?php echo $this->Html->script('jquery.ui.touch-punch.min');?>
-
-<?php //echo $this->Html->script('main.' . Configure::read('App.version'));?>
 
 <?php echo $this->fetch('toFooter');?>
 

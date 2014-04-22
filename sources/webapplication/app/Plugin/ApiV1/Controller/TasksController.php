@@ -21,6 +21,7 @@ App::uses('Validation', 'Utility');
  * Clients Controller
  *
  * @property Client $Client
+ * @property Task $Task
  */
 class TasksController extends ApiV1AppController {
 	
@@ -200,19 +201,43 @@ class TasksController extends ApiV1AppController {
         $this->set('_serialize', 'result');
     }
     
-    public function updateAllDone(){
+    public function updateWidget(){
         if ( !$this->request->isPost() ) {
             $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $result = $data = $done = $notDone = array();
             $data = $this->request->input('json_decode');
-            
             $user_id = $this->OAuth->user('id');
-            //$done = array_filter($data, function ($task) { return ($task->done == 1); } );
-            //$notDone = array_filter($data, function ($task) { return ($task->done == 0); } );
+            //Select ids of new tasks
+            $newIds =  array();
+            if(isset($data->new) and is_array($data->new) and count($data->new)){
+            	foreach($data->new as $task){
+            		if (!empty($task->id)){
+            			$newIds[] = $task->id;
+            		}
+            	}
+            }
+            //Saving tasks
             if(isset($data->tasks) and is_array($data->tasks)){
                 foreach($data->tasks as $task){
                     if (!isset($task->done) or empty($task->id)){
+                        continue;
+                    }
+                    if (in_array($task->id, $newIds) && isset($task->title) && !empty($task->title)) {
+                        // this is new task
+                        $saveData = array('Task' => array(
+                                'title' => $task->title,
+                                'done' => (int) $task->done,
+                                'date' => ($data->date && !((int)$task->future))?$data->date:null,
+                                'user_id' => $user_id,
+                                'priority' => (int)$task->priority,
+                                'comment' => null,
+                                'time'=> null,
+                                'timeend' => null,
+                                'future' => (int)$task->future,
+                        ));
+                        $this->Task->create();
+                        $res = $this->Task->save($saveData);
                         continue;
                     }
                     if((int)$task->done == 1)
@@ -359,6 +384,8 @@ class TasksController extends ApiV1AppController {
         
         return $taskObj;
     }
+    
+
     
     
     

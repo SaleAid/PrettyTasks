@@ -12,6 +12,7 @@ App::uses('CompletedList', 'Model');
 App::uses('DeletedList', 'Model');
 App::uses('ContinuedList', 'Model');
 App::uses('TagList', 'Model');
+App::uses('Setting', 'Model');
 App::uses('TaskEventListener', 'Event');
 App::uses('TaskObj', 'Lib');
 App::uses('TasksListObj', 'Lib');
@@ -21,6 +22,7 @@ App::uses('MessageObj', 'Lib');
  * Tasks Controller
  *
  * @property Task $Task
+ * @property Setting $Setting
  */
 class TasksController extends AppController {
     
@@ -29,6 +31,8 @@ class TasksController extends AppController {
     public $components = array(
         'RequestHandler',
     );
+    
+    public $uses = array('Task', 'Setting');
     
     
     public $layout = 'tasks';
@@ -547,31 +551,11 @@ class TasksController extends AppController {
                 $beginDate = CakeTime::format('Y-m-d', '-1 days', false, $this->_userTimeZone());
                 $endDate = CakeTime::format('Y-m-d', '+6 days', false, $this->_userTimeZone());
                 if($date > $endDate || $date < $beginDate)
-                    $this->Task->setDayToConfig($this->Auth->user('id'), $date);
+                    $this->Setting->addDay($this->Auth->user('id'), $date);
             }
             $result['success'] = true;
         }
         $result['action'] = 'addDay';
-        $this->set('result', $result);
-        $this->set('_serialize', 'result');
-    }
-
-    public function deleteDay() {
-        $result = $this->_prepareResponse();
-        if (! $this->_isSetRequestData('date')) {
-            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
-        } else {
-            if(CakeTime::wasYesterday($this->request->data['date'], $this->_userTimeZone())){
-                $this->Task->User->Setting->setValue('hideYesterday', CakeTime::format($this->request->data['date'], '%Y-%m-%d', false, $this->_userTimeZone()), $this->Auth->user('id'), false);
-            }
-            if ($this->Task->deleteDayFromConfig($this->Auth->user('id'), $this->request->data['date'])) {
-                $result['success'] = true;
-                $result['message'] = new MessageObj('success', __d('tasks', 'День успешно удален из списка'));
-            } else {
-                $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при удалении')); 
-            }
-        }
-        $result['action'] = 'deleteDay';
         $this->set('result', $result);
         $this->set('_serialize', 'result');
     }

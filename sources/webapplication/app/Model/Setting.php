@@ -14,24 +14,10 @@ class Setting extends AppModel {
  */
 	public $validate = array(
 		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+            'numeric'
 		),
 		'user_id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+            'numeric'
 		),
 		'key' => array(
 			'notempty' => array(
@@ -126,5 +112,35 @@ class Setting extends AppModel {
             return true;
         }
         return false;
+    }
+    
+    /**
+     *
+     * @param unknown_type $user_id
+     * @param unknown_type $date
+     */
+    public function addDay($user_id, $date) {
+    	$days = $this->getValue('days', $user_id);
+    
+    	if (empty($days) or !in_array($date, $days) ) {
+    		$days[] = $date;
+    		$this->setValue('days', $days, $user_id);
+    	}
+    }
+    
+    /**
+     *
+     * Enter description here ...
+     * @param unknown_type $user_id
+     * @param unknown_type $date
+     */
+    public function deleteDay($user_id, $date) {
+    	$days = (array)$this->getValue('days', $user_id);
+    	$key = array_search($date, $days);
+    	if($key !== false){
+    		unset($days[$key]);
+    		return  $this->setValue('days', $days, $user_id);
+    	}
+    	return true;
     }
 }

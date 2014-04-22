@@ -107,6 +107,7 @@ class AutoLoginComponent extends Component {
 
 		// Is debug enabled?
 		$this->_debug = (!empty($autoLogin['ips']) && in_array(env('REMOTE_ADDR'), (array) $autoLogin['ips']));
+		$this->startup($controller);
 	}
 
 	/**

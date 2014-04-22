@@ -36,11 +36,7 @@ class Goal extends AppModel {
                     )
             ),
             'user_id' => array(
-                    'uuid' => array(
-                            'rule' => array(
-                                    'uuid'
-                            )
-                    )
+                'numeric'
             )
     );
     
