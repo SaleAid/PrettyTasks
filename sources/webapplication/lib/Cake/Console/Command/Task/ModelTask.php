@@ -572,7 +572,7 @@ class ModelTask extends BakeTask {
 	public function findBelongsTo(Model $model, $associations) {
 		$fieldNames = array_keys($model->schema(true));
 		foreach ($fieldNames as $fieldName) {
-			$offset = strpos($fieldName, '_id');
+			$offset = substr($fieldName, -3) === '_id';
 			if ($fieldName != $model->primaryKey && $fieldName !== 'parent_id' && $offset !== false) {
 				$tmpModelName = $this->_modelNameFromKey($fieldName);
 				$associations['belongsTo'][] = array(
@@ -611,13 +611,13 @@ class ModelTask extends BakeTask {
 			}
 			foreach ($tempFieldNames as $fieldName) {
 				$assoc = false;
-				if ($fieldName != $model->primaryKey && $fieldName == $foreignKey) {
+				if ($fieldName !== $model->primaryKey && $fieldName === $foreignKey) {
 					$assoc = array(
 						'alias' => $tempOtherModel->name,
 						'className' => $tempOtherModel->name,
 						'foreignKey' => $fieldName
 					);
-				} elseif ($otherTable == $model->table && $fieldName === 'parent_id') {
+				} elseif ($otherTable === $model->table && $fieldName === 'parent_id') {
 					$assoc = array(
 						'alias' => 'Child' . $model->name,
 						'className' => $model->name,

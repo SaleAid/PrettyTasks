@@ -1408,7 +1408,7 @@ class Model extends Object implements CakeEventListener {
 			list($model, $column) = explode('.', $column);
 		}
 
-		if ($model != $this->alias && isset($this->{$model})) {
+		if (isset($model) && $model != $this->alias && isset($this->{$model})) {
 			return $this->{$model}->getColumnType($column);
 		}
 
@@ -1486,7 +1486,7 @@ class Model extends Object implements CakeEventListener {
 
 		if (strpos($field, '.') !== false) {
 			list($model, $field) = explode('.', $field);
-			if ($model == $this->alias && isset($this->virtualFields[$field])) {
+			if ($model === $this->alias && isset($this->virtualFields[$field])) {
 				return true;
 			}
 		}
@@ -1865,9 +1865,9 @@ class Model extends Object implements CakeEventListener {
 				$success = $this->data;
 			}
 
-			$this->data = false;
 			$this->_clearCache();
 			$this->validationErrors = array();
+			$this->data = false;
 		}
 
 		$this->whitelist = $_whitelist;
@@ -1930,7 +1930,7 @@ class Model extends Object implements CakeEventListener {
 			}
 
 			foreach ((array)$data as $row) {
-				if ((is_string($row) && (strlen($row) == 36 || strlen($row) == 16)) || is_numeric($row)) {
+				if ((is_string($row) && (strlen($row) === 36 || strlen($row) === 16)) || is_numeric($row)) {
 					$newJoins[] = $row;
 					$values = array($id, $row);
 
@@ -2703,8 +2703,9 @@ class Model extends Object implements CakeEventListener {
 		}
 
 		$ids = $this->find('all', array_merge(array(
-			'fields' => "DISTINCT {$this->alias}.{$this->primaryKey}",
+			'fields' => "{$this->alias}.{$this->primaryKey}",
 			'order' => false,
+			'group' => "{$this->alias}.{$this->primaryKey}",
 			'recursive' => 0), compact('conditions'))
 		);
 
@@ -3477,14 +3478,14 @@ class Model extends Object implements CakeEventListener {
 		if (!empty($oldConfig) && isset($db->config['prefix'])) {
 			$oldDb = ConnectionManager::getDataSource($oldConfig);
 
-			if (!isset($this->tablePrefix) || (!isset($oldDb->config['prefix']) || $this->tablePrefix == $oldDb->config['prefix'])) {
+			if (!isset($this->tablePrefix) || (!isset($oldDb->config['prefix']) || $this->tablePrefix === $oldDb->config['prefix'])) {
 				$this->tablePrefix = $db->config['prefix'];
 			}
 		} elseif (isset($db->config['prefix'])) {
 			$this->tablePrefix = $db->config['prefix'];
 		}
 
-		$this->schemaName = $db->getSchemaName();
+		$this->schemaName = (empty($this->schemaName) ? $db->getSchemaName() : $this->schemaName);
 	}
 
 /**

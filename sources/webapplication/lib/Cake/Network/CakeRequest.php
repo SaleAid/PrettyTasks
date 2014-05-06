@@ -207,7 +207,9 @@ class CakeRequest implements ArrayAccess {
 			$query = $_GET;
 		}
 
-		unset($query[$this->base . '/' . str_replace('.', '_', urldecode($this->url))]);
+		$unsetUrl = '/' . str_replace('.', '_', urldecode($this->url));
+		unset($query[$unsetUrl]);
+		unset($query[$this->base . $unsetUrl]);
 		if (strpos($this->url, '?') !== false) {
 			list(, $querystr) = explode('?', $this->url);
 			parse_str($querystr, $queryArgs);
@@ -846,7 +848,7 @@ class CakeRequest implements ArrayAccess {
  */
 	public function data($name) {
 		$args = func_get_args();
-		if (count($args) == 2) {
+		if (count($args) === 2) {
 			$this->data = Hash::insert($this->data, $name, $args[1]);
 			return $this;
 		}

@@ -211,6 +211,7 @@ class PostgresTest extends CakeTestCase {
 /**
  * Sets up a Dbo class instance for testing
  *
+ * @return void
  */
 	public function setUp() {
 		parent::setUp();
@@ -224,6 +225,7 @@ class PostgresTest extends CakeTestCase {
 /**
  * Sets up a Dbo class instance for testing
  *
+ * @return void
  */
 	public function tearDown() {
 		parent::tearDown();
@@ -234,6 +236,7 @@ class PostgresTest extends CakeTestCase {
 /**
  * Test field quoting method
  *
+ * @return void
  */
 	public function testFieldQuoting() {
 		$fields = array(
@@ -693,6 +696,34 @@ class PostgresTest extends CakeTestCase {
 		));
 		$result = $this->Dbo->alterSchema($New->compare($Old), 'alter_posts');
 		$this->assertNotRegExp('/varchar\(36\) NOT NULL/i', $result);
+	}
+
+/**
+ * Test the alterSchema changing boolean to integer
+ *
+ * @return void
+ */
+	public function testAlterSchemaBooleanToIntegerField() {
+		$default = array(
+			'connection' => 'test',
+			'name' => 'BoolField',
+			'bool_fields' => array(
+				'id' => array('type' => 'integer', 'key' => 'primary'),
+				'name' => array('type' => 'string', 'length' => 50),
+				'active' => array('type' => 'boolean', 'null' => false),
+			)
+		);
+		$Old = new CakeSchema($default);
+		$result = $this->Dbo->query($this->Dbo->createSchema($Old));
+		$this->assertTrue($result);
+
+		$modified = $default;
+		$modified['bool_fields']['active'] = array('type' => 'integer', 'null' => true);
+
+		$New = new CakeSchema($modified);
+		$query = $this->Dbo->alterSchema($New->compare($Old));
+		$result = $this->Dbo->query($query);
+		$this->Dbo->query($this->Dbo->dropSchema($Old));
 	}
 
 /**

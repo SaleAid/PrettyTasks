@@ -238,7 +238,7 @@ class Postgres extends DboSource {
 					'length' => $length
 				);
 				if ($model instanceof Model) {
-					if ($c->name == $model->primaryKey) {
+					if ($c->name === $model->primaryKey) {
 						$fields[$c->name]['key'] = 'primary';
 						if ($fields[$c->name]['type'] !== 'string') {
 							$fields[$c->name]['length'] = 11;
@@ -507,7 +507,7 @@ class Postgres extends DboSource {
 		$colList = array();
 		foreach ($compare as $curTable => $types) {
 			$indexes = $colList = array();
-			if (!$table || $table == $curTable) {
+			if (!$table || $table === $curTable) {
 				$out .= 'ALTER TABLE ' . $this->fullTableName($curTable) . " \n";
 				foreach ($types as $type => $column) {
 					if (isset($column['indexes'])) {
@@ -528,14 +528,17 @@ class Postgres extends DboSource {
 							}
 							break;
 						case 'change':
+							$schema = $this->describe($curTable);
 							foreach ($column as $field => $col) {
 								if (!isset($col['name'])) {
 									$col['name'] = $field;
 								}
+								$original = $schema[$field];
 								$fieldName = $this->name($field);
 
 								$default = isset($col['default']) ? $col['default'] : null;
 								$nullable = isset($col['null']) ? $col['null'] : null;
+								$boolToInt = $original['type'] === 'boolean' && $col['type'] === 'integer';
 								unset($col['default'], $col['null']);
 								if ($field !== $col['name']) {
 									$newName = $this->name($col['name']);
@@ -543,14 +546,23 @@ class Postgres extends DboSource {
 									$out .= 'ALTER TABLE ' . $this->fullTableName($curTable) . " \n";
 									$fieldName = $newName;
 								}
-								$colList[] = 'ALTER COLUMN ' . $fieldName . ' TYPE ' . str_replace(array($fieldName, 'NOT NULL'), '', $this->buildColumn($col));
+
+								if ($boolToInt) {
+									$colList[] = 'ALTER COLUMN ' . $fieldName . '  SET DEFAULT NULL';
+									$colList[] = 'ALTER COLUMN ' . $fieldName . ' TYPE ' . str_replace(array($fieldName, 'NOT NULL'), '', $this->buildColumn($col)) . ' USING CASE WHEN TRUE THEN 1 ELSE 0 END';
+								} else {
+									$colList[] = 'ALTER COLUMN ' . $fieldName . ' TYPE ' . str_replace(array($fieldName, 'NOT NULL'), '', $this->buildColumn($col));
+								}
+
 								if (isset($nullable)) {
 									$nullable = ($nullable) ? 'DROP NOT NULL' : 'SET NOT NULL';
 									$colList[] = 'ALTER COLUMN ' . $fieldName . '  ' . $nullable;
 								}
 
 								if (isset($default)) {
-									$colList[] = 'ALTER COLUMN ' . $fieldName . '  SET DEFAULT ' . $this->value($default, $col['type']);
+									if (!$boolToInt) {
+										$colList[] = 'ALTER COLUMN ' . $fieldName . '  SET DEFAULT ' . $this->value($default, $col['type']);
+									}
 								} else {
 									$colList[] = 'ALTER COLUMN ' . $fieldName . '  DROP DEFAULT';
 								}
@@ -657,7 +669,6 @@ class Postgres extends DboSource {
 		}
 
 		$col = str_replace(')', '', $real);
-		$limit = null;
 
 		if (strpos($col, '(') !== false) {
 			list($col, $limit) = explode('(', $col);
