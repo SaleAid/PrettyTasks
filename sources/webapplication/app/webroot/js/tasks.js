@@ -2523,7 +2523,7 @@ $(function(){
                 
                 if (location.hash == "#lists" ){
                     $('.lists').addClass('active');
-                    userEvent('getLists', data, {action: 1});
+                    userEvent('getLists', {action: 1});
                     activeTab('lists');
                 }else{
                     var tag = location.hash.slice(6);
