@@ -21,7 +21,7 @@ class OAuthController extends OAuthAppController {
 	
 	public $components = array('OAuth.OAuth', 'Auth', 'Session', 'Security');
 
-	public $uses = array('Users', 'Tasks');
+	public $uses = array('User', 'Task', 'AccountSocial');
 
 	public $helpers = array('Form');
 	
@@ -53,8 +53,8 @@ class OAuthController extends OAuthAppController {
  *  
  */
 	public function authorize () {
-       // $this->addC();
-		if (!$this->Auth->loggedIn()) {
+       
+        if (!$this->Auth->loggedIn()) {
 			$this->redirect(array('action' => 'login', '?' => $this->request->query));
 		}
 		
@@ -230,8 +230,9 @@ class OAuthController extends OAuthAppController {
     }
     
     public function googlelogin(){
-        CakeLog::debug(__LINE__ . print_r($this->request, true));
-    	$result = $data = array();
+        $result = $data = array();
+		CakeLog::debug(__LINE__ . print_r($this->request, true));
+    	
     	if ( !$this->request->isPost() ) {
     		$result["error"] = 1;//WRONG_REQUEST
     	} else {
@@ -245,27 +246,42 @@ class OAuthController extends OAuthAppController {
     		
     		
     		if ($gToken){
-    			$response = file_get_contents("https://www.googleapis.com/plus/v1/people/me?alt=json&access_token={$gToken}");
-    			CakeLog::debug(__LINE__ . print_r($response, true));
-    			$response = json_decode($response);
-    			CakeLog::debug(__LINE__ . print_r($response, true));
-    			if ($response){
-    				//check data
-    			    CakeLog::debug(__LINE__ . print_r($response, true));
-    			    if (($response->id!='')&&($gId==$response->id)&&($response->emails[0]->value==$gEmail)){
-    			        CakeLog::debug(__LINE__ . print_r('Everything ok!', true));
-    			        //TODO Login or register user here
-    			        //TODO Return good credentials for user
-    			        $result["access_token"] = "057f1dcc76ff446ebee977153eafec5d6c047d90";
-    			        $result["expires_in"] = 3600;
-    			        $result["token_type"] = "bearer";
-    			        $result["scope"] = null;
-    			        $result["refresh_token"] = "057f1dcc76ff446ebee977153eafec5d6c047d90";
-    			    }else{
-    			        CakeLog::debug(__LINE__ . print_r($response->id, true).'=?'.$gId.' '.$response->emails[0]->value.'=?'.$gEmail);
-    			        $result["error"] = 4;//WRONG_GOOGLE_USER
-    			    }
-    				
+    			
+    			$response = @file_get_contents("https://www.googleapis.com/plus/v1/people/me?alt=json&access_token={$gToken}");
+    			CakeLog::debug(__LINE__ . print_r($http_response_header, true));
+    			if (strpos($http_response_header[0], "200")) { 
+	    			
+	    			$response = json_decode($response);
+	    			CakeLog::debug(__LINE__ . print_r($response, true));
+	    			if ($response){
+	    				//check data
+	    			    CakeLog::debug(__LINE__ . print_r($response, true));
+	    			    if ( ($response->id != '') && ($gId == $response->id) && ($response->emails[0]->value == $gEmail) ){
+	    			        CakeLog::debug(__LINE__ . print_r('Everything ok!', true));
+
+	    			        $user_id = $this->AccountSocial->checkGoogle($response->id, $response->emails[0]->value,  $response->displayName);
+	    			        if($user_id){
+	    			        	try {
+	    			        		$client_id = !empty($data->authorize[0]->client_id) ? $data->authorize[0]->client_id : null;
+	    			        		$grant_type = !empty($data->authorize[0]->grant_type) ? $data->authorize[0]->grant_type : null;
+	    			        		$client_secret = !empty($data->authorize[0]->client_secret) ? $data->authorize[0]->client_secret : null;
+	    			        		$data = array('user_id' => $user_id, 'client_id' => $client_id, 'grant_type' => $grant_type, 'client_secret' => $client_secret); 
+	    			        		$this->OAuth->grantAccessToken($data);
+	    			        		exit;
+								} catch (OAuth2RedirectException $e) {
+									$e->sendHttpResponse();
+								}
+
+	    			        } else {
+	    			        	$result["error"] = 5;//EMPTY__USER_ID	
+	    			        }
+	    			    }else{
+	    			        CakeLog::debug(__LINE__ . print_r($response->id, true).'=?'.$gId.' '.$response->emails[0]->value.'=?'.$gEmail);
+	    			        $result["error"] = 4;//WRONG_GOOGLE_USER
+	    			    }
+    				}else{
+    					$result["error"] = 6;
+    				}
 
     			}else{
     				$result["error"] = 3;//WRONG_GOOGLE_RESPONSE

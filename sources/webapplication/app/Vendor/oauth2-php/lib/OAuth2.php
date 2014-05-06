@@ -189,13 +189,14 @@ class OAuth2 {
 	const GRANT_TYPE_CLIENT_CREDENTIALS = 'client_credentials';
 	const GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';
 	const GRANT_TYPE_EXTENSIONS = 'extensions';
+	const GRANT_TYPE_GOOGLE = 'google';
 	
 	/**
 	 * Regex to filter out the grant type.
 	 * NB: For extensibility, the grant type can be a URI
 	 * @see http://tools.ietf.org/html/draft-ietf-oauth-v2-20#section-4.5
 	 */
-	const GRANT_TYPE_REGEXP = '#^(authorization_code|token|password|client_credentials|refresh_token|http://.*)$#';
+	const GRANT_TYPE_REGEXP = '#^(authorization_code|token|password|client_credentials|refresh_token|http://.*|google)$#';
 	
 	/**
 	 * @}
@@ -591,8 +592,9 @@ class OAuth2 {
 			"username" => array("flags" => FILTER_REQUIRE_SCALAR),
 			"password" => array("flags" => FILTER_REQUIRE_SCALAR),
 			"refresh_token" => array("flags" => FILTER_REQUIRE_SCALAR),
+			"user_id" => array("flags" => FILTER_VALIDATE_INT)
 		);
-		
+
 		// Input data by default can be either POST or GET
 		if (!isset($inputData)) {
 			$inputData = ($_SERVER['REQUEST_METHOD'] == 'POST') ? $_POST : $_GET;
@@ -611,13 +613,14 @@ class OAuth2 {
         
         // Filter input data
 		$input = filter_var_array($inputData, $filters);
-		
+		//pr($input);die;
 		// Grant Type must be specified.
 		if (!$input["grant_type"]) {
 			throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_INVALID_REQUEST, 'Invalid grant_type parameter or parameter missing');
 		}
 		// Authorize the client
 		$client = $this->getClientCredentials($inputData, $authHeaders);
+		//pr($client);die;
 		if ($this->storage->checkClientCredentials($client[0], $client[1]) === FALSE) {
 			throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_INVALID_CLIENT, 'The client credentials are invalid');
 		}
@@ -673,6 +676,22 @@ class OAuth2 {
 				}
 				break;
 			
+			case self::GRANT_TYPE_GOOGLE:
+				if (!($this->storage instanceof IOAuth2GrantGoogle)) {
+					throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_UNSUPPORTED_GRANT_TYPE);
+				}
+				
+				if (!$input["user_id"]) {
+					throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_INVALID_REQUEST, 'Missing parameters. "user_id" required');
+				}
+				
+				$stored = $this->storage->checkGoogleCredentials($client[0], $input["user_id"]);
+				
+				if ($stored === FALSE) {
+					throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_INVALID_GRANT);
+				}
+				break;
+
 			case self::GRANT_TYPE_CLIENT_CREDENTIALS:
 				if (!($this->storage instanceof IOAuth2GrantClient)) {
 					throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_UNSUPPORTED_GRANT_TYPE);

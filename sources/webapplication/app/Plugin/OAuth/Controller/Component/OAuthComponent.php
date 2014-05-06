@@ -27,8 +27,10 @@ App::import('Vendor', 'oauth2-php/lib/IOAuth2Storage');
 App::import('Vendor', 'oauth2-php/lib/IOAuth2RefreshTokens');
 App::import('Vendor', 'oauth2-php/lib/IOAuth2GrantUser');
 App::import('Vendor', 'oauth2-php/lib/IOAuth2GrantCode');
+App::import('Vendor', 'oauth2-php/lib/IOAuth2GrantGoogle');
 
-class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2GrantCode {
+
+class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2GrantCode, IOAuth2GrantGoogle {
 	
 /**
  * AccessToken object.
@@ -104,7 +106,7 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
  * 
  * @var array
  */
-	public $grantTypes = array('authorization_code', 'refresh_token', 'password');
+	public $grantTypes = array('authorization_code', 'refresh_token', 'password', 'google');
 /**
 * OAuth2 Object
 * 
@@ -409,6 +411,27 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
 		));
 		if ($client){
 			return $client['Client'];
+		};
+		return false;
+	}
+
+	/**
+ * Check client details are valid
+ * 
+ * @see IOAuth2Storage::checkClientCredentials().
+ *
+ * @param string $client_id
+ * @param string $client_secret
+ * @return mixed array of client credentials if valid, false if not
+ */
+	public function checkGoogleCredentials($client_id, $user_id) {
+		$conditions = array('user_id' => $user_id);
+		$user = $this->User->find('first', array(
+		    'conditions' => $conditions,
+		    'recursive' => -1
+		));
+		if ($user){
+			return array('user_id' => $user['Account']['user_id']);
 		};
 		return false;
 	}
