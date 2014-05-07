@@ -1,0 +1,5 @@
+run these files:
+migration-before.sql
+fresh dump of data.sql
+migration-update.sql
+migration-after.sql
