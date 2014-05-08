@@ -205,7 +205,6 @@ class Day extends AppModel {
 	public function getDay($user_id, $date) { 
 		$this->contain();
 		$day = $this->findByUser_idAndDate($user_id, $date, $this->_dayFields);
-        CakeLog::debug(__LINE__. print_r($day, true));
 		if (!empty($day)) {
 			return new DayObj($day[$this->alias]); 
 		}
@@ -253,14 +252,12 @@ class Day extends AppModel {
 	 */
 	public function saveDay(){
 		$save = $this->save();
-		$this->log($save);
 		if (is_array($save)){
 			foreach($save[$this->alias] as $key => $value){
 				if(!in_array($key, $this->_dayFields)){
 					unset($save[$this->alias][$key]);
 				}
 			}
-			$this->log($save);
 			return new DayObj($save[$this->alias]);
 		}
 		else{
