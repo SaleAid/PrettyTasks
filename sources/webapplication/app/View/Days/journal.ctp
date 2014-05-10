@@ -41,6 +41,47 @@
                 <p><?php echo h($day['Day']['comment']); ?></p>
             </div>
         <?php endforeach; ?>
+        
+        <?php
+$params = $this->Paginator->params();
+if ($params['pageCount'] > 1) {
+?>
+<div class="pagination pagination-centered">
+ <ul>
+<?php
+    echo $this->Paginator->prev('&larr; '.__d('users','Previous'), array(
+        'class' => 'prev',
+        'tag' => 'li',
+         'escape' => false
+    ), '<a onclick="return false;">&larr; ' .__d('users','Previous'). '</a>', array(
+        'class' => 'prev disabled',
+        'tag' => 'li',
+        'escape' => false
+    ));
+
+    echo $this->Paginator->numbers(array(
+        'first' => 3,
+        'last' => 3,
+        'modulus' => 4,
+        'ellipsis' => '<li><span class="active">...</span></li>',
+        'separator' => '',
+        'tag' => 'li',
+        'currentClass' => 'active',
+        'currentTag' => 'a'
+    ));
+    echo $this->Paginator->next(__d('users','Next'). ' &rarr;', array(
+        'class' => 'next',
+        'tag' => 'li',
+        'escape' => false
+    ), '<a onclick="return false;">' .__d('users', 'Next'). ' &rarr;</a>', array(
+        'class' => 'next disabled',
+        'tag' => 'li',
+        'escape' => false
+    )); ?>
+ </ul>
+</div>
+<?php } ?>
+
      <?php else: ?>
          <?php echo $this->element('empty_lists', array('type' => 'journal', 'hide' => false));?>
      <?php endif ?>

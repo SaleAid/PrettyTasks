@@ -30,16 +30,10 @@ class Day extends AppModel {
 	 */
 	public $validate = array(
 			'id' => array(
-					'uuid'
+					'numeric'
 			),
 			'user_id' => array(
-					'maxLength' => array(
-							'rule' => array(
-									'maxLength',
-									36
-							),
-							'message' => 'Wrong ID'
-					)
+			        'numeric'
 			),
 			'date' => array(
 					'date' => array(
@@ -110,8 +104,9 @@ class Day extends AppModel {
 	 */
 	public function getIdDay($user_id, $date) {
 		$this->contain();
-		$day = $this->findByUser_idAndDate($user_id, $date, array('id'));
+		$day = $this->findByUser_idAndDate($user_id, $date, $this->_dayFields);
 		if ($day) {
+		    $this->data = $day;
 			return $day['Day']['id'];
 		} 
         return false;
@@ -175,6 +170,7 @@ class Day extends AppModel {
             $this->data[$this->alias]['user_id'] = $user_id;
 		} 
 		$this->data[$this->alias]['rating'] = $rating;
+		unset($this->data[$this->alias]['comment']);
         return $this;
 	}
 
@@ -209,7 +205,6 @@ class Day extends AppModel {
 	public function getDay($user_id, $date) { 
 		$this->contain();
 		$day = $this->findByUser_idAndDate($user_id, $date, $this->_dayFields);
-        //pr($day);
 		if (!empty($day)) {
 			return new DayObj($day[$this->alias]); 
 		}
@@ -249,5 +244,24 @@ class Day extends AppModel {
 				'limit' => $count
 		));
 		return $result;
+	}
+	
+	/**
+	 *
+	 * @return Ambigous <mixed, boolean, multitype:>|boolean
+	 */
+	public function saveDay(){
+		$save = $this->save();
+		if (is_array($save)){
+			foreach($save[$this->alias] as $key => $value){
+				if(!in_array($key, $this->_dayFields)){
+					unset($save[$this->alias][$key]);
+				}
+			}
+			return new DayObj($save[$this->alias]);
+		}
+		else{
+			return false;
+		}
 	}
 }

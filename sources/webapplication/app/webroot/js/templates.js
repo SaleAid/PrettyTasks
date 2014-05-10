@@ -4,10 +4,7 @@ templates.day_h3_label = '\
     	   <span class="dayDate"><%= title %></span><span class="dash"> - </span><span class="<%= weekDayStyle %>"><%= weekDay %></span>\
         </h3>';
          
-templates.ajax_loader_content = '\
-        <p class="loadContent" align=center>\
-            <img src="/img/ajax-loader-content.'+GLOBAL_CONFIG.version+'.gif" alt="">\
-        </p>';
+templates.ajax_loader_content = '';
         
 templates.day_tab_content = '\
     <div class="tab-pane" id="<%= date %>">\

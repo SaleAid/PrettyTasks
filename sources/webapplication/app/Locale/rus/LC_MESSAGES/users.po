@@ -4,16 +4,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-02-01 20:05+0000\n"
-"PO-Revision-Date: 2014-02-01 22:12+0300\n"
+"POT-Creation-Date: 2014-02-13 19:49+0200\n"
+"PO-Revision-Date: 2014-02-13 21:04+0200\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.5.3\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: Config/appconfig.php:16
 msgid "Russian"
@@ -59,13 +59,11 @@ msgstr ""
 msgid "Войдите используя Ваш аккаунт"
 msgstr ""
 
-#: Plugin/OAuth/View/OAuth/login.ctp:18
-#: View/Accounts/login.ctp:35
+#: Plugin/OAuth/View/OAuth/login.ctp:18 View/Accounts/login.ctp:35
 msgid "Логин или Емейл"
 msgstr ""
 
-#: Plugin/OAuth/View/OAuth/login.ctp:20
-#: View/Accounts/login.ctp:37
+#: Plugin/OAuth/View/OAuth/login.ctp:20 View/Accounts/login.ctp:37
 msgid "Пароль"
 msgstr ""
 
@@ -85,6 +83,14 @@ msgstr ""
 msgid "Good day"
 msgstr "Хороший день"
 
+#: View/Days/journal.ctp:52;56
+msgid "Previous"
+msgstr "Предыдущая"
+
+#: View/Days/journal.ctp:72;76
+msgid "Next"
+msgstr "Следующая"
+
 #: View/Elements/current_user.ctp:28
 msgid "Language"
 msgstr "Язык"
@@ -94,7 +100,9 @@ msgid "Осталось подтвердить регистрацию!"
 msgstr ""
 
 #: View/Elements/not_active.ctp:15
-msgid "При создании аккаунта на ваш e-mail было отправлено письмо с подтверждением, пожалуйста, перейдите по ссылке, указанной в данном письме"
+msgid ""
+"При создании аккаунта на ваш e-mail было отправлено письмо с подтверждением, "
+"пожалуйста, перейдите по ссылке, указанной в данном письме"
 msgstr ""
 
 #: View/Elements/not_active.ctp:17
@@ -105,8 +113,7 @@ msgstr ""
 msgid "Мой профиль"
 msgstr ""
 
-#: View/Elements/user_menu.ctp:6
-#: View/Users/profile.ctp:13
+#: View/Elements/user_menu.ctp:6 View/Users/profile.ctp:13
 msgid "Управление профилем"
 msgstr ""
 
@@ -174,28 +181,22 @@ msgstr ""
 msgid "Сохранить изменения"
 msgstr ""
 
-#: Model/User.php:validation
-#: for field id
+#: Model/User.php:validation for field id
 msgid "Wrong ID"
 msgstr ""
 
-#: Model/User.php:validation
-#: for field created;validation modified
+#: Model/User.php:validation for field created;validation modified
 msgid "datetime"
 msgstr ""
 
-#: Model/User.php:validation
-#: for field created
+#: Model/User.php:validation for field created
 msgid "notempty"
 msgstr ""
 
-#: Model/User.php:validation
-#: for field agreed
+#: Model/User.php:validation for field agreed
 msgid "Вы должны быть согласны с правилами использования сервиса"
 msgstr ""
 
-#: Model/User.php:validation
-#: for field language
+#: Model/User.php:validation for field language
 msgid "bad language"
 msgstr "Неправильный язык"
-

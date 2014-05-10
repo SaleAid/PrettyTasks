@@ -189,6 +189,7 @@ class ListsController extends AppController {
     
     public function getTasksByTag(){
         $result = $this->_prepareResponse();
+        $result['message'] = new MessageObj('error','');
         $expectedData = array(
             'tag'
         );

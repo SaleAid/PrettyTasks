@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-02-01 20:05+0000\n"
+"POT-Creation-Date: 2014-02-13 19:49+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,19 +14,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/DaysController.php:22;42;66
+#: Controller/DaysController.php:24;44;68
 msgid "Ошибка при передачи данных"
 msgstr ""
 
-#: Controller/DaysController.php:29;74
+#: Controller/DaysController.php:31;76
 msgid "Изменение успешно сохранено"
 msgstr ""
 
-#: Controller/DaysController.php:49
+#: Controller/DaysController.php:51
 msgid "Готово"
 msgstr ""
 
-#: Controller/DaysController.php:80
+#: Controller/DaysController.php:82
 msgid "Ошибка при сохранении комментария"
 msgstr ""
 

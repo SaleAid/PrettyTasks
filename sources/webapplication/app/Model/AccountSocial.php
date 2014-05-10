@@ -42,14 +42,7 @@ class AccountSocial extends Account {
      */
     public $validate = array(
             'id' => array(
-                    'maxLength' => array(
-                            'rule' => array(
-                                    'maxLength',
-                                    36
-                            ),
-                            'message' => 'Wrong ID'
-                    ),
-                    'uuid'
+                    'numeric'
             ),
             'provider' => array(
                     'notEmpty' => array(
@@ -148,6 +141,41 @@ class AccountSocial extends Account {
         return $data;
     }
 
+    public function checkGoogle($uid, $email, $displayName = ''){
+        $result = $this->_findAccount(array(
+                'provider' => 'google',
+                'or' => array( 
+                    'email' => $email,
+                    'uid' => $uid
+                )
+        ));
+        if ($result) {
+            if (!$this->_isActive($result)) {
+                //
+                //$this->User->save
+            } 
+            return $result['User']['id'];
+        }
+        
+        $this->User->create();
+        $user = $this->User->save(array('active' => 1, 'agreed' => 1));                  
+        $account = $this->save(array(
+                    'user_id' => $user['User']['id'],
+                    'active' => 1,
+                    'agreed' => 1,
+                    'master' => 1,
+                    'provider' => 'google',
+                    'uid' => $uid,
+                    'full_name' => $displayName,
+                    'email' => isset($email) ? $email : null
+                )
+        );
+        if($account[$this->alias]['user_id']){
+            return $account[$this->alias]['user_id'];    
+        }
+        return false;
+    }
+
     /**
      *
      * @param unknown_type $data            
@@ -174,7 +202,7 @@ class AccountSocial extends Account {
      *
      * @param unknown_type $provider            
      * @param unknown_type $uid            
-     * @param unknown_type $info            
+     * @param unknown_type $email            
      * @return Ambigous <mixed, boolean, multitype:>
      */
     private function _createAccount($provider, $uid, $info) {

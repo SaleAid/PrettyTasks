@@ -26,11 +26,15 @@ class ServerShell extends AppShell {
 
 /**
  * Default ServerHost
+ *
+ * @var string
  */
 	const DEFAULT_HOST = 'localhost';
 
 /**
  * Default ListenPort
+ *
+ * @var integer
  */
 	const DEFAULT_PORT = 80;
 
@@ -88,7 +92,7 @@ class ServerShell extends AppShell {
 		}
 
 		// for windows
-		if (substr($this->_documentRoot, -1, 1) == DIRECTORY_SEPARATOR) {
+		if (substr($this->_documentRoot, -1, 1) === DIRECTORY_SEPARATOR) {
 			$this->_documentRoot = substr($this->_documentRoot, 0, strlen($this->_documentRoot) - 1);
 		}
 		if (preg_match("/^([a-z]:)[\\\]+(.+)$/i", $this->_documentRoot, $m)) {

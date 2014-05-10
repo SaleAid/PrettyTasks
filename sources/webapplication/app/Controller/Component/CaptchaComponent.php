@@ -108,7 +108,7 @@ class CaptchaComponent extends Component {
 	 
     public function initialize(Controller $controller, $config = null){
         $this->controller = $controller;	
-		$this->resourcesPath = $this->webroot.'cakecaptcha/resources';	
+		$this->resourcesPath = APP.WEBROOT_DIR.'/cakecaptcha/resources';	
 	}
     	
 	public function getCaptcha(){
@@ -372,7 +372,6 @@ class CaptchaComponent extends Component {
 
         // Full path of font file
         $fontfile = $this->resourcesPath.'/fonts/'.$fontcfg['font'];
-
 
         /** Increase font-size for shortest words: 9% for each glyp missing */
         $lettersMissing = $this->maxWordLength-strlen($text);

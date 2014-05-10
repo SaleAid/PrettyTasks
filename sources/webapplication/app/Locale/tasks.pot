@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-02-01 20:05+0000\n"
+"POT-Creation-Date: 2014-02-13 19:49+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,8 +14,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/ListsController.php:30;106;131;164;197
-#: Controller/NotesController.php:47;75;95;118;139
+#: Controller/ListsController.php:30;106;131;164;198
+#: Controller/NotesController.php:48;76;97;121;143
 #: Controller/TasksController.php:53;131;213;248;289;321;370;400;437;463;500;536;562;586
 #: Plugin/ApiV1/Controller/TasksController.php:105;115;162;205;259;312
 #: Plugin/AppVK/Controller/TasksController.php:89;174;216;255;298;345;388;441;479;527;566;597;629

@@ -116,11 +116,11 @@ function checkStatus(){
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            if(xhr.status == '404' || xhr.status == 0){
+            if(xhr.status == '404' || xhr.status == 0 || xhr.status == '500'){
                 showErrorConnection(true);
             }else{
                 //console.log(xhr);
-                reload();
+                reloadTimeout(30);
             }
        }
     });
@@ -142,7 +142,7 @@ function checkLogin(){
                     showErrorConnection(true);
                 }else{
                     //console.log(xhr);
-                    //reload();
+                    reloadTimeout(30);
                 }
        }
     });
@@ -185,10 +185,10 @@ function superAjax(url, data){
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 countAJAX--;
-                if(xhr.status == '404' || xhr.status == 0){
+                if(xhr.status == '404' || xhr.status == 0 || xhr.status == '500'){
                     showErrorConnection(true);
                 }else{
-                    reload();
+                    //reload();
                 }
             }
      });
@@ -254,7 +254,7 @@ function userEvent(action, data){
             taskGetListByTag(data.tag);
         break;
         case 'getLists':
-            taskGetLists();
+            taskGetLists(data.action);
         break;
         case 'repeated':
             taskRepeated(data.id, data.recur);
@@ -386,9 +386,13 @@ function onRepeated(data){
 }
 
 //---------------getLists-------------
-function taskGetLists(){
-    $('#lists').find('ul[date="lists"]').empty().append(_.template(templates.ajax_loader_content));
-    srvGetLists();
+function taskGetLists(action){
+    console.log(action);
+    if(+action){
+        $('#lists').find('ul[date="lists"]').empty().append(_.template(templates.ajax_loader_content));
+        srvGetLists();
+    }
+    
 }
 
 function srvGetLists(){
@@ -700,7 +704,7 @@ function continuedTasks(data, hide){
                         date: task.date, 
                         title: task.date, 
                         weekDayStyle: weekDayStyle, 
-                        weekDay: $.datepicker.formatDate('DD', new Date (task.date))
+                        weekDay: $.datepicker.formatDate('DD', dateUTC(task.date))
                     } 
             );
             day = $(day_tmp);
@@ -724,7 +728,7 @@ function continuedTasks(data, hide){
 function agendaTasks(data, hide){
     var listUl = $('#agenda ul[date="agenda"]');
     var prevDate = 0;
-    var today = $.datepicker.formatDate('yy-mm-dd', new Date ());
+    var today = $.datepicker.formatDate('yy-mm-dd', dateUTC ());
     var weekDayStyle;
     if(+numPages['agenda'] <= 1){
         listUl.empty();
@@ -750,7 +754,7 @@ function agendaTasks(data, hide){
                         date: task.date,
                         title: task.date, 
                         weekDayStyle: weekDayStyle, 
-                        weekDay: $.datepicker.formatDate('DD', new Date (task.date))
+                        weekDay: $.datepicker.formatDate('DD', dateUTC (task.date))
                     } 
             );
             day = $(day_tmp);
@@ -800,7 +804,7 @@ function futureTasks(data, hide){
                         date: task.date,
                         title: task.date, 
                         weekDayStyle: weekDayStyle, 
-                        weekDay: $.datepicker.formatDate('DD', new Date (task.date))
+                        weekDay: $.datepicker.formatDate('DD', dateUTC (task.date))
                     } 
             );
             day = $(day_tmp);
@@ -846,7 +850,7 @@ function expiredTasks(data, hide){
                         date: task.date,
                         title: task.date, 
                         weekDayStyle: 'past', 
-                        weekDay: $.datepicker.formatDate('DD', new Date (task.date))
+                        weekDay: $.datepicker.formatDate('DD', dateUTC (task.date))
                     } 
             );
             day = $(day_tmp);
@@ -897,7 +901,7 @@ function completedTasks(data, hide){
                         date: task.date,
                         title: task.date, 
                         weekDayStyle: weekDayStyle, 
-                        weekDay: $.datepicker.formatDate('DD', new Date (task.date))
+                        weekDay: $.datepicker.formatDate('DD', dateUTC (task.date))
                     } 
             );
             day = $(day_tmp);
@@ -944,7 +948,7 @@ function deletedTasks(data, hide){
         $('.delete_all').removeAttr('disabled');
     }
     $.each(data,function(index, task) {
-        weekday = $.datepicker.formatDate('DD', new Date (task.date));
+        weekday = $.datepicker.formatDate('DD', dateUTC (task.date));
         if(task.date == null){
            task.date = GLOBAL_CONFIG.planned;
            weekDayStyle = 'future'; 
@@ -1204,7 +1208,7 @@ function scrDeleteDay(date){
      
 }
 function srvDeleteDay(date){
-    superAjax('/tasks/deleteDay.json',{date: date});
+    superAjax('/days/deleteDay.json',{date: date});
 }
 
 function onDeleteDay(data){
@@ -2412,6 +2416,10 @@ function initSeeMore(element){
     });
 }
 
+function reloadTimeout(sec){
+    setTimeout(location.reload(true), +sec*1000);
+    
+}
 function reload(r){
     if(r)
         countAJAX = 0;
@@ -2481,7 +2489,7 @@ function initReloadClick(element){
                 userEvent('getListByTag', {tag: tag}); 
            }
         }else if(date == 'lists'){
-            userEvent('getLists');
+            userEvent('getLists', {action: 1});
         }else{
             var index = _.indexOf(refreshDays, date);
             if( index > -1){
@@ -2515,7 +2523,7 @@ $(function(){
                 
                 if (location.hash == "#lists" ){
                     $('.lists').addClass('active');
-                    userEvent('getLists');
+                    userEvent('getLists', {action: 1});
                     activeTab('lists');
                 }else{
                     var tag = location.hash.slice(6);
@@ -2555,7 +2563,10 @@ $(function(){
                     }
                 }else{
                     var today = $.datepicker.formatDate('yy-mm-dd',new Date());
+                    var createDay = _.indexOf(createDays, today);
+                    delete createDays[createDay];
                     location.hash = 'day-'+today;
+                    
                     //userEvent('addDay',{date: today, action: -1});
                     //$('#main a[href="#'+today+'"]').tab('show');
                 }
@@ -2569,6 +2580,8 @@ $(function(){
             }
          }else{
             var today = $.datepicker.formatDate('yy-mm-dd',dateTZ());
+            var createDay = _.indexOf(createDays, today);
+            delete createDays[createDay];
             location.hash = 'day-'+today;
             userEvent('addDay',{date: today, action: -1});
         }

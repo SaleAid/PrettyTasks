@@ -425,6 +425,12 @@ class Validation {
 				$regex = "/^{$sign}{$dnum}{$exp}$/";
 			}
 		}
+
+		// account for localized floats.
+		$data = localeconv();
+		$check = str_replace($data['thousands_sep'], '', $check);
+		$check = str_replace($data['decimal_point'], '.', $check);
+
 		return self::_check($check, $regex);
 	}
 
@@ -705,8 +711,8 @@ class Validation {
  * $check is a legal finite on this platform
  *
  * @param string $check Value to check
- * @param integer $lower Lower limit
- * @param integer $upper Upper limit
+ * @param int|float $lower Lower limit
+ * @param int|float $upper Upper limit
  * @return boolean Success
  */
 	public static function range($check, $lower = null, $upper = null) {
@@ -964,7 +970,7 @@ class Validation {
 			$check = $check['error'];
 		}
 
-		return $check === UPLOAD_ERR_OK;
+		return (int)$check === UPLOAD_ERR_OK;
 	}
 
 /**

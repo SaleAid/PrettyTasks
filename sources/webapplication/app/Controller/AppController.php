@@ -47,8 +47,10 @@ class AppController extends Controller {
                             'Form' => array(
                                     'userModel' => 'Account',
                                     'fields' => array(
-                                            'username' => 'email'
-                                    )
+                                            'username' => 'email',
+                                            'password' => 'password',
+                                    ),
+                                    'scope' => array('Account.provider' => 'local')
                             )
                     )
             ),

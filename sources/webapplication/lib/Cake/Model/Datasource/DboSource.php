@@ -991,7 +991,7 @@ class DboSource extends DataSource {
 		for ($i = 0; $i < $count; $i++) {
 			$valueInsert[] = $this->value($values[$i], $model->getColumnType($fields[$i]));
 			$fieldInsert[] = $this->name($fields[$i]);
-			if ($fields[$i] == $model->primaryKey) {
+			if ($fields[$i] === $model->primaryKey) {
 				$id = $values[$i];
 			}
 		}
@@ -1283,7 +1283,7 @@ class DboSource extends DataSource {
 								if ($type1 === 'belongsTo' || ($deepModel->alias === $modelAlias && $type === 'belongsTo') || ($deepModel->alias !== $modelAlias)) {
 									$tmpStack = $stack;
 									$tmpStack[] = $assoc1;
-									if ($linkModel->useDbConfig == $deepModel->useDbConfig) {
+									if ($linkModel->useDbConfig === $deepModel->useDbConfig) {
 										$db = $this;
 									} else {
 										$db = ConnectionManager::getDataSource($deepModel->useDbConfig);
@@ -1561,7 +1561,7 @@ class DboSource extends DataSource {
 					if (!empty($assocData['order'])) {
 						$queryData['order'][] = $assocData['order'];
 					}
-					if (!in_array($join, $queryData['joins'])) {
+					if (!in_array($join, $queryData['joins'], true)) {
 						$queryData['joins'][] = $join;
 					}
 					return true;
@@ -1973,7 +1973,7 @@ class DboSource extends DataSource {
 		$joins = array_merge($model->getAssociated('hasOne'), $model->getAssociated('belongsTo'));
 
 		foreach ($joins as $assoc) {
-			if (isset($model->{$assoc}) && $model->useDbConfig == $model->{$assoc}->useDbConfig && $model->{$assoc}->getDataSource()) {
+			if (isset($model->{$assoc}) && $model->useDbConfig === $model->{$assoc}->useDbConfig && $model->{$assoc}->getDataSource()) {
 				$assocData = $model->getAssociated($assoc);
 				$join[] = $this->buildJoinStatement(array(
 					'table' => $model->{$assoc},
@@ -2734,7 +2734,7 @@ class DboSource extends DataSource {
 			if (is_object($model) && $model->isVirtualField($key)) {
 				$key = '(' . $this->_quoteFields($model->getVirtualField($key)) . ')';
 			}
-			list($alias, $field) = pluginSplit($key);
+			list($alias) = pluginSplit($key);
 			if (is_object($model) && $alias !== $model->alias && is_object($model->{$alias}) && $model->{$alias}->isVirtualField($key)) {
 				$key = '(' . $this->_quoteFields($model->{$alias}->getVirtualField($key)) . ')';
 			}
@@ -2832,7 +2832,7 @@ class DboSource extends DataSource {
 			'int' => 1, 'tinyint' => 1, 'smallint' => 1, 'mediumint' => 1, 'integer' => 1, 'bigint' => 1
 		);
 
-		list($real, $type, $length, $offset, $sign, $zerofill) = $result;
+		list($real, $type, $length, $offset, $sign) = $result;
 		$typeArr = $type;
 		$type = $type[0];
 		$length = $length[0];
@@ -2969,7 +2969,7 @@ class DboSource extends DataSource {
 		$out = '';
 
 		foreach ($schema->tables as $curTable => $columns) {
-			if (!$tableName || $tableName == $curTable) {
+			if (!$tableName || $tableName === $curTable) {
 				$cols = $indexes = $tableParameters = array();
 				$primary = null;
 				$table = $this->fullTableName($curTable);
@@ -3241,13 +3241,12 @@ class DboSource extends DataSource {
 		}
 
 		$isAllFloat = $isAllInt = true;
-		$containsFloat = $containsInt = $containsString = false;
+		$containsInt = $containsString = false;
 		foreach ($value as $valElement) {
 			$valElement = trim($valElement);
 			if (!is_float($valElement) && !preg_match('/^[\d]+\.[\d]+$/', $valElement)) {
 				$isAllFloat = false;
 			} else {
-				$containsFloat = true;
 				continue;
 			}
 			if (!is_int($valElement) && !preg_match('/^[\d]+$/', $valElement)) {

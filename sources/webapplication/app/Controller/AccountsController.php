@@ -58,10 +58,9 @@ class AccountsController extends AppController {
         $this->Seo->keywords = Configure::read('SEO.Login.keywords.'.Configure::read('Config.langURL'));
         
         $message = __d('accounts', 'Ваш емейл или пароль не совпадают');
-        
         if( isset($this->data['Account']['email']) && !Validation::email($this->data['Account']['email']) ){
               $this->request->data['Account']['login'] = $this->data['Account']['email'];
-              $this->Auth->authenticate['Form'] = array('fields' => array('username' => 'login', 'password' => 'password'), 'userModel' => 'Account');
+              $this->Auth->authenticate['Form']['fields']['username']  = 'login';
               $message = __d('accounts', 'Ваш логин или пароль не совпадают');
         }
         if ($this->Auth->login()) {
@@ -91,7 +90,7 @@ class AccountsController extends AppController {
                 $accout = $this->request->data['Account'];
                 unset($accout['password']);
                 $this->log($accout, LOG_ERROR);
-                $this->Session->setFlash($message, 'alert', array(
+				$this->Session->setFlash($message, 'alert', array(
                     'class' => 'alert-error'
                 ));
             }
@@ -488,7 +487,7 @@ class AccountsController extends AppController {
                     ));
                 }
                 if ($id = $this->Account->checkEmail($this->request->data[$this->modelClass]['email'])) {
-                    if ($this->Account->password_resend($id)) {
+				    if ($this->Account->password_resend($id)) {
                         $this->Session->setFlash(__d('accounts', 'На Вашу почту была отправлена инструкция по сбросу пароля'), 'alert', array(
                             'class' => 'info-success'
                         ));

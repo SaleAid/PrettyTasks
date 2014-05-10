@@ -90,6 +90,8 @@
    Configure::write('Tasks.Lists.Planned.limit', 10);
    
    Configure::write('Notes.Lists.limit', 20);
+   Configure::write('Days.journal.pagination.limit', 20);
+   
    
    //Cache
    //Cache::config('elements', array(
