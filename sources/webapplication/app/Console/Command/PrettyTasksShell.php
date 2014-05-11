@@ -2,7 +2,7 @@
 
 class PrettyTasksShell extends AppShell {
     
-    public $tasks = array('TodayDigest');
+    public $tasks = array('TodayDigest', 'EmailTest');
     
     public function main(){
         $this->hr(3);
@@ -13,4 +13,6 @@ class PrettyTasksShell extends AppShell {
     public function test() {
         $this->out('Hey there ' . $this->args[0]);
     }
+    
+
 }

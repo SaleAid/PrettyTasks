@@ -22,7 +22,7 @@ msgid "Активация аккаунта на сервисе %s"
 msgstr "Account activation %s"
 
 #: Config/appconfig.php:63
-msgid "Сбросить пароль на сервисе %s"
+msgid "Восстановление пароля на сервисе %s"
 msgstr "Reset password %s"
 
 #: Config/appconfig.php:64

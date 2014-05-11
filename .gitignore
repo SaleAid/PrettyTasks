@@ -15,6 +15,3 @@ sources/webapplication/app/Config/core.php
 sources/webapplication/app/webroot/.htaccess
 sources/webapplication/app/tmp/*
 sources/webapplication/app/webroot/tmp/*
-sources/webapplication/app/webroot/video
-sources/webapplication/app/webroot/video/*
-

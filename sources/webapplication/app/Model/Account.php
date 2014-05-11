@@ -1,8 +1,8 @@
 <?php
 /**
- * Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ * Copyright 2012-2014, PrettyTasks (http://prettytasks.com)
  *
- * @copyright Copyright 2012-2013, PrettyTasks (http://prettytasks.com)
+ * @copyright Copyright 2012-2014, PrettyTasks (http://prettytasks.com)
  * @author Vladyslav Kruglyk <krugvs@gmail.com>
  * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
  */
@@ -259,6 +259,7 @@ class Account extends AppModel {
         }
         $this->read();
         $email = new CakeEmail('account');
+        $email->domain(Configure::read('Email.global.domain'));
         $email->template(Configure::read('Config.language') . DS . 'activate_account', 'default');
         $email->emailFormat(Configure::read('Email.global.format'));
         $email->from(Configure::read('Email.global.from'));
@@ -280,6 +281,7 @@ class Account extends AppModel {
         $this->id = $id;
         $this->read();
         $email = new CakeEmail('account');
+        $email->domain(Configure::read('Email.global.domain'));
         $email->template(Configure::read('Config.language') . DS . 'password_resend', 'default');
         $email->emailFormat(Configure::read('Email.global.format'));
         $email->from(Configure::read('Email.global.from'));
@@ -287,7 +289,7 @@ class Account extends AppModel {
         $email->subject(__d('mail', Configure::read('Email.user.passwordResend.subject'), Configure::read('Site.name')));
         $email->viewVars(array(
                 'password_token' => $this->data[$this->alias]['password_token'],
-                'fullname' => $this->data[$this->alias]['full_name']
+                'full_name' => $this->data[$this->alias]['full_name']
         )); // 'login' => $this->data[$this->alias]['login']
         return $email->send();
     }
