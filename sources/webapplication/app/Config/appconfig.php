@@ -20,9 +20,9 @@
    if (isset($_SERVER['REQUEST_URI']))
         $_SERVER['REQUEST_URI'] = str_replace('://', ':%2F%2F', $_SERVER['REQUEST_URI']);
 
-   Configure::write('Site.name', 'Pretty Tasks');
+   Configure::write('Site.name', 'PrettyTasks');
    Configure::write('Site.url', 'http://'.@$_SERVER["HTTP_HOST"].'/');
-   Configure::write('Site.title', 'Pretty Tasks');
+   Configure::write('Site.title', 'PrettyTasks');
    Configure::write('Site.keywords', 'Pretty Tasks, tasks, gtd, goals, aims, success, schedule, time management');
    Configure::write('Site.description', 'Pretty Tasks is the prettiest personal tasks management service');
    //SEO ru
@@ -60,7 +60,7 @@
    Configure::write('Email.global.format', 'html');
    Configure::write('Email.user.invitation.subject', __d('mail', 'Приглашение на сервис %s'));
    Configure::write('Email.user.activateAccount.subject', __d('mail', 'Активация аккаунта на сервисе %s'));
-   Configure::write('Email.user.passwordResend.subject', __d('mail', 'Сбросить пароль на сервисе %s'));
+   Configure::write('Email.user.passwordResend.subject', __d('mail', 'Восстановление пароля на сервисе %s'));
    Configure::write('Email.user.todayDigest.subject', __d('mail', 'Today digest on Pretty Tasks'));
    
    //app version 

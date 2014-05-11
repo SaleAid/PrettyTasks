@@ -98,4 +98,12 @@ class GoalsController extends AppController {
 		$this->Session->setFlash(__('Goal was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	function testEmail(){
+	    $this->layout = 'Emails/html/default';
+	    $this->set('activate_token', md5('something'.rand(1000, 9999)));
+	    $this->set('full_name', 'John Smith');
+	    $this->render('../Emails/html/rus/activate_account');
+	    
+	}
 }

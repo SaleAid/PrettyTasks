@@ -1,4 +1,11 @@
 <?php
+/**
+ * Copyright 2012-2014, PrettyTasks (http://prettytasks.com)
+ *
+ * @copyright Copyright 2012-2014, PrettyTasks (http://prettytasks.com)
+ * @author Vladyslav Kruglyk <krugvs@gmail.com>
+ * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
+ */
 App::uses('CakeTime', 'Utility');
 App::uses('AppController', 'Controller');
 App::uses('Validation', 'Utility');
