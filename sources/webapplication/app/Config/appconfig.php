@@ -58,6 +58,7 @@
    
    Configure::write('Email.global.from', array('noreply@prettytasks.com' => 'Pretty Tasks'));
    Configure::write('Email.global.format', 'html');
+   Configure::write('Email.global.domain', 'prettytasks.com');
    Configure::write('Email.user.invitation.subject', __d('mail', 'Приглашение на сервис %s'));
    Configure::write('Email.user.activateAccount.subject', __d('mail', 'Активация аккаунта на сервисе %s'));
    Configure::write('Email.user.passwordResend.subject', __d('mail', 'Восстановление пароля на сервисе %s'));

@@ -47,8 +47,15 @@
             <?php echo $content_for_layout; ?>
             <hr style = "background-color:#cccccc; border-width:0; color:#cccccc; height:1px; lineheight:0; display: inline-block; text-align: left; width:75%;" />
             <p style="font-style:italic; font-size: 12px; color: #aaaaaa; margin-top:0px; padding-top:0px;">
-            С уважением, команда <?php echo Configure::read('Site.name'); ?><br/>
-            По любым вопросам обращайтесь по адресу prettytasks@gmail.com
+<?php
+if(Configure::read('Config.language') =='eng'):
+?>
+Best regards, <?php echo Configure::read('Site.name'); ?> team<br/>
+If you have any questions, please contact us prettytasks@gmail.com
+<?php else: ?>
+С уважением, команда <?php echo Configure::read('Site.name'); ?><br/>
+По любым вопросам обращайтесь по адресу prettytasks@gmail.com    
+<?php endif;?>
             </p>
           </td>
         </tr>
