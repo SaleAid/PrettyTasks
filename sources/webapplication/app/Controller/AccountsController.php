@@ -215,7 +215,8 @@ class AccountsController extends AppController {
                         'active' => 1,
                         'agreed' => 1,
                         'language' => Configure::read('Config.language'),
-                        'timezone_offset' => isset($timezoneOffset) ? $timezoneOffset : null
+                        'timezone_offset' => isset($timezoneOffset) ? $timezoneOffset : null,
+                        'invite_token' => $this->Account->generateToken()
                     );
                     $this->Account->User->create();
                     $user = $this->Account->User->save($data);

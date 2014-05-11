@@ -28,8 +28,8 @@ class UsersController extends AppController {
     public $layout = 'profile';
 
     public function beforeFilter() {
+        $this->Auth->allow('check');
         parent::beforeFilter();
-        $this->Auth->allow('checkVK', 'check');
         if ($this->Auth->loggedIn() and in_array($this->params['action'], array(
             'login', 
             'register', 
@@ -55,22 +55,24 @@ class UsersController extends AppController {
     
     public function check() {
         $result['status'] = 0;
+        
         if($this->Auth->loggedIn()){
+            $date = $this->request->query('date');
             $result['status'] = 1;
-            $result['data']['full_name'] = $this->Auth->user('full_name');
+            //$result['data']['full_name'] = $this->Auth->user('full_name');
             $result['data']['token'] = $this->generateCsrfToken();
             $result['data']['timezone'] = $this->Auth->user('timezone');
             $result['data']['language_url'] = $this->Auth->user('language');
-            if(!empty($this->request->data['date'])){
+            if(!empty($date)){
                 $result['data']['count'] = $this->Task->find('count', array(
                     'conditions' => array(
                         'Task.done' => 0,
                         'Task.deleted' => 0,
-                        'Task.date' => $this->request->data['date'],
+                        'Task.date' => $date,
                         'Task.user_id' => $this->Auth->user('id'))
                 )); 
             }
-        }                
+        }
         $this->set('result', $result);
         $this->set('_serialize', 'result');
     }

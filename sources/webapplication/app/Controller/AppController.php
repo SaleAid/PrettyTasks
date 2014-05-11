@@ -236,10 +236,15 @@ class AppController extends Controller {
             }
             $params['lang'] = $this->L10n->map($language);
         }
-        if (empty($params['named']))
-            unset($params['named']);
-        if (empty($params['pass']))
-            unset($params['pass']);
+        if (!empty($params['named'])){
+            $params = array_merge($params, array_values($params['named']));
+        }
+        unset($params['named']);
+        if (!empty($params['pass'])){
+            $params = array_merge($params, array_values($params['pass']));
+        }
+        unset($params['pass']);
+
         if (! empty($this->request->query))
             $params['?'] = $this->request->query;
             // pr($params);die;
