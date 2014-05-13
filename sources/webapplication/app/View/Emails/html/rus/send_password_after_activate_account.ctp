@@ -1,8 +1,6 @@
 Здравствуйте, <?php echo $full_name; ?>! <br />
 
-<p>Зарегистрированный логин: <?php echo $username; ?></p>
-<p>Пароль для непостредсвенного входа: <?php echo $password; ?></p>
+<br/>Зарегистрированный логин: <?php echo $username; ?><br/>
+<br/>Пароль для непостредсвенного входа: <?php echo $password; ?><br/>
 
-<p>
-С уважением, команда <?php echo Configure::read('Site.name'); ?>
-</p>
+

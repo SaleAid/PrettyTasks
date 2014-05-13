@@ -42,14 +42,14 @@ class PagesController extends AppController {
     public function view() {
         $pass = $this->request->pass;
         $url = implode("/", $pass);
-        $result = Cache::read('Page:'.$url, 'page');
+        $result = Cache::read('Page_'.Configure::read('Config.language').$url, 'page');
         if (!$result){
             $result = $this->Page->view($url, Configure::read('Config.language'));
         }
         if (!$result) {
             throw new NotFoundException();
         }
-        Cache::write('Page:'.$url, $result, 'page');
+        Cache::write('Page_'.Configure::read('Config.language').$url, $result, 'page');
         $this->Seo->title = $this->Seo->title . ' :: ' . $result['Page']['title'];
         $this->Seo->description = $result['Page']['metadescription'];
         $this->Seo->keywords = $result['Page']['metakeywords'];

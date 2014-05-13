@@ -45,6 +45,7 @@
           <td class="container-padding" bgcolor="#ffffff" style="background-color: #ffffff; padding-left: 30px; padding-right: 30px; font-size: 14px; line-height: 20px; font-family: Helvetica, sans-serif; color: #222244 !important;">
             <br>
             <?php echo $content_for_layout; ?>
+            <br/>
             <hr style = "background-color:#cccccc; border-width:0; color:#cccccc; height:1px; lineheight:0; display: inline-block; text-align: left; width:75%;" />
             <p style="font-style:italic; font-size: 12px; color: #aaaaaa; margin-top:0px; padding-top:0px;">
 <?php
