@@ -47,9 +47,10 @@ class EmailTestTask extends Shell {
     
     function remember_password(){
     	$email = $this->args[1];
+        $count = intval($this->args[2])?intval($this->args[2]):1;
     	$id = $this->Account->checkEmail($email);
     	if ($id){
-    	    for($i=0; $i<50; $i++){
+    	    for($i=0; $i<$count; $i++){
         		$r = $this->Account->password_resend($id);
     		    print_r((bool)$r);
     	    }
