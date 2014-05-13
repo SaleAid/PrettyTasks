@@ -228,7 +228,7 @@ class OAuthController extends OAuthAppController {
         //$client = $this->OAuth->Client->add('http://localhost');
        //print_r($client);die;
     }
-    
+
     public function googlelogin(){
         $result = $data = array();
 		CakeLog::debug(__LINE__ . print_r($this->request, true));
@@ -258,11 +258,16 @@ class OAuthController extends OAuthAppController {
 	    			    CakeLog::debug(__LINE__ . print_r($response, true));
 	    			    if ( ($response->id != '') && ($gId == $response->id) && ($response->emails[0]->value == $gEmail) ){
 	    			        CakeLog::debug(__LINE__ . print_r('Everything ok!', true));
-
-	    			        $user_id = $this->AccountSocial->checkGoogle($response->id, $response->emails[0]->value,  $response->displayName);
+	    			        $client_id = !empty($data->authorize[0]->client_id) ? $data->authorize[0]->client_id : null;
+	    			        $source = 0;
+							$sources = Configure::read('Clients.Source.Map');
+							if (array_key_exists($client_id, $sources)) {
+								$source = $sources[$client_id];
+							}
+							
+					        $user_id = $this->AccountSocial->checkGoogle($response->id, $response->emails[0]->value,  $response->displayName, $source);
 	    			        if($user_id){
 	    			        	try {
-	    			        		$client_id = !empty($data->authorize[0]->client_id) ? $data->authorize[0]->client_id : null;
 	    			        		$grant_type = !empty($data->authorize[0]->grant_type) ? $data->authorize[0]->grant_type : null;
 	    			        		$client_secret = !empty($data->authorize[0]->client_secret) ? $data->authorize[0]->client_secret : null;
 	    			        		$data = array('user_id' => $user_id, 'client_id' => $client_id, 'grant_type' => $grant_type, 'client_secret' => $client_secret); 

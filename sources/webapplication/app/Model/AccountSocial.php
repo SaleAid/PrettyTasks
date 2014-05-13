@@ -141,7 +141,7 @@ class AccountSocial extends Account {
         return $data;
     }
 
-    public function checkGoogle($uid, $email, $displayName = ''){
+    public function checkGoogle($uid, $email, $displayName = '', $source = 0){
         $result = $this->_findAccount(array(
                 'provider' => 'google',
                 'or' => array( 
@@ -158,7 +158,7 @@ class AccountSocial extends Account {
         }
         
         $this->User->create();
-        $user = $this->User->save(array('active' => 1, 'agreed' => 1));                  
+        $user = $this->User->save(array('active' => 1, 'agreed' => 1));
         $account = $this->save(array(
                     'user_id' => $user['User']['id'],
                     'active' => 1,
@@ -167,7 +167,8 @@ class AccountSocial extends Account {
                     'provider' => 'google',
                     'uid' => $uid,
                     'full_name' => $displayName,
-                    'email' => isset($email) ? $email : null
+                    'email' => isset($email) ? $email : null,
+                    'source' => $source,
                 )
         );
         if($account[$this->alias]['user_id']){

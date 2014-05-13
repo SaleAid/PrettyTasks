@@ -190,13 +190,14 @@ class OAuth2 {
 	const GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';
 	const GRANT_TYPE_EXTENSIONS = 'extensions';
 	const GRANT_TYPE_GOOGLE = 'google';
+	const GRANT_TYPE_REGISTER = 'register';
 	
 	/**
 	 * Regex to filter out the grant type.
 	 * NB: For extensibility, the grant type can be a URI
 	 * @see http://tools.ietf.org/html/draft-ietf-oauth-v2-20#section-4.5
 	 */
-	const GRANT_TYPE_REGEXP = '#^(authorization_code|token|password|client_credentials|refresh_token|http://.*|google)$#';
+	const GRANT_TYPE_REGEXP = '#^(authorization_code|token|password|client_credentials|refresh_token|http://.*|google|register)$#';
 	
 	/**
 	 * @}
@@ -592,13 +593,17 @@ class OAuth2 {
 			"username" => array("flags" => FILTER_REQUIRE_SCALAR),
 			"password" => array("flags" => FILTER_REQUIRE_SCALAR),
 			"refresh_token" => array("flags" => FILTER_REQUIRE_SCALAR),
-			"user_id" => array("flags" => FILTER_VALIDATE_INT)
+			"user_id" => array("flags" => FILTER_VALIDATE_INT),
+			"name" => array("flags" => FILTER_REQUIRE_SCALAR),
+			"email" => array("flags" => FILTER_REQUIRE_SCALAR),
+			"language" => array("flags" => FILTER_REQUIRE_SCALAR)
 		);
 
 		// Input data by default can be either POST or GET
 		if (!isset($inputData)) {
 			$inputData = ($_SERVER['REQUEST_METHOD'] == 'POST') ? $_POST : $_GET;
 		}
+		//pr($inputData);die;
 		
 		// Basic authorization header
 		$authHeaders = isset($authHeaders) ? $authHeaders : $this->getAuthorizationHeader();
@@ -690,6 +695,27 @@ class OAuth2 {
 				if ($stored === FALSE) {
 					throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_INVALID_GRANT);
 				}
+				break;
+
+			case self::GRANT_TYPE_REGISTER:
+				if (!($this->storage instanceof IOAuth2GrantRegister)) {
+					throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_UNSUPPORTED_GRANT_TYPE);
+				}
+				
+				if (!$input["email"] || !$input["password"] || !$input["name"]) {
+					throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_INVALID_REQUEST, 'Missing parameters. "email", "password", "name" required');
+				}
+				$language = isset($input["language"]) ? $input["language"] : null;
+				$stored = $this->storage->checkRegisterCredentials($client[0], $input["email"], $input["password"], $input["name"], $language);
+				
+				if (isset($stored['error'])) {
+					throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, $stored['error'], $stored['error_description']);
+				}
+				
+				/*if ($stored === FALSE) {
+					throw new OAuth2ServerException(self::HTTP_BAD_REQUEST, self::ERROR_INVALID_GRANT);
+				}
+				*/
 				break;
 
 			case self::GRANT_TYPE_CLIENT_CREDENTIALS:

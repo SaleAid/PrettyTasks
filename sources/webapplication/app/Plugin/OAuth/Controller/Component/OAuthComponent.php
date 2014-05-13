@@ -28,9 +28,10 @@ App::import('Vendor', 'oauth2-php/lib/IOAuth2RefreshTokens');
 App::import('Vendor', 'oauth2-php/lib/IOAuth2GrantUser');
 App::import('Vendor', 'oauth2-php/lib/IOAuth2GrantCode');
 App::import('Vendor', 'oauth2-php/lib/IOAuth2GrantGoogle');
+App::import('Vendor', 'oauth2-php/lib/IOAuth2GrantRegister');
 
 
-class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2GrantCode, IOAuth2GrantGoogle {
+class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2GrantCode, IOAuth2GrantGoogle, IOAuth2GrantRegister {
 	
 /**
  * AccessToken object.
@@ -44,7 +45,7 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
  * 
  * @var array
  */
-	protected $allowedActions = array('token', 'authorize', 'login', 'success', 'googlelogin');
+	protected $allowedActions = array('token', 'authorize', 'login', 'success', 'googlelogin', 'register');
 
 /**
  * An array containing the model and fields to authenticate users against
@@ -106,7 +107,7 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
  * 
  * @var array
  */
-	public $grantTypes = array('authorization_code', 'refresh_token', 'password', 'google');
+	public $grantTypes = array('authorization_code', 'refresh_token', 'password', 'google', 'register');
 /**
 * OAuth2 Object
 * 
@@ -415,7 +416,7 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
 		return false;
 	}
 
-	/**
+/**
  * Check client details are valid
  * 
  * @see IOAuth2Storage::checkClientCredentials().
@@ -435,6 +436,61 @@ class OAuthComponent extends Component implements IOAuth2Storage, IOAuth2Refresh
 		};
 		return false;
 	}
+
+/**
+ * 
+ * 
+ * @see IOAuth2Storage::checkClientCredentials().
+ *
+ * @param string $client_id
+ * @param string $client_secret
+ * @return mixed array of client credentials if valid, false if not
+ */
+	public function checkRegisterCredentials($client_id, $email, $password, $name, $lang) {
+		$source = 0;
+		$sources = Configure::read('Clients.Source.Map');
+		if (array_key_exists($client_id, $sources)) {
+			$source = $sources[$client_id];
+		}
+			
+		$saveData = array(
+			'email' => $email, 
+			'password' => $password, 
+			'password_confirm' => $password, 
+			'full_name' => $name, 
+			'agreed' => 1, 
+			'master' => 1,
+			'source' => $source
+		);
+		
+		if (array_key_exists($lang, Configure::read('Config.lang.available'))) {
+            Configure::write('Config.language', Configure::read('Config.lang.available.'.$lang.'.lang'));
+        }
+		
+		if($this->User->register($saveData)){
+			$id = $this->User->getLastInsertID();
+			$data = array(
+                'active' => 1,
+                'agreed' => 1,
+                'language' => Configure::read('Config.language'),
+                'timezone_offset' => isset($timezoneOffset) ? $timezoneOffset : null,
+                'invite_token' => $this->User->generateToken()
+            );
+			$this->User->User->create();
+			$user = $this->User->User->save($data);
+			
+			if($user){
+				$this->User->save(array('id' => $id, 'user_id' => $this->User->User->getLastInsertID()));
+				$this->User->sendActivationAccount($id);
+				return array('user_id' => $this->User->User->getLastInsertID());
+			}
+			return array('error' => 'invalid_fields', 'error_description' => $this->User->User->validationErrors);
+		}
+		
+		return array('error' => 'invalid_fields', 'error_description' => $this->User->validationErrors);
+	}
+
+	
 
 
 /**

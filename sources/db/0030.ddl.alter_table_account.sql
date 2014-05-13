@@ -1,0 +1,1 @@
+ALTER TABLE  `accounts` ADD  `source` INT( 1 ) UNSIGNED NOT NULL DEFAULT  '0'
