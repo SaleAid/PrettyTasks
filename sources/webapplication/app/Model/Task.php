@@ -281,7 +281,7 @@ class Task extends AppModel {
                 $this->getEventManager()->dispatch(new CakeEvent('Model.Task.afterSetDeleted', $this));    
             }
             //if day changed
-            if ($this->_isDraggedOnDay() || $this->updateTask){
+            if ($this->_isDraggedOnDay() || $this->updateTask || $this->_isRecovered()){
                 $this->getEventManager()->dispatch(new CakeEvent('Model.Task.afterMoveToDate', $this, array('originTask' => $this->_originData[$this->alias])));
             }
             //if only time changed and not null

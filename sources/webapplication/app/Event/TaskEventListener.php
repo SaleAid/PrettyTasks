@@ -47,26 +47,28 @@ class TaskEventListener implements CakeEventListener {
   public function eventAfterMoveToDateTask($event){
     $task = $event->subject->data[$event->subject->alias];
     $originTask = $event->data['originTask'];
-    
+
     if($originTask['future']){
         $originList = new PlannedList($originTask['user_id'], 'planned');
     } else {
         $originList = new DateList($originTask['user_id'], $originTask['date']);
     }
-    if($originList->removeFromList($originTask['id'])){
-        //add to new list
-         if($task['future']){
-            $PlannedList = new PlannedList($task['user_id'], 'planned');
-            $PlannedList->addToList($task['id'], true);    
+    
+    $originList->removeFromList($originTask['id']) ;
+    
+    //add to new list
+    if($task['future']){
+        $PlannedList = new PlannedList($task['user_id'], 'planned');
+        $PlannedList->addToList($task['id'], true);    
+    }else{
+        $DateList = new DateList($task['user_id'], $task['date']);
+        if($task['time']){
+            $DateList->addToListWithTime($task['id'], $task['time']);    
         }else{
-            $DateList = new DateList($task['user_id'], $task['date']);
-            if($task['time']){
-                $DateList->addToListWithTime($task['id'], $task['time']);    
-            }else{
-                $DateList->addToList($task['id'], $task['time']);
-            }
-        }   
-    }
+            $DateList->addToList($task['id'], $task['time']);
+        }
+    }   
+    
   }
   
   public function eventAfterChangeTimeTask($event){
