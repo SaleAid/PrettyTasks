@@ -118,6 +118,7 @@
           <?php endforeach; ?>
         </ul>
         <div class="tab-content">
+        <?php echo $this->element('androidwidgetads');?>
           <div class="tab-pane" id="expired">
               <div class="row">
                   <div class="listTask">
