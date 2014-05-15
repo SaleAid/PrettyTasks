@@ -1,4 +1,8 @@
 $().ready(function(){
+
+    $('.banner-android-widget button.close').click(function(){
+        $.cookie("banner-android-widget-hide", 1, { expires: 7, path: '/' })
+    });
     
     window.setTimeout(function() {
         $(".alert-success").fadeTo(1000, 0).slideUp(1000, function(){
@@ -54,7 +58,7 @@ $().ready(function(){
     
     $('.btn-note').tooltip({placement:'bottom',delay: { show: 500, hide: 100 }});
 
-    //console.log(__d('tasks', 'Некорректная дата'));
+    
 });
 
 

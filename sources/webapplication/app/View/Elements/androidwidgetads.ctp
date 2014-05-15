@@ -1,4 +1,6 @@
-<div class ="alert alert-info" style="background-color: #ffffff;">
+<?php if(!$banner_android_widget_hide): ?>
+<div class ="alert alert-info banner-android-widget" style="background-color: #ffffff;">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
 <?php
 if(Configure::read('Config.language') =='eng'):
 ?>
@@ -14,3 +16,4 @@ if(Configure::read('Config.language') =='eng'):
 </a> 
 <?php endif;?>
 </div>
+<?php endif ;?>

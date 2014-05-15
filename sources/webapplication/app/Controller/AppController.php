@@ -132,6 +132,13 @@ class AppController extends Controller {
         }
     }
 
+    protected function _isHideBannerAdnroidWidget(){
+        if(isset($_COOKIE['banner-android-widget-hide']) && $_COOKIE['banner-android-widget-hide']){
+            return true;
+        }
+        return false;
+    }
+
     private function __setTimeZone() {
         date_default_timezone_set(Configure::read('Config.timezone'));
     }
@@ -197,6 +204,7 @@ class AppController extends Controller {
         $this->set('timezone', $this->_userTimeZone());
         $this->set('isProUser', $this->isProUser());
         $this->set('isBetaUser', $this->isBetaUser());
+        $this->set('banner_android_widget_hide', $this->_isHideBannerAdnroidWidget());
         // $this->set('csrfToken', $this->_getCsrfToken());
         if (! $this->request->is('ajax')) {
             $this->set('csrfToken', $this->generateCsrfToken());
