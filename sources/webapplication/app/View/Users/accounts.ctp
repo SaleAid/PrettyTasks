@@ -12,7 +12,7 @@
                                          'action' => 'link',
                                          'google'
                                      ),
-                                     array('escape' => false)
+                                     array('escape' => false, "alt" => "Google", "title" => "Google")
                                  );
                         ?>
                         <?php
@@ -23,7 +23,7 @@
                                          'action' => 'link',
                                          'facebook'
                                      ),
-                                     array('escape' => false)
+                                     array('escape' => false, "alt" => "Facebook", "title" => "Facebook")
                                  );
                         ?>
                         <?php
@@ -34,7 +34,7 @@
                                          'action' => 'link',
                                          'linkedin'
                                      ),
-                                     array('escape' => false)
+                                     array('escape' => false, "alt" => "LinkedIn", "title" => "LinkedIn")
                                  );
                         ?>
                         <?php
@@ -45,7 +45,7 @@
                                          'action' => 'link',
                                          'twitter'
                                      ),
-                                     array('escape' => false)
+                                     array('escape' => false, "alt" => "Twitter", "title" => "Twitter")
                                  );
                         ?>
                         <?php
@@ -56,7 +56,7 @@
                                          'action' => 'link',
                                          'vkontakte'
                                      ),
-                                     array('escape' => false)
+                                     array('escape' => false, "alt" => "ВКонтакте", "title" => "ВКонтакте")
                                  );
                         ?>
                     </div>

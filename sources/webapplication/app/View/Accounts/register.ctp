@@ -33,7 +33,7 @@
                                      array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index',
                                          'google'
                                      ),
-                                     array('escape' => false, 'tabindex' => -1)
+                                     array('escape' => false, 'tabindex' => -1, "alt" => "Google", "title" => "Google")
                                  );
                         ?>
                         <?php
@@ -42,7 +42,7 @@
                                      array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index',
                                          'facebook'
                                      ),
-                                     array('escape' => false, 'tabindex' => -1)
+                                     array('escape' => false, 'tabindex' => -1, "alt" => "Facebook", "title" => "Facebook")
                                  );
                         ?>
                         <?php
@@ -51,7 +51,7 @@
                                      array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index',
                                          'linkedin'
                                      ),
-                                     array('escape' => false, 'tabindex' => -1)
+                                     array('escape' => false, 'tabindex' => -1, "alt" => "LinkedIn", "title" => "LinkedIn")
                                  );
                         ?>
                         <?php
@@ -60,7 +60,7 @@
                                      array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index',
                                          'twitter'
                                      ),
-                                     array('escape' => false, 'tabindex' => -1)
+                                     array('escape' => false, 'tabindex' => -1, "alt" => "Twitter", "title" => "Twitter")
                                  );
                         ?>
                         <?php
@@ -69,7 +69,7 @@
                                      array('plugin' => 'Opauth', 'controller' => 'Opauth', 'action' => 'index',
                                          'vkontakte'
                                      ),
-                                     array('escape' => false, 'tabindex' => -1)
+                                     array('escape' => false, 'tabindex' => -1, "alt" => "ВКонтакте", "title" => "ВКонтакте")
                                  );
                         ?>
                     </div>

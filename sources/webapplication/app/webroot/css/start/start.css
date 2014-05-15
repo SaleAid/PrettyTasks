@@ -1,0 +1,418 @@
+body, html {
+	height: 100%;
+	width: 100%;
+}
+
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: 700;
+}
+body{overflow-y: scroll;}
+
+.navbar-brand{
+	padding: 9px;
+}
+.lead {
+	font-size: 18px;
+	font-weight: 400;
+}
+
+.intro-header {
+	padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+	padding-bottom: 40px;
+	color: #f8f8f8;
+	background: #207ce5;
+	background: -moz-linear-gradient(top, #4ec5f4 0%, #207ce5 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4ec5f4), color-stop(100%,#207ce5));
+	background: -webkit-linear-gradient(top, #4ec5f4 0%,#207ce5 100%);
+	background: -o-linear-gradient(top, #4ec5f4 0%,#207ce5 100%);
+	background: -ms-linear-gradient(top, #4ec5f4 0%,#207ce5 100%);
+	background: linear-gradient(to bottom, #4ec5f4 0%,#207ce5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4ec5f4', endColorstr='#207ce5',GradientType=0 );
+	border-bottom: 2px solid #4496F1;
+}
+
+.intro-message {
+	position: relative;
+	padding-top: 40px;
+	padding-bottom: 10px;
+}
+
+.intro-message > h1 {
+	text-align: left;
+	color: #FFF;
+	font-size: 18px;
+	margin-bottom: 25px;
+	line-height: 25px;
+	font-weight: normal;
+}
+
+.intro-divider {
+	width: 400px;
+	border-top: 1px solid #f8f8f8;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.intro-message  h3 {
+	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+	font-weight: normal;
+	font-size: 18px;
+}
+
+@media (max-width: 767px) {
+	.intro-message {
+		padding-bottom: 15%;
+	}
+
+	.intro-message > h1 {
+		
+	}
+
+	ul.intro-social-buttons > li {
+		display: block;
+		margin-bottom: 20px;
+		padding: 0;
+	}
+
+	ul.intro-social-buttons > li:last-child {
+		margin-bottom: 0;
+	}
+
+	.intro-divider {
+		width: 100%;
+	}
+}
+
+.network-name {
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: 400;
+	letter-spacing: 2px;
+}
+
+.content-section-a {
+	padding: 10px 0;
+	margin-top: 20px;
+}
+
+.content-section-b {
+	border-top: 1px solid #e7e7e7;
+	border-bottom: 1px solid #e7e7e7;
+	padding: 50px 0;
+}
+
+.section-heading {
+	margin-bottom: 30px;
+}
+
+.section-heading-spacer {
+	border-top: 3px solid #e7e7e7;
+	width: 200px;
+	float: left;
+}
+
+.banner {
+	padding: 100px 0;
+	color: #f8f8f8;
+	
+	background-size: cover;
+}
+
+.banner h2 {
+	margin: 0;
+	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+	font-size: 3em;
+}
+
+.banner ul {
+	margin-bottom: 0;
+}
+
+.banner-social-buttons {
+	float: right;
+	margin-top: 0;
+}
+.bnt-reg{
+	padding-top: 11px;
+	position: relative;
+	margin-top: 20px;
+	border-top: 1px solid #e5e5e5;
+}
+.btn-link-lang, .btn-link-lang:hover, .btn-link-lang:focus{
+	color: #fff;
+	padding: 14px 12px;
+}
+.btn-group-lang .dropdown-menu{
+	min-width: 100px;
+	top: 33px;
+}
+
+@media (max-width: 1199px) {
+	ul.banner-social-buttons {
+		float: left;
+		margin-top: 15px;
+	}	
+	.s-btns {
+		width: auto;
+	}
+}
+
+@media (max-width: 767px) {
+	.banner h2 {
+		margin: 0;
+		text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+	}
+
+	ul.banner-social-buttons > li {
+		display: block;
+		margin-bottom: 20px;
+		padding: 0;
+	}
+
+	ul.banner-social-buttons > li:last-child {
+		margin-bottom: 0;
+	}	
+	.left-icon{
+		clear: both;
+	}
+	.navbar-pr .navbar-nav .open .dropdown-menu>li>a{
+		color: #000;
+	}
+	.btn-group-lang .dropdown-menu{
+		min-width: 160px;
+		top: 100%;
+	}
+}
+
+footer {
+	font-weight: normal;
+	background-color: #EDEDED;
+	padding: 10px 0;
+	font-size: 12px;
+	margin-top: 20px;
+}
+
+footer h2 {
+	color: #999898;
+	text-shadow: #fff 1px 1px 1px;
+	font-size: 14px;
+	font-family: Arial;
+	font-weight: normal;
+}
+
+footer p, footer a {
+	color: #adadad;
+	text-shadow: #fff 1px 1px 1px;
+}
+
+footer li, footer ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+p.copyright {
+	margin: 15px 0 0;
+	text-align: center;
+}
+
+.navbar-pr{
+	background-color: #0086ad;
+	background-image: linear-gradient(to bottom, #007ca1, #0094c0);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff007ca1', endColorstr='#ff0094c0', GradientType=0);
+	border: 1px solid #006583;
+}
+
+.navbar-pr .navbar-nav>li>a{
+	color: #fff;
+	font-weight: normal;
+}
+
+.navbar-pr .navbar-nav>li>a:hover, .navbar-pr .navbar-nav>li>a:focus{
+	color: #fff;
+	background-color: rgba(0, 55, 72, 0.15);
+}
+ .navbar-pr .navbar-nav .open .dropdown-menu>li>a:hover {
+	color: #333;
+	background-color: rgba(0, 55, 72, 0.15);
+}
+
+
+.fa-2 {
+	font-size: 2em;
+	margin-right: 10px;
+}
+
+.intro-list li{
+	font-weight: normal;
+}
+.intro-header-divider{
+
+}
+
+.form-area{
+	position: relative;
+	background: #FFF;
+	color: #7e7975;
+	-webkit-box-shadow: 0 1px 15px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 0 1px 15px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 1px 15px rgba(0, 0, 0, 0.4);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 0 20px;
+	margin-top: 35px;
+}
+.form-area h1 {
+	font-size: 24px;
+	margin-left: -20px;
+	margin-right: -20px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #EDEDED;
+	text-shadow: 0 2px 0 rgba(255,255,255,0.8);
+	box-shadow: 0 1px 0 rgba(255,255,255,0.8);
+	background: #f8f8f8;
+	background: -moz-linear-gradient(#f8f8f8, #EDEDED);
+	background: -ms-linear-gradient(#f8f8f8, #EDEDED);
+	background: -o-linear-gradient(#f8f8f8, #EDEDED);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#f8f8f8), to(#EDEDED));
+	background: -webkit-linear-gradient(#f8f8f8, #EDEDED);
+	background: linear-gradient(#f8f8f8, #EDEDED);
+	border: 1px solid #EDEDED;
+	color: #999898;
+	text-shadow: 0 1px rgba(255,255,255,0.3);
+	padding: 20px;
+	position: relative;
+	-webkit-border-radius: 5px 5px 0 0;
+	-moz-border-radius: 5px 5px 0 0;
+	border-radius: 5px 5px 0 0;
+	font-weight: 400;
+	letter-spacing: -1px;
+}
+
+.form-area-bottom {
+	clear: both;
+	margin-top: 15px;
+	background: #f8f8f8;
+	background: -moz-linear-gradient(#f8f8f8, #EDEDED);
+	background: -ms-linear-gradient(#f8f8f8, #EDEDED);
+	background: -o-linear-gradient(#f8f8f8, #EDEDED);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#f8f8f8), to(#EDEDED));
+	background: -webkit-linear-gradient(#f8f8f8, #EDEDED);
+	background: linear-gradient(#f8f8f8, #EDEDED);
+	border: 1px solid #EDEDED;
+	height: 10px;
+	-webkit-border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+	margin-left: -20px;
+	margin-right: -20px;
+}
+
+.social-bnts {
+	position: relative;
+	margin-top: 20px;
+}
+.bnt-reg .btn-block{
+	margin-top: 5px;
+}
+.social-bnts .social-buttons {
+	margin: 10px 0 40px 6px;
+	padding: 10px 0 0 0;
+	border-top: 1px solid #e5e5e5;
+}
+
+.social-or {
+	position: absolute;
+	left: 45%;
+	top: -9px;
+	background-color: #fff;
+	font-weight: bold;
+	padding: 0 3px;
+}
+
+.back-to-top {
+    cursor: pointer;
+    position: fixed;
+    bottom: 30px;
+    right: 10px;
+    display:none;
+}
+.unique-features h2{
+	font-size: 26px;
+	color: #4D4D4D;
+	text-transform: uppercase;
+	text-align: center;
+	margin-bottom: 25px;
+	border-bottom: 1px dotted #DDD;
+	padding-bottom: 15px;
+}
+.left-icon img {
+	margin: 20px;
+	margin-left: 0;
+	float: left;
+}
+.left-icon h4 {
+	font-size: 13px;
+	text-transform: uppercase;
+	color: #8D8D8D;
+}
+.left-icon p {
+	text-align: left;
+	line-height: 22px;
+	font-size: 12px;
+	margin-bottom: 10px;
+	color: #A2A2A2;
+}
+#testimonials {
+	font-weight: normal;
+	font-family: 'Open Sans', 'Lucida Sans Unicode', verdana, 'Lucida Grande', sans-serif;
+	font-size: 12px;
+	margin-top: 10px;
+	text-align: center;
+}
+#testimonials img {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border: 3px solid #E0E0E0;
+	margin-bottom: 10px;
+}
+#testimonials ul{
+	list-style: none;
+	padding-left: 0;
+}
+#testimonials p {
+	padding: 10px;
+	font-style: italic;
+	padding-left: 45px;
+	position: relative;
+	margin-bottom: 5px;
+	display: block;
+	font-size: 18px;
+	line-height: 34px;
+	text-align: left;
+	color: #A2A2A2;
+	font-family: 'Open Sans', 'Lucida Sans Unicode', verdana, 'Lucida Grande', sans-serif;
+}
+.author {
+	clear: both;
+	display: block;
+	color: #444;
+	text-align: right;
+}
+.flex-control-nav{
+	width: 60px;
+	right: 1px;
+}
+.flex-control-nav li {
+	float: right;
+	margin: 10px 3px;
+	display: inline-block;
+	zoom: 1;
+}
+.google-play-widget{
+	margin-top: 30px;
+	margin-left: 45px;
+}

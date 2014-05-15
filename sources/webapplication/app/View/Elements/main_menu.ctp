@@ -55,8 +55,8 @@
                     </span>
                 </a>
                    <ul class="dropdown-menu langList s6" role="menu" aria-labelledby="dLabel">
-                    <?php foreach(Configure::read('Config.lang.available') as $lang) : ?>
-                        <li><a href="#" data="<?php echo h($lang['lang']); ?>"><?php echo h($lang['name']); ?><?php if(Configure::read('Config.language') == $lang['lang']) : ;?>&nbsp;&nbsp;<i class="icon-ok"></i><?php endif;?></a></li>
+                    <?php foreach(Configure::read('Config.lang.available') as $key => $lang) : ?>
+                        <li><a href="/<?php echo h($key); ?>" data="<?php echo h($lang['lang']); ?>"><?php echo h($lang['name']); ?><?php if(Configure::read('Config.language') == $lang['lang']) : ;?>&nbsp;&nbsp;<i class="icon-ok"></i><?php endif;?></a></li>
                     <?php endforeach; ?> 
                    </ul>
              </span>  

@@ -27,10 +27,9 @@
                 <li class="dropdown-submenu">
                     <a tabindex="-1" href="#"><i class="icon-globe"></i>&nbsp;&nbsp;<?php echo __d('users', 'Language'); ?></a>
                     <ul class="dropdown-menu langList">
-                        <?php foreach(Configure::read('Config.lang.available') as $lang) : ?>
-                            <li><a tabindex="-1" href="#" data="<?php echo h($lang['lang']); ?>"><?php echo h($lang['name']); ?>&nbsp;&nbsp;<?php if(Configure::read('Config.language') == $lang['lang']) : ;?><i class="icon-ok"></i><?php endif;?></a></li>
+                        <?php foreach(Configure::read('Config.lang.available') as $key => $lang) : ?>
+                            <li><a tabindex="-1" href="/<?php echo h($key); ?>" data="<?php echo h($lang['lang']); ?>"><?php echo h($lang['name']); ?>&nbsp;&nbsp;<?php if(Configure::read('Config.language') == $lang['lang']) : ;?><i class="icon-ok"></i><?php endif;?></a></li>
                         <?php endforeach; ?>
-                        
                    </ul>
                 </li>
                 <li class="divider"></li>

@@ -34,7 +34,7 @@
    Configure::write('SEO.Login.keywords.ru', 'Pretty Tasks, gtd, tasks management, login, управление временем, списки задач, вход на сайт');
    Configure::write('SEO.Login.description.ru', 'Страница входа(логина) на сервис PrettyTasks');
    
-   Configure::write('SEO.Pages.title.ru', 'самый удобный онлайн органайзер');
+   Configure::write('SEO.Pages.title.ru', 'PrettyTasks - самый удобный онлайн органайзер');
    Configure::write('SEO.Pages.keywords.ru', 'Pretty Tasks, органайзер,  управление временем, задачи, списки, дневник, заметки, gtd, tasks management, todo list, тайм менеджмент');
    Configure::write('SEO.Pages.description.ru', 'Prettytasks - органайзер, который всегда с вами. Достигни большего!');
    
@@ -47,9 +47,9 @@
    Configure::write('SEO.Login.keywords.en', 'Pretty Tasks, gtd, tasks management, todo list, login, time management, task lists, login to site');
    Configure::write('SEO.Login.description.en', 'Login page of PrettyTasks service');
    
-   Configure::write('SEO.Pages.title.en', 'Pleasant personal service for task management');
-   Configure::write('SEO.Pages.keywords.en', 'Pretty Tasks, gtd, tasks management, todo list, time management, task lists, easy-to-use system');
-   Configure::write('SEO.Pages.description.en', 'PrettyTasks - a service of personal task management with maximum usability. Use the best system intuitively!');
+   Configure::write('SEO.Pages.title.en', 'Prettytasks is the most convinient on-line organizer and to-do lists');
+   Configure::write('SEO.Pages.keywords.en', 'Pretty Tasks, organizer,  time management, tasks, lists, notes, to-do lists, gtd, tasks management');
+   Configure::write('SEO.Pages.description.en', 'Prettytasks is an organizer  at your fingertips. Reach more!');
    
    Configure::write('Share.description', __d('appconfig', 'PrettyTasks - сервис управления личными задачами с максимальной удобностью использования.'));
    

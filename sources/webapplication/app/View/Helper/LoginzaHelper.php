@@ -6,7 +6,7 @@ class LoginzaHelper extends AppHelper {
         return implode(",", array_keys(Configure::read('loginza.provider')));
     }
     public function getCssUrl() {
-        return 'loginza/widget_style.'.Configure::read('App.version').'.css';
+        return 'sprite/widget_style.'.Configure::read('App.version').'.css';
     }
     public function getJs(){
         return 'http://loginza.ru/js/widget.js';
@@ -22,14 +22,41 @@ class LoginzaHelper extends AppHelper {
         return "<span class=\"providers_ico_sprite {$provider}_ico\">&nbsp;</span>";
     }
 
+    protected function providerTitle($provider){
+        switch ($provider) {
+            case 'local':
+                return 'PrettyTasks';
+                break;
+            case 'google':
+                return 'Google';
+                break;
+            case 'twitter':
+                return 'Twitter';
+                break;
+            case 'facebook':
+                return 'Facebook';
+                break;
+            case 'linkedin':
+                return 'LinkedIn';
+                break;
+            case 'vkontakte':
+                return 'ВКонтакте';
+                break;
+            default:
+                return '';
+                break;
+        }
+    }
+
     public function logo($provider) {
         if (! $provider) {
             return '';
         }
+        $title = $this->providerTitle($provider);
         if ($provider == 'local') {
-           return "<span class=\"prettytasks_logo\">&nbsp;</span>";
+           return "<span class=\"prettytasks_logo\" alt=\"".$title."\" title=\"".$title."\">&nbsp;</span>";
         }
-        return "<span class=\"providers_sprite {$provider}\">&nbsp;</span>";
+        return "<span class=\"providers_sprite {$provider}\" alt=\"".$title."\" title=\"".$title."\">&nbsp;</span>";
     }
     
     public function buttonWidget($token_url){
