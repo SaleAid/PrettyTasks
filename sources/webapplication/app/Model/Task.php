@@ -308,6 +308,18 @@ class Task extends AppModel {
     }
     /**
      * 
+     * @return 
+     */
+    public function cloneTask($date){
+        $data = $this->data;
+        unset($data[$this->alias]['id']);
+        $this->create();
+        $this->data = $data;
+        $this->setDate($date);
+        return $this;
+    }
+    /**
+     * 
      * @param unknown_type $user_id
      * @param unknown_type $title
      * @param unknown_type $date

@@ -31,6 +31,7 @@ function getTaskFromPage(id){
         continued: +$('#'+id).data('continued'),
         repeated: +$('#'+id).data('repeated')    
     };
+    console.log(data);
     return data;
 }
 
@@ -670,7 +671,7 @@ function addTaskNew(task){
                                   title: title,
                                   comment: comment,
                                   comment_status: comment_status,
-                                  continued: 0,
+                                  continued: task.continued,
                                   repeated: 0
                                   
         });

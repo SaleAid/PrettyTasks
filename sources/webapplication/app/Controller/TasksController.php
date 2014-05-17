@@ -301,7 +301,7 @@ class TasksController extends AppController {
         } else {
             $task = $this->Task->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($task) {
-                $cloneTask = $this->Task->createTask($this->Auth->user('id'), $task->title, $this->request->data['date'], $task->time, null, $task->priority, $task->future, 1)->saveTask();
+                $cloneTask = $this->Task->cloneTask($this->request->data['date'])->saveTask();
                 if ($cloneTask) {
                     $result['success'] = true;
                     $result['data'] = $cloneTask;
