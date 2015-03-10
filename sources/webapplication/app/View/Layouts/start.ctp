@@ -101,9 +101,9 @@ echo $this->Html->docType('html5');
 
     <?php
     if(Configure::read('Config.language') =='eng'){
-        echo $this->element('start/footer_eng');
+        echo $this->element('footer_eng');
     }else{
-        echo $this->element('start/footer_rus');    
+        echo $this->element('footer');    
     }
     ?>
     <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Click to return on the top page" data-toggle="tooltip" data-placement="left">

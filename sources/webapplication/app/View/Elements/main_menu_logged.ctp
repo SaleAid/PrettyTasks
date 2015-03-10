@@ -35,14 +35,14 @@
       <div class="nav-collapse">
         <ul class="nav top">
           <?php if ($currentUser): ?>
-          <li class="tasks <? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">
+          <li class="tasks <?php if($this->params['action'] == "index" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">
                 <?php echo $this->Html->link(
                                 __d('pages', 'Tasks'),
                                 array('controller' => 'tasks', 'action' => 'index', '#' => 'day-'.$this->Time->format('Y-m-d', time(), false, $timezone))
                 );?>    
           </li>
           <?php //if ($isBetaUser):?>
-          <li class="lists <? //if($this->params['action'] == "index" and strtolower($this->params['controller']) == "lists") echo 'active'; ?>">
+          <li class="lists <?php //if($this->params['action'] == "index" and strtolower($this->params['controller']) == "lists") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __d('pages', 'Списки'),
                     array('controller' => 'tasks', 'action' => 'index', '#' => 'lists')
@@ -50,7 +50,7 @@
           </li>
           <?php //endif;?>
          <!-- <?php //if ($isBetaUser):?>
-          <li class="<? //if($this->params['action'] == "index" and strtolower($this->params['controller']) == "calendar") echo 'active'; ?>">
+          <li class="<?php //if($this->params['action'] == "index" and strtolower($this->params['controller']) == "calendar") echo 'active'; ?>">
               <?php //echo $this->Html->link(
                     //__d('pages', Calendar'),
                    // array('controller' => 'calendar', 'action' => 'index')
@@ -58,7 +58,7 @@
           </li>
           <?php //endif;?>
           -->
-          <li class="agenda <? if($this->params['action'] == "agenda" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">
+          <li class="agenda <?php if($this->params['action'] == "agenda" and strtolower($this->params['controller']) == "tasks") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __d('pages', 'Agenda'),
                     array('controller' => 'tasks', 'action' => 'index', '#' => 'day-agenda')
@@ -68,14 +68,14 @@
           <?php endif;?>
 
         <?php //if ($isBetaUser):?>
-          <li class="<? if($this->params['action'] == "index" and strtolower($this->params['controller']) == "notes") echo 'active'; ?>">
+          <li class="<?php if($this->params['action'] == "index" and strtolower($this->params['controller']) == "notes") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __d('pages', 'Заметки'),
                     array('controller' => 'notes', 'action' => 'index')
                 ); ?>  
           </li>
           <?php //endif;?>
-         <li class="<? if($this->params['action'] == "journal" and strtolower($this->params['controller']) == "days") echo 'active'; ?>">
+         <li class="<?php if($this->params['action'] == "journal" and strtolower($this->params['controller']) == "days") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __d('days', 'Journal'),
                     array('controller' => 'days', 'action' => 'journal')

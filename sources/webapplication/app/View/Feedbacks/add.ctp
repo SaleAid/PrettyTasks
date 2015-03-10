@@ -1,5 +1,6 @@
-    <?php echo $this->Html->css('feedbacks.'.Configure::read('App.version'), null, array('block' => 'toHead')); ?>
-    <?php echo $this->Html->script('feedbacks.'.Configure::read('App.version'), array('block' => 'toFooter')); ?>
+<?php echo $this->Html->css('feedbacks.'.Configure::read('App.version'), null, array('block' => 'toHead')); ?>
+<?php echo $this->Html->script('feedbacks.'.Configure::read('App.version'), array('block' => 'toFooter')); ?>
+<?php App::uses('Feedback', 'Model');?>
 <div class="row">
     <div class="span8 feedbacks">
     <?php echo $this->Form->create('Feedback', array('class' => 'well',
@@ -36,7 +37,7 @@
             <?php echo __d('feedbacks', 'Пожалуйста, опишите Вашу просьбу, проблему как можно более подробно, чтобы мы могли быстрее и полнее ее проработать.'); ?><br/>
             <?php echo __d('feedbacks', 'Спасибо за сотрудничество.'); ?><br/>
             <?php echo __d('feedbacks', 'Мы делаем все, чтобы наш сервис приносил Вам наибольшую пользу и комфорт.'); ?></p>
-            <!--  <p>Также вы можете найти ответы на наиболее распостраненные вопросы в разделе <? //echo $this->Html->link('Faq', array('controller' => 'faqs', 'action' => 'index')); ?>. </p> -->
+            <!--  <p>Также вы можете найти ответы на наиболее распостраненные вопросы в разделе <?php //echo $this->Html->link('Faq', array('controller' => 'faqs', 'action' => 'index')); ?>. </p> -->
         </div>
     </div>
 </div>

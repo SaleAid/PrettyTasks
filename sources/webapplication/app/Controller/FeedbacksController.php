@@ -1,4 +1,7 @@
 <?php
+App::uses('AppController', 'Controller');
+App::uses('Feedback', 'Model');
+App::uses('User', 'Model');
 /**
  * Copyright 2012-2014, PrettyTasks (http://prettytasks.com)
  *
@@ -6,7 +9,6 @@
  * @author Vladyslav Kruglyk <krugvs@gmail.com>
  * @author Alexandr Frankovskiy <afrankovskiy@gmail.com>
  */
-App::uses('AppController', 'Controller');
 /**
  * Feedbacks Controller
  *

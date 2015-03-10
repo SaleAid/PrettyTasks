@@ -34,13 +34,13 @@
 
       <div class="nav-collapse">
         <ul class="nav top">
-          <li class="<? if( isset($this->params['pass'][0]) and $this->params['pass'][0] == "contacts" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
+          <li class="<?php if( isset($this->params['pass'][0]) and $this->params['pass'][0] == "contacts" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __d('pages', 'Contact'),
                     array('controller' => 'pages', 'action' => 'contacts')
                 );?>
           </li>
-          <li class="<? if(isset($this->params['pass'][0]) and $this->params['pass'][0] == "about" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
+          <li class="<?php if(isset($this->params['pass'][0]) and $this->params['pass'][0] == "about" and strtolower($this->params['controller']) == "pages") echo 'active'; ?>">
               <?php echo $this->Html->link(
                     __d('pages', 'About'),
                     array('controller' => 'pages', 'action' => 'about')
