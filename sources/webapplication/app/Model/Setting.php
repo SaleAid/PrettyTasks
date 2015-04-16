@@ -6,6 +6,13 @@ App::uses('AppModel', 'Model');
  * @property User $User
  */
 class Setting extends AppModel {
+	
+	
+	public $defaultSettings = [
+			'subscribe_news' => 1,// Receive news by default
+			'subscribe_daily_digest' => 0,// Do not receive daily digest by default
+			'subscribe_weekly_digest' => 1,//Receive weekly digest by default
+	];
 
 /**
  * Validation rules
@@ -49,18 +56,20 @@ class Setting extends AppModel {
 	);
 
 
-/**
-     *
-     * @param unknown_type $key            
-     * @param unknown_type $userId            
-     * @return array multitype: Ambigous
-     */
-    public function getValue($key, $userId, $unserialize = true) {
+	/**
+	 * Return value from DB, or default, or false
+	 * 
+	 * @param string $key
+	 * @param int $user_id
+	 * @param string $unserialize
+	 * @return multitype:number |boolean
+	 */
+    public function getValue($key, $user_id, $unserialize = true) {
         $this->contain();
         $result = $this->find('first', array(
                 'conditions' => array(
                         'Setting.key' => $key,
-                        'Setting.user_id' => $userId 
+                        'Setting.user_id' => $user_id 
                 ),
                 'fields' => array(
                         'key',
@@ -69,33 +78,41 @@ class Setting extends AppModel {
         ));
         
         if (!empty($result)) {
-            if($unserialize)
+            if($unserialize){
                 return unserialize($result['Setting']['value']);
+            }
             return $result['Setting']['value'];
+        }else{
+        	//Check for default value
+        	if (isset($this->defaultSettings[$key])){
+        		return $this->defaultSettings[$key];
+        	}
         }
         
         return false;
     }
     
+    //TODO Write function for bulk saving settings
+    
     /**
      * 
      * @param unknown_type $key
      * @param unknown_type $value
-     * @param unknown_type $userId
+     * @param unknown_type $user_id
      * @return boolean
      */
-    public function setValue($key, $value, $userId, $serialize = true) {
+    public function setValue($key, $value, $user_id, $serialize = true) {
         $data = array(
             'key' => $key,
             'value' => $serialize ? serialize($value) : $value,
-            'user_id' => $userId
+            'user_id' => $user_id
         );
         
         $this->contain();
         $result = $this->find('first', array(
                 'conditions' => array(
                         'Setting.key' => $key,
-                        'Setting.user_id' => $userId 
+                        'Setting.user_id' => $user_id 
                 ),
                 'fields' => array(
                         'id'

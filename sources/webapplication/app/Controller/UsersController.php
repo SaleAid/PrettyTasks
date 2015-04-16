@@ -14,13 +14,15 @@ App::uses ( 'Validation', 'Utility' );
  * @property Task $Task
  * @property User $User
  * @property Account $Account
+ * @property Setting $Setting
  */
 class UsersController extends AppController {
 	public $name = 'Users';
 	public $uses = array (
 			'User',
 			'Task',
-			'Account' 
+			'Account',
+			'Setting'
 	);
 	public $components = array (
 			'RequestHandler',
@@ -167,7 +169,7 @@ class UsersController extends AppController {
 		$this->set ( 'accounts', $accounts );
 	}
 	public function subscriptions() {
-		
+		//Prepare data for lists 
 		$options_subscribtions_news = [
 				0 => __d('users', 'Не получать'),
 				1 => __d('users', 'Получать'),
@@ -184,6 +186,30 @@ class UsersController extends AppController {
 				1 => __d('users', 'Получать'),
 		];
 		$this->set ('options_subscribe_weekly_digest', $options_subscribe_weekly_digest);
+		//
+		$allowed_options = [
+				'subscribe_news' ,
+				'subscribe_daily_digest',
+				'subscribe_weekly_digest'
+		];
+		$user_id = $this->Auth->user ( 'id' );
+		//Handle changes
+		if ($this->request->is('post')){
+			//Save data to DB
+			foreach ($allowed_options as $key){
+				$value = $this->request->data('Setting.'.$key);
+				$this->Setting->setValue($key, $value, $user_id, false);
+			}
+		}
+		else{
+			//Read settings from DB, and prepare defaults
+			foreach ($allowed_options as $key){
+				$value = $this->Setting->getValue($key, $user_id, false);
+				$this->request->data['Setting'][$key] = $value;
+			}
+			//debug($this->request->data);
+		}
+
 		
 	}
 	public function changeLanguage() {
