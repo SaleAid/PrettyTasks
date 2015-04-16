@@ -10,6 +10,9 @@
                 <?php echo $this->Html->link(__d('users', 'Изменить пароль'). $this->Html->tag('i', '', array('class' => 'icon-chevron-right pull-right')), array('controller' => 'accounts', 'action' => 'password_change'), array('escape' => false)); ?>
           </li>
       <?php endif; ?>
+      <li class="<?php if($this->params['action'] == "subscriptions") echo 'active'; ?>">
+            <?php echo $this->Html->link(__d('users', 'Управление рассылками'). $this->Html->tag('i', '', array('class' => 'icon-chevron-right pull-right')), array('controller' => 'users', 'action' => 'subscriptions'), array('escape' => false)); ?>
+      </li>
       <li class="<?php if($this->params['action'] == "accounts") echo 'active'; ?>">
             <?php echo $this->Html->link(__d('users', 'Связанные аккаунты'). $this->Html->tag('i', '', array('class' => 'icon-chevron-right pull-right')), array('controller' => 'users', 'action' => 'accounts'), array('escape' => false)); ?>
       </li>
