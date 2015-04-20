@@ -168,32 +168,17 @@ class UsersController extends AppController {
 		$accounts = $this->paginate ( 'Account' );
 		$this->set ( 'accounts', $accounts );
 	}
+	
+	/**
+	 * Change settings for subscriptions
+	 */
 	public function subscriptions() {
-		//Prepare data for lists 
-		$options_subscribtions_news = [
-				0 => __d('users', 'Не получать'),
-				1 => __d('users', 'Получать'),
-		];
-		$this->set ('options_subscribtions_news', $options_subscribtions_news);
-		$options_subscribe_daily_digest = [
-				0 => __d('users', 'Не получать'),
-				1 => __d('users', 'Получать, если есть изменения'),
-				2 => __d('users', 'Получать всегда'),
-		];
-		$this->set ('options_subscribe_daily_digest', $options_subscribe_daily_digest);
-		$options_subscribe_weekly_digest = [
-				0 => __d('users', 'Не получать'),
-				1 => __d('users', 'Получать'),
-		];
-		$this->set ('options_subscribe_weekly_digest', $options_subscribe_weekly_digest);
-		//
 		$allowed_options = [
 				'subscribe_news' ,
 				'subscribe_daily_digest',
 				'subscribe_weekly_digest'
 		];
 		$user_id = $this->Auth->user ( 'id' );
-		//Handle changes
 		if ($this->request->is('post')){
 			//Save data to DB
 			foreach ($allowed_options as $key){
@@ -207,10 +192,7 @@ class UsersController extends AppController {
 				$value = $this->Setting->getValue($key, $user_id, false);
 				$this->request->data['Setting'][$key] = $value;
 			}
-			//debug($this->request->data);
 		}
-
-		
 	}
 	public function changeLanguage() {
 		$result = $this->_prepareResponse ();

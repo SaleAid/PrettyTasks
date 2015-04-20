@@ -199,6 +199,11 @@ msgstr "You have to agree with Terms&Conditions"
 msgid "bad language"
 msgstr "bad language"
 
+msgid "Получать, если есть изменения"
+msgstr "Send only if changes"
+
+
+
 #~ msgid "Код активации аккаунта был выслан Вам на почту"
 #~ msgstr "Activation code has been sent to your email"
 

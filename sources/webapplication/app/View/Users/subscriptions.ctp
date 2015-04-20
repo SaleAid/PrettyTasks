@@ -14,6 +14,23 @@
 		<legend><?php echo __d('users', 'Управление подписками'); ?></legend>
         
         <?php 
+        //Prepare data for lists
+        $options_subscribtions_news = [
+        		0 => __d('users', 'Не получать'),
+        		1 => __d('users', 'Получать'),
+        ];
+
+        $options_subscribe_daily_digest = [
+        		0 => __d('users', 'Не получать'),
+        		1 => __d('users', 'Получать, если есть изменения'),
+        		2 => __d('users', 'Получать всегда'),
+        ];
+
+        $options_subscribe_weekly_digest = [
+        		0 => __d('users', 'Не получать'),
+        		1 => __d('users', 'Получать'),
+        ];
+
         echo $this->Form->label('subscribe_news', __d('users', 'Получать новости')); 
 	    echo $this->Form->select('subscribe_news', $options_subscribtions_news, array('class' => 'input-xlarge', 'empty' => false));
 	    echo $this->Form->label('subscribe_daily_digest', __d('users', 'Получать ежедневные отчеты'));
