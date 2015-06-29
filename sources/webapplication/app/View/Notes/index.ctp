@@ -27,6 +27,9 @@
     <div class="row">
               <div class="listTask">
                 <div >
+                    <?php echo $this->Html->image("reload.". Configure::read('App.version') .".png",
+                        array("alt" => "Reload", 'class' => 'reload','style' =>
+                            'display:inline-block;float:right;height:19px;margin:5px;width:19px;')); ?>
                 <h3 class="head-list-info"><?php echo __d('notes', 'Заметки'); ?></h3>
               </div>
                 <div class="well form-inline">

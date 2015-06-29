@@ -190,6 +190,7 @@ jQuery(function( $ ) {
             list.on( 'click', '#save-note', this.update );
             list.on( 'click', '.tags', this.clickTags );
             $('.btn-see-more').on('click', this.getNotes );
+            $('.reload').on('click', this.reload);
         },
 		blurIntput: function(){
 		  AppNotes.$new_note.blur(function(){
@@ -322,7 +323,14 @@ jQuery(function( $ ) {
             }
             return false;
         },
-        
+        reload: function(){
+            AppNotes.clearNotesList();
+            AppNotes.currentPage = 0;
+            AppNotes.userEvent('getNotes', {page: AppNotes.currentPage});
+        },
+        clearNotesList: function(){
+            $('#notes-list #notes').html('');
+        },
         
         //--------------------------------------------
         userEvent: function( action, data ){
