@@ -41,7 +41,7 @@
                    <?php foreach($result as $note):?> 
                         <li class="note-box" data-id="<?php echo h($note->id); ?>">
                             <div class="note">
-                                <div class="title-note"><?php echo $this->Tag->wrap($note->title, $note->tags); ?> </div>
+                                <div class="title-note"><?php echo $this->Text->autoLinkUrls($this->Tag->wrap($note->title, $note->tags)); ?> </div>
                             </div>
                             <div class="modified"><?php echo $this->Time->format('Y-m-d H:i', $note->modified, false, $timezone); ?></div>
                             <ul class="buttons">
