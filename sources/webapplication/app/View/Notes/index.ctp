@@ -26,9 +26,10 @@
 <div id="notes-list">
     <div class="row">
               <div class="listTask">
-                <div >
-                <h3 class="head-list-info"><?php echo __d('notes', 'Заметки'); ?></h3>
-              </div>
+                <div>
+                  <?php echo $this->Html->image("reload.". Configure::read('App.version') .".png", array("alt" => "Reload", 'class' => 'reload', 'width' => 19, 'height' => 19)); ?>
+                  <h3 class="head-list-info"><?php echo __d('notes', 'Заметки'); ?></h3>
+                </div>
                 <div class="well form-inline">
                     <textarea class="new-note" id="new-note" rows="5" placeholder="<?php echo __d('notes', '+Добавить заметку'); ?>"></textarea>
                     <button id="add-note" class="btn add-note"><?php echo __d('notes', 'Добавить'); ?></button>    

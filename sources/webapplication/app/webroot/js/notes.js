@@ -1,20 +1,20 @@
 Date.prototype.toLocaleFormat = function(format) {
-	var f = {y : this.getYear() + 1900,m : this.getMonth() + 1,d : this.getDate(),H : this.getHours(),M : this.getMinutes(),S : this.getSeconds()}
-	for(k in f)
-		format = format.replace('%' + k, f[k] < 10 ? "0" + f[k] : f[k]);
+    var f = {y : this.getYear() + 1900,m : this.getMonth() + 1,d : this.getDate(),H : this.getHours(),M : this.getMinutes(),S : this.getSeconds()}
+    for(k in f)
+        format = format.replace('%' + k, f[k] < 10 ? "0" + f[k] : f[k]);
     return format;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 /*global jQuery, underscore */
 jQuery(function( $ ) {
-	'use strict';
+    'use strict';
 
-	var countAJAX = 0;
+    var countAJAX = 0;
     var connError = false;
     
     var Utils = {
-		displayLoadAjax: function( count ){
+        displayLoadAjax: function( count ){
             if(!+count){
                 $('.ajaxLoader').addClass('hide');
             }else{
@@ -23,19 +23,19 @@ jQuery(function( $ ) {
         },
         
         mesgShow: function( message, type ){
-        	$.jGrowl.defaults.pool = 1;
+            $.jGrowl.defaults.pool = 1;
             $.jGrowl(message, { 
                             glue: 'before',
                             position: 'custom',
                             theme: type,
                             speed: 'fast',
                             life: '3000',
-        					animateOpen: { 
-        						height: "show"
-        					},
-        					animateClose: { 
-        						height: "hide"
-        					}
+                            animateOpen: { 
+                                height: "show"
+                            },
+                            animateClose: { 
+                                height: "hide"
+                            }
              });
         },
         
@@ -156,27 +156,27 @@ jQuery(function( $ ) {
         }
     };
 
-	var AppNotes = {
-		init: function() {
-			this.cacheElements();
-			this.bindEvents();
+    var AppNotes = {
+        init: function() {
+            this.cacheElements();
+            this.bindEvents();
             AppNotes.$new_note.focus();
             Utils.initAjax();
             this.currentPage = 1;
             this.stopPagination = false;
             
-		},
-		cacheElements: function() {
-			this.noteTemplate = _.template(templates.notes.preview);
+        },
+        cacheElements: function() {
+            this.noteTemplate = _.template(templates.notes.preview);
             this.noteEditTemplate = _.template(templates.notes.modal_edit_note);
-			this.$newNote = $('#new-note');
+            this.$newNote = $('#new-note');
             this.$new_note = $('#new-note');
-			this.$noteList = $('#notes');
+            this.$noteList = $('#notes');
             
-		},
-		bindEvents: function() {
-			var list = this.$noteList;
-			$('.add-note').on('click', this.create );
+        },
+        bindEvents: function() {
+            var list = this.$noteList;
+            $('.add-note').on('click', this.create );
             $('.new-note').on('keyup', this.create );
             $('.btn-note').on('click', this.showNewForm );
             this.blurIntput();
@@ -190,14 +190,15 @@ jQuery(function( $ ) {
             list.on( 'click', '#save-note', this.update );
             list.on( 'click', '.tags', this.clickTags );
             $('.btn-see-more').on('click', this.getNotes );
+            $('.reload').on('click', this.reloadNotes) //782
         },
-		blurIntput: function(){
-		  AppNotes.$new_note.blur(function(){
-		      if($(this).hasClass('errorEdit')){
-    		      $(this).removeClass('errorEdit');
-    		  }
-		  });
-    	},
+        blurIntput: function(){
+          AppNotes.$new_note.blur(function(){
+              if($(this).hasClass('errorEdit')){
+                  $(this).removeClass('errorEdit');
+              }
+          });
+        },
         modalForm: function(){
             $('#edit-note').modal({
                 backdrop: true,
@@ -228,13 +229,17 @@ jQuery(function( $ ) {
             AppNotes.userEvent('getNotes', {page: AppNotes.currentPage});
         },
         
+        reloadNotes: function(){
+            AppNotes.userEvent('reloadNotes');
+        },
+
         showNewForm: function() {
-		  AppNotes.$noteList.append(AppNotes.noteEditTemplate({title: '', id: undefined}));
+          AppNotes.$noteList.append(AppNotes.noteEditTemplate({title: '', id: undefined}));
           AppNotes.modalForm();   
         },
                 
         show: function() {
-		  var id = $(this).parents('li.note-box').data('id');
+          var id = $(this).parents('li.note-box').data('id');
           AppNotes.userEvent('getNote', {id: id}); 
         },
         
@@ -247,29 +252,29 @@ jQuery(function( $ ) {
         },
         
         view: function() {
-		  var id = $(this).parents('li.note-box').data('id');
+          var id = $(this).parents('li.note-box').data('id');
           AppNotes.userEvent('getNote', {id: id, view: true }); 
         },
         
         create: function(e) {
-		    var $input = AppNotes.$new_note,
-				val = $.trim( $input.val() );
+            var $input = AppNotes.$new_note,
+                val = $.trim( $input.val() );
             if((e.ctrlKey && e.keyCode == 13) || e.type == 'click'){
                 if (!val ){
                     $input.addClass('errorEdit');
                     $input.focus();
                     return;
-    			}
+                }
                 $input.removeClass('errorEdit');   
-    			AppNotes.userEvent('create', {title: val });
-    			$input.val('');
+                AppNotes.userEvent('create', {title: val });
+                $input.val('');
                     
             }
             $input.focus();
             
-		},
-		update: function() {
-			var title = $.trim( $('#edit-note').find('#text-note').val() );
+        },
+        update: function() {
+            var title = $.trim( $('#edit-note').find('#text-note').val() );
             var id = $.trim($('#edit-note').data('id'));
             
             if (id != "undefined"){
@@ -279,9 +284,9 @@ jQuery(function( $ ) {
             }
             
         },
-		destroy: function() {
-		    var that = this;
-			var id = $(this).parents('li.note-box').data('id');
+        destroy: function() {
+            var that = this;
+            var id = $(this).parents('li.note-box').data('id');
             if( !id ){
                 return false;
             }
@@ -342,6 +347,9 @@ jQuery(function( $ ) {
                 case 'getNotes':
                     this.notesGet(data.page, data.count);
                 break;
+                case 'reloadNotes':
+                    this.notesReload();
+                break;
             }
         },
         
@@ -364,6 +372,9 @@ jQuery(function( $ ) {
                 break;
                 case 'getNotes':
                     AppNotes.onGetNotes(data);
+                break;
+                case 'reloadNotes':
+                    AppNotes.onReloadNotes(data);
                 break;
             }
         },
@@ -395,6 +406,41 @@ jQuery(function( $ ) {
                   //delay += 500;  
                   AppNotes.inlineConfirmation('li[data-id='+note.id+'] .note-remove')  
               });
+        },
+
+        //reload notes
+        notesReload: function(){
+            this.srvReloadNotes();
+        },
+        onReloadNotes: function(data){
+            if( data.success ){
+                if(data.data.hide){
+                    $('.btn-see-more').hide();
+                } else {
+                    $('.btn-see-more').show();
+                }
+                this.renderReloadNotes(data.data.list);
+            } else {
+                Utils.mesgShow(data.message.message+'<hr/>'+ Utils.toListValidationErrorAll(data.message.errors), data.message.type);
+            }
+        },
+        srvReloadNotes: function(){
+            Utils.superAjax('/notes/reloadNotes.json', {}, AppNotes.responseHandler);
+        },
+        renderReloadNotes: function( data ) {
+            $(".note-box").remove();
+
+            var delay = 0;
+            $.each( data, function(index, note) {
+                  AppNotes.$noteList.append(AppNotes.noteTemplate({ id: note.id, title: Utils.wrapTags(note.title, note.tags), modified: Utils.usetDateTime(note.modified, '%y-%m-%d %H:%M') }))
+                  ;
+                  AppNotes.$noteList.find('li[data-id='+note.id+']').hide();
+                  AppNotes.$noteList.find('li[data-id='+note.id+']').delay(delay).slideDown(600);
+                  
+                  AppNotes.inlineConfirmation('li[data-id='+note.id+'] .note-remove')  
+              });
+            
+            AppNotes.currentPage = 1;
         },
 
         //get note
@@ -476,7 +522,7 @@ jQuery(function( $ ) {
                 this.renderUpdate( data.data );
                 $('#edit-note').modal('hide');
             }else{
-            	Utils.mesgShow(data.message.message+'<hr/>'+Utils.toListValidationErrorAll(data.message.errors), data.message.type);
+                Utils.mesgShow(data.message.message+'<hr/>'+Utils.toListValidationErrorAll(data.message.errors), data.message.type);
                 //this.showTooltipError(data.message.errors);   
             } 
         },
@@ -527,7 +573,7 @@ jQuery(function( $ ) {
         }
     };
 
-	AppNotes.init();
+    AppNotes.init();
     
     
     window.onbeforeunload = function(e) {
@@ -541,5 +587,5 @@ jQuery(function( $ ) {
     };
 
 
-}); 	
+});     
 

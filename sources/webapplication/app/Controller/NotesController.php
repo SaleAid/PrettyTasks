@@ -31,10 +31,10 @@ class NotesController extends AppController {
     public function index() {
         $this->response->disableCache();
         $result = $notes = array();
-    	$user_id = $this->Auth->user('id');
-    	$notes = $this->Note->getNotes($user_id, Configure::read('Notes.Lists.limit'), 1);
-    	foreach ($notes as $note) {
-    	    $result[] = new NoteObj($note);
+        $user_id = $this->Auth->user('id');
+        $notes = $this->Note->getNotes($user_id, Configure::read('Notes.Lists.limit'), 1);
+        foreach ($notes as $note) {
+            $result[] = new NoteObj($note);
         }    
         $this->set('result', $result);
         $this->set('_serialize', 'result');
@@ -48,26 +48,52 @@ class NotesController extends AppController {
             $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             $notesObj = $notes = array();
-       	    $count = !isset($this->request->data['count']) ? Configure::read('Notes.Lists.limit') : (int)$this->request->data['count'];
-        	if ( $count > Configure::read('Notes.Lists.limit') ) 
+            $count = !isset($this->request->data['count']) ? Configure::read('Notes.Lists.limit') : (int)$this->request->data['count'];
+            if ( $count > Configure::read('Notes.Lists.limit') ) 
                 $count = Configure::read('Notes.Lists.limit');
             
             $page = !empty($this->request->data['page']) ? (int)$this->request->data['page'] : 0;
-        	if($page > -1){
-        	    $notes = $this->Note->getNotes($this->Auth->user('id'), $count, $page);
-            	foreach ($notes as $note) {
-            	    $notesObj[] = new NoteObj($note);
+            if($page > -1){
+                $notes = $this->Note->getNotes($this->Auth->user('id'), $count, $page);
+                foreach ($notes as $note) {
+                    $notesObj[] = new NoteObj($note);
                 }
                 $result['success'] = true;
                 $result['data'] = new NotesListObj('NotesList', 'notes', $notesObj, $count);   
-        	}else{
-        	   $result['message'] = new MessageObj('error', __d('notes', 'Ошибка при передаче номера страницы'));
-        	}
+            }else{
+               $result['message'] = new MessageObj('error', __d('notes', 'Ошибка при передаче номера страницы'));
+            }
         }   
         $result['action'] = 'getNotes'; 
         $this->set('result', $result);
         $this->set('_serialize', 'result');
     
+    }
+
+    public function reloadNotes() {
+        $result = $this->_prepareResponse();
+        $result['message'] = new MessageObj('error','');
+        
+        $notesObj = $notes = array();
+        $count = !isset($this->request->data['count']) ? Configure::read('Notes.Lists.limit') : (int)$this->request->data['count'];
+        if ( $count > Configure::read('Notes.Lists.limit') ) 
+            $count = Configure::read('Notes.Lists.limit');
+        
+        $page = !empty($this->request->data['page']) ? (int)$this->request->data['page'] : 0;
+        if($page > -1){
+            $notes = $this->Note->getNotes($this->Auth->user('id'), $count, $page);
+            foreach ($notes as $note) {
+                $notesObj[] = new NoteObj($note);
+            }
+            $result['success'] = true;
+            $result['data'] = new NotesListObj('NotesList', 'notes', $notesObj, $count);   
+        }else{
+           $result['message'] = new MessageObj('error', __d('notes', 'Ошибка при передаче номера страницы'));
+        }
+        
+        $result['action'] = 'reloadNotes';
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');
     }
     
     public function create(){
@@ -78,7 +104,7 @@ class NotesController extends AppController {
             $note = $this->Note->createNote($this->Auth->user('id'), $this->request->data['title'])->save();
             if ( $note ) {
                 $note['Note']['title'] = mb_substr($note['Note']['title'], 0, 140);
-            	$result['data'] = new NoteObj($note);
+                $result['data'] = new NoteObj($note);
                 $result['success'] = true;
                 $result['message'] = new MessageObj('info', __d('notes', 'Заметка успешно создана'));
             } else {
@@ -98,13 +124,13 @@ class NotesController extends AppController {
         } else {
             $originNote = $this->Note->isOwner($this->request->data['id'], $this->Auth->user('id'));
             if ($originNote) {
-		      $note = $this->Note->update($this->request->data['title'])->save();
+              $note = $this->Note->update($this->request->data['title'])->save();
               if ( $note ) {
-	              $result['data'] = new NoteObj($note);
+                  $result['data'] = new NoteObj($note);
                   $result['success'] = true; 
-	          } else {
-	             $result['message'] = new MessageObj('error', __d('notes', 'Заметка не обновлена'), $this->Note->validationErrors);
-		      }
+              } else {
+                 $result['message'] = new MessageObj('error', __d('notes', 'Заметка не обновлена'), $this->Note->validationErrors);
+              }
             } else {
                 $result['message'] = new MessageObj('error', __d('notes', 'Ошибка, Вы не можете делать изменения в этой заметке'));
             }
