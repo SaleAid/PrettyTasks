@@ -29,7 +29,7 @@ function getTaskFromPage(id){
         timeEnd:  $('#'+id).children('.timeEnd').text(),   
         comment:  $('#'+id).children('.commentTask').text(),
         continued: +$('#'+id).data('continued'),
-        repeated: +$('#'+id).data('repeated')    
+        repeated: +$('#'+id).data('repeated')
     };
     console.log(data);
     return data;
@@ -68,19 +68,19 @@ function getCommentDayElement(name){
 }
 
 function mesg (message, type){
-	$.jGrowl.defaults.pool = 1;
+    $.jGrowl.defaults.pool = 1;
     $.jGrowl(message, { 
                     glue: 'before',
                     position: 'custom',
                     theme: type,
                     speed: 'fast',
                     life: '3000',
-					animateOpen: { 
-						height: "show"
-					},
-					animateClose: { 
-						height: "hide"
-					}
+                    animateOpen: { 
+                        height: "show"
+                    },
+                    animateClose: { 
+                        height: "hide"
+                    }
      });
 }
 function changeDay(){
@@ -262,8 +262,7 @@ function userEvent(action, data){
         break;
         case 'createList':
             taskCreateList(data.tag);
-        break;
-                    
+        break;           
     }
 }
 
@@ -347,7 +346,7 @@ function onCreateList(data){
     if(data.success){
         scrCreateList(data);
     }else{
-    	mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.message.errors), data.message.type);   
+        mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.message.errors), data.message.type);   
     }
 }
 function srvCreateList(tag){
@@ -1031,8 +1030,8 @@ function srvSetCommentTag(tag, comment){
 }
 
 function scrSetCommentTag(tag){
-	$('#commentDay').data('tag', null).attr('data-tag', null);
-	
+    $('#commentDay').data('tag', null).attr('data-tag', null);
+    
     $('#eCommentDay').text(null);
     $('#commentDay').modal('hide');
     
@@ -1056,14 +1055,14 @@ function srvGetCommentTag(tag){
 }
 
 function scrGetCommentTag(data){
-	$('#commentDay').data('tag', data.tag).attr('data-tag', data.tag);
-	$('#eCommentDay').val(data.comment);
+    $('#commentDay').data('tag', data.tag).attr('data-tag', data.tag);
+    $('#eCommentDay').val(data.comment);
     $('#commentDay').modal('show');
     
         
 }
 function onGetCommentTag(data){
-	if(!data.success){
+    if(!data.success){
         mesg(data.message.message, data.message.type); 
     }
     
@@ -1123,12 +1122,12 @@ function scrErrorSetCommentDay(data){
                                   template: '<div class="tooltip errorTooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
                                   });
         });
-    }
-    
+    }   
 }
+
 //---------------getCommnetDay-----
 function taskGetCommentDay(date){
-    srvGetCommentDay(date);    
+    srvGetCommentDay(date);   
 }
 
 function srvGetCommentDay(date){
@@ -1139,8 +1138,6 @@ function scrGetCommentDay(data){
     $('#commentDay').attr('date', data.date);
     $('#eCommentDay').val(data.comment);
     $('#commentDay').modal('show');
-    
-        
 }
 function onGetCommentDay(data){
     if(!data.success){
@@ -1288,7 +1285,6 @@ function activeTab(date){
     $('div.active').removeClass('active').removeClass('in');
     $('.listDay li.active').removeClass('active');
     $('#main ul.nav-tabs a[date="'+date+'"]').tab('show');
-    
 }
 
 function srvAddDay(date){
@@ -1296,12 +1292,10 @@ function srvAddDay(date){
 }
 
 function dateUTC(date) {
-
     d = new Date(date);
     utc = d.getTime() + (d.getTimezoneOffset() * 60000);
 
     return new Date(utc);
-
 }
 
 function onAddDay(data){
@@ -1542,7 +1536,7 @@ function scrDragWithTime(id, date, time){
                         newPositionID = $(itm).attr('id');
                     }
                 });
-            	if(!newPositionID && listitems.length){
+                if(!newPositionID && listitems.length){
                     newPositionID = $(listitems[0]).attr('id');
                     before = true;
                 }
@@ -1666,12 +1660,12 @@ function scrDelete(id){
 
 //----------------setDone-------
 function taskSetDone(id, done){
-	scrSetDone(id, done);
+    scrSetDone(id, done);
     srvSetDone(id, done);
 }
 function onSetDone(data){
     var task = data.data;
-	if(!data.success){
+    if(!data.success){
         mesg(data.message.message, data.message.type);
         return;   
     }
@@ -1755,8 +1749,27 @@ function scrSetTitle(id, title_text, tags, priority){
     }
 }
 
+function convertToLink( inputText ) {
+    //URLs starting with http://, https://, or ftp://
+    var replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    var replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+    //URLs starting with www. (without // before it, or it'd re-link the ones done above)
+    var replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+    var replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+
+    //Change email addresses to mailto:: links
+    var replacePattern3 = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim;
+    var replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+
+    return replacedText
+}
+
+
 function wrapTags( title, tags ){
     title = convertToHtml(title);
+    title = convertToLink(title);
+
     if(tags){
         $.each(tags, function(index, value) {
             if( value ){
@@ -1797,7 +1810,7 @@ function onCreate(data){
     if(data.success){
         scrCreate(data);
     }else{
-    	mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.message.errors), data.message.type);   
+        mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.message.errors), data.message.type);   
     }
 }
 function srvCreate(title, date){
@@ -1828,11 +1841,11 @@ function scrCreate(data){
         scrDragWithTime(data.data.id, data.data.date, data.data.time);
         $("li[id='"+data.data.id+"']").find('.time').text(data.data.time.slice(0,-3));
     }
-    srcCountTasks(date, true); 	
+    srcCountTasks(date, true);  
 }
 function AddTask(task){
     var important ='';
-	var setTime ='';
+    var setTime ='';
     var complete ='';
     var checked = '';
     var time = '<span class="time"></span>';
@@ -1840,14 +1853,14 @@ function AddTask(task){
     var comment = '';
     var comment_status = '';
     if (+task.priority){
-		important = 'important';
-	}
+        important = 'important';
+    }
     if (+task.done){
-		complete = ' complete';
+        complete = ' complete';
         checked = ' checked';
-	}
+    }
     if (task.time){
-		setTime = ' setTime';
+        setTime = ' setTime';
         time = '<span class="time">'+task.time.slice(0,-3)+'</span>';
         if(task.timeend){
             timeEnd = '<span class="timeEnd">'+task.timeend.slice(0,-3)+'</span>'; 
@@ -2016,25 +2029,25 @@ function initEditTask(element){
 
 function initRepeatTask(){
      $('#eRepeat').on("click", function(){
-    	 $('#repeatTask').modal('show');
+         $('#repeatTask').modal('show');
      });
      var $repeatedTask = $('#repeatTask');
      var $until = $repeatedTask.find("input[name='until']");
      $until.change(function() {
-    	 $(this).siblings("input[type='text']").focus();
-    	 $.each($until, function(index, value){
-    		 if(!$(value).is(':checked')) {
-    			$(value).siblings("input[type='text']").val('');
-		     }
-    	 });
-    	 
+         $(this).siblings("input[type='text']").focus();
+         $.each($until, function(index, value){
+             if(!$(value).is(':checked')) {
+                $(value).siblings("input[type='text']").val('');
+             }
+         });
+         
      });
      $repeatedTask.find('#date').datepicker({ 
          dateFormat: 'yy-mm-dd',
          showAnim: 'clip',
      });
      $('#freq').change(function() {
-	    $repeatedTask.find('.days-weekly').hide();
+        $repeatedTask.find('.days-weekly').hide();
         $("[class^=interval]").hide();
         switch($(this).val()){
             case 'dally':
@@ -2098,7 +2111,6 @@ function initCommentTag(element){
         return false;
     });
 }
-
 
 function initCreateTask(element){
     $(document).on("keypress", element, function(e){
@@ -2213,28 +2225,28 @@ function initSortable(element){
                 }
                 
                 if( ui.item.parent().attr('date') == 'expired' || 
-                		ui.item.parent().attr('date') == 'future' ||
+                        ui.item.parent().attr('date') == 'future' ||
                         ui.item.parent().attr('date') == 'agenda' ||
-                		ui.item.parent().attr('date') == 'deleted' ||
+                        ui.item.parent().attr('date') == 'deleted' ||
                         ui.item.parent().attr('date') == 'continued' 
-                		//|| ui.item.parent().data('tag') 
+                        //|| ui.item.parent().data('tag') 
                     ){
                     mesg(GLOBAL_CONFIG.moveForbiddenMessage, 'success');
                     $(this).css("color","");
                     return false;  
                 }
                 if (ui.item.hasClass('setTime') && !ui.item.parent().data('tag')){
-                	var listitems = ui.item.parent().children('li.setTime').get();
-                	var error = false;
-                	$.each(listitems, function(idx, itm) { 
+                    var listitems = ui.item.parent().children('li.setTime').get();
+                    var error = false;
+                    $.each(listitems, function(idx, itm) { 
                             if(toSeconds($(itm).find('.time').text()) > toSeconds($(listitems[idx + 1]).find('.time').text())){
-                            	error = true;
-                        		return false;
+                                error = true;
+                                return false;
                             }
                      });
-                	if (error){
-                		return false;
-                	}
+                    if (error){
+                        return false;
+                    }
                 }
                 
                 var id = ui.item.attr('id');
@@ -2288,7 +2300,7 @@ function initTab(element){
             
             window.location.hash = 'day-'+tab_id;
         }
-    	setFiler(tab_id);
+        setFiler(tab_id);
     });
 }
 
@@ -2297,9 +2309,9 @@ function setFiler(tab_id){
     if(!filter){
         filter = 'inProcess';
     }
-	$('.tab-content').find('#'+tab_id)
-			 .find('.filter a[data="'+filter+'"]')
-			 .trigger('click');
+    $('.tab-content').find('#'+tab_id)
+             .find('.filter a[data="'+filter+'"]')
+             .trigger('click');
 }
 
 function initTabDelte(element){
@@ -2685,9 +2697,9 @@ $(function(){
             var tag = $('#commentDay').data('tag');
             var comment = $('#eCommentDay').val();
             if(tag){
-            	userEvent('setCommentTag',{tag: tag, comment: comment });
+                userEvent('setCommentTag',{tag: tag, comment: comment });
             } else {
-            	userEvent('setCommentDay',{date: date, comment: comment });
+                userEvent('setCommentDay',{date: date, comment: comment });
             }
     });
     
@@ -2700,7 +2712,7 @@ $(function(){
         scrErrorSetCommentDay();
         $('#commentDay').removeAttr('date');
         $('#commentDay').data('tag', null).attr('data-tag', null);
-    	
+        
     });
     
     $('#commentDay textarea, #editTask input, #editTask textarea').change(function () {
@@ -2759,6 +2771,6 @@ $(function(){
 //    }) 
 
                
-}); 	
+});     
 
 //http://jscompress.com/
