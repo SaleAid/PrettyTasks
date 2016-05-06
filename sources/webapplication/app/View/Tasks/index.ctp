@@ -299,7 +299,7 @@
 
 <?php echo $this->element('edit_task', array(), array('cache' => array('key' => 'edit_task', 'config' => 'elements'))); ?>
 <?php //echo $this->element('repeat_task', array(), array('cache' => array('key' => 'repeat_task', 'config' => 'elements'))); ?>
-
+<?php echo $this->element('view_task_comment', array(), array('cache' => array('key' => 'view_task_comment', 'config' => 'elements'))); ?>
 <?php echo $this->element('comment_day', array(), array('cache' => array('key' => 'comment_day', 'config' => 'elements'))); ?>
 
 <!-- print_brand -->

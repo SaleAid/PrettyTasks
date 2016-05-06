@@ -221,6 +221,9 @@ function userEvent(action, data){
         case 'edit':
             taskEdit(data.id, data.title, data.priority, data.continued, data.done, data.date, data.time, data.timeEnd, data.comment);
         break;
+        case 'viewComment': //782
+            viewComment(data);
+        break;
         case 'addDay':
             taskAddDay(data.date, data.action);
         break;          
@@ -349,6 +352,7 @@ function onCreateList(data){
         mesg(data.message.message+'<hr/>'+toListValidationErrorAll(data.message.errors), data.message.type);   
     }
 }
+
 function srvCreateList(tag){
     superAjax('/lists/add.json',{tag: tag});
 }
@@ -1146,6 +1150,14 @@ function onGetCommentDay(data){
     
     scrGetCommentDay(data.data);
 }
+
+//---------------view Comment------
+function viewComment(data){ //782
+    if(data.show){
+        $("#viewTask").modal("show");  
+    }
+}
+
 //---------------setRatingDay------
 function taskRatingDay(date, rating){
     scrRatingDay(date, rating);
@@ -1416,6 +1428,8 @@ function taskEdit(id, title, priority, continued, done, date, time, timeEnd, com
     }
     srvEdit(id, title, priority, continued, done, date, time, timeEnd, comment);
 }
+
+
 function onEdit(data){
     if(data.success){
         $('#editTask').modal('hide');
@@ -1490,6 +1504,7 @@ function _refreshDays(date){
         refreshDays = _.uniq(refreshDays);    
     }
 }
+
 
 function scrDragWithTime(id, date, time){
         var before = false;
@@ -1950,6 +1965,30 @@ function initDelete(element){
               cancelCallback: function(el) {
                  //mesg('Отмена удаления .');
               },
+    });
+}
+
+function initViewComment(element){ //782
+    $(document).on('click', element, function(e) {
+        $(this).parent().addClass('currentTask');
+
+        var task = getTaskFromPage($(this).parent().attr('id'));
+        $('#viewTask').find('#vComment').val(task.comment);
+        $('#viewTask').find('#vTitle').val(task.title);
+
+        if(task.time){
+            $('#viewTask').find('#vCreated').text("Создан: " + task.date + " " + task.time);
+        } else {
+            $('#viewTask').find('#vCreated').text("");
+        }
+
+        if(task.timeEnd){
+            $('#viewTask').find('#vModified').text("Изменен: " + task.date + " " + task.timeEnd);
+        } else {
+            $('#viewTask').find('#vModified').text("");
+        } 
+
+        userEvent('viewComment', { show: true });
     });
 }
 
@@ -2620,6 +2659,7 @@ $(function(){
     initCreateListButton(".createListButton");
     initEditAble(".editable");
     initDelete(".deleteTask");
+    initViewComment(".comment-task-icon"); //782
     initDone(".done");
     //initRatingDay(".ratingDay input");
     initTagArchive(".to-archive input"); 
@@ -2642,6 +2682,8 @@ $(function(){
     //initRepeatTask();
     
    
+
+
     
     $(".daysButton a").click(function(){
         var type = $(this).attr('date');
@@ -2691,7 +2733,7 @@ $(function(){
             var comment = $.trim($('#eComment').val());
             userEvent('edit',{id: id,title: title, priority: priority, continued: continued, done: done, date: date, time: time, timeEnd: timeEnd, comment: comment });
     });
-    
+
     $("#eCommentDaySave").click(function(){
             var date = $('#commentDay').attr('date');
             var tag = $('#commentDay').data('tag');
@@ -2718,6 +2760,8 @@ $(function(){
     $('#commentDay textarea, #editTask input, #editTask textarea').change(function () {
         $(this).removeClass('errorEdit');
     });
+
+    $()
     
 
     

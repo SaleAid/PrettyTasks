@@ -125,9 +125,24 @@ div.well{
 }   
 .ratingDay{
    display: inline-block;
-   margin-right: 10px;
-   
+   margin-right: 3px;
+   vertical-align: top;
 }
+
+.mood-icons {
+    padding: 0px;
+    margin: 0px;
+    display: inline;
+    list-style-type: none;
+}
+.mood-icons li {
+    display: inline;
+}
+.mood-icons li img {
+    position: relative;
+    top: -6px;
+}
+
 .ratingDay input[type="checkbox"],
 .to-archive input[type="checkbox"] {
    margin-left: 0;
@@ -181,7 +196,7 @@ div.well{
 
 .editable{
     display: inline-block;
-    width: 600px;
+    width: 585px;
     text-align: left;
     font-family: arial, sans-serif;
     /*font-weight: bold;*/
@@ -338,7 +353,7 @@ div.well{
     margin: 40px 10px;
     padding: 20px 10px;
 }
-.editTask, .deleteTask{
+.editTask, .deleteTask, .viewTaskComment {
     padding: 5px;   
     cursor: pointer;
     -webkit-touch-callout: none;
@@ -495,12 +510,33 @@ div.well{
     margin-bottom: 5px;
 }
 
-.listTask .icon-pencil, .icon-move, .icon-file, .icon-trash{
+.listTask .icon-pencil, .icon-move, .icon-file, .icon-trash, .icon-comment { /* 782 */
     opacity: 0.2;
 }
-.listTask .icon-pencil:hover, .icon-move:hover, .icon-file:hover, .icon-trash:hover{
+.listTask .icon-pencil:hover, .icon-move:hover, .icon-file:hover, .icon-trash:hover, .icon-comment:hover {
     opacity: 1;
 }
+.view-task {
+    left: 50%;
+}
+.view-task .modal-body .text-task {
+    width: 100%;
+    cursor: text;
+    background-color: white ;
+    resize: none;
+}
+.task-view-comment {
+    width: 515px;
+}
+.task-view-date {
+    float: left;
+    line-height: 1.2;
+}
+.task-view-date span {
+    display: block;
+} /* end782 */
+
+
 .t-del{
     opacity: 1;
     margin-top: -1px;
