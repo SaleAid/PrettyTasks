@@ -353,7 +353,7 @@ div.well{
     margin: 40px 10px;
     padding: 20px 10px;
 }
-.editTask, .deleteTask, .viewTaskComment {
+.editTask, .deleteTask, .comment-task-icon {
     padding: 5px;   
     cursor: pointer;
     -webkit-touch-callout: none;
@@ -510,10 +510,10 @@ div.well{
     margin-bottom: 5px;
 }
 
-.listTask .icon-pencil, .icon-move, .icon-file, .icon-trash, .icon-comment { /* 782 */
+.listTask .icon-pencil, .icon-move, .icon-file, .icon-trash, .icon-file { /* 782 */
     opacity: 0.2;
 }
-.listTask .icon-pencil:hover, .icon-move:hover, .icon-file:hover, .icon-trash:hover, .icon-comment:hover {
+.listTask .icon-pencil:hover, .icon-move:hover, .icon-file:hover, .icon-trash:hover, .icon-file:hover {
     opacity: 1;
 }
 .view-task {
