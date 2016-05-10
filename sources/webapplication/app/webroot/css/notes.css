@@ -1,3 +1,20 @@
+.reload{
+    display: inline-block;
+    float: right;
+    margin: 6px 5px 4px 0;
+    width: 19px;
+    height: 19px;
+}
+
+.reload:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.fav-note .icon-star {
+    background-image: url("../img/glyphicons-halflings-yellow.png");
+}
+
 .listTask{
     margin-left: 20px;
 }
@@ -111,8 +128,11 @@ div.well{
     margin-left: 5px;
     float: left;
 }
-.buttons li a, .buttons-top li a{
-    opacity: 0.3;
+.buttons li a:not(.fav-note), .buttons-top li a{
+    opacity: 0.3;   
+}
+.fav-note {
+    opacity: 1;
 }
 .buttons li a:hover, .buttons-top li a:hover{
     opacity: 1;

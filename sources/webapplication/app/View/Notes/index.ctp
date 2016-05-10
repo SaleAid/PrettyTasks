@@ -41,10 +41,11 @@
                    <?php foreach($result as $note):?> 
                         <li class="note-box" data-id="<?php echo h($note->id); ?>">
                             <div class="note">
-                                <div class="title-note"><?php echo $this->Text->autoLinkUrls($this->Tag->wrap($note->title, $note->tags)); ?> </div>
+                                <div class="title-note"><?php echo $this->Text->autoLinkUrls($this->Tag->wrap($note->title, $note->tags), array('escape' => false)); ?> </div>
                             </div>
                             <div class="modified"><?php echo $this->Time->format('Y-m-d H:i', $note->modified, false, $timezone); ?></div>
                             <ul class="buttons">
+                                <li><a class="note-fav <?= ($note->fav) ? 'fav-note' : '' ?>" href="#"><i class="icon-star"></i></a></li>
                                 <li><a class="note-view" href="#"><i class="icon-zoom-in "></i></a></li>
                                 <li><a class="note-edit" href="#"><i class="icon-edit"></i></a></li>
                                 <li><a class="note-remove" href="#"><i class="icon-trash"></i></a></li>

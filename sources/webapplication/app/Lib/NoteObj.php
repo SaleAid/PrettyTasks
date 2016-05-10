@@ -7,6 +7,7 @@ class NoteObj {
     public $tags = NULL;
     public $modified = NULL;
     public $created = null;
+    public $fav = null;
     
     public  function __construct( array $note ){
         $this->id = $note['Note']['id'];
@@ -20,5 +21,6 @@ class NoteObj {
         $this->tags = isset($note['Note']['tags']) ? $note['Note']['tags'] : null;
         $this->modified = $note['Note']['modified'];
         $this->created = $note['Note']['created'];
+        $this->fav = $note['Note']['fav'];
     }
 } 

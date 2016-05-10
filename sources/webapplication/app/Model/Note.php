@@ -104,7 +104,8 @@ class Note extends AppModel {
             'id',
             'title_excerpt',
             'created',
-            'modified'
+            'modified',
+            'fav'
     );
     
     public $virtualFields = array(
@@ -203,6 +204,11 @@ class Note extends AppModel {
      */
     public function update($title) {
         $this->data[$this->alias]['title'] = $title;
+        return $this;
+    }
+
+    public function favorite() {
+        $this->data[$this->alias]['fav'] = !$this->data[$this->alias]['fav'];
         return $this;
     }
     

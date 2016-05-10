@@ -128,6 +128,7 @@ class NotesController extends AppController {
               if ( $note ) {
                   $result['data'] = new NoteObj($note);
                   $result['success'] = true; 
+                  $result['message'] = new MessageObj('info', __d('notes', 'Заметка помечена как любимая'));
               } else {
                  $result['message'] = new MessageObj('error', __d('notes', 'Заметка не обновлена'), $this->Note->validationErrors);
               }
@@ -136,6 +137,31 @@ class NotesController extends AppController {
             }
         }
         $result['action'] = 'update'; 
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');
+    }
+
+    public function favorite() {
+        $result = $this->_prepareResponse();
+        $result['message'] = new MessageObj('error', '');
+        if (!$this->_isSetRequestData('id')){
+            $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
+        } else {
+            $originNote = $this->Note->isOwner($this->request->data['id'], $this->Auth->user('id'));
+            if($originNote) {
+                $note = $this->Note->favorite()->save();
+
+                if($note) {
+                    $result['data'] = new NoteObj($note);
+                    $result['success'] = true;
+                } else {
+                    $result['message'] = new MessageObj('error', __d('notes', 'Заметка не обновлена'), $this->Note->validationErrors);
+                }
+            } else {
+                $result['message'] = new MessageObj('error', __d('notes', 'Ошибка, Вы не можете делать изменения в этой заметке'));
+            }
+        }
+        $result['action'] = 'favoriteNote';
         $this->set('result', $result);
         $this->set('_serialize', 'result');
     }

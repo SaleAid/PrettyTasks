@@ -207,7 +207,8 @@ jQuery(function( $ ) {
             list.on( 'click', '#save-note', this.update );
             list.on( 'click', '.tags', this.clickTags );
             $('.btn-see-more').on('click', this.getNotes );
-            $('.reload').on('click', this.reloadNotes) //782
+            $('.reload').on('click', this.reloadNotes); //782
+            list.on( 'click', '.note-fav', this.favoriteNote);
         },
         blurIntput: function(){
           AppNotes.$new_note.blur(function(){
@@ -336,6 +337,11 @@ jQuery(function( $ ) {
            $('#edit-note').modal('hide');
            $('#edit-note').remove();
         },
+
+        favoriteNote: function(){ //782
+            var id = $(this).parents('li.note-box').data('id');
+            AppNotes.userEvent('favorite', { id: id });
+        },
         
         clickTags: function(){
             var tag = $(this).attr('data-tag');
@@ -367,6 +373,8 @@ jQuery(function( $ ) {
                 case 'reloadNotes':
                     this.notesReload();
                 break;
+                case 'favorite':
+                    this.noteFavorite(data.id);
             }
         },
         
@@ -393,6 +401,9 @@ jQuery(function( $ ) {
                 case 'reloadNotes':
                     AppNotes.onReloadNotes(data);
                 break;
+                case 'favoriteNote':
+                    AppNotes.onFavoriteNote(data);
+                break;
             }
         },
         
@@ -416,7 +427,8 @@ jQuery(function( $ ) {
         renderGetNotes: function( data ){
               var delay = 0;
               $.each( data, function(index, note) {
-                  AppNotes.$noteList.append(AppNotes.noteTemplate({ id: note.id, title: Utils.wrapTags(note.title, note.tags), modified: Utils.usetDateTime(note.modified, '%y-%m-%d %H:%M') }))
+                  var fav = note.fav ? "fav-note" : "";
+                  AppNotes.$noteList.append(AppNotes.noteTemplate({ id: note.id, title: Utils.wrapTags(note.title, note.tags), modified: Utils.usetDateTime(note.modified, '%y-%m-%d %H:%M'), fav: fav }))
                   ;
                   AppNotes.$noteList.find('li[data-id='+note.id+']').hide();
                   AppNotes.$noteList.find('li[data-id='+note.id+']').delay(delay).slideDown(600);
@@ -449,7 +461,8 @@ jQuery(function( $ ) {
 
             var delay = 0;
             $.each( data, function(index, note) {
-                  AppNotes.$noteList.append(AppNotes.noteTemplate({ id: note.id, title: Utils.wrapTags(note.title, note.tags), modified: Utils.usetDateTime(note.modified, '%y-%m-%d %H:%M') }))
+                  var fav = note.fav ? "fav-note" : "";
+                  AppNotes.$noteList.append(AppNotes.noteTemplate({ id: note.id, title: Utils.wrapTags(note.title, note.tags), modified: Utils.usetDateTime(note.modified, '%y-%m-%d %H:%M'), fav: fav }))
                   ;
                   AppNotes.$noteList.find('li[data-id='+note.id+']').hide();
                   AppNotes.$noteList.find('li[data-id='+note.id+']').delay(delay).slideDown(600);
@@ -529,6 +542,30 @@ jQuery(function( $ ) {
                      $('.emptyList').removeClass('hide');
                 }
             });
+        },
+        //favorite
+        noteFavorite: function( id ){
+            this.srvFavoriteNote( id );
+        },
+        onFavoriteNote: function( data ){
+            if(!data.success){
+                Utils.mesgShow(data.message.message, data.message.type);
+            } else {
+                this.renderFavoriteNote( data.data.id, data.data.fav );
+            }
+        },
+        srvFavoriteNote: function( id ){
+            Utils.superAjax('/notes/favorite.json', {id: id}, AppNotes.responseHandler);
+        },
+        renderFavoriteNote: function( id, fav ){
+            var list = this.$noteList;
+
+            var el = $("li[data-id="+id+"] .buttons li .note-fav");
+            if(fav){
+                el.addClass('fav-note');
+            } else {
+                el.removeClass('fav-note');
+            }
         },
         //update
         noteUpdate: function( id, title ){

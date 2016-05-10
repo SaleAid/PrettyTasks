@@ -7,6 +7,7 @@ templates.notes.preview = '\
     </div>\
     <div class="modified"><%= modified %></div>\
     <ul class="buttons">\
+        <li><a class="note-fav <%= fav %>" href="#"><i class="icon-star"></i></a></li>\
         <li><a class="note-view" href="#"><i class="icon-zoom-in "></i></a></li>\
         <li><a class="note-edit" href="#"><i class="icon-edit"></i></a></li>\
         <li><a class="note-remove" href="#"><i class="icon-trash"></i></a></li>\

@@ -1,7 +1,7 @@
 var templates = {};
 templates.day_h3_label = '\
         <h3 class="day label label-info margin-bottom10" rel="tooltip" date="<%= date %>" title="' + __d('tasks', 'Кликните для перехода на') + '&nbsp;<%= date %>">\
-    	   <span class="dayDate"><%= title %></span><span class="dash"> - </span><span class="<%= weekDayStyle %>"><%= weekDay %></span>\
+           <span class="dayDate"><%= title %></span><span class="dash"> - </span><span class="<%= weekDayStyle %>"><%= weekDay %></span>\
         </h3>';
          
 templates.ajax_loader_content = '';
@@ -9,7 +9,7 @@ templates.ajax_loader_content = '';
 templates.day_tab_content = '\
     <div class="tab-pane" id="<%= date %>">\
     <div class="row">\
-    		<div class="listTask">\
+            <div class="listTask">\
             <div class="margin-bottom10">\
             <img src="/img/print.'+GLOBAL_CONFIG.version+'.png" alt="Print" class="print" width = "16" height = "16">\
             <img src="/img/reload.'+GLOBAL_CONFIG.version+'.png" alt="Reload" class="reload" width = "19" height = "19">\
@@ -26,38 +26,38 @@ templates.day_tab_content = '\
                     <input type="text" size="16" class="input-xxlarge createTask" placeholder="'+ __d('tasks', '+Добавить задание…')+'"/>\
                     <button class="btn createTaskButton">'+__d('tasks', 'Добавить')+'</button>\
                 </div>\
-    			</div>\
+                </div>\
                 <div class="filter">\
                 <span>'+ __d('tasks', 'Фильтр')+':&nbsp; </span>\
                 <a href=""  class="active" data="all">'+ __d('tasks', 'Все')+'</a>\
-    				<span class="all badge badge-info">\
-    					0\
-    				</span>,\
-    				&nbsp;\
+                    <span class="all badge badge-info">\
+                        0\
+                    </span>,\
+                    &nbsp;\
                     <a href=""  data="inProcess">'+ __d('tasks', 'В Процессе')+'</a>\
-    				<span class="inProcess badge badge-warning"> \
-    					0\
-    				</span>,\
-    				&nbsp;\
+                    <span class="inProcess badge badge-warning"> \
+                        0\
+                    </span>,\
+                    &nbsp;\
                     <a href=""  data="completed">'+ __d('tasks', 'Выполненные')+'</a>\
-    				<span class="completed badge badge-success"> \
-    					0\
-    				</span>\
-    			</div>\
+                    <span class="completed badge badge-success"> \
+                        0\
+                    </span>\
+                </div>\
                 <% if(date != "planned") { %>\
                 <div class="days">\
                 <a href="" data="commentDay">'+ __d('tasks', 'Комментарий')+'</a>\
                     <label class="checkbox ratingDay">\
                         <input type="checkbox" date="<%= date %>"/> '+ __d('tasks', 'Удачный день')+'\
                     </label>\
-    			</div>\
+                </div>\
                 <% } %>\
-    			<div class="clear"></div>\
-    			<ul class="sortable connectedSortable ui-helper-reset filtered dthl" date="<%= date %>" data-refresh="0">\
+                <div class="clear"></div>\
+                <ul class="sortable connectedSortable ui-helper-reset filtered dthl" date="<%= date %>" data-refresh="0">\
                 '+templates.ajax_loader_content+'\
-    			</ul>\
+                </ul>\
             </div>\
-    	</div>\
+        </div>\
     </div>';
     
 templates.empty_list_day_tasks = '\
@@ -113,7 +113,3 @@ templates.empty_list_filterCompleted = '\
     ' + __d('messages', 'Здесь нет ни одной задачи! Поторопись! Сделай свои дела и отдыхай. Забудь обо всем и сосредоточься на предыдущей вкладке. Выполни все свои задачи. Это принесет тебе счастье.') + '\
     </div>\
     ';  
-
-    
-
-  
