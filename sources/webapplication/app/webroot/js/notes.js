@@ -548,10 +548,10 @@ jQuery(function( $ ) {
             this.srvFavoriteNote( id );
         },
         onFavoriteNote: function( data ){
-            if(!data.success){
-                Utils.mesgShow(data.message.message, data.message.type);
-            } else {
-                this.renderFavoriteNote( data.data.id, data.data.fav );
+            Utils.mesgShow(data.message.message, data.message.type);
+
+            if(data.success){
+                this.renderFavoriteNote( data.data.id );
             }
         },
         srvFavoriteNote: function( id ){

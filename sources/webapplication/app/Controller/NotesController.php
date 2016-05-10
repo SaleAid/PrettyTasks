@@ -128,7 +128,6 @@ class NotesController extends AppController {
               if ( $note ) {
                   $result['data'] = new NoteObj($note);
                   $result['success'] = true; 
-                  $result['message'] = new MessageObj('info', __d('notes', 'Заметка помечена как любимая'));
               } else {
                  $result['message'] = new MessageObj('error', __d('notes', 'Заметка не обновлена'), $this->Note->validationErrors);
               }
