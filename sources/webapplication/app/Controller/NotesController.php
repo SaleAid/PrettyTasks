@@ -147,7 +147,7 @@ class NotesController extends AppController {
             $result['message'] = new MessageObj('error', __d('tasks', 'Ошибка при передаче данных'));
         } else {
             if($note_id = $this->request->data['id']) 
-                $originNote = $this->Note->isOwner($this->request->data['id'], $this->Auth->user('id'));
+                $originNote = $this->Note->isOwner($note_id, $this->Auth->user('id'));
             if($originNote) {
                 $note = $this->Note->favorite()->save();
 
