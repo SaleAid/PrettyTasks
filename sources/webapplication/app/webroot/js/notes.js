@@ -548,9 +548,9 @@ jQuery(function( $ ) {
             this.srvFavoriteNote( id );
         },
         onFavoriteNote: function( data ){
-            Utils.mesgShow(data.message.message, data.message.type);
-
-            if(data.success){
+            if(!data.success){
+                Utils.mesgShow(data.message.message, data.message.type);
+            } else {
                 this.renderFavoriteNote( data.data.id );
             }
         },
