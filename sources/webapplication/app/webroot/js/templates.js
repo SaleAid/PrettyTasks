@@ -98,7 +98,7 @@ templates.add_task = '\
         <input type="checkbox" class="done" value="1" <%= checked %>/>\
         <span class="editable"><%= title %></span>\
         <span class="commentTask"><%= comment %></span>\
-        <span class="comment-task-icon"><i class="icon-file <%= comment_status %>"></i></span>\
+        <span class="comment-task-icon <%= comment_status[1] %>"><i class="icon-file <%= comment_status[0] %>"></i></span>\
         <span class="editTask"><i class="icon-pencil"></i></span>\
         <span class="delete-wr"><span class="deleteTask"><i class=" icon-trash"></i></span></span>\
     </li>\

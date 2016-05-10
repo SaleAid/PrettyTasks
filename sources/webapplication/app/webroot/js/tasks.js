@@ -518,7 +518,7 @@ function addTagToList(task){
         }
         if (!task.comment || task.comment == null){
             comment_status =' hide';
-            comment = '';    
+            comment = '';
         }
         if (task.date != null){
             date = task.date;    
@@ -657,7 +657,7 @@ function addTaskNew(task){
             liClass +=' important';    
         }
         if (!task.comment || task.comment == null){
-            comment_status =' hide';
+            comment_status = [' hide', 'hide-visibility'];
             comment = '';    
         }
         if (task.date != null){
@@ -1411,11 +1411,16 @@ function scrPriority(id, priority){
 //----------------setCommentTask-------
 function scrCommentTask(id, comment){
     $("li[id='"+id+"']").find('.commentTask').text(comment);
+    
     if( comment ){
         $("li[id='"+id+"']").find('.comment-task-icon i').removeClass('hide');
-    }else{
+        $("li[id='"+id+"']").find('.comment-task-icon').removeClass('hide-visibility');
+    } else {
         if( ! $("li[id='"+id+"']").find('.comment-task-icon i').hasClass('hide') ){
             $("li[id='"+id+"']").find('.comment-task-icon i').addClass('hide');
+        }
+        if( !$("li[id='"+id+"']").find('.comment-task-icon').hasClass('hide-visibility')){
+            $("li[id='"+id+"']").find('.comment-task-icon').addClass('hide-visibility');
         }
     }
 }
@@ -1882,7 +1887,7 @@ function AddTask(task){
         }
     }
     if (!task.comment || task.comment == null){
-            comment_status =' hide';
+            comment_status =[' hide', 'hide-visibility'];
             task.comment = '';    
     }
     var date = task.date;
