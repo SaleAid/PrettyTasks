@@ -551,7 +551,7 @@ jQuery(function( $ ) {
             if(!data.success){
                 Utils.mesgShow(data.message.message, data.message.type);
             } else {
-                this.renderFavoriteNote( data.data.id );
+                this.renderFavoriteNote( data.data.id, data.data.fav );
             }
         },
         srvFavoriteNote: function( id ){
