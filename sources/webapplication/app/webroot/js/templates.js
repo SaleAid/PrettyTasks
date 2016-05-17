@@ -46,10 +46,21 @@ templates.day_tab_content = '\
                 </div>\
                 <% if(date != "planned") { %>\
                 <div class="days">\
-                <a href="" data="commentDay">'+ __d('tasks', 'Комментарий')+'</a>\
-                    <label class="checkbox ratingDay">\
-                        <input type="checkbox" date="<%= date %>"/> '+ __d('tasks', 'Удачный день')+'\
-                    </label>\
+                    <a href="" data="commentDay">'+ __d('tasks', 'Комментарий')+'</a>\
+                    <div class="dropdown mood-button">\
+                    <a class="btn dropdown-toggle day-rating btn-mood" date="<%= date %>" data-toggle="dropdown">' + __d('tasks', 'Нормальный день') + '\
+                    <span class="caret"></span>\
+                    </a>\
+                    <ul class="dropdown-menu pull-right">\
+                        <li><a class="rating-mood" mood="-3" href="#">' + __d('tasks', 'Черный день') + '</a></li>\
+                        <li><a class="rating-mood" mood="-2" href="#">' + __d('tasks', 'Ужасный день') + '</a></li>\
+                        <li><a class="rating-mood" mood="-1" href="#">' + __d('tasks', 'Плохой день') + '</a></li>\
+                        <li><a class="rating-mood" mood="0"  href="#">' + __d('tasks', 'Нормальный день') + '</a></li>\
+                        <li><a class="rating-mood" mood="1"  href="#">' + __d('tasks', 'Неплохой день') + '</a></li>\
+                        <li><a class="rating-mood" mood="2"  href="#">' + __d('tasks', 'Успешный день') + '</a></li>\
+                        <li><a class="rating-mood" mood="3"  href="#">' + __d('tasks', 'Отличный день') + '</a></li>\
+                    </ul>\
+                    </div>\
                 </div>\
                 <% } %>\
                 <div class="clear"></div>\

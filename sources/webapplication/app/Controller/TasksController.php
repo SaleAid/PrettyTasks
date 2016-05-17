@@ -194,11 +194,11 @@ class TasksController extends AppController {
                         break;
                     }
                 case 'planned' :
-                	{
+                    {
                         $PlannedList = new PlannedList($this->Auth->user('id'));
                         $result['data'] = new TasksListObj('defined', 'planned', $PlannedList->getItems($count, $page), $count);
-                		break;
-                	}
+                        break;
+                    }
                 default :
                     {
                         $result['success'] = false;
@@ -343,9 +343,9 @@ class TasksController extends AppController {
                         break;
                     case 'tag':
                         $options['conditions'] = array('Tag.name' => $this->request->data['list']['tag']);
-        	            $options['fields'] = array('id');
-        	            $options['contain'] = array();
-        	            $tag = $this->Task->Tag->find('first', $options);
+                        $options['fields'] = array('id');
+                        $options['contain'] = array();
+                        $tag = $this->Task->Tag->find('first', $options);
                         $List = new TagList($this->Auth->user('id'), $tag['Tag']['id'], 'Task');
                         break;
                     default:

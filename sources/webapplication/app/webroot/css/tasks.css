@@ -52,6 +52,7 @@
     margin-left: 20px;
     overflow:hidden;
     height:auto;
+    min-height: 285px;
 }
 .listTask h3 {
     padding-left: 10px;
@@ -122,25 +123,28 @@ div.well{
 }
 .days{
     float:right;
-}   
+    padding-right: 5px;
+}
+.days a.btn {
+    margin-left: 15px;
+    padding: 3px 12px;
+    position: relative;
+    top: -6px;
+}
+.days a{
+    vertical-align: top;
+    text-decoration: none;
+    border-bottom: 1px dashed;
+}
+
+.ratingMood {
+
+}
+
 .ratingDay{
    display: inline-block;
    margin-right: 3px;
    vertical-align: top;
-}
-
-.mood-icons {
-    padding: 0px;
-    margin: 0px;
-    display: inline;
-    list-style-type: none;
-}
-.mood-icons li {
-    display: inline;
-}
-.mood-icons li img {
-    position: relative;
-    top: -6px;
 }
 
 .ratingDay input[type="checkbox"],
@@ -149,11 +153,7 @@ div.well{
    margin-right: 5px;
    margin-top: 2px; 
 }
-.days a{
-    vertical-align: top;
-    text-decoration: none;
-    border-bottom: 1px dashed;
-}
+
 .margin-bottom10{ margin-bottom: 10px;}
 
 
@@ -186,7 +186,6 @@ div.well{
 }
 .help{
     margin: 0px 3px 0 0;
-
 }
 
 .sortable li span { 
@@ -534,7 +533,21 @@ div.well{
 }
 .task-view-date span {
     display: block;
-} /* end782 */
+}
+
+.hide-visibility {
+    visibility: hidden;
+}
+
+.mood-button {
+    display: inline;
+}
+.mood-button a {
+    font-size: 11px;
+    border-bottom: none;
+}
+
+/* end782 */
 
 
 .t-del{

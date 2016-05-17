@@ -57,6 +57,21 @@ function getEditElement(name){
     return element;
 }
 
+function getMoodByRating(rating){
+    var mood_rating = {
+        '-3' : ["Черный день", "btn-inverse"],
+        '-2' : ["Ужасный день", "btn-danger"],
+        '-1' : ["Плохой день", "btn-warning"],
+         '0' : ["Нормальный день", "btn-normal"],
+         '1' : ["Неплохой день", "btn-info"],
+         '2' : ["Успешный день", "btn-primary"],
+         '3' : ["Отличный день", "btn-success"]
+    };
+
+    return mood_rating[rating];
+}
+
+
 function getCommentDayElement(name){
     var element = '';
     switch(name){
@@ -221,7 +236,7 @@ function userEvent(action, data){
         case 'edit':
             taskEdit(data.id, data.title, data.priority, data.continued, data.done, data.date, data.time, data.timeEnd, data.comment);
         break;
-        case 'viewComment': //782
+        case 'viewComment':
             viewComment(data);
         break;
         case 'addDay':
@@ -1152,7 +1167,7 @@ function onGetCommentDay(data){
 }
 
 //---------------view Comment------
-function viewComment(data){ //782
+function viewComment(data){
     if(data.show){
         $("#viewTask").modal("show");  
     }
@@ -1161,20 +1176,20 @@ function viewComment(data){ //782
 //---------------setRatingDay------
 function taskRatingDay(date, rating){
     scrRatingDay(date, rating);
-    srvRatingDay(date, rating);    
+    srvRatingDay(date, rating);
 }
 function scrRatingDay(date, rating){
-    var ratingEl = $(".ratingDay[id='"+date+"']");
-    if(+rating){
-        ratingEl.attr('checked', 'checked');
-    }else{
-        ratingEl.removeAttr('checked');
-    }
+    var ratingEl = $(".day-rating[date='"+date+"']");
+
+    ratingEl.attr('value', rating);
+
+    currentBtnClass = ratingEl.attr('class').split(' ').pop();
+    ratingEl.removeClass(currentBtnClass).addClass(getMoodByRating(rating)[1]);
+    ratingEl[0].innerHTML = getMoodByRating(rating)[0] + " <span class='caret'></span>";
 }
 function srvRatingDay(date, rating){
     superAjax('/days/setRating.json',{date: date, rating: rating});
 }
-
 function onRatingDay(data){
     if(!data.success){
         mesg(data.message.message, data.message.type);
@@ -1231,10 +1246,9 @@ function onDeleteDay(data){
 
 //---------------addDay---------
 function taskAddDay(date, action){
-
     if(scrAddDay(date, action)){
         $("ul[date='" + date + "']").empty().append(_.template(templates.ajax_loader_content));
-        srvAddDay(date);    
+        srvAddDay(date);
     }
 }
 
@@ -1252,7 +1266,8 @@ function scrAddDay(date, action){
         activeTab(date);
         return false;    
     }
-    var newTabContent = _.template(templates.day_tab_content, {date: date} );            
+
+    var newTabContent = _.template(templates.day_tab_content, {date: date,});            
     $('.tab-content').append(newTabContent);
     
     if(action == -1){
@@ -1340,7 +1355,7 @@ function onAddDay(data){
     list.after(emptyList);
     
     if(!$.isEmptyObject(data.data.day) && +data.data.day.rating){
-        $(".ratingDay input[date='"+data.data.name+"']").attr('checked','checked');
+        scrRatingDay(data.data.name, data.data.day.rating); 
     }
      
     $.each(data.data.list, function(index, task) {
@@ -1356,7 +1371,7 @@ function onAddDay(data){
 
     initDrop($("li a[date='"+data.data.name+"']").parent());
     initSortable("ul[date='"+data.data.name+"'].sortable");
-    initRatingDay(".ratingDay input[date='"+data.data.name+"']");
+    initRatingDay('.rating-mood');
     initTabDelte("li a[date='"+data.data.name+"'] .close");
     initFilter(list.siblings('.filter').children('a'));
     initCommentDay($("ul[date='"+data.data.name+"']").siblings('.days').children('a[data="commentDay"]'));
@@ -1973,7 +1988,7 @@ function initDelete(element){
     });
 }
 
-function initViewComment(element){ //782
+function initViewComment(element){
     $(document).on('click', element, function(e) {
         $(this).parent().addClass('currentTask');
 
@@ -2009,12 +2024,13 @@ function initDone(element){
 
 function initRatingDay(element){
     $(element).on("click", function(){
-       
-        var date = $(this).attr('date');
-        var rating = $(this).is(":checked")? 1 : 0;
+        var date = $('.tab-pane.active').attr('id');
+        var rating = parseInt($(this).attr('mood'));
+
         userEvent('setRatingDay', {date: date, rating: rating});
     });
 }
+
 function initTagArchive(element){
     $(element).on("click", function(){
        var tag = $(this).attr('date');
@@ -2664,7 +2680,7 @@ $(function(){
     initCreateListButton(".createListButton");
     initEditAble(".editable");
     initDelete(".deleteTask");
-    initViewComment(".comment-task-icon"); //782
+    initViewComment(".comment-task-icon");
     initDone(".done");
     //initRatingDay(".ratingDay input");
     initTagArchive(".to-archive input"); 

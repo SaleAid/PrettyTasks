@@ -52,11 +52,20 @@ class Day extends AppModel {
 					)
 			),
 			'rating' => array(
-					'boolean' => array(
+					'maxLength' => array(
 							'rule' => array(
-									'boolean'
+									'maxLength',
+									'3'		
 							),
-							'allowEmpty' => true
+							'allowEmpty' => true,
+							'message' => 'Неверное значение'
+					),
+					'minLength' => array(
+							'rule' => array(
+									'minLength',
+									'-3'
+							),
+							'message' => 'Неверное значение'
 					)
 			)
 	);

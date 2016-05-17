@@ -39,10 +39,10 @@ class Task extends AppModel {
      */
     public $validate = array(
         'id' => array(
-        	'numeric'
+            'numeric'
         ), 
         'user_id' => array(
-        	'numeric'
+            'numeric'
         ), 
         'title' => array(
             'notempty' => array(
@@ -142,7 +142,7 @@ class Task extends AppModel {
             )
         ),
         'day_id' => array(
-			'maxLength' => array(
+            'maxLength' => array(
                 'rule'    => array('maxLength', 36),
                 'message' => 'Wrong ID',
             )
@@ -736,11 +736,11 @@ class Task extends AppModel {
                           }    
                       }
                       array_unique($byDays);
-	                }
+                    }
                     $begin->modify("+$interval week");
                     while($countRepeated > 0 and count($days) < Configure::read('Repeated.MaxCount') 
                            and (!$endDateRepeated or $endDateRepeated >= $begin)) {
-		                if(isset($byDays)){
+                        if(isset($byDays)){
                             foreach($byDays as $v){
                                 $days[] = $begin->format('Y-m-d');
                                 $begin->modify("$v this week");
@@ -777,15 +777,15 @@ class Task extends AppModel {
     }
     
     public function update( $data ){
-    	
-    	if ( isset($data['title']) ) {
+        
+        if ( isset($data['title']) ) {
             $this->setTitle($data['title'], null);
-	    }
+        }
         if ( isset($data['priority']) ) {
             if($data['priority'] != null){
                 $this->data[$this->alias]['priority'] = (int)$data['priority'];
             }
-	    }
+        }
         //check future ...
         if( isset($data['date']) ){
             $this->setDate($data['date']);
