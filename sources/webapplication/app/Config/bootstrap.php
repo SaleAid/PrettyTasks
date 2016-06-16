@@ -1,4 +1,5 @@
 <?php
+App::uses('AppErrorHandler', 'Error');
 
 Configure::write('Dispatcher.filters', array(
         'AssetDispatcher',
