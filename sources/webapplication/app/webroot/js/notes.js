@@ -461,7 +461,7 @@ jQuery(function( $ ) {
 
             var delay = 0;
             $.each( data, function(index, note) {
-                  var fav = note.fav ? "fav-note" : "";
+                  var fav = note.fav == 1 ? "fav-note" : "";
                   AppNotes.$noteList.append(AppNotes.noteTemplate({ id: note.id, title: Utils.wrapTags(note.title, note.tags), modified: Utils.usetDateTime(note.modified, '%y-%m-%d %H:%M'), fav: fav }))
                   ;
                   AppNotes.$noteList.find('li[data-id='+note.id+']').hide();
