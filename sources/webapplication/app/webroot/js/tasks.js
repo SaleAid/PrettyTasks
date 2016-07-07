@@ -1371,7 +1371,7 @@ function onAddDay(data){
 
     initDrop($("li a[date='"+data.data.name+"']").parent());
     initSortable("ul[date='"+data.data.name+"'].sortable");
-    initRatingDay('.rating-mood');
+    initRatingDay('');
     initTabDelte("li a[date='"+data.data.name+"'] .close");
     initFilter(list.siblings('.filter').children('a'));
     initCommentDay($("ul[date='"+data.data.name+"']").siblings('.days').children('a[data="commentDay"]'));
@@ -2021,8 +2021,10 @@ function initDone(element){
     });
 }
 
-function initRatingDay(element){
-    $(element).on("click", function(){
+function initRatingDay(){
+    $(document).on("click", ".rating-mood", function(event){
+        event.preventDefault();
+
         var date = $('.tab-pane.active').attr('id');
         var rating = parseInt($(this).attr('mood'));
 
