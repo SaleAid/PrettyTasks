@@ -545,6 +545,9 @@ div.well{
     border-bottom: none;
     min-width: 135px;
 }
+.days a.btn {
+    padding: 3px 0px;
+}
 /* end782 */
 
 
