@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-02-13 19:49+0200\n"
+"POT-Creation-Date: 2015-11-25 18:48+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,19 +14,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Config/appconfig.php:61
+#: Config/appconfig.php:62
 msgid "Приглашение на сервис %s"
 msgstr ""
 
-#: Config/appconfig.php:62
+#: Config/appconfig.php:63
 msgid "Активация аккаунта на сервисе %s"
 msgstr ""
 
-#: Config/appconfig.php:63
-msgid "Сбросить пароль на сервисе %s"
+#: Config/appconfig.php:64
+msgid "Восстановление пароля на сервисе %s"
 msgstr ""
 
-#: Config/appconfig.php:64
+#: Config/appconfig.php:65
 msgid "Today digest on Pretty Tasks"
 msgstr ""
 

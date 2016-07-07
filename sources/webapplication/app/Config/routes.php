@@ -17,6 +17,10 @@ Router::connect('/:lang/pages', array('controller' => 'pages', 'action' => 'inde
 Router::connect('/:lang/pages/index', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
 Router::connect('/:lang/pages/*', array('controller' => 'pages', 'action' => 'view'), array('lang' => '[a-z]{2}'));
 
+Router::connect('/:lang/articles', array('controller' => 'articles', 'action' => 'index'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/articles/index', array('controller' => 'pages', 'action' => 'index'), array('lang' => '[a-z]{2}'));
+Router::connect('/:lang/articles/*', array('controller' => 'articles', 'action' => 'view'), array('lang' => '[a-z]{2}'));
+
 
 //login && singup
 Router::connect('/:lang/login', array('controller' => 'accounts', 'action' => 'login'), array('lang' => '[a-z]{2}'));

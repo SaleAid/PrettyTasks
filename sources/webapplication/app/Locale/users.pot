@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-02-13 19:49+0200\n"
+"POT-Creation-Date: 2015-11-25 18:48+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-#: Controller/AccountsController.php:77
+#: Controller/AccountsController.php:76
 msgid "Ваш аккаунт заблокирован"
 msgstr ""
 
@@ -38,7 +38,7 @@ msgstr ""
 msgid "Профиль не может быть сохранен. Пожалуйста, попробуйте еще раз"
 msgstr ""
 
-#: Model/Account.php:210
+#: Model/Account.php:203
 msgid "Пароли не совпадает"
 msgstr ""
 
@@ -122,18 +122,22 @@ msgid "Изменить пароль"
 msgstr ""
 
 #: View/Elements/user_menu.ctp:14
+msgid "Управление рассылками"
+msgstr ""
+
+#: View/Elements/user_menu.ctp:17
 msgid "Связанные аккаунты"
 msgstr ""
 
-#: View/Elements/user_menu.ctp:16
+#: View/Elements/user_menu.ctp:19
 msgid "Дополнительно"
 msgstr ""
 
-#: View/Elements/user_menu.ctp:19
+#: View/Elements/user_menu.ctp:22
 msgid "Пригласить друзей"
 msgstr ""
 
-#: View/Elements/user_menu.ctp:23
+#: View/Elements/user_menu.ctp:26
 msgid "Обратная связь"
 msgstr ""
 
@@ -178,7 +182,40 @@ msgid "Язык"
 msgstr ""
 
 #: View/Users/profile.ctp:21
+#: View/Users/subscriptions.ctp:40
 msgid "Сохранить изменения"
+msgstr ""
+
+#: View/Users/subscriptions.ctp:14
+msgid "Управление подписками"
+msgstr ""
+
+#: View/Users/subscriptions.ctp:19;24;30
+msgid "Не получать"
+msgstr ""
+
+#: View/Users/subscriptions.ctp:20;31
+msgid "Получать"
+msgstr ""
+
+#: View/Users/subscriptions.ctp:25
+msgid "Получать, если есть изменения"
+msgstr ""
+
+#: View/Users/subscriptions.ctp:26
+msgid "Получать всегда"
+msgstr ""
+
+#: View/Users/subscriptions.ctp:34
+msgid "Получать новости"
+msgstr ""
+
+#: View/Users/subscriptions.ctp:36
+msgid "Получать ежедневные отчеты"
+msgstr ""
+
+#: View/Users/subscriptions.ctp:38
+msgid "Получать еженедельные отчеты"
 msgstr ""
 
 #: Model/User.php:validation for field id

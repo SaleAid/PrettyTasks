@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-02-13 19:49+0200\n"
+"POT-Creation-Date: 2015-11-25 18:48+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,63 +14,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/FeedbacksController.php:33
+#: Controller/FeedbacksController.php:35
 msgid "Ошибка при передачи данных"
 msgstr ""
 
-#: Controller/FeedbacksController.php:45
+#: Controller/FeedbacksController.php:47
 msgid "Ваше сообщение было сохранено"
 msgstr ""
 
-#: Controller/FeedbacksController.php:72
+#: Controller/FeedbacksController.php:74
 msgid "Ваше сообщение не удалось сохранить. Попробуйте снова."
 msgstr ""
 
-#: View/Feedbacks/add.ctp:14
+#: View/Feedbacks/add.ctp:15
 msgid "Сообщение разработчикам"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:16
+#: View/Feedbacks/add.ctp:17
 msgid "Идея"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:17
+#: View/Feedbacks/add.ctp:18
 msgid "Проблема"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:18
+#: View/Feedbacks/add.ctp:19
 msgid "Вопрос"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:19
+#: View/Feedbacks/add.ctp:20
 msgid "Благодарность"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:24
+#: View/Feedbacks/add.ctp:25
 msgid "Тема"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:25;34
+#: View/Feedbacks/add.ctp:26;35
 msgid "Сообщение"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:27
+#: View/Feedbacks/add.ctp:28
 msgid "Отправить"
 msgstr ""
 
-#: View/Feedbacks/add.ctp:35
+#: View/Feedbacks/add.ctp:36
 msgid "Ваше мнение очень важно для нас."
 msgstr ""
 
-#: View/Feedbacks/add.ctp:36
+#: View/Feedbacks/add.ctp:37
 msgid "Пожалуйста, опишите Вашу просьбу, проблему как можно более подробно, чтобы мы могли быстрее и полнее ее проработать."
 msgstr ""
 
-#: View/Feedbacks/add.ctp:37
+#: View/Feedbacks/add.ctp:38
 msgid "Спасибо за сотрудничество."
 msgstr ""
 
-#: View/Feedbacks/add.ctp:38
+#: View/Feedbacks/add.ctp:39
 msgid "Мы делаем все, чтобы наш сервис приносил Вам наибольшую пользу и комфорт."
 msgstr ""
 
