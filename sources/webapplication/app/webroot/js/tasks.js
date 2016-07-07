@@ -1387,7 +1387,6 @@ function onAddDay(data){
     setFiler(data.data.name);
     $('#wrapper-content').css('min-height', $('.listDay').height() + 30 );
     changeHeightListDays();
-
 }
 
 // --------------setDate--------

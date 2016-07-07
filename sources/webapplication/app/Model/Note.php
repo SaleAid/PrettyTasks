@@ -219,6 +219,7 @@ class Note extends AppModel {
     public function createNote($user_id, $title) {
         $this->data[$this->alias]['user_id'] = $user_id;
         $this->data[$this->alias]['title'] = $title;
+        $this->data[$this->alias]['fav'] = 0;
         return $this;
     }
     
