@@ -1185,6 +1185,7 @@ function scrRatingDay(date, rating){
 
     currentBtnClass = ratingEl.attr('class').split(' ').pop();
     ratingEl.removeClass(currentBtnClass).addClass(getMoodByRating(rating)[1]);
+    ratingEl.css('background-image','none');
     ratingEl[0].innerHTML = getMoodByRating(rating)[0] + " <span class='caret'></span>";
 }
 function srvRatingDay(date, rating){
