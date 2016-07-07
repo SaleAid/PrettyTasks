@@ -21,6 +21,6 @@ class NoteObj {
         $this->tags = isset($note['Note']['tags']) ? $note['Note']['tags'] : null;
         $this->modified = $note['Note']['modified'];
         $this->created = $note['Note']['created'];
-        $this->fav = isset($note['Note']['fav']) ? $note['Note']['fav'] : null;
+        $this->fav = isset($note['Note']['fav']) ? $note['Note']['fav'] : 0;
     }
 } 
