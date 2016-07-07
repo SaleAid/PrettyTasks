@@ -68,8 +68,6 @@
 } 
 
 
-
-
 .s4{
     padding: 0 5px 5px 5px;
     line-height: 5px;
@@ -545,6 +543,7 @@ div.well{
 .mood-button a {
     font-size: 11px;
     border-bottom: none;
+    min-width: 100px;
 }
 /* end782 */
 
