@@ -24,7 +24,7 @@ jQuery(function( $ ) {
         
         mesgShow: function( message, type ){
             $.jGrowl.defaults.pool = 1;
-            $.jGrowl(message, { 
+            $.jGrowl(message, {
                             glue: 'before',
                             position: 'custom',
                             theme: type,
@@ -512,7 +512,7 @@ jQuery(function( $ ) {
             Utils.superAjax('/notes/create.json', {title: title }, AppNotes.responseHandler);
         },
         renderCreate: function( data ){
-            this.$noteList.prepend(this.noteTemplate({ id: data.id, title: Utils.wrapTags(data.title, data.tags), modified: Utils.usetDateTime(data.modified, '%y-%m-%d %H:%M') }))
+            this.$noteList.prepend(this.noteTemplate({ id: data.id, title: Utils.wrapTags(data.title, data.tags), modified: Utils.usetDateTime(data.modified, '%y-%m-%d %H:%M'), fav: 0 }))
                           ;
             AppNotes.$noteList.find('li[data-id='+data.id+']').hide();
             AppNotes.$noteList.find('li[data-id='+data.id+']').slideDown(600);
