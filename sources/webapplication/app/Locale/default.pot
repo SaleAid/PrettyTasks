@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-02-13 19:49+0200\n"
+"POT-Creation-Date: 2015-11-25 18:48+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,6 +13,26 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: Controller/ArticlesController.php:43;78;106
+msgid "Invalid article"
+msgstr ""
+
+#: Controller/ArticlesController.php:58;82
+msgid "The article has been saved."
+msgstr ""
+
+#: Controller/ArticlesController.php:61;85
+msgid "The article could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/ArticlesController.php:110
+msgid "The article has been deleted."
+msgstr ""
+
+#: Controller/ArticlesController.php:112
+msgid "The article could not be deleted. Please, try again."
+msgstr ""
 
 #: Controller/FaqsController.php:44;54;86;135;163
 msgid "Invalid Faq"
@@ -58,10 +78,12 @@ msgstr ""
 msgid "Goal was not deleted"
 msgstr ""
 
-#: View/Days/add.ctp:4
-msgid "Add Day"
+#: View/Articles/add.ctp:4
+msgid "Add Article"
 msgstr ""
 
+#: View/Articles/add.ctp:15
+#: View/Articles/edit.ctp:17
 #: View/Days/add.ctp:12
 #: View/Days/admin_add.ctp:12
 #: View/Days/admin_edit.ctp:13
@@ -78,6 +100,8 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
+#: View/Articles/add.ctp:18
+#: View/Articles/edit.ctp:20
 #: View/Days/add.ctp:15
 #: View/Days/admin_add.ctp:15
 #: View/Days/admin_edit.ctp:16
@@ -108,15 +132,13 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: View/Days/add.ctp:18
-#: View/Days/admin_add.ctp:18
-#: View/Days/admin_edit.ctp:20
-#: View/Days/admin_view.ctp:36
-#: View/Days/edit.ctp:20
-#: View/Days/view.ctp:36
-msgid "List Days"
+#: View/Articles/add.ctp:21
+#: View/Articles/edit.ctp:24
+msgid "List Articles"
 msgstr ""
 
+#: View/Articles/add.ctp:22
+#: View/Articles/edit.ctp:25
 #: View/Days/add.ctp:19
 #: View/Days/admin_add.ctp:19
 #: View/Days/admin_edit.ctp:21
@@ -133,6 +155,8 @@ msgstr ""
 msgid "List Users"
 msgstr ""
 
+#: View/Articles/add.ctp:23
+#: View/Articles/edit.ctp:26
 #: View/Days/add.ctp:20
 #: View/Days/admin_add.ctp:20
 #: View/Days/admin_edit.ctp:22
@@ -149,14 +173,21 @@ msgstr ""
 msgid "New User"
 msgstr ""
 
-#: View/Days/admin_add.ctp:4
-msgid "Admin Add Day"
+#: View/Articles/add.ctp:24
+#: View/Articles/edit.ctp:27
+msgid "List Acategories"
 msgstr ""
 
-#: View/Days/admin_edit.ctp:4
-msgid "Admin Edit Day"
+#: View/Articles/add.ctp:25
+#: View/Articles/edit.ctp:28
+msgid "New Acategory"
 msgstr ""
 
+#: View/Articles/edit.ctp:4
+msgid "Edit Article"
+msgstr ""
+
+#: View/Articles/edit.ctp:23
 #: View/Days/admin_edit.ctp:19
 #: View/Days/admin_index.ctp:25
 #: View/Days/edit.ctp:19
@@ -174,6 +205,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
+#: View/Articles/edit.ctp:23
 #: View/Days/admin_edit.ctp:19
 #: View/Days/admin_index.ctp:25
 #: View/Days/admin_view.ctp:35
@@ -196,6 +228,110 @@ msgstr ""
 #: View/Goals/view.ctp:60
 #: View/Invitations/index.ctp:23
 msgid "Are you sure you want to delete # %s?"
+msgstr ""
+
+#: View/Articles/index.ctp:2
+msgid "Articles"
+msgstr ""
+
+#: View/Articles/index.ctp:19
+msgid "more details..."
+msgstr ""
+
+#: View/Articles/index.ctp:26
+#: View/Days/admin_index.ctp:33
+#: View/Days/index.ctp:33
+#: View/Goals/index.ctp:42
+#: View/Invitations/index.ctp:31
+msgid "Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}"
+msgstr ""
+
+#: View/Articles/index.ctp:31
+#: View/Days/admin_index.ctp:39
+#: View/Days/index.ctp:39
+#: View/Faqs/admin_index.ctp:42
+#: View/Feedbacks/admin_index.ctp:60
+#: View/Feedbacks/index.ctp:60
+#: View/Goals/index.ctp:47
+#: View/Invitations/index.ctp:37
+msgid "previous"
+msgstr ""
+
+#: View/Articles/index.ctp:33
+#: View/Days/admin_index.ctp:41
+#: View/Days/index.ctp:41
+#: View/Faqs/admin_index.ctp:45
+#: View/Feedbacks/admin_index.ctp:63
+#: View/Feedbacks/index.ctp:63
+#: View/Goals/index.ctp:49
+#: View/Invitations/index.ctp:39
+msgid "next"
+msgstr ""
+
+#: View/Articles/view.ctp:2
+msgid "Article"
+msgstr ""
+
+#: View/Articles/view.ctp:5
+msgid "Acategory"
+msgstr ""
+
+#: View/Articles/view.ctp:10
+#: View/Goals/view.ctp:9
+msgid "Title"
+msgstr ""
+
+#: View/Articles/view.ctp:15
+#: View/Faqs/admin_view.ctp:29
+#: View/Faqs/view.ctp:29
+msgid "Content"
+msgstr ""
+
+#: View/Articles/view.ctp:20
+msgid "Keywords"
+msgstr ""
+
+#: View/Articles/view.ctp:25
+msgid "Description"
+msgstr ""
+
+#: View/Articles/view.ctp:30
+#: View/Faqs/admin_view.ctp:44
+#: View/Faqs/view.ctp:44
+#: View/Feedbacks/admin_view.ctp:54
+#: View/Feedbacks/view.ctp:54
+#: View/Goals/view.ctp:44
+msgid "Created"
+msgstr ""
+
+#: View/Articles/view.ctp:35
+#: View/Faqs/admin_view.ctp:49
+#: View/Faqs/view.ctp:49
+#: View/Feedbacks/admin_view.ctp:59
+#: View/Feedbacks/view.ctp:59
+#: View/Goals/view.ctp:49
+msgid "Modified"
+msgstr ""
+
+#: View/Days/add.ctp:4
+msgid "Add Day"
+msgstr ""
+
+#: View/Days/add.ctp:18
+#: View/Days/admin_add.ctp:18
+#: View/Days/admin_edit.ctp:20
+#: View/Days/admin_view.ctp:36
+#: View/Days/edit.ctp:20
+#: View/Days/view.ctp:36
+msgid "List Days"
+msgstr ""
+
+#: View/Days/admin_add.ctp:4
+msgid "Admin Add Day"
+msgstr ""
+
+#: View/Days/admin_edit.ctp:4
+msgid "Admin Edit Day"
 msgstr ""
 
 #: View/Days/admin_index.ctp:2
@@ -221,33 +357,6 @@ msgstr ""
 #: View/Goals/index.ctp:33
 #: View/Invitations/index.ctp:22
 msgid "Edit"
-msgstr ""
-
-#: View/Days/admin_index.ctp:33
-#: View/Days/index.ctp:33
-#: View/Goals/index.ctp:42
-#: View/Invitations/index.ctp:31
-msgid "Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}"
-msgstr ""
-
-#: View/Days/admin_index.ctp:39
-#: View/Days/index.ctp:39
-#: View/Faqs/admin_index.ctp:42
-#: View/Feedbacks/admin_index.ctp:60
-#: View/Feedbacks/index.ctp:60
-#: View/Goals/index.ctp:47
-#: View/Invitations/index.ctp:37
-msgid "previous"
-msgstr ""
-
-#: View/Days/admin_index.ctp:41
-#: View/Days/index.ctp:41
-#: View/Faqs/admin_index.ctp:45
-#: View/Feedbacks/admin_index.ctp:63
-#: View/Feedbacks/index.ctp:63
-#: View/Goals/index.ctp:49
-#: View/Invitations/index.ctp:39
-msgid "next"
 msgstr ""
 
 #: View/Days/admin_index.ctp:48
@@ -449,30 +558,9 @@ msgstr ""
 msgid "Annotation"
 msgstr ""
 
-#: View/Faqs/admin_view.ctp:29
-#: View/Faqs/view.ctp:29
-msgid "Content"
-msgstr ""
-
 #: View/Faqs/admin_view.ctp:34
 #: View/Faqs/view.ctp:34
 msgid "Active"
-msgstr ""
-
-#: View/Faqs/admin_view.ctp:44
-#: View/Faqs/view.ctp:44
-#: View/Feedbacks/admin_view.ctp:54
-#: View/Feedbacks/view.ctp:54
-#: View/Goals/view.ctp:44
-msgid "Created"
-msgstr ""
-
-#: View/Faqs/admin_view.ctp:49
-#: View/Faqs/view.ctp:49
-#: View/Feedbacks/admin_view.ctp:59
-#: View/Feedbacks/view.ctp:59
-#: View/Goals/view.ctp:49
-msgid "Modified"
 msgstr ""
 
 #: View/Faqs/admin_view.ctp:59
@@ -588,10 +676,6 @@ msgstr ""
 msgid "Goal"
 msgstr ""
 
-#: View/Goals/view.ctp:9
-msgid "Title"
-msgstr ""
-
 #: View/Goals/view.ctp:19
 msgid "Fromdate"
 msgstr ""
@@ -621,34 +705,31 @@ msgid "New Invitation"
 msgstr ""
 
 #: View/Pages/index.ctp:11
-#: View/Pages/rus/index.ctp:11
 msgid "Готовься"
 msgstr ""
 
 #: View/Pages/index.ctp:23
-#: View/Pages/rus/index.ctp:23
 msgid "Целься"
 msgstr ""
 
 #: View/Pages/index.ctp:35
-#: View/Pages/rus/index.ctp:35
 msgid "Пли!"
-msgstr ""
-
-#: View/Pages/eng/index.ctp:11
-msgid "Get ready"
-msgstr ""
-
-#: View/Pages/eng/index.ctp:21
-msgid "Aim"
-msgstr ""
-
-#: View/Pages/eng/index.ctp:31
-msgid "Fire!"
 msgstr ""
 
 #: View/Tasks/mobile/index.ctp:36;80;125;182;207
 msgid "Go to full version"
+msgstr ""
+
+#: Model/Acategory.php:validation for field lang;validation for field name;validation for field slug
+#: Model/Article.php:validation for field slug;validation for field lang;validation for field title;validation for field content
+msgid "notEmpty"
+msgstr ""
+
+#: Model/Article.php:validation for field user_id;validation for field acategory_id
+#: Plugin/OAuth/Model/AccessToken.php:validation for field expires
+#: Plugin/OAuth/Model/AuthCode.php:validation for field expires
+#: Plugin/OAuth/Model/RefreshToken.php:validation for field expires
+msgid "numeric"
 msgstr ""
 
 #: Model/Goal.php:validation for field title
@@ -660,21 +741,10 @@ msgstr ""
 msgid "notempty"
 msgstr ""
 
-#: Model/Goal.php:validation for field user_id
-#: Model/Setting.php:validation for field id;validation for field user_id
-msgid "uuid"
-msgstr ""
-
 #: Plugin/OAuth/Model/AccessToken.php:validation for field oauth_token
 #: Plugin/OAuth/Model/AuthCode.php:validation for field code
 #: Plugin/OAuth/Model/Client.php:validation for field client_id
 #: Plugin/OAuth/Model/RefreshToken.php:validation for field refresh_token
 msgid "isUnique"
-msgstr ""
-
-#: Plugin/OAuth/Model/AccessToken.php:validation for field expires
-#: Plugin/OAuth/Model/AuthCode.php:validation for field expires
-#: Plugin/OAuth/Model/RefreshToken.php:validation for field expires
-msgid "numeric"
 msgstr ""
 
