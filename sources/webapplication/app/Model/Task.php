@@ -264,6 +264,16 @@ class Task extends AppModel {
     public function __construct($id = false, $table = null, $ds = null) {
          parent::__construct($id, $table, $ds);
          $this->getEventManager()->attach(new TaskEventListener());
+
+         $s = [
+             '-3' => [__d("tasks", "Черный день"), "btn-inverse"],
+             '-2' => [__d("tasks", "Ужасный день"), "btn-danger"],
+             '-1' => [__d("tasks", "Плохой день"), "btn-warning"],
+             '0'  => [__d("tasks", "Нормальный день"), "btn-normal"],
+             '1'  => [__d("tasks", "Неплохой день"), "btn-info"],
+             '2'  => [__d("tasks", "Успешный день"), "btn-primary"],
+             '3'  => [__d("tasks", "Отличный день"), "btn-success"]
+         ];
     }
     
     /**

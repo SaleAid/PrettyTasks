@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-07-07 16:08+0300\n"
+"POT-Creation-Date: 2016-07-07 16:35+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -153,49 +153,77 @@ msgstr ""
 msgid "Переход на новый день. Перезагрузка страницы произойдет через 5 секунд"
 msgstr ""
 
-#: Model/Task.php:606
+#: Model/Task.php:269
+msgid "Черный день"
+msgstr ""
+
+#: Model/Task.php:270
+msgid "Ужасный день"
+msgstr ""
+
+#: Model/Task.php:271
+msgid "Плохой день"
+msgstr ""
+
+#: Model/Task.php:272
+msgid "Нормальный день"
+msgstr ""
+
+#: Model/Task.php:273
+msgid "Неплохой день"
+msgstr ""
+
+#: Model/Task.php:274
+msgid "Успешный день"
+msgstr ""
+
+#: Model/Task.php:275
+msgid "Отличный день"
+msgstr ""
+
+#: Model/Task.php:616
 #: Plugin/ApiV1/Model_old/Task.php:869
 #: Plugin/AppVK/View/Tasks/index.ctp:74
 #: View/Tasks/index.ctp:89
 msgid "Sunday"
 msgstr ""
 
-#: Model/Task.php:607
+#: Model/Task.php:617
 #: Plugin/ApiV1/Model_old/Task.php:870
 #: Plugin/AppVK/View/Tasks/index.ctp:75
 #: View/Tasks/index.ctp:90
 msgid "Monday"
 msgstr ""
 
-#: Model/Task.php:608
+#: Model/Task.php:618
 #: Plugin/ApiV1/Model_old/Task.php:871
 #: Plugin/AppVK/View/Tasks/index.ctp:76
 #: View/Tasks/index.ctp:91
 msgid "Tuesday"
 msgstr ""
 
-#: Model/Task.php:609
+#: Model/Task.php:619
 #: Plugin/ApiV1/Model_old/Task.php:872
 #: Plugin/AppVK/View/Tasks/index.ctp:77
 #: View/Tasks/index.ctp:92
 msgid "Wednesday"
 msgstr ""
 
-#: Model/Task.php:610
+#: Model/Task.php:620
 #: Plugin/ApiV1/Model_old/Task.php:873
 #: Plugin/AppVK/View/Tasks/index.ctp:78
 #: View/Tasks/index.ctp:93
 msgid "Thursday"
 msgstr ""
 
-#: Model/Task.php:611
+#: Model/Task.php:621
 #: Plugin/ApiV1/Model_old/Task.php:874
 #: Plugin/AppVK/View/Tasks/index.ctp:79
 #: View/Tasks/index.ctp:94
 msgid "Friday"
 msgstr ""
 
-#: Model/Task.php:612
+#: Model/Task.php:622
 #: Plugin/ApiV1/Model_old/Task.php:875
 #: Plugin/AppVK/View/Tasks/index.ctp:80
 #: View/Tasks/index.ctp:95

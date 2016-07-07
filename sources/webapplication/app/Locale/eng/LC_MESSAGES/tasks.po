@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-07-07 16:22+0300\n"
-"PO-Revision-Date: 2016-07-07 16:23+0300\n"
+"POT-Creation-Date: 2016-07-07 16:35+0300\n"
+"PO-Revision-Date: 2016-07-07 16:37+0300\n"
 "Last-Translator: Vlad Kruglik <krugvs@gmail.com>\n"
 "Language-Team: prettytasks@gmail.com\n"
 "Language: en\n"
@@ -154,37 +154,65 @@ msgstr "Task has not been edited"
 msgid "Переход на новый день. Перезагрузка страницы произойдет через 5 секунд"
 msgstr "Move to next day. Page will be refreshed in 5 seconds"
 
-#: Model/Task.php:606 Plugin/ApiV1/Model_old/Task.php:869
+#: Model/Task.php:269
+msgid "Черный день"
+msgstr "Black day"
+
+#: Model/Task.php:270
+msgid "Ужасный день"
+msgstr "Awful day"
+
+#: Model/Task.php:271
+msgid "Плохой день"
+msgstr "Bad day"
+
+#: Model/Task.php:272
+msgid "Нормальный день"
+msgstr "Usual day"
+
+#: Model/Task.php:273
+msgid "Неплохой день"
+msgstr "Good day"
+
+#: Model/Task.php:274
+msgid "Успешный день"
+msgstr "Successful day"
+
+#: Model/Task.php:275
+msgid "Отличный день"
+msgstr "Perfect day"
+
+#: Model/Task.php:616 Plugin/ApiV1/Model_old/Task.php:869
 #: Plugin/AppVK/View/Tasks/index.ctp:74 View/Tasks/index.ctp:89
 msgid "Sunday"
 msgstr "Sunday"
 
-#: Model/Task.php:607 Plugin/ApiV1/Model_old/Task.php:870
+#: Model/Task.php:617 Plugin/ApiV1/Model_old/Task.php:870
 #: Plugin/AppVK/View/Tasks/index.ctp:75 View/Tasks/index.ctp:90
 msgid "Monday"
 msgstr "Monday"
 
-#: Model/Task.php:608 Plugin/ApiV1/Model_old/Task.php:871
+#: Model/Task.php:618 Plugin/ApiV1/Model_old/Task.php:871
 #: Plugin/AppVK/View/Tasks/index.ctp:76 View/Tasks/index.ctp:91
 msgid "Tuesday"
 msgstr "Tuesday"
 
-#: Model/Task.php:609 Plugin/ApiV1/Model_old/Task.php:872
+#: Model/Task.php:619 Plugin/ApiV1/Model_old/Task.php:872
 #: Plugin/AppVK/View/Tasks/index.ctp:77 View/Tasks/index.ctp:92
 msgid "Wednesday"
 msgstr "Wednesday"
 
-#: Model/Task.php:610 Plugin/ApiV1/Model_old/Task.php:873
+#: Model/Task.php:620 Plugin/ApiV1/Model_old/Task.php:873
 #: Plugin/AppVK/View/Tasks/index.ctp:78 View/Tasks/index.ctp:93
 msgid "Thursday"
 msgstr "Thursday"
 
-#: Model/Task.php:611 Plugin/ApiV1/Model_old/Task.php:874
+#: Model/Task.php:621 Plugin/ApiV1/Model_old/Task.php:874
 #: Plugin/AppVK/View/Tasks/index.ctp:79 View/Tasks/index.ctp:94
 msgid "Friday"
 msgstr "Friday"
 
-#: Model/Task.php:612 Plugin/ApiV1/Model_old/Task.php:875
+#: Model/Task.php:622 Plugin/ApiV1/Model_old/Task.php:875
 #: Plugin/AppVK/View/Tasks/index.ctp:80 View/Tasks/index.ctp:95
 msgid "Saturday"
 msgstr "Saturday"

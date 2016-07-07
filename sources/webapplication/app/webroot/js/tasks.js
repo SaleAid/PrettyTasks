@@ -59,13 +59,13 @@ function getEditElement(name){
 
 function getMoodByRating(rating){
     var mood_rating = {
-        '-3' : [__d("tasks", "Черный день"), "btn-day-black"],
-        '-2' : [__d("tasks", "Ужасный день"), "btn-day-awful"],
-        '-1' : [__d("tasks", "Плохой день"), "btn-day-bad"],
-         '0' : [__d("tasks", "Нормальный день"), "btn-day-normal"],
-         '1' : [__d("tasks", "Неплохой день"), "btn-day-notbad"],
-         '2' : [__d("tasks", "Успешный день"), "btn-day-success"],
-         '3' : [__d("tasks", "Отличный день"), "btn-day-perfect"]
+        '-3' : [__d("tasks", "Черный день"), "btn-inverse"],
+        '-2' : [__d("tasks", "Ужасный день"), "btn-danger"],
+        '-1' : [__d("tasks", "Плохой день"), "btn-warning"],
+         '0' : [__d("tasks", "Нормальный день"), "btn-normal"],
+         '1' : [__d("tasks", "Неплохой день"), "btn-info"],
+         '2' : [__d("tasks", "Успешный день"), "btn-primary"],
+         '3' : [__d("tasks", "Отличный день"), "btn-success"]
     };
 
     return mood_rating[rating];
