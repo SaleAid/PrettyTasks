@@ -59,13 +59,13 @@ function getEditElement(name){
 
 function getMoodByRating(rating){
     var mood_rating = {
-        '-3' : ["Черный день", "btn-inverse"],
-        '-2' : ["Ужасный день", "btn-danger"],
-        '-1' : ["Плохой день", "btn-warning"],
-         '0' : ["Нормальный день", "btn-normal"],
-         '1' : ["Неплохой день", "btn-info"],
-         '2' : ["Успешный день", "btn-primary"],
-         '3' : ["Отличный день", "btn-success"]
+        '-3' : [__d("tasks", "Черный день"), "btn-day-black"],
+        '-2' : [__d("tasks", "Ужасный день"), "btn-day-awful"],
+        '-1' : [__d("tasks", "Плохой день"), "btn-day-bad"],
+         '0' : [__d("tasks", "Нормальный день"), "btn-day-normal"],
+         '1' : [__d("tasks", "Неплохой день"), "btn-day-notbad"],
+         '2' : [__d("tasks", "Успешный день"), "btn-day-success"],
+         '3' : [__d("tasks", "Отличный день"), "btn-day-perfect"]
     };
 
     return mood_rating[rating];
@@ -1371,7 +1371,7 @@ function onAddDay(data){
 
     initDrop($("li a[date='"+data.data.name+"']").parent());
     initSortable("ul[date='"+data.data.name+"'].sortable");
-    initRatingDay('');
+    initRatingDay();
     initTabDelte("li a[date='"+data.data.name+"'] .close");
     initFilter(list.siblings('.filter').children('a'));
     initCommentDay($("ul[date='"+data.data.name+"']").siblings('.days').children('a[data="commentDay"]'));

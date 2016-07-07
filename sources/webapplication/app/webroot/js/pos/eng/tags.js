@@ -1,3 +1,3 @@
 var translations = (translations === null || translations === undefined)?{}:translations;
 translations.eng = (translations.eng === null || translations.eng === undefined)?{}:translations.eng;
-translations.eng.tags = {"\u041e\u0448\u0438\u0431\u043a\u0430, \u0421\u043f\u0438\u0441\u043e\u043a  \u043d\u0435 \u0441\u043e\u0437\u0434\u0430\u043d":"Error, list has not been created","Invalid Tag.":"Invalid Tag","Find tagged will not work with a recursive level of -1, you need at least 0.":"Find tagged will not work with a recursive level of -1, you need at least 0."};
+translations.eng.tags = {"Invalid Tag.":"Invalid Tag","Find tagged will not work with a recursive level of -1, you need at least 0.":"Find tagged will not work with a recursive level of -1, you need at least 0."};

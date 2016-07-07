@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-11-25 18:48+0200\n"
+"POT-Creation-Date: 2016-07-07 16:08+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: Controller/DaysController.php:129
 #: Controller/ListsController.php:30;106;131;164;198
-#: Controller/NotesController.php:48;76;97;121;143
+#: Controller/NotesController.php:48;102;123;147;173;195
 #: Controller/TasksController.php:64;142;224;259;300;332;381;411;448;474;511;547;577
 #: Plugin/ApiV1/Controller/TasksController.php:106;116;163;206;284;337
 #: Plugin/AppVK/Controller/TasksController.php:89;174;216;255;298;345;388;441;479;527;566;597;629
@@ -419,6 +419,7 @@ msgstr ""
 #: View/Elements/comment_day.ctp:10
 #: View/Elements/edit_task.ctp:76
 #: View/Elements/repeat_task.ctp:93
+#: View/Elements/view_task_comment.ctp:20
 msgid "Закрыть"
 msgstr ""
 
@@ -567,6 +568,10 @@ msgstr ""
 
 #: View/Elements/repeat_task.ctp:92
 msgid "Максимальное кол-во повторений"
+msgstr ""
+
+#: View/Elements/view_task_comment.ctp:5
+msgid "Просмотр комментария"
 msgstr ""
 
 #: View/Tasks/index.ctp:45;262
