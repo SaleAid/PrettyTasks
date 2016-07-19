@@ -22,11 +22,6 @@ if( Configure::read('App.Minify.css') ){
 <div class="row col-lg-12 col-md-12 col-xs-12">
     
     <div class="content-pinaric">
-        <?php
-            for($month = 1; $month <= 12; $month++) {
-                echo $this->Pinaric->renderMonth($month,date('Y'));
-                if($month % 4 == 0) echo '<div class="clearfix"></div>';
-            }
-        ?>
+        <?= $this->Pinaric->renderYear(2016, $days) ?>
     </div>
 </div>
