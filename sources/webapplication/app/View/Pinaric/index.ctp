@@ -22,6 +22,6 @@ if( Configure::read('App.Minify.css') ){
 <div class="row col-lg-12 col-md-12 col-xs-12">
     
     <div class="content-pinaric">
-        <?= $this->Pinaric->renderYear(2016, $days) ?>
+        <?= $this->Pinaric->renderYear(2016, $days, Configure::read('User.Normal.FirstDayOfWeek')) ?>
     </div>
 </div>

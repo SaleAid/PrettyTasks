@@ -12,13 +12,9 @@
                     <table class="clndr-table">
                         <thead>
                             <tr class="header-days">
-                                <td class="header-day">MON</td>
-                                <td class="header-day">TUE</td>
-                                <td class="header-day">WED</td>
-                                <td class="header-day">THU</td>
-                                <td class="header-day">FRI</td>
-                                <td class="header-day">SAT</td>
-                                <td class="header-day">SUN</td>
+                                <?php for($i = 0; $i < 7; $i++): ?>
+                                    <td class="header-day"><?= jddayofweek($i - $first_day,2) ?></td>
+                                <?php endfor; ?>
                             </tr>
                         </thead>
                         <tbody>

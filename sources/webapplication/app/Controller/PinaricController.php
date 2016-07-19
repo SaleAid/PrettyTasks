@@ -24,7 +24,7 @@ class PinaricController extends AppController {
             $days[$date] = new DayObj(['date' => $date]);
             $day_counter++;
         }
-        
+
         $this->set(['days' => array_merge($days, $user_days)]);
     }
 

@@ -2,14 +2,14 @@
 class PinaricHelper extends AppHelper {
     public $day_nests = 42;
 
-    public function renderYear($year, $days) {
+    public function renderYear($year, $days, $first_day = 0) {
         $response = '';
 
         $month = 1;
         $day_counter = 0;
 
         while($day_counter < count($days)) {
-            $response .= $this->renderMonth($year, $month, array_slice($days, $day_counter, cal_days_in_month(CAL_JULIAN, $month, $year)));
+            $response .= $this->renderMonth($year, $month, array_slice($days, $day_counter, cal_days_in_month(CAL_JULIAN, $month, $year)),$first_day);
             $day_counter += cal_days_in_month(CAL_JULIAN, $month, $year);
             $response .= $month % 4 == 0 ? '<div class="clearflix"></div>' : '';
             $month++;
@@ -18,11 +18,11 @@ class PinaricHelper extends AppHelper {
         return $response;
     }
 
-    public function renderMonth($year, $month, $days) {
-        $days_offset = jddayofweek(gregoriantojd($month,1,$year)) - 1;
+    public function renderMonth($year, $month, $days, $first_day) {
+        $days_offset = jddayofweek(gregoriantojd($month,1,$year)) - 1 + $first_day;
         $days_offset = $days_offset == -1 ? 6 : $days_offset;
 
-        return $this->_View->element('pinaric', ['year' => $year, 'month' => $month, 'days' => $days, 'days_offset' => $days_offset]);
+        return $this->_View->element('pinaric', ['year' => $year, 'month' => $month, 'days' => $days, 'days_offset' => $days_offset, 'first_day' => $first_day]);
     }
 
     public function getSeasonClass($month) {

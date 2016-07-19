@@ -445,6 +445,7 @@ input[type=checkbox]:checked + .checkbox:before {
 }
 .cal1 .clndr .clndr-table .header-days .header-day {
     border-left:1px solid #D8D8D8;
+    text-transform: uppercase;
 }
 .clndr .clndr-table {
     border-bottom:1px solid #d8d8d8;

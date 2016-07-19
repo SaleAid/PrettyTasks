@@ -19,6 +19,7 @@
     Configure::write('User.Normal.AllowAPI', true);
     Configure::write('User.Normal.SyncPeriod', '1 Day');
     Configure::write('User.Normal.MaxClients', 2);
+    Configure::write('User.Normal.FirstDayOfWeek', 0);
     
     // Task for new user
     //rus
