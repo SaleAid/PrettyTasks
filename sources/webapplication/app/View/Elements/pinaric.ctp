@@ -26,7 +26,7 @@
                             <?php
                                 $count = 1;
                                 foreach($days as $day) {
-                                    echo '<td class="day past '.$day->date. ' '. $this->Pinaric->getMoodClass($day->rating) .'"><div class="day-contents">'.date('j', strtotime($day->date)).'</div></td>';
+                                    echo '<td class="day past '.$day->date. ' '. $this->Pinaric->getMoodClass($day->rating) .'"><a href="/tasks#day-' .$day->date. '"><div class="day-contents">'.date('j', strtotime($day->date)).'</div></a></td>';
                                     echo ($days_offset + $count) % 7 == 0 ? '</tr><tr>' : '';
                                     $count++;
                                 }

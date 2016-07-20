@@ -276,7 +276,7 @@ table {
     border: 3px solid #c3c3c3;
 }
 
-/* Moth color depends on season */
+/* Month color depends on season */
 .clndr .clndr-controls.winter {
     background-color: #308be4;
 }
@@ -290,7 +290,13 @@ table {
     background-color: #f07444;
 }
 
-
+/* To save the native color */
+a .day-contents {
+    color: #555;
+}
+td.day.past a:hover {
+    text-decoration: none;
+}
 
 /* end782 */
 
