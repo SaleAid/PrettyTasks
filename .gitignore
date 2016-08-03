@@ -13,6 +13,7 @@
 sources/webapplication/app/Config/database.php
 sources/webapplication/app/Config/core.php
 sources/webapplication/app/Config/bootstrap.php
+sources/webapplication/app/Config/email.php
 sources/webapplication/app/webroot/.htaccess
 sources/webapplication/app/tmp/*
 sources/webapplication/app/webroot/tmp/*

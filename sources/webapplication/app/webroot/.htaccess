@@ -9,21 +9,21 @@ AddDefaultCharset UTF-8
     
     #RewriteCond %{REQUEST_FILENAME} !-f
     #RewriteCond %{REQUEST_FILENAME} !-d
-<<<<<<< HEAD
+
     
     #RewriteRule ^((css|js)/min/)([^/]+?)\.(\d.*\d+)\.(js|css)$ tmp/minify_g=$3.$5.v=$4 [L]
     #RewriteCond %{REQUEST_FILENAME} !-f   
     #RewriteRule ^(tmp/minify_g=)([^/]+?)$ min/index.php?g=$2 [L]
 
     #RewriteCond %{REQUEST_FILENAME} !-f
-=======
+
     #RewriteRule ^((css|js)/min/)([^/]+?)\.(\d.*\d+)\.(js|css)$ tmp/minify_g=$3.$5.v=$4 [L]
 
     #RewriteCond %{REQUEST_FILENAME} !-f
     #RewriteRule ^(tmp/minify_g=)([^/]+?)$ min/index.php?g=$2 [L]
 
     #RewriteCond %{REQUEST_FILENAME} !-f
->>>>>>> master
+
     #RewriteCond %{REQUEST_FILENAME} !-d
     #RewriteRule ^(.+?)\.(\d.*\d+)\.(js|css)$ min/index.php?f=$1.$3 [L]
             
