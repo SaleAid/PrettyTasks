@@ -36,4 +36,3 @@
 		'app_secret' => 'pUxgCOliewOaI5Az4xAt',
         
     ));
-?>
